@@ -15,9 +15,20 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.4"
+  s.add_dependency 'rails', '~> 4.2'
+  s.add_dependency 'bootstrap-sass', '~> 3.3'
+  s.add_dependency 'friendly_id', '~> 5.1.0'
+  s.add_dependency 'yaml_db', '~> 0.3.0'
+  s.add_dependency 'coveralls'
 
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'rspec-rails', '~> 3.4'
+  s.add_development_dependency 'engine_cart', '~> 0.8'
+  s.add_development_dependency 'factory_girl_rails', '~> 4.5.0'
+  s.add_development_dependency 'faker', '~> 1.4.3'
+  s.add_development_dependency 'database_cleaner', '~> 1.3'
+  s.add_development_dependency 'capybara', '~> 2.5.0'
+  s.add_development_dependency 'poltergeist'
 end

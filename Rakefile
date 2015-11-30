@@ -14,24 +14,30 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
-load 'rails/tasks/engine.rake'
+#
 
 
 load 'rails/tasks/statistics.rake'
 
 
+require 'engine_cart/rake_task'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
+task :ci => ['engine_cart:generate'] do
+  # run the tests
+end
 
 Bundler::GemHelper.install_tasks
 
 require 'rake/testtask'
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
-end
+# Rake::TestTask.new(:test) do |t|
+#   t.libs << 'lib'
+#   t.libs << 'test'
+#   t.pattern = 'test/**/*_test.rb'
+#   t.verbose = false
+# end
 
 
 task default: :test

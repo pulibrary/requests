@@ -6,8 +6,8 @@ describe Requests::RequestsController, type: :routing do
 
     routes { Requests::Engine.routes }
 
-    it 'routes to #index' do
-      expect(get: '/requests').to route_to('requests#index')
+    it 'routes to requests #index' do
+      expect(get: '/requests').to route_to('requests/requests#index')
     end
   end
 end

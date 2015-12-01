@@ -22,6 +22,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id', '~> 5.1.0'
   s.add_dependency 'yaml_db', '~> 0.3.0'
   s.add_dependency 'coveralls'
+  s.add_dependency 'faraday'
+  s.add_dependency 'simple_form'
+  s.add_dependency 'borrow_direct', '~> 1.2.0'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.4'
@@ -31,4 +34,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'capybara', '~> 2.5.0'
   s.add_development_dependency 'poltergeist'
+  s.add_development_dependency "webmock"
+  s.add_development_dependency "vcr"
 end

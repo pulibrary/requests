@@ -1,0 +1,7 @@
+# requests.yml
+voyager_ws_base: http://catalog.princeton.edu:7014/vxws
+umlaut_base: https://getit-dev.princeton.edu
+bibdata_base: https://bibdata.princeton.edu
+annex_email: blahannex@princeton.edu
+circulation_email: blahcirc@princeton.edu
+reply_to_email: blahhelpme@princeton.edu

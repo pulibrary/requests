@@ -7,9 +7,9 @@ class TestAppGenerator < Rails::Generators::Base
   # into the test app, this generator will be run immediately
   # after setting up the application
 
-  # def install_engine
-  #   generate 'locations:install'
-  # end
+  def install_engine
+    generate 'requests:install'
+  end
 
   def add_gems
     gem 'bootstrap-sass', '~> 3.3'

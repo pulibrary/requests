@@ -14,17 +14,13 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-#
-
-
 load 'rails/tasks/statistics.rake'
-
 
 require 'engine_cart/rake_task'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-task :ci => ['engine_cart:generate'] do
+task ci: ['engine_cart:generate'] do
   # run the tests
 end
 
@@ -38,6 +34,5 @@ require 'rake/testtask'
 #   t.pattern = 'test/**/*_test.rb'
 #   t.verbose = false
 # end
-
 
 task default: :test

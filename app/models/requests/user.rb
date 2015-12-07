@@ -5,8 +5,6 @@ module Requests
     attr_accessor :fname
     attr_accessor :lname
     attr_accessor :barcode
-
-
-
+    attr_accessor :email
   end
 end

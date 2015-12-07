@@ -18,12 +18,12 @@ module Requests
       copy_file './config/requests.yml', 'config/requests.yml'
     end
 
-    def inject_ignore_request_conf
-      insert_into_file '.gitignore', :after => '/tmp' do <<EOF
+    def requests_locatles
+      copy_file './config/locales/requests.en.yml', 'config/locales/requests.en.yml'
+    end
 
-config/config.yml
-EOF
-      end
+    def inject_ignore_request_conf
+      append_to_file '.gitignore', "\nconfig/requests.yml\n" if File.exist?('.gitignore')
     end
   end
 end

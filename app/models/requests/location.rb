@@ -1,4 +1,4 @@
 module Requests
-  module RequestsHelper
+  class Location
   end
 end

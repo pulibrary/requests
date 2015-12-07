@@ -10,3 +10,5 @@ test/dummy/tmp/
 test/dummy/.sass-cache
 
 .internal_test_app
+# Ignore coverage
+coverage/

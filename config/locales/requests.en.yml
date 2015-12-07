@@ -1,0 +1,6 @@
+# requests.en.yml
+en:
+  requests:
+    account:
+      unauthenticated: "Please sign in to see all requests"
+  

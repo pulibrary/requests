@@ -24,7 +24,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     # end
 
-    it "Record has holdings" do
+    it "Requests has holdings" do
       expect(request_aeon.holdings?).to be_truthy
     end
 

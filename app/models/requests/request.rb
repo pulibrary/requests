@@ -22,10 +22,6 @@ module Requests
       @system_id
     end
 
-    def thesis?
-      return true if @system_id =~ /^dsp.+/
-    end
-
     def serial?
       self.doc[:format] == 'Journal'
     end
@@ -46,23 +42,6 @@ module Requests
 
     def user(patron_id)
       user = current_patron(patron_id)
-    end
-
-    # If Record is not a serial/multivolume
-    def borrow_direct_eligible?
-      self.doc[:format] == 'Book'
-    end
-
-    # actually check to see if borrow direct is available
-    def borrow_direct_available?
-    end
-    
-    #When ISBN Match
-    def borrow_direct_exact?
-    end
-
-    # When Title or Author Matches
-    def borrow_direct_fuzzy?
     end
 
     def holdings?

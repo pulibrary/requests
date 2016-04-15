@@ -5,6 +5,19 @@ module Requests
       @user = user
     end
 
+    # Possible Services
+    # :online
+    # :on_shelf
+    # :on_order
+    # :in_process
+    # :annex
+    # :recap
+    # :recap_edd
+    # :borrow_direct
+    # :ill
+    # :recall
+    # :trace
+
     # top level call, returns a hash of symbols with service objects as values
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
@@ -29,7 +42,7 @@ module Requests
       end
     end
 
-    ### Utitlities for dealing with borrow direct's quirks
+    ### Methods for dealing with borrow direct's quirks
 
     # If Record is not a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?

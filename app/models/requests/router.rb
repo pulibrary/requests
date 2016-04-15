@@ -23,7 +23,6 @@ module Requests
     def calculate_services
       services = {}
       # here lies the switch case for all request types from the mega chart
-      # 
       services
     end
 
@@ -33,6 +32,10 @@ module Requests
       @services
     end
 
+    ## Behave differently if provider is cas, voyager, or access
+    ## cas - access to all services
+    ## voyager - no access to ill/borrow direct
+    ## access - only access to recap|aeon
     def current_user_provider
       if !@user.provider.nil?
         @user.provider
@@ -42,15 +45,7 @@ module Requests
       end
     end
 
-    ### Methods for dealing with borrow direct's quirks
-
-    # If Record is not a serial/multivolume no Borrow Direct
-    def borrow_direct_eligible?
-      if @requestable.item[:status] == 'check for not available' and self.doc[:format] == 'Book'
-        return true
-      end
-    end
-
+    ## 
     # actually check to see if borrow direct is available
     def borrow_direct_available?
     end

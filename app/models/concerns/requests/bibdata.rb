@@ -20,6 +20,13 @@ module Requests
       end
     end
 
+    def items_by_mfhd(mfh_id)
+      response = bibdata_conn.get "/holdings/#{mfh_id}/items"
+      if response.status == 200
+        response.body
+      end
+    end
+
     def location(location_code)
       response = bibdata_conn.get "/locations/holding_locations/#{location_code}.json"
       response.body

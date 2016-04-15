@@ -22,7 +22,6 @@ FactoryGirl.define do
 
     factory :unauthenticated_patron do
       guest true
-      access true
     end
   end
 end

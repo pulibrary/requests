@@ -47,13 +47,13 @@ module Requests
       conn
     end
 
-    def parse_solr_response solr_doc
-      solr_doc = JSON.parse(solr_doc).with_indifferent_access
+    def parse_blacklight_solr_response(solr_response)
+      solr_doc = parse_json(solr_response)
       solr_doc[:response][:document]
     end
 
-    def parse_patron_response patron_hash
-      JSON.parse(patron_hash).with_indifferent_access
+    def parse_json(data)
+      JSON.parse(data).with_indifferent_access
     end
     
   end

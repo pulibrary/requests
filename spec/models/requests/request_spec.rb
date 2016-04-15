@@ -24,6 +24,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     # end
 
+    ### All these tests need re-factoring 
     it "Requests has holdings" do
       expect(request_aeon.holdings?).to be_truthy
     end
@@ -34,13 +35,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     it "Is located at an Open Access Location" do
       expect(request_no_items.has_items?).to be_nil
-    end
-
-    xit "Is located at Restricted Access location" do
-    end
-
-    xit "Is an Annex Request" do
-      
     end
 
     it "Is an On Order Request" do
@@ -81,7 +75,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   # end
 
-  #   context "Non-Voyager Record Request Options" do
+  #   context "Non-Voyager Record Request" do
       
   #     let (:request)  { FactoryGirl.create(:request) }
 

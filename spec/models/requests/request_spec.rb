@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
 
-  context "When passed a system_id with a holding record with an item" do 
+  context "with a system_id and a mfhd that has a holding record with an attached item record" do 
 
     let(:user) { FactoryGirl.build(:user) }
     let(:params) { 
@@ -15,6 +15,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request_with_holding_item) { described_class.new(params) }
     subject { request_with_holding_item }
 
+    describe "#doc" do
+      it "returns a solr document" do
+        expect(subject.doc).to be_truthy
+        
+      end
+    end
+
+    describe "#items?" do
+      it "Has items" do
+        expect(subject.items?).to be_truthy
+      end
+    end
+
     describe "#requestable" do
       it "has a list of requestable objects" do
         expect(subject.requestable).to be_truthy
@@ -26,21 +39,31 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].holding).to be_truthy
       end
 
-      it "Contains a requesable object with an item" do
-        expect(subject.requestable[0].item).to be_truthy
+      it "Contains a requestable object with an item" do
+        expect(subject.requestable[0].item?).to be_truthy
+      end
+
+      it "has a mfhd" do
+        expect(subject.requestable[0].holding).to be_truthy
+        expect(subject.requestable[0].holding).to eq("8805567")
       end
     end
 
     describe "#system_id" do
       it "has a system id" do
+        expect(subject.system_id).to be_truthy
+        expect(subject.system_id).to eq('8880549')
       end
     end
 
-    describe "#load_items" do
+    describe "#thesis?" do
+      it "should not identify itself as a thesis request" do
+        expect(subject.thesis?).to be_falsy
+      end
     end
   end
 
-  context "When passed a system_id with only a holding record" do
+  context "with a system_id and a mfhd that only has a holding record" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) { 
       {
@@ -58,10 +81,27 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to eq(1)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
+
+      it "has a mfhd" do
+        expect(subject.requestable[0].holding).to be_truthy
+        expect(subject.requestable[0].holding).to eq("2056183")
+      end
     end
+      
   end
 
-  context "When passed a system_id with no holdings or items" do
+  context "with a system_id only that has holdings and item records" do
+    
+  end
+
+  context "with a system_id that only has holdings records" do
+
+  end
+
+  context "with a system_id that has holdings records that do and don't have item records attached" do
+  end
+
+  context "a system_id with no holdings or items" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) { 
       {
@@ -73,7 +113,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     subject { request_with_only_system_id }
 
     describe "#requestable" do
-      it "has a list of request objects" do
+      it "should not have a list of request objects" do
         expect(subject.requestable).to be_falsy
       end
     end
@@ -95,6 +135,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(1)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+    end
+
+    describe "#thesis?" do
+      it "should identify itself as a thesis request" do
+        expect(subject.thesis?).to be_truthy
       end
     end
   end

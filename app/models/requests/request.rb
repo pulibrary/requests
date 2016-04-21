@@ -8,8 +8,11 @@ module Requests
     include BorrowDirect
     include Requests::Bibdata
 
-    # params
+    # @option opts [String] :system_id A bib record id or a special collection ID value
+    # @option opts [Fixnum] :mfhd 
+    # @option opts [User] :user current user object                                                    
     def initialize(params)
+
       @system_id = params[:system_id]
       @mfhd = params[:mfhd]
       @user = params[:user]
@@ -23,13 +26,23 @@ module Requests
     end
 
     ### builds a list of possible requestable items
+    ## Do we want to this to return an empty array or 
     def requestable
-      requestable_items = []
-      @items.each do |item|
-        params = build_requestable_params(item)
-        requestable_items << Requests::Requestable.new(params)
-      end
-      requestable_items
+      if !@items.nil?
+        requestable_items = []
+        @items.each do |item|
+          params = build_requestable_params(item)
+          requestable_items << Requests::Requestable.new(params)
+        end
+        requestable_items
+      else
+        unless self.doc[:holdings_1display].nil?
+          requestable_items = []
+          params = build_requestable_params
+          requestable_items << Requests::Requestable.new(params)
+          requestable_items
+        end
+      end 
     end
 
     def system_id
@@ -85,36 +98,52 @@ module Requests
     def load_items
       if @mfhd
         items_as_json = JSON.parse(self.items_by_mfhd(@mfhd))
-        items_with_symbols = items_to_symbols(items_as_json)
+        unless items_as_json.size == 0
+          items_with_symbols = items_to_symbols(items_as_json)
+        end
       elsif(self.thesis?)
         nil
-      elsif()
-        items_to_json(self.items)
+      elsif(self.items(@system_id))
+        items_to_symbols(JSON.parse(self.items(@system_id)))
+      else
+        nil
       end
     end
 
     def thesis?
-      return true if @holding[:location_code] == 'thesis'
-    end
-
-    def holding_locations
-      @holding_locations
+      unless self.doc[:holdings_1display].nil?
+        return true if parse_json(self.doc[:holdings_1display]).key?('thesis')
+      end
     end
 
     # returns basic metadata for display on the request from via solr_doc values
     # Fields to return
     # :
     def display_metadata
-
+      {
+        title: self.doc
+      }
     end
 
     private
       # defaults come 
-      def build_requestable_params(item)
+      def build_requestable_params(item = nil)
         {
           bib: @doc,
-          holding: holdings[@mfhd]
+          holding: holding_id,
+          item: item
         }
+      end
+
+      def holding_id
+        if !@mfhd.nil?
+          holdings[@mfhd]
+        elsif(self.thesis?)
+          "thesis"
+        else
+          nil
+        end
+        # insert other types as they need support
       end
 
       def items_to_symbols(items = [])

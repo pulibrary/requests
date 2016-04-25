@@ -22,6 +22,20 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe "#display_metadata" do
+      it "returns a display title" do
+        expect(subject.display_metadata[:title]).to be_truthy
+      end
+
+      it "returns a author display" do
+        expect(subject.display_metadata[:author]).to be_truthy
+      end
+
+      it "returns a display date" do
+        expect(subject.display_metadata[:date]).to be_truthy
+      end
+    end
+
     describe "#items?" do
       it "Has items" do
         expect(subject.items?).to be_truthy
@@ -91,14 +105,79 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   end
 
   context "with a system_id only that has holdings and item records" do
-    
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '490930',
+        user: user
+      }
+    }
+
+    let(:request_system_id_only_with_holdings_items) { described_class.new(params) }
+    subject { request_system_id_only_with_holdings_items }
+
+    describe "#requestable" do
+      it "has a list of request objects" do
+        expect(subject.requestable).to be_truthy
+        expect(subject.requestable.size).to eq(98)
+        expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "has a collection of mfhds" do
+        expect(subject.holdings.size).to eq(2)
+      end
+    end
+
   end
 
   context "with a system_id that only has holdings records" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4758976',
+        user: user
+      }
+    }
+    let(:request_system_id_only_with_holdings) { described_class.new(params) }
+    subject { request_system_id_only_with_holdings }
 
+    describe "#requestable" do
+      it "has a list of request objects" do
+        expect(subject.requestable).to be_truthy
+        expect(subject.requestable.size).to eq(1)
+        expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "has a collection of mfhds" do
+        expect(subject.holdings.size).to eq(1)
+      end
+    end
   end
 
   context "with a system_id that has holdings records that do and don't have item records attached" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2478499',
+        user: user
+      }
+    }
+    let(:request_system_id_only_with_holdings_with_some_items) { described_class.new(params) }
+    subject { request_system_id_only_with_holdings_with_some_items }
+
+    describe "#requestable" do
+      it "has a list of request objects" do
+        expect(subject.requestable).to be_truthy
+        expect(subject.requestable.size).to eq(9)
+        expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "has a collection of mfhds" do
+        expect(subject.holdings.size).to eq(9)
+      end
+    end
+
+
   end
 
   context "a system_id with no holdings or items" do

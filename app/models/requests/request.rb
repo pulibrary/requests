@@ -27,18 +27,26 @@ module Requests
 
     ### builds a list of possible requestable items
     ## Do we want to this to return an empty array or 
+    ## should return a hash grouped by mfhd
     def requestable
       if !@items.nil?
         requestable_items = []
-        @items.each do |item|
-          params = build_requestable_params(item)
-          requestable_items << Requests::Requestable.new(params)
+        @items.each do |holding_id, items|
+          if !items.empty?
+            items.each do |item|
+              params = build_requestable_params({item: item, holding: holding_id})
+              requestable_items << Requests::Requestable.new(params)
+            end
+          else
+            params = build_requestable_params({holding: holding_id})
+            requestable_items << Requests::Requestable.new(params)
+          end
         end
         requestable_items
       else
         unless self.doc[:holdings_1display].nil?
           requestable_items = []
-          params = build_requestable_params
+          params = build_requestable_params({ holding: @mfhd})
           requestable_items << Requests::Requestable.new(params)
           requestable_items
         end
@@ -76,7 +84,7 @@ module Requests
     end
 
     def holdings
-      self.doc[:holdings_1display]
+      JSON.parse(self.doc[:holdings_1display])
     end
 
     def title
@@ -95,16 +103,27 @@ module Requests
       holding_locations
     end
 
+    # returns nil if there are no attached items
+    # if mfhd set returns only items associated with that mfhd
+    # if no mfhd returns items sorted by mfhd
     def load_items
       if @mfhd
         items_as_json = JSON.parse(self.items_by_mfhd(@mfhd))
         unless items_as_json.size == 0
+          items_by_mfhd = {}
           items_with_symbols = items_to_symbols(items_as_json)
+          items_by_mfhd[@mfhd] = items_with_symbols
+          items_by_mfhd
         end
       elsif(self.thesis?)
         nil
-      elsif(self.items(@system_id))
-        items_to_symbols(JSON.parse(self.items(@system_id)))
+      elsif(self.items(@system_id)) 
+        items_by_mfhd = {}
+        self.holdings.each do |holding|
+          items_by_holding = JSON.parse(self.items_by_mfhd(holding[0]))
+          items_by_mfhd[holding[0].to_s] = items_to_symbols(items_by_holding)
+        end
+        items_by_mfhd
       else
         nil
       end
@@ -117,33 +136,24 @@ module Requests
     end
 
     # returns basic metadata for display on the request from via solr_doc values
-    # Fields to return
-    # :
+    # Fields to return all keys are arrays
+    ## Add more fields here as needed
     def display_metadata
       {
-        title: self.doc
+        title: self.doc["title_citation_display"],
+        author: self.doc["author_citation_display"],
+        date:  self.doc["pub_date_display"]
       }
     end
 
     private
       # defaults come 
-      def build_requestable_params(item = nil)
+      def build_requestable_params(params)
         {
           bib: @doc,
-          holding: holding_id,
-          item: item
+          holding: params[:holding],
+          item: params[:item]
         }
-      end
-
-      def holding_id
-        if !@mfhd.nil?
-          holdings[@mfhd]
-        elsif(self.thesis?)
-          "thesis"
-        else
-          nil
-        end
-        # insert other types as they need support
       end
 
       def items_to_symbols(items = [])

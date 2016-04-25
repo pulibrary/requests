@@ -16,6 +16,8 @@ module Requests
       logger.info "Items #{@request.items(@id)}"
     end
 
+    # will post and a JSON document of selected "requestable" objects with selection parameters and
+    # user information for further processing and distribution to various request endpoints.
     def submit
       @request = params(params[:request])
     end

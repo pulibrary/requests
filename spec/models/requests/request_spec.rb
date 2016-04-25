@@ -18,7 +18,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#doc" do
       it "returns a solr document" do
         expect(subject.doc).to be_truthy
-        
       end
     end
 
@@ -58,8 +57,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a mfhd" do
-        expect(subject.requestable[0].holding).to be_truthy
+        expect(subject.requestable[0].holding).to be_truthy 
         expect(subject.requestable[0].holding).to eq("8805567")
+      end
+
+      it "has location data" do
+        expect(subject.requestable[0].location).to be_truthy
+      end
+    end
+
+    describe "#load_locations" do
+      it "provides a list of location data" do
+        expect(subject.locations.size).to eq(1)
+        expect(subject.locations.key? 'ues').to be_truthy
       end
     end
 
@@ -100,6 +110,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].holding).to be_truthy
         expect(subject.requestable[0].holding).to eq("2056183")
       end
+
+      it "has location data" do
+        expect(subject.requestable[0].location).to be_truthy
+      end
     end
       
   end
@@ -121,6 +135,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(98)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "has location data" do
+        expect(subject.requestable[0].location).to be_truthy
       end
 
       it "has a collection of mfhds" do
@@ -148,6 +166,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
+      it "has location data" do
+        expect(subject.requestable[0].location).to be_truthy
+      end
+
       it "has a collection of mfhds" do
         expect(subject.holdings.size).to eq(1)
       end
@@ -170,6 +192,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(9)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "has location data" do
+        expect(subject.requestable[0].location).to be_truthy
       end
 
       it "has a collection of mfhds" do

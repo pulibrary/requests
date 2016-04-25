@@ -18,6 +18,7 @@ module Requests
       @user = params[:user]
       solr_response = solr_doc(@system_id)
       @doc = parse_blacklight_solr_response(solr_response) # load the solr doc
+      @locations = load_locations
       @items = load_items # hash of item data if nil only holdings level data available
     end
 
@@ -34,11 +35,16 @@ module Requests
         @items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
-              params = build_requestable_params({item: item, holding: holding_id})
+              params = build_requestable_params(
+                { item: item, 
+                  holding: holding_id, 
+                  location: @locations[self.holdings[holding_id]["location_code"]]
+                } 
+              )
               requestable_items << Requests::Requestable.new(params)
             end
           else
-            params = build_requestable_params({holding: holding_id})
+            params = build_requestable_params({holding: holding_id, location: @locations[self.holdings[holding_id]["location_code"]] } )
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -46,11 +52,18 @@ module Requests
       else
         unless self.doc[:holdings_1display].nil?
           requestable_items = []
-          params = build_requestable_params({ holding: @mfhd})
-          requestable_items << Requests::Requestable.new(params)
+          if @mfhd
+            params = build_requestable_params({ holding: @mfhd, location: @locations[self.holdings[@mfhd]["location_code"]]} )
+            requestable_items << Requests::Requestable.new(params)
+          else
+            self.holdings.each do |holding_id, holding_details|
+              params = build_requestable_params({ holding: @mfhd, location: @locations[self.holdings[holding_id]["location_code"]]} )
+              requestable_items << Requests::Requestable.new(params)
+            end
+          end
           requestable_items
         end
-      end 
+      end  
     end
 
     def system_id
@@ -87,20 +100,18 @@ module Requests
       JSON.parse(self.doc[:holdings_1display])
     end
 
-    def title
-      self.doc[:title_display] || "Untitled"
-    end
-
-    def locations?
-      self.doc[:location_code_s]
+    def locations
+      @locations
     end
 
     def load_locations
-      holding_locations = { }
-      self.doc[:location_code_s].each do |loc|
-        holding_locations[loc] = JSON.parse(self.location(loc)).with_indifferent_access
+      unless self.doc[:location_code_s].nil?
+        holding_locations = { }
+        self.doc[:location_code_s].each do |loc|
+          holding_locations[loc] = JSON.parse(self.location(loc)).with_indifferent_access
+        end
+        holding_locations
       end
-      holding_locations
     end
 
     # returns nil if there are no attached items
@@ -152,7 +163,8 @@ module Requests
         {
           bib: @doc,
           holding: params[:holding],
-          item: params[:item]
+          item: params[:item],
+          location: params[:location]
         }
       end
 

@@ -43,7 +43,6 @@ module Requests
         faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
-
       conn
     end
 

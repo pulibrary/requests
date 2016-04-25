@@ -4468,4 +4468,332 @@ http_interactions:
         46, no. 3-4","chron":"1984","item_sequence_number":54,"status_date":"2005-03-30T15:10:54.000-04:00","barcode":"32101055804981"}]'
     http_version: 
   recorded_at: Mon, 25 Apr 2016 19:21:00 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/ex.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Apr 2016 21:22:15 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - da40439c-3cce-4ff4-bacf-9f515b87f507
+      X-Runtime:
+      - '0.024245'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c536206de949549b54f3b52b85e70ff0"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Rare Books","code":"ex","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Rare
+        Books and Special Collections","code":"rare"},"hours_location":{"label":"Firestone
+        Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[{"label":"Firestone
+        Library, Rare Books \u0026 Special Collections Reading Room","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Mon, 25 Apr 2016 21:23:49 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/f.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Apr 2016 21:22:16 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 64b07583-0ded-4465-9c23-7a2b4c4cf0e7
+      X-Runtime:
+      - '0.021741'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"a3dd3ad7e2450e78e70c2e3a97f1a24c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"f","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
+        Library","code":"firestone"},"hours_location":{"label":"Firestone Library
+        - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Mon, 25 Apr 2016 21:23:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/rcppa.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Apr 2016 21:22:16 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - eb73e70a-415b-4a11-9d08-9a630f5f3c2e
+      X-Runtime:
+      - '0.034886'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"fd9a424a8ab9560b97d6e326a8ce01cf"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"rcppa","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"ReCAP","code":"recap"},"hours_location":null,"delivery_locations":[{"label":"Plasma
+        Physics Library","address":"Forrestal Campus Princeton, NJ 08544","phone_number":"609-243-3565","contact_email":"ppllib@princeton.edu","gfa_pickup":"PQ","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Architecture
+        Library","address":"School of Architecture Building, Second Floor Princeton,
+        NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"East
+        Asian Library","address":"Frist Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"PL","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Engineering
+        Library","address":"Friend Center for Engineering Education Princeton, NJ
+        08544","phone_number":"609-258-3200","contact_email":"englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Firestone
+        Library, Microforms","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PF","staff_only":false,"pickup_location":false,"digital_location":false},{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Mendel
+        Music Library","address":"Woolworth Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Mudd
+        Manuscript Library","address":"65 Olden Street Princeton, NJ 08544","phone_number":"609-258-6345","contact_email":"mudd@princeton.edu","gfa_pickup":"PH","staff_only":false,"pickup_location":false,"digital_location":false},{"label":"Stokes
+        Library","address":"Wallace Hall, Lower Level Princeton, NJ 08544","phone_number":"609-258-5455","contact_email":"piaprlib@princeton.edu","gfa_pickup":"PM","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Firestone
+        Library, Rare Books \u0026 Special Collections Reading Room","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false},{"label":"Lewis
+        Library","address":"Washington Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Humanities
+        Resource Center","address":"011 East Pyne Princeton, NJ 08544","phone_number":"609-258-1290","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QV","staff_only":false,"pickup_location":false,"digital_location":false},{"label":"Firestone
+        Library, Resource Sharing","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QA","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services","address":"693 Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Preservation","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services, Holdings Management","address":"One Washington Rd. Princeton, NJ
+        08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Mon, 25 Apr 2016 21:23:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/hsvc.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Apr 2016 21:22:17 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 85fe2244-74f5-462b-b811-3209bf56fac3
+      X-Runtime:
+      - '0.017890'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"0a6dd7d15e79f76cb5acbfbe6c327216"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"South East (CTSN)","code":"hsvc","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"library":{"label":"Rare
+        Books and Special Collections","code":"rare"},"hours_location":{"label":"Firestone
+        Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Mon, 25 Apr 2016 21:23:51 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/hsvr.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Apr 2016 21:22:17 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 73f09f5d-d6fc-4cfc-a461-f99c36472a0a
+      X-Runtime:
+      - '0.019006'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"7edfe11b676c5f5a4dd8217d75202106"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"South East (RB)","code":"hsvr","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"library":{"label":"Rare
+        Books and Special Collections","code":"rare"},"hours_location":{"label":"Firestone
+        Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Mon, 25 Apr 2016 21:23:52 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/mudd.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Apr 2016 21:22:18 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 928c8101-4208-4ad0-ba5d-acce8d26f300
+      X-Runtime:
+      - '0.020107'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"ac4cad6dcbcf0bbebc5086234abec6f9"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"mudd","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Mudd
+        Manuscript Library","code":"mudd"},"hours_location":{"label":"Mudd Manuscript
+        Library and University Archives","code":"mudd"},"delivery_locations":[{"label":"Mendel
+        Music Library","address":"Woolworth Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Mon, 25 Apr 2016 21:23:53 GMT
 recorded_with: VCR 3.0.1

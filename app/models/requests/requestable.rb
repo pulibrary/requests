@@ -4,11 +4,12 @@ module Requests
     attr_reader :bib
     attr_reader :holding
     attr_reader :item
+    attr_reader :location
 
     def initialize(params)
       @bib = params[:bib] # has of bib values
       @holding = params[:holding] || nil # hash of holding values
-      #@location = params[:location] || nil # hash of location matrix data
+      @location = params[:location] || nil # hash of location matrix data
       @item = params[:item] || nil # hash of item values
     end
 

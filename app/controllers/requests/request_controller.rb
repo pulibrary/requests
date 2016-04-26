@@ -10,6 +10,7 @@ module Requests
 
     def generate
       @id = sanitize(params[:system_id])
+      @mfhd = santize(params[:mfhd])
       @request = Requests::Request.new(@id)
       flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
       logger.info "Holdings #{@request.holdings}"
@@ -30,7 +31,7 @@ module Requests
 
       # trusted params
       def request_params
-        params.require(:request).permit(:id, :system_id, :request).permit!
+        params.require(:request).permit(:id, :system_id, :mfhd, :request).permit!
       end
   end
 end

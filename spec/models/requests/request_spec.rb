@@ -202,8 +202,34 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.holdings.size).to eq(9)
       end
     end
+  end
 
+  context "A system id that has a holding with items in a temporary location" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) { 
+      {
+        system_id: '6195942',
+        user: user
+      }
+    }
+    let(:request_with_items_at_temp_locations) { described_class.new(params) }
+    subject { request_with_items_at_temp_locations }
 
+    describe "#requestable" do
+      it "should have a list of requestable objects" do
+        expect(subject.requestable).to be_truthy
+        expect(subject.requestable.size).to eq(7)
+        expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "should have location data that reflects an item's temporary location" do
+        expect(subject.requestable.first.location["code"]).to eq('scires')
+      end
+
+      it "should location data that uses a permenant location when no temporary code is specified" do
+        expect(subject.requestable.last.location["code"]).to eq('sci')
+      end
+    end
   end
 
   context "a system_id with no holdings or items" do
@@ -240,6 +266,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(1)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "should not have a Voyager location" do
+        expect(subject.requestable[0].holding).to eq('thesis')
+        expect(subject.requestable[0].location.key? 'code').to be_truthy
       end
     end
 

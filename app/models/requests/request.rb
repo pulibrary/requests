@@ -72,10 +72,10 @@ module Requests
       end  
     end
 
-    def route
+    def route_requestable
       routed_requests = []
       self.requestable.each do |requestable|
-        routed_requests << Requests::Router(requestable, @user)
+        routed_requests << Requests::Router.new(requestable, @user)
       end
       routed_requests
     end

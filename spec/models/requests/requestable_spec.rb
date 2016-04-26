@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Requestable do
+describe Requests::Requestable, vcr: { cassette_name: 'requestable_models', record: :new_episodes } do do
 
   describe "as a bibliographic record from voyager, a print holding, and an item record" do
     let(:params) { { bib: { id: 1 }, holding: { id: 2 }, item: { id: 3, barcode: 12133 }, location: {} } }

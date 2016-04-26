@@ -72,6 +72,14 @@ module Requests
       end  
     end
 
+    def route
+      routed_requests = []
+      self.requestable.each do |requestable|
+        routed_requests << Requests::Router(requestable, @user)
+      end
+      routed_requests
+    end
+
     def system_id
       @system_id
     end

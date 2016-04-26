@@ -8,8 +8,12 @@ describe Requests::RequestController, type: :routing do
       expect(get: '/').to route_to('requests/request#index')
     end
  
-    it 'routes to request form #magic_request' do
+    it 'generates a request form via #generate' do
       expect(get: '/1235').to route_to('requests/request#generate', system_id: '1235')
+    end
+
+    it 'generates a request form for a specific mfhd via #generate' do
+      expect(get: '/1235?mfhd=1234').to route_to('requests/request#generate', system_id: '1235', mfhd: '1234')
     end
 
     it 'submits via post to #submit' do

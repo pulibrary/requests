@@ -12,7 +12,6 @@ module Requests
     # @option opts [Fixnum] :mfhd 
     # @option opts [User] :user current user object                                                    
     def initialize(params)
-
       @system_id = params[:system_id]
       @mfhd = params[:mfhd]
       @user = params[:user]

@@ -27,18 +27,21 @@ module Requests
     end
 
     ### builds a list of possible requestable items
-    ## Do we want to this to return an empty array or 
-    ## should return a hash grouped by mfhd
+    # returns a collection of requestable objects or nil
     def requestable
       if !@items.nil?
         requestable_items = []
         @items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
+              unless @locations.key? item_current_location(item)
+                @locations[item_current_location(item)] = JSON.parse(self.location(item_current_location(item))).with_indifferent_access
+              end
               params = build_requestable_params(
-                { item: item, 
+                { 
+                  item: item, 
                   holding: holding_id, 
-                  location: @locations[self.holdings[holding_id]["location_code"]]
+                  location: @locations[item_current_location(item)]
                 } 
               )
               requestable_items << Requests::Requestable.new(params)
@@ -54,6 +57,9 @@ module Requests
           requestable_items = []
           if @mfhd
             params = build_requestable_params({ holding: @mfhd, location: @locations[self.holdings[@mfhd]["location_code"]]} )
+            requestable_items << Requests::Requestable.new(params)
+          elsif (self.thesis?)
+            params = build_requestable_params({ holding: 'thesis', location: @locations[self.holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             self.holdings.each do |holding_id, holding_details|
@@ -174,6 +180,10 @@ module Requests
           items_with_symbols << item.with_indifferent_access
         end
         items_with_symbols
+      end
+
+      def item_current_location(item) 
+        item['temp_location'] || item['perm_location']
       end
   end
 end

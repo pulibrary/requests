@@ -4,6 +4,7 @@ module Requests
     def initialize(requestable, user)
       @requestable = requestable
       @user = user
+      @services = self.calculate_services
     end
 
     # Possible Services

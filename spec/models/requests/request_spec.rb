@@ -85,6 +85,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.thesis?).to be_falsy
       end
     end
+
+    describe "#route_requestable" do
+      it "Returns a list of requestable routed items" do
+        expect(subject.route_requestable.size).to eq(1)
+        expect(subject.route_requestable[0].services).to be_truthy
+      end
+    end 
   end
 
   context "with a system_id and a mfhd that only has a holding record" do

@@ -34,7 +34,6 @@ module Requests
       @services
     end
 
-
     private
 
     # From Tampakis

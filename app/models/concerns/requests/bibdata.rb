@@ -5,36 +5,31 @@ module Requests
     
     def solr_doc(system_id)
       response = Faraday.get "#{Requests.config[:pulsearch_base]}/catalog/#{system_id}.json"
-      response.body
-    end
-
-    def marc_record(system_id)
-      response = bibdata_conn.get "/bibliographic/#{system_id}"
-      response.body
-    end
-
-    def items(system_id)
-      response = bibdata_conn.get "/bibliographic/#{system_id}/items"
-      if response.status == 200
-        response.body
+      if (response = parse_response(response)).empty?
+        response
+      else
+        response[:response][:document]
       end
     end
 
-    def items_by_mfhd(mfh_id)
-      response = bibdata_conn.get "/holdings/#{mfh_id}/items"
-      if response.status == 200
-        response.body
-      end
+    def items_by_bib(system_id)
+      response = bibdata_conn.get "/availability?id=#{system_id}"
+      parse_response(response)
     end
 
-    def location(location_code)
+    def items_by_mfhd(mfhd_id)
+      response = bibdata_conn.get "/availability?mfhd=#{mfhd_id}"
+      parse_response(response)
+    end
+
+    def get_location(location_code)
       response = bibdata_conn.get "/locations/holding_locations/#{location_code}.json"
-      response.body
+      parse_response(response)
     end
 
     def patron(patron_id)
       response = bibdata_conn.get "/patron/#{patron_id}"
-      response.body
+      parse_response(response)
     end
 
     def bibdata_conn
@@ -46,13 +41,13 @@ module Requests
       conn
     end
 
-    def parse_blacklight_solr_response(solr_response)
-      solr_doc = parse_json(solr_response)
-      solr_doc[:response][:document]
+    def parse_response(response)
+      parsed = response.status == 200 ? parse_json(response.body) : {}
+      parsed.class == Hash ? parsed.with_indifferent_access : parsed
     end
 
     def parse_json(data)
-      JSON.parse(data).with_indifferent_access
+      JSON.parse(data)
     end
     
   end

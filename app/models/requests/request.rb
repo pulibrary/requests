@@ -15,8 +15,7 @@ module Requests
       @system_id = params[:system_id]
       @mfhd = params[:mfhd]
       @user = params[:user]
-      solr_response = solr_doc(@system_id)
-      @doc = parse_blacklight_solr_response(solr_response) # load the solr doc
+      @doc = solr_doc(@system_id)
       @locations = load_locations
       @items = load_items # hash of item data if nil only holdings level data available
     end
@@ -33,36 +32,37 @@ module Requests
         @items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
-              unless @locations.key? item_current_location(item)
-                @locations[item_current_location(item)] = JSON.parse(self.location(item_current_location(item))).with_indifferent_access
+              item_loc = item_current_location(item)
+              unless @locations.key? item_loc
+                @locations[item_loc] = get_location(item_loc)
               end
               params = build_requestable_params(
                 { 
                   item: item, 
-                  holding: { "#{holding_id.to_sym}": self.holdings[holding_id] }, 
-                  location: @locations[item_current_location(item)]
+                  holding: { "#{holding_id.to_sym}": holdings[holding_id] },
+                  location: @locations[item_loc]
                 } 
               )
               requestable_items << Requests::Requestable.new(params)
             end
           else
-            params = build_requestable_params({holding: { "#{holding_id.to_sym}": self.holdings[holding_id] }, location: @locations[self.holdings[holding_id]["location_code"]] } )
+            params = build_requestable_params({holding: { "#{holding_id.to_sym}": holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
             requestable_items << Requests::Requestable.new(params)
           end
         end
         requestable_items
       else
-        unless self.doc[:holdings_1display].nil?
+        unless doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}": self.holdings[@mfhd] }, location: @locations[self.holdings[@mfhd]["location_code"]]} )
+            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}": holdings[@mfhd] }, location: @locations[holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
-          elsif (self.thesis?)
-            params = build_requestable_params({ holding: { thesis: {} }, location: @locations[self.holdings['thesis']["location_code"]]} )
+          elsif (thesis?)
+            params = build_requestable_params({ holding: { thesis: {} }, location: @locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
-            self.holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: { "#{holding_id.to_sym}": self.holdings[holding_id] }, location: @locations[self.holdings[holding_id]["location_code"]] } )
+            holdings.each do |holding_id, holding_details|
+              params = build_requestable_params({ holding: { "#{holding_id.to_sym}": holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
               requestable_items << Requests::Requestable.new(params)
             end
           end
@@ -73,7 +73,7 @@ module Requests
 
     def route_requestable
       routed_requests = []
-      self.requestable.each do |requestable|
+      requestable.each do |requestable|
         routed_requests << Requests::Router.new(requestable, @user)
       end
       routed_requests
@@ -84,16 +84,16 @@ module Requests
     end
 
     def serial?
-      self.doc[:format] == 'Journal'
+      doc[:format] == 'Journal'
     end
 
     def available?
-      self.items(@system_id)
+      items_by_bib(@system_id)
     end
 
     # def on_order?
     #   unless @items?
-    #     JSON.parse(self.items(@system_id)).has_key? "order"
+    #     JSON.parse(items_by_bib(@system_id)).has_key? "order"
     #   end
     # end
 
@@ -106,11 +106,11 @@ module Requests
     end
 
     def holdings?
-      self.holdings
+      holdings
     end
 
     def holdings
-      JSON.parse(self.doc[:holdings_1display])
+      JSON.parse(doc[:holdings_1display] || '{}')
     end
 
     def locations
@@ -118,10 +118,10 @@ module Requests
     end
 
     def load_locations
-      unless self.doc[:location_code_s].nil?
-        holding_locations = { }
-        self.doc[:location_code_s].each do |loc|
-          holding_locations[loc] = JSON.parse(self.location(loc)).with_indifferent_access
+      unless doc[:location_code_s].nil?
+        holding_locations = {}
+        doc[:location_code_s].each do |loc|
+          holding_locations[loc] = get_location(loc)
         end
         holding_locations
       end
@@ -131,31 +131,31 @@ module Requests
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd
     def load_items
-      if @mfhd
-        items_as_json = JSON.parse(self.items_by_mfhd(@mfhd))
-        unless items_as_json.size == 0
-          items_by_mfhd = {}
-          items_with_symbols = items_to_symbols(items_as_json)
-          items_by_mfhd[@mfhd] = items_with_symbols
-          items_by_mfhd
+      mfhd_items = {}
+      if !thesis?
+        if @mfhd
+          items_as_json = items_by_mfhd(@mfhd)
+          unless items_as_json.size == 0
+            items_with_symbols = items_to_symbols(items_as_json)
+            mfhd_items[@mfhd] = items_with_symbols
+          end
+        else
+          items_by_bib(@system_id).each do |holding_id, item_info|
+            items_by_holding = if item_info[:more_items] == false
+              [item_info]
+            else
+              items_to_symbols(items_by_mfhd(holding_id))
+            end
+            mfhd_items[holding_id] = items_by_holding
+          end
         end
-      elsif(self.thesis?)
-        nil
-      elsif(self.items(@system_id)) 
-        items_by_mfhd = {}
-        self.holdings.each do |holding|
-          items_by_holding = JSON.parse(self.items_by_mfhd(holding[0]))
-          items_by_mfhd[holding[0].to_s] = items_to_symbols(items_by_holding)
-        end
-        items_by_mfhd
-      else
-        nil
       end
+      mfhd_items.empty? ? nil : mfhd_items
     end
 
     def thesis?
-      unless self.doc[:holdings_1display].nil?
-        return true if parse_json(self.doc[:holdings_1display]).key?('thesis')
+      unless doc[:holdings_1display].nil?
+        return true if parse_json(doc[:holdings_1display]).key?('thesis')
       end
     end
 
@@ -164,9 +164,9 @@ module Requests
     ## Add more fields here as needed
     def display_metadata
       {
-        title: self.doc["title_citation_display"],
-        author: self.doc["author_citation_display"],
-        date:  self.doc["pub_date_display"]
+        title: doc["title_citation_display"],
+        author: doc["author_citation_display"],
+        date:  doc["pub_date_display"]
       }
     end
 
@@ -190,7 +190,7 @@ module Requests
       end
 
       def item_current_location(item) 
-        item['temp_location'] || item['perm_location']
+        item['temp_loc'] || item['location']
       end
   end
 end

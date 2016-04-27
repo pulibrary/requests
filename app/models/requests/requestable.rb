@@ -7,13 +7,12 @@ module Requests
     attr_reader :location
 
     def initialize(params)
-      @bib = params[:bib] # has of bib values
-      @holding = params[:holding] || nil # hash of holding values
-      @location = params[:location] || nil # hash of location matrix data
-      @item = params[:item] || nil # hash of item values
+      @bib = params[:bib] # hash of bibliographic data
+      @holding = params[:holding] # hash of holding data
+      @item = params[:item] # hash of item data
+      @location = params[:location] # hash of location matrix data
     end
 
-    #from tampakis
     def type
       if @item
         'item'
@@ -58,17 +57,5 @@ module Requests
     def borrow_direct_eligible?
       return true if @bib[:format] == 'Book' && !self.aeon?
     end
-
-    # private
-    # #from tampakis
-    # def get_location_code
-    #   if type == 'item'
-    #     @item['temp_loc'] || @item['location']
-    #   elsif type == 'holding'
-    #     @holding['location_code']
-    #   else
-    #     @bib['location_code_s']
-    #   end
-    # end
   end
 end

@@ -58,7 +58,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a mfhd" do
         expect(subject.requestable[0].holding).to be_truthy 
-        expect(subject.requestable[0].holding).to eq("8805567")
+        expect(subject.requestable[0].holding.key? :"8805567").to be_truthy
       end
 
       it "has location data" do
@@ -115,7 +115,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a mfhd" do
         expect(subject.requestable[0].holding).to be_truthy
-        expect(subject.requestable[0].holding).to eq("2056183")
+        expect(subject.requestable[0].holding.key? :"2056183").to be_truthy
       end
 
       it "has location data" do
@@ -276,7 +276,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "should not have a Voyager location" do
-        expect(subject.requestable[0].holding).to eq('thesis')
+        expect(subject.requestable[0].holding.key? :thesis).to be_truthy
         expect(subject.requestable[0].location.key? 'code').to be_truthy
         expect(subject.requestable[0].location['code']).to eq ('mudd')
       end

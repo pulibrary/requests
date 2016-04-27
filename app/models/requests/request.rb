@@ -39,14 +39,14 @@ module Requests
               params = build_requestable_params(
                 { 
                   item: item, 
-                  holding: holding_id, 
+                  holding: { "#{holding_id.to_sym}": self.holdings[holding_id] }, 
                   location: @locations[item_current_location(item)]
                 } 
               )
               requestable_items << Requests::Requestable.new(params)
             end
           else
-            params = build_requestable_params({holding: holding_id, location: @locations[self.holdings[holding_id]["location_code"]] } )
+            params = build_requestable_params({holding: { "#{holding_id.to_sym}": self.holdings[holding_id] }, location: @locations[self.holdings[holding_id]["location_code"]] } )
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -55,14 +55,14 @@ module Requests
         unless self.doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: @mfhd, location: @locations[self.holdings[@mfhd]["location_code"]]} )
+            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}": self.holdings[@mfhd] }, location: @locations[self.holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (self.thesis?)
-            params = build_requestable_params({ holding: 'thesis', location: @locations[self.holdings['thesis']["location_code"]]} )
+            params = build_requestable_params({ holding: { thesis: {} }, location: @locations[self.holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             self.holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: @mfhd, location: @locations[self.holdings[holding_id]["location_code"]]} )
+              params = build_requestable_params({ holding: { "#{holding_id.to_sym}": self.holdings[holding_id] }, location: @locations[self.holdings[holding_id]["location_code"]] } )
               requestable_items << Requests::Requestable.new(params)
             end
           end

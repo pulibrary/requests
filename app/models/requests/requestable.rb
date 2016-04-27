@@ -13,7 +13,16 @@ module Requests
       @item = params[:item] || nil # hash of item values
     end
 
-    def 
+    #from tampakis
+    def type
+      if @item
+        'item'
+      elsif @holding
+        'holding'
+      else
+        'bib'
+      end
+    end
 
     def location_code
       @holding[:location_code]
@@ -24,21 +33,42 @@ module Requests
     end
 
     def aeon?
+      return true if @location[:aeon_location] == true  
     end
 
-    def available?
+    def accessible?
+      return true if @location[:open] == true
+    end
+
+    def requestable?
+      return true if @location[:requestable] == true
+    end
+
+    def recap?
+      return true if @location[:library][:code] == 'recap'
     end
 
     def item?
       @item
     end
+
     # This should a property of requestable. The Router can invoke this test when it looks
     # at item status and finds something unavailable. Need to confirm with Peter Bae if the only monographs rule holds
     # true for borrow direct. Currenly if a Record is not a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-      if @requestable.item[:status] == 'check for not available' and self.doc[:format] == 'Book'
-        return true
-      end
+      return true if @bib[:format] == 'Book' && !self.aeon?
     end
+
+    # private
+    # #from tampakis
+    # def get_location_code
+    #   if type == 'item'
+    #     @item['temp_loc'] || @item['location']
+    #   elsif type == 'holding'
+    #     @holding['location_code']
+    #   else
+    #     @bib['location_code_s']
+    #   end
+    # end
   end
 end

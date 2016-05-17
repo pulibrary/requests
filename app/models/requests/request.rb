@@ -39,14 +39,14 @@ module Requests
               params = build_requestable_params(
                 { 
                   item: item, 
-                  holding: { "#{holding_id.to_sym}": holdings[holding_id] },
+                  holding: { "#{holding_id.to_sym}" => holdings[holding_id] },
                   location: @locations[item_loc]
                 } 
               )
               requestable_items << Requests::Requestable.new(params)
             end
           else
-            params = build_requestable_params({holding: { "#{holding_id.to_sym}": holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
+            params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -55,14 +55,14 @@ module Requests
         unless doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}": holdings[@mfhd] }, location: @locations[holdings[@mfhd]["location_code"]]} )
+            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: @locations[holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (thesis?)
             params = build_requestable_params({ holding: { thesis: {} }, location: @locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: { "#{holding_id.to_sym}": holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
+              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
               requestable_items << Requests::Requestable.new(params)
             end
           end

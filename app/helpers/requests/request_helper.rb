@@ -9,7 +9,7 @@ module Requests
       if !current_user.nil? && current_user.provider == 'cas'
         I18n.t('requests.account.pul_auth', current_user_name: current_user.uid)
       elsif !current_user.nil?
-        binding.pry
+        #binding.pry
         I18n.t('requests.account.guest', current_user_name: current_user.uid)
       else
         I18n.t('requests.account.unauthenticated')

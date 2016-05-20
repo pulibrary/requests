@@ -36,14 +36,6 @@ module Requests
 
     private
 
-    # From Tampakis
-    def unavailable_statuses
-      ['Charged', 'Renewed', 'Overdue', 'On hold', 'In transit',
-       'In transit on hold', 'At bindery', 'Remote storage request',
-       'Hold request', 'Recall request', 'Missing', 'Lost--library applied',
-       'Lost--system applied', 'Claims returned', 'Withdrawn']
-    end
-
     ## Behave differently if provider is cas, voyager, or access
     ## cas - access to all services
     ## voyager - no access to ill/borrow direct

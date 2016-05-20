@@ -54,7 +54,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable_models', reco
     let(:subject) { described_class.new(params) }
 
     it "has params needed for a Valid OpenURL" do
-      binding.pry
       expect(subject.title).to eq('foo')
     end
 

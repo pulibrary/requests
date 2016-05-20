@@ -58,7 +58,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a mfhd" do
         expect(subject.requestable[0].holding).to be_truthy 
-        expect(subject.requestable[0].holding.key? :"8805567").to be_truthy
+        expect(subject.requestable[0].holding.key? "8805567").to be_truthy
       end
 
       it "has location data" do
@@ -115,7 +115,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a mfhd" do
         expect(subject.requestable[0].holding).to be_truthy
-        expect(subject.requestable[0].holding.key? :"2056183").to be_truthy
+        expect(subject.requestable[0].holding.key? "2056183").to be_truthy
       end
 
       it "has location data" do
@@ -288,6 +288,121 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context "When passed an ID for a paging location within allowed call number range" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4472547',
+        user: user
+      }
+    }
+    let(:request_at_paging_charged) { described_class.new(params) }
+    subject { request_at_paging_charged }
+    describe "#requestable" do
+      it "should be unavailable" do
+        expect(subject.requestable[0].location['code']).to eq('nec')
+        expect(subject.requestable[0].pageable?).to be_truthy
+      end
+    end
+  end
+
+  context "When passed an ID for a paging location outside of call number range" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2937003',
+        user: user
+      }
+    }
+    let(:request_at_paging_outside) { described_class.new(params) }
+    subject { request_at_paging_outside }
+    
+    describe "#requestable" do
+      it "should be unavailable" do
+        expect(subject.requestable[0].location['code']).to eq('nec')
+        expect(subject.requestable[0].pageable?).to be_nil
+      end
+    end
+  end
+
+  context "When passed an ID for a paging location outside of call number range" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2942771',
+        user: user
+      }
+    }
+    let(:request_at_paging_nec_multiple) { described_class.new(params) }
+    subject { request_at_paging_nec_multiple }
+    
+    describe "#requestable" do
+      it "should be unavailable" do
+        expect(subject.requestable[0].location['code']).to eq('nec')
+        expect(subject.requestable[0].pageable?).to eq(true)
+      end
+    end
+  end
+
+  context "When passed an ID for a paging location outside of call number range" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4340413',
+        user: user
+      }
+    }
+    let(:request_at_paging_f) { described_class.new(params) }
+    subject { request_at_paging_f }
+    
+    describe "#pageable?" do
+      it "should be be false" do
+        expect(subject.requestable[0].location['code']).to eq('f')
+        expect(subject.requestable[0].pageable?).to be_nil
+      end
+    end
+  end
+  # 6009363 returned
+  context "When passed an ID for a paging location with a call in a range" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '6009363',
+        user: user
+      }
+    }
+    let(:request_at_paging_f) { described_class.new(params) }
+    subject { request_at_paging_f }
+    
+    describe "#requestable" do
+      it "should be unavailable" do
+        expect(subject.requestable[0].location['code']).to eq('f')
+        expect(subject.requestable[0].pageable?).to eq(true)
+      end
+    end
+  end
+
+  # from the A range in "f" 
+  context "When passed an ID for a paging location outside of call number range" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9545726',
+        user: user
+      }
+    }
+    let(:request_at_paging_f) { described_class.new(params) }
+    subject { request_at_paging_f }
+    
+    describe "#requestable" do
+      it "should be unavailable" do
+        expect(subject.requestable[0].location['code']).to eq('f')
+        expect(subject.requestable[0].pageable?).to eq(true)
+      end
+    end
+  end
+
   ## TODO
   ## Add context for Visuals when available
   ## Add context for EAD when available

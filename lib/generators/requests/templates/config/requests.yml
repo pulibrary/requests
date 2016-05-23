@@ -3,7 +3,7 @@
 defaults: &defaults
   umlaut_base: https://getit.princeton.edu
   bibdata_base: https://bibdata.princeton.edu
-  pulsearch_base: https://pulsearch-dev.princeton.edu
+  pulsearch_base: https://pulsearch.princeton.edu
   proxy_base: https://library.princeton.edu/resolve/lookup?url=
   stackmap_base: https://library.princeton.edu/utils/map
   voyager_api_base: http://catalog.princeton.edu:7014
@@ -15,7 +15,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  bibdata_base: http://localhost:3000
+  #bibdata_base: http://localhost:3000
 
 test:
   <<: *defaults

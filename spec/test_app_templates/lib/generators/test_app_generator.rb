@@ -1,6 +1,8 @@
 require 'rails/generators'
+require 'rails/generators/migration'
 
 class TestAppGenerator < Rails::Generators::Base
+  include Rails::Generators::Migration
   source_root "../../spec/test_app_templates"
 
   # if you need to generate any additional configuration
@@ -8,7 +10,7 @@ class TestAppGenerator < Rails::Generators::Base
   # after setting up the application
 
   def install_engine
-    generate 'requests:install'
+    generate 'requests:install --devise'
   end
 
   def add_gems
@@ -33,4 +35,5 @@ class TestAppGenerator < Rails::Generators::Base
     rake "db:migrate"
     rake "db:migrate RAILS_ENV=test"
   end
+
 end

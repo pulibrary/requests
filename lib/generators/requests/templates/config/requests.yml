@@ -12,6 +12,10 @@ defaults: &defaults
   annex_email: blahannex@princeton.edu
   circulation_email: blahcirc@princeton.edu
   reply_to_email: blahhelpme@princeton.edu
+  paging:
+    email:
+      - 'fstpaging@princeton.edu'
+      - 'wange@princeton.edu'
 
 development:
   <<: *defaults

@@ -4,6 +4,10 @@ require 'faraday'
 module Requests
   class Request
     attr_accessor :system_id
+    attr_accessor :f_name
+    attr_accessor :l_name
+    attr_accessor :email
+    attr_accessor :user_barcode
 
     include BorrowDirect
     include Requests::Bibdata
@@ -50,7 +54,7 @@ module Requests
             requestable_items << Requests::Requestable.new(params)
           end
         end
-        requestable_items
+        route_requests(requestable_items)
       else
         unless doc[:holdings_1display].nil?
           requestable_items = []
@@ -60,21 +64,43 @@ module Requests
           elsif (thesis?)
             params = build_requestable_params({ holding: { thesis: {} }, location: @locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
+          elsif (visuals?)
+            params = build_requestable_params({ holding: { visuals: {} }, location: @locations[holdings['visuals']["location_code"]]} )
+            requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
               params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
               requestable_items << Requests::Requestable.new(params)
             end
           end
-          requestable_items
+          route_requests(requestable_items)
         end
       end  
     end
 
-    def route_requestable
-      routed_requests = []
+    def has_requestable?
+      return true if requestable.size > 0
+    end
+
+    # returns an array of requestable hashes of  grouped under a common mfhd
+    def sorted_requestable
+      sorted = { }
       requestable.each do |requestable|
-        routed_requests << Requests::Router.new(requestable, @user)
+        mfhd = requestable.holding.keys[0]
+        if sorted.key? mfhd
+          sorted[mfhd] << requestable
+        else
+          sorted[mfhd] = [ requestable ]
+        end
+      end
+      sorted
+    end
+
+    def route_requests(requestable_items)
+      routed_requests = []
+      requestable_items.each do |requestable|
+        router = Requests::Router.new(requestable, @user)
+        routed_requests << router.routed_request
       end
       routed_requests
     end
@@ -159,6 +185,12 @@ module Requests
       end
     end
 
+    def visuals?
+      unless doc[:holdings_1display].nil?
+        return true if parse_json(doc[:holdings_1display]).key?('visuals')
+      end
+    end
+
     # returns basic metadata for display on the request from via solr_doc values
     # Fields to return all keys are arrays
     ## Add more fields here as needed
@@ -174,7 +206,7 @@ module Requests
       # defaults come 
       def build_requestable_params(params)
         {
-          bib: @doc,
+          bib: { id: @doc['id'] },
           holding: params[:holding],
           item: params[:item],
           location: params[:location]

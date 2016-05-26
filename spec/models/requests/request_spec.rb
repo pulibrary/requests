@@ -85,13 +85,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.thesis?).to be_falsy
       end
     end
-
-    describe "#route_requestable" do
-      it "Returns a list of requestable routed items" do
-        expect(subject.route_requestable.size).to eq(1)
-        expect(subject.route_requestable[0].services).to be_truthy
-      end
-    end 
   end
 
   context "with a system_id and a mfhd that only has a holding record" do
@@ -150,6 +143,20 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a collection of mfhds" do
         expect(subject.holdings.size).to eq(2)
+      end
+    end
+
+    describe "#sorted_requestable" do
+      it "returns a list of requestable objects grouped by mfhd" do
+        expect(subject.sorted_requestable.size).to eq(2)
+      end
+
+      it "assigns items to the correct mfhd" do
+        subject.sorted_requestable.each do |key, items| 
+          items.each do |item|
+            expect(item.holding.keys.first).to eq(key)
+          end
+        end
       end
     end
 
@@ -279,12 +286,75 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].holding.key? :thesis).to be_truthy
         expect(subject.requestable[0].location.key? 'code').to be_truthy
         expect(subject.requestable[0].location['code']).to eq ('mudd')
+        expect(subject.requestable[0].voyager_managed?).to be_nil
       end
     end
 
     describe "#thesis?" do
       it "should identify itself as a thesis request" do
         expect(subject.thesis?).to be_truthy
+      end
+    end
+
+    describe "#sorted_requestable" do
+      it "returns a list of requestable objects grouped by mfhd" do
+        expect(subject.sorted_requestable.size).to eq(1)
+      end
+
+      it "assigns items to the correct mfhd" do
+        subject.sorted_requestable.each do |key, items| 
+          items.each do |item|
+            expect(item.holding.keys.first).to eq(key)
+          end
+        end
+      end
+    end
+  end
+
+
+  context "When passed a system_id for a visuals record" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) { 
+      {
+        system_id: 'visuals45246',
+        user: user
+      }
+    }
+    let(:request_with_only_system_id) { described_class.new(params) }
+    subject { request_with_only_system_id }
+
+    describe "#requestable" do
+      it "has a list of request objects" do
+        expect(subject.requestable).to be_truthy
+        expect(subject.requestable.size).to eq(1)
+        expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "should not have a Voyager location" do
+        expect(subject.requestable[0].holding.key? :visuals).to be_truthy
+        expect(subject.requestable[0].location.key? 'code').to be_truthy
+        expect(subject.requestable[0].location['code']).to eq ('ga')
+        expect(subject.requestable[0].voyager_managed?).to be_nil
+      end
+    end
+
+    describe "#visuals?" do
+      it "should identify itself as a visuals request" do
+        expect(subject.visuals?).to be_truthy
+      end
+    end
+
+    describe "#sorted_requestable" do
+      it "returns a list of requestable objects grouped by mfhd" do
+        expect(subject.sorted_requestable.size).to eq(1)
+      end
+
+      it "assigns items to the correct mfhd" do
+        subject.sorted_requestable.each do |key, items| 
+          items.each do |item|
+            expect(item.holding.keys.first).to eq(key)
+          end
+        end
       end
     end
   end
@@ -379,6 +449,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
         expect(subject.requestable[0].pageable?).to eq(true)
+        binding.pry
+        expect(subject.requestable[0].pickup_locations.size).to eq(1)
       end
     end
   end
@@ -399,10 +471,36 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
         expect(subject.requestable[0].pageable?).to eq(true)
+        expect(subject.requestable[0].voyager_managed?).to eq(true)
       end
     end
   end
 
+  context "When passed an ID for an On Order Title" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9602549',
+        user: user
+      }
+    }
+    let(:request_with_on_order) { described_class.new(params) }
+    subject { request_with_on_order }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should have a requestable on order item" do
+        expect(subject.requestable[0].services.include?('on_order')).to be_truthy
+      end
+
+      it "should have a requestable on order item" do
+        expect(subject.requestable[0].voyager_managed?).to eq(true)
+      end
+    end
+  end
   ## TODO
   ## Add context for Visuals when available
   ## Add context for EAD when available

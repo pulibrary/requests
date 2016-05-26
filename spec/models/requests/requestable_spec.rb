@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Requestable, vcr: { cassette_name: 'requestable_models', record: :new_episodes } do
+describe Requests::Requestable do #, vcr: { cassette_name: 'requestable_models', record: :new_episodes } do
 
   describe "as bibliographic record from voyager stored at recap that has an item record" do
   end
@@ -42,7 +42,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable_models', reco
     }
     let(:holding) {
       {
-
+        
       }
     }
     let(:bib) {
@@ -54,7 +54,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable_models', reco
     let(:subject) { described_class.new(params) }
 
     it "has params needed for a Valid OpenURL" do
-      expect(subject.title).to eq('foo')
+      expect(subject).to eq('foo')
     end
 
     it "has a summary for the holding" do
@@ -65,13 +65,13 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable_models', reco
       expect(subject.item.status).to eq ('ooo')
     end
 
-    it "identifies as a ReCAP Item" do
+    xit "identifies as a ReCAP Item" do
       expect(subject.recap?).to be_truthy
     end
   end
 
   describe "Has a bibliographic record from voyager and a print holding, but no item record" do
-    it "has no item stats" do
+    xit "has no item stats" do
     end
   end
 

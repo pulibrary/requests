@@ -1,7 +1,39 @@
-<%= form_tag('/requests/submit', method: :post, remote: true) do %>
-  <% if @request.locations? %>
-    <% if @request.holdings? %>
-          <% @request.holdings.each do |holding| %>
+<%= simple_form_for(:request, { url: '/requests/submit', method: :post, remote: true} ) do |f| %>
+  <fieldset class="form-group blacklight-feedback-hidden">
+  <label class="control-label col-sm-2" for="f_name">
+      First Name
+  </label>
+  <div class="col-sm-10">
+    <%= f.text_field :f_name, class: 'form-control', error: 'First Name' %>
+  </div>
+  </fieldset>
+  <fieldset class="form-group blacklight-feedback-hidden">
+    <label class="control-label col-sm-2" for="l_name">
+        Last Name
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :l_name, class: 'form-control', error: 'Last Name' %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group blacklight-feedback-hidden">
+    <label class="control-label col-sm-2" for="user_barcode">
+      Barcode
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :user_barcode, class: 'form-control', error: 'Barcode' %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group blacklight-feedback-hidden">
+    <label class="control-label col-sm-2" for="email">
+        Email
+    </label>
+    <div class="col-sm-10">
+      <%= f.text_field :email, class: 'form-control', error: 'Email' %>
+    </div>
+  </fieldset>
+
+  <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
+
     <div class="table-responsive">
       <table class="table table-striped table-bordered request--holding_header">
             <thead>
@@ -13,22 +45,22 @@
             </thead>
             <tbody>
               <tr>
-                <td id="holding<%= holding[0] %>">
-                  <%= holding[1][:location] %>
+                <td id="holding<%= mfhd %>">
+                  <%= @request.holdings[mfhd]["location"] %>
                 </td>
                 <td>
-                  <%= holding[1][:call_number] %>
+                  <%= @request.holdings[mfhd]["call_number"] %>
                 <td>
-                  <%= holding[1][:library] %>
+                  <%= @request.holdings[mfhd]["library"] %>
                 </td>
               </tr>
-              <% unless holding[1][:location_has].nil? %>
+              <% unless @request.holdings[mfhd]["location_has"].nil? %>
                 <tr>
                   <td>
                     <span>Location has: </span>
                   </td>
                   <td colspan="2">
-                    <% holding[1][:location_has].each do |loc| %>
+                    <% @request.holdings[mfhd]["location_has"].each do |loc| %>
                       <%= loc %><br/>
                     <% end %>
                   </td>
@@ -41,28 +73,35 @@
       <table class="table table-striped table-bordered request--available_items">
         <thead>
           <th>Select</th>
-          <th>Call Number</th>
+          <th>Enumeration</th>
           <th>Status</th>
           <th>Options</th>
           <th>Pickup Location</th>
         </thead>
         <tbody>
-                <tr>
-                  <td><%= check_box_tag "holding[#{holding[0]}]", holding[0], false, class: 'request--select' %></td>
-                  <td><%= holding[1][:call_number] %></td>
-                  <td>Available</td>
-                  <td>Recap - Arrives in One Business Day</td>
-                  <td>Pickup Location</td>
-                </tr>
+          <% requestable_list.each do |requestable| %>
+            <% unless requestable.item.nil? %>
+            <tr>
+              <td><%= check_box_tag "holding[#{mfhd}][#{requestable.item["id"]}", requestable.holding.keys[0], false, class: 'request--select' %></td>
+              <td>
+                <%= requestable.item["enum"] %>
+              </td>
+              <td><%= requestable.item["status"] %></td>
+              <td>
+                <%= service_options requestable %>
+              </td>
+              <td><%= pickup_choices requestable %></td>
+            </tr>
+            <% else %>
+              <tr>
+                <td><%= check_box_tag "holding[#{mfhd}]}", requestable.holding.keys[0], false, class: 'request--select' %></td>
+                <td></td>
+              </tr>
             <% end %>
           <% end %>
         </tbody>
       </table>
     </div>
-    <%= submit_tag "Submit", class: "btn btn-primary", data: { confirm: "Are you sure?", disable_with: "Submitting Request" } %>
-  <% else %>
-    <div class="message">
-      <p>See Circulation Desk, there are no requestable items for this record</p>
-    </div>
+    <%= f.submit "Submit", class: "btn btn-primary", data: { confirm: "Are you sure?", disable_with: "Submitting Request" } %>
   <% end %>
 <% end %>

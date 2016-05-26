@@ -7,6 +7,8 @@ module Requests
     attr_reader :holding
     attr_reader :item
     attr_reader :location
+    attr_reader :provider
+    attr_writer :services
 
     def initialize(params)
       @bib = params[:bib] # hash of bibliographic data
@@ -29,15 +31,20 @@ module Requests
       @holding[:location_code]
     end
 
+    # non voyager options
     def thesis?
       return true if @holding[:location_code] == 'thesis'
+    end
+
+    def visuals?
+      return true if @holding[:location_code] == 'visuals'
     end
 
     def aeon?
       return true if @location[:aeon_location] == true  
     end
 
-    def accessible?
+    def open?
       return true if @location[:open] == true
     end
 
@@ -49,8 +56,58 @@ module Requests
       return true if @location[:library][:code] == 'recap'
     end
 
+    def recap_edd?
+      return true if @location[:recap_electronic_delivery_location] == true
+    end
+
+    def annexa?
+      return true if @location[:library][:code] == 'annexa'
+    end
+
+    def annexb?
+      return true if @location[:library][:code] == 'annexb'
+    end
+
+    def circulates?
+      return true if @location[:circulates] == true
+    end
+
+    def always_requestable?
+      return true if @location[:always_requestable] == true
+    end
+
+    def in_process?
+      return true if @item['status'] == 'In Process'
+    end
+
+    def on_order?
+      return true if @item['status'].starts_with?('On-Order')
+    end
+
     def item?
       @item
+    end
+
+    def services
+      @services
+    end
+
+    def voyager_managed?
+      return true if @bib[:id].to_i > 0
+    end
+
+    def online?
+      return true if @location[:library][:code] == 'online'
+    end
+
+    def charged?
+      if(item?)
+        if(unavailable_statuses.include?(@item["status"]))
+          return true
+        else
+          nil
+        end
+      end
     end
 
     def pageable?
@@ -66,6 +123,12 @@ module Requests
       return true if @bib[:format] == 'Book' && !self.aeon?
     end
 
+    def pickup_locations
+      if @location[:delivery_locations].size > 0
+        @location[:delivery_locations] 
+      end
+    end
+
     private
 
     def in_call_num_range(call_num, ranges)
@@ -79,7 +142,6 @@ module Requests
           return true if in_range?(call_num, start_range, end_range)
         end
       end
-      nil
     end
 
     def in_range?(call_num, start_range, end_range)
@@ -101,7 +163,7 @@ module Requests
         'nec' => nec_ranges,
         'necnc' => nec_ranges,
       }
-    end
+    end 
 
     # From Tampakis
     def unavailable_statuses

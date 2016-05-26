@@ -9,7 +9,6 @@ module Requests
     end
 
     def generate
-      request_params = { }
       request_params[:system_id] = sanitize(params[:system_id])
       unless params[:mfhd].nil?
         request_params[:mfhd] = sanitize(params[:mfhd])
@@ -17,25 +16,21 @@ module Requests
       request_params[:user] = current_user
       @request = Requests::Request.new(request_params)
       flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
-      logger.info "Holdings #{@request.holdings}"
-      logger.info "Items #{@request.items(@id)}"
     end
 
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
-      @request = params(params[:request])
+      @request = Request::Submission.new(params[:request])
+      @request.requested_items.each do |item|
+        item.send
+      end
     end
 
     private
-
-      # def set_request
-      #   @request = fetch_record(params[:system_id])
-      # end
-
       # trusted params
       def request_params
-        params.require(:request).permit(:id, :system_id, :mfhd, :request).permit!
+        params.permit(:id, :system_id, :mfhd, :f_name, :l_name, :email, :user_barcode).permit!
       end
   end
 end

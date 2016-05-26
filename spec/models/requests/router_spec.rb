@@ -5,11 +5,11 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
   context "A Princeton Community User has signed in" do
     let(:user) { FactoryGirl.create(:valid_princeton_patron) }
     describe "Online Holding" do
-      let(:params) { { system_id: 1, holding_id: 2, item_id: 3 } }
+      let(:params) { {  } }
       let(:requestable) { Requests::Requestable.new(params) }
       let(:subject) { described_class.new(requestable, user) }
       it "Returns an Online Link" do
-        expect(subject.services).to have_key?(:full_text)
+        expect(subject.services.key?(:full_text)).to be_truthy
       end
     end
 
@@ -18,7 +18,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
       let(:requestable) { Requests::Requestable.new(params) }
       let(:subject) { described_class.new(requestable, user) }
       it "Returns an Aeon Reading Room Link" do
-        expect(subject.services).to have_key?(:reading_room)
+        expect(subject.services.key?(:reading_room)).to be_truthy
       end
     end
 
@@ -45,10 +45,16 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
     describe "Annex Holding with charged item" do
     end
 
+    context "When an item is in a pageable location" do
+      describe "It has a unavilable status" do
+
+      end
+    end
+
     context "When a firestone item" do
       describe "Open Holding with item" do
         it "has a firestone locator link when a firestone item" do
-          expect(subject.services).to have_key?(:onshelf)
+          expect(subject.services.key?(:onshelf)).to be_truthy
         end
       end
     end
@@ -56,7 +62,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
     context "When a non-frestone item" do
       describe "Open Holding with item" do
         it "has a stackmap link when a firestone item" do
-          expect(subject.services).to have_key?(:onshelf)
+          expect(subject.services.key?(:onshelf)).to be_truthy
         end
       end
     end

@@ -29,7 +29,7 @@ class TestAppGenerator < Rails::Generators::Base
       %(  mount Requests::Engine, at: '/requests'\n)\
     end
   end
-
+  
   def run_migrations
     rake 'requests:install:migrations'
     rake "db:migrate"

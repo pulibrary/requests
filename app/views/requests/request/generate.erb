@@ -3,7 +3,13 @@
     <h1>Request <%= @request.display_metadata[:title] %></h1>
     <p><%= current_user_status %></p>
   </div>
+  <% if @request.has_requestable? %>
   <div class="row">
     <%= render "form" %>
   </div>
+  <% else %>
+  <div class="message">
+    <p>See Circulation Desk, there are no requestable items for this record</p>
+  </div>
+  <% end %>
 </div>

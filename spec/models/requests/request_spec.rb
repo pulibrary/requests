@@ -134,6 +134,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a list of request objects" do
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(98)
+        expect(subject.has_pageable?).to be_nil
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
@@ -371,6 +372,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     subject { request_at_paging_charged }
     describe "#requestable" do
       it "should be unavailable" do
+        expect(subject.has_pageable?).to be(true)
         expect(subject.requestable[0].location['code']).to eq('nec')
         expect(subject.requestable[0].pageable?).to be_truthy
       end
@@ -391,6 +393,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('nec')
+        expect(subject.has_pageable?).to be_nil
         expect(subject.requestable[0].pageable?).to be_nil
       end
     end
@@ -447,9 +450,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     
     describe "#requestable" do
       it "should be unavailable" do
+        expect(subject.has_pageable?).to be(true)
         expect(subject.requestable[0].location['code']).to eq('f')
         expect(subject.requestable[0].pageable?).to eq(true)
-        binding.pry
         expect(subject.requestable[0].pickup_locations.size).to eq(1)
       end
     end
@@ -471,6 +474,28 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
         expect(subject.requestable[0].pageable?).to eq(true)
+        expect(subject.has_pageable?).to be(true)
+        expect(subject.requestable[0].voyager_managed?).to eq(true)
+      end
+    end
+  end
+
+  context "When passed an ID for an xl paging location" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9596359',
+        user: user
+      }
+    }
+    let(:request_at_paging_f) { described_class.new(params) }
+    subject { request_at_paging_f }
+    
+    describe "#requestable" do
+      it "should be unavailable" do
+        expect(subject.requestable[0].location['code']).to eq('xl')
+        expect(subject.requestable[0].pageable?).to eq(true)
+        expect(subject.has_pageable?).to be(true)
         expect(subject.requestable[0].voyager_managed?).to eq(true)
       end
     end

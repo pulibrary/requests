@@ -62,10 +62,10 @@ module Requests
             params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: @locations[holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (thesis?)
-            params = build_requestable_params({ holding: { thesis: {} }, location: @locations[holdings['thesis']["location_code"]]} )
+            params = build_requestable_params({ holding: { "thesis" => {} }, location: @locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (visuals?)
-            params = build_requestable_params({ holding: { visuals: {} }, location: @locations[holdings['visuals']["location_code"]]} )
+            params = build_requestable_params({ holding: { "visuals" => {} }, location: @locations[holdings['visuals']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
@@ -96,6 +96,22 @@ module Requests
       sorted
     end
 
+    # Does request have any pageable items
+    def has_pageable?
+      services = []
+      requestable.each do |request|
+        request.services.each do |service|
+          services << service
+        end
+      end
+      services.uniq!
+      if services.include? 'paging'
+        return true
+      else
+        nil
+      end
+    end
+
     def route_requests(requestable_items)
       routed_requests = []
       requestable_items.each do |requestable|
@@ -117,18 +133,13 @@ module Requests
       items_by_bib(@system_id)
     end
 
-    # def on_order?
-    #   unless @items?
-    #     JSON.parse(items_by_bib(@system_id)).has_key? "order"
-    #   end
-    # end
-
     def items?
       @items
     end
 
-    def user(patron_id)
-      user = current_patron(patron_id)
+    def user
+      #user = current_patron(patron_id)
+      @user
     end
 
     def holdings?

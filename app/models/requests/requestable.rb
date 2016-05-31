@@ -120,7 +120,7 @@ module Requests
     # at item status and finds something unavailable. Need to confirm with Peter Bae if the only monographs rule holds
     # true for borrow direct. Currenly if a Record is not a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-      return true if @bib[:format] == 'Book' && !self.aeon?
+      return true if @bib[:format] == 'Book' && !aeon?
     end
 
     def pickup_locations
@@ -130,18 +130,17 @@ module Requests
     end
 
     private
-
     def in_call_num_range(call_num, ranges)
       call_num = Lcsort.normalize(call_num)
+      pageable = nil
       ranges.each do |range| 
-        if range.length == 1
-          return true if call_num.starts_with?(range[0])
-        else
-          start_range = Lcsort.normalize(range[0])
-          end_range = Lcsort.truncated_range_end(range[1])
-          return true if in_range?(call_num, start_range, end_range)
+        start_range = Lcsort.normalize(range[0])
+        end_range = Lcsort.truncated_range_end(range[1])
+        if in_range?(call_num, start_range, end_range)
+          pageable = true
         end
       end
+      pageable
     end
 
     def in_range?(call_num, start_range, end_range)
@@ -155,13 +154,16 @@ module Requests
     end
 
     def paging_ranges
-      f_ranges = [ ['A'], ['Q1', 'Z9999'] ]
-      nec_ranges = [ ['A1', 'BL9999'], ['BT1', 'DR999'], ['DT1', 'KA9999'], ['KG1', 'VM9999'] ]
+      f_ranges = [ ['A1', 'AZ9999'], ['Q1', 'Z9999'] ]
+      nec_ranges = [ ['A1', 'BL9999'], ['BT1', 'DR9999'], ['DT1', 'KA9999'], ['KG1', 'VM9999'] ]
+      xl_ranges = [ ['A1', 'Z9999'] ]
       { 
         'f' => f_ranges,
         'fnc' => f_ranges,
         'nec' => nec_ranges,
         'necnc' => nec_ranges,
+        'xl' => xl_ranges,
+        'xlnc' => xl_ranges,
       }
     end 
 
@@ -169,7 +171,7 @@ module Requests
     def unavailable_statuses
       ['Charged', 'Renewed', 'Overdue', 'On hold', 'In transit',
        'In transit on hold', 'At bindery', 'Remote storage request',
-       'Hold request', 'Recall request', 'Missing', 'Lost--library applied',
+       'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
        'Lost--system applied', 'Claims returned', 'Withdrawn']
     end
   end

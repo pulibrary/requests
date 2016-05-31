@@ -19,6 +19,10 @@ describe Requests::RequestController, type: :routing do
     it 'submits via post to #submit' do
       expect(post: '/submit').to route_to('requests/request#submit')
     end
+
+    it 'handles a #pageable arguement' do
+      expect(get: '/pageable?system_id=foo123').to route_to('requests/request#pageable', system_id: 'foo123')
+    end
   end
 end
 

@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'faraday'
   s.add_dependency 'borrow_direct', '~> 1.2.0'
   s.add_dependency 'lcsort'
+  s.add_dependency 'email_validator'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.4'

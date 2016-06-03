@@ -64,14 +64,14 @@ module Requests
       hidden = hidden_field_tag "requestable[][bibid]", "", value: "#{requestable.bib[:id]}"
       hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}"
       hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}"
+      hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}"
       unless requestable.item["barcode"].nil?
         hidden += hidden_field_tag "requestable[][barcode]", "", value: "#{requestable.item["barcode"]}"
-        hidden += hidden_field_tag "requestable[][id]", "", value: "#{requestable.item["id"]}"
       end
       unless requestable.item["enum"].nil?
         hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enum"]}"
-        hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}"
       end
+      hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}"
       hidden += hidden_field_tag "requestable[][status]", "", value: "#{requestable.item["status"]}"
       hidden
     end

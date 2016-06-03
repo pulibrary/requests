@@ -29,6 +29,12 @@ module Requests
       append_to_file '.gitignore', "\nconfig/requests.yml\n" if File.exist?('.gitignore')
     end
 
+    def inject_routes
+      inject_into_file 'config/routes.rb', after: %(Rails.application.routes.draw do\n) do
+        %(  mount Requests::Engine, at: '/requests'\n)\
+      end
+    end
+
     def generate_devise_assets
       puts "#{options.to_s}"
       if options[:devise]

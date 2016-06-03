@@ -7,15 +7,17 @@ module Requests
     def current_user_status current_user
       ## Expect that the host app can provide you a devise current_user object
       if current_user.provider == 'cas'
-        I18n.t('requests.account.pul_auth', current_user_name: current_user.uid)
+        content_tag(:dl, class: "flash_messages-user") do
+          content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
+        end
       elsif current_user.guest == true
-        #binding.pry
-        link_to I18n.t('requests.account.guest'), '/users/sign_in' #, current_user_name: current_user.uid)
+        button_to I18n.t('requests.account.guest'), '/users/auth/cas', class: 'btn btn-primary' #, current_user_name: current_user.uid)
       else
         I18n.t('requests.account.unauthenticated')
       end
     end
 
+    ### FIXME. This should come directly as a sub-property from the request object holding property.
     def render_mfhd_message requestable_list
       mfhd_services = []
       requestable_list.each do |requestable|
@@ -25,7 +27,10 @@ module Requests
       end
       mfhd_services.uniq!
       if mfhd_services.include? 'paging'
-        I18n.t('requests.paging.message')
+        content_tag(:div, class: 'flash_mesages-mfhd flash-notice') do
+          concat content_tag(:div, I18n.t('requests.paging.status').html_safe)
+          concat content_tag(:div, I18n.t('requests.paging.message').html_safe)
+        end
       end
     end
   end

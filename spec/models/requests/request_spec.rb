@@ -379,7 +379,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an ID for a paging location outside of call number range" do
+  context "When passed an ID for a paging location in nec outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
@@ -399,7 +399,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an ID for a paging location outside of call number range" do
+  context "When passed an ID for a paging location in nec  within a paging call number range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
@@ -418,7 +418,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an ID for a paging location outside of call number range" do
+  context "When passed an ID for a paging location in f outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
@@ -437,7 +437,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
   # 6009363 returned
-  context "When passed an ID for a paging location with a call in a range" do
+  context "When passed an ID for a paging location f within a call in a range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
@@ -459,7 +459,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   end
 
   # from the A range in "f" 
-  context "When passed an ID for a paging location outside of call number range" do
+  context "When passed an ID for a paging location f outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {

@@ -22,11 +22,18 @@ module Requests
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
-      # @request = Request::Submission.new(params[:request])
-      # @request.requested_items.each do |item|
-      #   item.send
-      # end
-      binding.pry
+      @submission = Requests::Submission.new(params)
+      respond_to do |format|
+        if @submission.valid?
+          service = @submission.service_type
+          if mail_services.include? service
+            Requests::RequestMailer.send("#{service}_email", @submission).deliver_now
+          end
+          format.js { flash.now[:notice] = I18n.t('requests.submit.success') } 
+        else
+          format.js { flash.now[:error] = I18n.t('requests.submit.error')}
+        end
+      end
     end
 
     # shim for pageable locations 
@@ -49,9 +56,11 @@ module Requests
     private
       # trusted params
       def request_params
-        params.permit(:id, :system_id, :mfhd, :f_name, :l_name, :email, :user_barcode, :loc_code, :user).permit!
+        params.permit(:id, :system_id, :mfhd, :f_name, :l_name, :email, :user_barcode, :loc_code, :user, :requestable).permit!
       end
 
-
+      def mail_services
+        ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
+      end
   end
 end

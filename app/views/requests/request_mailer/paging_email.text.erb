@@ -1,0 +1,11 @@
+Name: <%= @submission.f_name %> <%= @submission.l_name %>
+Email: <%= @submission.email %>
+Barcode: <%= @submission.user_barcode %>
+
+===============================================
+ 
+Items to be paged
+===============================================
+<% @submission.items.each do |item| %>
+  MFHD ID: <%= item[:mfhd] %>
+<% end %>

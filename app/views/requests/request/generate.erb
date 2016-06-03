@@ -1,7 +1,8 @@
 <div class="col-md-12">
   <div class="row doc-<%= @request.system_id %>">
-    <h1>Request <%= @request.display_metadata[:title] %></h1>
+    <h1>Request Options for: <%= @request.display_metadata[:title].first %></h1>
     <p><%= current_user_status @user %></p>
+    <%= render 'flash_messages' %>
   </div>
   <% if @request.has_requestable? %>
   <div class="row">

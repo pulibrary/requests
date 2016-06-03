@@ -4,27 +4,23 @@ module Requests
   class Submission
     include ActiveModel::Validations
 
-    validates :email, presence: true, email: true, length: { maximum: 50 }, on: :submit
-    validates :f_name, presence: true, length: { maximum: 50 }, on: :submit
-    validates :l_name, presence: true, length: { maximum: 50 }, on: :submit
-    validates :user_barcode, presence: true, length: { maximum: 14 }, on: :submit
+    validates :email, presence: true, email: true, length: { minimum: 5, maximum: 50 } #, on: :submit
+    validates :user_name, presence: true, length: { minimum: 1, maximum: 50 } #, on: :submit
+    validates :user_barcode, presence: true, length: { minimum: 5, maximum: 14 } #, on: :submit
     validates :items, presence: true, length: { minimum: 1 }, on: :submit
 
     def initialize(params)
       @user = params[:request]
       @items = params[:requestable]
+      @bib = params[:bib]
     end
 
     def email
       @user[:email]
     end
 
-    def f_name
-      @user[:f_name]
-    end
-
-    def l_name
-      @user[:l_name]
+    def user_name
+      @user[:user_name]
     end
 
     def user_barcode
@@ -32,7 +28,15 @@ module Requests
     end
 
     def items
-      @items
+      @items.select do |item| 
+        unless item[:selected].nil?
+          item
+        end
+      end
+    end
+
+    def bib
+      @bib
     end
 
     def service_type

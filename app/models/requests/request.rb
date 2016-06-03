@@ -4,10 +4,9 @@ require 'faraday'
 module Requests
   class Request
     attr_accessor :system_id
-    attr_accessor :f_name
-    attr_accessor :l_name
     attr_accessor :email
     attr_accessor :user_barcode
+    attr_accessor :user_name
 
     include BorrowDirect
     include Requests::Bibdata

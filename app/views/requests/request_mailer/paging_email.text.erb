@@ -1,11 +1,29 @@
-Name: <%= @submission.f_name %> <%= @submission.l_name %>
+
+==============================================
+Patron Information
+==============================================
+
+Name: <%= @submission.user_name %>
 Email: <%= @submission.email %>
 Barcode: <%= @submission.user_barcode %>
 
 ===============================================
- 
+Bib Info
+===============================================
+<%= "Bib ID: #{@submission.bib[:id]}" %>
+
+===============================================
+Holding Info
+===============================================
+  
+
+===============================================
 Items to be paged
 ===============================================
 <% @submission.items.each do |item| %>
-  MFHD ID: <%= item[:mfhd] %>
+  <% unless item[:selected].empty? %>
+    <% item.each do |key, value| %>
+      <%= "#{key}: #{value.html_safe}" %>
+    <% end %>
+  <% end %>
 <% end %>

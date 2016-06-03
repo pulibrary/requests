@@ -1,6 +1,9 @@
 <div class="col-md-12">
   <div class="row doc-<%= @request.system_id %>">
-    <h1>Request Options for: <%= @request.display_metadata[:title].first %></h1>
+    <h1>Request Library Materials</h1> 
+    <div class="bibliographic">
+      <%= format_brief_record_display @request.display_metadata %>
+    </div>
     <p><%= current_user_status @user %></p>
     <%= render 'flash_messages' %>
   </div>
@@ -9,7 +12,7 @@
     <%= render "form" %>
   </div>
   <% else %>
-  <div class="message">
+  <div class="message flash-alert">
     <p>See Circulation Desk, there are no requestable items for this record</p>
   </div>
   <% end %>

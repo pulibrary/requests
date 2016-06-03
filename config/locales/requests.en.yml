@@ -6,9 +6,9 @@ en:
       error: "We were unable to process your request."
     paging:
       email_subject: "Firestone Library Paging Request"
-      status: "Due to construction at Firestone Library items shelved at this location need to be request and picked up at firestone library."
-      message: "Items requested from this location will be available at Firestone Library Circulation within 2 hours of scheduled paging times.  Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
+      status: "Place a retrieval request for an item which is unavailable due to construction."
+      message: "Items requested from this location will be available at Firestone Library Circulation within <b>2 hours</b> of scheduled paging times.  Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
     account:
-      guest: "Princeton Faculty, Staff, and Students Sign in to see all requests"
+      guest: "Princeton Faculty, Staff, and Students Log in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"
   

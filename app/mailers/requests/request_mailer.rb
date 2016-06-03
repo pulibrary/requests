@@ -9,5 +9,29 @@ module Requests
            cc: cc_email,
            subject: I18n.t('requests.paging.email_subject'))
     end
+
+    def annexa_email(submission)
+      @submission = submission
+    end
+
+    def annexb_email(submission)
+      @submission = submission
+    end
+
+    def on_order_email(submission)
+      @submission = submission
+    end
+
+    def in_process_email(submission)
+      @submission = submission
+    end
+
+    def recap_confirmation_email(submission)
+      @submission = submission
+    end
+
+    def recall_confirmation(submission)
+      @submission = submission
+    end
   end
 end

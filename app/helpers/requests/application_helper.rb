@@ -80,5 +80,25 @@ module Requests
       hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}"
       hidden
     end
+
+    def format_brief_record_display params
+      content_tag(:dl, class: "dl-horizontal") do
+        params.each do |key, value|
+          unless value.nil?
+            concat content_tag(:dt, "#{key}")
+            concat content_tag(:dd, "#{value.first}")
+          end
+        end
+      end
+    end
+
+    def hidden_fields_request request
+      hidden_request_tags = ''
+      hidden_request_tags += hidden_field_tag "bib[id]", "", value: request.doc[:id]
+      request.display_metadata.each do |key, value|
+        hidden_request_tags += hidden_field_tag "bib[#{key}]", "", value: value
+      end
+      hidden_request_tags.html_safe
+    end
   end
 end

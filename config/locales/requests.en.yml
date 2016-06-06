@@ -8,6 +8,11 @@ en:
       email_subject: "Firestone Library Paging Request"
       status: "Place a retrieval request for an item which is unavailable due to construction."
       message: "Items requested from this location will be available at Firestone Library Circulation within <b>2 hours</b> of scheduled paging times.  Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
+      brief_msg: "Paging Request. Will be delivered to Firestone Circulation."
+    on_shelf:
+      brief_msg: "Item on Shelf"
+    trace:
+      brief_msg: "Trace a Missing Item"
     account:
       guest: "Princeton Faculty, Staff, and Students Log in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"

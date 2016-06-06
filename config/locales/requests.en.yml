@@ -4,15 +4,23 @@ en:
     submit:
       success: "Request successfully processed. You will be notified via email when your item(s) are available."
       error: "We were unable to process your request."
+    online:
+      brief_msg: "This Item is Online"
+    annexa: 
+      brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1 business day"
+    annexb:
+      brief_msg: "Item offsite at Fine Annex. Request for delivery in 1 business day."
+    on_shelf:
+      brief_msg: "Item on Shelf. Consult shelf location map."
+    on_order: 
+      brief_msg: "Place a request to be notified when this Item has arrived and processed for use."
     paging:
       email_subject: "Firestone Library Paging Request"
       status: "Place a retrieval request for an item which is unavailable due to construction."
       message: "Items requested from this location will be available at Firestone Library Circulation within <b>2 hours</b> of scheduled paging times.  Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
-      brief_msg: "Paging Request. Will be delivered to Firestone Circulation."
-    on_shelf:
-      brief_msg: "Item on Shelf"
+      brief_msg: "Paging Request. Will be delivered to Firestone Circulation at paging schedule listed above."
     trace:
-      brief_msg: "Trace a Missing Item"
+      brief_msg: "Trace a Missing Item. You will be notified via email when located."
     account:
       guest: "Princeton Faculty, Staff, and Students Log in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"

@@ -1,6 +1,9 @@
 <div class="col-md-12">
   <div class="row doc-<%= @request.system_id %>">
-    <h1>Request Library Materials</h1> 
+    <h1>
+      <%= request_title @request %>
+    </h1> 
+    <%= render_mfhd_message @request.requestable %>
     <div class="bibliographic">
       <%= format_brief_record_display @request.display_metadata %>
     </div>

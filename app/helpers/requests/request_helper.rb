@@ -17,6 +17,14 @@ module Requests
       end
     end
 
+    def request_title request
+      if request.has_pageable?
+        "Library Paging Request"
+      else
+        "Library Material Request"
+      end
+    end
+
     ### FIXME. This should come directly as a sub-property from the request object holding property.
     def render_mfhd_message requestable_list
       mfhd_services = []

@@ -1,4 +1,4 @@
-<%= simple_form_for(:request, { url: '/requests/submit', method: :post, remote: true} ) do |f| %>
+<%= simple_form_for(:request, { url: "/requests/submit", method: :post, remote: true} ) do |f| %>
   <%= hidden_fields_request @request %>
   <% if @user.guest %>
     <h3>Your Contact Information</h3>
@@ -56,7 +56,7 @@
           <th>Enumeration</th>
           <th>Copy</th>
           <th>Status</th>
-          <th>Options</th>
+          <th>Request Options</th>
           <th>Pickup Location</th>
         </thead>
         <tbody>
@@ -74,7 +74,8 @@
                   <%= requestable.item["copy_number"] %>
                 </td>
                 <td>
-                  <%= requestable.item["status"] %>
+                  <%= requestable.item["status"] %><br/>
+                  <%= status_label requestable %>
                 </td>
               <% else %>
                 <%= hidden_fields_holding requestable %>
@@ -91,6 +92,6 @@
         </tbody>
       </table>
     </div>
-    <%= f.submit "Submit", class: "btn btn-primary", data: { disable_with: "Submitting Request" } %>
   <% end %>
+  <%= f.submit "Submit", class: "btn btn-primary", data: { disable_with: "Submitting Request" } %>
 <% end %>

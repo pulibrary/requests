@@ -11,7 +11,7 @@ module Requests
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
       elsif current_user.guest == true
-        button_to I18n.t('requests.account.guest'), '/users/auth/cas', class: 'btn btn-primary' #, current_user_name: current_user.uid)
+        button_to I18n.t('requests.account.guest'), '#{root_url}users/auth/cas', class: 'btn btn-primary' #, current_user_name: current_user.uid)
       else
         I18n.t('requests.account.unauthenticated')
       end

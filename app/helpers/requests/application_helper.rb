@@ -7,7 +7,8 @@ module Requests
     def show_service_options requestable
       content_tag(:ul, class: "service-list") do
         requestable.services.each do |service|
-          concat content_tag(:li, "#{service}", class: "service-item")
+          brief_msg = I18n.t("requests.#{service}.brief_msg")
+          concat content_tag(:li, brief_msg.html_safe, class: "service-item")
         end
       end
     end
@@ -100,5 +101,14 @@ module Requests
       end
       hidden_request_tags.html_safe
     end
+
+    def status_label requestable
+      if requestable.charged?
+        content_tag(:span, 'Not Available', class: "badge-alert")
+      else
+        content_tag(:span, 'Available', class: "badge-success")
+      end
+    end
+
   end
 end

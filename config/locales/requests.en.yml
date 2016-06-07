@@ -24,6 +24,6 @@ en:
     trace:
       brief_msg: "Trace a Missing Item. You will be notified via email when located."
     account:
-      guest: "Princeton Faculty, Staff, and Students Log in via Central Authentication Services"
+      guest: "Princeton Faculty, Staff, and Students Log to Request in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"
   

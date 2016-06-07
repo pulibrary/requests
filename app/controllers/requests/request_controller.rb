@@ -11,7 +11,6 @@ module Requests
     end
 
     def generate
-
       request_params[:system_id] = sanitize(params[:system_id])
       @title = "Request ID: #{request_params[:system_id]}"
       unless params[:mfhd].nil?

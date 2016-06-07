@@ -19,7 +19,7 @@ module Requests
 
     def request_title request
       if request.has_pageable?
-        "Library Paging Request"
+        "Paging Request"
       else
         "Library Material Request"
       end

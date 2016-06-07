@@ -86,7 +86,7 @@ module Requests
       content_tag(:dl, class: "dl-horizontal") do
         params.each do |key, value|
           unless value.nil?
-            concat content_tag(:dt, "#{key}")
+            concat content_tag(:dt, "#{display_label[key]}")
             concat content_tag(:dd, "#{value.first}")
           end
         end
@@ -105,10 +105,17 @@ module Requests
     def status_label requestable
       if requestable.charged?
         content_tag(:span, 'Not Available', class: "badge-alert")
-      else
+      else 
         content_tag(:span, 'Available', class: "badge-success")
       end
     end
 
+    def display_label
+      {
+        author: "Author/Artist:",
+        title: "Title:",
+        date: "Published/Created:"
+      }
+    end
   end
 end

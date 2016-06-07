@@ -1,7 +1,7 @@
 <%= simple_form_for(:request, { url: "/requests/submit", method: :post, remote: true} ) do |f| %>
   <%= hidden_fields_request @request %>
   <% if @user.guest %>
-    <h3>Your Contact Information</h3>
+    <h3>Contact Information</h3>
     <div class="user">
       <fieldset class="form-group">
       <label class="control-label col-sm-2" for="user_name">

@@ -18,7 +18,9 @@ en:
       email_subject: "Firestone Library Paging Request"
       status: "Place a retrieval request for an item which is unavailable due to construction."
       message: "Items requested from this location will be available at Firestone Library Circulation within <b>2 hours</b> of scheduled paging times.  Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
-      brief_msg: "Paging Request. Will be delivered to Firestone Circulation at paging schedule listed above."
+      brief_msg: "Paging Request, will be delivered to Firestone Circulation."
+    recap:
+      brief_msg: "Item offsite at ReCAP Facility. Request for delivery in 1 business day."
     trace:
       brief_msg: "Trace a Missing Item. You will be notified via email when located."
     account:

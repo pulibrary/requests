@@ -16,8 +16,8 @@ en:
       brief_msg: "Place a request to be notified when this Item has arrived and processed for use."
     paging:
       email_subject: "Firestone Library Paging Request"
-      status: "Place a paging request for an item which is sequestered due to construction."
-      message: "Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm. Items requested before one of these paging times will be available for pick up at Circulation no later than the next indicated paging time (and often much sooner)."
+      status: "Place a paging request for an item which is sequestered due to construction. Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
+      message: "Items requested before one of these paging times will be available for pick up at Circulation no later than the next indicated paging time (and often much sooner)."
       brief_msg: "Paging Request, will be delivered to Firestone Circulation."
     recap:
       brief_msg: "Item offsite at ReCAP Facility. Request for delivery in 1 business day."

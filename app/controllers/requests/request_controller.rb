@@ -54,8 +54,10 @@ module Requests
           format.html { redirect_to "/requests/#{@request.system_id}" }
         end
       else
-        format.json { render json: { pageable: false } }
-        format.html { redirect_to "https://library.princeton.edu/requests/#{@request.system_id}" }
+        respond_to do | format |
+          format.json { render json: { pageable: false } }
+          format.html { redirect_to "https://library.princeton.edu/requests/#{@request.system_id}" }
+        end
       end
     end
 

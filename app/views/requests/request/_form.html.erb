@@ -2,6 +2,7 @@
   <%= hidden_fields_request @request %>
   <% if @user.guest %>
     <h3>Contact Information</h3>
+    <div><%= current_user_status @user %></div>
     <div class="user">
       <fieldset class="form-group">
       <label class="control-label col-sm-2" for="user_name">
@@ -9,6 +10,8 @@
       </label>
       <div class="col-sm-10">
         <%= f.text_field :user_name, class: 'form-control', error: 'User Name' %>
+        <span id="inputError2Status" class="sr-only">(error)</span>
+        <span class="error"></span>
       </div>
       </fieldset>
       <fieldset class="form-group">
@@ -17,6 +20,8 @@
         </label>
         <div class="col-sm-10">
           <%= f.text_field :user_barcode, class: 'form-control', error: 'Barcode', placeholder: '22101' %>
+          <span id="inputError2Status" class="sr-only">(error)</span>
+          <span class="error"></span>
         </div>
       </fieldset>
       <fieldset class="form-group">
@@ -25,6 +30,8 @@
         </label>
         <div class="col-sm-10">
           <%= f.text_field :email, class: 'form-control', error: 'Email' %>
+          <span id="inputError2Status" class="sr-only">(error)</span>
+          <span class="error"></span>
         </div>
       </fieldset>
     </div>

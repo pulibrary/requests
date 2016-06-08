@@ -11,11 +11,20 @@ module Requests
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
       elsif current_user.guest == true
-        button_to I18n.t('requests.account.guest'), '/users/auth/cas', class: 'btn btn-primary' #, current_user_name: current_user.uid)
+        link_to I18n.t('requests.account.guest'), '/users/auth/cas', class: 'btn btn-primary' #, current_user_name: current_user.uid)
       else
         I18n.t('requests.account.unauthenticated')
       end
     end
+
+    def active_user current_user
+      if current_user.provider == 'cas'
+        link_to "#{I18n.t('requests.account.logged_in')}#{current_user.uid}", '/users/sign_out'
+      else
+        link_to "PUL Users Sign In to Request", '/users/auth/cas'
+      end
+    end
+
 
     def request_title request
       if request.has_pageable?

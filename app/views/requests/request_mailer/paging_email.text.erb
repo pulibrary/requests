@@ -11,6 +11,9 @@ Barcode: <%= @submission.user_barcode %>
 Bib Info
 ===============================================
 <%= "Bib ID: #{@submission.bib[:id]}" %>
+<% @submission.bib.each do |key, value| %>
+  <%= display_label[key] %> <%= value %>
+<% end %>
 
 ===============================================
 Holding Info

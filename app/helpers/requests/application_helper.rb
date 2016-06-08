@@ -114,7 +114,9 @@ module Requests
       {
         author: "Author/Artist:",
         title: "Title:",
-        date: "Published/Created:"
+        date: "Published/Created:",
+        id: "Bibliographic ID:",
+        mfhd: "Holding ID (mfhd):"
       }
     end
   end

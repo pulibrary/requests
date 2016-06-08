@@ -7,7 +7,6 @@
     <div class="bibliographic">
       <%= format_brief_record_display @request.display_metadata %>
     </div>
-    <div><%= current_user_status @user %></div>
     <%= render 'flash_messages' %>
   </div>
   <% if @request.has_requestable? %>

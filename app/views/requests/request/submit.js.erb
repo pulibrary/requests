@@ -1,1 +1,4 @@
 $(".flash_messages").html("<%= escape_javascript(render :partial=>'flash_messages') %>");
+<% @submission.errors.each do |key, value| %>
+  $('<%= "request_#{key}" %>').append("<%= escape_javascript('<p>foo</p>') %>"); 
+<% end %>

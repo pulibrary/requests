@@ -52,7 +52,7 @@ module Requests
           locs << location[:label]
         end
         if(locs.size > 1)
-          locs = ["Choose an Option"] + locs.sort
+          locs = ["Select Delivery Location"] + locs.sort
           select_tag "requestable[][pickup]", options_for_select(locs)
         else
           hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"

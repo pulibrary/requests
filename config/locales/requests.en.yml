@@ -3,7 +3,7 @@ en:
   requests:
     submit:
       success: "Request successfully processed. You will be notified via email when your item(s) are available."
-      error: "We were unable to process your request."
+      error: "We were unable to process your request. Correct the errors noted below."
     online:
       brief_msg: "This Item is Online. The material may be restricted to Princeton NetID Holders only."
     annexa: 
@@ -22,6 +22,8 @@ en:
       status: "Place a paging request for an item which is sequestered due to construction. Paging will occur M-F 9am, 12pm, 3pm."
       message: "Items requested before one of these paging times will be available for pick up at Circulation no later than the next indicated paging time (and often much sooner)."
       brief_msg: "Paging Request, will be delivered to Firestone Circulation."
+      success: "Request successfully submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
+      email_conf_msg: "Paging requests are fulfilled M-F at 9AM, 12 Noon, and 3PM. Your request will be fulfilled at the next scheduled paging time."
     recap:
       email_subject: "Recap Request Confirmation"
       brief_msg: "Item offsite at ReCAP Facility. Request for delivery in one business day."

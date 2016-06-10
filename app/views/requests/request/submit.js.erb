@@ -1,4 +1,14 @@
 $(".flash_messages").html("<%= escape_javascript(render :partial=>'flash_messages') %>");
-<% @submission.errors.each do |key, value| %>
-  $('<%= "request_#{key}" %>').append("<%= escape_javascript('<p>foo</p>') %>"); 
+<% if @submission.errors.messages.empty? %>
+  $('.error').each(function( index ) {
+    $(this).hide();
+  });
+<% else %>
+  $('.error').each(function( index ) {
+    $(this).hide();
+  });
+  <% @submission.errors.messages.each do |key, value| %>
+    $(".error-<%= key %>").text("<%= value.first.html_safe %>"); 
+    $(".error-<%= key %>").show();
+  <% end %>
 <% end %>

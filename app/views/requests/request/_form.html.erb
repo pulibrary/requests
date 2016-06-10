@@ -1,17 +1,21 @@
 <%= simple_form_for(:request, { url: "/requests/submit", method: :post, remote: true} ) do |f| %>
   <%= hidden_fields_request @request %>
   <% if @user.guest %>
-    <h3>Contact Information</h3>
-    <div><%= current_user_status @user %></div>
+    <div class="user user-pul">
+        <h3>Princeton Faculty, Staff, and Students</h3>
+        <div>
+          <%= current_user_status @user %>
+        </div>
+    </div>
     <div class="user">
+      <h3>Other Users</h3>
       <fieldset class="form-group">
       <label class="control-label col-sm-2" for="user_name">
           Your Name
       </label>
       <div class="col-sm-10">
         <%= f.text_field :user_name, class: 'form-control', error: 'User Name' %>
-        <span id="inputError2Status" class="sr-only">(error)</span>
-        <span class="error"></span>
+        <span class="error error-user_name"></span>
       </div>
       </fieldset>
       <fieldset class="form-group">
@@ -19,9 +23,8 @@
           Barcode (Access only patrons, may enter 'access' as their barcode in order to request materials.)
         </label>
         <div class="col-sm-10">
-          <%= f.text_field :user_barcode, class: 'form-control', error: 'Barcode', placeholder: '22101' %>
-          <span id="inputError2Status" class="sr-only">(error)</span>
-          <span class="error"></span>
+          <%= f.text_field :user_barcode, class: 'form-control', error: 'Barcode', value: '22101' %>
+          <span class="error error-user_barcode"></span>
         </div>
       </fieldset>
       <fieldset class="form-group">
@@ -30,18 +33,29 @@
         </label>
         <div class="col-sm-10">
           <%= f.text_field :email, class: 'form-control', error: 'Email' %>
-          <span id="inputError2Status" class="sr-only">(error)</span>
-          <span class="error"></span>
+          <span class="error error-email"></span>
         </div>
       </fieldset>
     </div>
   <% else %>
+    <div class="user user-pul">
+      <h3>Your Contact Information</h3>
+      <dl>
+        <dt>Name</dt>
+        <dd><%= "#{@patron[:first_name]} #{@patron[:last_name]}" %></dd>
+        <dt>Email</dt>
+        <dd><%= @user.email %></dd>
+      </dl>
+    </div>
     <%= f.hidden_field :user_name, value: "#{@patron[:first_name]} #{@patron[:last_name]}" %>
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
     <%= f.hidden_field :email, value: @user.email %>
   <% end %>
 
+  <div class="error error-items">
+  </div>
   <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
+    <%= hidden_fields_mfhd @request.holdings[mfhd] %>
     <div id="holding<%= mfhd %>" class="table-responsive items">
       <h2><%= @request.holdings[mfhd]["location"] %> <%= @request.holdings[mfhd]["call_number"] %></h2>
         <% unless @request.holdings[mfhd]["location_has"].nil? %>
@@ -69,7 +83,7 @@
           <% requestable_list.each do |requestable| %>
             <tr>
               <td>
-                <%= check_box_tag "requestable[][selected]", true, false, class: 'request--select' %>
+                <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select' %>
               </td>
               <% unless requestable.item.nil? %>
                 <%= hidden_fields_item requestable %>
@@ -99,5 +113,5 @@
       </table>
     </div>
   <% end %>
-  <%= f.submit "Submit", class: "btn btn-primary", data: { disable_with: "Submitting Request" } %>
+  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary", data: { disable_with: "Submitting Request" } %>
 <% end %>

@@ -61,6 +61,18 @@ module Requests
       end
     end
 
+    def hidden_fields_mfhd mfhd
+      hidden = ""
+      unless mfhd["call_number"].nil?
+        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{mfhd["call_number"]}"
+      end
+      unless mfhd["location"].nil?
+        hidden += hidden_field_tag "requestable[][location]", "", value: "#{mfhd["location"]}"
+      end
+      hidden += hidden_field_tag "requestable[][library]", "", value: "#{mfhd["library"]}"
+      hidden.html_safe
+    end
+
     def hidden_fields_item requestable
       hidden = hidden_field_tag "requestable[][bibid]", "", value: "#{requestable.bib[:id]}"
       hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}"
@@ -110,6 +122,22 @@ module Requests
       end
     end
 
+    def check_box_selected requestable_list
+      if requestable_list.size == 1
+        true
+      else
+        false
+      end
+    end
+
+    def submit_message requestable
+      if requestable.size == 1
+        "Request this Item"
+      else
+        "Request Selected Items"
+      end
+    end
+
     def display_label
       {
         author: "Author/Artist:",
@@ -117,7 +145,7 @@ module Requests
         date: "Published/Created:",
         id: "Bibliographic ID:",
         mfhd: "Holding ID (mfhd):"
-      }
+      }.with_indifferent_access
     end
   end
 end

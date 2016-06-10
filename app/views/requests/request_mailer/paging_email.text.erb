@@ -1,3 +1,7 @@
+==============================================
+Paging Request
+
+<%= I18n.t('requests.paging.email_conf_msg') %>
 
 ==============================================
 Patron Information
@@ -20,7 +24,9 @@ Items Requested
 <% @submission.items.each do |item| %>
   <% unless item[:selected].empty? %>
     <% item.each do |key, value| %>
-      <%= "#{key}: #{value.html_safe}" %>
+      <% unless key == "selected" %>
+        <%= "#{key.capitalize}: #{value.html_safe}" %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>

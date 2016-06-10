@@ -19,7 +19,7 @@ en:
       brief_msg: "Place a request to be notified when this Item has arrived and processed for use."
     paging:
       email_subject: "Firestone Library Paging Request"
-      status: "Place a paging request for an item which is sequestered due to construction. Paging will occur M-F 9am, 12pm, 3pm, 6pm, 8pm; S-S 1pm, 5pm."
+      status: "Place a paging request for an item which is sequestered due to construction. Paging will occur M-F 9am, 12pm, 3pm."
       message: "Items requested before one of these paging times will be available for pick up at Circulation no later than the next indicated paging time (and often much sooner)."
       brief_msg: "Paging Request, will be delivered to Firestone Circulation."
     recap:
@@ -29,16 +29,18 @@ en:
       email_subject: "Recap Electronic Delivery Confirmation"
       brief_msg: "Item offsite at ReCAP Facility. Have a selection scanned for you and delivered via PDF in one business day."
     recall:
-      email_subject: ""
+      email_subject: "Recalled Item Information"
       brief_msg: "Recall Item from another Library user. May take up to six months."
     borrow_direct:
       brief_msg: "See if the Item can be obtained from one of our partner Libraries. Requests typically filled in four business days."
+    aeon:
+      brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
     ill:
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:
       brief_msg: "Trace a Missing Item. You will be notified via email when located."
     account:
-      guest: "Princeton Faculty, Staff, and Students Log to Request in via Central Authentication Services"
+      guest: "Log in to Request in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"
       logged_in: "Logged in as:"
   

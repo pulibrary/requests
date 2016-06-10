@@ -3,7 +3,7 @@ module Requests
     def paging_email(submission)
       @submission = submission
       destination_email = "fstpage@princeton.edu"
-      cc_email = "wange@princeton.edu"
+      cc_email = [ "wange@princeton.edu", @submission.email ]
       @url  = 'http://example.com/login'
       mail(to: destination_email, 
            cc: cc_email,

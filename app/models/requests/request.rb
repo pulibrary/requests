@@ -137,7 +137,6 @@ module Requests
     end
 
     def user
-      #user = current_patron(patron_id)
       @user
     end
 
@@ -180,7 +179,13 @@ module Requests
         else
           items_by_bib(@system_id).each do |holding_id, item_info|
             items_by_holding = if item_info[:more_items] == false
-              [item_info]
+              if item_info[:status].starts_with?('On-Order')
+                [item_info]
+              elsif item_info[:status].starts_with?('Online')
+                [item_info]
+              else
+                items_to_symbols(items_by_mfhd(holding_id))
+              end
             else
               items_to_symbols(items_by_mfhd(holding_id))
             end

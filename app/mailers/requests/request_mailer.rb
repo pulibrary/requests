@@ -7,6 +7,7 @@ module Requests
       @url  = 'http://example.com/login'
       mail(to: destination_email, 
            cc: cc_email,
+           from: destination_email,
            subject: I18n.t('requests.paging.email_subject'))
     end
 

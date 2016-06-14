@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Requestable do #, vcr: { cassette_name: 'requestable_models', record: :new_episodes } do
+describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :new_episodes } do
 
   context "as bibliographic record from voyager stored at recap that has an item record" do
     describe "#location_code" do
@@ -99,7 +99,23 @@ describe Requests::Requestable do #, vcr: { cassette_name: 'requestable_models',
     end
   end
 
-  describe "Is a bibliographic record from a Finding Aid" do
+  context "It is in a paging location" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_paging_available) }
+    let(:requestable) { request.requestable }
+    describe "#pageable?" do
+      it "should return nil when item status is unavailable" do
+        expect(requestable.size).to eq(1)
+        # change status 
+        requestable.first.item["status"] = 'Charged'
+        expect(requestable.first.pageable?).to be_falsey
+      end
+
+      it "should return true when item status is available" do
+        expect(requestable.size).to eq(1)
+        expect(requestable.first.pageable?).to be_truthy
+      end
+    end
   end
 
 end

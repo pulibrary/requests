@@ -416,6 +416,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].pageable?).to eq(true)
       end
     end
+
+    describe "#has_pageable?" do
+      it "should return true when all requestable items are pageable?" do
+        expect(subject.has_pageable?).to be_truthy
+      end
+
+      it "should return true when only some of the requestable items are pageable?" do
+        subject.requestable.first.item["status"] = 'Charged'
+        expect(subject.has_pageable?).to be_truthy
+      end
+
+      it "should return false when all requestable items are not pageable?" do
+        subject.requestable.each do |requestable|
+          requestable.item["status"] = 'Charged'
+        end
+        expect(subject.has_pageable?).to be_falsy
+      end 
+    end
   end
 
   context "When passed an ID for a paging location in f outside of call number range" do

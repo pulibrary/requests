@@ -64,6 +64,7 @@ module Requests
       return true if @location[:library][:code] == 'annexa'
     end
 
+    # locations temporarily moved to annex should work
     def annexb?
       return true if @location[:library][:code] == 'annexb'
     end
@@ -111,7 +112,9 @@ module Requests
     end
 
     def pageable?
-      if paging_locations.include? self.location['code']
+      if charged?
+        nil
+      else paging_locations.include? self.location['code']
         in_call_num_range(self.holding.first[1]['call_number'], paging_ranges[self.location['code']])
       end
     end

@@ -156,9 +156,7 @@ module Requests
       unless doc[:location_code_s].nil?
         holding_locations = {}
         doc[:location_code_s].each do |loc|
-          #if /^[a-z]+$/.match(loc)
           holding_locations[loc] = get_location(loc)
-          #end
         end
         holding_locations
       end

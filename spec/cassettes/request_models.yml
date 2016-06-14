@@ -3472,4 +3472,1278 @@ http_interactions:
         Charged"}}'
     http_version: 
   recorded_at: Thu, 26 May 2016 17:42:56 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4977668
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:30 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 86ae6247-da35-4163-a78e-84286efa6d56
+      X-Runtime:
+      - '0.059222'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 4977668 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:31:42 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779466
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:31 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 9cdc979f-4218-40ac-b2a8-16c72a9e2871
+      X-Runtime:
+      - '0.050253'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779466 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:31:43 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779467
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:38 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - ff5555e8-e87d-4e8f-8dfd-8654e30d1caa
+      X-Runtime:
+      - '0.082578'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779467 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:31:51 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779468
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:43 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - c6a71d8f-f3c6-43c5-918e-999b65f5d558
+      X-Runtime:
+      - '0.031718'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779468 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:31:55 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779469
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:46 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 2ce61a17-0387-4e21-9a55-a60c5579a855
+      X-Runtime:
+      - '0.050895'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779469 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:31:59 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779470
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:51 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6de7daae-c6d5-433e-a2ab-d688d9bf0936
+      X-Runtime:
+      - '0.068511'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"255f5d8a81ecc96841e625df52599c34"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101010941647","id":2375978,"location":"f","copy_number":1,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:03 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779471
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:56 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 33dac2de-aedb-4840-bf2b-c432713b129d
+      X-Runtime:
+      - '0.048839'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779471 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:08 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779472
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:57 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 22e05953-018c-47e2-992e-34b2c489b781
+      X-Runtime:
+      - '0.032266'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779472 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:09 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2779473
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:57 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 4a8bfc21-8f42-48ac-9abc-bb92813bbea7
+      X-Runtime:
+      - '0.053788'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2779473 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:09 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=3527325
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:58 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 6b6c5e73-ae49-4692-bcd8-37e5632049e1
+      X-Runtime:
+      - '0.050604'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 3527325 not found.'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:10 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6214112
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:31:59 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 77d36236-8b7e-4a81-a7af-7df7dedcafd3
+      X-Runtime:
+      - '0.051495'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"bb3e19f1462aa3962c568c469ce7386d"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899620","id":5825431,"location":"sci","on_reserve":"Lewis
+        Library - Term Loan Reserves","copy_number":1,"status":"Not Charged","temp_loc":"sciresp"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:11 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6218590
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:00 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 48875602-4f58-451f-9a1c-07f04b2e196b
+      X-Runtime:
+      - '0.068399'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6e0ee599a9ba5478bf8524410085c419"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899638","id":5825441,"location":"sci","on_reserve":"Lewis
+        Library - Term Loan Reserves","copy_number":2,"status":"Not Charged","temp_loc":"sciresp"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:12 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6218592
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 288fd29e-661d-4c79-b97e-1a5697b7de9d
+      X-Runtime:
+      - '0.071509'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"0b61ea2ef576387b7ab438bbf3d1bcd3"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899661","id":5825449,"location":"sci","on_reserve":"Lewis
+        Library - Term Loan Reserves","copy_number":3,"status":"Not Charged","temp_loc":"sciresp"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:13 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6218596
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 0c14e95c-fc53-41bf-b6b2-f2cd321aab3a
+      X-Runtime:
+      - '0.066998'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"66fe9eddc2b8413e84c4532c296bdd69"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899653","id":5825451,"location":"sci","copy_number":4,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:13 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6218598
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:02 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 0ed47a52-96b4-42ee-b341-48248433c8eb
+      X-Runtime:
+      - '0.070023'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"68e283e582fa0c7e3767dc5eaeffe44c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899604","id":5825455,"location":"sci","copy_number":5,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:14 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6218599
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:02 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a742ca04-6fb4-4255-970a-0133e6c2a9e0
+      X-Runtime:
+      - '0.074990'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6e7245452d786987a81e45baab85f276"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899646","id":5825458,"location":"sci","copy_number":6,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:14 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6218600
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:03 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 57efb389-8264-4829-8cef-7145677c586d
+      X-Runtime:
+      - '0.041688'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"7c6001f70d21b4f2f008a7d40336e51f"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078899422","id":5825459,"location":"sci","copy_number":7,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:15 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sciresp.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:03 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4ba03f45-404d-4688-b5d2-fd33c14297e4
+      X-Runtime:
+      - '0.072651'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"fb7f9fea13eb3000642cd5a3163db752"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Term Loan Reserves","code":"sciresp","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
+        Library","code":"lewis"},"holding_library":null,"hours_location":{"label":"Lewis
+        Library","code":"lewis"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:15 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4725563
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:05 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a454bd70-6e98-462e-aa39-fc02bed6df31
+      X-Runtime:
+      - '0.040737'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"f33c705474748f1e2696ab63be58da50"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101057079434","id":3999863,"location":"nec","copy_number":1,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:17 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=3251699
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:06 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ff2dd25c-791d-4bff-8e60-e739eb55faf6
+      X-Runtime:
+      - '0.067769'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"41a76c023df777cc6d972a59797f36fe"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101077709341","id":5520315,"location":"nec","copy_number":1,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4504821
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:06 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 0b218c75-1a85-4d34-84c8-7a6a8bad81ce
+      X-Runtime:
+      - '0.068888'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"4cac3b8cfe0f54bac00c4e9bc9390447"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101000924850","id":4478736,"location":"nec","copy_number":2,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6889523
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:07 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 41eccdc9-38fc-40de-a6c3-ed0de814b892
+      X-Runtime:
+      - '0.066251'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"58d212ddb5e5525e182e7451baea2d12"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101080891441","id":6271069,"location":"nec","copy_number":3,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:19 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4594920
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:07 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 98d39f91-c731-4d42-8881-198694293b59
+      X-Runtime:
+      - '0.076094'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"75149144a487f6fd8b8bb64798e6b20c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101056115783","id":3960398,"location":"f","copy_number":1,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:19 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6068387
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:08 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - aac3d497-db8a-470d-be2d-0b06f02977ef
+      X-Runtime:
+      - '0.064088'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"2d28ec1c826ccf0ec7bb207b7d7671f8"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101079581698","id":5667334,"location":"f","copy_number":1,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:20 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9396713
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:09 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 3e369edf-5d87-4f80-9797-4590d0e756a6
+      X-Runtime:
+      - '0.066075'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"e04f04cd408c882f8646d8f22163484b"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101095438303","id":7326328,"location":"f","copy_number":0,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:21 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9437529
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Jun 2016 22:32:09 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d6448f54-0888-4deb-91f5-2b6857b501a5
+      X-Runtime:
+      - '0.064118'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"afc43a4126a8977700eeaf41cce99ccd"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101096007537","id":7355620,"location":"xl","copy_number":0,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Mon, 13 Jun 2016 22:32:21 GMT
 recorded_with: VCR 3.0.1

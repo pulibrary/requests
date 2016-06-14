@@ -2,13 +2,20 @@ require 'spec_helper'
 
 describe Requests::Requestable do #, vcr: { cassette_name: 'requestable_models', record: :new_episodes } do
 
-  describe "as bibliographic record from voyager stored at recap that has an item record" do
+  context "as bibliographic record from voyager stored at recap that has an item record" do
+    describe "#location_code" do
+      it "returns a value voyager locatoin code." do
+      end
+    end
+
+    describe "#voyager_managed?" do
+    end
   end
 
-  describe "as a bibliographic record from voyager stored at the annex" do
+  context "as a bibliographic record from voyager stored at the annex" do
   end
 
-  describe "as a bibliographic record from voyager, a print holding, and an item record that does not circulate" do
+  context "as a bibliographic record from voyager, a print holding, and an item record that does not circulate" do
     let(:item) {
       {
         id: 4465718,
@@ -70,18 +77,26 @@ describe Requests::Requestable do #, vcr: { cassette_name: 'requestable_models',
     end
   end
 
-  describe "Has a bibliographic record from voyager and a print holding, but no item record" do
+  context "Has a bibliographic record from voyager and a print holding, but no item record" do
     xit "has no item stats" do
     end
   end
 
-  describe "It is a bibliographic record that is on order." do
+  context "It is a bibliographic record that is on order." do
   end
 
-  describe "Is a bibliographic record from the thesis collection" do
+  context "Is a bibliographic record from the thesis collection" do
+    describe "#thesis?" do
+      it "returns true when record is a senior thesis" do
+      end
+    end
   end
 
-  describe "Is a bibliographic record from the Graphic Arts collection" do
+  context "Is a bibliographic record from the Graphic Arts collection" do
+    describe "#visuals?" do
+      it "returns true when record is a senior thesis" do
+      end
+    end
   end
 
   describe "Is a bibliographic record from a Finding Aid" do

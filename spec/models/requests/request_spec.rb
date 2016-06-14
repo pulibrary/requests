@@ -238,7 +238,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "should have location data that reflects an item's temporary location" do
-        expect(subject.requestable.first.location["code"]).to eq('scires')
+        expect(subject.requestable.first.location["code"]).to eq('sciresp')
       end
 
       it "should location data that uses a permenant location when no temporary code is specified" do
@@ -283,8 +283,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
-      it "should not have a Voyager location" do
-        expect(subject.requestable[0].holding.key? :thesis).to be_truthy
+      it "should not have a thesis holding location" do
+        expect(subject.requestable[0].holding.key? 'thesis').to be_truthy
         expect(subject.requestable[0].location.key? 'code').to be_truthy
         expect(subject.requestable[0].location['code']).to eq ('mudd')
         expect(subject.requestable[0].voyager_managed?).to be_nil
@@ -332,7 +332,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "should not have a Voyager location" do
-        expect(subject.requestable[0].holding.key? :visuals).to be_truthy
+        expect(subject.requestable[0].holding.key? 'visuals').to be_truthy
         expect(subject.requestable[0].location.key? 'code').to be_truthy
         expect(subject.requestable[0].location['code']).to eq ('ga')
         expect(subject.requestable[0].voyager_managed?).to be_nil

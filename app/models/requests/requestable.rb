@@ -114,7 +114,7 @@ module Requests
     def pageable?
       if charged?
         nil
-      else paging_locations.include? self.location['code']
+      elsif paging_locations.include? self.location['code']
         in_call_num_range(self.holding.first[1]['call_number'], paging_ranges[self.location['code']])
       end
     end

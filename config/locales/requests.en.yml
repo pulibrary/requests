@@ -2,7 +2,7 @@
 en:
   requests:
     submit:
-      success: "Request successfully processed. You will be notified via email when your item(s) are available."
+      success: "Request successfully processed. See your confirmation email for details about when your item(s) will be available."
       error: "We were unable to process your request. Correct the errors noted below."
     online:
       brief_msg: "This Item is Online. The material may be restricted to Princeton NetID Holders only."

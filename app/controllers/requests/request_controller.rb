@@ -37,12 +37,12 @@ module Requests
           end
           format.js { 
             flash.now[:success] = I18n.t('requests.submit.success') 
-            logger.info "#{Time.now} Request Submission - INFO #{@submission.as_json}"
+            logger.info "#Request Submission - #{@submission.as_json}"
           }
         else
           format.js { 
             flash.now[:error] = I18n.t('requests.submit.error')
-            logger.error "#{Time.now} Request Submission - Error #{@submission.errors.messages.as_json}"
+            logger.error "Request Submission #{@submission.errors.messages.as_json}"
           }
         end
       end

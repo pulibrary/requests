@@ -191,7 +191,7 @@ module Requests
           end
         end
       end
-      mfhd_items.empty? ? nil : mfhd_items
+      mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
     end
 
     def thesis?

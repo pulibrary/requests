@@ -78,11 +78,15 @@ module Requests
     end
 
     def in_process?
-      return true if @item['status'] == 'In Process'
+      if item?
+        return true if @item[:status] == 'In Process'
+      end
     end
 
     def on_order?
-      return true if @item['status'].starts_with?('On-Order')
+      if item?
+        return true if @item[:status].starts_with?('On-Order')
+      end
     end
 
     def item?
@@ -103,7 +107,7 @@ module Requests
 
     def charged?
       if(item?)
-        if(unavailable_statuses.include?(@item["status"]))
+        if(unavailable_statuses.include?(@item[:status]))
           return true
         else
           nil

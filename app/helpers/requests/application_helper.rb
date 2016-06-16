@@ -5,10 +5,14 @@ module Requests
     end
 
     def show_service_options requestable
-      content_tag(:ul, class: "service-list") do
-        requestable.services.each do |service|
-          brief_msg = I18n.t("requests.#{service}.brief_msg")
-          concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+      if requestable.charged?
+        link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
+      else
+        content_tag(:ul, class: "service-list") do
+          requestable.services.each do |service|
+            brief_msg = I18n.t("requests.#{service}.brief_msg")
+            concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+          end
         end
       end
     end
@@ -47,7 +51,7 @@ module Requests
 
     def pickup_choices requestable
       locs = []
-      unless requestable.pickup_locations.nil?
+      unless requestable.pickup_locations.nil? || requestable.charged?
         requestable.pickup_locations.each do |location|
           locs << location[:label]
         end
@@ -124,15 +128,36 @@ module Requests
 
     def check_box_selected requestable_list
       if requestable_list.size == 1
-        true
+        if requestable_list.first.charged?
+          false
+        else
+          true
+        end
       else
         false
       end
     end
 
+    def submit_button_disabled requestable_list
+      if requestable_list.size == 1
+        if requestable_list.first.charged?
+          true
+        else
+          false
+        end
+      else
+        false
+      end
+    end
+
+
     def submit_message requestable
       if requestable.size == 1
-        "Request this Item"
+        if requestable.first.charged?
+          "No Items Available"
+        else
+          "Request this Item"
+        end
       else
         "Request Selected Items"
       end

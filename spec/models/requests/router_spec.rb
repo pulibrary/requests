@@ -8,7 +8,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
       let(:params) { {  } }
       let(:requestable) { Requests::Requestable.new(params) }
       let(:subject) { described_class.new(requestable, user) }
-      it "Returns an Online Link" do
+      xit "Returns an Online Link" do
         expect(subject.services.key?(:full_text)).to be_truthy
       end
     end
@@ -17,7 +17,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
       let(:params) { { system_id: 4, holding_id: 5, item_id: 6 } }
       let(:requestable) { Requests::Requestable.new(params) }
       let(:subject) { described_class.new(requestable, user) }
-      it "Returns an Aeon Reading Room Link" do
+      xit "Returns an Aeon Reading Room Link" do
         expect(subject.services.key?(:reading_room)).to be_truthy
       end
     end
@@ -53,7 +53,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
 
     context "When a firestone item" do
       describe "Open Holding with item" do
-        it "has a firestone locator link when a firestone item" do
+        xit "has a firestone locator link when a firestone item" do
           expect(subject.services.key?(:onshelf)).to be_truthy
         end
       end
@@ -61,7 +61,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
 
     context "When a non-frestone item" do
       describe "Open Holding with item" do
-        it "has a stackmap link when a firestone item" do
+        xit "has a stackmap link when a firestone item" do
           expect(subject.services.key?(:onshelf)).to be_truthy
         end
       end

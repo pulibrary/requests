@@ -35,6 +35,8 @@ en:
       brief_msg: "Recall Item from another Library user. May take up to six months."
     borrow_direct:
       brief_msg: "See if the Item can be obtained from one of our partner Libraries. Requests typically filled in four business days."
+    in_process:
+      brief_msg: "Item is being shelved. Submit request to have it held for pickup."
     aeon:
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
     ill:

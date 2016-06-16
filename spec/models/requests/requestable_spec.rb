@@ -60,15 +60,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) { { bib: { id: 1 }, holding: { id: 2 }, item: item, location: location } }
     let(:subject) { described_class.new(params) }
 
-    it "has params needed for a Valid OpenURL" do
+    xit "has params needed for a Valid OpenURL" do
       expect(subject).to eq('foo')
     end
 
-    it "has a summary for the holding" do
+    xit "has a summary for the holding" do
       expect(subject.holding.summary).to eq('foobar')
     end
 
-    it "has an item status" do
+    xit "has an item status" do
       expect(subject.item.status).to eq ('ooo')
     end
 
@@ -87,7 +87,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context "Is a bibliographic record from the thesis collection" do
     describe "#thesis?" do
-      it "returns true when record is a senior thesis" do
+      xit "returns true when record is a senior thesis" do
       end
     end
   end

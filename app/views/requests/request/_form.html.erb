@@ -113,5 +113,5 @@
       </table>
     </div>
   <% end %>
-  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary", data: { disable_with: "Submitting Request" } %>
+  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary", disabled: submit_button_disabled(@request.requestable) , data: { disable_with: "Submitting Request" } %>
 <% end %>

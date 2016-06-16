@@ -35,9 +35,15 @@ module Requests
           if mail_services.include? service
             Requests::RequestMailer.send("#{service}_email", @submission).deliver_now
           end
-          format.js { flash.now[:success] = I18n.t('requests.submit.success') } 
+          format.js { 
+            flash.now[:success] = I18n.t('requests.submit.success') 
+            logger.info "#{Time.now} Request Submission - INFO #{@submission.as_json}"
+          }
         else
-          format.js { flash.now[:error] = I18n.t('requests.submit.error')}
+          format.js { 
+            flash.now[:error] = I18n.t('requests.submit.error')
+            logger.error "#{Time.now} Request Submission - Error #{@submission.errors.messages.as_json}"
+          }
         end
       end
     end
@@ -47,6 +53,9 @@ module Requests
       request_params[:system_id] = sanitize(params[:system_id])
       @user = current_or_guest_user
       request_params[:user] = @user.uid
+      unless params[:mfhd].nil?
+        request_params[:mfhd] = sanitize(params[:mfhd])
+      end
       @request = Requests::Request.new(request_params)
       if @request.has_pageable?
         respond_to do | format |

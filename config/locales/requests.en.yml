@@ -2,7 +2,7 @@
 en:
   requests:
     submit:
-      success: "Request successfully processed. See your confirmation email for details about when your item(s) will be available."
+      success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       error: "We were unable to process your request. Correct the errors noted below."
     online:
       brief_msg: "This Item is Online. The material may be restricted to Princeton NetID Holders only."
@@ -22,7 +22,7 @@ en:
       status: "Items requested (online, via email, or in person) anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
       message: "If you have not picked up a requested book by the end of the same day, you will receive an email reminder that your book is available for you at Circulation."
       brief_msg: "Paging Request, will be delivered to Firestone Circulation."
-      success: "Request successfully submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
+      success: "Request submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
       email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
     recap:
       email_subject: "Recap Request Confirmation"

@@ -119,7 +119,7 @@ module Requests
       if charged?
         nil
       elsif paging_locations.include? self.location['code']
-        call_num = self.holding.first[1]['call_number']
+        call_num = self.holding.first[1]['call_number_browse']
         if lc_number?(call_num)
           in_call_num_range(call_num, paging_ranges[self.location['code']])
         end

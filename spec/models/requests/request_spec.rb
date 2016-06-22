@@ -576,6 +576,38 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  # Item with no call number 9602545
+  context "When passed an ID for an Item in a pageable location that has no call number" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9602545',
+        user: user
+      }
+    }
+    let(:request_no_callnum) { described_class.new(params) }
+    subject { request_no_callnum }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should be in a pageable location" do
+        expect(subject.requestable[0].location['code']).to eq('f')
+        expect(subject.requestable[0].voyager_managed?).to eq(true)
+      end
+
+      it "should not have any pageable items" do
+        expect(subject.has_pageable?).to be_nil
+      end        
+
+      it "should have a pageable item" do
+        expect(subject.requestable[0].pageable?).to be_nil
+      end
+    end
+  end
   ## Add context for Visuals when available
   ## Add context for EAD when available
 end

@@ -42,12 +42,12 @@
       <h3>Your Contact Information</h3>
       <dl>
         <dt>Name</dt>
-        <dd><%= "#{@patron[:first_name]} #{@patron[:last_name]}" %></dd>
+        <dd><%= pul_patron_name @patron %></dd>
         <dt>Email</dt>
         <dd><%= @user.email %></dd>
       </dl>
     </div>
-    <%= f.hidden_field :user_name, value: "#{@patron[:first_name]} #{@patron[:last_name]}" %>
+    <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
     <%= f.hidden_field :email, value: @user.email %>
   <% end %>

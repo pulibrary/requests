@@ -544,7 +544,38 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
-  ## TODO
+
+  # Oversize ID 
+  context "When passed an ID for an Item with that is Oversize" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '3785401',
+        user: user
+      }
+    }
+    let(:request_oversize) { described_class.new(params) }
+    subject { request_oversize }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should be in a location that contains some pageable items" do
+        expect(subject.requestable[0].location['code']).to eq('f')
+        expect(subject.requestable[0].voyager_managed?).to eq(true)
+      end
+
+      it "should be have pageable items" do
+        expect(subject.has_pageable?).to be(true)
+      end        
+
+      it "should have a pageable item" do
+        expect(subject.requestable[0].pageable?).to eq(true)
+      end
+    end
+  end
   ## Add context for Visuals when available
   ## Add context for EAD when available
 end

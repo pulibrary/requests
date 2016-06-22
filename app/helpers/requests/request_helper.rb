@@ -25,6 +25,16 @@ module Requests
       end
     end
 
+    def pul_patron_name patron
+      name = ""
+      unless patron[:first_name].nil?
+        name += patron[:first_name]
+      end
+      unless patron[:last_name].nil?
+        name += patron[:last_name]
+      end
+      name
+    end
 
     def request_title request
       if request.has_pageable?

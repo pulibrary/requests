@@ -82,11 +82,12 @@
         <tbody>
           <% requestable_list.each do |requestable| %>
             <tr>
-              <td>
-                <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select' %>
-              </td>
               <% unless requestable.item.nil? %>
-                <%= hidden_fields_item requestable %>
+                <td>
+                <%= hidden_field_tag 'requestable[][selected]', false %>
+                <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select', id: "requestable_selected_#{requestable.item['id']}" %>
+                  <%= hidden_fields_item requestable %>
+                </td>
                 <td>
                   <%= requestable.item["enum"] %>
                 </td>
@@ -98,7 +99,11 @@
                   <%= status_label requestable %>
                 </td>
               <% else %>
-                <%= hidden_fields_holding requestable %>
+                <td>
+                  <%= hidden_field_tag 'requestable[][selected]', false %>
+                  <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select', id: "requestable_selected_#{mfhd}" %>
+                  <%= hidden_fields_holding requestable %>
+                </td>
               <% end %>
               <td>
                 <%= show_service_options requestable %>

@@ -85,7 +85,7 @@
               <% unless requestable.item.nil? %>
                 <td>
                 <%= hidden_field_tag 'requestable[][selected]', false %>
-                <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select', id: "requestable_selected_#{requestable.item['id']}" %>
+                <%= item_checkbox @request.requestable, requestable %>
                   <%= hidden_fields_item requestable %>
                 </td>
                 <td>

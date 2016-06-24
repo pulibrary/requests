@@ -68,12 +68,12 @@ module Requests
     def hidden_fields_mfhd mfhd
       hidden = ""
       unless mfhd["call_number"].nil?
-        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{mfhd['call_number']}"
+        hidden += hidden_field_tag "mfhd[][call_number]", "", value: "#{mfhd['call_number']}"
       end
       unless mfhd["location"].nil?
-        hidden += hidden_field_tag "requestable[][location]", "", value: "#{mfhd["location"]}"
+        hidden += hidden_field_tag "mfhd[][location]", "", value: "#{mfhd["location"]}"
       end
-      hidden += hidden_field_tag "requestable[][library]", "", value: "#{mfhd["library"]}"
+      hidden += hidden_field_tag "mfhd[][library]", "", value: "#{mfhd["library"]}"
       hidden.html_safe
     end
 

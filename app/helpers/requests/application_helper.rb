@@ -81,9 +81,9 @@ module Requests
       hidden = hidden_field_tag "requestable[][bibid]", "", value: "#{requestable.bib[:id]}", id: "requestable_bibid_#{requestable.item['id']}"
       hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}", id: "requestable_mfhd_#{requestable.item['id']}"
       unless requestable.holding.first[1]["call_number"].nil?
-        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{requestable.holding.first[1]['call_number']}"
+        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{requestable.holding.first[1]['call_number']}", id: "requestable_call_number_#{requestable.item['id']}"
       end
-      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_bibid_#{requestable.item['location_code']}"
+      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_location_#{requestable.item['id']}"
       hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}", id: "requestable_item_id_#{requestable.item['id']}"
       unless requestable.item["barcode"].nil?
         hidden += hidden_field_tag "requestable[][barcode]", "", value: "#{requestable.item["barcode"]}", id: "requestable_barcode_#{requestable.item['id']}"
@@ -97,7 +97,12 @@ module Requests
     end
 
     def hidden_fields_holding requestable
-      hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}"
+      hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}", id: "requestable_mfhd_#{requestable.holding.keys[0]}"
+      unless requestable.holding.first[1]["call_number"].nil?
+        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{requestable.holding.first[1]['call_number']}", id: "requestable_call_number_#{requestable.holding.keys[0]}"
+      end
+      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.holding.first[1]['location_code']}", id: "requestable_location_code_#{requestable.holding.keys[0]}"
+      hidden += hidden_field_tag "requestable[][location]", "", value: "#{requestable.holding.first[1]["location"]}", id: "requestable_location_#{requestable.holding.keys[0]}"
       hidden
     end
 
@@ -126,6 +131,22 @@ module Requests
         content_tag(:span, 'Not Available', class: "badge-alert")
       else 
         content_tag(:span, 'Available', class: "badge-success")
+      end
+    end
+
+    def item_checkbox requestable_list, requestable
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), id: "requestable_selected_#{requestable.item['id']}"
+    end
+
+    def check_box_disabled requestable
+      if requestable.aeon?
+        true
+      elsif requestable.charged?
+        true
+      elsif requestable.open? && !requestable.pageable?
+        true
+      else
+        false
       end
     end
 

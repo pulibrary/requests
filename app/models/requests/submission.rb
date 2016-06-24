@@ -16,7 +16,7 @@ module Requests
     validates :email, presence: true, email: true, length: { minimum: 5, maximum: 50 } #, on: :submit
     validates :user_name, presence: true, length: { minimum: 1, maximum: 50 } #, on: :submit
     validates :user_barcode, presence: true, length: { minimum: 5, maximum: 14 }, format: { with: /(^ACCESS$|^\d{14}$)/i, message: "Supply a valid library barcode or type the value 'ACCESS'" }
-    validate :item_validations#, presence: true, length: { minimum: 1 }, on: :submit
+    validate :item_validations #, presence: true, length: { minimum: 1 }, on: :submit
 
     def initialize(params)
       @user = params[:request]
@@ -37,7 +37,7 @@ module Requests
     end
 
     def selected_items(requestable_list)
-      requestable_list.select{ |r| r unless r[:selected].nil? }
+      requestable_list.select{ |r| r unless r[:selected] == 'false' }
     end
 
     def item_validations

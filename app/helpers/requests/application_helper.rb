@@ -68,7 +68,7 @@ module Requests
     def hidden_fields_mfhd mfhd
       hidden = ""
       unless mfhd["call_number"].nil?
-        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{mfhd["call_number"]}"
+        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{mfhd['call_number']}"
       end
       unless mfhd["location"].nil?
         hidden += hidden_field_tag "requestable[][location]", "", value: "#{mfhd["location"]}"
@@ -78,18 +78,21 @@ module Requests
     end
 
     def hidden_fields_item requestable
-      hidden = hidden_field_tag "requestable[][bibid]", "", value: "#{requestable.bib[:id]}"
-      hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}"
-      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}"
-      hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}"
+      hidden = hidden_field_tag "requestable[][bibid]", "", value: "#{requestable.bib[:id]}", id: "requestable_bibid_#{requestable.item['id']}"
+      hidden = hidden_field_tag "requestable[][mfhd]", "", value: "#{requestable.holding.keys[0]}", id: "requestable_mfhd_#{requestable.item['id']}"
+      unless requestable.holding.first[1]["call_number"].nil?
+        hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{requestable.holding.first[1]['call_number']}"
+      end
+      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_bibid_#{requestable.item['location_code']}"
+      hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}", id: "requestable_item_id_#{requestable.item['id']}"
       unless requestable.item["barcode"].nil?
-        hidden += hidden_field_tag "requestable[][barcode]", "", value: "#{requestable.item["barcode"]}"
+        hidden += hidden_field_tag "requestable[][barcode]", "", value: "#{requestable.item["barcode"]}", id: "requestable_barcode_#{requestable.item['id']}"
       end
       unless requestable.item["enum"].nil?
-        hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enum"]}"
+        hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enum"]}", id: "requestable_enum_#{requestable.item['id']}"
       end
-      hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}"
-      hidden += hidden_field_tag "requestable[][status]", "", value: "#{requestable.item["status"]}"
+      hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}", id: "requestable_copy_number_#{requestable.item['id']}"
+      hidden += hidden_field_tag "requestable[][status]", "", value: "#{requestable.item["status"]}", id: "requestable_status_#{requestable.item['id']}"
       hidden
     end
 

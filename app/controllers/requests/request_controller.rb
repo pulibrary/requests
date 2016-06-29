@@ -28,7 +28,7 @@ module Requests
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
-      @submission = Requests::Submission.new(params)
+      @submission = Requests::Submission.new(sanitize_submission(params))
       respond_to do |format|
         if @submission.valid?
           service = @submission.service_type
@@ -107,5 +107,15 @@ module Requests
         logger.info(patron.to_hash.to_s)
         patron
       end
+
+      def sanitize_submission params
+        params[:requestable].each do |requestable|
+          if requestable.key? 'user_supplied_enum'
+            params['user_supplied_enum'] = sanitize(requestable['user_supplied_enum'])
+          end
+        end
+        params
+      end
+
   end
 end

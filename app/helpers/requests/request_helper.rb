@@ -60,5 +60,19 @@ module Requests
         end
       end
     end
+
+    def fill_in_eligible? requestable_list
+      fill_in = nil
+      requestable_list.each do |requestable|
+        unless (requestable.services & fill_in_services).empty?
+          fill_in = true
+        end
+      end
+      fill_in
+    end 
+
+    def fill_in_services
+      ["paging", "annexa", "annexb"]
+    end
   end
 end

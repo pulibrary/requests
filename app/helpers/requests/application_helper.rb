@@ -174,7 +174,6 @@ module Requests
       end
     end
 
-
     def submit_message requestable
       if requestable.size == 1
         if requestable.first.charged?

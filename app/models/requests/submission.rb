@@ -7,6 +7,13 @@ module Requests
       unless record.items.size >= 1
         record.errors[:items] << 'Please Select an Item to Request!'
       end
+      record.items.each do |selected|
+        if selected.key? 'user_supplied_enum' 
+          if selected['user_supplied_enum'].empty?
+            record.errors[:items] << 'Please Fill in additional volume information'
+          end
+        end
+      end
     end
   end
 
@@ -47,14 +54,6 @@ module Requests
     def user_barcode
       @user[:user_barcode]
     end
-
-    # def selected_items
-    #   @items.select do |item| 
-    #     unless item[:selected].nil?
-    #       item
-    #     end
-    #   end
-    # end
 
     def bib
       @bib

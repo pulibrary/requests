@@ -128,6 +128,17 @@ module Requests
       end
     end
 
+    def pageable_loc?
+      if !self.holding.first[1].key?('call_number_browse')
+        nil
+      elsif paging_locations.include? self.location['code']
+        call_num = self.holding.first[1]['call_number_browse']
+        if lc_number?(call_num)
+          in_call_num_range(call_num, paging_ranges[self.location['code']])
+        end
+      end
+    end
+
     # This should a property of requestable. The Router can invoke this test when it looks
     # at item status and finds something unavailable. Need to confirm with Peter Bae if the only monographs rule holds
     # true for borrow direct. Currenly if a Record is not a serial/multivolume no Borrow Direct

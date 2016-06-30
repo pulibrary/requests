@@ -220,22 +220,33 @@ module Requests
     end
 
     def submit_message requestable_list
+      single_item = "Request this Item"
+      multi_item = "Request Selected Items"
+      no_item = "No Items Available"
       if requestable_list.size == 1
         if requestable_list.first.charged?
           if requestable_list.first.annexa?
-            "Request Selected Items"
+            multi_item
           elsif requestable_list.first.annexb?
-            "Request Selected Items"
+            multi_item
           elsif requestable_list.first.pageable_loc?
-            "Request Selected Items"
+            multi_item
           else
-            "No Items Available"
+            no_item
           end
         else
-          "Request this Item"
+          if requestable_list.first.annexa?
+            multi_item
+          elsif requestable_list.first.annexb?
+            multi_item
+          elsif requestable_list.first.pageable_loc?
+            multi_item
+          else
+            single_item
+          end
         end
       else
-        "Request Selected Items"
+        multi_item
       end
     end
 

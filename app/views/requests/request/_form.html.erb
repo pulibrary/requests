@@ -115,7 +115,7 @@
             </tr>
           <% end %>
           <% if fill_in_eligible? requestable_list %>
-            <%= render partial: "padded_field", locals: { requestable: requestable_list.last } %>
+            <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last } %>
           <% end %>
         </tbody>
       </table>

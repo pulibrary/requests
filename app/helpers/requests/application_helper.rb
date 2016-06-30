@@ -17,6 +17,19 @@ module Requests
       end
     end
 
+    def show_service_options_fill_in requestable
+      content_tag(:ul, class: "service-list") do
+        if requestable.annexa?
+          brief_msg = I18n.t("requests.annexa.brief_msg")
+        elsif requestable.annexb?
+          brief_msg = I18n.t("requests.annexb.brief_msg")
+        else
+          brief_msg = I18n.t("requests.paging.brief_msg")
+        end
+        concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+      end
+    end
+
     def hidden_service_options requestable
       if(requestable.services.include? 'annexa')
         request_input('annexa')
@@ -34,6 +47,16 @@ module Requests
         request_input('recap')
       else
         nil
+      end
+    end
+
+    def hidden_service_options_fill_in requestable
+      if requestable.annexa? 
+        request_input('annexa')
+      elsif requestable.annexb?
+        request_input('annexb')
+      else
+        request_input('paging')
       end
     end
 
@@ -62,6 +85,20 @@ module Requests
           hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"
           hidden + locs[0]
         end
+      end
+    end
+
+    def pickup_choices_fill_in requestable
+      locs = []
+      requestable.pickup_locations.each do |location|
+        locs << location[:label]
+      end
+      if(locs.size > 1)
+        locs = ["Select Delivery Location"] + locs.sort
+        select_tag "requestable[][pickup]", options_for_select(locs)
+      else
+        hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"
+        hidden + locs[0]
       end
     end
 
@@ -165,7 +202,15 @@ module Requests
     def submit_button_disabled requestable_list
       if requestable_list.size == 1
         if requestable_list.first.charged?
-          true
+          if requestable_list.first.annexa?
+            false
+          elsif requestable_list.first.annexb?
+            false
+          elsif requestable_list.first.pageable_loc?
+            false
+          else
+            true
+          end
         else
           false
         end
@@ -174,10 +219,18 @@ module Requests
       end
     end
 
-    def submit_message requestable
-      if requestable.size == 1
-        if requestable.first.charged?
-          "No Items Available"
+    def submit_message requestable_list
+      if requestable_list.size == 1
+        if requestable_list.first.charged?
+          if requestable_list.first.annexa?
+            "Request Selected Items"
+          elsif requestable_list.first.annexb?
+            "Request Selected Items"
+          elsif requestable_list.first.pageable_loc?
+            "Request Selected Items"
+          else
+            "No Items Available"
+          end
         else
           "Request this Item"
         end

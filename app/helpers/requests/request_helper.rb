@@ -67,6 +67,9 @@ module Requests
         unless (requestable.services & fill_in_services).empty?
           fill_in = true
         end
+        if requestable_list.size == 1
+          fill_in = true
+        end
       end
       fill_in
     end 

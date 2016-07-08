@@ -11,14 +11,17 @@ en:
     annexa: 
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
+      email_conf_msg: "You will be notified via email when your item is ready for pickup."
     annexb:
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
+      email_conf_msg: "You will be notified via email when your item is ready for pickup."
     on_shelf:
       brief_msg: "Item on Shelf. Consult shelf location map."
     on_order: 
       email_subject: "On Order Request"
-      brief_msg: "Place a request to be notified when this item has arrived, is processed, and ready for pickup."
+      brief_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived, is processed, and ready for your pickup."
+      email_conf_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived, is processed, and ready for your pickup. This process can take several weeks."
     paging:
       email_subject: "Firestone Library Paging Request"
       status: "Items requested (online, via email, or in person) anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
@@ -29,26 +32,29 @@ en:
     recap:
       email_subject: "Recap Request Confirmation"
       brief_msg: "Item offsite at ReCAP Facility. Request for delivery in 1-2 business days."
+      email_conf_msg: "Your will receive an email in 1-2 business days when your item is delivered for pickup."
     recap_edd:
       email_subject: "Recap Electronic Delivery Confirmation"
       brief_msg: "Item offsite at ReCAP Facility. Have a selection scanned for you and delivered as PDF file in 1-2 business days."
+      email_conf_msg: "Electronic copy requests typically take 1-2 days to process. You receive an email including a link where you can download your scanned section in the that timeframe."
     recall:
       email_subject: "Recalled Item Information"
-      brief_msg: "Recall Item from another Library user. May take up to six months."
+      brief_msg: "Recall item charged to another Library user. This process can take up to several weeks."
+      email_conf_msg: "Your are requesting that another Library user return this book for your use. This process can take up to several weeks. Contact the Library Circulation Desk for Details. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
     bd:
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
     in_process:
       email_subject: "In Process Request"
-      brief_msg: "Item is being shelved. Submit request to have it held for pickup."
+      brief_msg: "In Process materials may be picked up at Circulation in 1-2 business days."
+      email_conf_msg: "In Process can typically be pickup up at the Circulation Desk of your choice in 1-2 business days. You will receive an email notification when the materail is available."
     aeon:
-      email_subject: "Reading Room Request"
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
     ill:
-      email_subject: "InterLibrary Loan Request"
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:
       email_subject: "Trace Request"
       brief_msg: "Trace a Missing Item. Our Circulation Department will search for this item and notify you it is located."
+      email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
     account:
       guest: "Log in to Request in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"

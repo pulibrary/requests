@@ -178,6 +178,8 @@ module Requests
     def check_box_disabled requestable
       if requestable.on_order?
         false
+      elsif requestable.in_process?
+        false
       elsif requestable.aeon?
         true
       elsif requestable.charged?

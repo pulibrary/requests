@@ -5,18 +5,18 @@ en:
       success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       error: "We were unable to process your request. Correct the errors noted below."
     online:
-      brief_msg: "This Item is Online. The material may be restricted to Princeton NetID Holders only."
+      brief_msg: "This item is online. The material may be restricted to Princeton NetID Holders only."
     annexa: 
       email_subject: "Annex A Request"
-      brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1 business day"
+      brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
     annexb:
       email_subject: "Annex B Request"
-      brief_msg: "Item offsite at Fine Annex. Request for delivery in 1 business day."
+      brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
     on_shelf:
       brief_msg: "Item on Shelf. Consult shelf location map."
     on_order: 
       email_subject: "On Order Request"
-      brief_msg: "Place a request to be notified when this Item has arrived and processed for use."
+      brief_msg: "Place a request to be notified when this item has arrived, is processed, and ready for pickup."
     paging:
       email_subject: "Firestone Library Paging Request"
       status: "Items requested (online, via email, or in person) anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
@@ -26,15 +26,15 @@ en:
       email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
     recap:
       email_subject: "Recap Request Confirmation"
-      brief_msg: "Item offsite at ReCAP Facility. Request for delivery in one business day."
+      brief_msg: "Item offsite at ReCAP Facility. Request for delivery in 1-2 business days."
     recap_edd:
       email_subject: "Recap Electronic Delivery Confirmation"
-      brief_msg: "Item offsite at ReCAP Facility. Have a selection scanned for you and delivered via PDF in one business day."
+      brief_msg: "Item offsite at ReCAP Facility. Have a selection scanned for you and delivered as PDF file in 1-2 business days."
     recall:
       email_subject: "Recalled Item Information"
       brief_msg: "Recall Item from another Library user. May take up to six months."
     bd:
-      brief_msg: "See if the Item can be obtained from one of our partner Libraries. Requests typically filled in four business days."
+      brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
     in_process:
       brief_msg: "Item is being shelved. Submit request to have it held for pickup."
     aeon:
@@ -42,7 +42,7 @@ en:
     ill:
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:
-      brief_msg: "Trace a Missing Item. You will be notified via email when located."
+      brief_msg: "Trace a Missing Item. Our Circulation Department will search for this item and notify you it is located."
     account:
       guest: "Log in to Request in via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"

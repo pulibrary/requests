@@ -176,7 +176,9 @@ module Requests
     end
 
     def check_box_disabled requestable
-      if requestable.aeon?
+      if requestable.on_order?
+        false
+      elsif requestable.aeon?
         true
       elsif requestable.charged?
         true

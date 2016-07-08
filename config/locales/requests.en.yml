@@ -7,10 +7,10 @@ en:
     online:
       brief_msg: "This item is online. The material may be restricted to Princeton NetID Holders only."
     annexa: 
-      email_subject: "Annex A Request"
+      email_subject: "Annex Request"
       brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
     annexb:
-      email_subject: "Annex B Request"
+      email_subject: "Annex Request"
       brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
     on_shelf:
       brief_msg: "Item on Shelf. Consult shelf location map."
@@ -36,12 +36,16 @@ en:
     bd:
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
     in_process:
+      email_subject: "In Process Request"
       brief_msg: "Item is being shelved. Submit request to have it held for pickup."
     aeon:
+      email_subject: "Reading Room Request"
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
     ill:
+      email_subject: "InterLibrary Loan Request"
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:
+      email_subject: "Trace Request"
       brief_msg: "Trace a Missing Item. Our Circulation Department will search for this item and notify you it is located."
     account:
       guest: "Log in to Request in via Central Authentication Services"

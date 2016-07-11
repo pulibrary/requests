@@ -76,6 +76,16 @@ module Requests
            subject: I18n.t('requests.recap.email_subject'))
     end
 
+    def recap_edd_email(submission)
+      @submission = submission
+      destination_email = @submission.email
+      @url  = 'http://example.com/login'
+      mail(to: destination_email, 
+           cc: cc_email,
+           from: destination_email,
+           subject: I18n.t('requests.recap_edd.email_subject'))
+    end
+
     def recall_email(submission)
       @submission = submission
       destination_email = @submission.email

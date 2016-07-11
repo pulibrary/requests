@@ -56,7 +56,7 @@ en:
       brief_msg: "Trace a Missing Item. Our Circulation Department will search for this item and notify you it is located."
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
     account:
-      guest: "Log in to Request in via Central Authentication Services"
+      guest: "Log in to Request via Central Authentication Services"
       unauthenticated: "Please sign in to see all requests"
       logged_in: "Logged in as:"
   

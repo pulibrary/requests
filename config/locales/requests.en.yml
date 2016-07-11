@@ -11,11 +11,11 @@ en:
     annexa: 
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
-      email_conf_msg: "You will be notified via email when your item is ready for pickup."
+      email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
     annexb:
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
-      email_conf_msg: "You will be notified via email when your item is ready for pickup."
+      email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
     on_shelf:
       brief_msg: "Item on Shelf. Consult shelf location map."
     on_order: 
@@ -30,7 +30,7 @@ en:
       success: "Request submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
       email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
     recap:
-      email_subject: "Recap Request Confirmation"
+      email_subject: "Offsite Request Confirmation"
       brief_msg: "Item offsite at ReCAP Facility. Request for delivery in 1-2 business days."
       email_conf_msg: "Your will receive an email in 1-2 business days when your item is delivered for pickup."
     recap_edd:

@@ -31,7 +31,7 @@ module Requests
         name += patron[:first_name]
       end
       unless patron[:last_name].nil?
-        name += patron[:last_name]
+        name += " #{patron[:last_name]}"
       end
       name
     end

@@ -5,7 +5,7 @@ en:
       email_destination: "libcir@princeton.edu"
     submit:
       success: "Request submitted. See confirmation email with details about when your item(s) will be available."
-      error: "We were unable to process your request. Correct the errors noted below."
+      error: "We were unable to process your request. Correct the highlighted errors."
     online:
       brief_msg: "This item is online. The material may be restricted to Princeton NetID Holders only."
     annexa: 

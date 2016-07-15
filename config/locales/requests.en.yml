@@ -9,19 +9,22 @@ en:
     online:
       brief_msg: "This item is online. The material may be restricted to Princeton NetID Holders only."
     annexa: 
+      email: "forranx@princeton.edu"
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
       email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
     annexb:
+      email: "fineanx@princeton.edu"
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
       email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
     on_shelf:
       brief_msg: "Item on Shelf. Consult shelf location map."
     on_order: 
+      email: "fstcirc@princeton.edu"
       email_subject: "On Order Request"
-      brief_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived, is processed, and ready for your pickup."
-      email_conf_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived, is processed, and ready for your pickup. This process can take several weeks."
+      brief_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pickup."
+      email_conf_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pickup."
     paging:
       email_subject: "Firestone Library Paging Request"
       status: "Items requested (online, via email, or in person) anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
@@ -44,14 +47,16 @@ en:
     bd:
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
     in_process:
+      email: "fstcirc@princeton.edu"
       email_subject: "In Process Request"
-      brief_msg: "In Process materials may be picked up at Circulation in 1-2 business days."
-      email_conf_msg: "In Process can typically be pickup up at the Circulation Desk of your choice in 1-2 business days. You will receive an email notification when the materail is available."
+      brief_msg: "In Process materials  in several business days."
+      email_conf_msg: "In Process materials can typically be picked up at the Circulation Desk of your choice in several business days. You will receive an email notification when the material is available."
     aeon:
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
     ill:
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:
+      email: "trace@princeton.edu"
       email_subject: "Trace Request"
       brief_msg: "Trace a Missing Item. Our Circulation Department will search for this item and notify you it is located."
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."

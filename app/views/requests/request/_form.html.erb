@@ -74,7 +74,6 @@
         <thead>
           <th>Select</th>
           <th>Enumeration</th>
-          <th>Copy</th>
           <th>Status</th>
           <th>Request Options</th>
           <th>Pickup Location</th>
@@ -89,10 +88,7 @@
                   <%= hidden_fields_item requestable %>
                 </td>
                 <td>
-                  <%= requestable.item["enum"] %>
-                </td>
-                <td>
-                  <%= requestable.item["copy_number"] %>
+                  <%= enum_copy_display requestable.item %>
                 </td>
                 <td>
                   <%= requestable.item["status"] %><br/>

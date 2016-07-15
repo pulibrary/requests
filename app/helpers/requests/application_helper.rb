@@ -50,6 +50,7 @@ module Requests
       end
     end
 
+    # only requestable services that support "user-supplied volume info"
     def hidden_service_options_fill_in requestable
       if requestable.annexa? 
         request_input('annexa')
@@ -66,6 +67,20 @@ module Requests
       radio += radio_button_tag "requestable[][type]", "recap_edd"
       radio += label_tag "requestable_recap_edd", "Electronic Delivery"
       radio
+    end
+
+    def enum_copy_display item
+      display = ""
+      unless item[:enum].nil?
+        display += item[:enum]
+      end
+      if !item[:enum].nil? && !item[:copy_number].nil?
+        display += " "
+      end
+      unless item[:copy_number].nil? || item[:copy_number] == 0
+        display += "Copy #{item[:copy_number]}"
+      end
+      display
     end
 
     def request_input type

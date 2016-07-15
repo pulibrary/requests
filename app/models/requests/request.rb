@@ -170,9 +170,12 @@ module Requests
       if !thesis?
         if @mfhd
           items_as_json = items_by_mfhd(@mfhd)
-          unless items_as_json.size == 0
+          if items_as_json.size != 0
             items_with_symbols = items_to_symbols(items_as_json)
             mfhd_items[@mfhd] = items_with_symbols
+          else
+            empty_mfhd = items_by_bib(@system_id)
+            mfhd_items[@mfhd] = [ empty_mfhd[@mfhd] ]
           end
         else
           items_by_bib(@system_id).each do |holding_id, item_info|

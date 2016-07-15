@@ -545,6 +545,33 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context "When passed an ID for an On Order Title" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9602551',
+        mfhd: '9442918',
+        user: user
+      }
+    }
+    let(:request_with_on_order) { described_class.new(params) }
+    subject { request_with_on_order }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should have a requestable on order item" do
+        expect(subject.requestable[0].services.include?('on_order')).to be_truthy
+      end
+
+      it "should have a requestable on order item" do
+        expect(subject.requestable[0].voyager_managed?).to eq(true)
+      end
+    end
+  end
+
   # Oversize ID 
   context "When passed an ID for an Item with that is Oversize" do
     let(:user) { FactoryGirl.build(:user) }

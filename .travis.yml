@@ -5,7 +5,7 @@ rvm:
 before_script:
   - rake engine_cart:generate
 
-script: bundle exec rspec
+script: bundle exec rake ci
 
 branches:
   only:

@@ -4,8 +4,12 @@ rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 
-require 'rdoc/task'
+Bundler::GemHelper.install_tasks
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
+require 'rdoc/task'
 RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title    = 'Requests'
@@ -14,25 +18,14 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
+require 'engine_cart/rake_task'
 load 'rails/tasks/statistics.rake'
 
-require 'engine_cart/rake_task'
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
-
 task ci: ['engine_cart:generate'] do
-  # run the tests
+  Rake::Task['spec'].invoke
 end
 
 Bundler::GemHelper.install_tasks
 
-require 'rake/testtask'
-
-# Rake::TestTask.new(:test) do |t|
-#   t.libs << 'lib'
-#   t.libs << 'test'
-#   t.pattern = 'test/**/*_test.rb'
-#   t.verbose = false
-# end
-
-task default: :test
+task clean: 'engine_cart:clean'
+task default: [:ci]

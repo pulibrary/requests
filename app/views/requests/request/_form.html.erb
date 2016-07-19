@@ -51,6 +51,9 @@
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
     <%= f.hidden_field :email, value: @user.email %>
   <% end %>
+  <% unless @request.source.nil? %>
+    <%= f.hidden_field :source, value: @request.source %>
+  <% end %>
 
   <div class="error error-items">
   </div>
@@ -117,5 +120,5 @@
       </table>
     </div>
   <% end %>
-  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary", disabled: submit_button_disabled(@request.requestable) , data: { disable_with: "Submitting Request" } %>
+  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
 <% end %>

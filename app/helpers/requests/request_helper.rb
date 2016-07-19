@@ -79,5 +79,22 @@ module Requests
     def fill_in_services
       ["paging", "annexa", "annexb"]
     end
+
+    def return_message(submission)
+      unless submission.source.nil?
+        link_to "Return to Record", return_url(@submission.source, @submission.id), class: 'btn btn-default icon-moveback', title: 'Return to Record'
+      end
+    end
+
+    def return_url(source, id)
+      case source
+      when 'catalog'
+        "http://catalog.princeton.edu/cgi-bin/Pwebrecon.cgi?BBID=#{id}"
+      when 'pulsearch'
+        "https://pulsearch.princeton.edu/catalog/#{id}"
+      else
+        nil
+      end
+    end
   end
 end

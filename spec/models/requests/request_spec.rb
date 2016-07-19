@@ -637,4 +637,27 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   end
   ## Add context for Visuals when available
   ## Add context for EAD when available
+  # http://localhost:4000/requests/2002206?mfhd=2281830
+  context "When passed a mfhd with missing items" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2002206',
+        mfhd: '2281830',
+        user: user
+      }
+    }
+    let(:request_with_missing) { described_class.new(params) }
+    subject { request_with_missing }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should show missing items as eligible for ill" do
+        expect(subject.requestable[2].services.include?('ill')).to be_truthy
+      end
+    end
+  end
 end

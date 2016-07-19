@@ -4,6 +4,13 @@ module Requests
       str.gsub(/[^A-Za-z0-9]/, '')
     end
 
+    def format_label(key)
+      label = key.to_s
+      human_label = label.gsub(/_/, ' ')
+      formatted = human_label.split.map(&:capitalize).join(' ')
+      formatted
+    end
+
     def show_service_options requestable
       if requestable.charged?
         link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
@@ -180,9 +187,9 @@ module Requests
 
     def status_label requestable
       if requestable.charged?
-        content_tag(:span, 'Not Available', class: "badge-alert")
+        content_tag(:span, 'Not Available', class: "availability--label badge-alert")
       else 
-        content_tag(:span, 'Available', class: "badge-success")
+        content_tag(:span, 'Available', class: "availability--label badge-success")
       end
     end
 

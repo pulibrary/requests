@@ -159,7 +159,7 @@ module Requests
       ['Charged', 'Renewed', 'Overdue', 'On hold', 'In transit',
        'In transit on hold', 'At bindery', 'Remote storage request',
        'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-       'Lost--system applied', 'Claims returned', 'Withdrawn']
+       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing']
     end
   end
 end

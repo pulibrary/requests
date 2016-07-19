@@ -18,6 +18,7 @@ module Requests
       @system_id = params[:system_id]
       @mfhd = params[:mfhd]
       @user = params[:user]
+      @source = params[:source]
       @doc = solr_doc(@system_id)
       @locations = load_locations
       @items = load_items # hash of item data if nil only holdings level data available
@@ -218,6 +219,10 @@ module Requests
         author: doc["author_citation_display"],
         date:  doc["pub_date_display"]
       }
+    end
+
+    def source
+      @source
     end
 
     private

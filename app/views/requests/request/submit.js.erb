@@ -1,14 +1,18 @@
-$(".flash_messages").html("<%= escape_javascript(render :partial=>'flash_messages') %>");
+//$(".flash_messages").html("<%= escape_javascript(render :partial=>'flash_messages') %>");
 <% if @submission.errors.messages.empty? %>
   $('.error').each(function( index ) {
     $(this).hide();
   });
+  $('.alert-danger').hide();
+  $('.submit--request').replaceWith("<%= escape_javascript(render partial: 'flash_messages') %>");
 <% else %>
   $('.error').each(function( index ) {
     $(this).hide();
   });
+  $('.alert-danger').hide();
   <% @submission.errors.messages.each do |key, value| %>
     $(".error-<%= key %>").text("<%= value.first.html_safe %>"); 
     $(".error-<%= key %>").show();
   <% end %>
+  $('.submit--request').before("<%= escape_javascript(render partial: 'flash_messages') %>");
 <% end %>

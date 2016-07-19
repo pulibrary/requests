@@ -20,9 +20,9 @@ module Requests
   class Submission
     include ActiveModel::Validations
 
-    validates :email, presence: true, email: true, length: { minimum: 5, maximum: 50 } #, on: :submit
-    validates :user_name, presence: true, length: { minimum: 1, maximum: 50 } #, on: :submit
-    validates :user_barcode, presence: true, length: { minimum: 5, maximum: 14 }, format: { with: /(^ACCESS$|^access$|^\d{14}$)/i, message: "Supply a valid library barcode or type the value 'ACCESS'" }
+    validates :email, presence: true, email: true, length: { minimum: 5, maximum: 50 } #, format: { message: "Supply a Valid Email Address" } #, on: :submit
+    validates :user_name, presence: true, length: { minimum: 1, maximum: 50 } # ,  format: { message: "Name Can't be Blank" } #, on: :submit
+    validates :user_barcode, presence: true, length: { minimum: 5, maximum: 14 }, format: { with: /(^ACCESS$|^access$|^\d{14}$)/i, message: "Please supply a valid library barcode or type the value 'ACCESS'" }
     validate :item_validations #, presence: true, length: { minimum: 1 }, on: :submit
 
     def initialize(params)
@@ -33,6 +33,10 @@ module Requests
 
     def email
       @user[:email]
+    end
+
+    def source
+      @user[:source]
     end
 
     def user_name
@@ -57,6 +61,10 @@ module Requests
 
     def bib
       @bib
+    end
+
+    def id
+      @bib[:id]
     end
 
     # def selected_items

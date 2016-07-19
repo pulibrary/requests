@@ -12,6 +12,9 @@ module Requests
 
     def generate
       request_params[:system_id] = sanitize(params[:system_id])
+      unless params[:source].nil?
+        request_params[:source] = sanitize(params[:source])
+      end
       @title = "Request ID: #{request_params[:system_id]}"
       unless params[:mfhd].nil?
         request_params[:mfhd] = sanitize(params[:mfhd])
@@ -73,7 +76,7 @@ module Requests
     private
       # trusted params
       def request_params
-        params.permit(:id, :system_id, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable).permit!
+        params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable).permit!
       end
 
       def mail_services

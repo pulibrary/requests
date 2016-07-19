@@ -79,7 +79,7 @@ module Requests
 
     def in_process?
       if item?
-        if @item[:status] == 'In Process' || 'On-Site - In Process'
+        if @item[:status] == 'In Process' || @item[:status] == 'On-Site - In Process'
           return true
         end
       end

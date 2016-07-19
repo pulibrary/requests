@@ -11,6 +11,13 @@ module Requests
       formatted
     end
 
+    def error_key_format(key)
+      keys_to_ignore = ['items']
+      unless keys_to_ignore.include? key.to_s
+        format_label(key)
+      end
+    end
+
     def show_service_options requestable
       if requestable.charged?
         link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
@@ -84,7 +91,7 @@ module Requests
       if !item[:enum].nil? && !item[:copy_number].nil?
         display += " "
       end
-      unless item[:copy_number].nil? || item[:copy_number] == 0
+      unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1
         display += "Copy #{item[:copy_number]}"
       end
       display
@@ -208,6 +215,8 @@ module Requests
         true
       elsif requestable.open? && !requestable.pageable?
         true
+      elsif requestable.always_requestable?
+        true
       else
         false
       end
@@ -241,8 +250,26 @@ module Requests
           false
         end
       else
-        false
+        if has_submitable? requestable_list
+          true
+        else
+          false
+        end
       end
+    end
+
+    def has_submitable? requestable_list
+      submitable = true
+      requestable_list.each do |requestable|
+        unless((requestable.services & self.submitable).empty?)
+          submitable = nil
+        end
+      end
+      submitable
+    end
+
+    def submitable
+      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging']
     end
 
     def submit_message requestable_list
@@ -274,6 +301,14 @@ module Requests
       else
         multi_item
       end
+    end
+
+    def show_tablesorter requestable_list
+      table_class = ""
+      if requestable_list.size > 5
+        table_class += "tablesorter"
+      end
+      table_class
     end
 
     def display_label

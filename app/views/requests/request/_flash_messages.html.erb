@@ -12,7 +12,7 @@
        <% if !@submission.errors.empty? %>
           <ul>
             <% @submission.errors.messages.each do |key, value| %>
-              <li><em><%= format_label(key) %></em> <%= value.first.html_safe %></li>
+              <li><em><%= error_key_format(key) %></em> <%= value.first.html_safe %></li>
             <% end %>
           </ul>
         <% else %>

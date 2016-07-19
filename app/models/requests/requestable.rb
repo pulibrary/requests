@@ -79,7 +79,9 @@ module Requests
 
     def in_process?
       if item?
-        return true if @item[:status] == 'In Process'
+        if @item[:status] == 'In Process' || 'On-Site - In Process'
+          return true
+        end
       end
     end
 
@@ -159,7 +161,8 @@ module Requests
       ['Charged', 'Renewed', 'Overdue', 'On hold', 'In transit',
        'In transit on hold', 'At bindery', 'Remote storage request',
        'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing']
+       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing', 
+       'Missing','On-Site - On Hold']
     end
   end
 end

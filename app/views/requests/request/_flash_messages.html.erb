@@ -9,14 +9,16 @@
   -%>
   <% if flash[type] %>
     <div class="alert <%=alert_class %>"><%= flash[type] %>
-       <% if !@submission.errors.empty? %>
-          <ul>
-            <% @submission.errors.messages.each do |key, value| %>
-              <li><em><%= error_key_format(key) %></em> <%= value.first.html_safe %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          <%= return_message @submission %>
+       <% if !@submission.nil? %>
+          <% if !@submission.errors.empty? %>
+            <ul>
+              <% @submission.errors.messages.each do |key, value| %>
+                <li><em><%= error_key_format(key) %></em> <%= value.first.html_safe %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <%= return_message @submission %>
+          <% end %>
         <% end %>
        <a class="close" data-dismiss="alert" href="#">&times;</a>
     </div>

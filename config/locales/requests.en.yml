@@ -38,7 +38,7 @@ en:
       email_conf_msg: "Your will receive an email in 1-2 business days when your item is delivered for pickup."
     recap_edd:
       email_subject: "Recap Electronic Delivery Confirmation"
-      brief_msg: "Item offsite at ReCAP Facility. Have a selection scanned for you and delivered as PDF file in 1-2 business days."
+      brief_msg: "Item offsite at ReCAP Facility. Have a selection up to 50 pages scanned for you and delivered as PDF file in 1-2 business days."
       email_conf_msg: "Electronic copy requests typically take 1-2 days to process. You receive an email including a link where you can download your scanned section in the that timeframe."
     recall:
       email_subject: "Recalled Item Information"

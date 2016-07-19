@@ -49,7 +49,7 @@ en:
     in_process:
       email: "fstcirc@princeton.edu"
       email_subject: "In Process Request"
-      brief_msg: "In Process materials  in several business days."
+      brief_msg: "In Process materials are typically in several business days."
       email_conf_msg: "In Process materials can typically be picked up at the Circulation Desk of your choice in several business days. You will receive an email notification when the material is available."
     aeon:
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."

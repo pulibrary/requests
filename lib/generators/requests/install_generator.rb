@@ -41,6 +41,9 @@ module Requests
       gem 'devise'
       gem "devise-guests", '~> 0.5'
       gem "omniauth-cas"
+      Bundler.with_clean_env do
+        run "bundle install"
+      end
       copy_file './db/migrate/201605022201303_add_columns_to_users.rb', 'db/migrate/201605022201303_add_columns_to_users.rb'
       generate "devise:install"
       generate "devise", 'User'

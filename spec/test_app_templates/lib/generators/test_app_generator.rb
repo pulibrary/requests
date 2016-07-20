@@ -8,11 +8,10 @@ class TestAppGenerator < Rails::Generators::Base
   # if you need to generate any additional configuration
   # into the test app, this generator will be run immediately
   # after setting up the application
-
   def install_engine
-    generate 'requests:install'#,  '--devise'
+    generate 'requests:install',  '-f'
   end
-
+  
   def add_gems
     gem 'bootstrap-sass', '~> 3.3'
     gem 'yaml_db', '~> 0.3.0'
@@ -23,7 +22,7 @@ class TestAppGenerator < Rails::Generators::Base
       run "bundle install"
     end
   end
-  
+
   def run_migrations
     rake 'requests:install:migrations'
     rake "db:migrate"

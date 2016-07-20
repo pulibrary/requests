@@ -101,12 +101,9 @@ module Requests
       hidden_field_tag "requestable[][type]", "", value: type 
     end
 
-    def pickup_choices requestable
-      locs = []
-      unless requestable.pickup_locations.nil? || requestable.charged?
-        requestable.pickup_locations.each do |location|
-          locs << location[:label]
-        end
+    def pickup_choices requestable, default_pickups
+      unless requestable.pickup_locations.nil? || requestable.charged? # || (requestable.services & self.default_pickup_services).empty?
+        locs = self.available_pickups(requestable, default_pickups)
         if(locs.size > 1)
           locs = ["Select Delivery Location"] + locs.sort
           select_tag "requestable[][pickup]", options_for_select(locs)
@@ -115,6 +112,22 @@ module Requests
           hidden + locs[0]
         end
       end
+    end
+
+    def available_pickups requestable, default_pickups
+      locs = []
+      if !(requestable.services & self.default_pickup_services).empty?
+        locs = default_pickups
+      else
+        requestable.pickup_locations.each do |location|
+          locs << location[:label]
+        end
+      end
+      locs
+    end
+
+    def default_pickup_services
+      ["on_order", "in_process"]
     end
 
     def pickup_choices_fill_in requestable
@@ -208,6 +221,8 @@ module Requests
       if requestable.on_order?
         false
       elsif requestable.in_process?
+        false
+      elsif requestable.always_requestable? && requestable.recap?
         false
       elsif requestable.aeon?
         true
@@ -303,6 +318,8 @@ module Requests
       end
     end
 
+    # only show the table sort if there are enough items
+    # to make it worthwhile
     def show_tablesorter requestable_list
       table_class = ""
       if requestable_list.size > 5

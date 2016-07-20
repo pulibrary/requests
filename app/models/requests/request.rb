@@ -21,6 +21,7 @@ module Requests
       @source = params[:source]
       @doc = solr_doc(@system_id)
       @locations = load_locations
+      @default_pickups = build_pickups
       @items = load_items # hash of item data if nil only holdings level data available
     end
 
@@ -219,6 +220,20 @@ module Requests
         author: doc["author_citation_display"],
         date:  doc["pub_date_display"]
       }
+    end
+
+    def build_pickups
+      pickup_locations = []
+      get_pickups.each do |pickup|
+        if pickup["pickup_location"] == true
+          pickup_locations << pickup["label"]
+        end
+      end
+      pickup_locations
+    end
+
+    def default_pickups
+      @default_pickups.sort
     end
 
     def source

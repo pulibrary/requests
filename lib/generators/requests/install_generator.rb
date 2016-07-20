@@ -36,16 +36,16 @@ module Requests
     end
 
     def generate_devise_assets
-      puts "#{options.to_s}"
-      if options[:devise]
-        gem 'devise'
-        gem "devise-guests", '~> 0.5'
-        gem "omniauth-cas"
-        copy_file './db/migrate/201605022201303_add_columns_to_users.rb', 'db/migrate/201605022201303_add_columns_to_users.rb'
-        generate "devise:install"
-        generate "devise", 'User'
-        generate "devise_guests", 'User'
-      end
+      #puts "#{options.to_s}"
+      #if options[:devise]
+      gem 'devise'
+      gem "devise-guests", '~> 0.5'
+      gem "omniauth-cas"
+      copy_file './db/migrate/201605022201303_add_columns_to_users.rb', 'db/migrate/201605022201303_add_columns_to_users.rb'
+      generate "devise:install"
+      generate "devise", 'User'
+      generate "devise_guests", 'User'
+      #end
     end
   end
 end

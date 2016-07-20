@@ -10,7 +10,7 @@ class TestAppGenerator < Rails::Generators::Base
   # after setting up the application
 
   def install_engine
-    generate 'requests:install --devise'
+    generate 'requests:install'#,  '--devise'
   end
 
   def add_gems
@@ -27,7 +27,7 @@ class TestAppGenerator < Rails::Generators::Base
   def run_migrations
     rake 'requests:install:migrations'
     rake "db:migrate"
-    rake "db:migrate RAILS_ENV=test"
+    #rake "db:migrate RAILS_ENV=test"
   end
 
 end

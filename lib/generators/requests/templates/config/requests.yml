@@ -9,9 +9,6 @@ defaults: &defaults
   voyager_api_base: http://catalog.princeton.edu:7014
   voyager_ub_id: 1@PRINCETONDB20050302104001
   gfa_base_url: http://lib-terminal.princeton.edu/gfa
-  annex_email: blahannex@princeton.edu
-  circulation_email: blahcirc@princeton.edu
-  reply_to_email: blahhelpme@princeton.edu
   paging:
     email:
       - 'fstpaging@princeton.edu'

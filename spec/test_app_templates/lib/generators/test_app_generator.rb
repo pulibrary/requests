@@ -13,10 +13,7 @@ class TestAppGenerator < Rails::Generators::Base
     generate 'requests:install --devise'
   end
 
-  def add_gems 
-    gem 'devise'
-    gem "devise-guests", '~> 0.5'
-    gem "omniauth-cas"
+  def add_gems
     gem 'bootstrap-sass', '~> 3.3'
     gem 'yaml_db', '~> 0.3.0'
     gem 'factory_girl_rails', '~> 4.5.0', group: [:development, :test]

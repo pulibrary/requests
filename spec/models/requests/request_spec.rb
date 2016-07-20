@@ -528,6 +528,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     }
     let(:request_with_on_order) { described_class.new(params) }
+    let(:firestone_circ) { "Firestone Library" }
     subject { request_with_on_order }
 
     describe "#requestable" do
@@ -541,6 +542,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should have a requestable on order item" do
         expect(subject.requestable[0].voyager_managed?).to eq(true)
+      end
+
+      it "should provide a list of the default pickup locations" do
+        expect(subject.default_pickups).to be_truthy
+        expect(subject.default_pickups).to be_an(Array)
+        expect(subject.default_pickups.size).to be > 1
+        expect(subject.default_pickups).to include? firestone_circ
       end
     end
   end

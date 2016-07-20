@@ -109,7 +109,7 @@
                 <%= hidden_service_options requestable %>
               </td>
               <td>
-                <%= pickup_choices requestable %>
+                <%= pickup_choices requestable, @request.default_pickups %>
               </td>
             </tr>
           <% end %>

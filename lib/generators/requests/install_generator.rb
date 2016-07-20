@@ -35,7 +35,7 @@ module Requests
       end
     end
 
-    def generate_devise_assets
+    def devise
       #puts "#{options.to_s}"
       #if options[:devise]
       gem 'devise'

@@ -1,9 +1,10 @@
 language: ruby
 rvm:
+  - 2.2.0
   - 2.3.0
 
-before_script:
-  - rake engine_cart:generate
+# before_script:
+#   - rake engine_cart:generate
 
 script: bundle exec rake ci
 

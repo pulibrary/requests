@@ -37,6 +37,10 @@ module Requests
           service = @submission.service_type
           if mail_services.include? service
             Requests::RequestMailer.send("#{service}_email", @submission).deliver_now
+          elsif recap_services.include? service
+            gfa_service = Requests::Recap.new(@submission)
+          elsif service == 'recall'
+            recall_service = Requests::Recall.new(@submission)
           end
           format.js { 
             flash.now[:success] = I18n.t('requests.submit.success') 
@@ -81,6 +85,10 @@ module Requests
 
       def mail_services
         ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
+      end
+
+      def recap_services
+        ["recap", 'recap_dd']
       end
 
 

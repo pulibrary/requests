@@ -9,6 +9,8 @@ module Requests
     attr_writer :services
 
     include Requests::Pageable
+    include Requests::Aeon
+    include Requests::Illiad
 
     def initialize(params)
       @bib = params[:bib] # hash of bibliographic data

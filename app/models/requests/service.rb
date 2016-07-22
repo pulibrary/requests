@@ -5,7 +5,7 @@ module Requests
       @type = params[:type]
     end
 
-    def handle(requestable, user)
+    def handle
       raise Exception.new("#{self.class}: handle() must be implemented by Service concrete sub-class, for standard services!")
     end
 

@@ -2,7 +2,7 @@ require 'lcsort'
 
 module Requests
   module Pageable
-    # for PUL Bibliographic Helpers
+    # 
     extend ActiveSupport::Concern
     
     def lc_number?(call_num)

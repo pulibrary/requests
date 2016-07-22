@@ -430,6 +430,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should return false when all requestable items are not pageable?" do
         subject.requestable.each do |requestable|
           requestable.item["status"] = 'Charged'
+          requestable.services = []
         end
         expect(subject.has_pageable?).to be_falsy
       end 
@@ -665,6 +666,108 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should show missing items as eligible for ill" do
         expect(subject.requestable[2].services.include?('ill')).to be_truthy
+      end
+    end
+  end
+
+  context "When passed an Aeon ID" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9627261',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should show item as aeon eligble" do
+        expect(subject.requestable.first.services.include?('aeon')).to be_truthy
+      end
+    end
+  end
+
+  context "When passed an Aeon holding ID with no items" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '616086',
+        mfhd: '5132984',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to eq(1)
+      end
+
+      it "should not have any barcode data" do
+        expect(subject.requestable.first.item[:barcode]).to be_nil
+      end
+
+      it "should be eligible for aeon services" do
+        expect(subject.requestable.first.services.include?('aeon')).to be_truthy
+      end
+    end
+  end
+
+  context "When Passed a ReCAP ID" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9676483',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should be eligible for recap services" do
+        expect(subject.requestable.first.services.include?('recap')).to be_truthy
+      end
+
+      it "should be eligible for recap_edd services" do
+        expect(subject.requestable.first.services.include?('recap_edd')).to be_truthy
+      end
+    end
+  end
+
+  context "When Passed a ReCAP ID and mfhd for a serial at a non EDD location" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '426420',
+        mfhd: '464640',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should be eligible for recap services" do
+        expect(subject.requestable.last.services.include?('recap')).to be_truthy
+      end
+
+      it "should be eligible for recap_edd services" do
+        expect(subject.requestable.last.services.include?('recap_edd')).to be_falsy
       end
     end
   end

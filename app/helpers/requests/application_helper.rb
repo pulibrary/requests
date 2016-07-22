@@ -56,7 +56,7 @@ module Requests
       elsif(requestable.services.include? 'on_order')
         request_input('on_order')
       elsif(requestable.services.include? 'recap_edd' and requestable.services.include? 'recap')
-        recap_radio_button_group
+        recap_radio_button_group requestable
       elsif(requestable.services.include? 'recap')
         request_input('recap')
       else
@@ -75,11 +75,11 @@ module Requests
       end
     end
 
-    def recap_radio_button_group
-      radio = radio_button_tag "requestable[][type]", "recap"
-      radio += label_tag "requestable_recap", "Print"
-      radio += radio_button_tag "requestable[][type]", "recap_edd"
-      radio += label_tag "requestable_recap_edd", "Electronic Delivery"
+    def recap_radio_button_group requestable
+      radio = radio_button_tag "requestable[][type]", "recap", id: "" 
+      radio += label_tag "requestable_recap", "Print", for: ""
+      radio += radio_button_tag "requestable[][type]", "recap_edd", id: ""
+      radio += label_tag "requestable_recap_edd", "Electronic Delivery", for: ""
       radio
     end
 

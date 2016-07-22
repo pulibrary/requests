@@ -12,8 +12,9 @@ module Requests
     include Requests::Bibdata
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
-    # @option opts [Fixnum] :mfhd 
-    # @option opts [User] :user current user object                                                    
+    # @option opts [Fixnum] :mfhd voyager id
+    # @option opts [User] :user current user object 
+    # @option opts [String] :source represents system that directed user to request form. i.e.                                                   
     def initialize(params)
       @system_id = params[:system_id]
       @mfhd = params[:mfhd]
@@ -23,15 +24,19 @@ module Requests
       @locations = load_locations
       @default_pickups = build_pickups
       @items = load_items # hash of item data if nil only holdings level data available
+      @requestable = build_requestable
     end
 
     def doc
       @doc
     end
 
+    def requestable
+      @requestable
+    end
     ### builds a list of possible requestable items
     # returns a collection of requestable objects or nil
-    def requestable
+    def build_requestable
       if !@items.nil?
         requestable_items = []
         @items.each do |holding_id, items|

@@ -12,6 +12,7 @@
   $('.alert-danger').hide();
   <% @submission.errors.messages.each do |key, value| %>
     $(".error-<%= key %>").text("<%= value.first.html_safe %>"); 
+    $(".error-<%= key %>").parent().addClass('has-error');
     $(".error-<%= key %>").show();
   <% end %>
   $('.submit--request').before("<%= escape_javascript(render partial: 'flash_messages') %>");

@@ -40,7 +40,7 @@
   <% else %>
     <div class="user user-pul">
       <h3>Your Contact Information</h3>
-      <dl>
+      <dl class='account--patron_info'>
         <dt>Name</dt>
         <dd><%= pul_patron_name @patron %></dd>
         <dt>Email</dt>
@@ -55,7 +55,9 @@
     <%= f.hidden_field :source, value: @request.source %>
   <% end %>
 
-  <div class="error error-items">
+  <div>
+    <span class="error error-items">
+    </span>
   </div>
   <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
     <%= hidden_fields_mfhd @request.holdings[mfhd] %>

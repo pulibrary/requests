@@ -12,6 +12,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
+  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>
 
 test:
   <<: *defaults

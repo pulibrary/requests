@@ -7,8 +7,8 @@ module Requests
     class_option :devise, :type => :boolean, :default => false, :aliases => "-d", :desc => "Use Devise as authentication logic (this is default)."
     desc ''"
     This generator does the following:
-    1. Creates a requests_inializer in config/initializers.
-    2. Creates a requests.yml populated with test values in config.
+    1. Creates a requests_inializer.rb in config/initializers.
+    2. Creates a requests.yml populated with usabale default values in config.
     3. Creates a requests.en.yml locale file
     4. Updates .gitignore
     "''
@@ -25,9 +25,10 @@ module Requests
       copy_file './config/locales/requests.en.yml', 'config/locales/requests.en.yml'
     end
 
-    def inject_ignore_request_conf
-      append_to_file '.gitignore', "\nconfig/requests.yml\n" if File.exist?('.gitignore')
-    end
+    # no longer need to ignore this, use env variables for overrides when needed.
+    # def inject_ignore_request_conf
+    #   append_to_file '.gitignore', "\nconfig/requests.yml\n" if File.exist?('.gitignore')
+    # end
 
     def inject_routes
       inject_into_file 'config/routes.rb', after: %(Rails.application.routes.draw do\n) do

@@ -6,17 +6,17 @@ module Requests
     attr_reader :item
     attr_reader :location
     attr_reader :provider
-    attr_writer :services
+    attr_accessor :services
 
     include Requests::Pageable
     include Requests::Aeon
     include Requests::Illiad
 
-    def initialize(params)
-      @bib = params[:bib] # hash of bibliographic data
-      @holding = params[:holding] # hash of holding data
-      @item = params[:item] # hash of item data
-      @location = params[:location] # hash of location matrix data
+    def initialize(bib:, holding: nil, item: nil, location: nil)
+      @bib ||= bib # hash of bibliographic data
+      @holding ||= holding # hash of holding data
+      @item ||= item # hash of item data
+      @location ||= location # hash of location matrix data
     end
 
     def type
@@ -27,6 +27,22 @@ module Requests
       else
         'bib'
       end
+    end
+
+    def bib
+      @bib
+    end
+
+    def holding
+      @holding
+    end
+
+    def item
+      @item
+    end
+
+    def location
+      @location
     end
 
     def location_code
@@ -97,8 +113,8 @@ module Requests
       @item
     end
 
-    def services
-      @services
+    def set_services service_list
+      @services = service_list
     end
 
     def voyager_managed?

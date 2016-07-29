@@ -7,6 +7,7 @@ module Requests
     attr_accessor :email
     attr_accessor :user_barcode
     attr_accessor :user_name
+    attr_accessor :source
 
     include BorrowDirect
     include Requests::Bibdata
@@ -15,36 +16,31 @@ module Requests
     # @option opts [Fixnum] :mfhd voyager id
     # @option opts [User] :user current user object 
     # @option opts [String] :source represents system that directed user to request form. i.e.                                                   
-    def initialize(params)
-      @system_id = params[:system_id]
-      @mfhd = params[:mfhd]
-      @user = params[:user]
-      @source = params[:source]
-      @doc = solr_doc(@system_id)
-      @locations = load_locations
-      @default_pickups = build_pickups
-      @items = load_items # hash of item data if nil only holdings level data available
-      @requestable = build_requestable
+    def initialize(system_id:, mfhd: nil, user: nil, source: nil)
+      @system_id ||= system_id
+      @mfhd ||= mfhd
+      @user ||= user
+      @source ||= source
     end
 
     def doc
-      @doc
+      @doc ||= solr_doc(@system_id)
     end
 
     def requestable
-      @requestable
+      @requestable ||= self.build_requestable
     end
     ### builds a list of possible requestable items
     # returns a collection of requestable objects or nil
     def build_requestable
-      if !@items.nil?
+      if !self.items.nil?
         requestable_items = []
-        @items.each do |holding_id, items|
+        self.items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
               item_loc = item_current_location(item)
-              unless @locations.key? item_loc
-                @locations[item_loc] = get_location(item_loc)
+              unless self.locations.key? item_loc
+                self.locations[item_loc] = get_location(item_loc)
               end
               params = build_requestable_params(
                 { 
@@ -56,7 +52,7 @@ module Requests
               requestable_items << Requests::Requestable.new(params)
             end
           else
-            params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
+            params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: self.locations[holdings[holding_id]["location_code"]] } )
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -65,17 +61,17 @@ module Requests
         unless doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: @locations[holdings[@mfhd]["location_code"]]} )
+            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: self.locations[holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (thesis?)
-            params = build_requestable_params({ holding: { "thesis" => {} }, location: @locations[holdings['thesis']["location_code"]]} )
+            params = build_requestable_params({ holding: { "thesis" => {} }, location: self.locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (visuals?)
-            params = build_requestable_params({ holding: { "visuals" => {} }, location: @locations[holdings['visuals']["location_code"]]} )
+            params = build_requestable_params({ holding: { "visuals" => {} }, location: self.locations[holdings['visuals']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: @locations[holdings[holding_id]["location_code"]] } )
+              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: self.locations[holdings[holding_id]["location_code"]] } )
               requestable_items << Requests::Requestable.new(params)
             end
           end
@@ -91,7 +87,7 @@ module Requests
     # returns an array of requestable hashes of  grouped under a common mfhd
     def sorted_requestable
       sorted = { }
-      requestable.each do |requestable|
+      self.requestable.each do |requestable|
         mfhd = requestable.holding.keys[0]
         if sorted.key? mfhd
           sorted[mfhd] << requestable
@@ -102,14 +98,14 @@ module Requests
       sorted
     end
 
-    # Does request have any pageable items
+    # Does this request object have any pageable items
     def has_pageable?
       services = []
       requestable.each do |request|
         request.services.each do |service|
           services << service
         end
-      end
+      end 
       services.uniq!
       if services.include? 'paging'
         return true
@@ -121,7 +117,7 @@ module Requests
     def route_requests(requestable_items)
       routed_requests = []
       requestable_items.each do |requestable|
-        router = Requests::Router.new(requestable, @user)
+        router = Requests::Router.new(requestable: requestable, user: @user)
         routed_requests << router.routed_request
       end
       routed_requests
@@ -140,7 +136,7 @@ module Requests
     end
 
     def items?
-      @items
+      self.items
     end
 
     def user
@@ -148,25 +144,19 @@ module Requests
     end
 
     def holdings?
-      holdings
+      self.holdings
     end
 
     def holdings
-      JSON.parse(doc[:holdings_1display] || '{}')
+      @holdings ||= JSON.parse(doc[:holdings_1display] || '{}')
     end
 
     def locations
-      @locations
+      @locations ||= load_locations
     end
 
-    def load_locations
-      unless doc[:location_code_s].nil?
-        holding_locations = {}
-        doc[:location_code_s].each do |loc|
-          holding_locations[loc] = get_location(loc)
-        end
-        holding_locations
-      end
+    def items
+      @items ||= load_items
     end
 
     # returns nil if there are no attached items
@@ -227,6 +217,10 @@ module Requests
       }
     end
 
+    def pickups
+      @pickups ||= self.build_pickups
+    end
+
     def build_pickups
       pickup_locations = []
       get_pickups.each do |pickup|
@@ -234,19 +228,25 @@ module Requests
           pickup_locations << pickup["label"]
         end
       end
-      pickup_locations
+      pickup_locations.sort
     end
 
     def default_pickups
-      @default_pickups.sort
-    end
-
-    def source
-      @source
+      self.pickups
     end
 
     private
-      # defaults come 
+      def load_locations
+        unless doc[:location_code_s].nil?
+          holding_locations = {}
+          doc[:location_code_s].each do |loc|
+            holding_locations[loc] = get_location(loc)
+          end
+          holding_locations
+        end
+      end
+
+
       def build_requestable_params(params)
         {
           bib: { id: @doc['id'] },

@@ -2,10 +2,9 @@ module Requests
   class Router
 
     # State Based Decisions
-    def initialize(requestable, user)
+    def initialize(requestable:, user:)
       @requestable = requestable
       @user = user
-      @services = self.calculate_services
     end
 
     # Possible Services
@@ -25,7 +24,7 @@ module Requests
     # :trace
 
     def routed_request
-      @requestable.services = @services
+      @requestable.set_services(self.calculate_services)
       @requestable
     end
 

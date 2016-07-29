@@ -24,7 +24,7 @@ module Requests
         @patron = current_patron(@user.uid)
       end
       request_params[:user] = @user.uid
-      @request = Requests::Request.new(request_params)
+      @request = Requests::Request.new(request_params.symbolize_keys)
       #flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end
 

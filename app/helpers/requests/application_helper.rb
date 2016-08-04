@@ -22,10 +22,12 @@ module Requests
       if requestable.charged?
         link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
       else
-        content_tag(:ul, class: "service-list") do
-          requestable.services.each do |service|
-            brief_msg = I18n.t("requests.#{service}.brief_msg")
-            concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+        unless requestable.services.include? 'recap_edd'
+          content_tag(:ul, class: "service-list") do
+            requestable.services.each do |service|
+              brief_msg = I18n.t("requests.#{service}.brief_msg")
+              concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+            end
           end
         end
       end
@@ -76,10 +78,10 @@ module Requests
     end
 
     def recap_radio_button_group requestable
-      radio = radio_button_tag "requestable[][type]", "recap", id: "" 
-      radio += label_tag "requestable_recap", "Print", for: ""
-      radio += radio_button_tag "requestable[][type]", "recap_edd", id: ""
-      radio += label_tag "requestable_recap_edd", "Electronic Delivery", for: ""
+      radio = radio_button_tag "requestable[][type]", "recap_#{requestable.item[:id]}"
+      radio += label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print"
+      radio += radio_button_tag "requestable[][type]", "recap_edd_#{requestable.item[:id]}"
+      radio += label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery"
       radio
     end
 

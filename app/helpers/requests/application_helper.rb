@@ -78,11 +78,14 @@ module Requests
     end
 
     def recap_radio_button_group requestable
-      radio = radio_button_tag "requestable[][type]", "recap_#{requestable.item[:id]}"
-      radio += label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print"
-      radio += radio_button_tag "requestable[][type]", "recap_edd_#{requestable.item[:id]}"
-      radio += label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery"
-      radio
+      content_tag(:fieldset, class: 'choices--recap', id: 'recap_group_#{requestable.item[:id]}') do
+        concat hidden_field_tag "requestable[][type]", "recap"
+        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print"#, false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded': 'false', 'aria-controls': "fields-eed__#{requestable.item[:id]}" 
+        concat label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print - #{I18n.t('requests.recap.brief_msg')}", class: 'control-label'
+        concat content_tag(:br)
+        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded': 'false', 'aria-controls': "fields-eed__#{requestable.item[:id]}", class: 'control-label'
+        concat label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery - #{I18n.t('requests.recap_edd.brief_msg')}"
+      end
     end
 
     def enum_copy_display item
@@ -107,8 +110,8 @@ module Requests
       unless requestable.pickup_locations.nil? || requestable.charged? # || (requestable.services & self.default_pickup_services).empty?
         locs = self.available_pickups(requestable, default_pickups)
         if(locs.size > 1)
-          locs = ["Select Delivery Location"] + locs.sort
-          select_tag "requestable[][pickup]", options_for_select(locs)
+          #locs = ["Select Delivery Location"] + locs.sort
+          select_tag "requestable[][pickup]", options_for_select(locs), prompt: I18n.t("requests.default.pickup_placeholder")
         else
           hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"
           hidden + locs[0]
@@ -138,8 +141,7 @@ module Requests
         locs << location[:label]
       end
       if(locs.size > 1)
-        locs = ["Select Delivery Location"] + locs.sort
-        select_tag "requestable[][pickup]", options_for_select(locs)
+        select_tag "requestable[][pickup]", options_for_select(locs), prompt: I18n.t("requests.default.pickup_placeholder")
       else
         hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"
         hidden + locs[0]

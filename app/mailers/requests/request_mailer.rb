@@ -70,6 +70,7 @@ module Requests
       @submission = submission
       destination_email = @submission.email
       @url  = 'http://example.com/login'
+      cc_email = [ @submission.email ]
       mail(to: destination_email, 
            cc: cc_email,
            from: destination_email,
@@ -80,6 +81,7 @@ module Requests
       @submission = submission
       destination_email = @submission.email
       @url  = 'http://example.com/login'
+      cc_email = [ @submission.email ]
       mail(to: destination_email, 
            cc: cc_email,
            from: destination_email,
@@ -90,6 +92,7 @@ module Requests
       @submission = submission
       destination_email = @submission.email
       @url  = 'http://example.com/login'
+      cc_email = [ @submission.email ]
       mail(to: destination_email, 
            cc: cc_email,
            from: destination_email,

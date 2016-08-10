@@ -39,8 +39,14 @@ module Requests
             Requests::RequestMailer.send("#{service}_email", @submission).deliver_now
           elsif recap_services.include? service
             gfa_service = Requests::Recap.new(@submission)
+            if gfa_service.submitted?
+              Requests::RequestMailer.send("recap_email", @submission).deliver_now
+            end
           elsif service == 'recall'
             recall_service = Requests::Recall.new(@submission)
+            if recall_service.submitted?
+              Requests::RequestMailer.send("recall_email", @submission).deliver_now
+            end
           end
           format.js { 
             flash.now[:success] = I18n.t('requests.submit.success') 

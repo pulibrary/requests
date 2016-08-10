@@ -8,5 +8,9 @@ module Requests
     def handle
     end
 
+    def submitted?
+      "foo"
+    end
+
   end
 end

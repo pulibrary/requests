@@ -7,7 +7,7 @@ Items Requested
   ========================
   <% unless item[:selected].empty? %>
     <% item.each do |key, value| %>
-      <% unless key == "selected" %>
+      <% unless key == "selected" || value.empty? %>
         <%= format_label(key) %>: <%= value.html_safe %>
       <% end %>
     <% end %>

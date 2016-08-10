@@ -8,8 +8,8 @@
     end
   -%>
   <% if flash[type] %>
-    <div class="alert <%=alert_class %>"><%= flash[type] %>
-       <% if !@submission.nil? %>
+      <% if !@submission.nil? %>
+        <div class="alert <%= alert_class %>"><%= flash[type] %>
           <% if !@submission.errors.empty? %>
             <ul>
               <% @submission.errors.messages.each do |key, value| %>
@@ -19,8 +19,8 @@
           <% else %>
             <%= return_message @submission %>
           <% end %>
-        <% end %>
-       <a class="close" data-dismiss="alert" href="#">&times;</a>
-    </div>
+          <a class="close" data-dismiss="alert" href="#">&times;</a>
+        </div>
+      <% end %>
   <% end %>
 <% end %>

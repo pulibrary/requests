@@ -28,19 +28,19 @@ module Requests
     end
 
     def requestable
-      @requestable ||= self.build_requestable
+      @requestable ||= build_requestable
     end
     ### builds a list of possible requestable items
     # returns a collection of requestable objects or nil
     def build_requestable
-      if !self.items.nil?
+      if !items.nil?
         requestable_items = []
-        self.items.each do |holding_id, items|
+        items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
               item_loc = item_current_location(item)
-              unless self.locations.key? item_loc
-                self.locations[item_loc] = get_location(item_loc)
+              unless locations.key? item_loc
+                locations[item_loc] = get_location(item_loc)
               end
               params = build_requestable_params(
                 { 
@@ -52,7 +52,7 @@ module Requests
               requestable_items << Requests::Requestable.new(params)
             end
           else
-            params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: self.locations[holdings[holding_id]["location_code"]] } )
+            params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] } )
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -61,17 +61,17 @@ module Requests
         unless doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: self.locations[holdings[@mfhd]["location_code"]]} )
+            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (thesis?)
-            params = build_requestable_params({ holding: { "thesis" => {} }, location: self.locations[holdings['thesis']["location_code"]]} )
+            params = build_requestable_params({ holding: { "thesis" => {} }, location: locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (visuals?)
-            params = build_requestable_params({ holding: { "visuals" => {} }, location: self.locations[holdings['visuals']["location_code"]]} )
+            params = build_requestable_params({ holding: { "visuals" => {} }, location: locations[holdings['visuals']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: self.locations[holdings[holding_id]["location_code"]] } )
+              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] } )
               requestable_items << Requests::Requestable.new(params)
             end
           end
@@ -87,7 +87,7 @@ module Requests
     # returns an array of requestable hashes of  grouped under a common mfhd
     def sorted_requestable
       sorted = { }
-      self.requestable.each do |requestable|
+      requestable.each do |requestable|
         mfhd = requestable.holding.keys[0]
         if sorted.key? mfhd
           sorted[mfhd] << requestable
@@ -136,7 +136,7 @@ module Requests
     end
 
     def items?
-      self.items
+      items
     end
 
     def user
@@ -144,7 +144,7 @@ module Requests
     end
 
     def holdings?
-      self.holdings
+      holdings
     end
 
     def holdings
@@ -218,7 +218,7 @@ module Requests
     end
 
     def pickups
-      @pickups ||= self.build_pickups
+      @pickups ||= build_pickups
     end
 
     def build_pickups
@@ -232,7 +232,7 @@ module Requests
     end
 
     def default_pickups
-      self.pickups
+      pickups
     end
 
     private

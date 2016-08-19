@@ -39,6 +39,7 @@ module Requests
             Requests::RequestMailer.send("#{service}_email", @submission).deliver_now
           elsif recap_services.include? service
             gfa_service = Requests::Recap.new(@submission)
+            binding.pry
             if gfa_service.submitted?
               Requests::RequestMailer.send("recap_email", @submission).deliver_now
             end
@@ -94,7 +95,7 @@ module Requests
       end
 
       def recap_services
-        ["recap", 'recap_dd']
+        ["recap"]
       end
 
 

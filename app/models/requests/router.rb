@@ -24,7 +24,7 @@ module Requests
     # :trace
 
     def routed_request
-      @requestable.set_services(self.calculate_services)
+      @requestable.set_services(calculate_services)
       @requestable
     end
 

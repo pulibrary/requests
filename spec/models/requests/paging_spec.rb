@@ -11,8 +11,4 @@ describe Requests::Paging do
     expect(subject.type).to eq('paging')
   end
 
-  it "returns an email that can be distributed" do
-
-  end
-
 end

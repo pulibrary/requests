@@ -771,4 +771,39 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context "When passed a Recallable Item that is eligible for Borrow Direct" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9738136',
+        mfhd: '9558038',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+
+    describe "#requestable" do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should be eligible for recap services" do
+        expect(subject.requestable.first.services.size).to eq(3)
+      end
+
+      it "should be eligible for ill services" do
+        expect(subject.requestable.first.services.include?('ill')).to be_truthy
+      end
+
+      it "should be eligible for borrow direct services" do
+        expect(subject.requestable.first.services.include?('bd')).to be_truthy
+      end
+
+      it "should be eligible for recall" do
+        expect(subject.requestable.first.services.include?('recall')).to be_truthy
+      end
+    end
+  end
 end

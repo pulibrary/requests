@@ -17,7 +17,7 @@ module Requests
     # :annex
     # :recap
     # :recap_edd
-    # :borrow_direct
+    # :bd
     # :ill
     # :paging
     # :recall

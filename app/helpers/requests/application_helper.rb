@@ -80,10 +80,10 @@ module Requests
     def recap_radio_button_group requestable
       content_tag(:fieldset, class: 'choices--recap', id: 'recap_group_#{requestable.item[:id]}') do
         concat hidden_field_tag "requestable[][type]", "recap"
-        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print"#, false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded': 'false', 'aria-controls': "fields-eed__#{requestable.item[:id]}" 
+        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print"#, false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}" 
         concat label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print - #{I18n.t('requests.recap.brief_msg')}", class: 'control-label'
         concat content_tag(:br)
-        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded': 'false', 'aria-controls': "fields-eed__#{requestable.item[:id]}", class: 'control-label'
+        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label'
         concat label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery - #{I18n.t('requests.recap_edd.brief_msg')}"
       end
     end

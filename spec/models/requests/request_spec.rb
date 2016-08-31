@@ -283,7 +283,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
-      it "should not have a thesis holding location" do
+      it "should have a thesis holding location" do
         expect(subject.requestable[0].holding.key? 'thesis').to be_truthy
         expect(subject.requestable[0].location.key? 'code').to be_truthy
         expect(subject.requestable[0].location['code']).to eq ('mudd')

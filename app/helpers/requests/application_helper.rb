@@ -21,6 +21,8 @@ module Requests
     def show_service_options requestable
       if requestable.charged?
         link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
+      elsif requestable.aeon?
+        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}#{requestable.params.to_query}", class: 'btn btn-primary'
       else
         unless requestable.services.include? 'recap_edd'
           content_tag(:ul, class: "service-list") do

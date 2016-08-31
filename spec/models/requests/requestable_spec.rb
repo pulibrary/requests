@@ -86,15 +86,53 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   end
 
   context "Is a bibliographic record from the thesis collection" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_thesis) }
+    let(:requestable) { request.requestable.first }
+    let(:holding_id) { "thesis" }
     describe "#thesis?" do
-      xit "returns true when record is a senior thesis" do
+      it "returns true when record is a senior thesis" do
+        expect(requestable.thesis?).to be_truthy
+      end
+
+      it "reports as a non Voyager aeon resource" do
+        expect(requestable.aeon?).to be_truthy
+        expect(requestable.non_voyager?(holding_id)).to be_truthy
+      end
+
+      it "returns a params list with an Aeon Site MUDD" do
+        expect(requestable.params.key?(:Site)).to be_truthy
+        expect(requestable.params[:Site]).to eq('MUDD')
+      end
+
+      it "includes a ReferenceNumber" do
+        expect(requestable.params[:ReferenceNumber]).to eq(request.system_id)
       end
     end
   end
 
   context "Is a bibliographic record from the Graphic Arts collection" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_visuals) }
+    let(:requestable) { request.requestable.first }
+    let(:holding_id) { "visuals" }
     describe "#visuals?" do
-      it "returns true when record is a senior thesis" do
+      it "returns true when record is a Graphic Arts record" do
+        expect(requestable.visuals?).to be_truthy
+      end
+
+      it "reports as a non Voyager aeon resource" do
+        expect(requestable.aeon?).to be_truthy
+        expect(requestable.non_voyager?(holding_id)).to be_truthy
+      end
+
+      it "includes a valid aeon site value for a visuals record" do
+        expect(requestable.params.key?(:Site)).to be_truthy
+        expect(requestable.params[:Site]).to eq('RBSC')
+      end
+
+      it "includes a ReferenceNumber" do
+        expect(requestable.params[:ReferenceNumber]).to eq(request.system_id)
       end
     end
   end

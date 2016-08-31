@@ -51,11 +51,11 @@ module Requests
 
     # non voyager options
     def thesis?
-      return true if @holding[:location_code] == 'thesis'
+      return true if @holding["thesis"][:location_code] == 'mudd'
     end
 
     def visuals?
-      return true if @holding[:location_code] == 'visuals'
+      return true if @holding["visuals"][:location_code] == 'ga'
     end
 
     def aeon?
@@ -121,6 +121,14 @@ module Requests
       return true if @bib[:id].to_i > 0
     end
 
+    def params
+      if aeon? && !voyager_managed?
+        aeon_mapped_params(bib, holding)
+      else
+        "foo"
+      end
+    end
+
     def online?
       return true if @location[:library][:code] == 'online'
     end
@@ -171,6 +179,7 @@ module Requests
         @location[:delivery_locations] 
       end
     end
+
 
     private 
 

@@ -39,7 +39,7 @@ module Requests
         Location: shelf_location_code(holding),
         ItemTitle: title(bib),
         ItemAuthor: author(bib),
-        ItemDate: date(bib),
+        ItemDate: pub_date(bib),
         ItemVolume: sub_title(holding),
         SubLocation: sub_location(holding),
         ItemInfo1: I18n.t("requests.aeon.access_statement"),
@@ -71,7 +71,7 @@ module Requests
       holding.first.last[:call_number]
     end
 
-    def date(bib)
+    def pub_date(bib)
       bib[:pub_date_start_sort]
     end
 

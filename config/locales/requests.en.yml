@@ -55,6 +55,7 @@ en:
       email_conf_msg: "In Process materials can typically be picked up at the Circulation Desk of your choice in several business days. You will receive an email notification when the material is available."
     aeon:
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
+      access_statement: "Reading Room Access Only"
     ill:
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:

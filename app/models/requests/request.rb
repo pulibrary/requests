@@ -64,10 +64,10 @@ module Requests
             params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (thesis?)
-            params = build_requestable_params({ holding: { "thesis" => {} }, location: locations[holdings['thesis']["location_code"]]} )
+            params = build_requestable_params({ holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           elsif (visuals?)
-            params = build_requestable_params({ holding: { "visuals" => {} }, location: locations[holdings['visuals']["location_code"]]} )
+            params = build_requestable_params({ holding: { "visuals" => holdings['visuals'].with_indifferent_access }, location: locations[holdings['visuals']["location_code"]]} )
             requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
@@ -249,7 +249,7 @@ module Requests
 
       def build_requestable_params(params)
         {
-          bib: { id: @doc['id'] },
+          bib: doc.with_indifferent_access,
           holding: params[:holding],
           item: params[:item],
           location: params[:location]

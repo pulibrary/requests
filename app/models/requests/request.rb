@@ -164,7 +164,11 @@ module Requests
     # if no mfhd returns items sorted by mfhd
     def load_items
       mfhd_items = {}
-      if !thesis? || !visuals?
+      if thesis?
+        return nil
+      elsif visuals?
+        return nil
+      else
         if @mfhd
           items_as_json = items_by_mfhd(@mfhd)
           if items_as_json.size != 0
@@ -190,8 +194,8 @@ module Requests
             mfhd_items[holding_id] = items_by_holding
           end
         end
+        return mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
       end
-      mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
     end
 
     def thesis?

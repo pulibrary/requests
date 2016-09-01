@@ -111,7 +111,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "includes a CallNumber" do
         expect(requestable.params[:CallNumber]).to be_truthy
-        expect(requestable.params[:CallNumber]).to eq(requestable.holding.first.last[:call_number])
+        expect(requestable.params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
       end
 
       it "includes an ItemTitle for a visuals record" do
@@ -153,7 +153,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "includes a CallNumber" do
         expect(requestable.params[:CallNumber]).to be_truthy
-        expect(requestable.params[:CallNumber]).to eq(requestable.holding.first.last[:call_number])
+        expect(requestable.params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
       end
     end
   end

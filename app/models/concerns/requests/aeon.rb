@@ -7,35 +7,12 @@ module Requests
     end
 
     def aeon_mapped_params(bib, holding)
-      ## For theses
-      # 'ReferenceNumber' => $this->getRecordID(),
-      #   'Site' => 'MUDD',
-      #   'CallNumber' => $this->getOtherCallNum(),
-      #   'Location' => 'mudd',
-      #   'Action' => '10',
-      #   'Form' => '21',
-      #   'ItemTitle' => $this->getTitle(),
-      #   'ItemAuthor' => $this->getCreator(),
-      #   'ItemDate' => $this->getCreationDate(),
-      #   'ItemInfo1' => 'Reading Room Access Only',
-      # For graphic arts
-      # 'ReferenceNumber' => $this->getRecordID(),
-      #   'Site' => 'RBSC',
-      #   'CallNumber' => $this->getOtherCallNum(),
-      #   'Location' => 'ga',
-      #   'Action' => '10',
-      #   'Form' => '21',
-      #   'ItemTitle' => $this->getTitle() . " [" . $this->getGenre() . "]",
-      #   'ItemVolume' => $this->getOtherSubTitle(),
-      #   'SubLocation' => $this->getOtherItemInfoFour(),
-      #   'ItemInfo1' => 'Reading Room Access Only',
-      #   'ItemAuthor' => $this->getCreator()
       params = {
         ReferenceNumber: bib[:id],
         Site: site(holding),
         Action: '10',
         Form: '21',
-        CallNumber: call_number(holding),
+        CallNumber: call_number(bib),
         Location: shelf_location_code(holding),
         ItemTitle: title(bib),
         ItemAuthor: author(bib),
@@ -68,8 +45,10 @@ module Requests
     end
 
     private
-    def call_number(holding)
-      holding.first.last[:call_number]
+    def call_number(bib)
+      unless bib[:call_number_display].nil?
+        bib[:call_number_display].first
+      end
     end
 
     def pub_date(bib)
@@ -95,7 +74,7 @@ module Requests
       "#{bib[:title_display]}#{genre(bib)}"
     end
 
-    ## Don T requested this for visuals
+    ## Don T requested this be appended when present
     def genre(bib)
       unless bib[:form_genre_display].nil?
         " [ #{bib[:form_genre_display].first} ]"

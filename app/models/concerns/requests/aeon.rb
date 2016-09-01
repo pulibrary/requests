@@ -67,6 +67,7 @@ module Requests
       end
     end
 
+    private
     def call_number(holding)
       holding.first.last[:call_number]
     end
@@ -91,13 +92,13 @@ module Requests
     ### end special params
 
     def title(bib)
-      "#{bib[:title_display]} #{genre(bib)}"
+      "#{bib[:title_display]}#{genre(bib)}"
     end
 
     ## Don T requested this for visuals
     def genre(bib)
       unless bib[:form_genre_display].nil?
-        "[ #{bib[:form_genre_display].first} ]"
+        " [ #{bib[:form_genre_display].first} ]"
       end
     end
 

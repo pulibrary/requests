@@ -164,7 +164,7 @@ module Requests
     # if no mfhd returns items sorted by mfhd
     def load_items
       mfhd_items = {}
-      if !thesis?
+      if !thesis? || !visuals?
         if @mfhd
           items_as_json = items_by_mfhd(@mfhd)
           if items_as_json.size != 0

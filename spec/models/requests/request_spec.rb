@@ -350,12 +350,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.sorted_requestable.size).to eq(1)
       end
 
-      it "assigns items to the correct mfhd" do
-        subject.sorted_requestable.each do |key, items| 
-          items.each do |item|
-            expect(item.holding.keys.first).to eq(key)
-          end
-        end
+      it "should not have any items attached" do
+        expect(subject.items?).to be_nil
       end
     end
   end

@@ -155,6 +155,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.params[:CallNumber]).to be_truthy
         expect(requestable.params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
       end
+
+      it "includes a sub location" do
+        expect(requestable.params[:SubLocation]).to be_truthy
+        expect(requestable.params[:SubLocation]).to eq(requestable.holding.first.last[:location_note].first)
+      end
     end
   end
 

@@ -108,6 +108,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it "includes a ReferenceNumber" do
         expect(requestable.params[:ReferenceNumber]).to eq(request.system_id)
       end
+
+      it "includes a CallNumber" do
+        expect(requestable.params[:CallNumber]).to be_truthy
+        expect(requestable.params[:CallNumber]).to eq(requestable.holding.first.last[:call_number])
+      end
+
+      it "includes an ItemTitle for a visuals record" do
+        expect(requestable.params[:ItemTitle]).to be_truthy
+        expect(requestable.params[:ItemTitle]).to eq(requestable.bib[:title_display])
+      end
     end
   end
 
@@ -115,7 +125,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_visuals) }
     let(:requestable) { request.requestable.first }
-    let(:holding_id) { "visuals" }
+    let(:holding_id) { 'visuals' }
+    let(:formatted_genre) { '[ Print ]' }
     describe "#visuals?" do
       it "returns true when record is a Graphic Arts record" do
         expect(requestable.visuals?).to be_truthy
@@ -133,6 +144,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "includes a ReferenceNumber" do
         expect(requestable.params[:ReferenceNumber]).to eq(request.system_id)
+      end
+
+      it "includes the Genre in the ItemTitle for a visuals record" do
+        expect(requestable.params[:ItemTitle]).to be_truthy
+        expect(requestable.params[:ItemTitle]).to eq("#{requestable.bib[:title_display]} #{formatted_genre}")
+      end
+
+      it "includes a CallNumber" do
+        expect(requestable.params[:CallNumber]).to be_truthy
+        expect(requestable.params[:CallNumber]).to eq(requestable.holding.first.last[:call_number])
       end
     end
   end

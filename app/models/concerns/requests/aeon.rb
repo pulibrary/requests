@@ -66,7 +66,9 @@ module Requests
     end
 
     def sub_location(bib)
-      holding.first.last[:location_note]
+      unless holding.first.last[:location_note].nil?
+        holding.first.last[:location_note].first
+      end
     end
     ### end special params
 

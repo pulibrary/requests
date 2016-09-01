@@ -124,8 +124,6 @@ module Requests
     def params
       if aeon? && !voyager_managed?
         aeon_mapped_params(bib, holding)
-      else
-        "foo"
       end
     end
 

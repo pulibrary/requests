@@ -23,6 +23,11 @@ module Requests
         link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
       elsif requestable.aeon?
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}#{requestable.params.to_query}", class: 'btn btn-primary'
+      elsif requestable.traceable?
+        content_tag(:div) do
+          concat link_to 'Where to find it', requestable.stackmap_url
+          concat content_tag(:span, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
+        end
       else
         unless requestable.services.include? 'recap_edd'
           content_tag(:ul, class: "service-list") do
@@ -63,6 +68,8 @@ module Requests
         recap_radio_button_group requestable
       elsif(requestable.services.include? 'recap')
         request_input('recap')
+      elsif(requestable.services.include? 'trace')
+        request_input('trace')
       else
         nil
       end
@@ -124,6 +131,8 @@ module Requests
     def available_pickups requestable, default_pickups
       locs = []
       if !(requestable.services & self.default_pickup_services).empty?
+        locs = default_pickups
+      elsif(requestable.services.include? 'trace')
         locs = default_pickups
       else
         requestable.pickup_locations.each do |location|
@@ -228,6 +237,8 @@ module Requests
         false
       elsif requestable.in_process?
         false
+      elsif requestable.traceable?
+        false
       elsif requestable.always_requestable? && requestable.recap?
         false
       elsif requestable.aeon?
@@ -297,6 +308,7 @@ module Requests
       single_item = "Request this Item"
       multi_item = "Request Selected Items"
       no_item = "No Items Available"
+      trace = "Trace this item"
       if requestable_list.size == 1
         if requestable_list.first.charged?
           if requestable_list.first.annexa?
@@ -315,6 +327,8 @@ module Requests
             multi_item
           elsif requestable_list.first.pageable_loc?
             multi_item
+          elsif requestable_list.first.traceable?
+            trace
           else
             single_item
           end

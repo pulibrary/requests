@@ -63,6 +63,9 @@
   <% unless @request.source.nil? %>
     <%= f.hidden_field :source, value: @request.source %>
   <% end %>
+  <% if @mode == 'trace' %>
+    <%= render partial: "trace_instructions" %>
+  <% end %>
 
   <div>
     <span class="error error-items">
@@ -97,8 +100,8 @@
             <tr>
               <% unless requestable.item.nil? %>
                 <td>
-                <%= hidden_field_tag 'requestable[][selected]', false %>
-                <%= item_checkbox @request.requestable, requestable %>
+                  <%= hidden_field_tag 'requestable[][selected]', false %>
+                  <%= item_checkbox @request.requestable, requestable %>
                   <%= hidden_fields_item requestable %>
                 </td>
                 <td>

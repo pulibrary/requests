@@ -15,6 +15,11 @@ module Requests
       unless params[:source].nil?
         request_params[:source] = sanitize(params[:source])
       end
+      if params[:mode].nil?
+        @mode = 'standard'
+      else
+        @mode = sanitize(params[:mode]) 
+      end
       @title = "Request ID: #{request_params[:system_id]}"
       unless params[:mfhd].nil?
         request_params[:mfhd] = sanitize(params[:mfhd])

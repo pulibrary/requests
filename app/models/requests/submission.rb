@@ -1,8 +1,11 @@
 require 'email_validator'
 
 module Requests
-
   class SelectedItemsValidator < ActiveModel::Validator
+    def mail_services
+      ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
+    end
+
     def validate(record)
       unless record.items.size >= 1
         record.errors[:items] << 'Please Select an Item to Request!'
@@ -11,6 +14,11 @@ module Requests
         if selected.key? 'user_supplied_enum' 
           if selected['user_supplied_enum'].empty?
             record.errors[:items] << 'Please Fill in additional volume information'
+          end
+        end
+        if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
+          if selected['pickup'].empty?
+            record.errors[:items] << 'Please select a pickup location.'
           end
         end
         if selected["type"] == 'recap'

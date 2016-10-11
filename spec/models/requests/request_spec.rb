@@ -802,4 +802,36 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context 'When passed an item that is traceable and mappable' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9907433',
+        mfhd: '9723988',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+
+      it "should be eligible for multiple services" do
+        expect(subject.requestable.first.services.size).to eq(2)
+      end
+
+      it "should be eligible for trace services" do
+        expect(subject.requestable.first.services.include?('trace')).to be_truthy
+      end
+
+      it "should be eligible for recall" do
+        expect(subject.requestable.first.services.include?('on_shelf')).to be_truthy
+      end
+
+    end
+  end
+
 end

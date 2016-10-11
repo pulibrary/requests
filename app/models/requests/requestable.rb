@@ -11,6 +11,7 @@ module Requests
     include Requests::Pageable
     include Requests::Aeon
     include Requests::Illiad
+    include Requests::Mapable
 
     def initialize(bib:, holding: nil, item: nil, location: nil)
       @bib ||= bib # hash of bibliographic data
@@ -27,6 +28,10 @@ module Requests
       else
         'bib'
       end
+    end
+
+    def stackmap_url
+      map_link(bib, holding)
     end
 
     def bib
@@ -115,6 +120,10 @@ module Requests
 
     def set_services service_list
       @services = service_list
+    end
+
+    def traceable?
+      return true if @services.include?('trace')
     end
 
     def voyager_managed?

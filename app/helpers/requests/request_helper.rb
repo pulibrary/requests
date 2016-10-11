@@ -39,6 +39,8 @@ module Requests
     def request_title request
       if request.has_pageable?
         "Paging Request"
+      elsif @mode == 'trace'
+        "Trace Materials"
       else
         "Library Material Request"
       end

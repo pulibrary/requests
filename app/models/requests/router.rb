@@ -41,7 +41,9 @@ module Requests
           if(@requestable.charged?)
             services << 'bd' # pop this off at a later point
             services << 'ill'
-            services << 'recall'
+            unless @requestable.missing?
+              services << 'recall'
+            end
             #### other choices
             # Borrow Direct/ILL
           else #my item status is positive or non-existent churn through statuses

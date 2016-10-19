@@ -182,4 +182,28 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context 'A requestable item with a missing status' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_missing_item) }
+    let(:requestable) { request.requestable }
+    describe "#services" do
+      it "should return an item status of missing" do
+        expect(requestable.size).to eq(1) 
+        requestable.first.item["status"] = 'Missing'
+        expect(requestable.first.services).to be_truthy
+      end
+
+      it 'should not be recallable' do
+        expect(requestable.first.services.include?('recall')).to be_falsey
+      end
+
+      it 'should be available via borrow direct' do
+        expect(requestable.first.services.include?('bd')).to be_truthy
+      end
+
+      it 'should be available via ILL' do
+        expect(requestable.first.services.include?('ill')).to be_truthy
+      end
+    end
+  end
 end

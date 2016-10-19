@@ -85,4 +85,11 @@ FactoryGirl.define do
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
+  # missing item 
+  factory :request_missing_item, class: "Requests::Request" do
+    system_id 2300474
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
 end

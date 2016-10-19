@@ -33,9 +33,9 @@ module Requests
     end
 
     def paging_ranges
-      f_ranges = [ ['A1', 'AZ9999'], ['Q1', 'Z9999'] ]
+      f_ranges = [ ['A1', 'AZ9999'], ['Q1', 'ZZ9999'] ]
       nec_ranges = [ ['A1', 'BL9999'], ['BT1', 'DR9999'], ['DT1', 'KA9999'], ['KG1', 'VM9999'] ]
-      xl_ranges = [ ['A1', 'Z9999'] ]
+      xl_ranges = [ ['A1', 'ZZ9999'] ]
       { 
         'f' => f_ranges,
         'fnc' => f_ranges,

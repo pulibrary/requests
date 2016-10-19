@@ -185,6 +185,8 @@ module Requests
                 [item_info]
               elsif item_info[:status].starts_with?('Online')
                 [item_info]
+              elsif item_info[:status] == 'Missing'
+                [item_info]
               else
                 items_to_symbols(items_by_mfhd(holding_id))
               end

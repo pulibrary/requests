@@ -155,7 +155,6 @@ module Requests
     end
 
     def pageable?
-      binding.pry
       if charged?
         nil
       elsif !holding.first[1].key?('call_number_browse')

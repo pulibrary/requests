@@ -1,7 +1,7 @@
 require 'factory_girl' 
 
 FactoryGirl.define do
-  factory :user, class: "User" do
+  factory :user do #, class: "User" do
     sequence(:username) { |n| "username#{srand}" }
     sequence(:email) { |n| "email-#{srand}@princeton.edu" }
     password 'foobarfoo'

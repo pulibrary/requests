@@ -29,4 +29,9 @@ class TestAppGenerator < Rails::Generators::Base
     #rake "db:migrate RAILS_ENV=test"
   end
 
+  def clean_device_spec
+    File.delete 'spec/models/user_spec.rb'
+    File.delete 'spec/factories/users.rb'
+  end
+
 end

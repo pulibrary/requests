@@ -10051,4 +10051,340 @@ http_interactions:
         Charged","label":"Firestone Library"}]'
     http_version: 
   recorded_at: Sat, 17 Sep 2016 03:36:06 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/495501.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - a698c71c-bceb-45e5-b2f7-ce0dec44cb12
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"a0980e0a9940f103b1379fdb7c102d64"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.062091'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 27 Oct 2016 01:26:46 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"495501","author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[]}","title_display":"Look.","title_t":["Look."],"opensearch_display":["Look."],"title_citation_display":["Look."],"compiled_created_t":["Look."],"pub_created_display":["[Des
+        Moines, Iowa : Cowles Communications]"],"pub_created_s":["[Des Moines, Iowa
+        : Cowles Communications]"],"pub_citation_display":["Des Moines, Iowa: Cowles
+        Communications"],"pub_date_display":["1937"],"pub_date_start_sort":1937,"pub_date_end_sort":1971,"cataloged_tdt":"2000-06-13T04:00:00Z","format":["Journal"],"description_display":["v.
+        : ill. ; 34-43 cm.","Vol. 1, no. 1 (Jan. 1937)-v. 35, no. 21 (Oct. 19, 1971)."],"description_t":["v.
+        : ill. ; 34-43 cm.","Vol. 1, no. 1 (Jan. 1937)-v. 35, no. 21 (Oct. 19, 1971).","Vol.
+        1, no. 1 (Jan. 1937) never issued."],"frequency_display":["Biweekly, May 11,
+        1937-Oct. 19, 1971"],"former_frequency_display":["Monthly, Jan.-May 1937"],"linking_notes_display":["Continued
+        by: Look (New York, N.Y.) published 1979- with differing numbering designation."],"numbering_pec_notes_display":["Vol.
+        1, no. 1 (Jan. 1937) never issued."],"language_facet":["English"],"language_code_s":["eng"],"other_title_display":["Look
+        (Des Moines, Iowa)"],"issn_display":["0024-6336"],"lccn_display":["   39005737
+        "],"lccn_s":["39005737"],"issn_s":["00246336"],"oclc_s":["1624492"],"other_version_s":["00246336","ocm01624492"],"holdings_1display":"{\"538750\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"copy_number\":\"1\",\"call_number\":\"Oversize
+        AP2 .L665q\",\"call_number_browse\":\"AP2 .L665q\",\"location_has\":[\"Feb.
+        1954-Oct. 1971\",\"LACKS: Apr.-June 1963.\"]}}","location_code_s":["f"],"location_display":["Firestone
+        Library"],"location":["Firestone Library"],"advanced_location_s":["f","Firestone
+        Library"],"call_number_display":["Oversize AP2 .L665q"],"call_number_browse_s":["AP2
+        .L665q"],"timestamp":"2016-09-07T16:52:40.960Z"}}}'
+    http_version: 
+  recorded_at: Thu, 27 Oct 2016 01:26:46 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=495501
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 27 Oct 2016 01:26:47 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 28507213-5d5e-40d3-bd0d-84091f5eaab2
+      X-Runtime:
+      - '0.067003'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6aea8bceb57712aede3438dd5a225682"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"538750":{"more_items":true,"location":"f","copy_number":1,"item_id":617576,"status":"Not
+        Charged","label":"Firestone Library"}}'
+    http_version: 
+  recorded_at: Thu, 27 Oct 2016 01:26:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=538750
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 27 Oct 2016 01:26:48 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b0c12d59-b215-43c7-8668-1a58cf2dc6de
+      X-Runtime:
+      - '0.274346'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"7d3a432ea932afad7bdf49354e074446"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101003412739","id":617635,"location":"f","copy_number":1,"item_sequence_number":62,"status":"Not
+        Charged","enum":"1971,Oct","label":"Firestone Library"},{"barcode":"32101013888142","id":617634,"location":"f","copy_number":1,"item_sequence_number":61,"status":"Not
+        Charged","enum":"1971,July-Sept","label":"Firestone Library"},{"barcode":"32101005971450","id":617633,"location":"f","copy_number":1,"item_sequence_number":60,"status":"Not
+        Charged","enum":"1971,Apr-June","label":"Firestone Library"},{"barcode":"32101013888126","id":617632,"location":"f","copy_number":1,"item_sequence_number":59,"status":"Not
+        Charged","enum":"1971,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575532","id":617631,"location":"f","copy_number":1,"item_sequence_number":58,"status":"Not
+        Charged","enum":"1970,Oct-Dec","label":"Firestone Library"},{"barcode":"32101001223039","id":617630,"location":"f","copy_number":1,"item_sequence_number":57,"status":"Not
+        Charged","enum":"1970,July-Sept","label":"Firestone Library"},{"barcode":"32101013888134","id":617629,"location":"f","copy_number":1,"item_sequence_number":56,"status":"Not
+        Charged","enum":"1970,Apr-June","label":"Firestone Library"},{"barcode":"32101003577598","id":617628,"location":"f","copy_number":1,"item_sequence_number":55,"status":"Not
+        Charged","enum":"1970,Jan-Mar","label":"Firestone Library"},{"barcode":"32101003305719","id":617627,"location":"f","copy_number":1,"item_sequence_number":54,"status":"Not
+        Charged","enum":"1969,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013655137","id":617626,"location":"f","copy_number":1,"item_sequence_number":53,"status":"Not
+        Charged","enum":"1969,July-Sept","label":"Firestone Library"},{"barcode":"32101013854961","id":617625,"location":"f","copy_number":1,"item_sequence_number":52,"status":"Not
+        Charged","enum":"1969,Apr-June","label":"Firestone Library"},{"barcode":"32101013854920","id":617624,"location":"f","copy_number":1,"item_sequence_number":51,"status":"Not
+        Charged","enum":"1969,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575540","id":617623,"location":"f","copy_number":1,"item_sequence_number":50,"status":"Not
+        Charged","enum":"1968,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495609","id":617622,"location":"f","copy_number":1,"item_sequence_number":49,"status":"Not
+        Charged","enum":"1968,July-Sept","label":"Firestone Library"},{"barcode":"32101013495658","id":617621,"location":"f","copy_number":1,"item_sequence_number":48,"status":"Not
+        Charged","enum":"1968,Apr-June","label":"Firestone Library"},{"barcode":"32101013495641","id":617620,"location":"f","copy_number":1,"item_sequence_number":47,"status":"Not
+        Charged","enum":"1968,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006930430","id":617619,"location":"f","copy_number":1,"item_sequence_number":46,"status":"Not
+        Charged","enum":"1967,July-Sept","label":"Firestone Library"},{"barcode":"32101013495690","id":617618,"location":"f","copy_number":1,"item_sequence_number":45,"status":"Not
+        Charged","enum":"1967,Apr-June","label":"Firestone Library"},{"barcode":"32101006252991","id":617617,"location":"f","copy_number":1,"item_sequence_number":44,"status":"Not
+        Charged","enum":"1967,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575607","id":617616,"location":"f","copy_number":1,"item_sequence_number":43,"status":"Not
+        Charged","enum":"1966,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495666","id":617615,"location":"f","copy_number":1,"item_sequence_number":42,"status":"Not
+        Charged","enum":"1966,July-Sept","label":"Firestone Library"},{"barcode":"32101002709796","id":617614,"location":"f","copy_number":1,"item_sequence_number":41,"status":"Not
+        Charged","enum":"1966,Apr-June","label":"Firestone Library"},{"barcode":"32101013493463","id":617613,"location":"f","copy_number":1,"item_sequence_number":40,"status":"Not
+        Charged","enum":"1966,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575565","id":617612,"location":"f","copy_number":1,"item_sequence_number":39,"status":"Not
+        Charged","enum":"1965,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495625","id":617611,"location":"f","copy_number":1,"item_sequence_number":38,"status":"Not
+        Charged","enum":"1965,July-Sept","label":"Firestone Library"},{"barcode":"32101013495633","id":617610,"location":"f","copy_number":1,"item_sequence_number":37,"status":"Not
+        Charged","enum":"1965,Apr-June","label":"Firestone Library"},{"barcode":"32101013495617","id":617609,"location":"f","copy_number":1,"item_sequence_number":36,"status":"Not
+        Charged","enum":"1965,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575623","id":617608,"location":"f","copy_number":1,"item_sequence_number":35,"status":"Not
+        Charged","enum":"1964,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495674","id":617607,"location":"f","copy_number":1,"item_sequence_number":34,"status":"Not
+        Charged","enum":"1964,July-Sept","label":"Firestone Library"},{"barcode":"32101013495716","id":617606,"location":"f","copy_number":1,"item_sequence_number":33,"status":"Not
+        Charged","enum":"1964,Apr-June","label":"Firestone Library"},{"barcode":"32101002451860","id":617605,"location":"f","copy_number":1,"item_sequence_number":32,"status":"Not
+        Charged","enum":"1964,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575573","id":617604,"location":"f","copy_number":1,"item_sequence_number":31,"status":"Not
+        Charged","enum":"1963,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013101124","id":617603,"location":"f","copy_number":1,"item_sequence_number":30,"status":"Not
+        Charged","enum":"1963,July-Sept","label":"Firestone Library"},{"barcode":"32101012016406","id":617602,"location":"f","copy_number":1,"item_sequence_number":29,"status":"Not
+        Charged","enum":"1962,Oct-Dec","label":"Firestone Library"},{"barcode":"32101006575615","id":617601,"location":"f","copy_number":1,"item_sequence_number":28,"status":"Not
+        Charged","enum":"1961,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013368442","id":617600,"location":"f","copy_number":1,"item_sequence_number":27,"status":"Not
+        Charged","enum":"1961,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575631","id":617599,"location":"f","copy_number":1,"item_sequence_number":26,"status":"Not
+        Charged","enum":"1960,Oct-Dec","label":"Firestone Library"},{"barcode":"32101008375881","id":617598,"location":"f","copy_number":1,"item_sequence_number":25,"status":"Not
+        Charged","enum":"1960,July-Sept","label":"Firestone Library"},{"barcode":"32101006046963","id":617597,"location":"f","copy_number":1,"item_sequence_number":24,"status":"Not
+        Charged","enum":"1960,Apr-June","label":"Firestone Library"},{"barcode":"32101001626785","id":617596,"location":"f","copy_number":1,"item_sequence_number":23,"status":"Not
+        Charged","enum":"1956,Oct-Dec","label":"Firestone Library"},{"barcode":"32101025263441","id":617595,"location":"f","copy_number":1,"item_sequence_number":22,"status":"Not
+        Charged","enum":"1956,Apr-June","label":"Firestone Library"},{"barcode":"32101006575557","id":617594,"location":"f","copy_number":1,"item_sequence_number":21,"status":"Not
+        Charged","enum":"1967 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101035684099","id":617593,"location":"f","copy_number":1,"item_sequence_number":20,"status":"Not
+        Charged","enum":"1960 (Jan.-Mar.)","label":"Firestone Library"},{"barcode":"32101030756447","id":617592,"location":"f","copy_number":1,"item_sequence_number":19,"status":"Not
+        Charged","enum":"1959 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101031884628","id":617591,"location":"f","copy_number":1,"item_sequence_number":18,"status":"Not
+        Charged","enum":"1959 (Jul.-Sept.)","label":"Firestone Library"},{"barcode":"32101037397922","id":617590,"location":"f","copy_number":1,"item_sequence_number":17,"status":"Not
+        Charged","enum":"1959 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101037397930","id":617589,"location":"f","copy_number":1,"item_sequence_number":16,"status":"Not
+        Charged","enum":"1959 (Jan.-Mar.)","label":"Firestone Library"},{"barcode":"32101007547290","id":617588,"location":"f","copy_number":1,"item_sequence_number":15,"status":"Not
+        Charged","enum":"1958 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101015573171","id":617587,"location":"f","copy_number":1,"item_sequence_number":13,"status":"Not
+        Charged","enum":"1957 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101003282850","id":617586,"location":"f","copy_number":1,"item_sequence_number":12,"status":"Not
+        Charged","enum":"1957 (July-Sept.)","label":"Firestone Library"},{"barcode":"32101002441705","id":617585,"location":"f","copy_number":1,"item_sequence_number":11,"status":"Not
+        Charged","enum":"1957 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101003423884","id":617584,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not
+        Charged","enum":"1957 (Jan.-Mar.)","label":"Firestone Library"},{"barcode":"32101033258409","id":617583,"location":"f","copy_number":1,"item_sequence_number":9,"status":"Not
+        Charged","enum":"1956 (July-Sept.)","label":"Firestone Library"},{"barcode":"32101013255771","id":617582,"location":"f","copy_number":1,"item_sequence_number":8,"status":"Not
+        Charged","enum":"1956 (Jan.-March)","label":"Firestone Library"},{"barcode":"32101031883786","id":617581,"location":"f","copy_number":1,"item_sequence_number":7,"status":"Not
+        Charged","enum":"1955 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101001625399","id":617580,"location":"f","copy_number":1,"item_sequence_number":6,"status":"Not
+        Charged","enum":"1955 (Jul.-Sept.)","label":"Firestone Library"},{"barcode":"32101017716448","id":617579,"location":"f","copy_number":1,"item_sequence_number":5,"status":"Not
+        Charged","enum":"1955 (May-June)","label":"Firestone Library"},{"barcode":"32101003436761","id":4141233,"location":"f","copy_number":1,"item_sequence_number":4,"status":"Not
+        Charged","enum":"1955 (Jan.11-April 19)","label":"Firestone Library"},{"barcode":"32101031886250","id":617578,"location":"f","copy_number":1,"item_sequence_number":3,"status":"Not
+        Charged","enum":"1954 (July-Dec.)","label":"Firestone Library"},{"barcode":"32101003735873","id":617577,"location":"f","copy_number":1,"item_sequence_number":2,"status":"Not
+        Charged","enum":"1954 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101031883521","id":617576,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","enum":"1954 (Feb.-June)","label":"Firestone Library"},{"barcode":null,"id":null,"location":null,"copy_number":null,"item_sequence_number":null,"status":null}]'
+    http_version: 
+  recorded_at: Thu, 27 Oct 2016 01:26:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Thu, 27 Oct 2016 01:26:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Request-Id:
+      - 831b8d3e-8bb9-4c9f-9f1e-67a160d1ad26
+      X-Runtime:
+      - '0.003432'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Content-Length:
+      - '1564'
+      Status:
+      - 404 Not Found
+      Content-Type:
+      - text/html; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>The page you were looking for doesn't exist (404)</title>
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <style>
+          body {
+            background-color: #EFEFEF;
+            color: #2E2F30;
+            text-align: center;
+            font-family: arial, sans-serif;
+            margin: 0;
+          }
+
+          div.dialog {
+            width: 95%;
+            max-width: 33em;
+            margin: 4em auto 0;
+          }
+
+          div.dialog > div {
+            border: 1px solid #CCC;
+            border-right-color: #999;
+            border-left-color: #999;
+            border-bottom-color: #BBB;
+            border-top: #B00100 solid 4px;
+            border-top-left-radius: 9px;
+            border-top-right-radius: 9px;
+            background-color: white;
+            padding: 7px 12% 0;
+            box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+          }
+
+          h1 {
+            font-size: 100%;
+            color: #730E15;
+            line-height: 1.5em;
+          }
+
+          div.dialog > p {
+            margin: 0 0 1em;
+            padding: 1em;
+            background-color: #F7F7F7;
+            border: 1px solid #CCC;
+            border-right-color: #999;
+            border-left-color: #999;
+            border-bottom-color: #999;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-top-color: #DADADA;
+            color: #666;
+            box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+          }
+          </style>
+        </head>
+
+        <body>
+          <!-- This file lives in public/404.html -->
+          <div class="dialog">
+            <div>
+              <h1>The page you were looking for doesn't exist.</h1>
+              <p>You may have mistyped the address or the page may have moved.</p>
+            </div>
+            <p>If you are the application owner check the logs for more information.</p>
+          </div>
+        </body>
+        </html>
+    http_version: 
+  recorded_at: Thu, 27 Oct 2016 01:26:50 GMT
 recorded_with: VCR 3.0.3

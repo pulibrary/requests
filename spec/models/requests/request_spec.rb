@@ -833,5 +833,22 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     end
   end
-
+  # 495501
+  context 'When passed a holding with a null item record' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '495501',
+        mfhd: '538750',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+    end
+  end
 end

@@ -7,6 +7,7 @@ module Requests
     attr_reader :location
     attr_reader :provider
     attr_accessor :services
+    attr_accessor :preferred_id
 
     include Requests::Pageable
     include Requests::Aeon
@@ -38,6 +39,14 @@ module Requests
       @bib
     end
 
+    def preferred_request_id
+      if item?
+        item['id']
+      else
+        holding.first[0]
+      end
+    end
+
     def holding
       @holding
     end
@@ -59,18 +68,22 @@ module Requests
       return true if @holding["thesis"][:location_code] == 'mudd'
     end
 
+    # graphic arts non voyager collection
     def visuals?
       return true if @holding["visuals"][:location_code] == 'ga'
     end
 
+    # Reading Room Request
     def aeon?
       return true if @location[:aeon_location] == true  
     end
 
+    # at an open location users may go to
     def open?
       return true if @location[:open] == true
     end
 
+    # A closed location where items need to be retrieved from by default
     def requestable?
       return true if @location[:requestable] == true
     end
@@ -87,6 +100,7 @@ module Requests
       return true if @item[:status] == 'Missing'
     end
 
+    # merge these two 
     def annexa?
       return true if @location[:library][:code] == 'annexa'
     end

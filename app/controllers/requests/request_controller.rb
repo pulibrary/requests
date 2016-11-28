@@ -92,6 +92,10 @@ module Requests
       end
     end
 
+    def patron_barcode
+
+    end
+
     private
       # trusted params
       def request_params

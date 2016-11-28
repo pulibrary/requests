@@ -1,0 +1,97 @@
+<%= simple_form_for(:request, { url: '/requests/submit', method: :post, remote: true} ) do |f| %>
+  <%= hidden_fields_request @request %>
+  <% if @user.guest %>
+    <%= render partial: 'user_login_options' %>
+  <% else %>
+    <div class='user user-pul'>
+      <h3>Your Contact Information</h3>
+      <dl class='account--patron_info'>
+        <dt>Name</dt>
+        <dd><%= pul_patron_name @patron %></dd>
+        <dt>Email</dt>
+        <dd><%= @user.email %></dd>
+      </dl>
+    </div>
+    <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
+    <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
+    <%= f.hidden_field :email, value: @user.email %>
+  <% end %>
+  <% unless @request.source.nil? %>
+    <%= f.hidden_field :source, value: @request.source %>
+  <% end %>
+  <% if @mode == 'trace' %>
+    <%= render partial: 'trace_instructions' %>
+  <% end %>
+
+  <div>
+    <span class="error error-items">
+    </span>
+  </div>
+  <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
+    <%= hidden_fields_mfhd @request.holdings[mfhd] %>
+    <div id="holding<%= mfhd %>" class="table-responsive items">
+      <h2><%= @request.holdings[mfhd]["location"] %> <%= @request.holdings[mfhd]["call_number"] %></h2>
+        <% unless @request.holdings[mfhd]["location_has"].nil? %>
+            <div>
+              <h3>Location has: </h3>
+            </td>
+            <p>
+              <% @request.holdings[mfhd]["location_has"].each do |loc| %>
+                <%= loc %><br/>
+              <% end %>
+            </p>
+        <% end %>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered request--available_items <%= show_tablesorter requestable_list%>">
+        <thead>
+          <th>Select</th>
+          <th>Enumeration</th>
+          <th>Status</th>
+          <th>Options</th>
+          <th>Pickup Location</th>
+        </thead>
+        <tbody>
+          <% requestable_list.each do |requestable| %>
+            <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
+              <% unless requestable.item.nil? %>
+                <td class='request--select'>
+                  <%= hidden_field_tag 'requestable[][selected]', false %>
+                  <%= item_checkbox @request.requestable, requestable %>
+                  <%= hidden_fields_item requestable %>
+                </td>
+                <td>
+                  <%= enum_copy_display requestable.item %>
+                </td>
+                <td>
+                  <%= requestable.item["status"] %><br/>
+                  <%= status_label requestable %>
+                </td>
+              <% else %>
+                <td>
+                  <%= hidden_field_tag 'requestable[][selected]', false %>
+                  <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select', id: "requestable_selected_#{mfhd}" %>
+                  <%= hidden_fields_holding requestable %>
+                </td>
+              <% end %>
+              <td class='request--options'>
+                <%= show_service_options requestable %>
+                <%= hidden_service_options requestable %>
+                <% if requestable.recap_edd? %>
+                  <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+                <% end %>
+              </td>
+              <td class='request--pickup'>
+                <%= pickup_choices requestable, @request.default_pickups %>
+              </td>
+            </tr>
+          <% end %>
+          <% if fill_in_eligible? requestable_list %>
+            <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
+<% end %>

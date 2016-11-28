@@ -1,0 +1,1003 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/6009363.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 17:11:57 GMT
+      Server:
+      - Apache/2.2.22 (Ubuntu)
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - e237fa68-dbf8-4be1-aeef-80bb5382850f
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"816e5de64635a1fe78a01675674ddcb3"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.087733'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 5.0.18
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjYwMDkzNjMiLCJhdXRo
+        b3JfZGlzcGxheSI6WyJDYW5hbGVzLCBKaW1lbmEiXSwiYXV0aG9yX21haW5f
+        dCI6WyJDYW5hbGVzLCBKaW1lbmEiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3Bs
+        YXkiOlsiQ2FuYWxlcywgSmltZW5hIl0sImF1dGhvcl9yb2xlc18xZGlzcGxh
+        eSI6IntcInNlY29uZGFyeV9hdXRob3JzXCI6W10sXCJ0cmFuc2xhdG9yc1wi
+        OltdLFwiZWRpdG9yc1wiOltdLFwiY29tcGlsZXJzXCI6W10sXCJwcmltYXJ5
+        X2F1dGhvclwiOlwiQ2FuYWxlcywgSmltZW5hXCJ9IiwiYXV0aG9yX3MiOlsi
+        Q2FuYWxlcywgSmltZW5hIl0sImF1dGhvcl90IjpbIkNhbmFsZXMsIEppbWVu
+        YSJdLCJvcGVuc2VhcmNoX2Rpc3BsYXkiOlsiQ2FuYWxlcywgSmltZW5hIiwi
+        QSB0ZW50aCBvZiBhIHNlY29uZCA6IGEgaGlzdG9yeSAvIEppbWVuYSBDYW5h
+        bGVzLiIsIlRpbWUgbWVhc3VyZW1lbnRzIiwiVGltZSIsIlBoaWxvc29waHki
+        XSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rp
+        c3BsYXkiOiJBIHRlbnRoIG9mIGEgc2Vjb25kIDogYSBoaXN0b3J5IC8gSmlt
+        ZW5hIENhbmFsZXMuIiwidGl0bGVfdCI6WyJBIHRlbnRoIG9mIGEgc2Vjb25k
+        IDogYSBoaXN0b3J5IC8gSmltZW5hIENhbmFsZXMuIl0sInRpdGxlX2NpdGF0
+        aW9uX2Rpc3BsYXkiOlsiQSB0ZW50aCBvZiBhIHNlY29uZCA6IGEgaGlzdG9y
+        eSAvIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJBIHRlbnRoIG9mIGEgc2Vj
+        b25kIDogYSBoaXN0b3J5IC8gSmltZW5hIENhbmFsZXMuIl0sInB1Yl9jcmVh
+        dGVkX2Rpc3BsYXkiOlsiQ2hpY2FnbyA6IFVuaXZlcnNpdHkgb2YgQ2hpY2Fn
+        byBQcmVzcywgMjAwOS4iXSwicHViX2NyZWF0ZWRfcyI6WyJDaGljYWdvIDog
+        VW5pdmVyc2l0eSBvZiBDaGljYWdvIFByZXNzLCAyMDA5LiJdLCJwdWJfY2l0
+        YXRpb25fZGlzcGxheSI6WyJDaGljYWdvOiBVbml2ZXJzaXR5IG9mIENoaWNh
+        Z28gUHJlc3MiXSwicHViX2RhdGVfZGlzcGxheSI6WyIyMDA5Il0sInB1Yl9k
+        YXRlX3N0YXJ0X3NvcnQiOjIwMDksImNhdGFsb2dlZF90ZHQiOiIyMDEwLTAx
+        LTE0VDE4OjI1OjQwWiIsImZvcm1hdCI6WyJCb29rIl0sImRlc2NyaXB0aW9u
+        X2Rpc3BsYXkiOlsieGlpLCAyNjkgcC4gOiBpbGwuIDsgMjQgY20uIl0sImRl
+        c2NyaXB0aW9uX3QiOlsieGlpLCAyNjkgcC4gOiBpbGwuIDsgMjQgY20uIl0s
+        ImJpYl9yZWZfbm90ZXNfZGlzcGxheSI6WyJJbmNsdWRlcyBiaWJsaW9ncmFw
+        aGljYWwgcmVmZXJlbmNlcyBhbmQgaW5kZXguIl0sImxhbmd1YWdlX2ZhY2V0
+        IjpbIkVuZ2xpc2giXSwibGFuZ3VhZ2VfY29kZV9zIjpbImVuZyJdLCJjb250
+        ZW50c19kaXNwbGF5IjpbIkludHJvZHVjdGlvbiAtLSBSZWFjdGlvbiB0aW1l
+        IGFuZCB0aGUgcGVyc29uYWwgZXF1YXRpb24gLS0gVGhlIG1lYXN1cmUgb2Yg
+        YWxsIHRob3VnaHRzIC0tIE1vbWVudHMgb2YgY29udGFjdCAtLSBDYXB0dXJl
+        ZCBieSBjaW5lbWF0b2dyYXBoeSAtLSBTdGFiaWxpemluZyBwaHlzaWNzIC0t
+        IFJlYWN0aW5nIHRvIHJlbGF0aXZpdHkgLS0gQ29uY2x1c2lvbi4iXSwic3Vi
+        amVjdF9kaXNwbGF5IjpbIlRpbWUgbWVhc3VyZW1lbnRzIiwiVGltZeKAlFBo
+        aWxvc29waHkiXSwic3ViamVjdF90IjpbIlRpbWUgbWVhc3VyZW1lbnRzIiwi
+        VGltZeKAlFBoaWxvc29waHkiXSwic3ViamVjdF9mYWNldCI6WyJUaW1lIG1l
+        YXN1cmVtZW50cyIsIlRpbWXigJRQaGlsb3NvcGh5Il0sImlzYm5fZGlzcGxh
+        eSI6WyI5NzgwMjI2MDkzMTg1IChjbG90aCA6IGFsay4gcGFwZXIpIiwiMDIy
+        NjA5MzE4MiAoY2xvdGggOiBhbGsuIHBhcGVyKSJdLCJsY2NuX2Rpc3BsYXki
+        OlsiICAyMDA4MDU0MDE5Il0sImxjY25fcyI6WyIyMDA4MDU0MDE5Il0sImlz
+        Ym5fcyI6WyI5NzgwMjI2MDkzMTg1Il0sImlzYm5fdCI6WyI5NzgwMjI2MDkz
+        MTg1Il0sIm9jbGNfcyI6WyIyOTE5MDgwMDkiXSwib3RoZXJfdmVyc2lvbl9z
+        IjpbIjk3ODAyMjYwOTMxODUiLCJvY24yOTE5MDgwMDkiXSwiaG9sZGluZ3Nf
+        MWRpc3BsYXkiOiJ7XCI2MDY4Mzg3XCI6e1wibG9jYXRpb25cIjpcIkZpcmVz
+        dG9uZSBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJGaXJlc3RvbmUgTGlicmFy
+        eVwiLFwibG9jYXRpb25fY29kZVwiOlwiZlwiLFwiY2FsbF9udW1iZXJcIjpc
+        IlFCMjEzIC5DMzYgMjAwOVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJR
+        QjIxMyAuQzM2IDIwMDlcIn19IiwibG9jYXRpb25fY29kZV9zIjpbImYiXSwi
+        bG9jYXRpb25fZGlzcGxheSI6WyJGaXJlc3RvbmUgTGlicmFyeSJdLCJsb2Nh
+        dGlvbiI6WyJGaXJlc3RvbmUgTGlicmFyeSJdLCJhZHZhbmNlZF9sb2NhdGlv
+        bl9zIjpbImYiLCJGaXJlc3RvbmUgTGlicmFyeSJdLCJjYWxsX251bWJlcl9k
+        aXNwbGF5IjpbIlFCMjEzIC5DMzYgMjAwOSJdLCJjYWxsX251bWJlcl9icm93
+        c2VfcyI6WyJRQjIxMyAuQzM2IDIwMDkiXSwidGltZXN0YW1wIjoiMjAxNi0w
+        Ni0wOFQwNjoyOTo1My4yNTJaIn19fQ==
+    http_version: 
+  recorded_at: Tue, 14 Jun 2016 17:11:57 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/f.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 17:11:35 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 61ba9af8-63bf-42bb-9093-bf73fa8d61a0
+      X-Runtime:
+      - '0.124698'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"0973ed95576e7d517489a545f896ba04"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"f","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
+        Library","code":"firestone"},"holding_library":null,"hours_location":{"label":"Firestone
+        Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Tue, 14 Jun 2016 17:11:58 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=6009363
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 17:11:36 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4a1baefc-d34b-4423-886a-abd41d08fd42
+      X-Runtime:
+      - '0.073971'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"585d871348c35fe356c87e561b50e6f2"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"6068387":{"more_items":false,"location":"f","copy_number":1,"item_id":5667334,"status":"Not
+        Charged"}}'
+    http_version: 
+  recorded_at: Tue, 14 Jun 2016 17:11:58 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6068387
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 17:11:36 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - feda68f0-6ad3-45ee-ba5f-588939a62d8f
+      X-Runtime:
+      - '0.075008'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"2d28ec1c826ccf0ec7bb207b7d7671f8"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101079581698","id":5667334,"location":"f","copy_number":1,"status":"Not
+        Charged"}]'
+    http_version: 
+  recorded_at: Tue, 14 Jun 2016 17:11:59 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/delivery_locations.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Jul 2016 02:45:30 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6550f28b-c4d2-4e00-931f-34ab4a53b9d7
+      X-Runtime:
+      - '0.111956'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c9d1182e221bf644a65a4f8c5ba6f141"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"label":"Plasma Physics Library","address":"Forrestal Campus Princeton,
+        NJ 08544","phone_number":"609-243-3565","contact_email":"ppllib@princeton.edu","gfa_pickup":"PQ","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/1.json","library":{"label":"Harold
+        P. Furth Plasma Physics Library","code":"plasma"}},{"label":"Technical Services","address":"693
+        Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/2.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Architecture Library","address":"School
+        of Architecture Building, Second Floor Princeton, NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/3.json","library":{"label":"Architecture
+        Library","code":"architecture"}},{"label":"East Asian Library","address":"Frist
+        Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"PL","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/4.json","library":{"label":"East
+        Asian Library","code":"eastasian"}},{"label":"Engineering Library","address":"Friend
+        Center for Engineering Education Princeton, NJ 08544","phone_number":"609-258-3200","contact_email":"englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/5.json","library":{"label":"Engineering
+        Library","code":"engineering"}},{"label":"Firestone Library, Microforms","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PF","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/6.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Marquand Library of Art and Archaeology","address":"McCormick
+        Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/7.json","library":{"label":"Marquand
+        Library","code":"marquand"}},{"label":"Mendel Music Library","address":"Woolworth
+        Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/8.json","library":{"label":"Mendel
+        Music Library","code":"mendel"}},{"label":"Mudd Manuscript Library","address":"65
+        Olden Street Princeton, NJ 08544","phone_number":"609-258-6345","contact_email":"mudd@princeton.edu","gfa_pickup":"PH","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/9.json","library":{"label":"Mudd
+        Manuscript Library","code":"mudd"}},{"label":"Stokes Library","address":"Wallace
+        Hall, Lower Level Princeton, NJ 08544","phone_number":"609-258-5455","contact_email":"piaprlib@princeton.edu","gfa_pickup":"PM","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/10.json","library":{"label":"Stokes
+        Library","code":"stokes"}},{"label":"Lewis Library, Geosciences and Map Library","address":"Washington
+        Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/11.json","library":{"label":"Lewis
+        Library","code":"lewis"}},{"label":"Firestone Library, Resource Sharing","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QA","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/12.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Firestone Library, Rare Books \u0026
+        Special Collections Reading Room","address":"One Washington Rd. Princeton,
+        NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/13.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Lewis Library","address":"Washington
+        Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/14.json","library":{"label":"Lewis
+        Library","code":"lewis"}},{"label":"Firestone Library","address":"One Washington
+        Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/15.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"ReCAP Reading Room","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"IL","staff_only":false,"pickup_location":true,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/16.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Humanities Resource Center","address":"011
+        East Pyne Princeton, NJ 08544","phone_number":"609-258-1290","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QV","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/17.json","library":{"label":"Video
+        Library","code":"hrc"}},{"label":"Firestone Library, Cotsen","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/19.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Firestone Library, Graphics Arts","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/20.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Firestone Library, Numismatics","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/21.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Firestone, Historic Maps","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/22.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Technical Services, Holdings Management","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/23.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"East Asian Library. Microforms","address":"Frist
+        Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"QL","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/24.json","library":{"label":"East
+        Asian Library","code":"eastasian"}},{"label":"Lewis Library (Rare)","address":"Washington
+        Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PS","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/25.json","library":{"label":"Lewis
+        Library","code":"lewis"}},{"label":"Marquand Library of Art and Archaeology
+        (Rare)","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PZ","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/26.json","library":{"label":"Marquand
+        Library","code":"marquand"}},{"label":"Mendel Music Library. Sound/Video","address":"Woolworth
+        Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"QK","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/27.json","library":{"label":"Mendel
+        Music Library","code":"mendel"}},{"label":"Firestone Library, Microforms (Firestone
+        Use Only)","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PB","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/28.json","library":{"label":"Firestone
+        Library","code":"firestone"}},{"label":"Preservation","address":"One Washington
+        Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/29.json","library":{"label":"Firestone
+        Library","code":"firestone"}}]'
+    http_version: 
+  recorded_at: Wed, 20 Jul 2016 02:45:30 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/dsp01rr1720547.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 31 Aug 2016 06:18:06 GMT
+      Server:
+      - Apache/2.2.22 (Ubuntu)
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - a1cb8f68-b2d0-45e8-bd8e-c1e813bf8e29
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"6cee658adb9f873f25d6902a9eabf393"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.035817'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 5.0.18
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6ImRzcDAxcnIxNzIwNTQ3
+        IiwidGl0bGVfdCI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCd
+        XG5BbiBFeGFtaW5hdGlvbiBvZiBIdW1hbiBNZWRpY2FsIEV4cGVyaW1lbnRh
+        dGlvbiBpbiBOYXppIEdlcm1hbnkgYW5kIHRoZSBVbml0ZWQgU3RhdGVzIl0s
+        Im9wZW5zZWFyY2hfZGlzcGxheSI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUg
+        Rm9yIE1l4oCdXG5BbiBFeGFtaW5hdGlvbiBvZiBIdW1hbiBNZWRpY2FsIEV4
+        cGVyaW1lbnRhdGlvbiBpbiBOYXppIEdlcm1hbnkgYW5kIHRoZSBVbml0ZWQg
+        U3RhdGVzIiwiRG9keWssIEhpbGxhcnkgQWx5c2UiLCJSb3VzZSwgQ2Fyb2x5
+        biBNLiIsIlByaW5jZXRvbiBVbml2ZXJzaXR5LiBEZXBhcnRtZW50IG9mIEhp
+        c3RvcnkiXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyLigJxBbmQgVGhl
+        biBUaGV5IENhbWUgRm9yIE1l4oCdXG5BbiBFeGFtaW5hdGlvbiBvZiBIdW1h
+        biBNZWRpY2FsIEV4cGVyaW1lbnRhdGlvbiBpbiBOYXppIEdlcm1hbnkgYW5k
+        IHRoZSBVbml0ZWQgU3RhdGVzIl0sInRpdGxlX2Rpc3BsYXkiOiLigJxBbmQg
+        VGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXG5BbiBFeGFtaW5hdGlvbiBvZiBI
+        dW1hbiBNZWRpY2FsIEV4cGVyaW1lbnRhdGlvbiBpbiBOYXppIEdlcm1hbnkg
+        YW5kIHRoZSBVbml0ZWQgU3RhdGVzIiwiZWxlY3Ryb25pY19hY2Nlc3NfMWRp
+        c3BsYXkiOiJ7XCJodHRwOi8vYXJrcy5wcmluY2V0b24uZWR1L2FyazovODg0
+        MzUvZHNwMDFycjE3MjA1NDdcIjpbXCJEYXRhU3BhY2VcIixcIkNpdGF0aW9u
+        IG9ubHlcIl19IiwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJBQzEwMiJdLCJj
+        YWxsX251bWJlcl9icm93c2VfcyI6WyJBQy4wMTAyIl0sImxhbmd1YWdlX2Zh
+        Y2V0IjpbIkVuZ2xpc2giXSwiYXV0aG9yX2Rpc3BsYXkiOlsiRG9keWssIEhp
+        bGxhcnkgQWx5c2UiXSwiYXV0aG9yX3MiOlsiRG9keWssIEhpbGxhcnkgQWx5
+        c2UiLCJSb3VzZSwgQ2Fyb2x5biBNLiIsIlByaW5jZXRvbiBVbml2ZXJzaXR5
+        LiBEZXBhcnRtZW50IG9mIEhpc3RvcnkiXSwiYWR2aXNvcl9kaXNwbGF5Ijpb
+        IlJvdXNlLCBDYXJvbHluIE0uIl0sImRlcGFydG1lbnRfZGlzcGxheSI6WyJQ
+        cmluY2V0b24gVW5pdmVyc2l0eS4gRGVwYXJ0bWVudCBvZiBIaXN0b3J5Il0s
+        ImRlc2NyaXB0aW9uX2Rpc3BsYXkiOlsiMTAzIHBhZ2VzIl0sInJpZ2h0c19y
+        ZXByb2R1Y3Rpb25zX25vdGVfZGlzcGxheSI6WyJXYWxrLWluIEFjY2Vzcy4g
+        VGhpcyB0aGVzaXMgY2FuIG9ubHkgYmUgdmlld2VkIG9uIGNvbXB1dGVyIHRl
+        cm1pbmFscyBhdCB0aGUgXHUwMDNjYSBocmVmPWh0dHA6Ly9tdWRkLnByaW5j
+        ZXRvbi5lZHVcdTAwM2VNdWRkIE1hbnVzY3JpcHQgTGlicmFyeVx1MDAzYy9h
+        XHUwMDNlLiJdLCJsb2NhdGlvbiI6WyJNdWRkIE1hbnVzY3JpcHQgTGlicmFy
+        eSJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIk11ZGQgTWFudXNjcmlwdCBMaWJy
+        YXJ5Il0sImxvY2F0aW9uX2NvZGVfcyI6WyJtdWRkIl0sImFkdmFuY2VkX2xv
+        Y2F0aW9uX3MiOlsibXVkZCIsIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0s
+        ImhvbGRpbmdzXzFkaXNwbGF5Ijoie1widGhlc2lzXCI6e1wibG9jYXRpb25c
+        IjpcIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJN
+        dWRkIE1hbnVzY3JpcHQgTGlicmFyeVwiLFwibG9jYXRpb25fY29kZVwiOlwi
+        bXVkZFwiLFwiY2FsbF9udW1iZXJcIjpcIkFDMTAyXCIsXCJjYWxsX251bWJl
+        cl9icm93c2VcIjpcIkFDMTAyXCIsXCJkc3BhY2VcIjp0cnVlfX0iLCJjbGFz
+        c195ZWFyX3MiOlsiMjAxNSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE1
+        LCJwdWJfZGF0ZV9lbmRfc29ydCI6MjAxNSwiZm9ybWF0IjpbIlNlbmlvciB0
+        aGVzaXMiXSwidGltZXN0YW1wIjoiMjAxNi0wOC0zMFQwMDowMjowOS43MDZa
+        In19fQ==
+    http_version: 
+  recorded_at: Wed, 31 Aug 2016 06:18:06 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/mudd.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 31 Aug 2016 06:18:07 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 63d01980-bd70-4e2e-a1a6-9d67fcd1e911
+      X-Runtime:
+      - '0.017568'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"5d8ea8e3fcc0fe251e2a35751500ab75"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"mudd","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Mudd
+        Manuscript Library","code":"mudd"},"holding_library":null,"hours_location":{"label":"Mudd
+        Manuscript Library and University Archives","code":"mudd"},"delivery_locations":[{"label":"Mudd
+        Manuscript Library","address":"65 Olden Street Princeton, NJ 08544","phone_number":"609-258-6345","contact_email":"mudd@princeton.edu","gfa_pickup":"PH","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Wed, 31 Aug 2016 06:18:06 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/visuals46165.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 31 Aug 2016 06:40:39 GMT
+      Server:
+      - Apache/2.2.22 (Ubuntu)
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 98d77ed7-34db-4a85-89c5-a08567f48854
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"b2c4baafbd55913c37301a8a27674495"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.052833'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 5.0.18
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6InZpc3VhbHM0NjE2NSIs
+        InRpdGxlX3QiOlsiSGFyZCBjeWRlciJdLCJvcGVuc2VhcmNoX2Rpc3BsYXki
+        OlsiSGFyZCBjeWRlciIsIkF2ZXJ5LCBFcmljIiwiTWF2ZXJpY2ssIFBhdHJp
+        Y2siLCJCcm9hZHNpZGVzIiwiV2FzaGluZ3RvbiAoRC5DLikiLCIyMDEzIiwi
+        VW5pdGVkIFN0YXRlcyIsIjIxc3QgY2VudHVyeSIsIlNwZWNpbWVucyIsIkJp
+        YmxlLiBPLlQuIiwiSWxsdXN0cmF0aW9ucyIsIlJlbGlnaW91cyBhcnQiLCJB
+        ZGFtIChCaWJsaWNhbCBmaWd1cmUpIiwiQXJ0IiwiRXZlIChCaWJsaWNhbCBm
+        aWd1cmUpIiwiQmlibGUuIE8uVC4gR2VuZXNpcyIsIlNpbiBpbiBhcnQiLCJU
+        ZW1wdGF0aW9uIGluIGFydCIsIldvbWVuIGluIHRoZSBCaWJsZSIsIkRldmls
+        IGluIGFydCIsIlNlcnBlbnRzIGluIHRoZSBCaWJsZSJdLCJ0aXRsZV9jaXRh
+        dGlvbl9kaXNwbGF5IjpbIkhhcmQgY3lkZXIiXSwidGl0bGVfZGlzcGxheSI6
+        IkhhcmQgY3lkZXIiLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDEzLCJwdWJf
+        ZGF0ZV9lbmRfc29ydCI6MjAxMywicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJX
+        YXNoaW5ndG9uLCBELmMuIDogSGFuZCBQYXBlcm1ha2luZywgSW5jLCBOLmQu
+        IFsyMDEzXSJdLCJmb3JtX2dlbnJlX2Rpc3BsYXkiOlsiUHJpbnQiXSwibG9j
+        YXRpb25fY29kZV9zIjpbImdhIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsi
+        Z2EiLCJSYXJlIEJvb2tzIGFuZCBTcGVjaWFsIENvbGxlY3Rpb25zIl0sImxv
+        Y2F0aW9uIjpbIlJhcmUgQm9va3MgYW5kIFNwZWNpYWwgQ29sbGVjdGlvbnMi
+        XSwiaG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCJ2aXN1YWxzXCI6e1wibG9jYXRp
+        b25fY29kZVwiOlwiZ2FcIixcImNhbGxfbnVtYmVyXCI6XCJHQzA3MyBHQSAy
+        MDE0LjAwMDAzIEdDMDczL0JveCAwMSBvciBCb3ggMDIvTm9ybWFsIEFtZXJp
+        Y2FuLzIxc3QgYy4vR0MwNzMvQm94IDAxIG9yIEJveCAwMlwiLFwiY2FsbF9u
+        dW1iZXJfYnJvd3NlXCI6XCJHQzA3MyBHQSAyMDE0LjAwMDAzIEdDMDczL0Jv
+        eCAwMSBvciBCb3ggMDIvTm9ybWFsIEFtZXJpY2FuLzIxc3QgYy4vR0MwNzMv
+        Qm94IDAxIG9yIEJveCAwMlwiLFwibG9jYXRpb25fbm90ZVwiOltcIkNvbXBh
+        cnRtZW50IEUgLy8gR0MwNzNcIl0sXCJsaWJyYXJ5XCI6XCJSYXJlIEJvb2tz
+        IGFuZCBTcGVjaWFsIENvbGxlY3Rpb25zXCIsXCJsb2NhdGlvblwiOlwiUmFy
+        ZSBCb29rcyBhbmQgU3BlY2lhbCBDb2xsZWN0aW9ucyAtIEdyYXBoaWMgQXJ0
+        cyBDb2xsZWN0aW9uXCIsXCJkc3BhY2VcIjp0cnVlfX0iLCJhdXRob3JfZGlz
+        cGxheSI6WyJBdmVyeSwgRXJpYyIsIk1hdmVyaWNrLCBQYXRyaWNrIl0sImF1
+        dGhvcl9zIjpbIkF2ZXJ5LCBFcmljIiwiTWF2ZXJpY2ssIFBhdHJpY2siXSwi
+        ZGVzY3JpcHRpb25fZGlzcGxheSI6WyJTaXplIG9mIHNoZWV0OiAzNi41IHgg
+        MTguOCBjbSJdLCJub3Rlc19kaXNwbGF5IjpbIk1hdmVyaWNrLCBQYXRyaWNr
+        IFthZnRlcl07IEF2ZXJ5LCBFcmljIFtlbmdyYXZlcl0iLCJNZWRpdW06IFdv
+        b2QgZW5ncmF2aW5ncyIsIlNpZ25lZCBpbiBwZW5jaWwsIHZlcnNvOiBcIkUg
+        QXZlcnlcIi4iLCJOdW1iZXJlZCAzNC8xMDAsIGluIHBlbmNpbCwgdmVyc28u
+        Il0sInNvdXJjZV9hY3F1aXNpdGlvbl9kaXNwbGF5IjpbIkdpZnQgb2YgSGFu
+        ZCBQYXBlcm1ha2luZyBJbmMuLCAyMDEzLiJdLCJwdWJfZGF0ZV9kaXNwbGF5
+        IjpbIm4uZC4gWzIwMTNdIl0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiR0Mw
+        NzMgR0EgMjAxNC4wMDAwMyBHQzA3My9Cb3ggMDEgb3IgQm94IDAyL05vcm1h
+        bCBBbWVyaWNhbi8yMXN0IGMuL0dDMDczL0JveCAwMSBvciBCb3ggMDIiXSwi
+        Y2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiR0MwNzMgR0EgMjAxNC4wMDAwMyBH
+        QzA3My9Cb3ggMDEgb3IgQm94IDAyL05vcm1hbCBBbWVyaWNhbi8yMXN0IGMu
+        L0dDMDczL0JveCAwMSBvciBCb3ggMDIiXSwic3ViamVjdF9mYWNldCI6WyJC
+        cm9hZHNpZGVz4oCUV2FzaGluZ3RvbiAoRC5DLinigJQyMDEzIiwiQnJvYWRz
+        aWRlc+KAlFVuaXRlZCBTdGF0ZXPigJQyMXN0IGNlbnR1cnnigJRTcGVjaW1l
+        bnMiLCJCaWJsZS4gTy5ULuKAlElsbHVzdHJhdGlvbnMiLCJSZWxpZ2lvdXMg
+        YXJ0IiwiQWRhbSAoQmlibGljYWwgZmlndXJlKeKAlEFydCIsIkV2ZSAoQmli
+        bGljYWwgZmlndXJlKeKAlEFydCIsIkJpYmxlLiBPLlQuIEdlbmVzaXPigJRJ
+        bGx1c3RyYXRpb25zIiwiU2luIGluIGFydCIsIlRlbXB0YXRpb24gaW4gYXJ0
+        IiwiV29tZW4gaW4gdGhlIEJpYmxlIiwiRGV2aWwgaW4gYXJ0IiwiU2VycGVu
+        dHMgaW4gdGhlIEJpYmxlIl0sInN1YmplY3RfZGlzcGxheSI6WyJCcm9hZHNp
+        ZGVz4oCUV2FzaGluZ3RvbiAoRC5DLinigJQyMDEzIiwiQnJvYWRzaWRlc+KA
+        lFVuaXRlZCBTdGF0ZXPigJQyMXN0IGNlbnR1cnnigJRTcGVjaW1lbnMiLCJC
+        aWJsZS4gTy5ULuKAlElsbHVzdHJhdGlvbnMiLCJSZWxpZ2lvdXMgYXJ0Iiwi
+        QWRhbSAoQmlibGljYWwgZmlndXJlKeKAlEFydCIsIkV2ZSAoQmlibGljYWwg
+        ZmlndXJlKeKAlEFydCIsIkJpYmxlLiBPLlQuIEdlbmVzaXPigJRJbGx1c3Ry
+        YXRpb25zIiwiU2luIGluIGFydCIsIlRlbXB0YXRpb24gaW4gYXJ0IiwiV29t
+        ZW4gaW4gdGhlIEJpYmxlIiwiRGV2aWwgaW4gYXJ0IiwiU2VycGVudHMgaW4g
+        dGhlIEJpYmxlIl0sInN1YmplY3RfdCI6WyJCcm9hZHNpZGVz4oCUV2FzaGlu
+        Z3RvbiAoRC5DLinigJQyMDEzIiwiQnJvYWRzaWRlc+KAlFVuaXRlZCBTdGF0
+        ZXPigJQyMXN0IGNlbnR1cnnigJRTcGVjaW1lbnMiLCJCaWJsZS4gTy5ULuKA
+        lElsbHVzdHJhdGlvbnMiLCJSZWxpZ2lvdXMgYXJ0IiwiQWRhbSAoQmlibGlj
+        YWwgZmlndXJlKeKAlEFydCIsIkV2ZSAoQmlibGljYWwgZmlndXJlKeKAlEFy
+        dCIsIkJpYmxlLiBPLlQuIEdlbmVzaXPigJRJbGx1c3RyYXRpb25zIiwiU2lu
+        IGluIGFydCIsIlRlbXB0YXRpb24gaW4gYXJ0IiwiV29tZW4gaW4gdGhlIEJp
+        YmxlIiwiRGV2aWwgaW4gYXJ0IiwiU2VycGVudHMgaW4gdGhlIEJpYmxlIl0s
+        ImZvcm1hdCI6WyJWaXN1YWwgbWF0ZXJpYWwiXSwidGltZXN0YW1wIjoiMjAx
+        Ni0wOC0zMFQwMDoxODo1My41NDJaIn19fQ==
+    http_version: 
+  recorded_at: Wed, 31 Aug 2016 06:40:39 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=visuals46165
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Wed, 31 Aug 2016 06:40:40 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Request-Id:
+      - c2c87055-fa52-4c61-a219-fb17fd2b1718
+      X-Runtime:
+      - '0.058676'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Content-Length:
+      - '48'
+      Status:
+      - 500 Internal Server Error
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"status":"500","error":"Internal Server Error"}'
+    http_version: 
+  recorded_at: Wed, 31 Aug 2016 06:40:40 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/ga.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 31 Aug 2016 06:40:40 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - c01e4cf4-bb40-4e0e-bafb-072a3a33d8ad
+      X-Runtime:
+      - '0.018092'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c8aca303d3d63a35826487de3e6f0129"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Graphic Arts Collection","code":"ga","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Rare
+        Books and Special Collections","code":"rare"},"holding_library":null,"hours_location":{"label":"Firestone
+        Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Wed, 31 Aug 2016 06:40:40 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=dsp01rr1720547
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Thu, 01 Sep 2016 16:45:48 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Request-Id:
+      - a9865a37-7fa2-40b6-bb81-c9700bd1195e
+      X-Runtime:
+      - '0.064997'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Content-Length:
+      - '48'
+      Status:
+      - 500 Internal Server Error
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"status":"500","error":"Internal Server Error"}'
+    http_version: 
+  recorded_at: Thu, 01 Sep 2016 16:45:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=dsp01rr1720547
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Thu, 01 Sep 2016 16:45:48 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Request-Id:
+      - c4989062-42f8-4ef9-ac68-e61b22c4f344
+      X-Runtime:
+      - '0.053597'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Content-Length:
+      - '48'
+      Status:
+      - 500 Internal Server Error
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"status":"500","error":"Internal Server Error"}'
+    http_version: 
+  recorded_at: Thu, 01 Sep 2016 16:45:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=visuals46165
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Thu, 01 Sep 2016 16:45:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      X-Request-Id:
+      - fc2ba87f-15e7-40dc-90bb-c6ea504b5509
+      X-Runtime:
+      - '0.061234'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Content-Length:
+      - '48'
+      Status:
+      - 500 Internal Server Error
+      Connection:
+      - close
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"status":"500","error":"Internal Server Error"}'
+    http_version: 
+  recorded_at: Thu, 01 Sep 2016 16:45:49 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/2300474.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 8031e175-adb3-47d7-a4ee-a1c32c95bce3
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"677734f5f9f5f06ab8f471796b32bcd9"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.031127'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 11 Oct 2016 21:32:19 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjIzMDA0NzQiLCJhdXRo
+        b3JfZGlzcGxheSI6WyJOaXR6ZSwgUGF1bCBILiJdLCJhdXRob3JfY2l0YXRp
+        b25fZGlzcGxheSI6WyJOaXR6ZSwgUGF1bCBILiJdLCJhdXRob3Jfcm9sZXNf
+        MWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltdLFwidHJhbnNs
+        YXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwi
+        cHJpbWFyeV9hdXRob3JcIjpcIk5pdHplLCBQYXVsIEguXCJ9IiwiYXV0aG9y
+        X3MiOlsiTml0emUsIFBhdWwgSC4iXSwib3BlbnNlYXJjaF9kaXNwbGF5Ijpb
+        Ik5pdHplLCBQYXVsIEguIiwiVS4gUy4gZm9yZWlnbiBwb2xpY3ksIDE5NDUt
+        MTk1NSIsIlVuaXRlZCBTdGF0ZXMiLCJGb3JlaWduIHJlbGF0aW9ucyJdLCJt
+        YXJjX3JlbGF0b3JfZGlzcGxheSI6WyJBdXRob3IiXSwidGl0bGVfZGlzcGxh
+        eSI6IlUuIFMuIGZvcmVpZ24gcG9saWN5LCAxOTQ1LTE5NTUiLCJ0aXRsZV90
+        IjpbIlUuIFMuIGZvcmVpZ24gcG9saWN5LCAxOTQ1LTE5NTUiXSwidGl0bGVf
+        Y2l0YXRpb25fZGlzcGxheSI6WyJVLiBTLiBmb3JlaWduIHBvbGljeSwgMTk0
+        NS0xOTU1Il0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJVLiBTLiBmb3JlaWdu
+        IHBvbGljeSwgMTk0NS0xOTU1Il0sInB1Yl9jcmVhdGVkX2Rpc3BsYXkiOlsi
+        W05ldyBZb3JrLCBGb3JlaWduIFBvbGljeSBBc3NvY2lhdGlvbl0gMTk1NiJd
+        LCJwdWJfY3JlYXRlZF9zIjpbIltOZXcgWW9yaywgRm9yZWlnbiBQb2xpY3kg
+        QXNzb2NpYXRpb25dIDE5NTYiXSwicHViX2NpdGF0aW9uX2Rpc3BsYXkiOlsi
+        TmV3IFlvcms6IEZvcmVpZ24gUG9saWN5IEFzc29jaWF0aW9uIl0sInB1Yl9k
+        YXRlX2Rpc3BsYXkiOlsiMTk1NiJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0Ijox
+        OTU2LCJjYXRhbG9nZWRfdGR0IjoiMjAwNy0wNi0xOVQxOTo1NTowMVoiLCJm
+        b3JtYXQiOlsiQm9vayJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjYyIHAu
+        IGlsbHVzLiwgbWFwcy4gMjAgY20uIl0sImRlc2NyaXB0aW9uX3QiOlsiNjIg
+        cC4gaWxsdXMuLCBtYXBzLiAyMCBjbS4iXSwic2VyaWVzX2Rpc3BsYXkiOlsi
+        SGVhZGxpbmUgc2VyaWVzIG5vLiAxMTYiXSwibW9yZV9pbl90aGlzX3Nlcmll
+        c190IjpbIkhlYWRsaW5lIHNlcmllcyJdLCJiaWJfcmVmX25vdGVzX2Rpc3Bs
+        YXkiOlsiSW5jbHVkZXMgYmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMgYW5k
+        IHZpc3VhbCBhaWRzLiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0s
+        Imxhbmd1YWdlX2NvZGVfcyI6WyJlbmciXSwic3ViamVjdF9kaXNwbGF5Ijpb
+        IlVuaXRlZCBTdGF0ZXPigJRGb3JlaWduIHJlbGF0aW9uc+KAlDE5NDUtIl0s
+        InN1YmplY3RfdCI6WyJVbml0ZWQgU3RhdGVz4oCURm9yZWlnbiByZWxhdGlv
+        bnPigJQxOTQ1LSJdLCJzdWJqZWN0X2ZhY2V0IjpbIlVuaXRlZCBTdGF0ZXPi
+        gJRGb3JlaWduIHJlbGF0aW9uc+KAlDE5NDUtIl0sImxjY25fZGlzcGxheSI6
+        WyIgICA1NjAwOTM1MSAgIl0sImxjY25fcyI6WyI1NjAwOTM1MSJdLCJvY2xj
+        X3MiOlsiMjY2OTA3MyJdLCJvdGhlcl92ZXJzaW9uX3MiOlsib2NtMDI2Njkw
+        NzMiXSwic3ViamVjdF9lcmFfZmFjZXQiOlsiMTk0NS0iXSwiaG9sZGluZ3Nf
+        MWRpc3BsYXkiOiJ7XCIyNTkxMzYwXCI6e1wibG9jYXRpb25cIjpcIkZpcmVz
+        dG9uZSBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJGaXJlc3RvbmUgTGlicmFy
+        eVwiLFwibG9jYXRpb25fY29kZVwiOlwiZlwiLFwiY29weV9udW1iZXJcIjpc
+        IjFcIixcImNhbGxfbnVtYmVyXCI6XCIxMDk2LjY4MVwiLFwiY2FsbF9udW1i
+        ZXJfYnJvd3NlXCI6XCIxMDk2LjY4MVwifX0iLCJsb2NhdGlvbl9jb2RlX3Mi
+        OlsiZiJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIkZpcmVzdG9uZSBMaWJyYXJ5
+        Il0sImxvY2F0aW9uIjpbIkZpcmVzdG9uZSBMaWJyYXJ5Il0sImFkdmFuY2Vk
+        X2xvY2F0aW9uX3MiOlsiZiIsIkZpcmVzdG9uZSBMaWJyYXJ5Il0sIm5hbWVf
+        dGl0bGVfMjQ1X3MiOlsiTml0emUsIFBhdWwgSC4uIFUuIFMuIGZvcmVpZ24g
+        cG9saWN5LCAxOTQ1LTE5NTUiXSwibmFtZV90aXRsZV9icm93c2VfcyI6WyJO
+        aXR6ZSwgUGF1bCBILi4gVS4gUy4gZm9yZWlnbiBwb2xpY3ksIDE5NDUtMTk1
+        NSJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIjEwOTYuNjgxIl0sImNhbGxf
+        bnVtYmVyX2Jyb3dzZV9zIjpbIjEwOTYuNjgxIl0sInRpbWVzdGFtcCI6IjIw
+        MTYtMDktMDZUMjM6MjU6MjcuNTQ1WiJ9fX0=
+    http_version: 
+  recorded_at: Tue, 11 Oct 2016 21:32:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=2300474
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Oct 2016 21:32:20 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 0ad27507-a5e2-4c48-a721-c92531674f6e
+      X-Runtime:
+      - '0.045899'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"50e35fdd922a026a1b79157d4b096d67"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"2591360":{"more_items":false,"location":"f","copy_number":1,"item_id":4601827,"status":"Missing","label":"Firestone
+        Library"}}'
+    http_version: 
+  recorded_at: Tue, 11 Oct 2016 21:32:19 GMT
+recorded_with: VCR 3.0.3

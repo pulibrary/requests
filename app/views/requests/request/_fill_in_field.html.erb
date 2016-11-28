@@ -1,0 +1,24 @@
+<tr class='user-supplied-input' id='request_user_supplied_<%= "#{requestable.holding.keys[0]}" %>'>
+  <td class='request--select'>
+    <%= hidden_field_tag 'requestable[][selected]', false %>
+    <%= check_box_tag "requestable[][selected]", true, false, class: 'request--select' %>
+    <%= hidden_fields_holding requestable %>
+  </td>
+  <td colspan="2" class='request--options'>
+    <fieldset class="form-group">
+     <label class="control-label col-sm-6" for="user_supplied_enum">
+          If the specific volume does not appear in the list above, please enter it here:
+      </label>
+      <div class="col-sm-6">
+        <%= text_field_tag 'requestable[][user_supplied_enum]', "", value: "", placeholder: "Ex: Volume 2, 1987", id: "requestable_user_supplied_enum_#{requestable.holding.keys[0]}", maxlength: 60, size: 20 %>
+      </div>
+    </fieldset>
+  </td>
+  <td>
+    <%= show_service_options_fill_in requestable %>
+    <%= hidden_service_options_fill_in requestable %>
+  </td>
+  <td class='request--pickup-options'>
+    <%= pickup_choices_fill_in requestable %>
+  </td>
+</tr>

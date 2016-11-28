@@ -23,12 +23,12 @@ This engine is mouting within Orangelight. To test your local engine code intera
 
 Change:
 ```
-gem 'locations', git: 'git@github.com:pulibrary/locations.git', branch: 'development'
+gem 'requests', git: 'git@github.com:pulibrary/requests.git', branch: 'development'
 ```
 
 to:
 ```
-gem 'locations', path: 'git@github.com:pulibrary/locations.git'
+gem 'requests', path: 'git@github.com:pulibrary/requests.git'
 ```
 
 and run ```bundle install``` to point OL at your local gem.

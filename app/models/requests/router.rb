@@ -23,6 +23,10 @@ module Requests
     # :recall
     # :trace
 
+    # user levels
+    # guest - Access patron
+    
+
     def routed_request
       @requestable.set_services(calculate_services)
       @requestable
@@ -34,7 +38,7 @@ module Requests
       services = []
       # here lies the switch case for all request types from the mega chart
       if(@requestable.voyager_managed?)
-        if(@requestable.online?) # I am online
+        if(@requestable.online?)
           services << 'online'
         else
           ## my item status is negative

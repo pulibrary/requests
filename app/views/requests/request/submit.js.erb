@@ -11,9 +11,17 @@
   });
   $('.alert-danger').hide();
   <% @submission.errors.messages.each do |key, value| %>
-    $(".error-<%= key %>").text("<%= value.first.html_safe %>"); 
+    <% if key == :items %>
+      $(".error-<%= key %>").text("<%= value.first.values[0]['text'].html_safe %>");
+    <% else %>
+      <%= value.first.html_safe %>
+      $(".error-<%= key %>").text("<%= value.first.html_safe %>");
+    <% end %>
     $(".error-<%= key %>").parent().addClass('has-error');
     $(".error-<%= key %>").show();
+    <% if key == :items %>
+      $("#request_<%= value.first.keys[0].html_safe %> .request--<%= value.first.values[0]['type'] %>").addClass('alert alert-danger');
+    <% end %>
   <% end %>
   $('.submit--request').before("<%= escape_javascript(render partial: 'flash_messages') %>");
 <% end %>

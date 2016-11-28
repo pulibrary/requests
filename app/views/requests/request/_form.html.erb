@@ -1,53 +1,9 @@
-<%= simple_form_for(:request, { url: "/requests/submit", method: :post, remote: true} ) do |f| %>
+<%= simple_form_for(:request, { url: '/requests/submit', method: :post, remote: true} ) do |f| %>
   <%= hidden_fields_request @request %>
   <% if @user.guest %>
-    <div class="row">
-      <div class="user user-pul col-sm-12 col-md-6">
-          <h3>Princeton Faculty, Staff, and Students</h3>
-          <div>
-            <%= current_user_status @user %>
-          </div>
-      </div>
-      <div class="user col-sm-12 col-md-6">
-        <h3>Other Users</h3>
-        <div>
-          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#other_user_account_info" aria-expanded="false" aria-controls="other_user_account_info">
-          <%= I18n.t('requests.account.other_user_login_msg') %>
-          </a>
-        </div>
-        <div class='collapse well' id='other_user_account_info'>
-          <fieldset class="form-group required">
-            <label class="control-label col-sm-10" for="user_name">
-                Your Name
-            </label>
-            <div class="col-sm-10">
-              <%= f.text_field :user_name, size: 50, maxlength: 50, class: 'form-control', error: 'User Name' %>
-              <span class="error error-user_name"></span>
-            </div>
-          </fieldset>
-          <fieldset class="form-group required">
-            <label class="control-label col-sm-10" for="user_barcode">
-              Your Barcode (Access only patrons, may enter 'access' as their barcode in order to request materials.)
-            </label>
-            <div class="col-sm-10">
-              <%= f.text_field :user_barcode, size: 14, maxlength: 14, class: 'form-control', error: 'Barcode', value: '22101' %>
-              <span class="error error-user_barcode"></span>
-            </div>
-          </fieldset>
-          <fieldset class="form-group required">
-            <label class="control-label col-sm-10" for="email">
-                Contact Email
-            </label>
-            <div class="col-sm-10">
-              <%= f.text_field :email, size: 50, maxlength: 50, class: 'form-control', error: 'Email' %>
-              <span class="error error-email"></span>
-            </div>
-          </fieldset>
-        </div>
-      </div>
-    </div>
+    <%= render partial: 'user_login_options' %>
   <% else %>
-    <div class="user user-pul">
+    <div class='user user-pul'>
       <h3>Your Contact Information</h3>
       <dl class='account--patron_info'>
         <dt>Name</dt>
@@ -64,7 +20,7 @@
     <%= f.hidden_field :source, value: @request.source %>
   <% end %>
   <% if @mode == 'trace' %>
-    <%= render partial: "trace_instructions" %>
+    <%= render partial: 'trace_instructions' %>
   <% end %>
 
   <div>
@@ -97,9 +53,9 @@
         </thead>
         <tbody>
           <% requestable_list.each do |requestable| %>
-            <tr>
+            <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
               <% unless requestable.item.nil? %>
-                <td>
+                <td class='request--select'>
                   <%= hidden_field_tag 'requestable[][selected]', false %>
                   <%= item_checkbox @request.requestable, requestable %>
                   <%= hidden_fields_item requestable %>
@@ -118,14 +74,14 @@
                   <%= hidden_fields_holding requestable %>
                 </td>
               <% end %>
-              <td>
+              <td class='request--options'>
                 <%= show_service_options requestable %>
                 <%= hidden_service_options requestable %>
                 <% if requestable.recap_edd? %>
                   <%= render partial: "edd_fields", locals: { requestable: requestable } %>
                 <% end %>
               </td>
-              <td>
+              <td class='request--pickup'>
                 <%= pickup_choices requestable, @request.default_pickups %>
               </td>
             </tr>

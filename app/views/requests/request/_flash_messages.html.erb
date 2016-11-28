@@ -13,7 +13,11 @@
           <% if !@submission.errors.empty? %>
             <ul>
               <% @submission.errors.messages.each do |key, value| %>
-                <li><em><%= error_key_format(key) %></em> <%= value.first.html_safe %></li>
+                <% if key == :items %>
+                  <li><em><%= error_key_format(key) %></em> <%= value.first.values[0]['text'].html_safe %></li>
+                <% else %>
+                  <li><em><%= error_key_format(key) %></em> <%= value.first.html_safe %></li>
+                <% end %>
               <% end %>
             </ul>
           <% else %>

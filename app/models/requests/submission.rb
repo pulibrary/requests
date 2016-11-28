@@ -13,32 +13,34 @@ module Requests
       record.items.each do |selected|
         if selected.key? 'user_supplied_enum' 
           if selected['user_supplied_enum'].empty?
-            record.errors[:items] << 'Please Fill in additional volume information'
+            record.errors[:items].merge!({ "user_supplied_#{selected['mfhd']}" => { 'text' => 'Please Fill in additional volume information', 'type' => 'options' } })
           end
         end
         if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
-          if selected['pickup'].empty?
-            record.errors[:items] << 'Please select a pickup location.'
+          if selected['pickup'].empty? && selected['item_id'].empty?
+            record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
+          elsif selected['pickup'].empty?
+            record.errors[:items] << { selected['item_id'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
           end
         end
         if selected["type"] == 'recap'
           if selected['item_id'].empty?
-            record.errors[:items] << 'Item Cannot be Requested from Recap, see circulation desk.'
+            record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be Requested from Recap, see circulation desk.', 'type' => 'options' } }
           else
             item_id = selected['item_id']
             if selected["delivery_mode_#{item_id}"].nil?
-              record.errors[:items] << 'Please select a delivery type for your selected recap item'
+              record.errors[:items] << { item_id => { 'text' => 'Please select a delivery type for your selected recap item', 'type' => 'options' } }
             else
               delivery_type = selected["delivery_mode_#{item_id}"]
               if delivery_type == 'print' && selected['pickup'].empty?
-                record.errors[:items] << 'Please selected a pickup location for your selected recap item'
+                record.errors[:items] << { item_id => { 'text' => 'Please selected a pickup location for your selected recap item', 'type' => 'pickup' } }
               end
               if delivery_type == 'edd'
                 if selected['edd_start_page'].empty?
-                  record.errors[:items] << 'Please specify a starting page.'
+                  record.errors[:items] << { item_id => { 'text' => 'Please specify a starting page.', 'type' => 'options' } }
                 end
                 if selected['edd_art_title'].empty?
-                  record.errors[:items] << 'Please specify title for the selection you want digitized.'
+                  record.errors[:items] << { item_id => { 'text' => 'Please specify title for the selection you want digitized.', 'type' => 'options' } }
                 end
               end
             end

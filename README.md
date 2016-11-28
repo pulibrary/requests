@@ -28,7 +28,7 @@ gem 'requests', git: 'git@github.com:pulibrary/requests.git', branch: 'developme
 
 to:
 ```
-gem 'requests', path: 'git@github.com:pulibrary/requests.git'
+gem 'requests', path: '/mylocal/path/to/the/gem/requests'
 ```
 
 and run ```bundle update requests``` to point your local copy of OL at your local requests gem.

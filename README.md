@@ -31,7 +31,7 @@ to:
 gem 'requests', path: 'git@github.com:pulibrary/requests.git'
 ```
 
-and run ```bundle install``` to point OL at your local gem.
+and run ```bundle update requests``` to point your local copy of OL at your local requests gem.
 
 
 ## Install in Production

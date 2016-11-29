@@ -1,7 +1,7 @@
 <%= simple_form_for(:request, { url: '/requests/submit', method: :post, remote: true} ) do |f| %>
   <%= hidden_fields_request @request %>
   <% if @user.guest %>
-    <%= render partial: 'user_login_options' %>
+    <%= render partial: 'user_login_options', locals: { f: f } %>
   <% else %>
     <div class='user user-pul'>
       <h3>Your Contact Information</h3>

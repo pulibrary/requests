@@ -8,7 +8,7 @@ module Requests
 
     def validate(record)
       unless record.items.size >= 1
-        record.errors[:items] << 'Please Select an Item to Request!'
+        record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } }
       end
       record.items.each do |selected|
         if selected.key? 'user_supplied_enum' 
@@ -33,7 +33,7 @@ module Requests
             else
               delivery_type = selected["delivery_mode_#{item_id}"]
               if delivery_type == 'print' && selected['pickup'].empty?
-                record.errors[:items] << { item_id => { 'text' => 'Please selected a pickup location for your selected recap item', 'type' => 'pickup' } }
+                record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } }
               end
               if delivery_type == 'edd'
                 if selected['edd_start_page'].empty?
@@ -62,6 +62,10 @@ module Requests
       @user = params[:request]
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
+    end
+
+    def user
+      @user
     end
 
     def email

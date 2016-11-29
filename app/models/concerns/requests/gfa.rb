@@ -14,11 +14,10 @@ module Requests
 
     # implement solr doc to GFA schema mapping
     # each param should an indifferent hash
-    def param_mappings(bib, user, item)
+    def param_mapping(bib, user, item)
       {
-        Bbid: "",
-        barcode: "",
-        
+        Bbid: "foo",
+        barcode: "bar"
       }
     end
 

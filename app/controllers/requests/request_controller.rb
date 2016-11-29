@@ -84,6 +84,7 @@ module Requests
           format.json { render json: { pageable: true } }
           format.html { redirect_to "/requests/#{@request.system_id}" }
         end
+      ## This clause should go away when this systems is in production for all request types
       else
         respond_to do | format |
           format.json { render json: { pageable: false } }

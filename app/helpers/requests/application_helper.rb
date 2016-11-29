@@ -18,6 +18,12 @@ module Requests
       end
     end
 
+    # array of error_keys
+    def guest_user_error?(error_keys)
+      user_errors = [:email, :user_name, :user_barcode]
+      error_keys.any? { |item| user_errors.include? item }
+    end
+
     def show_service_options requestable
       if requestable.charged?
         link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'

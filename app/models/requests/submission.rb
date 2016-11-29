@@ -69,15 +69,15 @@ module Requests
     end
 
     def email
-      @user[:email]
+      @user["email"]
     end
 
     def source
-      @user[:source]
+      @user["source"]
     end
 
     def user_name
-      @user[:user_name]
+      @user["user_name"]
     end
 
     def items
@@ -93,7 +93,7 @@ module Requests
     end
 
     def user_barcode
-      @user[:user_barcode]
+      @user["user_barcode"]
     end
 
     def bib

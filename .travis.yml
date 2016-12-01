@@ -9,7 +9,7 @@ script: bundle exec rake ci
 
 branches:
   only:
-    - master
+    - development
 notifications:
   email:
     recipients:

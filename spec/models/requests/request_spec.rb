@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
 
-  context "with a system_id and a mfhd that has a holding record with an attached item record" do 
+  context "with a system_id and a mfhd that has a holding record with an attached item record" do
 
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) { 
+    let(:params) {
       {
         system_id: '8880549',
         mfhd: '8805567',
@@ -57,7 +57,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a mfhd" do
-        expect(subject.requestable[0].holding).to be_truthy 
+        expect(subject.requestable[0].holding).to be_truthy
         expect(subject.requestable[0].holding.key? "8805567").to be_truthy
       end
 
@@ -89,7 +89,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   context "with a system_id and a mfhd that only has a holding record" do
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) { 
+    let(:params) {
       {
         system_id: '1791763',
         mfhd: '2056183',
@@ -115,7 +115,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].location).to be_truthy
       end
     end
-      
+
   end
 
   context "with a system_id only that has holdings and item records" do
@@ -153,7 +153,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "assigns items to the correct mfhd" do
-        subject.sorted_requestable.each do |key, items| 
+        subject.sorted_requestable.each do |key, items|
           items.each do |item|
             expect(item.holding.keys.first).to eq(key)
           end
@@ -221,7 +221,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   context "A system id that has a holding with items in a temporary location" do
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) { 
+    let(:params) {
       {
         system_id: '6195942',
         user: user
@@ -249,7 +249,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   context "a system_id with no holdings or items" do
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) { 
+    let(:params) {
       {
         system_id: '2385868',
         user: user
@@ -267,7 +267,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   context "When passed a system_id for a theses record" do
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) { 
+    let(:params) {
       {
         system_id: 'dsp01rr1720547',
         user: user
@@ -303,7 +303,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "assigns items to the correct mfhd" do
-        subject.sorted_requestable.each do |key, items| 
+        subject.sorted_requestable.each do |key, items|
           items.each do |item|
             expect(item.holding.keys.first).to eq(key)
           end
@@ -315,7 +315,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   context "When passed a system_id for a visuals record" do
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) { 
+    let(:params) {
       {
         system_id: 'visuals45246',
         user: user
@@ -385,7 +385,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_at_paging_outside) { described_class.new(params) }
     subject { request_at_paging_outside }
-    
+
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('nec')
@@ -405,7 +405,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_at_paging_nec_multiple) { described_class.new(params) }
     subject { request_at_paging_nec_multiple }
-    
+
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('nec')
@@ -429,7 +429,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
           requestable.services = []
         end
         expect(subject.has_pageable?).to be_falsy
-      end 
+      end
     end
   end
 
@@ -443,7 +443,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_at_paging_f) { described_class.new(params) }
     subject { request_at_paging_f }
-    
+
     describe "#pageable?" do
       it "should be be false" do
         expect(subject.requestable[0].location['code']).to eq('f')
@@ -462,7 +462,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_at_paging_f) { described_class.new(params) }
     subject { request_at_paging_f }
-    
+
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.has_pageable?).to be(true)
@@ -473,7 +473,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  # from the A range in "f" 
+  # from the A range in "f"
   context "When passed an ID for a paging location f outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
@@ -484,7 +484,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_at_paging_f) { described_class.new(params) }
     subject { request_at_paging_f }
-    
+
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
@@ -505,7 +505,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_at_paging_f) { described_class.new(params) }
     subject { request_at_paging_f }
-    
+
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('xl')
@@ -525,7 +525,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     }
     let(:request_with_on_order) { described_class.new(params) }
-    let(:firestone_circ) { "Firestone Library" }
+    let(:firestone_circ) {
+        { label: "Firestone Library", gfa_code: "PA" }
+    }
     subject { request_with_on_order }
 
     describe "#requestable" do
@@ -544,8 +546,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should provide a list of the default pickup locations" do
         expect(subject.default_pickups).to be_truthy
         expect(subject.default_pickups).to be_an(Array)
+        #test that it is an array of hashes
         expect(subject.default_pickups.size).to be > 1
-        expect(subject.default_pickups.include?(firestone_circ)).to be_truthy 
+        expect(subject.default_pickups.include?(firestone_circ)).to be_truthy
       end
     end
   end
@@ -577,7 +580,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  # Oversize ID 
+  # Oversize ID
   context "When passed an ID for an Item with that is Oversize" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
@@ -601,7 +604,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should be have pageable items" do
         expect(subject.has_pageable?).to be(true)
-      end        
+      end
 
       it "should have a pageable item" do
         expect(subject.requestable[0].pageable?).to eq(true)
@@ -633,7 +636,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should not have any pageable items" do
         expect(subject.has_pageable?).to be_nil
-      end        
+      end
 
       it "should have a pageable item" do
         expect(subject.requestable[0].pageable?).to be_nil

@@ -13,6 +13,7 @@
       </dl>
     </div>
     <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
+    <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
     <%= f.hidden_field :email, value: @user.email %>
   <% end %>
@@ -48,8 +49,7 @@
           <th>Select</th>
           <th>Enumeration</th>
           <th>Status</th>
-          <th>Options</th>
-          <th>Pickup Location</th>
+          <th>Delivery Options</th>
         </thead>
         <tbody>
           <% requestable_list.each do |requestable| %>
@@ -75,18 +75,32 @@
                 </td>
               <% end %>
               <td class='request--options'>
-                <%= show_service_options requestable %>
-                <%= hidden_service_options requestable %>
-                <% if requestable.recap_edd? %>
-                  <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+                <% if requestable.services.include?('recap_edd') %>
+                    <%= hidden_field_tag "requestable[][type]", "recap" %>
+                    <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print", false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-expanded' => 'true', 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
+                    <%= label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print", class: 'control-label' %>
+                    <br/><small id="requestable__type_recap_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap.brief_msg') %></small>
+                    <br/>
+                <% else %>
+                    <%= show_service_options requestable %>
+                    <%= hidden_service_options requestable %>
                 <% end %>
-              </td>
-              <td class='request--pickup'>
                 <%= pickup_choices requestable, @request.default_pickups %>
+
+                <% if requestable.services.include?('recap_edd') %>
+                    <br/>
+                    <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
+                    <%= label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery", class: 'control-label' %>
+                    <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
+
+                    <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+                <% end %>
               </td>
             </tr>
           <% end %>
+          
           <% if fill_in_eligible? requestable_list %>
+
             <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last } %>
           <% end %>
         </tbody>

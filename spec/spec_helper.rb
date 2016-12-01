@@ -19,6 +19,7 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
 require 'factory_girl_rails'
+require 'webmock/rspec'
 require 'rspec/rails'
 require 'engine_cart'
 require 'database_cleaner'
@@ -26,6 +27,9 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 require 'coveralls'
+
+
+WebMock.disable_net_connect!(allow_localhost: false)
 
 Coveralls.wear!('rails')
 Capybara.javascript_driver = :poltergeist
@@ -77,6 +81,19 @@ RSpec.configure do |config|
   config.include Requests::Engine.routes.url_helpers
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
+
+  # config.before(:each) do
+  #
+  #     stub_request(:post, "http://libweb5.princeton.edu/RecapRequestService").
+  #       with(body: "abc",
+  #           :headers => {'Accept'=>'*/*',
+  #               'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+  #               'Content-Length'=>'3',
+  #               'User-Agent'=>'Ruby'}).
+  #       to_return(:status => 200, :body => "stubbed response", :headers => {})
+  #
+  #   end
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

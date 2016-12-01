@@ -11,7 +11,7 @@ module Requests
         record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } }
       end
       record.items.each do |selected|
-        if selected.key? 'user_supplied_enum' 
+        if selected.key? 'user_supplied_enum'
           if selected['user_supplied_enum'].empty?
             record.errors[:items].merge!({ "user_supplied_#{selected['mfhd']}" => { 'text' => 'Please Fill in additional volume information', 'type' => 'options' } })
           end
@@ -107,7 +107,7 @@ module Requests
     def service_type
       types = []
       @items.each do |item|
-        types << item[:type]
+        types << item['type']
       end
       types.uniq!
       types.first

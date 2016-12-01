@@ -14,8 +14,8 @@ module Requests
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
     # @option opts [Fixnum] :mfhd voyager id
-    # @option opts [User] :user current user object 
-    # @option opts [String] :source represents system that directed user to request form. i.e.                                                   
+    # @option opts [User] :user current user object
+    # @option opts [String] :source represents system that directed user to request form. i.e.
     def initialize(system_id:, mfhd: nil, user: nil, source: nil)
       @system_id ||= system_id
       @mfhd ||= mfhd
@@ -43,15 +43,15 @@ module Requests
                 locations[item_loc] = get_location(item_loc)
               end
               params = build_requestable_params(
-                { 
-                  item: item, 
+                {
+                  item: item,
                   holding: { "#{holding_id.to_sym}" => holdings[holding_id] },
                   location: @locations[item_loc]
-                } 
+                }
               )
               # sometimes availability returns items without any status
               # see https://github.com/pulibrary/marc_liberation/issues/174
-              unless item["status"].nil?  
+              unless item["status"].nil?
                 requestable_items << Requests::Requestable.new(params)
               end
             end
@@ -81,7 +81,7 @@ module Requests
           end
           route_requests(requestable_items)
         end
-      end  
+      end
     end
 
     def has_requestable?
@@ -109,7 +109,7 @@ module Requests
         request.services.each do |service|
           services << service
         end
-      end 
+      end
       services.uniq!
       if services.include? 'paging'
         return true
@@ -235,10 +235,10 @@ module Requests
       pickup_locations = []
       get_pickups.each do |pickup|
         if pickup["pickup_location"] == true
-          pickup_locations << pickup["label"]
+          pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"]}
         end
       end
-      pickup_locations.sort
+      pickup_locations.sort_by! { |loc| loc[:label] }
     end
 
     def default_pickups
@@ -274,7 +274,7 @@ module Requests
         items_with_symbols
       end
 
-      def item_current_location(item) 
+      def item_current_location(item)
         item['temp_loc'] || item['location']
       end
   end

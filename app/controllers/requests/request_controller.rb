@@ -18,7 +18,7 @@ module Requests
       if params[:mode].nil?
         @mode = 'standard'
       else
-        @mode = sanitize(params[:mode]) 
+        @mode = sanitize(params[:mode])
       end
       @title = "Request ID: #{request_params[:system_id]}"
       unless params[:mfhd].nil?
@@ -43,34 +43,43 @@ module Requests
       @submission = Requests::Submission.new(sanitize_submission(params))
       respond_to do |format|
         if @submission.valid?
-          service = @submission.service_type
-          if mail_services.include? service
-            Requests::RequestMailer.send("#{service}_email", @submission).deliver_now
-          elsif recap_services.include? service
-            gfa_service = Requests::Recap.new(@submission)
-            if gfa_service.submitted?
-              Requests::RequestMailer.send("recap_email", @submission).deliver_now
-            end
-          elsif service == 'recall'
-            recall_service = Requests::Recall.new(@submission)
-            if recall_service.submitted?
-              Requests::RequestMailer.send("recall_email", @submission).deliver_now
-            end
+          service_type = @submission.service_type
+          @service = nil
+          service_errors = []
+          if recap_services.include? service_type
+            @service = Requests::Recap.new(@submission)
+          elsif service_type == 'recall'
+            @service = Requests::Recall.new(@submission)
+          else
+            @service = Requests::Generic.new(@submission)
           end
-          format.js { 
-            flash.now[:success] = I18n.t('requests.submit.success') 
+          
+          service_errors = @service.errors
+        end
+        if @submission.valid? && !@service.errors.any?
+          format.js {
+            flash.now[:success] = I18n.t('requests.submit.success')
             logger.info "#Request Submission - #{@submission.as_json}"
+            logger.info "Request Sent"
+            Requests::RequestMailer.send("#{@submission.service_type}_email", @submission).deliver_now
           }
         else
-          format.js { 
-            flash.now[:error] = I18n.t('requests.submit.error')
-            logger.error "Request Submission #{@submission.errors.messages.as_json}"
+          format.js {
+            if @submission.valid? # submission was valid, but service failed
+                flash.now[:error] = I18n.t('requests.submit.service_error')
+                logger.error "Request Service Error"
+                Requests::RequestMailer.send("service_error_email", @service).deliver_now
+            else
+                flash.now[:error] = I18n.t('requests.submit.error')
+                logger.error "Request Submission #{@submission.errors.messages.as_json}"
+            end
           }
         end
+
       end
     end
 
-    # shim for pageable locations 
+    # shim for pageable locations
     def pageable
       request_params[:system_id] = sanitize(params[:system_id])
       @user = current_or_guest_user

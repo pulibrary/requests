@@ -36,10 +36,11 @@ module Requests
         end
       else
         unless requestable.services.include? 'recap_edd'
+        #unless !(requestable.services && ['recap','recap_edd']).empty?
           content_tag(:ul, class: "service-list") do
             requestable.services.each do |service|
               brief_msg = I18n.t("requests.#{service}.brief_msg")
-              concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+              concat content_tag(:li, brief_msg.html_safe, class: "service-item text-muted")
             end
           end
         end
@@ -55,7 +56,7 @@ module Requests
         else
           brief_msg = I18n.t("requests.paging.brief_msg")
         end
-        concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+        concat content_tag(:li, brief_msg.html_safe, class: "service-item text-muted")
       end
     end
 
@@ -84,7 +85,7 @@ module Requests
 
     # only requestable services that support "user-supplied volume info"
     def hidden_service_options_fill_in requestable
-      if requestable.annexa? 
+      if requestable.annexa?
         request_input('annexa')
       elsif requestable.annexb?
         request_input('annexb')
@@ -93,22 +94,11 @@ module Requests
       end
     end
 
-    def recap_radio_button_group requestable
-      content_tag(:fieldset, class: 'choices--recap', id: "recap_group_#{requestable.item[:id]}") do
-        concat hidden_field_tag "requestable[][type]", "recap"
-        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print"#, false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}" 
-        concat label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print - #{I18n.t('requests.recap.brief_msg')}", class: 'control-label'
-        concat content_tag(:br)
-        concat radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { toggle: 'collapse', target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label'
-        concat label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery - #{I18n.t('requests.recap_edd.brief_msg')}"
-      end
-    end
-
     def recap_print_only_input requestable
       content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{requestable.item[:id]}") do
         concat hidden_field_tag "requestable[][type]", "", value: 'recap'
         concat hidden_field_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print"
-      end 
+      end
     end
 
     def enum_copy_display item
@@ -126,18 +116,23 @@ module Requests
     end
 
     def request_input type
-      hidden_field_tag "requestable[][type]", "", value: type 
+      hidden_field_tag "requestable[][type]", "", value: type
     end
 
     def pickup_choices requestable, default_pickups
       unless requestable.pickup_locations.nil? || requestable.charged? # || (requestable.services & self.default_pickup_services).empty?
-        locs = self.available_pickups(requestable, default_pickups)
-        if(locs.size > 1)
-          #locs = ["Select Delivery Location"] + locs.sort
-          select_tag "requestable[][pickup]", options_for_select(locs), prompt: I18n.t("requests.default.pickup_placeholder")
-        else
-          hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"
-          hidden + locs[0]
+        class_list = "well collapse in request--print"
+        if requestable.services.include?('recap_edd')
+            class_list = "well collapse request--print"
+        end
+        content_tag(:div, id: "fields-print__#{requestable.item['id']}", class: class_list) do
+            locs = self.available_pickups(requestable, default_pickups)
+            if(locs.size > 1)
+               concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+            else
+              hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
+              hidden + locs[0][:label]
+            end
         end
       end
     end
@@ -150,7 +145,7 @@ module Requests
         locs = default_pickups
       else
         requestable.pickup_locations.each do |location|
-          locs << location[:label]
+          locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
         end
       end
       locs
@@ -163,13 +158,13 @@ module Requests
     def pickup_choices_fill_in requestable
       locs = []
       requestable.pickup_locations.each do |location|
-        locs << location[:label]
+        locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
       end
       if(locs.size > 1)
-        select_tag "requestable[][pickup]", options_for_select(locs), prompt: I18n.t("requests.default.pickup_placeholder")
+        select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
       else
-        hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0]}"
-        hidden + locs[0]
+        hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
+        hidden + locs[0][:label]
       end
     end
 
@@ -237,7 +232,7 @@ module Requests
     def status_label requestable
       if requestable.charged?
         content_tag(:span, 'Not Available', class: "availability--label badge-alert label label-danger")
-      else 
+      else
         content_tag(:span, 'Available', class: "availability--label badge-success label label-success")
       end
     end

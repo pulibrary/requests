@@ -6,7 +6,7 @@ module Requests
 
     def current_user_status current_user
       ## Expect that the host app can provide you a devise current_user object
-      if current_user.provider == 'cas'
+      if current_user.provider == 'cas' || current_user.provider == 'barcode'
         content_tag(:div, class: "flash_messages-user") do
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
@@ -18,7 +18,7 @@ module Requests
     end
 
     def active_user current_user
-      if current_user.provider == 'cas'
+      if current_user.provider == 'cas' || current_user.provider == 'barcode'
         link_to "#{I18n.t('requests.account.logged_in')}#{current_user.uid}", '/users/sign_out'
       else
         link_to "PUL Users Sign In to Request", '/users/auth/cas'
@@ -34,6 +34,14 @@ module Requests
         name += " #{patron[:last_name]}"
       end
       name
+    end
+
+    def pul_patron_last_name patron
+      last_name = ""
+      unless patron[:last_name].nil?
+        last_name += " #{patron[:last_name]}"
+      end
+      last_name
     end
 
     def request_title request
@@ -65,7 +73,12 @@ module Requests
 
     def fill_in_eligible? requestable_list
       fill_in = nil
+      enums = false
+
       requestable_list.each do |requestable|
+        unless requestable.item.key?('enum') #if there are any enums show the fill in request row
+            enums = true
+        end
         unless (requestable.services & fill_in_services).empty?
           fill_in = true
         end
@@ -75,8 +88,11 @@ module Requests
           end
         end
       end
+      if enums
+          fill_in = nil
+      end
       fill_in
-    end 
+    end
 
     def fill_in_services
       ["paging", "annexa", "annexb"]
@@ -93,7 +109,7 @@ module Requests
       when 'catalog'
         "http://catalog.princeton.edu/cgi-bin/Pwebrecon.cgi?BBID=#{id}"
       when 'pulsearch'
-        "https://pulsearch.princeton.edu/catalog/#{id}"
+        "/catalog/#{id}"
       else
         nil
       end

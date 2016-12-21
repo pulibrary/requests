@@ -4,6 +4,7 @@ en:
     default:
       email_destination: "libcir@princeton.edu"
       pickup_placeholder: "Select a Delivery Location"
+      request_method_placeholder: "Select a Request Method"
     error:
       service_error_email: "lsupport@princeton.edu"
       service_error_subject: "Request Service Error"
@@ -48,9 +49,12 @@ en:
       email_conf_msg: "Electronic copy requests typically take 1-2 days to process. You receive an email including a link where you can download your scanned section in the that timeframe."
     recall:
       email_subject: "Recalled Item Information"
+      request_label: "Recall (several weeks)"
       brief_msg: "Recall item charged to another Library user. This process can take up to several weeks."
       email_conf_msg: "Your are requesting that another Library user return this book for your use. This process can take up to several weeks. Contact the Library Circulation Desk for Details. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
+      service_error: "You cannot recall this item. "
     bd:
+      request_label: "Borrow Direct (2-4 business days)"
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
       email_config_msg: "You will be notified via email when your item has arrived and can be picked up"
     in_process:
@@ -62,6 +66,7 @@ en:
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."
       access_statement: "Reading Room Access Only"
     ill:
+      request_label: "Interlibrary Loan (1-2 weeks)"
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
     trace:
       email: "trace@princeton.edu"

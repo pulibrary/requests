@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'devise'
-  
+
   s.add_dependency 'rails', '~> 4.2'
   s.add_dependency 'bootstrap-sass', '~> 3.3'
   s.add_dependency 'friendly_id', '~> 5.1.0'
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'borrow_direct', '~> 1.2.0'
   s.add_dependency 'lcsort'
   s.add_dependency 'email_validator'
+  s.add_dependency 'cobravsmongoose', '~> 0.0.2'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.4'

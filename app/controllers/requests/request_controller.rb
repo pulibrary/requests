@@ -53,7 +53,6 @@ module Requests
           else
             @service = Requests::Generic.new(@submission)
           end
-          
           service_errors = @service.errors
         end
         if @submission.valid? && !@service.errors.any?

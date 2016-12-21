@@ -1,0 +1,11 @@
+<div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Request via &hellip; <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=<%= "#{requestable.bib['uniform_title_s'].first}" %>">Borrow Direct (2-4 business days)</a></li>
+    <li><a href="https://library.princeton.edu/services/interlibrary-services">Interlibrary Loan (1-2 weeks)</a></li>
+    <li><a href="#" class="recall-request">Recall (several weeks)</a></li>
+  </ul>
+</div>
+<%= pickup_choices_recall %>

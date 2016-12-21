@@ -26,7 +26,7 @@ module Requests
 
     def show_service_options requestable
       if requestable.charged?
-        link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
+        render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon?
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}#{requestable.params.to_query}", class: 'btn btn-primary'
       elsif requestable.traceable?
@@ -160,6 +160,16 @@ module Requests
       requestable.pickup_locations.each do |location|
         locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
       end
+      if(locs.size > 1)
+        select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+      else
+        hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
+        hidden + locs[0][:label]
+      end
+    end
+
+    def pickup_choices_recall
+      locs = [{ label: "Firestone Circ", gfa_code: "PA"}, { label: "Lewis Circ", gfa_code: "LW"}]
       if(locs.size > 1)
         select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
       else

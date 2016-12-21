@@ -26,7 +26,7 @@ module Requests
 
     def show_service_options requestable
       if requestable.charged?
-        link_to 'Check Available Request Options', "https://library.princeton.edu/requests/#{requestable.bib[:id]}", class: 'btn btn-primary'
+        render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon?
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}#{requestable.params.to_query}", class: 'btn btn-primary'
       elsif requestable.traceable?
@@ -253,7 +253,8 @@ module Requests
       elsif requestable.aeon?
         true
       elsif requestable.charged?
-        true
+        #true
+        false
       elsif requestable.open? && !requestable.pageable?
         true
       elsif requestable.always_requestable?
@@ -285,7 +286,7 @@ module Requests
           elsif requestable_list.first.pageable_loc?
             false
           else
-            true
+            false
           end
         else
           false
@@ -327,7 +328,7 @@ module Requests
           elsif requestable_list.first.pageable_loc?
             multi_item
           else
-            no_item
+            single_item #no_item
           end
         else
           if requestable_list.first.annexa?

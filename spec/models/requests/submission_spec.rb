@@ -88,8 +88,8 @@ describe Requests::Submission do
       end
 
       it "It has one service type" do
-        expect(submission.service_type).to be_truthy
-        expect(submission.service_type).to be_a(String)
+        expect(submission.service_types).to be_truthy
+        expect(submission.service_types).to be_an(Array)
       end
     end
   end

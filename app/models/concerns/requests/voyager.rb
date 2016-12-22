@@ -13,14 +13,8 @@ module Requests
     end
 
     def response(params, payload)
-        request_url = "#{Requests.config[:voyager_api_base]}/record/#{params[:recordID]}/items/#{params[:itemID]}/recall?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}&patron_group=#{params[:patron_group]}"
+        request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/recall?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}&patron_group=#{params[:patron_group]}"
         conn.put request_url, payload, { 'X-Accept' => 'application/xml' }
-    end
-
-    def parse_response(response)
-      #need to parse response xml
-      #parsed = response.status == 201 ? parse_json(response.body) : {}
-      #parsed.class == Hash ? parsed.with_indifferent_access : parsed
     end
 
     # implement solr doc to Voyager schema mapping
@@ -42,7 +36,7 @@ module Requests
             xml.send(:"pickup-location", item[:pickup])
             xml.send(:"last-pickup-date", "20091006")
             xml.comment "testing recall request"
-            xml.dbkey "1@QA20012DB20020613131313"
+            xml.dbkey "1@PRINCETONDB20050302104001"
           }
         end
         recall_request.to_xml

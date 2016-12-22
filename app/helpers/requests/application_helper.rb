@@ -169,7 +169,7 @@ module Requests
     end
 
     def pickup_choices_recall
-      locs = [{ label: "Firestone Circ", gfa_code: "PA"}, { label: "Lewis Circ", gfa_code: "LW"}]
+      locs = [{ label: "Firestone Circ", gfa_code: "1"}, { label: "Lewis Circ", gfa_code: "2"}]
       if(locs.size > 1)
         select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
       else

@@ -21,12 +21,12 @@ module Requests
     # each param should have an indifferent hash
     def param_mapping(bib, user, item)
       {
-        recordID: bib[:id],
-        itemID: item[:item_id],
-        patron: user[:patron_id],
+        recordID: bib['id'],
+        itemID: item['item_id'],
+        patron: user['patron_id'],
         #patron_homedb: Requests.config[:voyager_ub_id], #need to reconcile requests.yml with orangelight coming back as 1@DB
         patron_homedb: '1@PRINCETONDB20050302104001',
-        patron_group: user[:patron_group]
+        patron_group: user['patron_group']
       }
     end
 

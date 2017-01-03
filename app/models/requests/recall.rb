@@ -27,7 +27,7 @@ module Requests
       end
     end
 
-    def submitted?
+    def submitted
         @sent
     end
 

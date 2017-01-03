@@ -57,10 +57,9 @@ describe Requests::Recall do
 
     describe 'All Recall Requests' do
 
-
         it "It should capture errors when the request is unsuccessful or malformed." do
-            binding.pry
-            stub_request(:put, "Requests.config[:voyager_api_base]").
+
+            stub_request(:put, Requests.config[:voyager_api_base] + ":7014").
               with(headers: {'Accept'=>'*/*'}).
               to_return(status: 405, body: responses[:error], headers: {})
 
@@ -70,7 +69,7 @@ describe Requests::Recall do
 
         it "It should capture successful request submissions." do
 
-            stub_request(:put, Requests.config[:voyager_api_base]).
+            stub_request(:put, Requests.config[:voyager_api_base] + ":7014").
               with(headers: {'Accept'=>'*/*'}).
               to_return(status: 201, body: responses[:success], headers: {})
 

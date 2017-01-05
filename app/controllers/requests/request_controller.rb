@@ -37,6 +37,13 @@ module Requests
       #flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end
 
+    # will request recall pickup location options from voyager
+    # will convert from xml to json
+    def recall_pickups
+      @pickups = Requests::PickupLookup.new(params)
+      render json: @pickups.returned
+    end
+    
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit

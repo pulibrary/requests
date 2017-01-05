@@ -15,34 +15,48 @@ $(document).ready(function() {
 
     });
 
-    // Submit Recall requests independently of requests _form partial
-    $( ".table-responsive" ).on( "click", ".recall-request", function() {
+    var data = {}; //generic data object to put ajax payload in
 
-      var item_inputs = $( this ).closest( "tr" ).find( "input" );
-      var bib_inputs =  $('input[name^="bib["]');
-      var user_inputs = $('input[name^="request["]');
-      var pickup_pref = $( this ).closest( "td" ).find( "select" );
-      // var mfhd_inputs = $('input[name^="mfhd[]["]');
+    $( ".table-responsive" ).on( "change", ".request-options", function() {
+      if($(this)[0].selectedOptions[0].value === 'recall'){
 
-      var inputs = $.merge( $.merge( item_inputs, bib_inputs ), user_inputs );
-      var data = {};
+        var item_inputs = $( this ).closest( "tr" ).find( "input" );
+        var bib_inputs =  $('input[name^="bib["]');
+        var user_inputs = $('input[name^="request["]');
+        // var pickup_pref = $( this ).closest( "td" ).find( "select" );
+        // var mfhd_inputs = $('input[name^="mfhd[]["]');
 
-      $.each( inputs, function( key ) {
-        data[inputs[key].name] = inputs[key].value;
-      });
-      data['requestable[][type]'] = "recall";
-      data[pickup_pref[0].name] = pickup_pref[0].selectedOptions[0].value;
+        var inputs = $.merge( $.merge( item_inputs, bib_inputs ), user_inputs );
 
-      $.ajax({
-        method: "POST",
-        url: "/requests/submit",
-        data: data
-      })
-      .done(function( msg ) {
-        console.log( "Done: " + msg );
-      });
+        $.each( inputs, function( key ) {
+          data[inputs[key].name] = inputs[key].value;
+        });
 
+        $.ajax({
+          method: "POST",
+          url: "/requests/recall_pickups",
+          data: data
+        })
+        .done(function( msg ) {
+          console.log( "Done: " + msg );
+          //to-do: populate the dropdown here
+          // data['requestable[][type]'] = "recall";
+          // data[pickup_pref[0].name] = pickup_pref[0].selectedOptions[0].value;
+          $( this ).closest( "td" ).find( ".recall-pickup" ).show();
+        });
+      } else {
+        $( this ).closest( "td" ).find( ".recall-pickup" ).hide();
+      }
     });
+
+    // $.ajax({
+    //   method: "POST",
+    //   url: "/requests/submit",
+    //   data: data
+    // })
+    // .done(function( msg ) {
+    //   console.log( "Done: " + msg );
+    // });
 
 
 });

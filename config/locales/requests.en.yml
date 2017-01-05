@@ -50,6 +50,7 @@ en:
       email_subject: "Recalled Item Information"
       brief_msg: "Recall item charged to another Library user. This process can take up to several weeks."
       email_conf_msg: "Your are requesting that another Library user return this book for your use. This process can take up to several weeks. Contact the Library Circulation Desk for Details. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
+      service_error: "You cannot recall this item. "
     bd:
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
       email_config_msg: "You will be notified via email when your item has arrived and can be picked up"

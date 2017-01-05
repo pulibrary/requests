@@ -16,7 +16,7 @@ module Requests
       @submission.items.each do |item|
         params = param_mapping(@submission.bib, @submission.user, item)
         payload = request_payload(item)
-        r = response(params, payload)
+        r = put_response(params, payload)
         xml_response  = Nokogiri::XML(r.body)
         unless xml_response.xpath("//reply-text").text() == 'ok'
             error_message =  "Failed request: " + xml_response.xpath("//note").text()

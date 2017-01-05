@@ -12,9 +12,14 @@ module Requests
       conn
     end
 
-    def response(params, payload)
+    def put_response(params, payload)
         request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/recall?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}&patron_group=#{params[:patron_group]}"
         conn.put request_url, payload, { 'X-Accept' => 'application/xml' }
+    end
+
+    def get_response(params)
+        request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=1@PRINCETONDB20050302104001&patron_group=#{params['request']['patron_group']}"
+        conn.get request_url, { 'X-Accept' => 'application/xml' }
     end
 
     # implement solr doc to Voyager schema mapping

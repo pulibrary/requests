@@ -1,11 +1,19 @@
-<div class="btn-group">
+<!-- <div class="btn-group">
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Request via &hellip; <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <li><a href="http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=foo">Borrow Direct (2-4 business days)</a></li>
-    <li><a href="https://library.princeton.edu/services/interlibrary-services">Interlibrary Loan (1-2 weeks)</a></li>
+    <li><a href="http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=foo" class="bd-request">Borrow Direct (2-4 business days)</a></li>
+    <li><a href="https://library.princeton.edu/services/interlibrary-services" class="ill-request">Interlibrary Loan (1-2 weeks)</a></li>
+    <li><a href="#" class="bd-request">Borrow Direct (2-4 business days)</a></li>
+    <li><a href="#" class="ill-request">Interlibrary Loan (1-2 weeks)</a></li>
     <li><a href="#" class="recall-request">Recall (several weeks)</a></li>
   </ul>
-</div>
+</div> -->
+<select class="request-options">
+  <option value="bd">Borrow Direct (2-4 business days)</option>
+  <option value="ill">Interlibrary Loan (1-2 weeks)</option>
+  <option value="recall">Recall (several weeks)</option>
+</select>
+<br/>
 <%= pickup_choices_recall %>

@@ -78,7 +78,6 @@ describe Requests::Recap do
 
     describe 'All ReCAP Requests' do
 
-
         it "It should capture errors when the request is unsuccessful or malformed." do
 
             stub_request(:post, Requests.config[:gfa_base]).

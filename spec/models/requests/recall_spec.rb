@@ -55,16 +55,20 @@ describe Requests::Recall do
           }
         }
 
-        let(:stub_url) {
-          # can't build url string from the submission object, hardcoding seems to work  which may be enough...
-          #Requests.config[:voyager_api_base] + ":7014/vxws/record/" + submission.bib['id'] + "/items/" + submission.item['item_id'] + "/recall?patron=" + submission.user['patron_id'] + "&patron_group=" + submission.user['patron_group'] + "&patron_homedb=1%40PRINCETONDB20050302104001"
-          "http://catalog.princeton.edu:7014/vxws/record/4815239/items/4428451/recall?patron=12345&patron_group=staff&patron_homedb=1%40PRINCETONDB20050302104001"
-        }
 
     describe 'All Recall Requests' do
 
+        before(:each) do
+         @stub_url = Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
+                     "/items/" + submission.items[0]['item_id'] +
+                     "/recall?patron=" + submission.user['patron_id'] +
+                     "&patron_group=" + submission.user['patron_group'] +
+                     "&patron_homedb=1%40PRINCETONDB20050302104001"
+        end
+
         it "It should capture errors when the request is unsuccessful or malformed." do
-            stub_request(:put, stub_url).
+
+            stub_request(:put, @stub_url).
               with(headers: {'Accept'=>'*/*'}).
               to_return(status: 405, body: responses[:error], headers: {})
 
@@ -74,7 +78,7 @@ describe Requests::Recall do
 
         it "It should capture successful request submissions." do
 
-            stub_request(:put, stub_url).
+            stub_request(:put, @stub_url).
               with(headers: {'Accept'=>'*/*'}).
               to_return(status: 201, body: responses[:success], headers: {})
 

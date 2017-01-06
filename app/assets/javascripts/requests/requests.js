@@ -18,8 +18,10 @@ $(document).ready(function() {
     var data = {}; //generic data object to put ajax payload in
 
     $( ".table-responsive" ).on( "change", ".request-options", function() {
-      if($(this)[0].selectedOptions[0].value === 'recall'){
 
+      if($(this)[0].selectedOptions[0].value === 'recall'){
+        var this_td = $( this ).closest( "td" )
+        var recall_pickup_select = this_td.find( ".recall-pickup" );
         var item_inputs = $( this ).closest( "tr" ).find( "input" );
         var bib_inputs =  $('input[name^="bib["]');
         var user_inputs = $('input[name^="request["]');
@@ -38,14 +40,22 @@ $(document).ready(function() {
           data: data
         })
         .done(function( msg ) {
-          console.log( "Done: " + msg );
-          //to-do: populate the dropdown here
-          // data['requestable[][type]'] = "recall";
-          // data[pickup_pref[0].name] = pickup_pref[0].selectedOptions[0].value;
-          $( this ).closest( "td" ).find( ".recall-pickup" ).show();
+          if(msg.response.recall['@allowed'] == 'Y'){
+            var opts = msg.response.recall['pickup-locations']['pickup-location'];
+            var length = opts.length;
+            for ( i=0; i < length; i++) {
+             //console.log(opts[i]['@code'] + " : " + opts[i]['$']);
+             recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code']).text(opts[i]['$']));
+            }
+            recall_pickup_select.show();
+            // data['requestable[][type]'] = "recall";
+            // data[pickup_pref[0].name] = pickup_pref[0].selectedOptions[0].value;
+          } else {
+            this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
+          }
         });
       } else {
-        $( this ).closest( "td" ).find( ".recall-pickup" ).hide();
+        recall_pickup_select.hide();
       }
     });
 

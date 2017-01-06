@@ -43,7 +43,7 @@ module Requests
       @pickups = Requests::PickupLookup.new(params)
       render json: @pickups.returned
     end
-    
+
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit

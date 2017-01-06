@@ -1,4 +1,5 @@
 require 'faraday'
+require 'cobravsmongoose'
 
 module Requests
   class PickupLookup
@@ -15,14 +16,16 @@ module Requests
     def handle
         r = get_response(@params)
         @xml_response = Nokogiri::XML(r.body)
-        unless @xml_response.xpath("//recall/@allowed").text() == 'N'
-            error_message =  @xml_response.xpath("//note").text()
-            @errors <<  { bibid: params['bib']['id'], item: params['requestable'].first['item_id'], patron: @params['request']['patron_id'], error: error_message }
+
+        if @xml_response.xpath("//recall/@allowed").text() == 'N'
+          error_message =  @xml_response.xpath("//note").text()
+          @errors <<  { bibid: @params['bib']['id'], item: @params['requestable'].first['item_id'], patron: @params['request']['patron_id'], error: error_message }
         end
+
     end
 
     def returned
-        Hash.from_xml(@xml_response.to_s).to_json
+        hash = CobraVsMongoose.xml_to_hash(@xml_response.to_s).to_json
     end
 
     def errors

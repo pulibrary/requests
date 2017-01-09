@@ -16,6 +16,11 @@ module Requests
             record.errors[:items].merge!({ "user_supplied_#{selected['mfhd']}" => { 'text' => 'Please Fill in additional volume information', 'type' => 'options' } })
           end
         end
+
+        if selected["type"].empty?
+          record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please choose a Request Method for your selected item.', 'type' => 'pickup' } }
+        end
+
         if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
           if selected['pickup'].empty? && selected['item_id'].empty?
             record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
@@ -23,6 +28,18 @@ module Requests
             record.errors[:items] << { selected['item_id'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
           end
         end
+
+        if selected["type"] == 'recall'
+          if selected['item_id'].empty?
+            record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be Recalled, see circulation desk.', 'type' => 'options' } }
+          else
+            item_id = selected['item_id']
+            if selected['pickup'].empty?
+              record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recall item', 'type' => 'pickup' } }
+            end
+          end
+        end
+
         if selected["type"] == 'recap'
           if selected['item_id'].empty?
             record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be Requested from Recap, see circulation desk.', 'type' => 'options' } }

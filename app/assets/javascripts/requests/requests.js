@@ -15,10 +15,11 @@ $(document).ready(function() {
 
     });
 
-    var data = {}; //generic data object to put ajax payload in
+    var data = {}; //generic data object to package ajax pickup locations request
+    var submit_data = {}; //generic data object to package ajax request submissions
 
-    $( ".table-responsive" ).on( "change", ".request-options", function() {
-
+    $( ".table-responsive" ).on( "change", ".request-options", function(event) {
+      event.stopPropagation();
       if($(this)[0].selectedOptions[0].value === 'recall'){
         var this_td = $( this ).closest( "td" )
         var recall_pickup_select = this_td.find( ".recall-pickup" );
@@ -43,16 +44,19 @@ $(document).ready(function() {
           if(msg.response.recall['@allowed'] == 'Y'){
             var opts = msg.response.recall['pickup-locations']['pickup-location'];
             var length = opts.length;
+
             for ( i=0; i < length; i++) {
              //console.log(opts[i]['@code'] + " : " + opts[i]['$']);
              recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code']).text(opts[i]['$']));
             }
+
             recall_pickup_select.show();
             // data['requestable[][type]'] = "recall";
             // data[pickup_pref[0].name] = pickup_pref[0].selectedOptions[0].value;
           } else {
             this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
           }
+          //data = {}; // clear data for submission step
         });
       } else {
         $('.alert').hide();
@@ -61,6 +65,16 @@ $(document).ready(function() {
         }
       }
     });
+
+    // $( "input.request--select" ).on( "click", function(event) {
+    //   //event.preventDefault();
+    //   console.log(data['requestable[][item_id]']);
+    // });
+    //
+    // $( ".submit--request" ).on( "click", function(event) {
+    //   //event.preventDefault();
+    //   console.log(data['requestable[][item_id]']);
+    // });
 
     // $.ajax({
     //   method: "POST",

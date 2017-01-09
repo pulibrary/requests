@@ -62,6 +62,7 @@ module Requests
           end
           service_errors = @service.errors
         end
+
         if @submission.valid? && !@service.errors.any?
           format.js {
             flash.now[:success] = I18n.t('requests.submit.success')

@@ -65,7 +65,9 @@ $(document).ready(function() {
         }
       }
     });
-
+    // ILL link https://library.princeton.edu/services/interlibrary-services
+    // BD fuzzy search link http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=foo
+    
     // $( "input.request--select" ).on( "click", function(event) {
     //   //event.preventDefault();
     //   console.log(data['requestable[][item_id]']);

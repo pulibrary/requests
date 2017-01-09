@@ -168,16 +168,6 @@ module Requests
       end
     end
 
-    def pickup_choices_recall
-      locs = [{ label: "Firestone Circ", gfa_code: "1"}, { label: "Lewis Circ", gfa_code: "2"}]
-      if(locs.size > 1)
-        select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), class: "recall-pickup", prompt: I18n.t("requests.default.pickup_placeholder")
-      else
-        hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
-        hidden + locs[0][:label]
-      end
-    end
-
     def hidden_fields_mfhd mfhd
       hidden = ""
       unless mfhd["call_number"].nil?

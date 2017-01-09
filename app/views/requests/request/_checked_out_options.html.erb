@@ -16,4 +16,6 @@
   <option value="recall">Recall (several weeks)</option>
 </select>
 <br/>
-<%= pickup_choices_recall %>
+<select name="requestable[][pickup]" id="requestable__pickup" class="recall-pickup">
+  <option value=""><%= I18n.t("requests.default.pickup_placeholder") %></option>
+</select>

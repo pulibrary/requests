@@ -55,7 +55,10 @@ $(document).ready(function() {
           }
         });
       } else {
-        recall_pickup_select.hide();
+        $('.alert').hide();
+        if(recall_pickup_select){
+          recall_pickup_select.hide();
+        }
       }
     });
 

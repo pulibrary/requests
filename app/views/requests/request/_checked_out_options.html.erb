@@ -1,10 +1,10 @@
 <select name="requestable[][type]" class="request-options">
-  <option value="">Select a Request Method</option>
-  <% if requestable.item['enum'].nil? %>
-    <option value="bd">Borrow Direct (2-4 business days)</option>
+  <option value=""><%= I18n.t("requests.default.request_method_placeholder") %></option>
+  <% if requestable.services.include? 'bd' %>
+    <option value="bd"><%= I18n.t("requests.bd.request_label") %></option>
   <% end %>
-  <option value="ill">Interlibrary Loan (1-2 weeks)</option>
-  <option value="recall">Recall (several weeks)</option>
+  <option value="ill"><%= I18n.t("requests.ill.request_label") %></option>
+  <option value="recall"><%= I18n.t("requests.recall.request_label") %></option>
 </select>
 <br/>
 <select name="requestable[][pickup]" id="requestable__pickup" class="recall-pickup">

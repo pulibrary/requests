@@ -20,8 +20,10 @@ $(document).ready(function() {
 
     $( ".table-responsive" ).on( "change", ".request-options", function(event) {
       event.stopPropagation();
+      var this_td = $( this ).closest( "td" )
       if($(this)[0].selectedOptions[0].value === 'recall'){
-        var this_td = $( this ).closest( "td" )
+        // enable checkbox?
+        $('.alert').hide();
         var recall_pickup_select = this_td.find( ".recall-pickup" );
         var item_inputs = $( this ).closest( "tr" ).find( "input" );
         var bib_inputs =  $('input[name^="bib["]');
@@ -63,29 +65,17 @@ $(document).ready(function() {
         if(recall_pickup_select){
           recall_pickup_select.hide();
         }
+        if($(this)[0].selectedOptions[0].value === 'bd'){
+          // uncheck and disable checkbox?
+          var item_title = $('#bib_title').val();
+          this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>the BorrowDirect system interface</a> to request this item."));
+        }
+        if($(this)[0].selectedOptions[0].value === 'ill'){
+          // uncheck and disable checkbox?
+          this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='https://library.princeton.edu/services/interlibrary-services' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
+        }
       }
     });
-    // ILL link https://library.princeton.edu/services/interlibrary-services
-    // BD fuzzy search link http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=foo
-    
-    // $( "input.request--select" ).on( "click", function(event) {
-    //   //event.preventDefault();
-    //   console.log(data['requestable[][item_id]']);
-    // });
-    //
-    // $( ".submit--request" ).on( "click", function(event) {
-    //   //event.preventDefault();
-    //   console.log(data['requestable[][item_id]']);
-    // });
-
-    // $.ajax({
-    //   method: "POST",
-    //   url: "/requests/submit",
-    //   data: data
-    // })
-    // .done(function( msg ) {
-    //   console.log( "Done: " + msg );
-    // });
 
 
 });

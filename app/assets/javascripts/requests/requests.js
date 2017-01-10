@@ -16,53 +16,57 @@ $(document).ready(function() {
     });
 
     var data = {}; //generic data object to package ajax pickup locations request
-    var submit_data = {}; //generic data object to package ajax request submissions
 
     $( ".table-responsive" ).on( "change", ".request-options", function(event) {
       event.stopPropagation();
-      var this_td = $( this ).closest( "td" )
+      var this_td = $( this ).closest( "td" );
+      var recall_pickup_select = this_td.find( ".recall-pickup" );
+      var chbx =  $( this ).closest( "tr" ).find( "input:checkbox" );
+
       if($(this)[0].selectedOptions[0].value === 'recall'){
-        // enable checkbox?
+
+        chbx.prop("disabled", false);
         $('.alert').hide();
-        var recall_pickup_select = this_td.find( ".recall-pickup" );
-        var item_inputs = $( this ).closest( "tr" ).find( "input" );
-        var bib_inputs =  $('input[name^="bib["]');
-        var user_inputs = $('input[name^="request["]');
-        // var pickup_pref = $( this ).closest( "td" ).find( "select" );
-        // var mfhd_inputs = $('input[name^="mfhd[]["]');
+        recall_pickup_select.show();
 
-        var inputs = $.merge( $.merge( item_inputs, bib_inputs ), user_inputs );
+        // don't keep hitting the service if the pickup locs are populated
+        if(recall_pickup_select.find('option').length == 1){
+          var item_inputs = $( this ).closest( "tr" ).find( "input" );
+          var bib_inputs =  $('input[name^="bib["]');
+          var user_inputs = $('input[name^="request["]');
 
-        $.each( inputs, function( key ) {
-          data[inputs[key].name] = inputs[key].value;
-        });
+          var inputs = $.merge( $.merge( item_inputs, bib_inputs ), user_inputs );
 
-        $.ajax({
-          method: "POST",
-          url: "/requests/recall_pickups",
-          data: data
-        })
-        .done(function( msg ) {
-          if(msg.response.recall['@allowed'] == 'Y'){
-            var opts = msg.response.recall['pickup-locations']['pickup-location'];
-            var length = opts.length;
+          $.each( inputs, function( key ) {
+            data[inputs[key].name] = inputs[key].value;
+          });
 
-            for ( i=0; i < length; i++) {
-             //console.log(opts[i]['@code'] + " : " + opts[i]['$']);
-             recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code']).text(opts[i]['$']));
+          $.ajax({
+            method: "POST",
+            url: "/requests/recall_pickups",
+            data: data
+          })
+          .done(function( msg ) {
+            if(msg.response.recall['@allowed'] == 'Y'){
+              var opts = msg.response.recall['pickup-locations']['pickup-location'];
+              var length = opts.length;
+
+              for ( i=0; i < length; i++) {
+               //console.log(opts[i]['@code'] + " : " + opts[i]['$']);
+               recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code']).text(opts[i]['$']));
+              }
+            } else {
+              recall_pickup_select.hide();
+              this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
             }
-
-            recall_pickup_select.show();
-            // data['requestable[][type]'] = "recall";
-            // data[pickup_pref[0].name] = pickup_pref[0].selectedOptions[0].value;
-          } else {
-            this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
-          }
-          //data = {}; // clear data for submission step
-        });
+          });
+        }
       } else {
         $('.alert').hide();
-        if(recall_pickup_select){
+        chbx.prop("disabled", true);
+        chbx.prop("checked", false);
+
+        if(recall_pickup_select.is(':visible')){
           recall_pickup_select.hide();
         }
         if($(this)[0].selectedOptions[0].value === 'bd'){

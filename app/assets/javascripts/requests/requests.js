@@ -52,7 +52,6 @@ $(document).ready(function() {
               var length = opts.length;
 
               for ( i=0; i < length; i++) {
-               //console.log(opts[i]['@code'] + " : " + opts[i]['$']);
                recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code']).text(opts[i]['$']));
               }
             } else {
@@ -70,12 +69,10 @@ $(document).ready(function() {
           recall_pickup_select.hide();
         }
         if($(this)[0].selectedOptions[0].value === 'bd'){
-          // uncheck and disable checkbox?
           var item_title = $('#bib_title').val();
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>the BorrowDirect system interface</a> to request this item."));
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
-          // uncheck and disable checkbox?
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='https://library.princeton.edu/services/interlibrary-services' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
         }
       }

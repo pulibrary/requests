@@ -121,13 +121,13 @@ module Requests
       @bib[:id]
     end
 
-    def service_type
+    def service_types
       types = []
       @items.each do |item|
         types << item['type']
       end
       types.uniq!
-      types.first
+      types
     end
   end
 end

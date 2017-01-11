@@ -50,32 +50,46 @@ module Requests
       @submission = Requests::Submission.new(sanitize_submission(params))
       respond_to do |format|
         if @submission.valid?
-          service_type = @submission.service_type
-          @service = nil
+          @services = []
           service_errors = []
-          if recap_services.include? service_type
-            @service = Requests::Recap.new(@submission)
-          elsif service_type == 'recall'
-            @service = Requests::Recall.new(@submission)
-          else
-            @service = Requests::Generic.new(@submission)
+          recap = (recap_services & @submission.service_types).length
+          recall = @submission.service_types.include? 'recall'
+
+          if recap
+            @services << Requests::Recap.new(@submission)
           end
-          service_errors = @service.errors
+
+          if recall
+            @services << Requests::Recall.new(@submission)
+          end
+
+          if !recap && !recall
+            @services = Requests::Generic.new(@submission)
+          end
+
+          @services.each do |service|
+            service.errors.each do |error|
+              service_errors << error
+            end
+          end
+
         end
 
-        if @submission.valid? && !@service.errors.any?
+        if @submission.valid? && !service_errors.any?
           format.js {
             flash.now[:success] = I18n.t('requests.submit.success')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
-            Requests::RequestMailer.send("#{@submission.service_type}_email", @submission).deliver_now
+            @submission.service_types.each do |type|
+              Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+            end
           }
         else
           format.js {
             if @submission.valid? # submission was valid, but service failed
                 flash.now[:error] = I18n.t('requests.submit.service_error')
                 logger.error "Request Service Error"
-                Requests::RequestMailer.send("service_error_email", @service).deliver_now
+                Requests::RequestMailer.send("service_error_email", @services).deliver_now
             else
                 flash.now[:error] = I18n.t('requests.submit.error')
                 logger.error "Request Submission #{@submission.errors.messages.as_json}"

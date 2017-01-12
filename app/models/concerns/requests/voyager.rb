@@ -18,8 +18,9 @@ module Requests
     end
 
     def get_response(params)
+      binding.pry
         request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=1@PRINCETONDB20050302104001&patron_group=#{params['request']['patron_group']}"
-        conn.get request_url, { 'X-Accept' => 'application/xml' }
+        conn.get request_url
     end
 
     # implement solr doc to Voyager schema mapping
@@ -29,8 +30,7 @@ module Requests
         recordID: bib['id'],
         itemID: item['item_id'],
         patron: user['patron_id'],
-        #patron_homedb: Requests.config[:voyager_ub_id], #need to reconcile requests.yml with orangelight coming back as 1@DB
-        patron_homedb: '1@PRINCETONDB20050302104001',
+        patron_homedb: URI.escape(Requests.config[:voyager_ub_id]),
         patron_group: user['patron_group']
       }
     end
@@ -41,7 +41,7 @@ module Requests
             xml.send(:"pickup-location", item[:pickup])
             xml.send(:"last-pickup-date", "20091006")
             xml.comment "testing recall request"
-            xml.dbkey "1@PRINCETONDB20050302104001"
+            xml.dbkey URI.escape(Requests.config[:voyager_ub_id])
           }
         end
         recall_request.to_xml

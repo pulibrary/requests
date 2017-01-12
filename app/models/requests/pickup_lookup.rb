@@ -15,6 +15,7 @@ module Requests
 
     def handle
         r = get_response(@params)
+
         @xml_response = Nokogiri::XML(r.body)
 
         if @xml_response.xpath("//recall/@allowed").text() == 'N'

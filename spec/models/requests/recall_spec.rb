@@ -63,7 +63,7 @@ describe Requests::Recall do
                      "/items/" + submission.items[0]['item_id'] +
                      "/recall?patron=" + submission.user['patron_id'] +
                      "&patron_group=" + submission.user['patron_group'] +
-                     "&patron_homedb=1%40PRINCETONDB20050302104001"
+                     "&patron_homedb=" + URI.escape(Requests.config[:voyager_ub_id])
         end
 
         it "It should capture errors when the request is unsuccessful or malformed." do

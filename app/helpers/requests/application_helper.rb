@@ -286,7 +286,7 @@ module Requests
           elsif requestable_list.first.pageable_loc?
             false
           else
-            true
+            false
           end
         else
           false
@@ -328,7 +328,7 @@ module Requests
           elsif requestable_list.first.pageable_loc?
             multi_item
           else
-            no_item
+            single_item #no_item
           end
         else
           if requestable_list.first.annexa?

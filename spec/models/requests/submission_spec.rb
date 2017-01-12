@@ -89,7 +89,7 @@ describe Requests::Submission do
 
       it "It has one service type" do
         expect(submission.service_types).to be_truthy
-        expect(submission.service_types).to be_a(Array)
+        expect(submission.service_types).to be_an(Array)
       end
     end
   end

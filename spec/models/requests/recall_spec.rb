@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Requests::Recall do
 
-    context 'Reall Request' do
+    context 'Recall Request' do
         let(:user_info) {
           {
             "user_name"=>"Foo Request",
@@ -23,7 +23,7 @@ describe Requests::Recall do
               "copy_number"=>"1",
               "status"=>"Renewed",
               "type"=>"recall",
-              "pickup"=>"1"}]
+              "pickup"=>"299|Firestone Circulation"}]
         }
 
         let(:bib) {

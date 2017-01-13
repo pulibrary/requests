@@ -18,8 +18,7 @@ module Requests
     end
 
     def get_response(params)
-      binding.pry
-        request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=1@PRINCETONDB20050302104001&patron_group=#{params['request']['patron_group']}"
+        request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=#{Requests.config[:voyager_ub_id]}&patron_group=#{params['request']['patron_group']}"
         conn.get request_url
     end
 
@@ -36,9 +35,10 @@ module Requests
     end
 
     def request_payload(item)
+        pickup = item['pickup'].split("|")
         recall_request = Nokogiri::XML::Builder.new do |xml|
           xml.send(:"recall-parameters") {
-            xml.send(:"pickup-location", item[:pickup])
+            xml.send(:"pickup-location", pickup[0])
             xml.send(:"last-pickup-date", "20091006")
             xml.comment "testing recall request"
             xml.dbkey URI.escape(Requests.config[:voyager_ub_id])

@@ -52,7 +52,7 @@ $(document).ready(function() {
               var length = opts.length;
 
               for ( i=0; i < length; i++) {
-               recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code']).text(opts[i]['$']));
+               recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code'] + '|' + opts[i]['$']).text(opts[i]['$']));
               }
             } else {
               recall_pickup_select.hide();

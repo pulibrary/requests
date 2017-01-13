@@ -15,6 +15,8 @@
     <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
     <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
+    <%= f.hidden_field :patron_id, value: @patron[:patron_id] %>
+    <%= f.hidden_field :patron_group, value: @patron[:patron_group] %>
     <%= f.hidden_field :email, value: @user.email %>
   <% end %>
   <% unless @request.source.nil? %>
@@ -53,6 +55,7 @@
         </thead>
         <tbody>
           <% requestable_list.each do |requestable| %>
+
             <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
               <% unless requestable.item.nil? %>
                 <td class='request--select'>
@@ -98,7 +101,7 @@
               </td>
             </tr>
           <% end %>
-          
+
           <% if fill_in_eligible? requestable_list %>
 
             <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last } %>

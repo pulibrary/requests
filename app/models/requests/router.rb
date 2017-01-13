@@ -25,7 +25,7 @@ module Requests
 
     # user levels
     # guest - Access patron
-    
+
 
     def routed_request
       @requestable.set_services(calculate_services)
@@ -43,7 +43,9 @@ module Requests
         else
           ## my item status is negative
           if(@requestable.charged?)
-            services << 'bd' # pop this off at a later point
+            if @requestable.item['enum'].nil?
+              services << 'bd' # pop this off at a later point
+            end
             services << 'ill'
             unless @requestable.missing?
               services << 'recall'
@@ -71,7 +73,7 @@ module Requests
               services << 'paging'
             else
               services << 'on_shelf' # goes to stack mapping
-              if(@requestable.open?)  
+              if(@requestable.open?)
                 services << 'trace' # all open stacks items are traceable
               end
             end
@@ -83,7 +85,7 @@ module Requests
       services
     end
 
-    # returns a hash of all possible services for the combmination of 
+    # returns a hash of all possible services for the combmination of
     # a 'requestable' item and a the user object passed in.
     def services
       @services
@@ -104,11 +106,11 @@ module Requests
       end
     end
 
-    ## 
+    ##
     # actually check to see if borrow direct is available
     def borrow_direct_available?
     end
-    
+
     #When ISBN Match
     def borrow_direct_exact?
     end

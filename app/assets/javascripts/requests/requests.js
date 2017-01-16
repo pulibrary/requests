@@ -73,7 +73,8 @@ $(document).ready(function() {
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>the BorrowDirect system interface</a> to request this item."));
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
-          this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='https://library.princeton.edu/services/interlibrary-services' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
+          var ctx = this_td.find('span.Z3988').attr('title')
+          this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
         }
       }
     });

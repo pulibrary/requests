@@ -11,6 +11,7 @@ module Requests
 
     include BorrowDirect
     include Requests::Bibdata
+    include Requests::Ctx
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
     # @option opts [Fixnum] :mfhd voyager id
@@ -243,6 +244,15 @@ module Requests
 
     def default_pickups
       pickups
+    end
+
+    #if a Record is a serial/multivolume no Borrow Direct
+    def borrow_direct_eligible?
+     requestable.any? { |r| r.services.include? 'bd' }
+    end
+
+    def ill_eligible?
+      requestable.any? { |r| r.services.include? 'ill' }
     end
 
     private

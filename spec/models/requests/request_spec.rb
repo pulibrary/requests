@@ -783,6 +783,18 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request) { described_class.new(params) }
     subject { request }
 
+    describe "#borrow_direct_eligible?" do
+      it "Should be Borrow Direct Eligible" do
+        expect(subject.borrow_direct_eligible?).to be true
+      end
+    end
+
+    describe "#ill_eligible?" do
+      it 'Should be ILL Eligible' do
+        expect(subject.ill_eligible?).to be true
+      end
+    end
+    
     describe "#requestable" do
       it "should have an requestable items" do
         expect(subject.requestable.size).to be >= 1

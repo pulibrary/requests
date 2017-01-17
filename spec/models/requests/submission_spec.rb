@@ -227,6 +227,98 @@ describe Requests::Submission do
   context 'Recall' do
   end
 
+  context 'Multiple Submission Types (Recap and Recall)' do
+
+    let(:user_info) {
+      {
+        "user_name"=>"Foo Request",
+        "user_barcode"=>"22101007797777",
+        "email"=>"foo@princeton.edu",
+        "source"=>"pulsearch",
+        "patron_id"=>"12345",
+        "patron_group"=>"staff"
+      }
+    }
+    let(:requestable) {
+      [
+        {"selected"=>"true",
+            "mfhd"=>"538419",
+            "call_number"=>"GN670 .P74",
+            "location_code"=>"rcppa",
+            "item_id"=>"3710038",
+            "barcode"=>"32101091858066",
+            "enum"=>"vol. 5 (1896)",
+            "copy_number"=>"1",
+            "status"=>"Charged",
+            "type"=>"recall",
+            "pickup"=>"299|.Firestone Library Circulation Desk"
+          },
+          {
+            "selected"=>"true",
+            "mfhd"=>"538419",
+            "call_number"=>"GN670 .P74",
+            "location_code"=>"rcppa",
+            "item_id"=>"3707281",
+            "barcode"=>"32101091857142",
+            "enum"=>"vol. 4 (1895)",
+            "copy_number"=>"1",
+            "status"=>"Not Charged",
+            "type"=>"recap",
+            "delivery_mode_3707281"=>"print",
+            "pickup"=>"PA",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>""
+          }
+      ]
+    }
+
+    let(:bib) {
+      {
+        "id"=>"495220",
+        "title"=>"Journal of the Polynesian Society.",
+        "author"=>"Polynesian Society (N.Z.)",
+        "date"=>"1892"
+      }
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+    let(:submission) {
+      Requests::Submission.new(params)
+    }
+
+    describe "Mixed Service Types" do
+
+      it 'recall items have voyager pickup location code' do
+       pickup = submission.items[0]['pickup'].split("|")
+
+       expect(submission.items[0]['pickup']).to be_truthy
+       expect(pickup[0].to_i.to_s).to eq(pickup[0])
+       expect(submission.items[0]['type']).to eq("recall")
+       expect(submission.user['patron_id']).to be_truthy
+       expect(submission.user['patron_group']).to be_truthy
+      end
+
+      it 'recap items have gfa pickup location code' do
+        expect(submission.items[1]['pickup']).to be_truthy
+        expect(submission.items[1]['pickup']).to be_a(String)
+        expect(submission.items[1]['pickup'].size).to eq(2)
+        expect(submission.items[1]['type']).to eq("recap")
+      end
+
+    end
+
+  end
+
   context 'Submission with User Supplied Data' do
     describe 'Valid user Supplied Data' do
     end

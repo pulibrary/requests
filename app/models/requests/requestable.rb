@@ -144,6 +144,10 @@ module Requests
       return true if @services.include?('trace')
     end
 
+    def ill_eligible?
+      return true if @services.include?('ill')
+    end
+
     def voyager_managed?
       return true if @bib[:id].to_i > 0
     end
@@ -190,13 +194,6 @@ module Requests
           in_call_num_range(call_num, paging_ranges[location['code']])
         end
       end
-    end
-
-    # This should a property of requestable. The Router can invoke this test when it looks
-    # at item status and finds something unavailable. Need to confirm with Peter Bae if the only monographs rule holds
-    # true for borrow direct. Currenly if a Record is not a serial/multivolume no Borrow Direct
-    def borrow_direct_eligible?
-      return true if @bib[:format] == 'Book' && !aeon?
     end
 
     def pickup_locations

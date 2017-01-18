@@ -30,6 +30,7 @@
     <span class="error error-items">
     </span>
   </div>
+  <%= render partial: 'umlaut_services' %>
   <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
     <%= hidden_fields_mfhd @request.holdings[mfhd] %>
     <div id="holding<%= mfhd %>" class="table-responsive items">
@@ -78,6 +79,9 @@
                 </td>
               <% end %>
               <td class='request--options'>
+                <% if requestable.ill_eligible? %>
+                  <span class="Z3988" title="<%= @request.openurl_ctx_kev %>"></span>
+                <% end %>
                 <% if requestable.services.include?('recap_edd') %>
                     <%= hidden_field_tag "requestable[][type]", "recap" %>
                     <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print", false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-expanded' => 'true', 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>

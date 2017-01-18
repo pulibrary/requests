@@ -17,8 +17,15 @@
           if(count == 0) {
           $(html).find(".section_heading h3").hide();
           }
+          $(html).find("input.borrow-direct-form-redirect").attr("value", window.location.href)
           return (count != 0);
         }
+        // after_update: function(html, count) {
+        //   if($(html).find(".borrow-direct-request-form")) {
+        //     $('.request--available_items').hide();
+        //     $('.submit--request').hide();
+        //   }
+        // }
       });
       updater.update();
     });

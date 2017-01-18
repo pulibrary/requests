@@ -35,6 +35,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe "#ctx" do
+      it "should produce an ILLiad flavored openurl" do
+        expect(subject.ctx).to be_an_instance_of(OpenURL::ContextObject)
+      end
+    end
+
     describe "#items?" do
       it "Has items" do
         expect(subject.items?).to be_truthy
@@ -666,6 +672,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should show missing items as eligible for ill" do
         expect(subject.requestable[2].services.include?('ill')).to be_truthy
       end
+
+      it "should be enumerated" do
+        expect(subject.requestable[2].enumerated?).to be true
+      end
+
+      it "should provide an ILLiad URL" do
+        expect(subject.requestable[2].illiad_request_url(subject.ctx, subject.requestable[2])).to start_with(Requests.config[:ill_base])
+      end
+
+      it "should provide illiad query parameters with enumeration" do
+        enum = "Volume foo"
+        expect(subject.requestable[2].illiad_query_parameters(subject.ctx, enum)).to include(CGI.escape(enum))
+      end
     end
   end
 
@@ -814,6 +833,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should be eligible for recall" do
         expect(subject.requestable.first.services.include?('recall')).to be_truthy
+        expect(subject.requestable.first.ill_eligible?).to be true
       end
     end
   end
@@ -840,6 +860,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should be eligible for trace services" do
         expect(subject.requestable.first.services.include?('trace')).to be_truthy
+        expect(subject.requestable.first.traceable?).to be true
       end
 
       it "should be eligible for recall" do

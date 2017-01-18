@@ -73,7 +73,7 @@ $(document).ready(function() {
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>the BorrowDirect system interface</a> to request this item."));
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
-          var ctx = this_td.find('span.Z3988').attr('title')
+          var ctx = this_td.find('.ill-data').attr('data-ill-url')
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
         }
       }

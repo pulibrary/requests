@@ -80,7 +80,7 @@
               <% end %>
               <td class='request--options'>
                 <% if requestable.ill_eligible? %>
-                  <span class="Z3988" title="<%= @request.openurl_ctx_kev %>"></span>
+                  <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
                 <% end %>
                 <% if requestable.services.include?('recap_edd') %>
                     <%= hidden_field_tag "requestable[][type]", "recap" %>

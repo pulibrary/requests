@@ -26,6 +26,7 @@ $(document).ready(function() {
       if($(this)[0].selectedOptions[0].value === 'recall'){
 
         chbx.prop("disabled", false);
+        $('.submit--request').prop("disabled", false);
         $('.alert').hide();
         recall_pickup_select.show();
 
@@ -64,13 +65,14 @@ $(document).ready(function() {
         $('.alert').hide();
         chbx.prop("disabled", true);
         chbx.prop("checked", false);
+        $('.submit--request').prop("disabled", true);
 
         if(recall_pickup_select.is(':visible')){
           recall_pickup_select.hide();
         }
         if($(this)[0].selectedOptions[0].value === 'bd'){
           var item_title = $('#bib_title').val();
-          this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>the BorrowDirect system interface</a> to request this item."));
+          this_td.append($("<div class='alert alert-warning'></div>").html("We could not automatically locate a direct match for this item in BorrowDirect, but you can <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>manually check for other editions</a> that may be useful. Checkout period is 12 weeks, with no renewals."));
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
           var ctx = this_td.find('span.Z3988').attr('title')

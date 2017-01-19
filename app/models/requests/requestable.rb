@@ -172,6 +172,18 @@ module Requests
       end
     end
 
+    def enumerated?
+      if item?
+        unless item[:enum].nil?
+          true
+        else 
+          false
+        end
+      else
+        false
+      end
+    end
+
     def pageable?
       if charged?
         nil

@@ -9,7 +9,8 @@ defaults: &defaults
   voyager_api_base: http://catalog.princeton.edu:7014
   voyager_ub_id: 1@PRINCETONDB20050302104001
   gfa_base: http://libweb5.princeton.edu/RecapRequestService
-
+  aeon_base: https://library.princeton.edu/aeon/aeon.dll?
+  ill_base: https://lib-illiad.princeton.edu/illiad/illiad.dll/OpenURL
 development:
   <<: *defaults
   bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>

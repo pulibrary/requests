@@ -24,18 +24,14 @@
           return (count != 0);
         },
         after_update: function(html, count) {
-          if($(html).find(".bd-api-unavailable").length) {
+          if($(html).find(".bd-api-unavailable").length || $(html).find(".borrow-direct-error").length) {
+            bd_link = $(html).find("a.bd-direct-link").attr("href")
             jQuery('.umlaut-services').hide();
+            jQuery('body').data( "bd", { link: bd_link } );
             jQuery('table.request--available_items').show();
             jQuery('.submit--request').show();
           }
         }
-        // after_update: function(html, count) {
-        //   if($(html).find(".borrow-direct-request-form")) {
-        //     $('.request--available_items').hide();
-        //     $('.submit--request').hide();
-        //   }
-        // }
       });
       updater.update();
     });

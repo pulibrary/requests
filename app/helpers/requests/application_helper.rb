@@ -119,19 +119,8 @@ module Requests
       hidden_field_tag "requestable[][type]", "", value: type
     end
 
-    def sort_pickups locs
-      #staff only locations go at the bottom of the list and Firestone to the top
-      locs.sort_by! { |loc| loc[:staff_only] ? 0 : 1 }
-      locs.each do |loc|
-        if loc[:staff_only]
-          loc[:label] = loc[:label] + " (staff only)"
-        end
-      end
-      locs.reverse!
-      firestone = locs.find {|loc| loc[:label] == "Firestone Library" }
-      locs.insert(0,locs.delete_at(locs.index(firestone)))
-    end
-
+    # move this to requestable object
+    # Default pickups should be available
     def pickup_choices requestable, default_pickups
       unless requestable.pickup_locations.nil? || requestable.charged? # || (requestable.services & self.default_pickup_services).empty?
         class_list = "well collapse in request--print"
@@ -141,7 +130,6 @@ module Requests
         content_tag(:div, id: "fields-print__#{requestable.item['id']}", class: class_list) do
             locs = self.available_pickups(requestable, default_pickups)
             if(locs.size > 1)
-               locs = sort_pickups(locs)
                concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
             else
               hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"

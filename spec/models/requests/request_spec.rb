@@ -556,6 +556,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.default_pickups.size).to be > 1
         expect(subject.default_pickups.include?(firestone_circ)).to be_truthy
       end
+
+      it "should list Firestone as the first choice" do
+        expect(subject.default_pickups.first).to eq(firestone_circ)
+      end
     end
   end
 

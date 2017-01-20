@@ -224,7 +224,6 @@ module Requests
       {
         title: doc["title_citation_display"],
         author: doc["author_citation_display"],
-        date:  doc["pub_date_display"]
       }
     end
 

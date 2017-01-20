@@ -31,10 +31,6 @@ module Requests
       end
     end
 
-    def stackmap_url
-      map_link(bib, holding)
-    end
-
     def bib
       @bib
     end
@@ -148,13 +144,17 @@ module Requests
       return true if @services.include?('ill')
     end
 
+    def on_shelf?
+      return true if @services.include?('on_shelf')
+    end
+
     def voyager_managed?
       return true if @bib[:id].to_i > 0
     end
 
     def params
       if aeon? && !voyager_managed?
-        aeon_mapped_params(bib, holding)
+        aeon_mapped_params
       end
     end
 
@@ -214,6 +214,21 @@ module Requests
       end
     end
 
+    def barcode?
+      if item?
+        if /^[0-9]+/.match(item[:barcode])
+          true
+        else
+          false
+        end
+      else
+        false
+      end
+    end
+
+    def barcode
+      item[:barcode]
+    end
 
     private 
 

@@ -28,11 +28,11 @@ module Requests
       unless @user.guest?
         @patron = current_patron(@user.uid)
       end
-      ### also a a redirect for single copy aeon links that routes directl tp
       request_params[:user] = @user.uid
       @request = Requests::Request.new(request_params.symbolize_keys)
+      ### redirect to Aeon non-voyager items 
       if @request.thesis? || @request.visuals?
-        redirect_to "#{Requests.config[:aeon_base]}#{@request.requestable.first.params.to_query}"
+        redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.params.to_query}"
       end
       #flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end

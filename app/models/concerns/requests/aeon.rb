@@ -6,23 +6,54 @@ module Requests
     def submit_request(submission)
     end
 
-    def aeon_mapped_params(bib, holding)
+    # for use with only non-voyager visuals and thesis records
+    def aeon_mapped_params
       params = {
-        ReferenceNumber: bib[:id],
-        Site: site(holding),
         Action: '10',
         Form: '21',
-        CallNumber: call_number(bib),
-        Location: shelf_location_code(holding),
-        ItemTitle: title(bib),
-        ItemAuthor: author(bib),
-        ItemDate: pub_date(bib),
-        ItemVolume: sub_title(holding),
-        SubLocation: sub_location(holding),
+        ItemTitle: title,
+        ItemAuthor: author,
+        ItemDate: pub_date,
+        ItemVolume: sub_title, 
+      }
+      params.merge! aeon_basic_params
+      params.reject { |k,v| v.nil? }
+    end
+
+    ## params shared by both voyager and non-voyager aeon requests
+    def aeon_basic_params
+      params = {
+        ReferenceNumber: bib[:id],
+        CallNumber: call_number,
+        Site: site,
+        Location: shelf_location_code,
+        SubLocation: sub_location,
         ItemInfo1: I18n.t("requests.aeon.access_statement"),
-        # ItemNumber: barcode(item) 
       }
       params.reject { |k,v| v.nil? }
+    end
+
+    # accepts the base Openurl Context Object and formats it appropriately for Aeon
+    def aeon_request_url(ctx = nil)
+      if enumerated?
+        enum = item[:enum]
+      else
+        enum = nil
+      end
+      "#{Requests.config[:aeon_base]}/OpenURL?#{aeon_openurl(ctx, enum)}"
+    end
+
+    # returns encoded OpenURL string for voyager derived records
+    def aeon_openurl(ctx, enum = nil)
+      unless enum.nil?
+        ctx.referent.set_metadata('volume', enum) 
+      end
+      aeon_params = aeon_basic_params
+      if barcode?
+        aeon_params[:ItemNumber] = barcode
+      end
+      ## mash these two together in an encoded string
+      "#{ctx.kev}&#{aeon_params.to_query}"
     end
 
     def non_voyager?(holding_id)
@@ -36,58 +67,75 @@ module Requests
     end
 
     ### need to get site codes for EAL and Marquand
-    def site(holding)
-      unless holding["thesis"].nil?
-        "MUDD"
+    ### MARQ and EAL
+    def site
+      if holding.key? 'thesis' # || MUDD holding
+        'MUDD'
+      elsif holding.key? 'visuals'
+        'RBSC'
+      elsif location['library']['code'] == 'eastasian' && location['aeon_location'] == true
+        'EAL'
+      elsif location['library']['code'] == 'marquand' && location['aeon_location'] == true
+        'MARQ'
+      elsif location['library']['code'] == 'mudd'
+        'MUDD'
       else
         "RBSC"
       end
     end
 
     private
-    def call_number(bib)
+    def call_number
       unless bib[:call_number_display].nil?
         bib[:call_number_display].first
       end
     end
 
-    def pub_date(bib)
+    def pub_date
       bib[:pub_date_start_sort]
     end
 
-    def shelf_location_code(holding)
-      holding.first.last[:location_code]
+    def shelf_location_code
+      holding.first.last['location_code']
     end
 
     ## These two params were from Primo think they both go to
     ## location and location_note in our holdings statement
-    def sub_title(bib)
+    def sub_title
       holding.first.last[:location]
     end
 
-    def sub_location(bib)
+    def sub_location
       unless holding.first.last[:location_note].nil?
         holding.first.last[:location_note].first
       end
     end
     ### end special params
 
-    def title(bib)
-      "#{bib[:title_display]}#{genre(bib)}"
+    def title
+      "#{bib[:title_display]}#{genre}"
     end
 
     ## Don T requested this be appended when present
-    def genre(bib)
+    def genre
       unless bib[:form_genre_display].nil?
         " [ #{bib[:form_genre_display].first} ]"
       end
     end
 
-    def author(bib)
+    def author
       unless bib[:author_display].nil?
         bib[:author_display].join(" AND ")
       end
     end
 
+
+    def eal_rare
+
+    end
+
+    def marquand_rare_locations
+      
+    end
   end
 end

@@ -12,17 +12,17 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     end
   end
 
-  # when current_user is available test these
-  describe 'When visitng with a system id' do
-    xit 'from Voyager' do
-      visit '/requests/9493318'
-      expect(page).to have_content voyager_id
-    end
+  # # when current_user is available test these
+  # describe 'When visitng with a system id' do
+  #   it 'from Voyager' do
+  #     visit '/requests/9493318'
+  #     expect(page).to have_content voyager_id
+  #   end
 
-    xit 'from a Theses' do
-      visit "/requests/#{thesis_id}"
-      expect(page).to have_content thesis_id
-    end
-  end
+  #   it 'from a Theses' do
+  #     visit "/requests/#{thesis_id}"
+  #     expect(page).to have_content thesis_id
+  #   end
+  # end
 
 end

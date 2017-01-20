@@ -68,6 +68,8 @@
                   <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select', id: "requestable_selected_#{mfhd}" %>
                   <%= hidden_fields_holding requestable %>
                 </td>
+                <td></td>
+                <td></td>
               <% end %>
               <td class='request--options'>
                 <% if requestable.ill_eligible? %>
@@ -83,8 +85,9 @@
                     <%= show_service_options requestable %>
                     <%= hidden_service_options requestable %>
                 <% end %>
-                <%= pickup_choices requestable, @request.default_pickups %>
-
+                <% unless requestable.aeon? %>
+                  <%= pickup_choices requestable, @request.default_pickups %>
+                <% end %>
                 <% if requestable.services.include?('recap_edd') %>
                     <br/>
                     <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
@@ -98,7 +101,6 @@
           <% end %>
 
           <% if fill_in_eligible? requestable_list %>
-
             <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last } %>
           <% end %>
         </tbody>

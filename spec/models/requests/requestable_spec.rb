@@ -85,6 +85,24 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context "It is a bibliographic record that is on order." do
   end
 
+  context "Is a bibliographic record on the shelf" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_on_shelf) }
+    let(:requestable) { request.requestable.first }
+
+    describe '#services' do
+      it 'has a service on on_shelf' do
+        expect(requestable.services.include?('on_shelf')).to be true
+      end
+    end
+
+    describe '#map_url' do
+      it 'returns a map url' do
+        expect(requestable.map_url).to match(/^#{Requests.config[:stackmap_base]}/)
+      end
+    end
+  end
+
   context "Is a bibliographic record from the thesis collection" do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_thesis) }
@@ -203,6 +221,105 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it 'should be available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_truthy
+      end
+    end
+  end
+
+
+  context 'A requestable item from an Aeon EAL Holding with a null barcode' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_eal_voyager_item) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+    describe '#aeon_open_url' do
+      it 'should be eligible for aeon services' do
+        expect(requestable.services.include?('aeon')).to be true
+      end
+
+      it 'should return the correct Aeon Site param' do
+        expect(requestable.site).to eq('EAL')
+      end
+
+      it 'should return an openurl with a Call Number param' do
+        expect(requestable.aeon_openurl(request.ctx)).to be_truthy
+      end
+
+      it 'should not report there is a barocode' do
+        expect(requestable.barcode?).to be false
+      end
+    end
+  end
+
+  context 'A requestable item from a RBSC holding without an item record' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_no_item_record) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+    describe '#barcode?' do
+      it 'should not have a barcode' do
+        expect(requestable.barcode?).to be false
+      end
+    end
+
+    describe '#site' do
+      it 'should return a RBSC site param' do
+        expect(requestable.site).to eq('RBSC')
+      end
+    end
+  end
+
+  context 'A requestable item from a RBSC holding with an item record including a barcode' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_w_barcode) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+    let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
+    describe '#barcode?' do
+      it 'should have a barcode' do
+        expect(requestable.barcode?).to be true
+        expect(requestable.barcode).to match(/^[0-9]+/)
+      end
+    end
+
+    describe '#aeon_openurl' do
+      it 'returns an OpenURL CTX Object' do
+        expect(aeon_ctx).to be_a(String)
+      end
+
+      it 'includes an ItemNumber Param' do
+        expect(aeon_ctx).to include(requestable.barcode)
+      end
+
+      it 'includes a Site Param' do
+        expect(aeon_ctx).to include(requestable.site)
+      end
+
+      it 'includes a Genre Param' do
+        expect(aeon_ctx).to include('rft.genre=book')
+      end
+
+      it 'includes a Call Number Param' do
+        expect(aeon_ctx).to include('CallNumber')
+      end
+    end
+
+    describe '#aeon_basic_params' do
+      it 'should include a Site param' do
+        expect(requestable.aeon_basic_params.key? :Site).to be true
+        expect(requestable.aeon_basic_params[:Site]).to eq('RBSC')
+      end
+
+      it 'shouuld have a Referennce NUmber' do
+        expect(requestable.aeon_basic_params.key? :ReferenceNumber).to be true
+        expect(requestable.aeon_basic_params[:ReferenceNumber]).to eq(requestable.bib[:id])
+      end
+
+       it 'shouuld have Location Param' do
+        expect(requestable.aeon_basic_params.key? :Location).to be true
+        expect(requestable.aeon_basic_params[:Location]).to eq(requestable.holding.first.last['location_code'])
+      end
+    end
+
+    describe '#aeon_request_url' do
+      it 'beings with Aeon GFA base' do
+        expect(requestable.aeon_request_url(request.ctx)).to match(/^#{Requests.config[:aeon_base]}/)
       end
     end
   end

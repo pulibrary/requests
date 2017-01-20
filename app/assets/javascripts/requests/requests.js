@@ -76,8 +76,12 @@ $(document).ready(function() {
           recall_pickup_select.hide();
         }
         if($(this)[0].selectedOptions[0].value === 'bd'){
-          var item_title = $('#bib_title').val();
-          this_td.append($("<div class='alert alert-warning'></div>").html("We could not automatically locate a direct match for this item in BorrowDirect, but you can <a href='http://libserv51.princeton.edu/bd.link/link.to.bd.php?ti=" + item_title + "' target='_blank'>manually check for other editions</a> that may be useful. Checkout period is 12 weeks, with no renewals."));
+          var bd_link = $( "body" ).data( "bd" ).link
+          if(typeof bd_link !== "undefined"){
+            this_td.append($("<div class='alert alert-warning'></div>").html("We could not automatically locate a direct match for this item in BorrowDirect, but you can <a href='" + bd_link + "' target='_blank'>manually check for other editions</a> that may be useful. Checkout period is 12 weeks, with no renewals."));
+          }else{
+            this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the BorrowDirect service."));
+          }
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
           var ctx = this_td.find('.ill-data').attr('data-ill-url')

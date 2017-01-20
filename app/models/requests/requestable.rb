@@ -210,7 +210,7 @@ module Requests
 
     def pickup_locations
       if @location[:delivery_locations].size > 0
-        @location[:delivery_locations] 
+        @location[:delivery_locations]
       end
     end
 

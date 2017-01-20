@@ -3,15 +3,6 @@
   <% if @user.guest %>
     <%= render partial: 'user_login_options', locals: { f: f } %>
   <% else %>
-    <div class='user user-pul'>
-      <h3>Your Contact Information</h3>
-      <dl class='account--patron_info'>
-        <dt>Name</dt>
-        <dd><%= pul_patron_name @patron %></dd>
-        <dt>Email</dt>
-        <dd><%= @user.email %></dd>
-      </dl>
-    </div>
     <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
     <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>

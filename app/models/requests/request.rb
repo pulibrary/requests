@@ -232,14 +232,16 @@ module Requests
       @pickups ||= build_pickups
     end
 
+    # should probably happen in the initializer
     def build_pickups
       pickup_locations = []
-      get_pickups.each do |pickup|
+      DELIVERY_LOCATIONS.values.each do |pickup|
         if pickup["pickup_location"] == true
           pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"]}
         end
       end
-      pickup_locations.sort_by! { |loc| loc[:label] }
+      #pickup_locations.sort_by! { |loc| loc[:label] }
+      sort_pickups(pickup_locations)
     end
 
     def default_pickups
@@ -260,7 +262,11 @@ module Requests
         unless doc[:location_code_s].nil?
           holding_locations = {}
           doc[:location_code_s].each do |loc|
-            holding_locations[loc] = get_location(loc)
+            location = get_location(loc)
+            unless location[:delivery_locations].empty?
+              location[:delivery_locations] = sort_pickups(location[:delivery_locations])
+            end
+            holding_locations[loc] = location
           end
           holding_locations
         end

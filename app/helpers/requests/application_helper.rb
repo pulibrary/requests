@@ -119,6 +119,8 @@ module Requests
       hidden_field_tag "requestable[][type]", "", value: type
     end
 
+    # move this to requestable object
+    # Default pickups should be available
     def pickup_choices requestable, default_pickups
       unless requestable.pickup_locations.nil? || requestable.charged? # || (requestable.services & self.default_pickup_services).empty?
         class_list = "well collapse in request--print"
@@ -145,7 +147,7 @@ module Requests
         locs = default_pickups
       else
         requestable.pickup_locations.each do |location|
-          locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
+          locs << { label: location[:label], gfa_code: location[:gfa_pickup], staff_only: location[:staff_only] }
         end
       end
       locs

@@ -4,7 +4,7 @@
     <%= I18n.t("requests.account.pul_user_service_msg") %>
   </div>
 <% else %>
-  <% if @request.borrow_direct_eligible? || @request.ill_eligible? %>
+  <% if @request.borrow_direct_eligible? %>
     <script type="text/javascript">
     jQuery(document).ready(function(){
       jQuery('.table-responsive h2').hide();
@@ -40,15 +40,13 @@
       updater.update();
     });
     </script>
-  <% end %>
-  <div class='umlaut-services'>
-  <% if @request.borrow_direct_eligible? %>
-    <div id="borrow_direct" class='availability--panel availability_borrow-direct availability--panel_umlaut'>
-      <p>
-        <img style="display:inline-block" src="/assets/requests/spinner.gif"/>
-        Checking BorrowDirect availablility for you.
-      </p>
+    <div class='umlaut-services'>
+      <div id="borrow_direct" class='availability--panel availability_borrow-direct availability--panel_umlaut'>
+        <p>
+          <img style="display:inline-block" src="/assets/requests/spinner.gif"/>
+          Checking BorrowDirect availablility for you.
+        </p>
+      </div>
     </div>
   <% end %>
-  </div>
 <% end %>

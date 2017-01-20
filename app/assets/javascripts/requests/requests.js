@@ -2,6 +2,11 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function() {
 
+    $( "#returnToRecordLink" ).click(function( event ) {
+      event.preventDefault();
+      location.href= document.referrer;
+    });
+
     // Enhance the Bootstrap collapse utility to toggle hide/show for other options
     $('input[type=radio][name^="requestable[][delivery_mode"]').change(function() {
         // collapse others

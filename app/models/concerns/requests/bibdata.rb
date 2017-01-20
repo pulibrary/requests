@@ -54,6 +54,23 @@ module Requests
     def parse_json(data)
       JSON.parse(data)
     end
+
+    ## Accepts an array of location hashes and sorts them according to our quirks
+    def sort_pickups locs
+      #staff only locations go at the bottom of the list and Firestone to the top
+      locs.sort_by! { |loc| loc[:staff_only] ? 0 : 1 }
+      locs.each do |loc|
+        if loc[:staff_only]
+          loc[:label] = loc[:label] + " (staff only)"
+        end
+      end
+      locs.reverse!
+      firestone = locs.find {|loc| loc[:label] == "Firestone Library" }
+      unless firestone.nil?
+        locs.insert(0,locs.delete_at(locs.index(firestone)))
+      end
+      locs
+    end
     
   end
 end

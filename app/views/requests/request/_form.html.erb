@@ -49,7 +49,7 @@
           <% requestable_list.each do |requestable| %>
 
             <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
-              <% unless requestable.item.nil? %>
+              <% if requestable.item? %>
                 <td class='request--select'>
                   <%= hidden_field_tag 'requestable[][selected]', false %>
                   <%= item_checkbox @request.requestable, requestable %>

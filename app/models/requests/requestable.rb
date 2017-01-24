@@ -123,14 +123,14 @@ module Requests
     end
 
     def on_order?
-      if item?
+      unless @item.blank?
         return true if @item[:status].starts_with?('On-Order')
       end
     end
 
     def item?
-      if @item[:id]
-        @item
+      unless @item.nil?
+          @item
       end
     end
 

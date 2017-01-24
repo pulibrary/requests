@@ -14,16 +14,17 @@ module Requests
         if selected['selected'] == 'true'
           if selected.key? 'user_supplied_enum'
             if selected['user_supplied_enum'].empty?
-              record.errors[:items].merge!({ "user_supplied_#{selected['mfhd']}" => { 'text' => 'Please Fill in additional volume information', 'type' => 'options' } })
+              #record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please Fill in additional volume information.', 'type' => 'options' } }
+              record.errors[:items] << { "user_supplied_#{selected['mfhd']}" => { 'text' => 'Please Fill in additional volume information', 'type' => 'options' } }
             end
           end
-        
+
           if selected["type"].blank?
             record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please choose a Request Method for your selected item.', 'type' => 'pickup' } }
           end
 
           if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
-            if selected['pickup'].empty? && selected['item_id'].empty?
+            if selected['pickup'].empty? && selected['item_id'].blank?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
             elsif selected['pickup'].empty?
               record.errors[:items] << { selected['item_id'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }

@@ -27,11 +27,13 @@ module Requests
     def show_service_options requestable
       if requestable.charged?
         render partial: 'checked_out_options', locals: { requestable: requestable }
+      elsif requestable.aeon? && requestable.voyager_managed?
+        link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
       elsif requestable.aeon?
-        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}#{requestable.params.to_query}", class: 'btn btn-primary'
+        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.params.to_query}", class: 'btn btn-primary'
       elsif requestable.traceable?
         content_tag(:div) do
-          concat link_to 'Where to find it', requestable.stackmap_url
+          concat link_to 'Where to find it', requestable.map_url
           concat content_tag(:span, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
         end
       else
@@ -95,9 +97,10 @@ module Requests
     end
 
     def recap_print_only_input requestable
-      content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{requestable.item[:id]}") do
+      id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+      content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{id}") do
         concat hidden_field_tag "requestable[][type]", "", value: 'recap'
-        concat hidden_field_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print"
+        concat hidden_field_tag "requestable[][delivery_mode_#{id}]", "print"
       end
     end
 
@@ -127,7 +130,8 @@ module Requests
         if requestable.services.include?('recap_edd')
             class_list = "well collapse request--print"
         end
-        content_tag(:div, id: "fields-print__#{requestable.item['id']}", class: class_list) do
+        id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+        content_tag(:div, id: "fields-print__#{id}", class: class_list) do
             locs = self.available_pickups(requestable, default_pickups)
             if(locs.size > 1)
                concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")

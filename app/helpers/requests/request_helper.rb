@@ -71,13 +71,18 @@ module Requests
       end
     end
 
+    # maybe this should move to the request object and be cleaned up.
+    ## This needs rethinking - serials that are no-item records need fill in services
     def fill_in_eligible? requestable_list
       fill_in = nil
       enums = false
-
       requestable_list.each do |requestable|
-        unless requestable.item.key?('enum') #if there are any enums show the fill in request row
+        if requestable.aeon?
+          enums = false
+        elsif requestable.item?
+          if requestable.item.key?('enum') #if there are any enums show the fill in request row
             enums = true
+          end
         end
         unless (requestable.services & fill_in_services).empty?
           fill_in = true
@@ -89,7 +94,7 @@ module Requests
         end
       end
       if enums
-          fill_in = nil
+        fill_in = nil
       end
       fill_in
     end

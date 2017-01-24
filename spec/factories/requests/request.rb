@@ -92,4 +92,28 @@ FactoryGirl.define do
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
+  factory :request_on_shelf, class: "Requests::Request" do
+    system_id 1214063
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :aeon_eal_voyager_item, class: "Requests::Request" do
+    system_id 7721323
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :aeon_w_barcode, class: "Requests::Request" do
+    system_id 9594435
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :aeon_no_item_record, class: "Requests::Request" do
+    system_id 2535845
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
 end

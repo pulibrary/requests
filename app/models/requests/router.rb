@@ -24,7 +24,9 @@ module Requests
     # :trace
 
     # user levels
-    # guest - Access patron
+    # guest - Access patron - shouldn't show recap_edd
+    # barcode - no ill, no bd
+    # cas - all services
 
 
     def routed_request

@@ -71,7 +71,7 @@ module Requests
 
     # Reading Room Request
     def aeon?
-      return true if @location[:aeon_location] == true  
+      return true if @location[:aeon_location] == true
     end
 
     # at an open location users may go to
@@ -96,7 +96,7 @@ module Requests
       return true if @item[:status] == 'Missing'
     end
 
-    # merge these two 
+    # merge these two
     def annexa?
       return true if @location[:library][:code] == 'annexa'
     end
@@ -129,7 +129,9 @@ module Requests
     end
 
     def item?
-      @item
+      if @item[:id]
+        @item
+      end
     end
 
     def set_services service_list
@@ -176,7 +178,7 @@ module Requests
       if item?
         unless item[:enum].nil?
           true
-        else 
+        else
           false
         end
       else
@@ -230,14 +232,14 @@ module Requests
       item[:barcode]
     end
 
-    private 
+    private
 
     # From Tampakis
     def unavailable_statuses
       ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
        'In transit on hold', 'At bindery', 'Remote storage request',
        'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing', 
+       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
        'Missing','On-Site - On Hold']
     end
   end

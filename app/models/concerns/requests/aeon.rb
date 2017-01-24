@@ -3,9 +3,6 @@ module Requests
     # for Aeon Related Bibliographic Helpers
     extend ActiveSupport::Concern
 
-    def submit_request(submission)
-    end
-
     # for use with only non-voyager visuals and thesis records
     def aeon_mapped_params
       params = {
@@ -35,47 +32,40 @@ module Requests
 
     # accepts the base Openurl Context Object and formats it appropriately for Aeon
     def aeon_request_url(ctx = nil)
-      if enumerated?
-        enum = item[:enum]
-      else
-        enum = nil
-      end
-      "#{Requests.config[:aeon_base]}/OpenURL?#{aeon_openurl(ctx, enum)}"
+      "#{Requests.config[:aeon_base]}/OpenURL?#{aeon_openurl(ctx)}"
     end
 
     # returns encoded OpenURL string for voyager derived records
-    def aeon_openurl(ctx, enum = nil)
-      unless enum.nil?
-        ctx.referent.set_metadata('volume', enum) 
+    def aeon_openurl(ctx)
+      if enumerated?
+        ctx.referent.set_metadata('volume', item[:enum]) 
       end
       aeon_params = aeon_basic_params
       if barcode?
         aeon_params[:ItemNumber] = barcode
       end
-      ## mash these two together in an encoded string
+      ## returned mashed together in an encoded string
       "#{ctx.kev}&#{aeon_params.to_query}"
     end
 
-    def non_voyager?(holding_id)
-      if holding_id == 'thesis' 
-        return true
-      elsif holding_id == 'visuals'
-        return true
-      else
-        return false
-      end
-    end
-
-    ### need to get site codes for EAL and Marquand
-    ### MARQ and EAL
     def site
-      if holding.key? 'thesis' # || MUDD holding
+      if holding.key? 'thesis'
         'MUDD'
       elsif holding.key? 'visuals'
         'RBSC'
+      elsif !location[:holding_library].nil?
+        if location['holding_library']['code'] == 'eastasian' && location['aeon_location'] == true
+          'EAL'
+        elsif location['holding_library']['code'] == 'marquand' && location['aeon_location'] == true
+          'MARQ'
+        elsif location['holding_library']['code'] == 'mudd' && location['aeon_location'] == true
+          'MUDD'
+        else
+          'RBSC'
+        end
       elsif location['library']['code'] == 'eastasian' && location['aeon_location'] == true
         'EAL'
-      elsif location['library']['code'] == 'marquand' && location['aeon_location'] == true
+      elsif location['library']['code'] == 'marquand'  && location['aeon_location'] == true
         'MARQ'
       elsif location['library']['code'] == 'mudd'
         'MUDD'
@@ -127,15 +117,6 @@ module Requests
       unless bib[:author_display].nil?
         bib[:author_display].join(" AND ")
       end
-    end
-
-
-    def eal_rare
-
-    end
-
-    def marquand_rare_locations
-      
     end
   end
 end

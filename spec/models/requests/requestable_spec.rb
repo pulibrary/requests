@@ -4,7 +4,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context "as bibliographic record from voyager stored at recap that has an item record" do
     describe "#location_code" do
-      it "returns a value voyager locatoin code." do
+      it "returns a value voyager location code." do
       end
     end
 
@@ -115,7 +115,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "reports as a non Voyager aeon resource" do
         expect(requestable.aeon?).to be_truthy
-        expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
 
       it "returns a params list with an Aeon Site MUDD" do
@@ -152,7 +151,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "reports as a non Voyager aeon resource" do
         expect(requestable.aeon?).to be_truthy
-        expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
 
       it "includes a valid aeon site value for a visuals record" do
@@ -225,26 +223,45 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
-
   context 'A requestable item from an Aeon EAL Holding with a null barcode' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_eal_voyager_item) }
     let(:requestable) { request.requestable.first } # assume only one requestable
-    describe '#aeon_open_url' do
+    
+    describe '#services' do
       it 'should be eligible for aeon services' do
         expect(requestable.services.include?('aeon')).to be true
       end
+    end
 
+    describe '#aeon_open_url' do
+      it 'should return an openurl with a Call Number param' do
+        expect(requestable.aeon_openurl(request.ctx)).to be_a(String)
+      end
+    end
+
+    describe '#site' do
       it 'should return the correct Aeon Site param' do
         expect(requestable.site).to eq('EAL')
       end
+    end
 
-      it 'should return an openurl with a Call Number param' do
-        expect(requestable.aeon_openurl(request.ctx)).to be_truthy
-      end
-
+    describe '#barcode' do
       it 'should not report there is a barocode' do
         expect(requestable.barcode?).to be false
+      end
+    end
+  end
+
+
+  context 'A requestable item from an Aeon EAL Holding with a null barcode' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+    let(:enumeration) { 'v.7' }
+    describe '#aeon_open_url' do
+      it 'should return an openurl with enumeration when available' do
+        expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(enumeration)}")
       end
     end
   end
@@ -262,6 +279,30 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#site' do
       it 'should return a RBSC site param' do
         expect(requestable.site).to eq('RBSC')
+      end
+    end
+  end
+
+  context 'A MUDD holding' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_mudd) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+
+    describe '#site' do
+      it 'should return a RBSC site param' do
+        expect(requestable.site).to eq('MUDD')
+      end
+    end
+  end
+  
+  context 'A Marquand holding' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_marquand) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+
+    describe '#site' do
+      it 'should return a Marquand site param' do
+        expect(requestable.site).to eq('MARQ')
       end
     end
   end

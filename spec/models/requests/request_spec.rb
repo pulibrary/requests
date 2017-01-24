@@ -2,9 +2,28 @@ require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
 
+  context "with a bad system_id" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:bad_system_id) { 'foo' }
+    let(:params) {
+      {
+        system_id: bad_system_id,
+        user: user
+      }
+    }
+    let(:bad_request) { described_class.new(params) }
+    subject { bad_request }
+    describe '#solr_doc' do
+      it 'returns an 404 response without a valid system id' do
+        expect(subject.solr_doc(bad_system_id).empty?).to be true
+      end
+    end
+  end
+
   context "with a system_id and a mfhd that has a holding record with an attached item record" do
 
     let(:user) { FactoryGirl.build(:user) }
+    let(:bad_system_id) { 'foo' }
     let(:params) {
       {
         system_id: '8880549',
@@ -21,6 +40,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe '#solr_doc' do
+      it 'returns hash with a valid system id' do
+        expect(subject.solr_doc(subject.system_id)).to be_a(Hash)
+      end
+
+    end
+
     describe "#display_metadata" do
       it "returns a display title" do
         expect(subject.display_metadata[:title]).to be_truthy
@@ -29,15 +55,20 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "returns a author display" do
         expect(subject.display_metadata[:author]).to be_truthy
       end
-
-      # it "returns a display date" do
-      #   expect(subject.display_metadata[:date]).to be_truthy
-      # end
     end
 
     describe "#ctx" do
       it "should produce an ILLiad flavored openurl" do
         expect(subject.ctx).to be_an_instance_of(OpenURL::ContextObject)
+      end
+    end
+
+    describe '#openurl_ctx_kev' do
+      it 'should return an encoded query string' do
+        expect(subject.openurl_ctx_kev).to be_a(String)
+        subject.ctx.referent.identifiers.each do |identifier|
+          expect(subject.openurl_ctx_kev).to include(CGI.escape(identifier))
+        end
       end
     end
 

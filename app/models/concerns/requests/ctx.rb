@@ -7,28 +7,21 @@ module Requests
 
     # returns an openurl CTX object
     def ctx
-      @ctx || build_ctx
+      @ctx ||= build_ctx
     end
 
     def openurl_ctx_kev
       ctx.kev
     end
 
-    def standard_numbers?
-      std_numbers.any? { |v| doc.key? v }
-    end
-
-    def std_numbers
-      %w(lccn_s isbn_s issn_s oclc_s)
-    end
-
-    def format_to_openurl_genre(format)
-      return 'book' if format == 'book'
-      return 'bookitem' if format == 'book'
-      return 'journal' if format == 'serial'
-      return 'conference' if format == 'conference'
-      'unknown'
-    end
+    ## double check what are valid openURL formsts in the catatlog
+    ## look at our choices and map
+    # def format_to_openurl_genre(format)
+    #   return 'book' if format == 'book'
+    #   return 'journal' if format == 'serial'
+    #   return 'journal' if format == 'journal'
+    #   'unknown'
+    # end
 
     private
     
@@ -43,7 +36,7 @@ module Requests
       edition = doc['edition_display'].first unless doc['edition_display'].nil?
       #unless format.nil?
       format = doc['format'].is_a?(Array) ? doc['format'].first.downcase.strip : doc['format'].downcase.strip
-      genre = format_to_openurl_genre(format)
+      #genre = format_to_openurl_genre(format)
       #end
       if format == 'book'
         ctx.referent.set_format('book')
@@ -67,7 +60,7 @@ module Requests
         ctx.referent.set_metadata('issn', doc['issn_s'].first) unless doc['issn_s'].nil?
       else
         ctx.referent.set_format(genre) # do we need to do this?
-        ctx.referent.set_metadata('genre', genre)
+        ctx.referent.set_metadata('genre', format)
         ctx.referent.set_metadata('title', title)
         ctx.referent.set_metadata('creator', author)
         ctx.referent.set_metadata('aucorp', corp_author)
@@ -88,7 +81,5 @@ module Requests
       ctx.referent.add_identifier("info:lccn/#{doc['lccn_s'].first}") unless doc['lccn_s'].nil?
       ctx
     end
-
-
   end
 end

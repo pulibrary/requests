@@ -149,6 +149,8 @@ module Requests
         locs = default_pickups
       elsif(requestable.services.include? 'trace')
         locs = default_pickups
+      elsif requestable.pickup_locations.nil?
+        locs = default_pickups
       else
         requestable.pickup_locations.each do |location|
           locs << { label: location[:label], gfa_code: location[:gfa_pickup], staff_only: location[:staff_only] }
@@ -161,10 +163,14 @@ module Requests
       ["on_order", "in_process"]
     end
 
-    def pickup_choices_fill_in requestable
+    def pickup_choices_fill_in requestable, default_pickups
       locs = []
-      requestable.pickup_locations.each do |location|
-        locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
+      if requestable.pickup_locations.nil? || requestable.location['delivery_locations'].empty?
+        locs = self.available_pickups(requestable, default_pickups)
+      else
+        requestable.pickup_locations.each do |location|
+          locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
+        end
       end
       if(locs.size > 1)
         select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")

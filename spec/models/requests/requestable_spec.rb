@@ -202,6 +202,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable item with a missing status' do
     let(:user) { FactoryGirl.build(:user) }
+    #let(:user) { FactoryGirl.create(:valid_access_patron) }
     let(:request) { FactoryGirl.build(:request_missing_item) }
     let(:requestable) { request.requestable }
     describe "#services" do

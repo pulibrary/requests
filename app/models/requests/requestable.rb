@@ -129,9 +129,7 @@ module Requests
     end
 
     def item?
-      unless @item.nil?
           @item
-      end
     end
 
     def set_services service_list

@@ -21,20 +21,22 @@ module Requests
       @location ||= location # hash of location matrix data
     end
 
-    def type
-      if @item
-        'item'
-      elsif @holding
-        'holding'
-      else
-        'bib'
-      end
-    end
+    # remove unused
+    # def type
+    #   if @item
+    #     'item'
+    #   elsif @holding
+    #     'holding'
+    #   else
+    #     'bib'
+    #   end
+    # end
 
     def bib
       @bib
     end
 
+    ## use this in instances where you don't know if an item has item details
     def preferred_request_id
       if item?
         item['id']
@@ -55,68 +57,76 @@ module Requests
       @location
     end
 
+    def set_services service_list
+      @services = service_list
+    end
+
+    def services
+      @services
+    end
+
     def location_code
-      @holding[:location_code]
+      holding[:location_code]
     end
 
     # non voyager options
     def thesis?
-      return true if @holding["thesis"][:location_code] == 'mudd'
+      return true if holding["thesis"][:location_code] == 'mudd'
     end
 
     # graphic arts non voyager collection
     def visuals?
-      return true if @holding["visuals"][:location_code] == 'ga'
+      return true if holding["visuals"][:location_code] == 'ga'
     end
 
     # Reading Room Request
     def aeon?
-      return true if @location[:aeon_location] == true  
+      return true if location[:aeon_location] == true  
     end
 
     # at an open location users may go to
     def open?
-      return true if @location[:open] == true
+      return true if location[:open] == true
     end
 
     # A closed location where items need to be retrieved from by default
     def requestable?
-      return true if @location[:requestable] == true
+      return true if location[:requestable] == true
     end
 
     def recap?
-      return true if @location[:library][:code] == 'recap'
+      return true if location[:library][:code] == 'recap'
     end
 
     def recap_edd?
-      return true if @location[:recap_electronic_delivery_location] == true
+      return true if location[:recap_electronic_delivery_location] == true
     end
 
     def missing?
-      return true if @item[:status] == 'Missing'
+      return true if item[:status] == 'Missing'
     end
 
     # merge these two 
     def annexa?
-      return true if @location[:library][:code] == 'annexa'
+      return true if location[:library][:code] == 'annexa'
     end
 
     # locations temporarily moved to annex should work
     def annexb?
-      return true if @location[:library][:code] == 'annexb'
+      return true if location[:library][:code] == 'annexb'
     end
 
     def circulates?
-      return true if @location[:circulates] == true
+      return true if location[:circulates] == true
     end
 
     def always_requestable?
-      return true if @location[:always_requestable] == true
+      return true if location[:always_requestable] == true
     end
 
     def in_process?
       if item?
-        if @item[:status] == 'In Process' || @item[:status] == 'On-Site - In Process'
+        if item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
           return true
         end
       end
@@ -124,32 +134,29 @@ module Requests
 
     def on_order?
       if item?
-        return true if @item[:status].starts_with?('On-Order')
+        return true if item[:status].starts_with?('On-Order')
       end
     end
 
     def item?
-      @item
-    end
-
-    def set_services service_list
-      @services = service_list
+      item
     end
 
     def traceable?
-      return true if @services.include?('trace')
+      return true if services.include?('trace')
     end
 
     def ill_eligible?
-      return true if @services.include?('ill')
+      return true if services.include?('ill')
     end
 
     def on_shelf?
-      return true if @services.include?('on_shelf')
+      return true if services.include?('on_shelf')
     end
 
+    # assume numeric ids come from voyager
     def voyager_managed?
-      return true if @bib[:id].to_i > 0
+      return true if bib[:id].to_i > 0
     end
 
     def params
@@ -159,12 +166,12 @@ module Requests
     end
 
     def online?
-      return true if @location[:library][:code] == 'online'
+      return true if location[:library][:code] == 'online'
     end
 
     def charged?
       if(item?)
-        if(unavailable_statuses.include?(@item[:status]))
+        if(unavailable_statuses.include?(item[:status]))
           return true
         else
           nil
@@ -209,8 +216,8 @@ module Requests
     end
 
     def pickup_locations
-      if @location[:delivery_locations].size > 0
-        @location[:delivery_locations]
+      if location[:delivery_locations].size > 0
+        location[:delivery_locations]
       end
     end
 

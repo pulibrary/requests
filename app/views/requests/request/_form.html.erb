@@ -47,9 +47,8 @@
         </thead>
         <tbody>
           <% requestable_list.each do |requestable| %>
-
+            <% unless requestable.item.blank? %>
             <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
-              <% if requestable.item? %>
                 <td class='request--select'>
                   <%= hidden_field_tag 'requestable[][selected]', false %>
                   <%= item_checkbox @request.requestable, requestable %>
@@ -62,15 +61,6 @@
                   <%= requestable.item["status"] %><br/>
                   <%= status_label requestable %>
                 </td>
-              <% else %>
-                <td>
-                  <%= hidden_field_tag 'requestable[][selected]', false %>
-                  <%= check_box_tag "requestable[][selected]", true, check_box_selected(@request.requestable), class: 'request--select', id: "requestable_selected_#{mfhd}" %>
-                  <%= hidden_fields_holding requestable %>
-                </td>
-                <td></td>
-                <td></td>
-              <% end %>
               <td class='request--options'>
                 <% if requestable.ill_eligible? %>
                   <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
@@ -98,10 +88,11 @@
                 <% end %>
               </td>
             </tr>
+            <% end %>
           <% end %>
 
           <% if fill_in_eligible? requestable_list %>
-            <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last } %>
+            <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
           <% end %>
         </tbody>
       </table>

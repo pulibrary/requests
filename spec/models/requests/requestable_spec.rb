@@ -49,7 +49,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     }
     let(:holding) {
       {
-        
+
       }
     }
     let(:bib) {
@@ -186,7 +186,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe "#pageable?" do
       it "should return nil when item status is unavailable" do
         expect(requestable.size).to eq(1)
-        # change status 
+        # change status
         requestable.first.item["status"] = 'Charged'
         expect(requestable.first.pageable?).to be_falsey
       end
@@ -200,11 +200,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable item with a missing status' do
     let(:user) { FactoryGirl.build(:user) }
+    #let(:user) { FactoryGirl.create(:valid_access_patron) }
     let(:request) { FactoryGirl.build(:request_missing_item) }
     let(:requestable) { request.requestable }
     describe "#services" do
       it "should return an item status of missing" do
-        expect(requestable.size).to eq(1) 
+        expect(requestable.size).to eq(1)
         requestable.first.item["status"] = 'Missing'
         expect(requestable.first.services).to be_truthy
       end

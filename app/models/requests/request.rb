@@ -25,7 +25,7 @@ module Requests
     end
 
     def doc
-      @doc ||= solr_doc(@system_id)
+      @doc ||= solr_doc(system_id)
     end
 
     def requestable

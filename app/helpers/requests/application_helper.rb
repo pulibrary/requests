@@ -97,10 +97,10 @@ module Requests
     end
 
     def recap_print_only_input requestable
-      id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
-      content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{id}") do
+      #id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+      content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{requestable.preferred_request_id}") do
         concat hidden_field_tag "requestable[][type]", "", value: 'recap'
-        concat hidden_field_tag "requestable[][delivery_mode_#{id}]", "print"
+        concat hidden_field_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", "print"
       end
     end
 
@@ -130,8 +130,8 @@ module Requests
         if requestable.services.include?('recap_edd')
             class_list = "well collapse request--print"
         end
-        id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
-        content_tag(:div, id: "fields-print__#{id}", class: class_list) do
+        #id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+        content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
             locs = self.available_pickups(requestable, default_pickups)
             if(locs.size > 1)
                concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")

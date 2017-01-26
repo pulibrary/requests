@@ -10387,4 +10387,224 @@ http_interactions:
         </html>
     http_version: 
   recorded_at: Thu, 27 Oct 2016 01:26:50 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/foo.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 500 Internal Server Error
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 5fdfdb2e-3423-489a-955f-ddd3b65e6055
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.023085'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 24 Jan 2017 21:13:23 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: |
+        <div class="col-md-12">
+          <div class="dialog">
+            <h1>We're sorry, but there was a problem processing the page you requested.</h1>
+            <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
+          </div>
+        </div>
+    http_version: 
+  recorded_at: Tue, 24 Jan 2017 21:13:23 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/foo.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 500 Internal Server Error
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 6a95c254-e63f-414d-920d-d5e3a73754c4
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.033594'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 24 Jan 2017 23:16:49 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: |
+        <div class="col-md-12">
+          <div class="dialog">
+            <h1>We're sorry, but there was a problem processing the page you requested.</h1>
+            <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
+          </div>
+        </div>
+    http_version: 
+  recorded_at: Tue, 24 Jan 2017 23:16:49 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/foo.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 500 Internal Server Error
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - c8f5cca1-1023-42eb-a7ee-8687b72b4fb4
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.023352'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 24 Jan 2017 23:24:32 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: |
+        <div class="col-md-12">
+          <div class="dialog">
+            <h1>We're sorry, but there was a problem processing the page you requested.</h1>
+            <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
+          </div>
+        </div>
+    http_version: 
+  recorded_at: Tue, 24 Jan 2017 23:24:32 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/foo.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 500 Internal Server Error
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 12a47567-a6f8-4494-865a-94368158d897
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.041748'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 24 Jan 2017 23:24:43 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: |
+        <div class="col-md-12">
+          <div class="dialog">
+            <h1>We're sorry, but there was a problem processing the page you requested.</h1>
+            <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
+          </div>
+        </div>
+    http_version: 
+  recorded_at: Tue, 24 Jan 2017 23:24:44 GMT
 recorded_with: VCR 3.0.3

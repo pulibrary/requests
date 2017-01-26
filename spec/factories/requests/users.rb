@@ -13,10 +13,13 @@ FactoryGirl.define do
       provider 'cas'
     end
 
-
     # for patrons without a net ID
     factory :valid_access_patron do
       provider 'voyager'
+    end
+
+    factory :valid_barcode_patron do
+      provider 'barcode'
     end
 
     factory :unauthenticated_patron do

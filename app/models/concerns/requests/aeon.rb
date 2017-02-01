@@ -11,7 +11,7 @@ module Requests
         ItemTitle: title,
         ItemAuthor: author,
         ItemDate: pub_date,
-        ItemVolume: sub_title, 
+        ItemVolume: sub_title,
       }
       params.merge! aeon_basic_params
       params.reject { |k,v| v.nil? }
@@ -38,7 +38,7 @@ module Requests
     # returns encoded OpenURL string for voyager derived records
     def aeon_openurl(ctx)
       if enumerated?
-        ctx.referent.set_metadata('volume', item[:enum]) 
+        ctx.referent.set_metadata('volume', item[:enum])
       end
       aeon_params = aeon_basic_params
       if barcode?
@@ -46,6 +46,17 @@ module Requests
       end
       ## returned mashed together in an encoded string
       "#{ctx.kev}&#{aeon_params.to_query}"
+    end
+
+    # this non_voyager? method has an OL dependency
+    def non_voyager?(holding_id)
+      if holding_id == 'thesis'
+        return true
+      elsif holding_id == 'visuals'
+        return true
+      else
+        return false
+      end
     end
 
     def site

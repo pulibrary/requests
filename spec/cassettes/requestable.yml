@@ -3202,4 +3202,223 @@ http_interactions:
         Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true}]}'
     http_version: 
   recorded_at: Tue, 24 Jan 2017 23:45:40 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/4492846.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - ce895c15-d199-4f64-9610-0736a3f138e0
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"9645ed977c76f039aa762ded59e9ce01"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.252284'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 07 Feb 2017 19:09:58 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"4492846","author_display":["Princeton
+        University. Princeton Elm Club"],"author_citation_display":["Princeton University"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Princeton
+        University\"}","author_s":["Princeton University. Princeton Elm Club"],"opensearch_display":["Princeton
+        University. Princeton Elm Club","Constitution, house rules, officers \u0026
+        members ...","Princeton University. Princeton Elm Club"],"marc_relator_display":["Author"],"title_display":"Constitution,
+        house rules, officers \u0026 members ...","title_t":["Constitution, house
+        rules, officers \u0026 members ..."],"title_citation_display":["Constitution,
+        house rules, officers \u0026 members ..."],"compiled_created_t":["Constitution,
+        house rules, officers \u0026 members ..."],"pub_created_display":["[Newark
+        : Shurt]."],"pub_created_s":["[Newark : Shurt]."],"pub_citation_display":["Newark:
+        Shurt]."],"format":["Journal"],"description_display":["v. ; 17 cm."],"description_t":["v.
+        ; 17 cm."],"language_facet":["English"],"language_code_s":["eng"],"subject_display":["Princeton
+        University. Princeton Elm Club"],"subject_t":["Princeton University. Princeton
+        Elm Club"],"subject_facet":["Princeton University. Princeton Elm Club"],"oclc_s":["177681144"],"other_version_s":["ocn177681144"],"holdings_1display":"{\"4745646\":{\"location\":\"Forrestal
+        Annex - Princeton Collection\",\"library\":\"Forrestal Annex\",\"location_code\":\"p\",\"call_number\":\"P755.73\",\"call_number_browse\":\"P755.73\",\"location_has\":[\"1908\"]}}","location_code_s":["p"],"location_display":["Forrestal
+        Annex - Princeton Collection"],"location":["Forrestal Annex"],"advanced_location_s":["p","Forrestal
+        Annex"],"name_title_245_s":["Princeton University. Princeton Elm Club. Constitution,
+        house rules, officers \u0026 members ..."],"name_title_browse_s":["Princeton
+        University. Princeton Elm Club. Constitution, house rules, officers \u0026
+        members ..."],"call_number_display":["P755.73"],"call_number_browse_s":["P755.73"],"timestamp":"2017-01-04T04:35:31.440Z"}}}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 19:09:57 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=4492846
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 19:10:19 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 342c92b2-6a0e-48c0-afd9-00a43ba0e09c
+      X-Runtime:
+      - '0.112074'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"4a9f08eadf2400e5ec82a5b2a591f9a2"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"4745646":{"more_items":false,"location":"p","status":"On Shelf","label":"Forrestal
+        Annex - Princeton Collection"}}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 19:09:57 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4745646
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 19:10:20 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - fd3aacbe-8e5c-4dd5-a48b-4cc1362f7fbc
+      X-Runtime:
+      - '0.058120'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 4745646 not found.'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 19:09:57 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/p.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 19:10:20 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 415c6a62-9cbe-475f-bf28-d494e20b0b0a
+      X-Runtime:
+      - '0.018247'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"3f7269af7bb40a396f05452e698140fe"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Princeton Collection","code":"p","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"Forrestal
+        Annex","code":"annexa","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 19:09:57 GMT
 recorded_with: VCR 3.0.3

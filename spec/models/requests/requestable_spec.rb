@@ -228,7 +228,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_eal_voyager_item) }
     let(:requestable) { request.requestable.first } # assume only one requestable
-    
+
     describe '#services' do
       it 'should be eligible for aeon services' do
         expect(requestable.services.include?('aeon')).to be true
@@ -295,7 +295,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
   end
-  
+
   context 'A Marquand holding' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_marquand) }
@@ -365,4 +365,19 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
   end
+
+  context 'A requestable item from Forrestal Annex with no item data' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_no_items) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+
+    describe 'requestable with no items ' do
+      it 'should not have item data' do
+        expect(requestable.has_item_data?).to be false
+      end
+    end
+
+  end
+
+
 end

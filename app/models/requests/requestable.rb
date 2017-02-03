@@ -142,6 +142,18 @@ module Requests
       item
     end
 
+    def has_item_data?
+      if item.nil?
+        false
+      else
+        if item[:id].blank?
+          false
+        else
+          true
+        end
+      end
+    end
+
     def set_services service_list
       @services = service_list
     end

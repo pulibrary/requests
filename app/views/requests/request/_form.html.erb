@@ -47,7 +47,7 @@
         </thead>
         <tbody>
           <% requestable_list.each do |requestable| %>
-            <% unless requestable.item[:id].blank? %>
+            <% if requestable.has_item_data? %>
             <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                 <td class='request--select'>
                   <%= hidden_field_tag 'requestable[][selected]', false %>

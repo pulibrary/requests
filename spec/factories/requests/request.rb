@@ -7,8 +7,9 @@ FactoryGirl.define do
   end
 
   factory :request_no_items, class: 'Requests::Request' do
-    system_id 1_918_456
-    initialize_with { new(system_id) }
+    system_id 4492846
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
   factory :request_on_order, class: 'Requests::Request' do
@@ -42,7 +43,7 @@ FactoryGirl.define do
   end
 
   factory :request_aeon, class: 'Requests::Request' do
-    system_id 9_561_302 
+    system_id 9_561_302
     initialize_with { new(system_id) }
   end
 
@@ -85,7 +86,7 @@ FactoryGirl.define do
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
-  # missing item 
+  # missing item
   factory :request_missing_item, class: 'Requests::Request' do
     system_id 2300474
     user { FactoryGirl.build(:user) }

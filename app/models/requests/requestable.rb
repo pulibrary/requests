@@ -134,7 +134,9 @@ module Requests
 
     def on_order?
       if item?
-        return true if item[:status].starts_with?('On-Order')
+        if item[:status].starts_with?('On-Order') || item[:status].starts_with?('Pending Order')
+          return true
+        end
       end
     end
 

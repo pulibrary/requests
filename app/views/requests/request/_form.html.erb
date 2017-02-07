@@ -47,7 +47,7 @@
         </thead>
         <tbody>
           <% requestable_list.each do |requestable| %>
-            <% if requestable.has_item_data? %>
+            <% if requestable.has_item_data? || requestable.on_order? %>
             <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                 <td class='request--select'>
                   <%= hidden_field_tag 'requestable[][selected]', false %>
@@ -62,6 +62,7 @@
                   <%= status_label requestable %>
                 </td>
               <td class='request--options'>
+
                 <% if requestable.ill_eligible? %>
                   <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
                 <% end %>

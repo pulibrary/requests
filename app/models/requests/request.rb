@@ -186,7 +186,7 @@ module Requests
         else
           items_by_bib(@system_id).each do |holding_id, item_info|
             items_by_holding = if item_info[:more_items] == false
-              if item_info[:status].starts_with?('On-Order')
+              if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
                 [item_info]
               elsif item_info[:status].starts_with?('Online')
                 [item_info]

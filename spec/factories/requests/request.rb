@@ -14,7 +14,14 @@ FactoryGirl.define do
 
   factory :request_on_order, class: 'Requests::Request' do
     system_id 7_338_297
-    initialize_with { new(system_id) }
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :request_pending, class: 'Requests::Request' do
+    system_id 10094671
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
   factory :request_with_items_available, class: 'Requests::Request' do

@@ -3421,4 +3421,414 @@ http_interactions:
         Annex","code":"annexa","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
     http_version: 
   recorded_at: Tue, 07 Feb 2017 19:09:57 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/7338297.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 4220313a-f765-438e-a0a9-c79b75f6ab1d
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"0ae7a4245d5bbc659f5f58330f6a5f46"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.233230'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 07 Feb 2017 21:04:29 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjczMzgyOTciLCJhdXRo
+        b3JfZGlzcGxheSI6WyJIdSwgTGlsaSIsIuiDoem6l+m6lyJdLCJhdXRob3Jf
+        Y2l0YXRpb25fZGlzcGxheSI6WyJIdSwgTGlsaSIsIkxpYW5nLCBKaWFuIl0s
+        ImF1dGhvcl9yb2xlc18xZGlzcGxheSI6IntcInNlY29uZGFyeV9hdXRob3Jz
+        XCI6W1wiTGlhbmcsIEppYW5cIixcIuiDoem6l+m6l1wiLFwi5qKB5YqNXCJd
+        LFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVy
+        c1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIkh1LCBMaWxpXCJ9IiwiYXV0
+        aG9yX3MiOlsiSHUsIExpbGkiLCJMaWFuZywgSmlhbiIsIuiDoem6l+m6lyIs
+        IuaigeWKjSJdLCJvcGVuc2VhcmNoX2Rpc3BsYXkiOlsiSHUsIExpbGkiLCJM
+        aWFuZywgSmlhbiIsIuiDoem6l+m6lyIsIuaigeWKjSIsIlhpIGppbiBwaW5n
+        IHpodWFuIGppIl0sIm1hcmNfcmVsYXRvcl9kaXNwbGF5IjpbIkF1dGhvciJd
+        LCJ0aXRsZV9kaXNwbGF5IjoiWGkgamluIHBpbmcgemh1YW4gamkiLCJ0aXRs
+        ZV92ZXJuX2Rpc3BsYXkiOiLnv5Lov5HlubPlgrPoqJgiLCJ0aXRsZV90Ijpb
+        IlhpIGppbiBwaW5nIHpodWFuIGppIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3Bs
+        YXkiOlsiWGkgamluIHBpbmcgemh1YW4gamkiLCLnv5Lov5HlubPlgrPoqJgi
+        XSwiY29tcGlsZWRfY3JlYXRlZF90IjpbIlhpIGppbiBwaW5nIHpodWFuIGpp
+        Iiwi57+S6L+R5bmz5YKz6KiYIl0sInB1Yl9jcmVhdGVkX2Rpc3BsYXkiOlsi
+        5piO6Y+h5Ye654mI56S+LCAyMDEyIl0sInB1Yl9jcmVhdGVkX3MiOlsi5piO
+        6Y+h5Ye654mI56S+LCAyMDEyIl0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5Ijpb
+        IuaYjumPoeWHuueJiOekviJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTIi
+        XSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxMiwiZm9ybWF0IjpbIkJvb2si
+        XSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyI0OTIgcC4iXSwiZGVzY3JpcHRp
+        b25fdCI6WyI0OTIgcC4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiQ2hpbmVzZSJd
+        LCJsYW5ndWFnZV9jb2RlX3MiOlsiY2hpIl0sInJlbGF0ZWRfbmFtZV9qc29u
+        XzFkaXNwbGF5Ijoie1wiUmVsYXRlZCBuYW1lXCI6W1wiTGlhbmcsIEppYW5c
+        IixcIuaigeWKjVwiXX0iLCJpc2JuX2Rpc3BsYXkiOlsiOTc4MTkzNTk4MTYz
+        MyJdLCJpc2JuX3MiOlsiOTc4MTkzNTk4MTYzMyJdLCJpc2JuX3QiOlsiOTc4
+        MTkzNTk4MTYzMyJdLCJvdGhlcl92ZXJzaW9uX3MiOlsiOTc4MTkzNTk4MTYz
+        MyJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjcxNjg4OTRcIjp7XCJsb2Nh
+        dGlvblwiOlwiRWFzdCBBc2lhbiBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJF
+        YXN0IEFzaWFuIExpYnJhcnlcIixcImxvY2F0aW9uX2NvZGVcIjpcImNcIn19
+        IiwibG9jYXRpb25fY29kZV9zIjpbImMiXSwibG9jYXRpb25fZGlzcGxheSI6
+        WyJFYXN0IEFzaWFuIExpYnJhcnkiXSwibG9jYXRpb24iOlsiRWFzdCBBc2lh
+        biBMaWJyYXJ5Il0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsiYyIsIkVhc3Qg
+        QXNpYW4gTGlicmFyeSJdLCJuYW1lX3RpdGxlXzI0NV9zIjpbIkh1LCBMaWxp
+        LiBYaSBqaW4gcGluZyB6aHVhbiBqaSJdLCJuYW1lX3RpdGxlX2Jyb3dzZV9z
+        IjpbIkh1LCBMaWxpLiBYaSBqaW4gcGluZyB6aHVhbiBqaSJdLCJ0aW1lc3Rh
+        bXAiOiIyMDE3LTAxLTA0VDA2OjM5OjQ0Ljc4OVoifX19
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:04:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=7338297
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 21:04:54 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 51970d09-82d8-40d9-b4f0-5d038f3de43b
+      X-Runtime:
+      - '0.129140'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"809ca873ff4e4cd4023c1a72754f8301"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"7168894":{"more_items":false,"location":"c","status":"On-Order","label":"East
+        Asian Library"}}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:04:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/c.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 21:04:54 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 072731a5-d5a3-4067-8044-c1a75e7649fa
+      X-Runtime:
+      - '0.018690'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"e6b685469651ed6aa9b22ff4262e7868"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"c","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"East
+        Asian Library","code":"eastasian","order":2},"holding_library":null,"hours_location":{"label":"East
+        Asian Library","code":"eastasian"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:04:29 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/10094671.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 5d63d300-a6e0-4777-b6d0-6169d88a4226
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"c552b61a757d9e286d8b1484cad32d8d"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.039647'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 07 Feb 2017 21:07:10 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"10094671","author_display":["Corleis,
+        Gisela"],"author_citation_display":["Corleis, Gisela"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Corleis,
+        Gisela\"}","author_s":["Corleis, Gisela"],"opensearch_display":["Corleis,
+        Gisela","BENDIX HARMS: CHOSEN ONES. Gisela Corleis."],"marc_relator_display":["Author"],"title_display":"BENDIX
+        HARMS: CHOSEN ONES. Gisela Corleis.","title_t":["BENDIX HARMS: CHOSEN ONES.
+        Gisela Corleis."],"title_citation_display":["BENDIX HARMS: CHOSEN ONES."],"compiled_created_t":["BENDIX
+        HARMS: CHOSEN ONES. Gisela Corleis."],"pub_created_display":["Karma, New York.  Distributed
+        by Artbook/D.A.P., New York. 2016"],"pub_created_s":["Karma, New York.  Distributed
+        by Artbook/D.A.P., New York. 2016"],"pub_citation_display":["Karma, New York.  Distributed
+        by Artbook/D.A.P., New York"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["368
+        pp. with 320 ills. (300 col.). 32 x 24 cm."],"description_t":["368 pp. with
+        320 ills. (300 col.). 32 x 24 cm."],"language_display":["In English."],"language_facet":["English"],"language_code_s":["eng"],"isbn_display":["9781942607281
+        (Hardcover)"],"isbn_s":["9781942607281"],"isbn_t":["9781942607281"],"other_version_s":["9781942607281"],"holdings_1display":"{\"9888200\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\"}}","location_code_s":["sa"],"location_display":["Marquand
+        Library"],"location":["Marquand Library"],"advanced_location_s":["sa","Marquand
+        Library"],"name_title_245_s":["Corleis, Gisela. BENDIX HARMS: CHOSEN ONES"],"name_title_browse_s":["Corleis,
+        Gisela. BENDIX HARMS: CHOSEN ONES"],"timestamp":"2017-01-28T06:02:06.904Z"}}}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:07:10 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10094671
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 21:07:35 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 5cebf5da-9d06-4ebb-9f66-cbf107524752
+      X-Runtime:
+      - '0.086473'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"71ed3ebf22376197d9c0a641a3130103"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9888200":{"more_items":false,"location":"sa","status":"Pending Order","label":"Marquand
+        Library"}}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:07:10 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9888200
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 21:07:35 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 7d7180c6-f7de-4973-9144-d1c7f19d4137
+      X-Runtime:
+      - '0.040478'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 9888200 not found.'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:07:10 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sa.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 07 Feb 2017 21:07:35 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - bb630639-073a-412a-8c51-3b1e139b1c64
+      X-Runtime:
+      - '0.010013'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"1edecb25ba68d6866fb5ac87b91543b0"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"sa","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Marquand
+        Library","code":"marquand","order":2},"holding_library":null,"hours_location":{"label":"Marquand
+        Library of Art and Archaeology","code":"marquand"},"delivery_locations":[{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Tue, 07 Feb 2017 21:07:10 GMT
 recorded_with: VCR 3.0.3

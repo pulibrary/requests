@@ -379,5 +379,30 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   end
 
+  context 'Requestable items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_on_order) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+
+    describe 'with a status of on_order ' do
+      it 'should be on_order ' do
+        expect(requestable.on_order?).to be true
+      end
+    end
+
+  end
+
+  context 'Requestable items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_pending) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+
+    describe 'that are pending order ' do
+      it 'should be treated like on order items ' do
+        expect(requestable.on_order?).to be true
+      end
+    end
+
+  end
 
 end

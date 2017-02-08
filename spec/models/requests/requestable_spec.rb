@@ -200,7 +200,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable item with a missing status' do
     let(:user) { FactoryGirl.build(:user) }
-    #let(:user) { FactoryGirl.create(:valid_access_patron) }
     let(:request) { FactoryGirl.build(:request_missing_item) }
     let(:requestable) { request.requestable }
     describe "#services" do
@@ -220,6 +219,32 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it 'should be available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_truthy
+      end
+    end
+  end
+
+  context 'A requestable item eligible for borrow direct' do
+    let(:request) { FactoryGirl.build(:missing_item) }
+    let(:requestable) { request.requestable }
+    describe '#services' do
+      it 'should not be recallable' do
+        expect(requestable.first.services.include?('recall')).to be false
+      end
+
+      it 'should not be recallable' do
+        expect(requestable.first.recallable?).to be false
+      end
+
+      it 'should be missing' do
+        expect(requestable.first.missing?).to be true
+      end
+
+      it 'should be eligible for borrow direct' do
+        expect(requestable.first.borrow_direct?).to be true
+      end
+
+      it 'should be eligible for ill' do
+        expect(requestable.first.ill_eligible?).to be true
       end
     end
   end
@@ -379,7 +404,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   end
 
-  context 'Requestable items' do
+  context 'On Order materials' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_on_order) }
     let(:requestable) { request.requestable.first } # assume only one requestable
@@ -392,17 +417,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   end
 
-  context 'Requestable items' do
+  context 'Pending Order materials' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_pending) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
-    describe 'that are pending order ' do
+    describe 'with a status of pending orders' do
       it 'should be treated like on order items ' do
         expect(requestable.on_order?).to be true
       end
     end
-
   end
 
 end

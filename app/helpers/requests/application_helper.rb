@@ -31,7 +31,7 @@ module Requests
         link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
       elsif requestable.aeon?
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.params.to_query}", class: 'btn btn-primary'
-      elsif requestable.traceable?
+      elsif requestable.traceable? || requestable.on_shelf?
         content_tag(:div) do
           concat link_to 'Where to find it', requestable.map_url
           concat content_tag(:span, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')

@@ -3831,4 +3831,184 @@ http_interactions:
         Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true}]}'
     http_version: 
   recorded_at: Tue, 07 Feb 2017 21:07:10 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/4106627.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 86ddd334-7f6e-4923-8df4-c249e43a8e01
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"b387d7791d0b9e08b9ba0d6d1eb59f31"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.023719'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Wed, 08 Feb 2017 05:06:36 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"4106627","author_display":["Tufte, Edward
+        R., 1942-"],"author_citation_display":["Tufte, Edward R."],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Tufte,
+        Edward R.\"}","author_s":["Tufte, Edward R., 1942-"],"opensearch_display":["Tufte,
+        Edward R., 1942-","The cognitive style of PowerPoint / Edward R. Tufte.","Visual
+        communication","Microsoft PowerPoint (Computer file)","Visual perception"],"marc_relator_display":["Author"],"title_display":"The
+        cognitive style of PowerPoint / Edward R. Tufte.","title_t":["The cognitive
+        style of PowerPoint / Edward R. Tufte."],"title_citation_display":["The cognitive
+        style of PowerPoint /"],"compiled_created_t":["The cognitive style of PowerPoint
+        / Edward R. Tufte."],"pub_created_display":["Cheshire, Conn. : Graphics Press,
+        c2003."],"pub_created_s":["Cheshire, Conn. : Graphics Press, c2003."],"pub_citation_display":["Cheshire,
+        Conn: Graphics Press"],"pub_date_display":["2003"],"pub_date_start_sort":2003,"cataloged_tdt":"2004-02-09T16:16:47Z","format":["Book"],"description_display":["27
+        p. : ill. (some col.) ; 27 cm."],"description_t":["27 p. : ill. (some col.)
+        ; 27 cm."],"bib_ref_notes_display":["Includes bibliographical references."],"language_facet":["English"],"language_code_s":["eng"],"subject_display":["Visual
+        communication","Microsoft PowerPoint (Computer file)","Visual perception"],"subject_t":["Visual
+        communication","Microsoft PowerPoint (Computer file)","Visual perception"],"subject_facet":["Visual
+        communication","Microsoft PowerPoint (Computer file)","Visual perception"],"isbn_display":["0961392150"],"isbn_s":["9780961392154"],"isbn_t":["9780961392154"],"oclc_s":["52289224"],"other_version_s":["9780961392154","ocm52289224"],"holdings_1display":"{\"4385744\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"call_number\":\"P93.5
+        .T848 2003\",\"call_number_browse\":\"P93.5 .T848 2003\"},\"9050688\":{\"location\":\"Stokes
+        Library - SPIA\",\"library\":\"Stokes Library\",\"location_code\":\"spia\",\"call_number\":\"P93.5
+        .T848 2003\",\"call_number_browse\":\"P93.5 .T848 2003\"},\"9888770\":{\"location\":\"Stokes
+        Library - SPIA\",\"library\":\"Stokes Library\",\"location_code\":\"spia\",\"copy_number\":\"2\",\"call_number\":\"P93.5
+        .T848 2003\",\"call_number_browse\":\"P93.5 .T848 2003\"}}","location_code_s":["f","spia"],"location_display":["Firestone
+        Library","Stokes Library - SPIA"],"location":["Firestone Library","Stokes
+        Library"],"advanced_location_s":["f","spia","Firestone Library","Stokes Library"],"name_title_245_s":["Tufte,
+        Edward R., 1942-. The cognitive style of PowerPoint"],"name_title_browse_s":["Tufte,
+        Edward R., 1942-. The cognitive style of PowerPoint"],"call_number_display":["P93.5
+        .T848 2003"],"call_number_browse_s":["P93.5 .T848 2003"],"timestamp":"2017-02-06T22:02:52.468Z"}}}'
+    http_version: 
+  recorded_at: Wed, 08 Feb 2017 05:06:36 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4385744
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 08 Feb 2017 05:06:14 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d64640b2-a828-4d74-ac40-1826235a30ea
+      X-Runtime:
+      - '0.066858'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c3bca6a5a8a16cace07c1856be9b224e"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101048274607","id":3664006,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Missing","label":"Firestone
+        Library"}]'
+    http_version: 
+  recorded_at: Wed, 08 Feb 2017 05:06:37 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/spia.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 08 Feb 2017 05:06:14 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b3a7bbd7-37cc-406e-b046-a2ef9365d044
+      X-Runtime:
+      - '0.022543'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b78cab92fb2b05c17654957b352c9f8c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"SPIA","code":"spia","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Stokes
+        Library","code":"stokes","order":2},"holding_library":null,"hours_location":{"label":"Stokes
+        Library","code":"stokes"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Wed, 08 Feb 2017 05:06:37 GMT
 recorded_with: VCR 3.0.3

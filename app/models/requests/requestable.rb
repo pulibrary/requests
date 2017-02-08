@@ -161,15 +161,27 @@ module Requests
     end
 
     def traceable?
-      return true if services.include?('trace')
+      #return true if services.include?('trace')
+      services.include?('trace') ? true : false
     end
 
     def ill_eligible?
-      return true if services.include?('ill')
+      #return true if services.include?('ill')
+      services.include?('ill') ? true : false
     end
 
     def on_shelf?
-      return true if services.include?('on_shelf')
+      #return true if services.include?('on_shelf')
+      services.include?('on_shelf') ? true : false
+    end
+
+    def borrow_direct?
+      #return true if services.include?('bd')
+      services.include?('bd') ? true : false
+    end
+
+    def recallable?
+      services.include?('recall') ? true : false
     end
 
     # assume numeric ids come from voyager
@@ -177,6 +189,7 @@ module Requests
       return true if bib[:id].to_i > 0
     end
 
+    ### FIXME - this should be rethought
     def params
       if aeon? && !voyager_managed?
         aeon_mapped_params

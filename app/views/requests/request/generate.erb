@@ -1,0 +1,30 @@
+<div class="col-md-12">
+
+  <div class="row">
+    <div class="button--start-over">
+      <a class="btn btn-primary" id="returnToRecordLink" href="/">
+        <span class="icon-refresh"></span> <span class="hidden-xs hidden-sm">Return to record</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="row doc-<%= @request.system_id %>">
+    <h1>
+      <%= request_title @request %>
+    </h1>
+    <%= render_mfhd_message @request.requestable %>
+    <div class="bibliographic">
+      <%= format_brief_record_display @request.display_metadata %>
+    </div>
+    <%= render 'flash_messages' %>
+  </div>
+  <% if @request.has_requestable? %>
+    <div class="row">
+      <%= render "form" %>
+    </div>
+    <% else %>
+    <div class="message flash-alert">
+      <p>See Circulation Desk, there are no requestable items for this record</p>
+    </div>
+  <% end %>
+</div>

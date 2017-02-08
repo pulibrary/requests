@@ -1,7 +1,22 @@
 # requests.yml
-voyager_ws_base: http://catalog.princeton.edu:7014/vxws
-umlaut_base: https://getit-dev.princeton.edu
-bibdata_base: https://bibdata.princeton.edu
-annex_email: blahannex@princeton.edu
-circulation_email: blahcirc@princeton.edu
-reply_to_email: blahhelpme@princeton.edu
+
+defaults: &defaults
+  umlaut_base: https://getit.princeton.edu
+  bibdata_base: https://bibdata.princeton.edu
+  pulsearch_base: https://pulsearch.princeton.edu
+  proxy_base: https://library.princeton.edu/resolve/lookup?url=
+  stackmap_base: https://library.princeton.edu/utils/map
+  voyager_api_base: http://catalog.princeton.edu:7014
+  voyager_ub_id: ***REMOVED***
+  gfa_base: http://libweb5.princeton.edu/RecapRequestService
+  aeon_base: https://library.princeton.edu/aeon/aeon.dll
+  ill_base: https://lib-illiad.princeton.edu/illiad/illiad.dll/OpenURL
+development:
+  <<: *defaults
+  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

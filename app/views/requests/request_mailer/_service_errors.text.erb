@@ -1,0 +1,13 @@
+==============================================
+Request Service Errors
+==============================================
+
+<%=
+@service.each do |s|
+  s.errors.map { |error|
+      error.each do |k,v|
+        puts "#{k}=#{v}"
+      end
+  }
+end
+%>

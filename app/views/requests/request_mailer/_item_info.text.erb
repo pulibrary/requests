@@ -1,0 +1,16 @@
+===============================================
+Items Requested
+===============================================
+<% @submission.items.each_with_index do |item, index| %>
+  ========================
+  Item <%= index+1 %>
+  ========================
+  <% unless item[:selected].empty? %>
+    <% recalled = (item[:type] == "recall") ? true : false %>
+    <% item.each do |key, value| %>
+      <% unless key == "selected" || value.empty? %>
+            <%= format_label(key) %>: <% if key == "pickup" && !recalled %><%= DELIVERY_LOCATIONS[value]['label'].html_safe %>,<% end %><%= value.html_safe %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

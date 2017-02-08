@@ -1,0 +1,43 @@
+<div class='well collapse request--edd' id='fields-eed__<%= "#{requestable.item['id']}" %>'>
+  <fieldset class="form-group required">
+    <%= label_tag "requestable__edd_start_page", 'Start Page', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_start_page]', "", value: "", placeholder: "1, xi, toc", maxlength: 20, size: 20 %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= label_tag "requestable__edd_end_page", 'End Page', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_end_page]', "", value: "", placeholder: "50, xi", maxlength: 20, size: 20 %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= label_tag "requestable__edd_volume_number", 'Volume Number', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_volume_number]', "", value: "", placeholder: "Vol. 50", maxlength: 20, size: 20 %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= label_tag "requestable__edd_issue", 'Issue', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_issue]', "", value: "", placeholder: "3", maxlength: 20, size: 20 %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= label_tag "requestable__edd_author", 'Author', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_author]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group required">
+    <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_art_title]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= label_tag "requestable__edd_note", 'Note', class: 'control-label col-sm-3' %>
+    <div class="col-sm-7">
+      <%= text_field_tag 'requestable[][edd_note]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
+    </div>
+  </fieldset>

@@ -1,0 +1,23 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+.request--edd {
+  display: none;
+}
+
+.table-responsive  {
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+.recall-pickup {
+  display: none;
+  margin-top: 10px;
+}
+
+#returnToRecordLink {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

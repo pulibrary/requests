@@ -164,6 +164,14 @@ module Requests
       @items ||= load_items
     end
 
+    def all_items_online?
+      online = true
+      requestable.each do |item|
+        online = false unless item.online?
+      end
+      return online
+    end
+
     # returns nil if there are no attached items
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd

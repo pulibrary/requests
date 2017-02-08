@@ -946,4 +946,41 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  # 9994692
+  context 'When passed a holding with all online items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9994692',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should be all online" do
+        expect(subject.all_items_online?).to be true
+      end
+    end
+  end
+
+  # 9746776
+  context 'When passed a holdings with mixed physical and online items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9746776',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should be all online" do
+        expect(subject.all_items_online?).to be false
+      end
+    end
+  end
+
 end

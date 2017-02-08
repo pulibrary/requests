@@ -1,12 +1,16 @@
 <select name="requestable[][type]" class="request-options">
   <option value=""><%= I18n.t("requests.default.request_method_placeholder") %></option>
-  <% if requestable.services.include? 'bd' %>
+  <% if requestable.borrow_direct? %>
     <option value="bd"><%= I18n.t("requests.bd.request_label") %></option>
   <% end %>
   <option value="ill"><%= I18n.t("requests.ill.request_label") %></option>
-  <option value="recall"><%= I18n.t("requests.recall.request_label") %></option>
+  <% unless requestable.missing? %>
+    <option value="recall"><%= I18n.t("requests.recall.request_label") %></option>
+  <% end %>
 </select>
 <br/>
-<select name="requestable[][pickup]" id="requestable__pickup" class="recall-pickup">
-  <option value=""><%= I18n.t("requests.default.pickup_placeholder") %></option>
-</select>
+  <% unless requestable.missing? %>
+  <select name="requestable[][pickup]" id="requestable__pickup" class="recall-pickup">
+    <option value=""><%= I18n.t("requests.default.pickup_placeholder") %></option>
+  </select>
+<% end %>

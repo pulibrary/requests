@@ -148,4 +148,11 @@ FactoryGirl.define do
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
   end
 
+  factory :missing_item, class: 'Requests::Request' do
+    system_id 4106627
+    mfhd_id '4385744'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
 end

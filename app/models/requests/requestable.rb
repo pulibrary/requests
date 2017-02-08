@@ -200,6 +200,14 @@ module Requests
       return true if location[:library][:code] == 'online'
     end
 
+    def urls
+      if online?
+        return JSON.parse(bib['electronic_access_1display'])
+      else
+        return {}
+      end
+    end
+
     def charged?
       if(item?)
         if(unavailable_statuses.include?(item[:status]))

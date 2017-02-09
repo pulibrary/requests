@@ -70,7 +70,7 @@ module Requests
               services << 'on_order'
             elsif(requestable.recap?)
               services << 'recap'
-              if(requestable.recap_edd?)
+              if(requestable.recap_edd? && !access_user?)
                 services << 'recap_edd'
               end
             elsif(requestable.pageable?)
@@ -90,6 +90,14 @@ module Requests
     end
 
     private
+
+    def access_user?
+      if current_user_provider == 'access'
+        true
+      else
+        false
+      end
+    end
 
     ## Behave differently if provider is cas, voyager, or access
     ## cas - access to all services

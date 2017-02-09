@@ -4011,4 +4011,460 @@ http_interactions:
         Library","code":"stokes"},"delivery_locations":[]}'
     http_version: 
   recorded_at: Wed, 08 Feb 2017 05:06:37 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/495501.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 2306d785-c14b-4021-a97e-90afe6aa89d3
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"9db1ad6f9e1b2a4f1949a5880a23a104"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.035220'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 09 Feb 2017 17:43:20 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"495501","author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[]}","title_display":"Look.","title_t":["Look."],"opensearch_display":["Look."],"title_citation_display":["Look."],"compiled_created_t":["Look."],"pub_created_display":["[Des
+        Moines, Iowa : Cowles Communications]"],"pub_created_s":["[Des Moines, Iowa
+        : Cowles Communications]"],"pub_citation_display":["Des Moines, Iowa: Cowles
+        Communications"],"pub_date_display":["1937"],"pub_date_start_sort":1937,"pub_date_end_sort":1971,"cataloged_tdt":"2000-06-13T05:00:00Z","format":["Journal"],"description_display":["v.
+        : ill. ; 34-43 cm.","Vol. 1, no. 1 (Jan. 1937)-v. 35, no. 21 (Oct. 19, 1971)."],"description_t":["v.
+        : ill. ; 34-43 cm.","Vol. 1, no. 1 (Jan. 1937)-v. 35, no. 21 (Oct. 19, 1971).","Vol.
+        1, no. 1 (Jan. 1937) never issued."],"frequency_display":["Biweekly, May 11,
+        1937-Oct. 19, 1971"],"former_frequency_display":["Monthly, Jan.-May 1937"],"linking_notes_display":["Continued
+        by: Look (New York, N.Y.) published 1979- with differing numbering designation."],"numbering_pec_notes_display":["Vol.
+        1, no. 1 (Jan. 1937) never issued."],"language_facet":["English"],"language_code_s":["eng"],"other_title_display":["Look
+        (Des Moines, Iowa)"],"issn_display":["0024-6336"],"lccn_display":["   39005737
+        "],"lccn_s":["39005737"],"issn_s":["00246336"],"oclc_s":["1624492"],"other_version_s":["00246336","ocm01624492"],"holdings_1display":"{\"538750\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"copy_number\":\"1\",\"call_number\":\"Oversize
+        AP2 .L665q\",\"call_number_browse\":\"AP2 .L665q\",\"location_has\":[\"Feb.
+        1954-Oct. 1971\",\"LACKS: Apr.-June 1963.\"]}}","location_code_s":["f"],"location_display":["Firestone
+        Library"],"location":["Firestone Library"],"advanced_location_s":["f","Firestone
+        Library"],"call_number_display":["Oversize AP2 .L665q"],"call_number_browse_s":["AP2
+        .L665q"],"timestamp":"2017-01-04T01:18:16.082Z"}}}'
+    http_version: 
+  recorded_at: Thu, 09 Feb 2017 17:43:20 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=538750
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 Feb 2017 17:43:39 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - bc03015a-9454-4c17-b166-91d4544821ee
+      X-Runtime:
+      - '0.293604'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"9d8de08139b1b972fe2ff1da0f2f657a"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101003412739","id":617635,"location":"f","copy_number":1,"item_sequence_number":62,"status":"Not
+        Charged","enum":"1971,Oct","label":"Firestone Library"},{"barcode":"32101013888142","id":617634,"location":"f","copy_number":1,"item_sequence_number":61,"status":"Not
+        Charged","enum":"1971,July-Sept","label":"Firestone Library"},{"barcode":"32101005971450","id":617633,"location":"f","copy_number":1,"item_sequence_number":60,"status":"Not
+        Charged","enum":"1971,Apr-June","label":"Firestone Library"},{"barcode":"32101013888126","id":617632,"location":"f","copy_number":1,"item_sequence_number":59,"status":"Not
+        Charged","enum":"1971,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575532","id":617631,"location":"f","copy_number":1,"item_sequence_number":58,"status":"Not
+        Charged","enum":"1970,Oct-Dec","label":"Firestone Library"},{"barcode":"32101001223039","id":617630,"location":"f","copy_number":1,"item_sequence_number":57,"status":"Not
+        Charged","enum":"1970,July-Sept","label":"Firestone Library"},{"barcode":"32101013888134","id":617629,"location":"f","copy_number":1,"item_sequence_number":56,"status":"Not
+        Charged","enum":"1970,Apr-June","label":"Firestone Library"},{"barcode":"32101003577598","id":617628,"location":"f","copy_number":1,"item_sequence_number":55,"status":"Not
+        Charged","enum":"1970,Jan-Mar","label":"Firestone Library"},{"barcode":"32101003305719","id":617627,"location":"f","copy_number":1,"item_sequence_number":54,"status":"Not
+        Charged","enum":"1969,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013655137","id":617626,"location":"f","copy_number":1,"item_sequence_number":53,"status":"Not
+        Charged","enum":"1969,July-Sept","label":"Firestone Library"},{"barcode":"32101013854961","id":617625,"location":"f","copy_number":1,"item_sequence_number":52,"status":"Not
+        Charged","enum":"1969,Apr-June","label":"Firestone Library"},{"barcode":"32101013854920","id":617624,"location":"f","copy_number":1,"item_sequence_number":51,"status":"Not
+        Charged","enum":"1969,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575540","id":617623,"location":"f","copy_number":1,"item_sequence_number":50,"status":"Not
+        Charged","enum":"1968,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495609","id":617622,"location":"f","copy_number":1,"item_sequence_number":49,"status":"Not
+        Charged","enum":"1968,July-Sept","label":"Firestone Library"},{"barcode":"32101013495658","id":617621,"location":"f","copy_number":1,"item_sequence_number":48,"status":"Not
+        Charged","enum":"1968,Apr-June","label":"Firestone Library"},{"barcode":"32101013495641","id":617620,"location":"f","copy_number":1,"item_sequence_number":47,"status":"Not
+        Charged","enum":"1968,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006930430","id":617619,"location":"f","copy_number":1,"item_sequence_number":46,"status":"Not
+        Charged","enum":"1967,July-Sept","label":"Firestone Library"},{"barcode":"32101013495690","id":617618,"location":"f","copy_number":1,"item_sequence_number":45,"status":"Not
+        Charged","enum":"1967,Apr-June","label":"Firestone Library"},{"barcode":"32101006252991","id":617617,"location":"f","copy_number":1,"item_sequence_number":44,"status":"Not
+        Charged","enum":"1967,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575607","id":617616,"location":"f","copy_number":1,"item_sequence_number":43,"status":"Not
+        Charged","enum":"1966,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495666","id":617615,"location":"f","copy_number":1,"item_sequence_number":42,"status":"Not
+        Charged","enum":"1966,July-Sept","label":"Firestone Library"},{"barcode":"32101002709796","id":617614,"location":"f","copy_number":1,"item_sequence_number":41,"status":"Not
+        Charged","enum":"1966,Apr-June","label":"Firestone Library"},{"barcode":"32101013493463","id":617613,"location":"f","copy_number":1,"item_sequence_number":40,"status":"Not
+        Charged","enum":"1966,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575565","id":617612,"location":"f","copy_number":1,"item_sequence_number":39,"status":"Not
+        Charged","enum":"1965,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495625","id":617611,"location":"f","copy_number":1,"item_sequence_number":38,"status":"Not
+        Charged","enum":"1965,July-Sept","label":"Firestone Library"},{"barcode":"32101013495633","id":617610,"location":"f","copy_number":1,"item_sequence_number":37,"status":"Not
+        Charged","enum":"1965,Apr-June","label":"Firestone Library"},{"barcode":"32101013495617","id":617609,"location":"f","copy_number":1,"item_sequence_number":36,"status":"Not
+        Charged","enum":"1965,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575623","id":617608,"location":"f","copy_number":1,"item_sequence_number":35,"status":"Not
+        Charged","enum":"1964,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013495674","id":617607,"location":"f","copy_number":1,"item_sequence_number":34,"status":"Not
+        Charged","enum":"1964,July-Sept","label":"Firestone Library"},{"barcode":"32101013495716","id":617606,"location":"f","copy_number":1,"item_sequence_number":33,"status":"Not
+        Charged","enum":"1964,Apr-June","label":"Firestone Library"},{"barcode":"32101002451860","id":617605,"location":"f","copy_number":1,"item_sequence_number":32,"status":"Not
+        Charged","enum":"1964,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575573","id":617604,"location":"f","copy_number":1,"item_sequence_number":31,"status":"Not
+        Charged","enum":"1963,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013101124","id":617603,"location":"f","copy_number":1,"item_sequence_number":30,"status":"Not
+        Charged","enum":"1963,July-Sept","label":"Firestone Library"},{"barcode":"32101012016406","id":617602,"location":"f","copy_number":1,"item_sequence_number":29,"status":"Not
+        Charged","enum":"1962,Oct-Dec","label":"Firestone Library"},{"barcode":"32101006575615","id":617601,"location":"f","copy_number":1,"item_sequence_number":28,"status":"Not
+        Charged","enum":"1961,Oct-Dec","label":"Firestone Library"},{"barcode":"32101013368442","id":617600,"location":"f","copy_number":1,"item_sequence_number":27,"status":"Not
+        Charged","enum":"1961,Jan-Mar","label":"Firestone Library"},{"barcode":"32101006575631","id":617599,"location":"f","copy_number":1,"item_sequence_number":26,"status":"Not
+        Charged","enum":"1960,Oct-Dec","label":"Firestone Library"},{"barcode":"32101008375881","id":617598,"location":"f","copy_number":1,"item_sequence_number":25,"status":"Not
+        Charged","enum":"1960,July-Sept","label":"Firestone Library"},{"barcode":"32101006046963","id":617597,"location":"f","copy_number":1,"item_sequence_number":24,"status":"Not
+        Charged","enum":"1960,Apr-June","label":"Firestone Library"},{"barcode":"32101001626785","id":617596,"location":"f","copy_number":1,"item_sequence_number":23,"status":"Not
+        Charged","enum":"1956,Oct-Dec","label":"Firestone Library"},{"barcode":"32101025263441","id":617595,"location":"f","copy_number":1,"item_sequence_number":22,"status":"Not
+        Charged","enum":"1956,Apr-June","label":"Firestone Library"},{"barcode":"32101006575557","id":617594,"location":"f","copy_number":1,"item_sequence_number":21,"status":"Not
+        Charged","enum":"1967 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101035684099","id":617593,"location":"f","copy_number":1,"item_sequence_number":20,"status":"Not
+        Charged","enum":"1960 (Jan.-Mar.)","label":"Firestone Library"},{"barcode":"32101030756447","id":617592,"location":"f","copy_number":1,"item_sequence_number":19,"status":"Charged","due_date":"2017-02-26T23:45:00.000-05:00","enum":"1959
+        (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101031884628","id":617591,"location":"f","copy_number":1,"item_sequence_number":18,"status":"Not
+        Charged","enum":"1959 (Jul.-Sept.)","label":"Firestone Library"},{"barcode":"32101037397922","id":617590,"location":"f","copy_number":1,"item_sequence_number":17,"status":"Not
+        Charged","enum":"1959 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101037397930","id":617589,"location":"f","copy_number":1,"item_sequence_number":16,"status":"Not
+        Charged","enum":"1959 (Jan.-Mar.)","label":"Firestone Library"},{"barcode":"32101007547290","id":617588,"location":"f","copy_number":1,"item_sequence_number":15,"status":"Not
+        Charged","enum":"1958 (Apr.-June)","label":"Firestone Library"},{"barcode":null,"id":5068808,"location":"f","copy_number":1,"item_sequence_number":14,"status":"Missing","enum":"1958
+        (Jan.-March)","label":"Firestone Library"},{"barcode":"32101015573171","id":617587,"location":"f","copy_number":1,"item_sequence_number":13,"status":"Not
+        Charged","enum":"1957 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101003282850","id":617586,"location":"f","copy_number":1,"item_sequence_number":12,"status":"Not
+        Charged","enum":"1957 (July-Sept.)","label":"Firestone Library"},{"barcode":"32101002441705","id":617585,"location":"f","copy_number":1,"item_sequence_number":11,"status":"Not
+        Charged","enum":"1957 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101003423884","id":617584,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not
+        Charged","enum":"1957 (Jan.-Mar.)","label":"Firestone Library"},{"barcode":"32101033258409","id":617583,"location":"f","copy_number":1,"item_sequence_number":9,"status":"Not
+        Charged","enum":"1956 (July-Sept.)","label":"Firestone Library"},{"barcode":"32101013255771","id":617582,"location":"f","copy_number":1,"item_sequence_number":8,"status":"Not
+        Charged","enum":"1956 (Jan.-March)","label":"Firestone Library"},{"barcode":"32101031883786","id":617581,"location":"f","copy_number":1,"item_sequence_number":7,"status":"Not
+        Charged","enum":"1955 (Oct.-Dec.)","label":"Firestone Library"},{"barcode":"32101001625399","id":617580,"location":"f","copy_number":1,"item_sequence_number":6,"status":"Not
+        Charged","enum":"1955 (Jul.-Sept.)","label":"Firestone Library"},{"barcode":"32101017716448","id":617579,"location":"f","copy_number":1,"item_sequence_number":5,"status":"Not
+        Charged","enum":"1955 (May-June)","label":"Firestone Library"},{"barcode":"32101003436761","id":4141233,"location":"f","copy_number":1,"item_sequence_number":4,"status":"Not
+        Charged","enum":"1955 (Jan.11-April 19)","label":"Firestone Library"},{"barcode":"32101031886250","id":617578,"location":"f","copy_number":1,"item_sequence_number":3,"status":"Not
+        Charged","enum":"1954 (July-Dec.)","label":"Firestone Library"},{"barcode":"32101003735873","id":617577,"location":"f","copy_number":1,"item_sequence_number":2,"status":"Not
+        Charged","enum":"1954 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101031883521","id":617576,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","enum":"1954 (Feb.-June)","label":"Firestone Library"}]'
+    http_version: 
+  recorded_at: Thu, 09 Feb 2017 17:43:21 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/9999800.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - f1f778a1-ce07-44bc-a378-c80e1ae7fbeb
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"85d9abad2c25fbdd6c6d60afcb14ea1d"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.025710'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 09 Feb 2017 17:55:20 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6Ijk5OTk4MDAiLCJhdXRo
+        b3JfZGlzcGxheSI6WyJLZWxtLCBPcmxhbmRvIFIuLCAxOTU3LSJdLCJhdXRo
+        b3JfY2l0YXRpb25fZGlzcGxheSI6WyJLZWxtLCBPcmxhbmRvIFIuIiwiVmlj
+        dG9yLCBEYXZpZCBBLiJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJz
+        ZWNvbmRhcnlfYXV0aG9yc1wiOltcIlZpY3RvciwgRGF2aWQgQS5cIl0sXCJ0
+        cmFuc2xhdG9yc1wiOltdLFwiZWRpdG9yc1wiOltdLFwiY29tcGlsZXJzXCI6
+        W10sXCJwcmltYXJ5X2F1dGhvclwiOlwiS2VsbSwgT3JsYW5kbyBSLlwifSIs
+        ImF1dGhvcl9zIjpbIktlbG0sIE9ybGFuZG8gUi4sIDE5NTctIiwiVmljdG9y
+        LCBEYXZpZCBBLiwgMTk1Ni0iXSwib3BlbnNlYXJjaF9kaXNwbGF5IjpbIktl
+        bG0sIE9ybGFuZG8gUi4sIDE5NTctIiwiVmljdG9yLCBEYXZpZCBBLiwgMTk1
+        Ni0iLCJUaGUgNyBrZXlzIHRvIGNvbW11bmljYXRpbmcgaW4gQnJhemlsIDog
+        YW4gaW50ZXJjdWx0dXJhbCBhcHByb2FjaCAvIE9ybGFuZG8gUi4gS2VsbSwg
+        RGF2aWQgQS4gVmljdG9yLiIsIkJ1c2luZXNzIGV0aXF1ZXR0ZSIsIkJyYXpp
+        bCIsIkJ1c2luZXNzIGNvbW11bmljYXRpb24iLCJCcmF6aWwiLCJDb3Jwb3Jh
+        dGUgY3VsdHVyZSIsIkJyYXppbCIsIkludGVyY3VsdHVyYWwgY29tbXVuaWNh
+        dGlvbiIsIkJyYXppbCIsIkNvbW11bmljYXRpb24gYW5kIGN1bHR1cmUiLCJC
+        cmF6aWwiLCJOYXRpb25hbCBjaGFyYWN0ZXJpc3RpY3MsIEJyYXppbGlhbiIs
+        IkFtZXJpY2FucyIsIkVtcGxveW1lbnQiLCJCcmF6aWwiXSwibWFyY19yZWxh
+        dG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rpc3BsYXkiOiJUaGUg
+        NyBrZXlzIHRvIGNvbW11bmljYXRpbmcgaW4gQnJhemlsIDogYW4gaW50ZXJj
+        dWx0dXJhbCBhcHByb2FjaCAvIE9ybGFuZG8gUi4gS2VsbSwgRGF2aWQgQS4g
+        VmljdG9yLiIsInRpdGxlX3QiOlsiVGhlIDcga2V5cyB0byBjb21tdW5pY2F0
+        aW5nIGluIEJyYXppbCA6IGFuIGludGVyY3VsdHVyYWwgYXBwcm9hY2ggLyBP
+        cmxhbmRvIFIuIEtlbG0sIERhdmlkIEEuIFZpY3Rvci4iXSwidGl0bGVfY2l0
+        YXRpb25fZGlzcGxheSI6WyJUaGUgNyBrZXlzIHRvIGNvbW11bmljYXRpbmcg
+        aW4gQnJhemlsIDogYW4gaW50ZXJjdWx0dXJhbCBhcHByb2FjaCAvIl0sImNv
+        bXBpbGVkX2NyZWF0ZWRfdCI6WyJUaGUgNyBrZXlzIHRvIGNvbW11bmljYXRp
+        bmcgaW4gQnJhemlsIDogYW4gaW50ZXJjdWx0dXJhbCBhcHByb2FjaCAvIE9y
+        bGFuZG8gUi4gS2VsbSwgRGF2aWQgQS4gVmljdG9yLiJdLCJwdWJfY3JlYXRl
+        ZF9kaXNwbGF5IjpbIldhc2hpbmd0b24sIERDIDogR2VvcmdldG93biBVbml2
+        ZXJzaXR5IFByZXNzLCBbMjAxN10iLCLCqTIwMTciXSwicHViX2NyZWF0ZWRf
+        cyI6WyJXYXNoaW5ndG9uLCBEQyA6IEdlb3JnZXRvd24gVW5pdmVyc2l0eSBQ
+        cmVzcywgWzIwMTddIiwiwqkyMDE3Il0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5
+        IjpbIldhc2hpbmd0b24sIERDOiBHZW9yZ2V0b3duIFVuaXZlcnNpdHkgUHJl
+        c3MiXSwicHViX2RhdGVfZGlzcGxheSI6WyIyMDE3Il0sInB1Yl9kYXRlX3N0
+        YXJ0X3NvcnQiOjIwMTcsInB1Yl9kYXRlX2VuZF9zb3J0IjoyMDE3LCJjYXRh
+        bG9nZWRfdGR0IjoiMjAxNi0xMS0wNFQwMjozMjowM1oiLCJmb3JtYXQiOlsi
+        Qm9vayJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbInh4aWksIDIxMSBwYWdl
+        cyA6IGlsbHVzdHJhdGlvbnMsIG1hcHMgOyAyMiBjbSJdLCJkZXNjcmlwdGlv
+        bl90IjpbInh4aWksIDIxMSBwYWdlcyA6IGlsbHVzdHJhdGlvbnMsIG1hcHMg
+        OyAyMiBjbSJdLCJzdW1tYXJ5X25vdGVfZGlzcGxheSI6WyJUaGlzIGJvb2sg
+        cHJvdmlkZXMgYSBwcmFjdGljYWwgc2V0IG9mIGd1aWRlbGluZXMgZm9yIHBl
+        b3BsZSB3aXNoaW5nIHRvIGNvbW11bmljYXRlIGFuZCBkbyBidXNpbmVzcyBp
+        biBCcmF6aWwuIEdvb2QgY29tbXVuaWNhdGlvbiByZXF1aXJlcyBtb3JlIHRo
+        YW4ga25vd2luZyB0aGUgbGFuZ3VhZ2UuIE9ybGFuZG8gS2VsbSBhbmQgRGF2
+        aWQgVmljdG9yLCBzZWFzb25lZCBjcm9zcy1jdWx0dXJhbCB0cmFpbmVycyBm
+        b3IgYnVzaW5lc3NwZW9wbGUsIHByb3ZpZGUgYSBndWlkZSB0aHJvdWdoIFZp
+        Y3RvcidzIExFU0NBTlQgbW9kZWwgKExhbmd1YWdlLCBFbnZpcm9ubWVudCwg
+        U29jaWFsIE9yZ2FuaXphdGlvbiwgQ29udGV4dCwgQXV0aG9yaXR5LCBOb252
+        ZXJiYWwsIGFuZCBUaW1lKS4gRWFjaCBjaGFwdGVyIGFkZHJlc3NlcyBvbmUg
+        b2YgdGhlc2UgdG9waWNzIGFuZCBkZW1vbnN0cmF0ZXMgaG93IHRvIGV2YWx1
+        YXRlIHRoZSBkaWZmZXJlbmNlIGluIEJyYXppbCwgcHJlc2VudGluZyBleGFt
+        cGxlcyB0byBoZWxwIHBlb3BsZSBhdm9pZCBjb21tb24gY29tbXVuaWNhdGlv
+        biBtaXN0YWtlcy4gVGhlIGJvb2sgaXMgZ2VuZXJvdXNseSBwZXBwZXJlZCB3
+        aXRoIHBob3RvZ3JhcGhzIHRvIHByb3ZpZGUgdmlzdWFsIGV4YW1wbGVzLiBL
+        ZWxtIGFuZCBWaWN0b3IgY29tcGxldGUgdGhlIGJvb2sgd2l0aCBhIGNoYXB0
+        ZXIgb2YgY2FzZSBzdHVkaWVzLS1nb29kIGFuZCBiYWQuIFRoZXkgdGhlbiBn
+        YXRoZXJlZCBjb21tZW50cyBmcm9tIHZhcmlvdXMgVVMgcHJvZmVzc2lvbmFs
+        cyB3b3JraW5nIGluIEJyYXppbCBhbmQgQnJhemlsaWFucyB3b3JraW5nIHdp
+        dGggVVMgcHJvZmVzc2lvbmFscyBhYm91dCB0aGUgaW50ZXJhY3Rpb25zIGlu
+        IHRoZSBjYXNlLCBwcm92aWRpbmcgaGVscGZ1bCBvYnNlcnZhdGlvbnMgYWJv
+        dXQgdGhlIHNpdHVhdGlvbi4gVGhlIGJvb2sgc3RyYWRkbGVzIHNvbWUgbGFu
+        Z3VhZ2UgYW5kIGNvbW11bmljYXRpb24gdG9waWNzLCBpbnRlcm5hdGlvbmFs
+        IHJlbGF0aW9ucywgYW5kIHJlYWNoZXMgaW50byB0aGUgYnVzaW5lc3MgY29t
+        bXVuaXR5LiJdLCJiaWJfcmVmX25vdGVzX2Rpc3BsYXkiOlsiSW5jbHVkZXMg
+        YmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMgKHBhZ2VzIDE5Ny0xOTkpIGFu
+        ZCBpbmRleC4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiRW5nbGlzaCJdLCJsYW5n
+        dWFnZV9jb2RlX3MiOlsiZW5nIl0sImNvbnRlbnRzX2Rpc3BsYXkiOlsiQnJh
+        emlsaWFuIGxhbmd1YWdlIDogdGhhdCdzIGEgbG90IG9mIFBvcnR1Z3Vlc2Uh
+        IC0tIEJyYXppbGlhbiBlbnZpcm9ubWVudCA6IHdoYXQgYSBodWdlIGNvdW50
+        cnkhIC0tIEJyYXppbGlhbiBzb2NpYWwgb3JnYW5pemF0aW9uIDogbGV0J3Mg
+        d29yayBvbiBpdCB0b2dldGhlciAtLSBCcmF6aWxpYW4gY29udGV4dGluZyA6
+        IEknbGwgY2FsbCB5b3UsIHJlYWxseSBJIHdpbGwgLS0gQnJhemlsaWFuIGF1
+        dGhvcml0eSBjb25jZXB0aW9uIDogc2hvdyBtZSBzb21lIG9mIHRoYXQgamVp
+        dGluaG8gLS0gQnJhemlsaWFuIG5vbnZlcmJhbCBjb21tdW5pY2F0aW9uIDog
+        b25lIGtpc3Mgb3IgdHdvPyAtLSBCcmF6aWxpYW4gdGVtcG9yYWwgY29uY2Vw
+        dGlvbiA6IGNvbWUgb24gb3ZlciB3aGVuIHlvdSBjYW4gLS0gQ2FzZSBzdHVk
+        eSA6IHNpdHRpbmcgc2VjdXJlIGluIExhdGluIEFtZXJpY2EsIEJyYXppbGlh
+        biBzdHlsZS4iXSwic3ViamVjdF9kaXNwbGF5IjpbIkJ1c2luZXNzIGV0aXF1
+        ZXR0ZeKAlEJyYXppbCIsIkJ1c2luZXNzIGNvbW11bmljYXRpb27igJRCcmF6
+        aWwiLCJDb3Jwb3JhdGUgY3VsdHVyZeKAlEJyYXppbCIsIkludGVyY3VsdHVy
+        YWwgY29tbXVuaWNhdGlvbuKAlEJyYXppbCIsIkNvbW11bmljYXRpb24gYW5k
+        IGN1bHR1cmXigJRCcmF6aWwiLCJOYXRpb25hbCBjaGFyYWN0ZXJpc3RpY3Ms
+        IEJyYXppbGlhbiIsIkFtZXJpY2Fuc+KAlEVtcGxveW1lbnTigJRCcmF6aWwi
+        XSwic3ViamVjdF90IjpbIkJ1c2luZXNzIGV0aXF1ZXR0ZeKAlEJyYXppbCIs
+        IkJ1c2luZXNzIGNvbW11bmljYXRpb27igJRCcmF6aWwiLCJDb3Jwb3JhdGUg
+        Y3VsdHVyZeKAlEJyYXppbCIsIkludGVyY3VsdHVyYWwgY29tbXVuaWNhdGlv
+        buKAlEJyYXppbCIsIkNvbW11bmljYXRpb24gYW5kIGN1bHR1cmXigJRCcmF6
+        aWwiLCJOYXRpb25hbCBjaGFyYWN0ZXJpc3RpY3MsIEJyYXppbGlhbiIsIkFt
+        ZXJpY2Fuc+KAlEVtcGxveW1lbnTigJRCcmF6aWwiXSwic3ViamVjdF9mYWNl
+        dCI6WyJCdXNpbmVzcyBldGlxdWV0dGXigJRCcmF6aWwiLCJCdXNpbmVzcyBj
+        b21tdW5pY2F0aW9u4oCUQnJhemlsIiwiQ29ycG9yYXRlIGN1bHR1cmXigJRC
+        cmF6aWwiLCJJbnRlcmN1bHR1cmFsIGNvbW11bmljYXRpb27igJRCcmF6aWwi
+        LCJDb21tdW5pY2F0aW9uIGFuZCBjdWx0dXJl4oCUQnJhemlsIiwiTmF0aW9u
+        YWwgY2hhcmFjdGVyaXN0aWNzLCBCcmF6aWxpYW4iLCJBbWVyaWNhbnPigJRF
+        bXBsb3ltZW504oCUQnJhemlsIl0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNw
+        bGF5Ijoie1wiQXV0aG9yXCI6W1wiVmljdG9yLCBEYXZpZCBBLiwgMTk1Ni1c
+        Il19Iiwib3RoZXJfdGl0bGVfZGlzcGxheSI6WyJTZXZlbiBrZXlzIHRvIGNv
+        bW11bmljYXRpbmcgaW4gQnJhemlsIl0sImlzYm5fZGlzcGxheSI6WyI5Nzgx
+        NjI2MTYzNTIyIChwYiA7IGFsay4gcGFwZXIpIiwiMTYyNjE2MzUyOSAocGIg
+        OyBhbGsuIHBhcGVyKSIsIjk3ODE2MjYxNjM1MTUgKGhjIDsgYWxrLiBwYXBl
+        cikiLCIxNjI2MTYzNTEwIChoYyA7IGFsay4gcGFwZXIpIiwiKGViKSJdLCJs
+        Y2NuX2Rpc3BsYXkiOlsiICAyMDE1MDQ4Njc1Il0sImxjY25fcyI6WyIyMDE1
+        MDQ4Njc1Il0sImlzYm5fcyI6WyI5NzgxNjI2MTYzNTIyIiwiOTc4MTYyNjE2
+        MzUxNSJdLCJpc2JuX3QiOlsiOTc4MTYyNjE2MzUyMiIsIjk3ODE2MjYxNjM1
+        MTUiXSwib2NsY19zIjpbIjkzMzIxOTA0NiJdLCJvdGhlcl92ZXJzaW9uX3Mi
+        OlsiOTc4MTYyNjE2MzUyMiIsIjk3ODE2MjYxNjM1MTUiLCI5NzgxNjI2MTYz
+        NTM5Iiwib2NuOTMzMjE5MDQ2Il0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wi
+        OTgwNTI0NFwiOntcImxvY2F0aW9uXCI6XCJSZUNBUFwiLFwibGlicmFyeVwi
+        OlwiUmVDQVBcIixcImxvY2F0aW9uX2NvZGVcIjpcInJjcHBhXCIsXCJjYWxs
+        X251bWJlclwiOlwiSEY1Mzg5LjMuQjcgSzQ1IDIwMTdcIixcImNhbGxfbnVt
+        YmVyX2Jyb3dzZVwiOlwiSEY1Mzg5LjMuQjcgSzQ1IDIwMTdcIn19IiwibG9j
+        YXRpb25fY29kZV9zIjpbInJjcHBhIl0sImxvY2F0aW9uX2Rpc3BsYXkiOlsi
+        UmVDQVAiXSwibG9jYXRpb24iOlsiUmVDQVAiXSwiYWR2YW5jZWRfbG9jYXRp
+        b25fcyI6WyJyY3BwYSIsIlJlQ0FQIl0sIm5hbWVfdGl0bGVfMjQ1X3MiOlsi
+        S2VsbSwgT3JsYW5kbyBSLiwgMTk1Ny0uIFRoZSA3IGtleXMgdG8gY29tbXVu
+        aWNhdGluZyBpbiBCcmF6aWwiXSwibmFtZV90aXRsZV9icm93c2VfcyI6WyJL
+        ZWxtLCBPcmxhbmRvIFIuLCAxOTU3LS4gVGhlIDcga2V5cyB0byBjb21tdW5p
+        Y2F0aW5nIGluIEJyYXppbCJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIkhG
+        NTM4OS4zLkI3IEs0NSAyMDE3Il0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpb
+        IkhGNTM4OS4zLkI3IEs0NSAyMDE3Il0sInRpbWVzdGFtcCI6IjIwMTctMDEt
+        MDRUMDg6NDM6MTEuMjY0WiJ9fX0=
+    http_version: 
+  recorded_at: Thu, 09 Feb 2017 17:55:20 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=9999800
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 Feb 2017 17:55:39 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 86ed6f60-0f44-489a-b58a-3246c2970534
+      X-Runtime:
+      - '0.069848'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"3937b5d806ff5f69f6a0bac167fcf1bd"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9805244":{"more_items":false,"location":"rcppa","copy_number":0,"item_id":7495389,"on_reserve":"N","status":"Not
+        Charged","label":"ReCAP"}}'
+    http_version: 
+  recorded_at: Thu, 09 Feb 2017 17:55:20 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9805244
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 09 Feb 2017 17:55:40 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 1a22266d-a970-4f77-bed4-f6cf6b3b144f
+      X-Runtime:
+      - '0.064920'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"5b18e1b4c0b78824391c6a7f5968a072"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101099186403","id":7495389,"location":"rcppa","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","label":"ReCAP"}]'
+    http_version: 
+  recorded_at: Thu, 09 Feb 2017 17:55:21 GMT
 recorded_with: VCR 3.0.3

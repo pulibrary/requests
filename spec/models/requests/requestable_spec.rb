@@ -429,4 +429,37 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context 'When a barcode only user visits the site' do
+    let(:user) { FactoryGirl.build(:valid_barcode_patron) }
+    let(:params) {
+      {
+        system_id: '9999800',
+        user: user
+      }
+    }
+    let(:request) { Requests::Request.new(params) }
+    let(:requestable) { request.requestable.first }
+    describe '#requestable' do
+      it "should have an requestable items" do
+        expect(requestable.services.include?('recap_edd')).to be true
+      end
+    end
+  end
+
+  context 'When an access only user visits the site' do
+    let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:params) {
+      {
+        system_id: '9999800',
+        user: user
+      }
+    }
+    let(:request) { Requests::Request.new(params) }
+    let(:requestable) { request.requestable.first }
+    describe '#requestable' do
+      it "should have an requestable items" do
+        expect(requestable.services.include?('recap_edd')).to be false
+      end
+    end
+  end
 end

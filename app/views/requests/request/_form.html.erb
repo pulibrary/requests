@@ -90,8 +90,10 @@
               </td>
             </tr>
             <% end %>
+            <% if requestable.online? %>
+              <%= render partial: "online_items", locals: { requestable: requestable } %>
+            <% end %>
           <% end %>
-
           <% if fill_in_eligible? requestable_list %>
             <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
           <% end %>
@@ -99,5 +101,7 @@
       </table>
     </div>
   <% end %>
-  <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
+  <% unless @request.all_items_online? %>
+    <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
+  <% end %>
 <% end %>

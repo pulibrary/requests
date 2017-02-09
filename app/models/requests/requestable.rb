@@ -181,7 +181,7 @@ module Requests
     end
 
     def recallable?
-      services.include?('recall') ? true : false
+      services.include?('recall')
     end
 
     # assume numeric ids come from voyager

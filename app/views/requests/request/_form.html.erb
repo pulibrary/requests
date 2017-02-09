@@ -29,7 +29,7 @@
         <% unless @request.holdings[mfhd]["location_has"].nil? %>
             <div>
               <h3>Location has: </h3>
-            </td>
+            </div>
             <p>
               <% @request.holdings[mfhd]["location_has"].each do |loc| %>
                 <%= loc %><br/>
@@ -62,7 +62,6 @@
                   <%= status_label requestable %>
                 </td>
               <td class='request--options'>
-            
                 <% if requestable.ill_eligible? %>
                   <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
                 <% end %>

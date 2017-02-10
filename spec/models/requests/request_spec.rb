@@ -983,4 +983,21 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context 'When a barcode only user visits the site' do
+    let(:user) { FactoryGirl.build(:valid_barcode_patron) }
+    let(:params) {
+      {
+        system_id: '495501',
+        mfhd: '538750',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+    end
+  end
 end

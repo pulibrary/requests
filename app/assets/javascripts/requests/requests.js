@@ -2,6 +2,18 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function() {
 
+    $( "#no_netid").click(function( event ) {
+      event.preventDefault();
+      $( "#no_netid").hide();
+      $( "#other_user_account_info").show();
+    });
+
+    $( "#go_back").click(function( event ) {
+      event.preventDefault();
+      $( "#no_netid").show();
+      $( "#other_user_account_info").hide();
+    });
+
     $( "#returnToRecordLink" ).click(function( event ) {
       event.preventDefault();
       location.href= document.referrer;

@@ -1,8 +1,11 @@
+<% if @user.guest %>
+  <%= simple_form_for(:request, { url: '/requests/barcode_auth', method: :post} ) do |l| %>
+    <%= render partial: 'user_login_options', locals: { l: l } %>
+  <% end %>
+<% else %>
 <%= simple_form_for(:request, { url: '/requests/submit', method: :post, remote: true} ) do |f| %>
   <%= hidden_fields_request @request %>
-  <% if @user.guest %>
-    <%= render partial: 'user_login_options', locals: { f: f } %>
-  <% else %>
+
     <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
     <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>

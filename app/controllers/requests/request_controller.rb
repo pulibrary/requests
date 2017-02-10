@@ -30,7 +30,7 @@ module Requests
       end
       request_params[:user] = @user.uid
       @request = Requests::Request.new(request_params.symbolize_keys)
-      ### redirect to Aeon non-voyager items 
+      ### redirect to Aeon non-voyager items
       if @request.thesis? || @request.visuals?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.params.to_query}"
       end
@@ -42,6 +42,24 @@ module Requests
     def recall_pickups
       @pickups = Requests::PickupLookup.new(params)
       render json: @pickups.returned
+    end
+
+    def barcode_auth
+      @user = current_or_guest_user
+      @barcode_auth = Requests::BarcodeAuth.new(params)
+      if @barcode_auth.valid?
+        @user.provider = 'barcode'
+        @user.guest = false
+        @user.uid = params['request']['barcode']
+      end
+      redirect_to '/requests/' + params['request']['bib_id']
+      # format.js {
+      #   if @barcode_auth.valid?
+      #       flash.now[:success] = 'You are now logged in!'
+      #   else
+      #       flash.now[:error] = 'Login invalid.'
+      #   end
+      # }
     end
 
     # will post and a JSON document of selected "requestable" objects with selection parameters and
@@ -142,10 +160,10 @@ module Requests
       end
 
 
-      def current_patron(netid)
-        return false unless netid
+      def current_patron(uid)
+        return false unless uid
         begin
-          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{netid}"
+          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{uid}"
         rescue Faraday::Error::ConnectionFailed
           logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
           return false
@@ -153,11 +171,11 @@ module Requests
 
         if patron_record.status == 403
           logger.info('403 Not Authorized to Connect to Patron Data Service at '\
-                      "#{Requests.config[:bibdata_base]}/patron/#{netid}")
+                      "#{Requests.config[:bibdata_base]}/patron/#{uid}")
           return false
         end
         if patron_record.status == 404
-          logger.info("404 Patron #{netid} cannot be found in the Patron Data Service.")
+          logger.info("404 Patron #{uid} cannot be found in the Patron Data Service.")
           return false
         end
         if patron_record.status == 500

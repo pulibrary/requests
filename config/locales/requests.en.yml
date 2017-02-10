@@ -83,8 +83,8 @@ en:
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
       access_msg: 'Access Users are not eligible for trace requests.'
     account:
-      guest: "Log in to Request via Central Authentication Services"
+      guest: "Log in to request with a Princeton University NetID"
       unauthenticated: "Please sign in to see all requests"
       logged_in: "Logged in as:"
-      other_user_login_msg: 'All patrons who do not hold an active Princeton University netID.'
+      other_user_login_msg: "I don't have a NetID."
       pul_user_service_msg: 'Princeton Faculty, Staff, and Students need to sign in to see Borrow Direct Services'

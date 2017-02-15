@@ -1,7 +1,10 @@
 module Requests
   module ApplicationHelper
     def sanitize(str)
-      str.gsub(/[^A-Za-z0-9]/, '')
+      if str.is_a? String
+        str.gsub(/[^A-Za-z0-9]/, '')
+      end
+      str
     end
 
     def format_label(key)

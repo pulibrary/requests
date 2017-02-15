@@ -11,7 +11,12 @@ module Requests
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
       elsif current_user.guest == true
-        link_to I18n.t('requests.account.guest'), '/users/auth/cas', class: 'btn btn-md btn-primary btn-full' #, current_user_name: current_user.uid)
+        content_tag(:div) do
+          concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', class: 'btn btn-md btn-primary btn-full' #, current_user_name: current_user.uid)
+          concat content_tag(:hr)
+          concat content_tag(:p, "or", class: "or-divider")
+          concat link_to I18n.t('requests.account.barcode_login_msg'), main_app.page_path('account'), class: 'btn btn-md btn-default btn-full'
+        end
       else
         I18n.t('requests.account.unauthenticated')
       end

@@ -1,5 +1,5 @@
-<% if @user.guest %>
-  <%= simple_form_for(:request, { url: '/requests/barcode_auth', method: :post} ) do |l| %>
+<% if @user.guest && @patron.blank? %>
+  <%= simple_form_for(:request, { url: "/requests/#{@request.requestable.first.bib['id']}", method: :post} ) do |l| %>
     <%= render partial: 'user_login_options', locals: { l: l } %>
   <% end %>
 <% else %>
@@ -11,7 +11,7 @@
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
     <%= f.hidden_field :patron_id, value: @patron[:patron_id] %>
     <%= f.hidden_field :patron_group, value: @patron[:patron_group] %>
-    <%= f.hidden_field :email, value: @user.email %>
+    <%= f.hidden_field :email, value: @patron[:active_email] %>
 
     <% unless @request.source.nil? %>
       <%= f.hidden_field :source, value: @request.source %>

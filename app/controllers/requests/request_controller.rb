@@ -15,6 +15,14 @@ module Requests
       unless params[:source].nil?
         request_params[:source] = sanitize(params[:source])
       end
+      if request.post?
+        unless params[:request][:email].nil?
+          email = params[:request][:email]
+        end
+        unless params[:request][:user_name].nil?
+          user_name = sanitize(params[:request][:user_name])
+        end
+      end
       if params[:mode].nil?
         @mode = 'standard'
       else
@@ -24,11 +32,26 @@ module Requests
       unless params[:mfhd].nil?
         request_params[:mfhd] = sanitize(params[:mfhd])
       end
+
       @user = current_or_guest_user
-      unless @user.guest?
+      if !@user.guest?
         @patron = current_patron(@user.uid)
+      elsif email && user_name
+        @patron = {:netid=>nil,
+                 :first_name=>nil,
+                 :last_name=>user_name,
+                 :active_email=>email,
+                 :barcode=>'ACCESS',
+                 :barcode_status=>0,
+                 :barcode_status_date=>nil,
+                 :university_id=>nil,
+                 :patron_group=>nil,
+                 :purge_date=>nil,
+                 :expire_date=>nil,
+                 :patron_id=>nil}.with_indifferent_access
       end
-      request_params[:user] = @user.uid
+
+      request_params[:user] = @user
       @request = Requests::Request.new(request_params.symbolize_keys)
       ### redirect to Aeon non-voyager items
       if @request.thesis? || @request.visuals?
@@ -44,24 +67,6 @@ module Requests
       render json: @pickups.returned
     end
 
-    def barcode_auth
-      @user = current_or_guest_user
-      @barcode_auth = Requests::BarcodeAuth.new(params)
-      if @barcode_auth.valid?
-        @user.provider = 'barcode'
-        @user.guest = false
-        @user.uid = params['request']['barcode']
-      end
-      redirect_to '/requests/' + params['request']['bib_id']
-      # format.js {
-      #   if @barcode_auth.valid?
-      #       flash.now[:success] = 'You are now logged in!'
-      #   else
-      #       flash.now[:error] = 'Login invalid.'
-      #   end
-      # }
-    end
-
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
@@ -72,9 +77,13 @@ module Requests
           service_errors = []
           recap = (recap_services & @submission.service_types).length
           recall = @submission.service_types.include? 'recall'
-
           if recap
-            @services << Requests::Recap.new(@submission)
+            if @submission.user['user_barcode']=='ACCESS'
+              #Access users cannot use recap service directly
+              @services << Requests::Generic.new(@submission)
+            else
+              @services << Requests::Recap.new(@submission)
+            end
           end
 
           if recall
@@ -82,7 +91,7 @@ module Requests
           end
 
           if !recap && !recall
-            @services = Requests::Generic.new(@submission)
+            @services << Requests::Generic.new(@submission)
           end
 
           @services.each do |service|
@@ -141,14 +150,10 @@ module Requests
       end
     end
 
-    def patron_barcode
-
-    end
-
     private
       # trusted params
       def request_params
-        params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable).permit!
+          params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request).permit!
       end
 
       def mail_services

@@ -17,15 +17,6 @@
           </div>
         </fieldset>
         <fieldset class="form-group required">
-          <label class="control-label col-sm-10" for="user_barcode">
-            Your Barcode (Access only patrons, may enter 'access' as their barcode in order to request materials.)
-          </label>
-          <div class="col-sm-10">
-            <%= l.text_field :user_barcode, size: 14, maxlength: 14, class: 'form-control', error: 'Barcode', value: '22101' %>
-            <span class="error error-user_barcode"></span>
-          </div>
-        </fieldset>
-        <fieldset class="form-group required">
           <label class="control-label col-sm-10" for="email">
               Contact Email
           </label>
@@ -34,7 +25,6 @@
             <span class="error error-email"></span>
           </div>
         </fieldset>
-        <%= l.hidden_field :bib_id, :value => @request.requestable.first.bib['id'] %>
         <%= l.submit submit_message('Login'), class: "btn btn-primary submit--login" %>
         <div id="go-back-link">
           <a href="#punetid-form" id="go_back">

@@ -120,7 +120,7 @@ module Requests
     end
 
     # Does this request object have any available copies?
-    def has_available_copy?
+    def has_loanable_copy?
       copy_available = false
       # This code creates a Stack Too Deep error although has_pageable? uses the same approach
       requestable.each do |request|
@@ -133,9 +133,8 @@ module Requests
 
     def route_requests(requestable_items)
       routed_requests = []
-      alternate_copy_available = has_available_copy?
       requestable_items.each do |requestable|
-        router = Requests::Router.new(requestable: requestable, user: @user, alternate_copy_available: alternate_copy_available)
+        router = Requests::Router.new(requestable: requestable, user: @user)
         routed_requests << router.routed_request
       end
       routed_requests
@@ -270,7 +269,7 @@ module Requests
 
     #if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-     if has_available_copy?
+     if has_loanable_copy?
        return false
      end
      requestable.any? { |r| r.services.include? 'bd' }

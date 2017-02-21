@@ -984,7 +984,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   end
 
   # 4815239
-  context 'When passed a non-enumerated holdings with at least one item non-charged' do
+  context 'When passed a non-enumerated holdings with at least one loanable item' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
@@ -996,7 +996,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     subject { request }
     describe '#requestable' do
       it "should have available copy" do
-        expect(subject.has_available_copy?).to be true
+        expect(subject.has_loanable_copy?).to be true
       end
     end
   end

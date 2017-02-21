@@ -50,9 +50,12 @@ module Requests
                  :expire_date=>nil,
                  :patron_id=>nil}.with_indifferent_access
       end
-
-      request_params[:user] = @user
-      @request = Requests::Request.new(request_params.symbolize_keys)
+      @request = Requests::Request.new({
+        system_id: request_params[:system_id],
+        mfhd: request_params[:mfhd],
+        source: request_params[:source],
+        user: @user
+      })
       ### redirect to Aeon non-voyager items
       if @request.thesis? || @request.visuals?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.params.to_query}"

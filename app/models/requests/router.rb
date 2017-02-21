@@ -3,10 +3,12 @@ module Requests
 
     attr_accessor :requestable
     attr_reader :user
+    attr_reader :alternate_copy_available
     # State Based Decisions
-    def initialize(requestable:, user:)
+    def initialize(requestable:, user:, alternate_copy_available:)
       @requestable = requestable
       @user = user
+      @alternate_copy_available = alternate_copy_available
     end
 
     # Possible Services
@@ -46,13 +48,23 @@ module Requests
           services << 'online'
         else
           ## my item status is negative
-          if(requestable.charged?)
-            if requestable.item['enum'].nil?
+          if(requestable.charged? && auth_user?)
+            if (!@alternate_copy_available && cas_user?)
               services << 'bd' # pop this off at a later point
             end
-            services << 'ill'
+            if (cas_user?)
+              services << 'ill'
+            end
             unless requestable.missing?
               services << 'recall'
+            end
+          elsif(requestable.in_process?)
+            if auth_user?
+              services << 'in_process'
+            end
+          elsif(requestable.on_order?)
+            if auth_user?
+              services << 'on_order'
             end
             #### other choices
             # Borrow Direct/ILL
@@ -64,20 +76,20 @@ module Requests
               services << 'annexa'
             elsif(requestable.annexb?)
               services << 'annexb'
-            elsif(requestable.in_process?)
-              services << 'in_process'
-            elsif(requestable.on_order?)
-              services << 'on_order'
+            # elsif(requestable.in_process? && auth_user?)
+            #   services << 'in_process'
+            # elsif(requestable.on_order? && auth_user?)
+            #   services << 'on_order'
             elsif(requestable.recap?)
               services << 'recap'
-              if(requestable.recap_edd?)
+              if(requestable.recap_edd? && auth_user?)
                 services << 'recap_edd'
               end
             elsif(requestable.pageable?)
               services << 'paging'
             else
               services << 'on_shelf' # goes to stack mapping
-              if(requestable.open?)
+              if(requestable.open? && auth_user?)
                 services << 'trace' # all open stacks items are traceable
               end
             end
@@ -101,6 +113,38 @@ module Requests
       else
         # assume it is an access/anonymous patron
         @user.provider
+      end
+    end
+
+    def access_user?
+      if @user.guest == true
+        true
+      else
+        false
+      end
+    end
+
+    def barcode_user?
+      if @user.provider == 'barcode'
+        true
+      else
+        false
+      end
+    end
+
+    def cas_user?
+      if @user.provider == 'cas'
+        true
+      else
+        false
+      end
+    end
+
+    def auth_user?
+      if cas_user? || barcode_user?
+        true
+      else
+        false
       end
     end
   end

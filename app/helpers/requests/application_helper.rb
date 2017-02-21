@@ -7,6 +7,12 @@ module Requests
       str
     end
 
+    def format_email(email)
+      unless email.nil?
+        email.downcase
+      end
+    end
+
     def format_label(key)
       label = key.to_s
       human_label = label.gsub(/_/, ' ')

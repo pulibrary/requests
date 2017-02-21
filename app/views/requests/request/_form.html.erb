@@ -11,7 +11,7 @@
     <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
     <%= f.hidden_field :patron_id, value: @patron[:patron_id] %>
     <%= f.hidden_field :patron_group, value: @patron[:patron_group] %>
-    <%= f.hidden_field :email, value: @patron[:active_email] %>
+    <%= f.hidden_field :email, value: format_email(@patron[:active_email]) %>
 
     <% unless @request.source.nil? %>
       <%= f.hidden_field :source, value: @request.source %>

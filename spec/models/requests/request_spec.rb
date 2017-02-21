@@ -983,6 +983,25 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  # 4815239
+  context 'When passed a non-enumerated holdings with at least one item non-charged' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4815239',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should have available copy" do
+        expect(subject.has_available_copy?).to be true
+      end
+    end
+  end
+
+
   context 'When a barcode only user visits the site' do
     let(:user) { FactoryGirl.build(:valid_barcode_patron) }
     let(:params) {

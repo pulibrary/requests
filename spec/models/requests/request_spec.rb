@@ -171,7 +171,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a list of request objects" do
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(98)
-        expect(subject.has_pageable?).to be_nil
+        expect(subject.has_pageable?).to be(false)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
@@ -450,7 +450,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.has_pageable?).to be_nil
+        expect(subject.has_pageable?).to be(false)
         expect(subject.requestable[0].pageable?).to be_nil
       end
     end
@@ -700,7 +700,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "should not have any pageable items" do
-        expect(subject.has_pageable?).to be_nil
+        expect(subject.has_pageable?).to be(false)
       end
 
       it "should have a pageable item" do
@@ -994,9 +994,32 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request) { described_class.new(params) }
     subject { request }
-    describe '#requestable' do
+    describe '#has_loanable_copy?' do
       it "should have available copy" do
         expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'RBSC Items and Borrow Direct' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2631265',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#borrow_direct_eligible?' do
+      it 'should be borrow_direct_eligible?' do
+        expect(subject.borrow_direct_eligible?).to be true
       end
     end
   end

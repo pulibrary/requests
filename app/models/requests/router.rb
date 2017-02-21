@@ -3,12 +3,10 @@ module Requests
 
     attr_accessor :requestable
     attr_reader :user
-    attr_reader :alternate_copy_available
     # State Based Decisions
-    def initialize(requestable:, user:, alternate_copy_available:)
+    def initialize(requestable:, user:)
       @requestable = requestable
       @user = user
-      @alternate_copy_available = alternate_copy_available
     end
 
     # Possible Services
@@ -49,7 +47,7 @@ module Requests
         else
           ## my item status is negative
           if(requestable.charged? && auth_user?)
-            if (!@alternate_copy_available && cas_user?)
+            if (requestable.enumerated? && cas_user?)
               services << 'bd' # pop this off at a later point
             end
             if (cas_user?)

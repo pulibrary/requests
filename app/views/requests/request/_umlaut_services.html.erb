@@ -7,9 +7,10 @@
   <% if @request.borrow_direct_eligible? %>
     <script type="text/javascript">
     jQuery(document).ready(function(){
-      jQuery('.table-responsive h2').hide();
-      jQuery('table.request--available_items').hide();
-      jQuery('.submit--request').hide();
+      // comments out display issues with BD
+      // jQuery('.table-responsive h2').hide();
+      // jQuery('table.request--available_items').hide();
+      // jQuery('.submit--request').hide();
       var ctx = $("span.Z3988").attr("title");
       var updater = new Umlaut.HtmlUpdater('<%= Requests.config[:umlaut_base] %>', ctx);
       updater.add_section_target({
@@ -26,10 +27,11 @@
         after_update: function(html, count) {
           if($(html).find(".bd-api-unavailable").length || $(html).find(".borrow-direct-error").length) {
             bd_link = $(html).find("a.bd-direct-link").attr("href")
-            jQuery('.umlaut-services').hide();
             jQuery('body').data( "bd", { link: bd_link } );
-            jQuery('table.request--available_items').show();
-            jQuery('.submit--request').show();
+            // comments out display issues with BD
+            // jQuery('.umlaut-services').hide();
+            // jQuery('table.request--available_items').show();
+            // jQuery('.submit--request').show();
           }
         }
       });

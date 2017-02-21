@@ -11533,4 +11533,199 @@ http_interactions:
         Library","code":"engineering"},"delivery_locations":[]}'
     http_version: 
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/2631265.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 3fc3b11d-de77-46c0-ab1e-eac78fb8fc40
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"debe3db73fb6d60415869ae32940cbec"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.020717'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 21 Feb 2017 23:03:18 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"2631265","author_display":["Wooler,
+        T. J. (Thomas Jonathan), 1786?-1853"],"author_citation_display":["Wooler,
+        T. J.","Street, Julian"],"author_roles_1display":"{\"secondary_authors\":[\"Street,
+        Julian\"],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Wooler,
+        T. J.\"}","author_s":["Wooler, T. J. (Thomas Jonathan), 1786?-1853","Street,
+        Julian, 1879-1947"],"opensearch_display":["Wooler, T. J. (Thomas Jonathan),
+        1786?-1853","Street, Julian, 1879-1947","The kettle abusing the pot. : a satirical
+        poem / by the Black Dwarf.","George IV, King of Great Britain, 1762-1830","Caroline,
+        Queen, consort of George IV, King of Great Britain, 1768-1821"],"marc_relator_display":["Author"],"title_display":"The
+        kettle abusing the pot. : a satirical poem / by the Black Dwarf.","title_t":["The
+        kettle abusing the pot. : a satirical poem / by the Black Dwarf."],"title_citation_display":["The
+        kettle abusing the pot. : a satirical poem /"],"compiled_created_t":["The
+        kettle abusing the pot. : a satirical poem / by the Black Dwarf."],"pub_created_display":["London
+        : Printed for J. Johnston, 1820 (London : W. Flint)."],"pub_created_s":["London
+        : Printed for J. Johnston, 1820 (London : W. Flint)."],"pub_citation_display":["London:
+        Printed for J. Johnston"],"pub_date_display":["1820"],"pub_date_start_sort":1820,"cataloged_tdt":"2003-08-12T20:59:10Z","format":["Book"],"description_display":["29
+        p. : ill. (wood-engravings) ; 22 cm."],"description_t":["29 p. : ill. (wood-engravings)
+        ; 22 cm."],"notes_display":["A satire on the dispute between George IV and
+        Queen Caroline.","Attribution to T.J. Wooler ( Brit. Mus. Cat.) refuted by
+        Brit. Mus. Catalogue of political and personal satires, 13898.","Title vignette.","F
+        copy is no. 8 of a volume of pamphlets.","No. 9 not analyzed.","Ex copy is
+        25 of 28 satirical pamphlets bound together in a volume with supplied title
+        \"A collection of pamphlets on Queen Caroline.\""],"language_facet":["English"],"language_code_s":["eng"],"source_acquisition_display":["Ex
+        copy: Gift of Julian Street."],"subject_display":["George IV, King of Great
+        Britain, 1762-1830","Caroline, Queen, consort of George IV, King of Great
+        Britain, 1768-1821"],"subject_t":["George IV, King of Great Britain, 1762-1830","Caroline,
+        Queen, consort of George IV, King of Great Britain, 1768-1821"],"subject_facet":["George
+        IV, King of Great Britain, 1762-1830","Caroline, Queen, consort of George
+        IV, King of Great Britain, 1768-1821"],"related_name_json_1display":"{\"Former
+        owner\":[\"Street, Julian, 1879-1947\"]}","in_display":["Collection of pamphlets
+        on Queen Caroline"],"oclc_s":["21938935"],"other_version_s":["ocm21938935"],"holdings_1display":"{\"3539546\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"call_number\":\"DA30
+        .H377 v.14\",\"call_number_browse\":\"DA30 .H377 v.14\",\"location_has\":[\"Princeton
+        copy 1\"]},\"4238081\":{\"location\":\"Rare Books and Special Collections
+        - Rare Books\",\"library\":\"Rare Books and Special Collections\",\"location_code\":\"ex\",\"copy_number\":\"1\",\"call_number\":\"2004-0069N\",\"call_number_browse\":\"2004-0069N\",\"location_has\":[\"Princeton
+        copy 3\"]}}","location_code_s":["f","ex"],"location_display":["Firestone Library","Rare
+        Books and Special Collections - Rare Books"],"location":["Firestone Library","Rare
+        Books and Special Collections"],"advanced_location_s":["f","ex","Firestone
+        Library","Rare Books and Special Collections"],"name_title_245_s":["Wooler,
+        T. J. (Thomas Jonathan), 1786?-1853. The kettle abusing the pot"],"name_title_browse_s":["Wooler,
+        T. J. (Thomas Jonathan), 1786?-1853. The kettle abusing the pot"],"call_number_display":["DA30
+        .H377 v.14","2004-0069N"],"call_number_browse_s":["DA30 .H377 v.14","2004-0069N"],"timestamp":"2017-01-04T03:02:07.139Z"}}}'
+    http_version: 
+  recorded_at: Tue, 21 Feb 2017 23:03:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=2631265
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 21 Feb 2017 23:03:03 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e52eeafd-1d68-4292-9292-774b9ebd97dd
+      X-Runtime:
+      - '0.075791'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"bf1abeb7ae4e4f6837759eb457865f22"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"3539546":{"more_items":false,"location":"f","copy_number":1,"item_id":6555616,"on_reserve":"N","status":"Missing","label":"Firestone
+        Library"},"4238081":{"more_items":false,"location":"ex","copy_number":1,"item_id":3533136,"on_reserve":"N","status":"On-Site","label":"Rare
+        Books and Special Collections - Rare Books"}}'
+    http_version: 
+  recorded_at: Tue, 21 Feb 2017 23:03:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4238081
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 21 Feb 2017 23:03:03 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 52d5dc5e-46b9-499b-aaa8-02dded28888e
+      X-Runtime:
+      - '0.065714'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"be94a8633eaaf8ae136a6e8a011f321e"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101010196770","id":3533136,"location":"ex","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Rare
+        Books and Special Collections - Rare Books"}]'
+    http_version: 
+  recorded_at: Tue, 21 Feb 2017 23:03:19 GMT
 recorded_with: VCR 3.0.3

@@ -113,22 +113,28 @@ module Requests
       end
       services.uniq!
       if services.include? 'paging'
-        return true
+        true
       else
-        nil
+        false
       end
     end
 
     # Does this request object have any available copies?
     def has_loanable_copy?
-      copy_available = false
-      # This code creates a Stack Too Deep error although has_pageable? uses the same approach
+      copy_available = []
       requestable.each do |request|
-        if !request.enumerated? && !request.charged?
-          copy_available = true
+        if request.charged? || (request.aeon? || !request.circulates? || request.enumerated?) 
+          copy_available << false
+        else
+          copy_available << true
         end
       end
-      return copy_available
+      copy_available.uniq!
+      if copy_available.include? true
+        true
+      else
+        false
+      end
     end
 
     def route_requests(requestable_items)
@@ -269,10 +275,11 @@ module Requests
 
     #if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-     if has_loanable_copy?
-       return false
-     end
-     requestable.any? { |r| r.services.include? 'bd' }
+      if has_loanable_copy?
+        false
+      else
+        requestable.any? { |r| r.services.include? 'bd' }
+      end
     end
 
     def ill_eligible?

@@ -47,7 +47,7 @@ module Requests
         else
           ## my item status is negative
           if(requestable.charged? && auth_user?)
-            if (requestable.enumerated? && cas_user?)
+            if (!requestable.enumerated? && cas_user?)
               services << 'bd' # pop this off at a later point
             end
             if (cas_user?)

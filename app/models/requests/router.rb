@@ -3,10 +3,11 @@ module Requests
 
     attr_accessor :requestable
     attr_reader :user
-    # State Based Decisions
-    def initialize(requestable:, user:)
+
+    def initialize(requestable:, user:, has_loanable: false)
       @requestable = requestable
       @user = user
+      @has_loanable = has_loanable
     end
 
     # Possible Services
@@ -47,13 +48,13 @@ module Requests
         else
           ## my item status is negative
           if(requestable.charged? && auth_user?)
-            if (!requestable.enumerated? && cas_user?)
-              services << 'bd' # pop this off at a later point
+            if (!requestable.enumerated? && cas_user? && !has_loanable?)
+              services << 'bd'
             end
-            if (cas_user?)
+            if (cas_user? && !has_loanable?)
               services << 'ill'
             end
-            unless requestable.missing?
+            unless requestable.missing? && !has_loanable?
               services << 'recall'
             end
           elsif(requestable.in_process?)
@@ -112,6 +113,10 @@ module Requests
         # assume it is an access/anonymous patron
         @user.provider
       end
+    end
+
+    def has_loanable?
+      @has_loanable
     end
 
     def access_user?

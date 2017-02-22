@@ -14,7 +14,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:bad_request) { described_class.new(params) }
     subject { bad_request }
     describe '#solr_doc' do
-      it 'returns an 404 response without a valid system id' do
+      it 'returns an empty document response without a valid system id' do
         expect(subject.solr_doc(bad_system_id).empty?).to be true
       end
     end
@@ -297,7 +297,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "should not have a list of request objects" do
-        expect(subject.requestable).to be_falsy
+        expect(subject.requestable.empty?).to be true
       end
     end
   end
@@ -1007,6 +1007,105 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context 'Enumerated record with charged items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: 'foo',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Enumerated record without charged items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '7494358',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#has_enumerated?' do
+      it 'should be enumerated' do
+        expect(subject.has_enumerated?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Multi-holding record with charged items and items available at non-restricted locations' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: 'foo',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Multi-holding record with charged items and items available at restricted locations' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9696811',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be false
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be true
+      end
+    end
+  end
+
+  ### Review this test
   context 'RBSC Items and Borrow Direct' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {

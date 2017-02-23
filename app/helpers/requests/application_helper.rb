@@ -34,7 +34,9 @@ module Requests
     end
 
     def show_service_options requestable
-      if requestable.charged?
+      if requestable.services.empty?
+        content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
+      elsif requestable.charged?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon? && requestable.voyager_managed?
         link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
@@ -43,7 +45,7 @@ module Requests
       elsif requestable.traceable? || requestable.on_shelf?
         content_tag(:div) do
           concat link_to 'Where to find it', requestable.map_url
-          concat content_tag(:span, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
+          concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
         end
       else
         unless requestable.services.include? 'recap_edd'
@@ -134,7 +136,7 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
-      unless requestable.pickup_locations.nil? || requestable.charged? || (requestable.services.include? 'on_shelf') #(requestable.services & self.default_pickup_services).empty?
+      unless requestable.pickup_locations.nil? || requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty?
         class_list = "well collapse in request--print"
         if requestable.services.include?('recap_edd')
             class_list = "well collapse request--print"
@@ -261,7 +263,9 @@ module Requests
     end
 
     def check_box_disabled requestable
-      if requestable.on_order?
+      if requestable.services.empty?
+        true
+      elsif requestable.on_order?
         false
       elsif requestable.in_process?
         false
@@ -285,7 +289,7 @@ module Requests
 
     def check_box_selected requestable_list
       if requestable_list.size == 1
-        if requestable_list.first.charged?
+        if requestable_list.first.charged? || requestable_list.first.services.empty?
           false
         else
           true
@@ -297,7 +301,9 @@ module Requests
 
     def submit_button_disabled requestable_list
       if requestable_list.size == 1
-        if requestable_list.first.charged?
+        if requestable_list.first.services.empty?
+          true
+        elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
             false
           elsif requestable_list.first.annexb?
@@ -339,7 +345,9 @@ module Requests
       no_item = "No Items Available"
       trace = "Trace this item"
       if requestable_list.size == 1
-        if requestable_list.first.charged?
+        if requestable_list.first.services.empty?
+          no_item
+        elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
             multi_item
           elsif requestable_list.first.annexb?

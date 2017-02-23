@@ -1011,7 +1011,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
-        system_id: 'foo',
+        system_id: '495220',
         user: user
       }
     }
@@ -1063,7 +1063,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
-        system_id: 'foo',
+        system_id: '5596067',
         user: user
       }
     }

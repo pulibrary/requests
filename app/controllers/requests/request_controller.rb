@@ -15,6 +15,14 @@ module Requests
       unless params[:source].nil?
         request_params[:source] = sanitize(params[:source])
       end
+      if request.post?
+        unless params[:request][:email].nil?
+          email = params[:request][:email]
+        end
+        unless params[:request][:user_name].nil?
+          user_name = sanitize(params[:request][:user_name])
+        end
+      end
       if params[:mode].nil?
         @mode = 'standard'
       else
@@ -24,13 +32,31 @@ module Requests
       unless params[:mfhd].nil?
         request_params[:mfhd] = sanitize(params[:mfhd])
       end
+
       @user = current_or_guest_user
-      unless @user.guest?
+      if !@user.guest?
         @patron = current_patron(@user.uid)
+      elsif email && user_name
+        @patron = {:netid=>nil,
+                 :first_name=>nil,
+                 :last_name=>user_name,
+                 :active_email=>email,
+                 :barcode=>'ACCESS',
+                 :barcode_status=>0,
+                 :barcode_status_date=>nil,
+                 :university_id=>nil,
+                 :patron_group=>nil,
+                 :purge_date=>nil,
+                 :expire_date=>nil,
+                 :patron_id=>nil}.with_indifferent_access
       end
-      request_params[:user] = @user.uid
-      @request = Requests::Request.new(request_params.symbolize_keys)
-      ### redirect to Aeon non-voyager items 
+      @request = Requests::Request.new({
+        system_id: request_params[:system_id],
+        mfhd: request_params[:mfhd],
+        source: request_params[:source],
+        user: @user
+      })
+      ### redirect to Aeon non-voyager items
       if @request.thesis? || @request.visuals?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.params.to_query}"
       end
@@ -54,9 +80,13 @@ module Requests
           service_errors = []
           recap = (recap_services & @submission.service_types).length
           recall = @submission.service_types.include? 'recall'
-
           if recap
-            @services << Requests::Recap.new(@submission)
+            if @submission.user['user_barcode']=='ACCESS'
+              #Access users cannot use recap service directly
+              @services << Requests::Generic.new(@submission)
+            else
+              @services << Requests::Recap.new(@submission)
+            end
           end
 
           if recall
@@ -64,7 +94,7 @@ module Requests
           end
 
           if !recap && !recall
-            @services = Requests::Generic.new(@submission)
+            @services << Requests::Generic.new(@submission)
           end
 
           @services.each do |service|
@@ -123,14 +153,10 @@ module Requests
       end
     end
 
-    def patron_barcode
-
-    end
-
     private
       # trusted params
       def request_params
-        params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable).permit!
+          params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request).permit!
       end
 
       def mail_services
@@ -142,10 +168,10 @@ module Requests
       end
 
 
-      def current_patron(netid)
-        return false unless netid
+      def current_patron(uid)
+        return false unless uid
         begin
-          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{netid}"
+          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{uid}"
         rescue Faraday::Error::ConnectionFailed
           logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
           return false
@@ -153,11 +179,11 @@ module Requests
 
         if patron_record.status == 403
           logger.info('403 Not Authorized to Connect to Patron Data Service at '\
-                      "#{Requests.config[:bibdata_base]}/patron/#{netid}")
+                      "#{Requests.config[:bibdata_base]}/patron/#{uid}")
           return false
         end
         if patron_record.status == 404
-          logger.info("404 Patron #{netid} cannot be found in the Patron Data Service.")
+          logger.info("404 Patron #{uid} cannot be found in the Patron Data Service.")
           return false
         end
         if patron_record.status == 500

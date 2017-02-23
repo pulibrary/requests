@@ -5,9 +5,7 @@ module Requests
     attr_reader :holding
     attr_reader :item
     attr_reader :location
-    attr_reader :provider
     attr_accessor :services
-    attr_accessor :preferred_id
 
     include Requests::Pageable
     include Requests::Aeon
@@ -20,17 +18,6 @@ module Requests
       @item ||= item # hash of item data
       @location ||= location # hash of location matrix data
     end
-
-    # remove unused
-    # def type
-    #   if @item
-    #     'item'
-    #   elsif @holding
-    #     'holding'
-    #   else
-    #     'bib'
-    #   end
-    # end
 
     def bib
       @bib
@@ -161,7 +148,6 @@ module Requests
     end
 
     def traceable?
-      #return true if services.include?('trace')
       services.include?('trace') ? true : false
     end
 

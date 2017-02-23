@@ -2,7 +2,7 @@ module Requests
   module Bibdata
     # for PUL Bibliographic Helpers
     extend ActiveSupport::Concern
-    
+
     def solr_doc(system_id)
       response = Faraday.get "#{Requests.config[:pulsearch_base]}/catalog/#{system_id}.json"
       if (response = parse_response(response)).empty?
@@ -33,11 +33,10 @@ module Requests
     #   parse_response(response)
     # end
 
-    ### Not current in use
-    # def patron(patron_id)
-    #   response = bibdata_conn.get "/patron/#{patron_id}"
-    #   parse_response(response)
-    # end
+    def patron(patron_id)
+      response = bibdata_conn.get "/patron/#{patron_id}"
+      parse_response(response)
+    end
 
     def bibdata_conn
       conn = Faraday.new(:url => Requests.config[:bibdata_base]) do |faraday|
@@ -73,6 +72,6 @@ module Requests
       end
       locs
     end
-    
+
   end
 end

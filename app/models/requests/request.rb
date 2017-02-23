@@ -22,18 +22,27 @@ module Requests
       @mfhd ||= mfhd
       @user ||= user
       @source ||= source
+      ### These should be re-factored
+      @doc ||= solr_doc(system_id)
+      @requestable_unrouted ||= build_requestable
+      @requestable ||= route_requests(@requestable_unrouted)
     end
 
     def doc
-      @doc ||= solr_doc(system_id)
+      @doc #||= solr_doc(system_id)
     end
 
     def requestable
-      @requestable ||= build_requestable
+      @requestable #||= build_requestable
+    end
+
+    def requestable_unrouted
+      @requestable_unrouted
     end
     ### builds a list of possible requestable items
     # returns a collection of requestable objects or nil
     def build_requestable
+      return [] if doc.blank?
       if !items.nil?
         requestable_items = []
         items.each do |holding_id, items|
@@ -61,7 +70,7 @@ module Requests
             requestable_items << Requests::Requestable.new(params)
           end
         end
-        route_requests(requestable_items)
+        requestable_items
       else
         unless doc[:holdings_1display].nil?
           requestable_items = []
@@ -80,7 +89,7 @@ module Requests
               requestable_items << Requests::Requestable.new(params)
             end
           end
-          route_requests(requestable_items)
+          requestable_items
         end
       end
     end
@@ -103,7 +112,7 @@ module Requests
       sorted
     end
 
-    # Does this request object have any pageable items
+    # Does this request object have any pageable items?
     def has_pageable?
       services = []
       requestable.each do |request|
@@ -113,16 +122,45 @@ module Requests
       end
       services.uniq!
       if services.include? 'paging'
-        return true
+        true
       else
-        nil
+        false
       end
+    end
+
+    # Does this request object have any available copies?
+    def has_loanable_copy?
+      copy_available = []
+      requestable_unrouted.each do |request|
+        if request.charged? || (request.aeon? || !request.circulates?) #|| request.enumerated?) 
+          copy_available << false
+        else
+          copy_available << true
+        end
+      end
+      copy_available.uniq!
+      if copy_available.include? true
+        true
+      else
+        false
+      end
+    end
+
+    def has_enumerated?
+      enumerated = []
+      requestable_unrouted.each do |request|
+        enum = request.enumerated? ? true : false
+        enumerated << enum
+      end
+      enumerated.include?(true) ? true : false
     end
 
     def route_requests(requestable_items)
       routed_requests = []
+      return [] if requestable_items.blank?
+      has_loanable = has_loanable_copy?
       requestable_items.each do |requestable|
-        router = Requests::Router.new(requestable: requestable, user: @user)
+        router = Requests::Router.new(requestable: requestable, user: @user, has_loanable: has_loanable)
         routed_requests << router.routed_request
       end
       routed_requests
@@ -257,7 +295,11 @@ module Requests
 
     #if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-     requestable.any? { |r| r.services.include? 'bd' }
+      if has_loanable_copy? && has_enumerated?
+        false
+      else
+        requestable.any? { |r| r.services.include? 'bd' }
+      end
     end
 
     def ill_eligible?

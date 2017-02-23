@@ -39,11 +39,6 @@ FactoryGirl.define do
   #   initialize_with { new(system_id) }
   # end
 
-  # factory :request_with_items_charged, class: 'Requests::Request' do
-  #   system_id 1 # get real ID
-  #   initialize_with { new(system_id) }
-  # end
-
   # factory :request_serial_format, class: 'Requests::Request' do
   #   system_id 1 # get real ID
   #   initialize_with { new(system_id) }
@@ -87,6 +82,18 @@ FactoryGirl.define do
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
+  factory :request_paging_available_barcode_patron, class: 'Requests::Request' do
+    system_id 6009363
+    user { FactoryGirl.build(:valid_barcode_patron) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :request_paging_available_unauthenticated_patron, class: 'Requests::Request' do
+    system_id 6009363
+    user { FactoryGirl.build(:unauthenticated_patron) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
   factory :request_paging_mutliple_mfhd, class: 'Requests::Request' do
     system_id 2942771
     user { FactoryGirl.build(:user) }
@@ -97,6 +104,18 @@ FactoryGirl.define do
   factory :request_missing_item, class: 'Requests::Request' do
     system_id 2300474
     user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :request_missing_item_barcode_patron, class: 'Requests::Request' do
+    system_id 2300474
+    user { FactoryGirl.build(:valid_barcode_patron) }
+    initialize_with { new( { system_id: system_id, user: user } ) }
+  end
+
+  factory :request_missing_item_unauthenticated_patron, class: 'Requests::Request' do
+    system_id 2300474
+    user { FactoryGirl.build(:unauthenticated_patron) }
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
@@ -148,6 +167,22 @@ FactoryGirl.define do
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
   end
 
+  factory :aeon_mudd_barcode_patron, class: 'Requests::Request' do
+    system_id 6023439
+    mfhd_id '6080541'
+    source 'pulsearch'
+    user { FactoryGirl.build(:valid_barcode_patron) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
+
+  factory :aeon_mudd_unauthenticated_patron, class: 'Requests::Request' do
+    system_id 6023439
+    mfhd_id '6080541'
+    source 'pulsearch'
+    user { FactoryGirl.build(:unauthenticated_patron) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
+
   factory :missing_item, class: 'Requests::Request' do
     system_id 4106627
     mfhd_id '4385744'
@@ -155,4 +190,29 @@ FactoryGirl.define do
     user { FactoryGirl.build(:user) }
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
   end
+
+  factory :request_with_items_charged, class: 'Requests::Request' do
+    system_id 4815239
+    mfhd_id '5039570'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
+
+  factory :request_with_items_charged_barcode_patron, class: 'Requests::Request' do
+    system_id 4815239
+    mfhd_id '5039570'
+    source 'pulsearch'
+    user { FactoryGirl.build(:valid_barcode_patron) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
+
+  factory :request_with_items_charged_unauthenticated_patron, class: 'Requests::Request' do
+    system_id 4815239
+    mfhd_id '5039570'
+    source 'pulsearch'
+    user { FactoryGirl.build(:unauthenticated_patron) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
+
 end

@@ -429,7 +429,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
-  context 'When a princeton user only user visits the site' do
+  #user authentication tests
+  context 'When a princeton user with NetID visits the site' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
@@ -439,7 +440,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     }
     let(:request) { Requests::Request.new(params) }
     let(:requestable) { request.requestable.first }
-    describe '#requestable' do
+
+    describe '# offsite requestable' do
       it "should have recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
@@ -447,6 +449,63 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.services.include?('recap_edd')).to be true
       end
     end
+
+    let(:request_charged) { FactoryGirl.build(:request_with_items_charged) }
+    let(:requestable_charged) { request_charged.requestable.first }
+
+    describe '# checked-out requestable' do
+
+      it "should have borrow direct request service available" do
+        expect(requestable_charged.services.include?('bd')).to be true
+      end
+
+      it "should have ILL request service available" do
+        expect(requestable_charged.services.include?('ill')).to be true
+      end
+
+      it "should have recall request service available" do
+        expect(requestable_charged.services.include?('recall')).to be true
+      end
+
+    end
+
+    let(:request_missing) { FactoryGirl.build(:request_missing_item) }
+    let(:requestable_missing) { request_missing.requestable.first }
+
+    describe '# missing requestable' do
+
+      it "should have borrow direct request service available" do
+        expect(requestable_missing.services.include?('bd')).to be true
+      end
+
+      it "should have ILL request service available" do
+        expect(requestable_missing.services.include?('ill')).to be true
+      end
+
+      it "should NOT have recall request service available" do
+        expect(requestable_missing.services.include?('recall')).to be false
+      end
+
+    end
+
+    let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd) }
+    let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
+
+    describe '# reading_room requestable' do
+      it "should have Aeon request service available" do
+        expect(requestable_aeon_mudd.services.include?('aeon')).to be true
+      end
+    end
+
+    let(:request_paging) { FactoryGirl.build(:request_paging_available) }
+    let(:requestable_paging) { request_paging.requestable.first }
+
+    describe '# paging requestable' do
+      it "should have the Paging request service available" do
+        expect(requestable_paging.services.include?('paging')).to be true
+      end
+    end
+
   end
 
   context 'When a barcode only user visits the site' do
@@ -459,6 +518,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     }
     let(:request) { Requests::Request.new(params) }
     let(:requestable) { request.requestable.first }
+
     describe '#requestable' do
       it "should have recap request service available" do
         expect(requestable.services.include?('recap')).to be true
@@ -467,9 +527,50 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.services.include?('recap_edd')).to be true
       end
     end
+
+    let(:request_paging) { FactoryGirl.build(:request_paging_available_barcode_patron) }
+    let(:requestable_paging) { request_paging.requestable.first }
+
+    describe '#paging requestable' do
+      it "should have the Paging request service available" do
+        expect(requestable_paging.services.include?('paging')).to be true
+      end
+    end
+
+    let(:request_charged) { FactoryGirl.build(:request_with_items_charged_barcode_patron) }
+    let(:requestable_charged) { request_charged.requestable.first }
+
+    describe '#checked-out requestable' do
+      it "should have recall request service available" do
+        expect(requestable_charged.services.include?('recall')).to be true
+      end
+
+      #Barcode users should NOT have the following privileges ...
+
+      it "should NOT have Borrow Direct request service available" do
+        expect(requestable_charged.services.include?('bd')).to be false
+      end
+
+      it "should NOT have ILL request service available" do
+        expect(requestable_charged.services.include?('ill')).to be false
+      end
+
+    end
+
+    let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd_barcode_patron) }
+    let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
+
+    describe '#reading room requestable' do
+
+      it "should have Aeon request service available" do
+        expect(requestable_aeon_mudd.services.include?('aeon')).to be true
+      end
+
+    end
+
   end
 
-  context 'When an access only user visits the site for a recap item' do
+  context 'When an access only user visits the site' do
     let(:user) { FactoryGirl.build(:unauthenticated_patron) }
     let(:params) {
       {
@@ -479,14 +580,57 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     }
     let(:request) { Requests::Request.new(params) }
     let(:requestable) { request.requestable.first }
-    describe '#requestable' do
+
+    describe '#recap requestable' do
       it "should have recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
-      #
-      xit "should not have recap edd request service available" do
-        expect(requestable.services.include?('recap_edd')).to be true
+
+      it "should NOT have recap edd request service available" do
+        expect(requestable.services.include?('recap_edd')).to be false
+      end
+
+    end
+
+    describe '#paging-requestable' do
+      let(:request_paging) { FactoryGirl.build(:request_paging_available_unauthenticated_patron) }
+      let(:requestable_paging) { request_paging.requestable.first }
+
+      it "should have the Paging request service available" do
+        expect(requestable_paging.services.include?('paging')).to be true
       end
     end
+
+      let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd_unauthenticated_patron) }
+      let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
+
+      describe '#reading room requestable' do
+
+        it "should have Aeon request service available" do
+          expect(requestable_aeon_mudd.services.include?('aeon')).to be true
+        end
+
+      end
+
+      #Barcode users should NOT have the following privileges ...
+      let(:request_charged) { FactoryGirl.build(:request_with_items_charged_unauthenticated_patron) }
+      let(:requestable_charged) { request_charged.requestable.first }
+
+      describe '#checked-out requestable' do
+        it "should NOT have recall request service available" do
+          expect(requestable_charged.services.include?('recall')).to be false
+        end
+
+        it "should NOT have Borrow Direct request service available" do
+          expect(requestable_charged.services.include?('bd')).to be false
+        end
+
+        it "should NOT have ILL request service available" do
+          expect(requestable_charged.services.include?('ill')).to be false
+        end
+
+      end
+
   end
+
 end

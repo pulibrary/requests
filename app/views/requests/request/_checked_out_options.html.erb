@@ -3,13 +3,15 @@
   <% if requestable.borrow_direct? %>
     <option value="bd"><%= I18n.t("requests.bd.request_label") %></option>
   <% end %>
-  <option value="ill"><%= I18n.t("requests.ill.request_label") %></option>
-  <% unless requestable.missing? %>
+  <% if requestable.ill_eligible? %>
+    <option value="ill"><%= I18n.t("requests.ill.request_label") %></option>
+  <% end %>
+  <% if requestable.recallable? %>
     <option value="recall"><%= I18n.t("requests.recall.request_label") %></option>
   <% end %>
 </select>
 <br/>
-  <% unless requestable.missing? %>
+<% if requestable.recallable? %>
   <select name="requestable[][pickup]" id="requestable__pickup" class="recall-pickup">
     <option value=""><%= I18n.t("requests.default.pickup_placeholder") %></option>
   </select>

@@ -148,7 +148,6 @@ module Requests
     end
 
     def traceable?
-      #return true if services.include?('trace')
       services.include?('trace') ? true : false
     end
 

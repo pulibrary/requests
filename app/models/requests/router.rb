@@ -47,15 +47,17 @@ module Requests
           services << 'online'
         else
           ## my item status is negative
-          if(requestable.charged? && auth_user?)
+          if(requestable.charged?)
             if (!requestable.enumerated? && cas_user? && !has_loanable?)
               services << 'bd'
             end
             if (cas_user? && !has_loanable?)
               services << 'ill'
             end
-            unless requestable.missing? && !has_loanable?
-              services << 'recall'
+            if !has_loanable? && auth_user?
+              unless requestable.missing?
+                services << 'recall'
+              end
             end
           elsif(requestable.in_process?)
             if auth_user?

@@ -17,7 +17,7 @@ module Requests
       end
       if request.post?
         unless params[:request][:email].nil?
-          email = params[:request][:email]
+          email = format_email(sanitize(params[:request][:email]))
         end
         unless params[:request][:user_name].nil?
           user_name = sanitize(params[:request][:user_name])

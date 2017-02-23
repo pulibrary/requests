@@ -50,19 +50,24 @@
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
-              <% if requestable.has_item_data? || requestable.on_order? %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                   <td class='request--select'>
-                    <%= hidden_field_tag 'requestable[][selected]', false %>
-                    <%= item_checkbox @request.requestable, requestable %>
-                    <%= hidden_fields_item requestable %>
+                    <% if requestable.has_item_data? %>
+                      <%= hidden_field_tag 'requestable[][selected]', false %>
+                      <%= item_checkbox @request.requestable, requestable %>
+                      <%= hidden_fields_item requestable %>
+                    <% end %>
                   </td>
                   <td>
-                    <%= enum_copy_display requestable.item %>
+                    <% if requestable.has_item_data? %>
+                      <%= enum_copy_display requestable.item %>
+                    <% end %>
                   </td>
                   <td>
-                    <%= requestable.item["status"] %><br/>
-                    <%= status_label requestable %>
+                    <% if requestable.has_item_data? %>
+                      <%= requestable.item["status"] %><br/>
+                      <%= status_label requestable %>
+                    <% end %>
                   </td>
                 <td class='request--options'>
                   <% if requestable.ill_eligible? %>
@@ -91,7 +96,6 @@
                   <% end %>
                 </td>
               </tr>
-              <% end %>
               <% if requestable.online? %>
                 <%= render partial: "online_items", locals: { requestable: requestable } %>
               <% end %>

@@ -2,7 +2,7 @@ module Requests
   module ApplicationHelper
     def sanitize(str)
       if str.is_a? String
-        str.gsub(/[^A-Za-z0-9]/, '')
+        str.gsub(/[^A-Za-z0-9@\-_\.]/, '')
       end
       str
     end

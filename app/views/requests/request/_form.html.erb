@@ -1,5 +1,5 @@
 <% if @user.guest && @patron.blank? %>
-  <%= simple_form_for(:request, { url: "/requests/#{@request.requestable.first.bib['id']}", method: :post} ) do |l| %>
+  <%= simple_form_for(:request, { url: "/requests/#{@request.requestable.first.bib['id']}", method: :post, html: { id: 'access_form'} } ) do |l| %>
     <%= render partial: 'user_login_options', locals: { l: l } %>
   <% end %>
 <% else %>

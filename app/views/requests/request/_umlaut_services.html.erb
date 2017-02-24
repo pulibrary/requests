@@ -29,9 +29,9 @@
             bd_link = $(html).find("a.bd-direct-link").attr("href")
             jQuery('body').data( "bd", { link: bd_link } );
             // comments out display issues with BD
-            // jQuery('.umlaut-services').hide();
-            // jQuery('table.request--available_items').show();
-            // jQuery('.submit--request').show();
+            jQuery('.umlaut-services').hide();
+            jQuery('table.request--available_items').show();
+            jQuery('.submit--request').show();
           }
         }
       });
@@ -39,9 +39,9 @@
     });
     </script>
     <div class='umlaut-services'>
-      <div id="borrow_direct" class='availability--panel availability_borrow-direct availability--panel_umlaut'>
+      <div id="borrow_direct" class='availability--panel availability_borrow-direct'>
         <p>
-          <img style="display:inline-block" src="/assets/requests/spinner.gif"/>
+          <img style="display:inline-block" src="<%= asset_path('requests/spinner.gif') %>"/>
           Checking BorrowDirect availablility for you.
         </p>
       </div>

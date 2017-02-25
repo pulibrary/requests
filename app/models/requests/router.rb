@@ -51,10 +51,22 @@ module Requests
             if (!requestable.enumerated? && cas_user? && !has_loanable?)
               services << 'bd'
             end
+            # for mongraphs - title level check
             if (cas_user? && !has_loanable?)
               services << 'ill'
             end
+            # for serials - copy level check
+            if (cas_user? && requestable.enumerated?)
+              services << 'ill'
+            end
+            # for mongraphs - title level check
             if !has_loanable? && auth_user?
+              unless requestable.missing?
+                services << 'recall'
+              end
+            end
+            # for serials - copy level check
+            if (auth_user? && requestable.enumerated?)
               unless requestable.missing?
                 services << 'recall'
               end

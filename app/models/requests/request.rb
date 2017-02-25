@@ -132,7 +132,7 @@ module Requests
     def has_loanable_copy?
       copy_available = []
       requestable_unrouted.each do |request|
-        if request.charged? || (request.aeon? || !request.circulates? || request.enumerated?)
+        if request.charged? || (request.aeon? || !request.circulates?) #|| request.enumerated?)
           copy_available << false
         else
           copy_available << true
@@ -295,7 +295,11 @@ module Requests
 
     #if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-      requestable.any? { |r| r.services.include? 'bd' }
+      if has_loanable_copy? && has_enumerated?
+        false   
+      else    
+        requestable.any? { |r| r.services.include? 'bd' }   
+      end
     end
 
     def ill_eligible?

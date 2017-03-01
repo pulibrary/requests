@@ -3,13 +3,17 @@
   They will automatically be included in application.css.
 */
 
+div.go-back-link {
+  margin-top: 10px;
+}
+
 .request--edd {
   display: none;
 }
 
 .table-responsive  {
-    overflow-x: visible;
-    overflow-y: visible;
+  overflow-x: visible;
+  overflow-y: visible;
 }
 
 .recall-pickup {
@@ -23,15 +27,15 @@
 }
 
 .btn-sub-text {
-    display: block;
-    font-size: 0.85em;
+  display: block;
+  font-size: 0.85em;
 }
 
 .or-divider {
-    background-color: #fff;
-    color: #737373;
-    font-size: 1.1em;
-    margin: -32px auto 10px;
-    text-align: center;
-    width: 10ch;
+  background-color: #fff;
+  color: #737373;
+  font-size: 1.1em;
+  margin: -32px auto 10px;
+  text-align: center;
+  width: 10ch;
 }

@@ -1,5 +1,5 @@
 <% if @user.guest && @patron.blank? %>
-  <%= simple_form_for(:request, { url: "/requests/#{@request.requestable.first.bib['id']}", method: :post, html: { id: 'logins'}} ) do |l| %>
+  <%= simple_form_for(:request, { url: "/requests/#{@request.requestable.first.bib['id']}?mfhd=#{@request.mfhd}&source=#{@request.source}", method: :post, html: { id: 'logins'}} ) do |l| %>
     <%= render partial: 'user_login_options', locals: { l: l } %>
   <% end %>
 <% elsif !@user.guest && @patron['barcode'].blank? %>
@@ -28,6 +28,7 @@
     </div>
     <%= render partial: 'umlaut_services' %>
     <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
+
       <%= hidden_fields_mfhd @request.holdings[mfhd] %>
       <div id="holding<%= mfhd %>" class="table-responsive items">
         <h2><%= @request.holdings[mfhd]["location"] %> <%= @request.holdings[mfhd]["call_number"] %></h2>

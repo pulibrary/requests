@@ -3,10 +3,6 @@
   They will automatically be included in application.css.
 */
 
-div.go-back-link {
-  margin-top: 10px;
-}
-
 .request--edd {
   display: none;
 }
@@ -38,4 +34,8 @@ div.go-back-link {
   margin: -32px auto 10px;
   text-align: center;
   width: 10ch;
+}
+
+div#go-back-link {
+  margin-top: 10px;
 }

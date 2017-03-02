@@ -12,26 +12,30 @@ module Requests
 
     def generate
       request_params[:system_id] = sanitize(params[:system_id])
-      unless params[:source].nil?
+
+      unless params[:source].blank?
         request_params[:source] = sanitize(params[:source])
       end
+
+      unless params[:mfhd].blank?
+        request_params[:mfhd] = sanitize(params[:mfhd])
+      end
+
       if request.post?
-        unless params[:request][:email].nil?
+        unless params[:request][:email].blank?
           email = format_email(sanitize(params[:request][:email]))
         end
-        unless params[:request][:user_name].nil?
+        unless params[:request][:user_name].blank?
           user_name = sanitize(params[:request][:user_name])
         end
       end
+
       if params[:mode].nil?
         @mode = 'standard'
       else
         @mode = sanitize(params[:mode])
       end
       @title = "Request ID: #{request_params[:system_id]}"
-      unless params[:mfhd].nil?
-        request_params[:mfhd] = sanitize(params[:mfhd])
-      end
 
       @user = current_or_guest_user
       if !@user.guest?
@@ -50,6 +54,7 @@ module Requests
                  :expire_date=>nil,
                  :patron_id=>nil}.with_indifferent_access
       end
+
       @request = Requests::Request.new({
         system_id: request_params[:system_id],
         mfhd: request_params[:mfhd],

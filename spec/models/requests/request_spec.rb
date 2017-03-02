@@ -1141,4 +1141,29 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context "When passed mfhd and source params" do
+    let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:params) {
+      {
+        system_id: '1969881',
+        mfhd: '2246633',
+        source: 'pulsearch',
+        user: user
+      }
+    }
+    let(:request_with_optional_params) { described_class.new(params) }
+    subject { request_with_optional_params }
+
+    describe "#request" do
+      it "should have accessible mfhd param" do
+        expect(subject.mfhd).to eq('2246633')
+      end
+
+      it "should have accessible source param" do
+        expect(subject.source).to eq('pulsearch')
+      end
+
+    end
+  end
 end

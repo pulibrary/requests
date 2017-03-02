@@ -8,6 +8,7 @@ module Requests
     attr_accessor :user_barcode
     attr_accessor :user_name
     attr_accessor :source
+    attr_accessor :mfhd
 
     include BorrowDirect
     include Requests::Bibdata
@@ -26,6 +27,14 @@ module Requests
       @doc ||= solr_doc(system_id)
       @requestable_unrouted ||= build_requestable
       @requestable ||= route_requests(@requestable_unrouted)
+    end
+
+    def mfhd
+      @mfhd
+    end
+
+    def source
+      @source
     end
 
     def doc
@@ -296,9 +305,9 @@ module Requests
     #if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
       if has_loanable_copy? && has_enumerated?
-        false   
-      else    
-        requestable.any? { |r| r.services.include? 'bd' }   
+        false
+      else
+        requestable.any? { |r| r.services.include? 'bd' }
       end
     end
 

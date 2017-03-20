@@ -82,7 +82,7 @@ en:
     trace:
       email: "trace@princeton.edu"
       email_subject: "Trace Request"
-      brief_msg: "Trace a Missing Item. Our Circulation Department will search for this item and notify you it is located."
+      brief_msg: "Trace a Missing Item. Library staff will search for this item and contact you with an outcome."
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
       access_msg: 'Access Users are not eligible for trace requests.'
     account:
@@ -94,4 +94,3 @@ en:
       pul_user_service_msg: 'Princeton Faculty, Staff, and Students need to sign in to see Borrow Direct Services'
       other_user_login_btn: "View Available Request Options"
       cas_user_no_barcode_msg: 'You must register with the library and obtain a barcode before you can request materials. Please contact the Circulation Desk for details.'
-

@@ -115,8 +115,15 @@ module Requests
     end
 
     def login_url(request)
-      #{}"/requests/#{request.requestable.first.bib['id']}?mfhd=#{request.mfhd}&source=#{request.source}"
-      "/requests/#{request.requestable.first.bib['id']}?mfhd=#{request.mfhd}&source=#{request.source}"
+      url = "/requests/#{request.requestable.first.bib['id']}?"
+      params = []
+      if !request.mfhd.nil?
+        params.push("mfhd=#{request.mfhd}")
+      end
+      if !request.source.nil?
+        params.push("source=#{request.source}")
+      end
+      url += params.join("&")
     end
 
     def return_url(source, id)

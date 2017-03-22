@@ -114,6 +114,11 @@ module Requests
       end
     end
 
+    def login_url(request)
+      #{}"/requests/#{request.requestable.first.bib['id']}?mfhd=#{request.mfhd}&source=#{request.source}"
+      "/requests/#{request.requestable.first.bib['id']}?mfhd=#{request.mfhd}&source=#{request.source}"
+    end
+
     def return_url(source, id)
       case source
       when 'catalog'

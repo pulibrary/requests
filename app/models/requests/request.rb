@@ -70,9 +70,11 @@ module Requests
               )
               # sometimes availability returns items without any status
               # see https://github.com/pulibrary/marc_liberation/issues/174
+
               unless item["status"].nil?
                 requestable_items << Requests::Requestable.new(params)
               end
+
             end
           else
             params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] } )
@@ -349,7 +351,7 @@ module Requests
       end
 
       def item_current_location(item)
-        item['temp_loc'] || item['location']
+          item['temp_loc'] || item['location']
       end
   end
 end

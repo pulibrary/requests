@@ -25,7 +25,9 @@
             <span class="error error-email"></span>
           </div>
         </fieldset>
-        <%= l.hidden_field :mfhd, value: @request.mfhd %>
+        <% unless @request.mfhd.nil? %>
+          <%= l.hidden_field :mfhd, value: @request.mfhd %>
+        <% end %>
         <%= l.hidden_field :source, value: @request.source %>
         <%= l.submit I18n.t("requests.account.other_user_login_btn"), class: "btn btn-primary submit--login" %>
         <div id="go-back-link">

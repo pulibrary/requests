@@ -62,7 +62,7 @@ en:
       service_error: "You cannot recall this item. "
       access_msg: 'Access Users are not eligible for Recall requests.'
     bd:
-      request_label: "Borrow Direct (3-6 business days)"
+      request_label: "Borrow Direct (4 business days or less)"
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
       email_config_msg: "You will be notified via email when your item has arrived and can be picked up"
     in_process:

@@ -42,6 +42,12 @@ FactoryGirl.find_definitions
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, timeout: 60)
+end
+Capybara.javascript_driver = :poltergeist
+
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 

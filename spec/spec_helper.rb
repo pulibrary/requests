@@ -97,6 +97,8 @@ RSpec.configure do |config|
       raise 'AJAX request took longer than 5 seconds.' if counter >= 10
     end
   end
+  # Capybara.default_wait_time
+
   # config.before(:each) do
   #
   #     stub_request(:post, "http://libweb5.princeton.edu/RecapRequestService").

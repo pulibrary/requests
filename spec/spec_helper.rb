@@ -42,6 +42,12 @@ FactoryGirl.find_definitions
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, timeout: 60)
+end
+Capybara.javascript_driver = :poltergeist
+
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
@@ -81,6 +87,17 @@ RSpec.configure do |config|
   config.include Requests::Engine.routes.url_helpers
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
+
+
+  def wait_for_ajax
+    counter = 0
+    while page.execute_script('return $.active').to_i > 0
+      counter += 1
+      sleep(0.1)
+      raise 'AJAX request took longer than 5 seconds.' if counter >= 10
+    end
+  end
+  # Capybara.default_wait_time
 
   # config.before(:each) do
   #

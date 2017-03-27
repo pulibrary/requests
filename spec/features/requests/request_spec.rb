@@ -77,6 +77,34 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       expect(page).to have_content 'www.jstor.org'
     end
 
+    it 'allows guest patrons to request Aeon items' do
+      visit '/requests/561774?mfhd=612742'
+      click_link(I18n.t('requests.account.other_user_login_msg'))
+      fill_in 'request_email', :with => 'name@email.com'
+      fill_in 'request_user_name', :with => 'foobar'
+      click_button I18n.t('requests.account.other_user_login_btn')
+      click_link('Request to View in Reading Room')
+      expect(page).to have_content 'Special Collections Research Account'
+    end
+
+    it 'prohibits guest patrons from using Borrow Direct, ILL, and Recall on Missing items' do
+      visit '/requests/1788796?mfhd=2053005'
+      click_link(I18n.t('requests.account.other_user_login_msg'))
+      fill_in 'request_email', :with => 'name@email.com'
+      fill_in 'request_user_name', :with => 'foobar'
+      click_button I18n.t('requests.account.other_user_login_btn')
+      expect(page).to have_content 'Item is not requestable.'
+    end
+
+    it 'allows guests to request from Annex, but not from Firestone in mixed holding' do
+      visit '/requests/2286894'
+      click_link(I18n.t('requests.account.other_user_login_msg'))
+      fill_in 'request_email', :with => 'name@email.com'
+      fill_in 'request_user_name', :with => 'foobar'
+      click_button I18n.t('requests.account.other_user_login_btn')
+      expect(page).to have_field 'requestable__selected', disabled: false
+      expect(page).to have_field 'requestable_selected_7484608', disabled: true
+    end
 
   end
   # # when current_user is available test these

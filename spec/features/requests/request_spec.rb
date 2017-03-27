@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes } do
 
+  let(:unauthenticated_patron) { FactoryGirl.build(:unauthenticated_patron) }
   let(:recap_id) { '9944355' }
+  let(:in_process) { '9646099' }
   let(:voyager_id) { '9493318' }
   let(:thesis_id) { 'dsp01rr1720547' }
 
@@ -13,7 +15,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     end
   end
 
-  describe 'When visiting a request item without logging in', js: true do
+  describe 'When unauthenticated patron visits a request item', js: true do
 
     it "displays three authentication options" do
       visit '/requests/9944355'
@@ -21,6 +23,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       expect(page).to have_content(I18n.t('requests.account.barcode_login_msg'))
       expect(page).to have_content(I18n.t('requests.account.other_user_login_msg'))
     end
+
+  end
+
+  describe 'When visiting a request item without logging in', js: true do
 
     it 'allows guest patrons to identify themselves and view the form' do
       visit '/requests/9944355'
@@ -40,7 +46,37 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       expect(page).to have_no_content 'Electronic Delivery'
       select('Firestone Library', :from => 'requestable__pickup')
       click_button 'Request this Item'
+      expect(page).to have_content 'Request submitted'
     end
+
+    it 'prohibits guest patrons from requesting In-Process items' do
+      visit '/requests/9646099'
+      click_link(I18n.t('requests.account.other_user_login_msg'))
+      fill_in 'request_email', :with => 'name@email.com'
+      fill_in 'request_user_name', :with => 'foobar'
+      click_button I18n.t('requests.account.other_user_login_btn')
+      expect(page).to have_content 'In Process'
+      expect(page).to have_content 'Item is not requestable.'
+    end
+
+    it 'prohibits guest patrons from requesting On-Order items' do
+      visit '/requests/10081566'
+      click_link(I18n.t('requests.account.other_user_login_msg'))
+      fill_in 'request_email', :with => 'name@email.com'
+      fill_in 'request_user_name', :with => 'foobar'
+      click_button I18n.t('requests.account.other_user_login_btn')
+      expect(page).to have_content 'Item is not requestable.'
+    end
+
+    it 'allows guest patrons to access Online items' do
+      visit '/requests/9994692'
+      click_link(I18n.t('requests.account.other_user_login_msg'))
+      fill_in 'request_email', :with => 'name@email.com'
+      fill_in 'request_user_name', :with => 'foobar'
+      click_button I18n.t('requests.account.other_user_login_btn')
+      expect(page).to have_content 'www.jstor.org'
+    end
+
 
   end
   # # when current_user is available test these

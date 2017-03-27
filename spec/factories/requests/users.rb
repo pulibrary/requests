@@ -17,7 +17,7 @@ FactoryGirl.define do
     factory :valid_barcode_patron do
       provider 'barcode'
       sequence(:uid) { srand.to_s[2..15] }
-      username 'Student'
+      username 'Barcode Patron'
     end
 
     factory :unauthenticated_patron do

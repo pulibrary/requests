@@ -6,4 +6,7 @@ VCR.configure do |c|
   c.ignore_localhost = true
   c.configure_rspec_metadata!
   c.ignore_hosts 'catalog.princeton.edu','libweb5.princeton.edu'
+  c.ignore_request do |request|
+    request.uri.include? 'patron'
+  end
 end

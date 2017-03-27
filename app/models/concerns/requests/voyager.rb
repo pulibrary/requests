@@ -6,7 +6,8 @@ module Requests
     def conn
       conn = Faraday.new(:url => Requests.config[:voyager_api_base]) do |faraday|
         faraday.request  :multipart             # allow XML data to be sent with request
-        faraday.response :logger                  # log requests to STDOUT
+        faraday.response :logger if !Rails.env.test?
+        #faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
       conn

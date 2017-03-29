@@ -29,13 +29,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
   context 'a princeton net ID user' do
     let(:user) { FactoryGirl.create(:user) }
-
-    before(:each) do
-      
-    end
-    #before(:each) { @request.env['devise.mapping'] = Devise.mappings[:user] }
     describe 'When visiting a voyager ID as a CAS User' do
-
       it 'displays the sign in page with a CAS User message' do
         visit "/requests/#{voyager_id}"
         expect(page).to have_content I18n.t('requests.account.other_user_login_msg')
@@ -47,6 +41,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           .to_return(status: 200, body: valid_patron_response, headers: {})
         login_as user
         visit "/requests/#{voyager_id}"
+        expect(page).to have_content 'Electronic Delivery'
         expect(page).to have_selector '#request_user_barcode'
       end
     end
@@ -66,6 +61,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
         login_as user
         visit "/requests/#{voyager_id}"
+        expect(page).to have_content 'Electronic Delivery'
         expect(page).to have_selector '#request_user_barcode'
       end
   end

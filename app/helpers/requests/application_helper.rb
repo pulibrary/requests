@@ -397,6 +397,12 @@ module Requests
       }.with_indifferent_access
     end
 
+    def display_status requestable
+      unless requestable.item.nil?
+        content_tag(:span, requestable.item['status'])
+      end
+    end
+
     def display_urls requestable
       content_tag :ol do
           requestable.urls.each do |key, value|

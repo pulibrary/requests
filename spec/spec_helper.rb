@@ -27,6 +27,7 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 require 'coveralls'
+require 'devise'
 
 
 WebMock.disable_net_connect!(allow_localhost: false)
@@ -35,6 +36,7 @@ Coveralls.wear!('rails')
 Capybara.javascript_driver = :poltergeist
 EngineCart.load_application!
 
+#WebMock.disable_net_connect!(allow_localhost: true, allow: [(ENV['umlaut_base']).to_s, %r{/bibliographic/}, %r{/locations/}, %r{/availability?}])
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
@@ -81,7 +83,20 @@ RSpec.configure do |config|
   config.include Requests::Engine.routes.url_helpers
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
-
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  #config.include Devise::Test::ControllerHelpers, type: :feature
+  # config.include Devise::Test::IntegrationHelpers, type: :feature
+  # config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Warden::Test::Helpers#, type: :feature
+  # config.include Warden::Test::Helpers, type: :request
+  config.include Features::SessionHelpers, type: :feature
+  config.before(:each, type: :feature) do
+    Warden.test_mode!
+    OmniAuth.config.test_mode = true
+  end
+  config.after(:each, type: :feature) do
+    Warden.test_reset!
+  end
   # config.before(:each) do
   #
   #     stub_request(:post, "http://libweb5.princeton.edu/RecapRequestService").
@@ -143,4 +158,8 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+def fixture(file)
+  File.open(File.join(File.dirname(__FILE__), 'fixtures', file), 'rb')
 end

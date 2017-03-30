@@ -69,6 +69,9 @@ en:
     bd:
       request_label: "Borrow Direct (4 business days or less)"
       brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
+      success: "Your request has been submitted successfully to Borrow Direct."
+      account_fail: 'Your current Library Account status prevents you from using Borrow Direct. Consult the Fireston Circulation Desk about how to resolve this issue'
+      auto_search_fail: 'We could not identify a direct match for this title in Borrow Direct. Try a search for this item using the link below'
       email_config_msg: "You will be notified via email when your item has arrived and can be picked up"
     in_process:
       email: "fstcirc@princeton.edu"

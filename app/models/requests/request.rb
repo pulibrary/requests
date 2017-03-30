@@ -10,7 +10,6 @@ module Requests
     attr_accessor :source
     attr_accessor :mfhd
 
-    include BorrowDirect
     include Requests::Bibdata
     include Requests::Ctx
 
@@ -182,7 +181,7 @@ module Requests
     end
 
     def serial?
-      doc[:format] == 'Journal'
+      return true if doc[:format].include? 'Journal'
     end
 
     def available?
@@ -315,6 +314,18 @@ module Requests
 
     def ill_eligible?
       requestable.any? { |r| r.services.include? 'ill' }
+    end
+
+    def isbn_numbers?
+      if doc.key? 'isbn_s'
+        true
+      else
+        false
+      end
+    end
+
+    def isbn_numbers
+      doc['isbn_s']
     end
 
     private

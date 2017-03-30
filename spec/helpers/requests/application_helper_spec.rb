@@ -1,7 +1,15 @@
 require 'spec_helper'
 
-RSpec.describe ApplicationHelper do
+RSpec.describe Requests::ApplicationHelper do
 
+  let(:isbns) {
+      [
+        '9780544343757',
+        '179758877'
+      ]
+    }
+  let(:isbn_string_helper) { described_class.isbn_string(isbns) }
+  
   describe "#pickup_choices" do
     let(:on_order_params) {
       {
@@ -53,6 +61,12 @@ RSpec.describe ApplicationHelper do
     context "When an item is not in process or on order" do
       xit "Shows the pickups selected for the holding location" do
       end
+    end
+  end
+
+  describe '#isbn_string' do
+    xit 'returns a list of formatted isbns' do
+      expect(isbn_string_helper).to eq('9780544343757,179758877')
     end
   end
 end

@@ -6,7 +6,7 @@ module Requests
     def conn
       conn = Faraday.new(:url => Requests.config[:gfa_base]) do |faraday|
         faraday.request  :url_encoded             # form-encode POST params
-        faraday.response :logger                  # log requests to STDOUT
+        faraday.response :logger if !Rails.env.test? # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
       conn

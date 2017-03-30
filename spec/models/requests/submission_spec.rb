@@ -65,6 +65,10 @@ describe Requests::Submission do
         expect(submission.errors.full_messages.size).to eq(0)
       end
 
+      it "has a system ID" do
+        expect(submission.id).to eq(bib[:id])
+      end
+
       it "has a user barcode" do
         expect(submission.user_barcode).to be_truthy
       end
@@ -222,6 +226,88 @@ describe Requests::Submission do
   end
 
   context 'Borrow Direct Eligible Item' do
+    let(:user_info) {
+      {
+        "user_name"=>"Foo Request",
+        "user_barcode"=>"22101007797777",
+        "email"=>"foo@princeton.edu",
+        "source"=>"pulsearch"}
+
+    }
+    let(:requestable) {
+      [
+        {
+          "selected"=>"true",
+          "mfhd"=>"534137",
+          "call_number"=>"HA202 .U581",
+          "location_code"=>"rcppa",
+          "item_id"=>"3059236",
+          "delivery_mode_3059236"=>"print",
+          "barcode"=>"32101044283008",
+          "enum"=>"2000 (13th ed.)",
+          "copy_number"=>"1",
+          "status"=>"Not Charged",
+          "type"=>"bd",
+          "edd_start_page"=>"",
+          "edd_end_page"=>"",
+          "edd_volume_number"=>"",
+          "edd_issue"=>"",
+          "edd_author"=>"",
+          "edd_art_title"=>"",
+          "edd_note"=>"",
+          "pickup"=>"Firestone Library"
+        },
+        {
+          "selected"=>"false",
+        }
+      ]
+    }
+    let(:bib) {
+      {
+        "id"=>"491654",
+        "title"=>"County and city data book.",
+        "author"=>"United States",
+        "date"=>"1949",
+      }
+    }
+    let(:bd) {
+      {
+        "auth_id" => 'foobarfoobar',
+        "query_params" => '9780544343757'
+      }
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib,
+        bd: bd
+      }
+    }
+
+    let(:submission) {
+      Requests::Submission.new(params)
+    }
+
+    describe 'A valid Borrow Direct Direct Request' do
+      it 'has a borrow direct eligible item selected' do
+        expect(submission.items.first).to be_truthy
+        expect(submission.items.first['type']).to eq('bd')
+      end
+
+      it 'has an auth_id' do
+        expect(submission.bd['auth_id']).to eq(bd['auth_id'])
+      end
+
+      it 'has a pickup location' do
+        expect(submission.items.first['pickup']).to eq(requestable.first['pickup'])
+      end
+
+      it 'has query parameters' do
+        expect(submission.bd['query_params']).to eq(bd['query_params'])
+      end
+    end
+
   end
 
   context 'Recall' do
@@ -327,4 +413,661 @@ describe Requests::Submission do
     end
   end
 
+  context 'Invalid Submissions' do
+    let(:user_info) {
+      {
+        "user_name"=>"Foo Request",
+        "user_barcode"=>"22101007797777",
+        "email"=>"foo@princeton.edu",
+        "source"=>"pulsearch",
+        "patron_id"=>"12345",
+        "patron_group"=>"staff"
+      }
+    }
+    let(:bib) {
+      {
+        "id"=>"495220",
+        "title"=>"Journal of the Polynesian Society.",
+        "author"=>"Polynesian Society (N.Z.)",
+        "date"=>"1892"
+      }
+    }
+    describe 'An empty submission' do
+      let(:requestable) {
+        [
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'contains an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+    end
+
+    describe 'A submission without a pickup location' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"3059236",
+            "barcode"=>"32101044283008",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Not Charged",
+            "type"=>"annexa",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the item ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('3059236')).to be true
+      end
+    end
+
+    describe 'A submission without a pickup location and item ID' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Not Charged",
+            "type"=>"annexa",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+      end
+    end
+
+    describe 'A recall submission without a pickup location and item ID' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Missing",
+            "type"=>"recall",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+      end
+    end
+    describe 'A recall submission without a pickup location' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"12131313",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Missing",
+            "type"=>"annexa",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the item ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('12131313')).to be true
+      end
+    end
+    describe 'A borrow direct submission without a pickup location and item ID' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Missing",
+            "type"=>"bd",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+      end
+    end
+    describe 'A bd submission without a pickup location' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"12131313",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Missing",
+            "type"=>"bd",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the item ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('12131313')).to be true
+      end
+    end
+    describe 'A recap submission without a pickup location and item ID' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Not Charged",
+            "type"=>"recap",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+      end
+    end
+    describe 'A recap submission without delivery type' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"121333",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "status"=>"Not Charged",
+            "type"=>"recap",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('121333')).to be true
+      end
+    end
+    describe 'A recap print submission without a pickup location' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"121333",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "delivery_mode_121333"=>"print",
+            "status"=>"Not Charged",
+            "type"=>"recap",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('121333')).to be true
+      end
+    end
+    describe 'A recap edd submission without start page' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"121333",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "delivery_mode_121333"=>"print",
+            "status"=>"Not Charged",
+            "type"=>"recap",
+            "edd_start_page"=>"",
+            "edd_end_page"=>"",
+            "edd_volume_number"=>"",
+            "edd_issue"=>"",
+            "edd_author"=>"",
+            "edd_art_title"=>"foo",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('121333')).to be true
+      end
+    end
+    describe 'A recap edd submission without a title' do
+      let(:requestable) {
+        [
+          {
+            "selected"=>"true",
+            "mfhd"=>"534137",
+            "call_number"=>"HA202 .U581",
+            "location_code"=>"rcppa",
+            "item_id"=>"121333",
+            "barcode"=>"",
+            "enum"=>"2000 (13th ed.)",
+            "copy_number"=>"1",
+            "delivery_mode_121333"=>"print",
+            "status"=>"Not Charged",
+            "type"=>"recap",
+            "edd_start_page"=>"1",
+            "edd_end_page"=>"40",
+            "edd_volume_number"=>"8",
+            "edd_issue"=>"30",
+            "edd_author"=>"",
+            "edd_art_title"=>"",
+            "edd_note"=>"",
+            "pickup"=>""
+          },
+          {
+            "selected"=>"false",
+          }
+        ]
+      }
+      let(:params) {
+        {
+          request: user_info,
+          requestable: requestable,
+          bib: bib
+        }
+      }
+
+      let(:submission) {
+        Requests::Submission.new(params)
+      }
+      before(:each) do
+        submission.valid?
+      end
+
+      it 'is invalid' do
+        expect(submission.valid?).to be false
+      end
+
+      it 'has an error message' do
+        expect(submission.errors.messages).to be_truthy
+      end
+
+      it 'has an error message with the mfhd ID as the message key' do
+        expect(submission.errors.messages[:items].first.keys.include?('121333')).to be true
+      end
+    end
+  end
 end

@@ -1,0 +1,62 @@
+require 'borrow_direct'
+
+module Requests
+  class BorrowDirectLookup
+
+    attr_reader :query_params
+    attr_reader :find_response
+    attr_reader :request_number
+
+    def initialize
+    end
+
+    # default method using BorrowDirect::Defaults.find_item_patron_barcode
+    def find(query_params, barcode=nil)
+      ## failed lookup response looks like 
+      ## #<BorrowDirect::FindItem::Response:0x007fd34f289900 @response_hash={"Problem"=>{"ErrorCode"=>"PUBFI002", "ErrorMessage"=>"No result"}}, @auth_id="lO1ufRAj6CcG9AqOHV_kks3ozR8">
+      ## good response looks like 
+      ## #<BorrowDirect::FindItem::Response:0x007fd353863980 @response_hash={"Available"=>true, "SearchTerm"=>"isbn=0415296633", "RequestLink"=>{"ButtonLink"=>"AddRequest", "ButtonLabel"=>"Request", "RequestMessage"=>"Select a pickup location and click the Request button to order this item through Borrow Direct."}, "NumberOfRecords"=>1, "PickupLocation"=>[{"PickupLocationCode"=>"I", "PickupLocationDescription"=>"Architecture Library"}, {"PickupLocationCode"=>"A", "PickupLocationDescription"=>"East Asian Library"}, {"PickupLocationCode"=>"B", "PickupLocationDescription"=>"Engineering Library"}, {"PickupLocationCode"=>"C", "PickupLocationDescription"=>"Firestone Library"}, {"PickupLocationCode"=>"E", "PickupLocationDescription"=>"Lewis Library"}, {"PickupLocationCode"=>"F", "PickupLocationDescription"=>"Mendel Music Library"}, {"PickupLocationCode"=>"D", "PickupLocationDescription"=>"Plasma Physics Library"}, {"PickupLocationCode"=>"H", "PickupLocationDescription"=>"Stokes Library"}]}, @auth_id="LSGSEDkamjcoLRNPxdNsgpbCD00">
+      begin
+        if barcode.nil?
+          @find_response = ::BorrowDirect::FindItem.new.find(query_params)
+        else
+          @find_response = ::BorrowDirect::FindItem.new(barcode).find(query_params)
+        end
+      rescue *BorrowDirect::Error => error
+        @find_response = { error: error.message}
+      end
+    end
+
+    # param is a solr document using pul schema key => value. Returns title/author query as a fallback
+    def fallback_query(params)
+      ::BorrowDirect::GenerateQuery.new.normalized_author_title_query(params)
+    end
+
+    def available?
+      if find_response.requestable?
+        true
+      else
+        false
+      end
+    end
+
+    def fallback_query_params(doc)
+      params = {}
+      fallback_keys.each do |key,value|
+        unless doc[key].nil?
+          params[value] = doc[key].first
+        end
+      end
+      params
+    end
+
+    private
+
+      def fallback_keys
+        {
+          'title_citation_display' => :title,
+          'author_citation_display' => :author
+        }
+      end
+  end
+end

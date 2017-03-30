@@ -80,6 +80,8 @@ module Requests
     def hidden_service_options requestable
       if(requestable.services.include? 'annexa')
         request_input('annexa')
+      elsif(requestable.services.include? 'bd')
+        request_input('bd')
       elsif(requestable.services.include? 'annexb')
         request_input('annexb')
       elsif(requestable.services.include? 'pres')
@@ -245,6 +247,17 @@ module Requests
           end
         end
       end
+    end
+
+    def hidden_fields_borrow_direct request
+      hidden_bd_tags = ''
+      hidden_bd_tags += hidden_field_tag 'bd[auth_id]', '', value: ''
+      hidden_bd_tags += hidden_field_tag 'bd[query_params]', '', value: isbn_string(request.isbn_numbers)
+      hidden_bd_tags.html_safe
+    end
+
+    def isbn_string array_of_isbns
+      array_of_isbns.join(',')
     end
 
     def hidden_fields_request request

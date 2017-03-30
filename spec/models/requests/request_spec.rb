@@ -117,6 +117,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe '#user' do
+      it 'returns a user object' do
+        expect(subject.user.is_a? User).to be true
+      end
+    end
+
+    describe '#holdings?' do
+      it 'returns holdings data' do
+        expect(subject.holdings?).to be_truthy
+      end
+    end
+
+    describe '#available?' do
+      it 'returns a list of items' do
+        expect(subject.available?).to be_truthy
+      end
+    end
+
     describe "#thesis?" do
       it "should not identify itself as a thesis request" do
         expect(subject.thesis?).to be_falsy
@@ -847,6 +865,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.last.services.include?('recap_edd')).to be_falsy
       end
     end
+
+    describe '#serial?' do
+      it 'returns true when the item is a serial' do
+        expect(subject.serial?).to be true
+      end
+    end
   end
 
   context "When passed a Recallable Item that is eligible for Borrow Direct" do
@@ -870,6 +894,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#ill_eligible?" do
       it 'Should be ILL Eligible' do
         expect(subject.ill_eligible?).to be true
+      end
+    end
+
+    describe "#isbn_numbers?" do 
+      it 'Should return true if a request has an isbn' do
+        expect(subject.isbn_numbers?).to be true
+      end
+    end
+
+    describe "#isbn_numbers" do
+      it 'returns an array of all attached isbn numbers' do
+        expect(subject.isbn_numbers.is_a?(Array)).to be true
+        expect(subject.isbn_numbers.size).to eq(1)
       end
     end
 
@@ -1119,6 +1156,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe '#borrow_direct_eligible?' do
       it 'should be borrow_direct_eligible?' do
         expect(subject.borrow_direct_eligible?).to be true
+      end
+    end
+
+    describe '#isbn_numbers?' do
+      it 'returns false when there are no isbns present' do
+        expect(subject.isbn_numbers?).to be false
       end
     end
   end

@@ -33,10 +33,12 @@ require 'devise'
 WebMock.disable_net_connect!(allow_localhost: false)
 
 Coveralls.wear!('rails')
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, timeout: 60)
+end
 Capybara.javascript_driver = :poltergeist
 EngineCart.load_application!
 
-#WebMock.disable_net_connect!(allow_localhost: true, allow: [(ENV['umlaut_base']).to_s, %r{/bibliographic/}, %r{/locations/}, %r{/availability?}])
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
@@ -165,8 +167,12 @@ def wait_for_ajax
   while page.execute_script('return $.active').to_i > 0
     counter += 1
     sleep(0.1)
-    raise 'AJAX request took longer than 5 seconds.' if counter >= 10
+    raise 'AJAX request took longer than 20 seconds.' if counter >= 20
   end
+end
+
+def in_travis?
+  !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
 end
 
 def fixture(file)

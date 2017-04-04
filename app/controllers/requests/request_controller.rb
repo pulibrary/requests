@@ -54,7 +54,6 @@ module Requests
                  :expire_date=>nil,
                  :patron_id=>nil}.with_indifferent_access
       end
-
       @request = Requests::Request.new({
         system_id: request_params[:system_id],
         mfhd: request_params[:mfhd],
@@ -109,7 +108,6 @@ module Requests
           end
 
         end
-
         if @submission.valid? && !service_errors.any?
           format.js {
             flash.now[:success] = I18n.t('requests.submit.success')
@@ -181,7 +179,6 @@ module Requests
           logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
           return false
         end
-
         if patron_record.status == 403
           logger.info('403 Not Authorized to Connect to Patron Data Service at '\
                       "#{Requests.config[:bibdata_base]}/patron/#{uid}")

@@ -4,8 +4,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
   let(:voyager_id) { '9493318' }
   let(:thesis_id) { 'dsp01rr1720547' }
+  let(:in_process_id) { '10144698' }
+  let(:on_order_id) { '10081566' }
+
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
-  let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_guest.json') }
+  let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
 
   context 'all patrons' do
 
@@ -34,7 +37,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', :with => 'name@email.com'
           fill_in 'request_user_name', :with => 'foobar'
-          click_button I18n.t('requests.account.other_user_login_btn')
+          click_button(I18n.t('requests.account.other_user_login_btn'))
           wait_for_ajax
           expect(page).to have_content 'ReCAP Oversize DT549 .E274q'
         end
@@ -53,7 +56,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'prohibits guest patrons from requesting In-Process items' do
-          visit '/requests/9646099'
+          visit "/requests/#{in_process_id}"
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', :with => 'name@email.com'
           fill_in 'request_user_name', :with => 'foobar'
@@ -63,7 +66,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'prohibits guest patrons from requesting On-Order items' do
-          visit '/requests/10081566'
+          visit "/requests/#{on_order_id}"
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', :with => 'name@email.com'
           fill_in 'request_user_name', :with => 'foobar'
@@ -86,8 +89,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           fill_in 'request_email', :with => 'name@email.com'
           fill_in 'request_user_name', :with => 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
-          click_link('Request to View in Reading Room')
-          expect(page).to have_content 'Special Collections Research Account'
+          expect(page).to have_link('Request to View in Reading Room')
         end
 
         it 'prohibits guest patrons from using Borrow Direct, ILL, and Recall on Missing items' do
@@ -118,40 +120,80 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
   context 'a princeton net ID user' do
     let(:user) { FactoryGirl.create(:user) }
-    describe 'When visiting a voyager ID as a CAS User' do
-      it 'displays the sign in page with a CAS User message' do
-        visit "/requests/#{voyager_id}"
-        expect(page).to have_content I18n.t('requests.account.other_user_login_msg')
-      end
+    let(:recap_params) {
+      {
+        :Bbid=>"9493318",
+        :barcode=>"22101008199999",
+        :item=>"7303228",
+        :lname=>"Student",
+        :delivery=>"p",
+        :pickup=>"PN",
+        :startpage=>"",
+        :endpage=>"",
+        :email=>"a@b.com",
+        :volnum=>"",
+        :issue=>"",
+        :aauthor=>"",
+        :atitle=>"",
+        :note=>""
+      }
+    }
 
-      it 'display a request form for a ReCAP item.' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
-          .with(headers: { 'User-Agent' => 'Faraday v0.11.0' })
-          .to_return(status: 200, body: valid_patron_response, headers: {})
-        login_as user
+    before(:each) do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+        .with(headers: { 'User-Agent' => 'Faraday v0.12.0.1' })
+        .to_return(status: 200, body: valid_patron_response, headers: {})
+      login_as user
+    end
+
+    describe 'When visiting a voyager ID as a CAS User' do
+
+      it 'allow CAS patrons to request an available ReCAP item.' do
+        stub_request(:post, Requests.config[:gfa_base]).
+          with(headers: {'Accept'=>'*/*'}).
+          to_return(status: 201, body: "<document count='1' sent='true'></document>", headers: {})
         visit "/requests/#{voyager_id}"
         expect(page).to have_content 'Electronic Delivery'
         expect(page).to have_selector '#request_user_barcode'
+        choose('requestable__delivery_mode_7303228_print') #chooses 'print' radio button
+        select('Firestone Library', :from => 'requestable__pickup')
+        expect(page).to have_button('Request this Item', disabled: false)
+        # click_button 'Request this Item'
+        # wait_for_ajax
+        # expect(page).to have_content 'Request submitted'
       end
+
+      it 'allows CAS patrons to request In-Process items', js: true do
+        visit "/requests/#{in_process_id}"
+        expect(page).to have_content 'In Process'
+        select('Marquand Library of Art and Archaeology', :from => 'requestable__pickup')
+        expect(page).to have_button('Request this Item', disabled: false)
+        click_button 'Request this Item'
+        wait_for_ajax
+        expect(page).to have_content 'Request submitted'
+        # expect(page).to have_content 'We were unable to process your request'
+      end
+
+      it 'allows CAS patrons to request On-Order items' do
+        visit "/requests/#{on_order_id}"
+        expect(page).to have_button('Request this Item', disabled: false)
+      end
+
+
     end
   end
 
   context 'A barcode holding user' do
     let(:user) { FactoryGirl.create(:valid_barcode_patron) }
 
-    it 'displays the sign in page with a CAS User message' do
-        visit "/requests/#{voyager_id}"
-        expect(page).to have_content I18n.t('requests.account.other_user_login_msg')
-      end
-
-      it 'display a request form for a ReCAP item.' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
-          .with(headers: { 'User-Agent' => 'Faraday v0.11.0' })
-          .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
-        login_as user
-        visit "/requests/#{voyager_id}"
-        expect(page).to have_content 'Electronic Delivery'
-        expect(page).to have_selector '#request_user_barcode'
-      end
+    it 'display a request form for a ReCAP item.' do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+        .with(headers: { 'User-Agent' => 'Faraday v0.12.0.1' })
+        .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
+      login_as user
+      visit "/requests/#{voyager_id}"
+      expect(page).to have_content 'Electronic Delivery'
+      expect(page).to have_selector '#request_user_barcode'
+    end
   end
 end

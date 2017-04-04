@@ -2,8 +2,12 @@
 
   <div class="row">
     <div class="button--start-over">
-      <a class="btn btn-primary" id="returnToRecordLink" href="/">
-        <span class="icon-refresh"></span> <span class="hidden-xs hidden-sm">Return to record</span>
+      <a class="btn btn-primary" id="returnToRecordLink"
+        href=<%= "/catalog/#{@request.system_id}" %>>
+        <span class="icon-refresh"></span>
+        <span class="hidden-xs hidden-sm">
+          Return to record
+        </span>
       </a>
     </div>
   </div>

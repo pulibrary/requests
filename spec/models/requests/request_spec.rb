@@ -1166,4 +1166,21 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     end
   end
+
+  context "When passed an ID for a preservation office location" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9712355',
+        user: user
+      }
+    }
+    let(:request_for_preservation) { described_class.new(params) }
+    subject { request_for_preservation }
+    describe "#requestable" do
+      it "should have a preservation location code" do
+        expect(subject.requestable[0].location['code']).to eq('pres')
+      end
+    end
+  end
 end

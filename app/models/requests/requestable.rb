@@ -93,6 +93,10 @@ module Requests
       return true if item[:status] == 'Missing'
     end
 
+    def preservation?
+      return true if location[:code] == 'pres'
+    end
+
     # merge these two
     def annexa?
       return true if location[:library][:code] == 'annexa'

@@ -10,7 +10,6 @@ describe Requests::RequestMailer, :type => :mailer do
         "user_barcode"=>"22101007797777",
         "email"=>"foo@princeton.edu",
         "source"=>"pulsearch"}
-
     }
     let(:requestable) {
       [
@@ -24,15 +23,19 @@ describe Requests::RequestMailer, :type => :mailer do
           "copy_number"=>"0",
           "status"=>"Not Charged",
           "type"=>"pres",
-          "pickup"=>"Firestone Library"
+          "pickup"=>"PA"
         }.with_indifferent_access,
         {
           "selected"=>"false",
-        }
+        }.with_indifferent_access
       ]
     }
     let(:bib) {
-      {"id"=>"9712355", "title"=>"The atlas of water damage on inkjet-printed fine art /", "author"=>"Connor, Meghan Burge, Daniel Rochester Institute of Technology"}
+      {
+        "id"=>"9712355",
+        "title"=>"The atlas of water damage on inkjet-printed fine art /",
+        "author"=>"Connor, Meghan Burge, Daniel Rochester Institute of Technology"
+      }
     }
     let(:params) {
       {
@@ -51,7 +54,7 @@ describe Requests::RequestMailer, :type => :mailer do
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Signup")
+      expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
       # expect(mail.to).to eq(["to@example.org"])
       # expect(mail.from).to eq(["from@example.com"])
     end

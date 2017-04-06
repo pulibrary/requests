@@ -78,6 +78,7 @@ module Requests
     # user information for further processing and distribution to various request endpoints.
     def submit
       @submission = Requests::Submission.new(sanitize_submission(params))
+      binding.pry
       respond_to do |format|
         if @submission.valid?
           @services = []
@@ -108,7 +109,7 @@ module Requests
           end
 
         end
-        
+
         if @submission.valid? && !service_errors.any?
           format.js {
             flash.now[:success] = I18n.t('requests.submit.success')

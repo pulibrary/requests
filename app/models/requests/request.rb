@@ -13,6 +13,7 @@ module Requests
     include Requests::Bibdata
     include Requests::BdUtils
     include Requests::Ctx
+    include Requests::Scsb
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
     # @option opts [Fixnum] :mfhd voyager id
@@ -41,6 +42,10 @@ module Requests
       @doc # ||= solr_doc(system_id)
     end
 
+    def scsb?
+      return true if /^SCSB-\d+/ =~ system_id.to_s
+    end
+
     def requestable
       @requestable # ||= build_requestable
     end
@@ -53,7 +58,37 @@ module Requests
     # returns a collection of requestable objects or nil
     def build_requestable
       return [] if doc.blank?
-      if !items.nil?
+      if scsb?
+        # requestable_items = []
+        # ## scsb processing
+        # ## If mfhd present look for only that
+        # ## sort items by keys
+        # ## send query for availability by barcode
+        # ## overlay availability to the 'status' field
+        # ## make sure other fields map to the current data model for item in requestable
+        # ## adjust router to understand SCSB status
+        # holdings.each do |id, values|
+        #   barcodes = values['items'].map { |e| e['barcode']  }
+        #   barcodesort = {}
+        #   values['items'].each {|item| barcodes ort[item['barcode']] = item }
+        #   availability_data = items_by_barcode(barcodes)
+        #   availability_data.each do |item|
+        #     barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
+        #   end
+        #   barcodesort.values.each do |item|
+        #     params = build_requestable_params(
+        #           {
+        #             item: item.with_indifferent_access,
+        #             holding: { "#{id.to_sym}" => holdings[id] },
+        #             location: locations[item_scsb_collection_group(item)]
+        #           }
+        #         )
+        #     requestable_items << Requests::Requestable.new(params)
+        #   end
+        # end
+        scsb_factory = Requests::ScsbRequestableFactory.new(holdings)
+        requestable_items = scsb_factory.requestable
+      elsif !items.nil?
         requestable_items = []
         items.each do |holding_id, items|
           if !items.empty?
@@ -67,7 +102,7 @@ module Requests
 
               params = build_requestable_params(
                 {
-                  item: item,
+                  item: item.with_indifferent_access,
                   holding: { "#{holding_id.to_sym}" => holdings[holding_id] },
                   location: @locations[item_loc]
                 }

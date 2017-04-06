@@ -114,6 +114,15 @@ module Requests
       return true if location[:always_requestable] == true
     end
 
+    def scsb?
+      return true if scsb_locations.include?(location['code'])
+    end
+
+    def use_restriction?
+      return false if item.nil?
+      return true unless item[:use_statement].nil?
+    end
+
     def in_process?
       if item?
         if item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
@@ -134,6 +143,7 @@ module Requests
       item
     end
 
+    ##FIXME
     def has_item_data?
       if item.nil?
         false
@@ -280,13 +290,16 @@ module Requests
 
     private
 
-      # From Tampakis
+      def scsb_locations
+        ['scsbnypl', 'scsbcul']
+      end
+
       def unavailable_statuses
         ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold']
+         'Missing','On-Site - On Hold', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
   end
 end

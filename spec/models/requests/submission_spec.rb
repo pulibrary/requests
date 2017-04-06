@@ -1065,4 +1065,8 @@ describe Requests::Submission do
       end
     end
   end
+
+  context 'Submission with SCSB Managed data' do
+
+  end
 end

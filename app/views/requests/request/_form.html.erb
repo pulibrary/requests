@@ -75,6 +75,10 @@
                       <%= requestable.item["status"] %><br/>
                       <%= status_label requestable %>
                     <% end %>
+                    <% if requestable.use_restriction? %>
+                      <br/>
+                      <%= requestable.item[:use_statement] %>
+                    <% end %>
                   </td>
                 <td class='request--options' aria-live="polite">
                   <% if requestable.ill_eligible? %>

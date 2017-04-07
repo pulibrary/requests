@@ -67,7 +67,7 @@ describe Requests::PickupLookup do
                      "/items/" + params['requestable'][0]['item_id'] +
                      "/recall?patron=" + params['request']['patron_id'] +
                      "&patron_group=" + params['request']['patron_group'] +
-                     "&patron_homedb=" + URI.escape(Requests.config[:voyager_ub_id])
+                     "&patron_homedb=" + URI.escape('1@DB')
 
         end
 

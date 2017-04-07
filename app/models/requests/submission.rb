@@ -3,7 +3,7 @@ require 'email_validator'
 module Requests
   class SelectedItemsValidator < ActiveModel::Validator
     def mail_services
-      ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
+      ["paging", "pres", "annexa", "annexb", "trace", "on_order", "in_process"]
     end
 
     def validate(record)
@@ -12,7 +12,6 @@ module Requests
       end
       record.items.each do |selected|
         if selected['selected'] == 'true'
-
           if selected["type"].blank?
             record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please choose a Request Method for your selected item.', 'type' => 'pickup' } }
           end

@@ -78,7 +78,6 @@ module Requests
     # user information for further processing and distribution to various request endpoints.
     def submit
       @submission = Requests::Submission.new(sanitize_submission(params))
-      binding.pry
       respond_to do |format|
         if @submission.valid?
           @services = []

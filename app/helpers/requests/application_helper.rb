@@ -68,6 +68,8 @@ module Requests
           brief_msg = I18n.t("requests.annexa.brief_msg")
         elsif requestable.annexb?
           brief_msg = I18n.t("requests.annexb.brief_msg")
+        elsif requestable.preservation?
+          brief_msg = I18n.t("requests.pres.brief_msg")
         else
           brief_msg = I18n.t("requests.paging.brief_msg")
         end
@@ -80,6 +82,8 @@ module Requests
         request_input('annexa')
       elsif(requestable.services.include? 'annexb')
         request_input('annexb')
+      elsif(requestable.services.include? 'pres')
+        request_input('pres')
       elsif(requestable.services.include? 'paging')
         request_input('paging')
       elsif(requestable.services.include? 'in_process')

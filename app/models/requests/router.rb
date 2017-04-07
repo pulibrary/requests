@@ -41,6 +41,7 @@ module Requests
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
       services = []
+
       # here lies the switch case for all request types from the mega chart
       if(requestable.voyager_managed?)
         if(requestable.online?)
@@ -85,6 +86,8 @@ module Requests
             ## any check at this level means items must fall in one bucket or another
             if(requestable.aeon?)
               services << 'aeon'
+            elsif(requestable.preservation?)
+              services << 'pres'
             elsif(requestable.annexa?)
               services << 'annexa'
             elsif(requestable.annexb?)

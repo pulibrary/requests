@@ -55,7 +55,7 @@
             <% requestable_list.each do |requestable| %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                   <td class='request--select'>
-                    <% if requestable.has_item_data? %>
+                    <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
                       <%= hidden_field_tag 'requestable[][selected]', false %>
                       <%= item_checkbox @request.requestable, requestable %>
                       <%= hidden_fields_item requestable %>
@@ -67,7 +67,7 @@
                     <% end %>
                   </td>
                   <td>
-                    <% if requestable.has_item_data? %>
+                    <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
                       <%= requestable.item["status"] %><br/>
                       <%= status_label requestable %>
                     <% end %>

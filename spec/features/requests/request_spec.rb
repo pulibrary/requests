@@ -120,6 +120,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
   context 'a princeton net ID user' do
     let(:user) { FactoryGirl.create(:user) }
+
     let(:recap_params) {
       {
         :Bbid=>"9493318",

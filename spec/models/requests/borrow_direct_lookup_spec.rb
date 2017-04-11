@@ -69,31 +69,5 @@ describe Requests::BorrowDirectLookup do
         expect(subject.available?).to be false
       end
     end
-
-    describe '#fallback_query_params' do
-      it 'has a title and author parameters when both are present' do
-        expect(subject.fallback_query_params(solr_doc).keys.size).to eq(2)
-        expect(subject.fallback_query_params(solr_doc).key? :title).to be true
-        expect(subject.fallback_query_params(solr_doc).key? :author).to be true
-      end
-
-      it 'has a title and author parameters when both are present' do
-        expect(subject.fallback_query_params(solr_doc_no_author).keys.size).to eq(1)
-        expect(subject.fallback_query_params(solr_doc_no_author).key? :title).to be true
-        expect(subject.fallback_query_params(solr_doc_no_author).key? :author).to be false
-      end
-    end
-
-    describe '#fallback_query' do
-      it 'returns a borrow direct fallback query url' do
-        params = {
-          title: 'Test',
-          author: 'Author, Test'
-        }
-        expect(subject.fallback_query(params)).to be_truthy
-        expect(subject.fallback_query(params)).to include(BorrowDirect::Defaults.html_base_url)
-        expect(subject.fallback_query(params)).to include(params[:title].downcase)
-      end
-    end
   end
 end

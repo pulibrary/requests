@@ -20,13 +20,13 @@ module Requests
       bd_item = items.first
       begin
         if bd_item['auth_id'].nil?
-          request_number = ::BorrowDirect::RequestItem.new(submission.user_barcode).make_request(bd_item['pickup'], bd_item['query_params'])
+          request_number = ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], bd_item['query_params'])
         else
-          request_number = ::BorrowDirect::RequestItem.new(submission.user_barcode).with_auth_id(bd_item['auth_id']).make_request(bd_item['pickup'], bd_item['query_params'])
+          request_number = ::BorrowDirect::RequestItem.new(@submission.user_barcode).with_auth_id(bd_item['auth_id']).make_request(bd_item['pickup'], bd_item['query_params'])
         end
         ## request number response indicates attempt was successful
         @sent <<  { request_number: request_number }
-      rescue *BorrowDirect::Error => error
+      rescue *::BorrowDirect::Error => error
         @errors << { error: error.message }
       end
     end

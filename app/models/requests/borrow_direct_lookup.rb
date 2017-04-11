@@ -27,11 +27,6 @@ module Requests
       end
     end
 
-    # param is a solr document using pul schema key => value. Returns title/author query as a fallback
-    def fallback_query(params)
-      ::BorrowDirect::GenerateQuery.new.normalized_author_title_query(params)
-    end
-
     def available?
       if find_response.requestable?
         true
@@ -39,24 +34,5 @@ module Requests
         false
       end
     end
-
-    def fallback_query_params(doc)
-      params = {}
-      fallback_keys.each do |key,value|
-        unless doc[key].nil?
-          params[value] = doc[key].first
-        end
-      end
-      params
-    end
-
-    private
-
-      def fallback_keys
-        {
-          'title_citation_display' => :title,
-          'author_citation_display' => :author
-        }
-      end
   end
 end

@@ -1226,4 +1226,31 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context 'A borrow Direct item that is not available' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '10140054',
+        user: user
+      }
+    }
+    let(:request_with_title_author) { described_class.new(params) }
+    subject { request_with_title_author }
+
+    describe '#fallback_query_params' do
+      it 'has a title and author parameters when both are present' do
+        expect(subject.fallback_query_params.key? :title).to be true
+        expect(subject.fallback_query_params.key? :author).to be true
+      end
+    end
+
+    describe '#fallback_query' do
+      it 'returns a borrow direct fallback query url' do
+        expect(subject.fallback_query).to be_truthy
+        expect(subject.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
+        expect(subject.fallback_query).to include(CGI.escape(subject.fallback_query_params[:title].downcase))
+      end
+    end
+  end
 end

@@ -32,7 +32,16 @@ require 'devise'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
-Coveralls.wear!('rails')
+Coveralls.wear!('rails') do
+  add_filter '/lib/generators/requests/install_generator.rb'
+  add_filter '/lib/generators/requests/templates/borrow_direct.rb'
+  add_filter '/lib/generators/requests/templates/requests_initializer.rb'
+  add_filter '/lib/generators/requests/templates/lib/omniauth/strategies/omniauth-barcode.rb'
+  add_filter '/lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
+  add_filter '/lib/requests/version.rb'
+  add_filter '/lib/requests/engine.rb'
+  add_filter '/lib/requests.rb'
+end
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, timeout: 60)
 end

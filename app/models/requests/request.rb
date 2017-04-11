@@ -11,6 +11,7 @@ module Requests
     attr_accessor :mfhd
 
     include Requests::Bibdata
+    include Requests::BdUtils
     include Requests::Ctx
 
     # @option opts [String] :system_id A bib record id or a special collection ID value

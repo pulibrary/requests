@@ -5,9 +5,16 @@
   </div>
 <% else %>
   <% if @request.borrow_direct_eligible? %>
+    <script type='text/javascript'>
+      var bd_fallback = '<%= @request.fallback_query %>'
+      $('body').data( "bd", { link: bd_fallback } );
+    </script>
     <% if @request.isbn_numbers? %>
       <%= hidden_fields_borrow_direct @request %>
       <script type='text/javascript'>
+        $( document ).ready(function() {
+        $(':input[type="submit"]').prop('disabled', true);
+        $('select.request-options').prop('disabled', true);
         $.ajax({
           method: "POST",
           url: "/requests/borrow_direct",
@@ -28,12 +35,13 @@
               });
               $('input#bd_auth_id').val(response.auth_id);
               $('#bd_available').show();
-              $('select.request-options option:eq(1)').prop('selected', true)
+              $('select.request-options option').not(':eq(1)').remove();
               $('#requestable__pickup').show();
             } else {
               $('#bd_not_available').show();
             }
-
+            $('select.request-options').prop('disabled', false);
+            $(':input[type="submit"]').prop('disabled', false);
 
           },
         error: function () {
@@ -48,6 +56,7 @@
 
         }
       );
+      });
       </script>
       <div class='umlaut-services'>
       <div id="borrow_direct" class='availability--panel availability_borrow-direct'>

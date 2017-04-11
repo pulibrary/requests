@@ -319,11 +319,14 @@ module Requests
     end
 
     def submit_button_disabled requestable_list
+
       if requestable_list.size == 1
         if requestable_list.first.services.empty?
           true
         elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
+            false
+          elsif requestable_list.first.services.include? 'bd'
             false
           elsif requestable_list.first.annexb?
             false
@@ -348,14 +351,14 @@ module Requests
       submitable = true
       requestable_list.each do |requestable|
         unless((requestable.services & self.submitable).empty?)
-          submitable = nil
+          submitable = false
         end
       end
       submitable
     end
 
     def submitable
-      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging']
+      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd']
     end
 
     def submit_message requestable_list

@@ -26,6 +26,7 @@
                   }
                 });
               });
+              $('input#bd_auth_id').val(response.auth_id);
               $('#bd_available').show();
               $('select.request-options option:eq(1)').prop('selected', true)
               $('#requestable__pickup').show();

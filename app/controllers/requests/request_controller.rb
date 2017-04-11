@@ -136,8 +136,10 @@ module Requests
             flash.now[:success] = I18n.t('requests.submit.success')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
-            @submission.service_types.each do |type|
-              Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+            unless bd
+              @submission.service_types.each do |type|
+                Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+              end
             end
           }
         else

@@ -118,7 +118,7 @@ module Requests
     end
 
     def selected_items(requestable_list)
-      requestable_list.select{ |r| r unless r[:selected] == 'false' }
+      requestable_list.select{ |r| r unless (r[:selected] == 'false' || r[:selected].nil?) }
     end
 
     def item_validations

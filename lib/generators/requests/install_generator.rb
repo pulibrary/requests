@@ -17,6 +17,10 @@ module Requests
       copy_file 'requests_initializer.rb', 'config/initializers/requests_initializer.rb'
     end
 
+    def bd_initializer
+      copy_file 'borrow_direct.rb', 'config/initializers/borrow_direct.rb'
+    end
+
     def requests_config
       copy_file './config/requests.yml', 'config/requests.yml'
     end

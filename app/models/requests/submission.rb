@@ -24,6 +24,17 @@ module Requests
             end
           end
 
+          if selected["type"] == 'bd'
+            if selected['item_id'].empty?
+              record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be requested via Borrow Direct, see circulation desk.', 'type' => 'options' } }
+            else
+              item_id = selected['item_id']
+              if selected['pickup'].empty?
+                record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for delivery of your borrow direct item', 'type' => 'pickup' } }
+              end
+            end
+          end
+
           if selected["type"] == 'recall'
             if selected['item_id'].empty?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be Recalled, see circulation desk.', 'type' => 'options' } }
@@ -75,6 +86,7 @@ module Requests
       @user = params[:request]
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
+      @bd = params[:bd]
     end
 
     def user
@@ -95,6 +107,10 @@ module Requests
 
     def items
       @items
+    end
+
+    def bd
+      @bd
     end
 
     def filter_items_by_service(service)

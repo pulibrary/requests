@@ -80,6 +80,8 @@ module Requests
     def hidden_service_options requestable
       if(requestable.services.include? 'annexa')
         request_input('annexa')
+      elsif(requestable.services.include? 'bd')
+        request_input('bd')
       elsif(requestable.services.include? 'annexb')
         request_input('annexb')
       elsif(requestable.services.include? 'pres')
@@ -247,6 +249,17 @@ module Requests
       end
     end
 
+    def hidden_fields_borrow_direct request
+      hidden_bd_tags = ''
+      hidden_bd_tags += hidden_field_tag 'bd[auth_id]', '', value: ''
+      hidden_bd_tags += hidden_field_tag 'bd[query_params]', '', value: isbn_string(request.isbn_numbers)
+      hidden_bd_tags.html_safe
+    end
+
+    def isbn_string array_of_isbns
+      array_of_isbns.join(',')
+    end
+
     def hidden_fields_request request
       hidden_request_tags = ''
       hidden_request_tags += hidden_field_tag "bib[id]", "", value: request.doc[:id]
@@ -306,11 +319,14 @@ module Requests
     end
 
     def submit_button_disabled requestable_list
+
       if requestable_list.size == 1
         if requestable_list.first.services.empty?
           true
         elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
+            false
+          elsif requestable_list.first.services.include? 'bd'
             false
           elsif requestable_list.first.annexb?
             false
@@ -335,14 +351,14 @@ module Requests
       submitable = true
       requestable_list.each do |requestable|
         unless((requestable.services & self.submitable).empty?)
-          submitable = nil
+          submitable = false
         end
       end
       submitable
     end
 
     def submitable
-      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging']
+      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd']
     end
 
     def submit_message requestable_list

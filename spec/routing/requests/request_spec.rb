@@ -23,6 +23,14 @@ describe Requests::RequestController, type: :routing do
     it 'handles a #pageable arguement' do
       expect(get: '/pageable?system_id=foo123').to route_to('requests/request#pageable', system_id: 'foo123')
     end
+
+    it 'routes to borrow direct' do
+      expect(post: '/borrow_direct').to route_to('requests/request#borrow_direct')
+    end
+
+    it 'routes to borrow direct' do
+      expect(post: '/recall_pickups').to route_to('requests/request#recall_pickups')
+    end
   end
 end
 

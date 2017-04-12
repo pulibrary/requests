@@ -5,6 +5,9 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
+
+    skip_before_action :verify_authenticity_token, only: [:borrow_direct]
+
     def index
       flash.now[:notice] = "This form is in development"
       flash.now[:notice] = "Please Supply a valid Library ID to Request"
@@ -74,6 +77,18 @@ module Requests
       render json: @pickups.returned
     end
 
+    def borrow_direct
+      @isbns = sanitize(params[:isbns]).split(',')
+      query_params = {isbn: @isbns.first}
+      bd = Requests::BorrowDirectLookup.new
+      if params[:barcode].nil?
+        bd.find(query_params)
+      else
+        bd.find(query_params, sanitize(params[:barcode]))
+      end
+      render json: bd.find_response.to_json
+    end
+
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
@@ -84,6 +99,7 @@ module Requests
           service_errors = []
           recap = (recap_services & @submission.service_types).length
           recall = @submission.service_types.include? 'recall'
+          bd = @submission.service_types.include? 'bd'
           if recap
             if @submission.user['user_barcode']=='ACCESS'
               #Access users cannot use recap service directly
@@ -97,7 +113,13 @@ module Requests
             @services << Requests::Recall.new(@submission)
           end
 
-          if !recap && !recall
+          if bd
+            bd_request = Requests::BorrowDirect.new(@submission)
+            bd_request.handle
+            @services << bd_request
+          end
+
+          if !recap && !recall && !bd
             @services << Requests::Generic.new(@submission)
           end
 
@@ -114,8 +136,10 @@ module Requests
             flash.now[:success] = I18n.t('requests.submit.success')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
-            @submission.service_types.each do |type|
-              Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+            unless bd
+              @submission.service_types.each do |type|
+                Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+              end
             end
           }
         else
@@ -160,7 +184,7 @@ module Requests
     private
       # trusted params
       def request_params
-          params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request).permit!
+          params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
       end
 
       def mail_services

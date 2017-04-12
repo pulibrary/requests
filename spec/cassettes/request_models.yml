@@ -15044,4 +15044,214 @@ http_interactions:
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
     http_version: 
   recorded_at: Wed, 05 Apr 2017 19:18:30 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=8880549
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Apr 2017 16:34:15 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 26f92cb8-fe65-4f51-848d-859fb36b02a1
+      X-Runtime:
+      - '5.091926'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"0a89eda159bd76bdd4f2809425da7a84"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"8805567":{"more_items":false,"location":"ues","copy_number":1,"item_id":7040389,"on_reserve":"N","due_date":"6/15/2017","status":"Charged","label":"Architecture
+        Library"}}'
+    http_version: 
+  recorded_at: Mon, 10 Apr 2017 16:34:42 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/10140054.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 22b21e7b-81aa-4eb9-abbb-2e6ecfd4783b
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"1ec0b46c80231d248101adea5601a7dd"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.021652'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 11 Apr 2017 17:04:43 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"10140054","author_display":["Falful
+        , Habib"],"author_citation_display":["Falful , Habib"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Falful
+        , Habib\"}","author_s":["Falful , Habib"],"opensearch_display":["Falful ,
+        Habib","Adab al-Tunisi al-Farankfuni"],"marc_relator_display":["Author"],"title_display":"Adab
+        al-Tunisi al-Farankfuni","title_t":["Adab al-Tunisi al-Farankfuni"],"title_citation_display":["Adab
+        al-Tunisi al-Farankfuni"],"compiled_created_t":["Adab al-Tunisi al-Farankfuni"],"pub_created_display":["Tunis:
+        Majma'' al-Atrash, 2016"],"pub_created_s":["Tunis: Majma'' al-Atrash, 2016"],"pub_citation_display":["Tunis:
+        Majma'' al-Atrash"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["157
+        p."],"description_t":["157 p."],"language_code_s":["und"],"holdings_1display":"{\"9929808\":{\"location\":\"ReCAP\",\"library\":\"ReCAP\",\"location_code\":\"rcppa\"}}","location_code_s":["rcppa"],"location_display":["ReCAP"],"location":["ReCAP"],"advanced_location_s":["rcppa","ReCAP"],"name_title_browse_s":["Falful
+        , Habib. Adab al-Tunisi al-Farankfuni"],"timestamp":"2017-03-23T21:38:05.736Z"}}}'
+    http_version: 
+  recorded_at: Tue, 11 Apr 2017 17:04:43 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10140054
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Apr 2017 17:04:21 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 56442522-f54d-49a8-bfb3-bd6bb50eac03
+      X-Runtime:
+      - '0.085162'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"33da0d0619bb8f97e1eb6351515c6358"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9929808":{"more_items":false,"location":"rcppa","copy_number":0,"item_id":7590215,"on_reserve":"N","due_date":"6/15/2017","status":"Charged","label":"ReCAP"}}'
+    http_version: 
+  recorded_at: Tue, 11 Apr 2017 17:04:44 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9929808
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Apr 2017 17:04:21 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d2499e26-003e-48c1-9d30-5eae9f50795b
+      X-Runtime:
+      - '0.066925'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"be7fedee9f63ca459e470c7e0b37521a"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101101254694","id":7590215,"location":"rcppa","copy_number":0,"item_sequence_number":0,"status":"Charged","due_date":"6/15/2017","label":"ReCAP"}]'
+    http_version: 
+  recorded_at: Tue, 11 Apr 2017 17:04:44 GMT
 recorded_with: VCR 3.0.3

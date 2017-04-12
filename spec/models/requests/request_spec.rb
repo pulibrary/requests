@@ -117,6 +117,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe '#user' do
+      it 'returns a user object' do
+        expect(subject.user.is_a? User).to be true
+      end
+    end
+
+    describe '#holdings?' do
+      it 'returns holdings data' do
+        expect(subject.holdings?).to be_truthy
+      end
+    end
+
+    describe '#available?' do
+      it 'returns a list of items' do
+        expect(subject.available?).to be_truthy
+      end
+    end
+
     describe "#thesis?" do
       it "should not identify itself as a thesis request" do
         expect(subject.thesis?).to be_falsy
@@ -847,6 +865,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.last.services.include?('recap_edd')).to be_falsy
       end
     end
+
+    describe '#serial?' do
+      it 'returns true when the item is a serial' do
+        expect(subject.serial?).to be true
+      end
+    end
   end
 
   context "When passed a Recallable Item that is eligible for Borrow Direct" do
@@ -870,6 +894,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#ill_eligible?" do
       it 'Should be ILL Eligible' do
         expect(subject.ill_eligible?).to be true
+      end
+    end
+
+    describe "#isbn_numbers?" do 
+      it 'Should return true if a request has an isbn' do
+        expect(subject.isbn_numbers?).to be true
+      end
+    end
+
+    describe "#isbn_numbers" do
+      it 'returns an array of all attached isbn numbers' do
+        expect(subject.isbn_numbers.is_a?(Array)).to be true
+        expect(subject.isbn_numbers.size).to eq(1)
       end
     end
 
@@ -1121,6 +1158,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.borrow_direct_eligible?).to be true
       end
     end
+
+    describe '#isbn_numbers?' do
+      it 'returns false when there are no isbns present' do
+        expect(subject.isbn_numbers?).to be false
+      end
+    end
   end
 
 
@@ -1180,6 +1223,33 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "should have a preservation location code" do
         expect(subject.requestable[0].location['code']).to eq('pres')
+      end
+    end
+  end
+
+  context 'A borrow Direct item that is not available' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '10140054',
+        user: user
+      }
+    }
+    let(:request_with_title_author) { described_class.new(params) }
+    subject { request_with_title_author }
+
+    describe '#fallback_query_params' do
+      it 'has a title and author parameters when both are present' do
+        expect(subject.fallback_query_params.key? :title).to be true
+        expect(subject.fallback_query_params.key? :author).to be true
+      end
+    end
+
+    describe '#fallback_query' do
+      it 'returns a borrow direct fallback query url' do
+        expect(subject.fallback_query).to be_truthy
+        expect(subject.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
+        expect(subject.fallback_query).to include(CGI.escape(subject.fallback_query_params[:title].downcase))
       end
     end
   end

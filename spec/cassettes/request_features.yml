@@ -6362,4 +6362,668 @@ http_interactions:
         Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false}]}'
     http_version: 
   recorded_at: Fri, 31 Mar 2017 19:24:15 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/4815239.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - ebce92f1-2516-4aa8-96dc-5a86f1321017
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"6415886dacbb50eea126ba3c404dd0dc"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.021273'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 13 Apr 2017 05:38:43 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"4815239","author_display":["Tufte, Edward
+        R., 1942-"],"author_citation_display":["Tufte, Edward R."],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Tufte,
+        Edward R.\"}","author_s":["Tufte, Edward R., 1942-"],"opensearch_display":["Tufte,
+        Edward R., 1942-","Beautiful evidence / Edward R. Tufte.","Visual communication"],"marc_relator_display":["Author"],"title_display":"Beautiful
+        evidence / Edward R. Tufte.","title_t":["Beautiful evidence / Edward R. Tufte."],"title_citation_display":["Beautiful
+        evidence /"],"compiled_created_t":["Beautiful evidence / Edward R. Tufte."],"pub_created_display":["Cheshire,
+        Conn. : Graphics Press, c2006."],"pub_created_s":["Cheshire, Conn. : Graphics
+        Press, c2006."],"pub_citation_display":["Cheshire, Conn: Graphics Press"],"pub_date_display":["2006"],"pub_date_start_sort":2006,"cataloged_tdt":"2006-08-31T13:19:29Z","format":["Book"],"description_display":["213
+        p. : ill. (some col.) ; 28 cm."],"description_t":["213 p. : ill. (some col.)
+        ; 28 cm."],"notes_display":["Includes index."],"language_facet":["English"],"language_code_s":["eng"],"subject_display":["Visual
+        communication"],"subject_t":["Visual communication"],"subject_facet":["Visual
+        communication"],"isbn_display":["0961392177"],"isbn_s":["9780961392178"],"isbn_t":["9780961392178"],"oclc_s":["70203994"],"other_version_s":["ocm70203994","9780961392178"],"holdings_1display":"{\"5017592\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"},\"5018096\":{\"location\":\"Stokes
+        Library - SPIA\",\"library\":\"Stokes Library\",\"location_code\":\"spia\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"},\"5039570\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"},\"5674398\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"}}","location_code_s":["sci","spia","f","sa"],"location_display":["Lewis
+        Library","Stokes Library - SPIA","Firestone Library","Marquand Library"],"location":["Lewis
+        Library","Stokes Library","Firestone Library","Marquand Library"],"advanced_location_s":["sci","spia","f","sa","Lewis
+        Library","Stokes Library","Firestone Library","Marquand Library"],"name_title_browse_s":["Tufte,
+        Edward R., 1942-. Beautiful evidence"],"call_number_display":["P93.5 .T847
+        2006"],"call_number_browse_s":["P93.5 .T847 2006"],"timestamp":"2017-03-23T17:22:00.830Z"}}}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:43 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5018096
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:42 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ae3b85f8-441e-47fc-9a65-7814e8aab26d
+      X-Runtime:
+      - '0.078257'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b785a00736663aaedfb472d3732713da"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101059892883","id":4397582,"location":"spia","temp_loc":"strr","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","label":"Engineering Library - Reserve"}]'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:47 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sci.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:46 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 33866e17-62d6-418b-afee-cd165468ea72
+      X-Runtime:
+      - '0.064039'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"124d5546371db4e237b7268fddd7bcdf"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"sci","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
+        Library","code":"lewis","order":2},"holding_library":null,"hours_location":{"label":"Lewis
+        Library","code":"lewis"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/spia.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:47 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 300db272-732a-4c04-a8aa-f2f5f44daff2
+      X-Runtime:
+      - '0.027667'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b78cab92fb2b05c17654957b352c9f8c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"SPIA","code":"spia","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Stokes
+        Library","code":"stokes","order":2},"holding_library":null,"hours_location":{"label":"Stokes
+        Library","code":"stokes"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sa.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:47 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 2404aec7-466a-4008-8c7a-18debd3f2045
+      X-Runtime:
+      - '0.024394'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"1edecb25ba68d6866fb5ac87b91543b0"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"sa","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Marquand
+        Library","code":"marquand","order":2},"holding_library":null,"hours_location":{"label":"Marquand
+        Library of Art and Archaeology","code":"marquand"},"delivery_locations":[{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/strr.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:47 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ef89997a-0350-4443-80ff-dad5b081ee66
+      X-Runtime:
+      - '0.029538'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c6122ce53cc5607adda0ce203a9bdebf"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Reserve","code":"strr","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Engineering
+        Library","code":"engineering","order":2},"holding_library":null,"hours_location":{"label":"Engineering
+        Library","code":"engineering"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:49 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/4815239.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 1b2a7c0e-75b8-4094-b289-cc730f947eea
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"6415886dacbb50eea126ba3c404dd0dc"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.022933'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 13 Apr 2017 05:38:50 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"4815239","author_display":["Tufte, Edward
+        R., 1942-"],"author_citation_display":["Tufte, Edward R."],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Tufte,
+        Edward R.\"}","author_s":["Tufte, Edward R., 1942-"],"opensearch_display":["Tufte,
+        Edward R., 1942-","Beautiful evidence / Edward R. Tufte.","Visual communication"],"marc_relator_display":["Author"],"title_display":"Beautiful
+        evidence / Edward R. Tufte.","title_t":["Beautiful evidence / Edward R. Tufte."],"title_citation_display":["Beautiful
+        evidence /"],"compiled_created_t":["Beautiful evidence / Edward R. Tufte."],"pub_created_display":["Cheshire,
+        Conn. : Graphics Press, c2006."],"pub_created_s":["Cheshire, Conn. : Graphics
+        Press, c2006."],"pub_citation_display":["Cheshire, Conn: Graphics Press"],"pub_date_display":["2006"],"pub_date_start_sort":2006,"cataloged_tdt":"2006-08-31T13:19:29Z","format":["Book"],"description_display":["213
+        p. : ill. (some col.) ; 28 cm."],"description_t":["213 p. : ill. (some col.)
+        ; 28 cm."],"notes_display":["Includes index."],"language_facet":["English"],"language_code_s":["eng"],"subject_display":["Visual
+        communication"],"subject_t":["Visual communication"],"subject_facet":["Visual
+        communication"],"isbn_display":["0961392177"],"isbn_s":["9780961392178"],"isbn_t":["9780961392178"],"oclc_s":["70203994"],"other_version_s":["ocm70203994","9780961392178"],"holdings_1display":"{\"5017592\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"},\"5018096\":{\"location\":\"Stokes
+        Library - SPIA\",\"library\":\"Stokes Library\",\"location_code\":\"spia\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"},\"5039570\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"},\"5674398\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\",\"call_number\":\"P93.5
+        .T847 2006\",\"call_number_browse\":\"P93.5 .T847 2006\"}}","location_code_s":["sci","spia","f","sa"],"location_display":["Lewis
+        Library","Stokes Library - SPIA","Firestone Library","Marquand Library"],"location":["Lewis
+        Library","Stokes Library","Firestone Library","Marquand Library"],"advanced_location_s":["sci","spia","f","sa","Lewis
+        Library","Stokes Library","Firestone Library","Marquand Library"],"name_title_browse_s":["Tufte,
+        Edward R., 1942-. Beautiful evidence"],"call_number_display":["P93.5 .T847
+        2006"],"call_number_browse_s":["P93.5 .T847 2006"],"timestamp":"2017-03-23T17:22:00.830Z"}}}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5018096
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 27453914-5894-4dda-944c-acefd809b633
+      X-Runtime:
+      - '0.068237'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b785a00736663aaedfb472d3732713da"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101059892883","id":4397582,"location":"spia","temp_loc":"strr","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","label":"Engineering Library - Reserve"}]'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sci.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 99b89d90-0340-4d42-b735-73e6595d5b46
+      X-Runtime:
+      - '0.014733'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"124d5546371db4e237b7268fddd7bcdf"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"sci","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
+        Library","code":"lewis","order":2},"holding_library":null,"hours_location":{"label":"Lewis
+        Library","code":"lewis"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:51 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/spia.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e96ca358-bd37-4631-b4bf-3855e9411346
+      X-Runtime:
+      - '0.030118'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b78cab92fb2b05c17654957b352c9f8c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"SPIA","code":"spia","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Stokes
+        Library","code":"stokes","order":2},"holding_library":null,"hours_location":{"label":"Stokes
+        Library","code":"stokes"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:51 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sa.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e9ff4af3-6bac-4cf1-9ef6-d73deb958dba
+      X-Runtime:
+      - '0.027223'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"1edecb25ba68d6866fb5ac87b91543b0"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"sa","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Marquand
+        Library","code":"marquand","order":2},"holding_library":null,"hours_location":{"label":"Marquand
+        Library of Art and Archaeology","code":"marquand"},"delivery_locations":[{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:51 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/strr.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 13 Apr 2017 05:38:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 1d673747-71c3-4012-98d7-1e5efc17d16e
+      X-Runtime:
+      - '0.029446'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c6122ce53cc5607adda0ce203a9bdebf"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Reserve","code":"strr","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Engineering
+        Library","code":"engineering","order":2},"holding_library":null,"hours_location":{"label":"Engineering
+        Library","code":"engineering"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 13 Apr 2017 05:38:52 GMT
 recorded_with: VCR 3.0.3

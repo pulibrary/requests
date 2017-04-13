@@ -58,6 +58,8 @@ module Requests
           if !items.empty?
             items.each do |item|
               item_loc = item_current_location(item)
+              ## This check is needed in case the item level data denotes a temporary
+              ## location
               unless locations.key? item_loc
                 locations[item_loc] = get_location(item_loc)
               end
@@ -74,7 +76,6 @@ module Requests
               unless item["status"].nil?
                 requestable_items << Requests::Requestable.new(params)
               end
-
             end
           else
             params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] } )

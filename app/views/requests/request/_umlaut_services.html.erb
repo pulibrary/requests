@@ -34,6 +34,9 @@
                 });
               });
               $('input#bd_auth_id').val(response.auth_id);
+              if ($('input:checkbox.request--select').length == 1){
+                $('input:checkbox.request--select').prop('checked', true);
+              }
               $('#bd_available').show();
               $('select.request-options option').not(':eq(1)').remove();
               $('#requestable__pickup').show();

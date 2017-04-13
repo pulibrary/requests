@@ -252,7 +252,7 @@ module Requests
     def hidden_fields_borrow_direct request
       hidden_bd_tags = ''
       hidden_bd_tags += hidden_field_tag 'bd[auth_id]', '', value: ''
-      hidden_bd_tags += hidden_field_tag 'bd[query_params]', '', value: isbn_string(request.isbn_numbers)
+      hidden_bd_tags += hidden_field_tag 'bd[query_params]', '', value: request.isbn_numbers.first
       hidden_bd_tags.html_safe
     end
 
@@ -305,6 +305,16 @@ module Requests
         false
       end
     end
+
+    ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
+    def current_location_label(mfhd_label, requestable_list)
+      location_label = requestable_list.first.location['label'].blank? ? "" : "- #{requestable_list.first.location['label']}"
+      if requestable_list.first.temp_loc?
+        "#{requestable_list.first.location['library']['label']}#{location_label}"
+      else
+        mfhd_label
+      end
+    end 
 
     def check_box_selected requestable_list
       if requestable_list.size == 1

@@ -59,21 +59,21 @@ describe Requests::Submission do
       Requests::Submission.new(params)
     }
 
-    describe "includes" do
-      it "is a valid submission with no errors" do
+    describe "contains" do
+      it "no errors" do
         expect(submission.valid?).to be_truthy
         expect(submission.errors.full_messages.size).to eq(0)
       end
 
-      it "has a system ID" do
+      it "a system ID" do
         expect(submission.id).to eq(bib[:id])
       end
 
-      it "has a user barcode" do
+      it "a user barcode" do
         expect(submission.user_barcode).to be_truthy
       end
 
-      it "has a user name" do
+      it "a user name" do
         expect(submission.user_name).to be_truthy
       end
 
@@ -81,17 +81,17 @@ describe Requests::Submission do
         expect(submission.email).to be_truthy
       end
 
-      it "It has one or more items requested attached. " do
+      it "one or more items requested attached. " do
         expect(submission.items).to be_truthy
         expect(submission.items).to be_an(Array)
         expect(submission.items.size).to be > 0
       end
 
-      it "It has basic bibliographic information for a requested title" do
+      it "basic bibliographic information for a requested title" do
         expect(submission.bib['id']).to be_truthy
       end
 
-      it "It has one service type" do
+      it "one service type" do
         expect(submission.service_types).to be_truthy
         expect(submission.service_types).to be_an(Array)
       end
@@ -259,6 +259,9 @@ describe Requests::Submission do
         },
         {
           "selected"=>"false",
+        },
+        {
+          "type"=> 'bd'
         }
       ]
     }
@@ -706,6 +709,9 @@ describe Requests::Submission do
           },
           {
             "selected"=>"false",
+          },
+          {
+            'type' => 'bd'
           }
         ]
       }

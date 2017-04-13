@@ -28,10 +28,9 @@
     </div>
     <%= render partial: 'umlaut_services' %>
     <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
-
       <%= hidden_fields_mfhd @request.holdings[mfhd] %>
       <div id="holding<%= mfhd %>" class="table-responsive items">
-        <h2><%= @request.holdings[mfhd]["location"] %> <%= @request.holdings[mfhd]["call_number"] %></h2>
+        <h2><%= current_location_label(@request.holdings[mfhd]["location"], requestable_list) %> <%= @request.holdings[mfhd]["call_number"] %></h2>
           <% unless @request.holdings[mfhd]["location_has"].nil? %>
               <div>
                 <h3>Location has: </h3>

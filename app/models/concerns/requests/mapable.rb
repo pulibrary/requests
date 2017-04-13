@@ -11,7 +11,7 @@ module Requests
     def map_params
       {
         id: bib['id'],
-        loc: holding.values.first['location_code']
+        loc: location['code']
       }
     end
   end

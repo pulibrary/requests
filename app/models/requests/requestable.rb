@@ -147,6 +147,16 @@ module Requests
       end
     end
 
+    def temp_loc?
+      if item?
+        if item[:temp_loc]
+          true
+        else
+          false
+        end
+      end
+    end
+
     def set_services service_list
       @services = service_list
     end

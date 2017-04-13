@@ -7,7 +7,7 @@ module Requests
     end
 
     def validate(record)
-      unless record.items.size >= 1
+      unless record.items.size >= 1 && !record.items.any?{|item| defined? item.selected }
         record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } }
       end
       record.items.each do |selected|
@@ -118,7 +118,7 @@ module Requests
     end
 
     def selected_items(requestable_list)
-      requestable_list.select{ |r| r unless r[:selected] == 'false' }
+      requestable_list.select{ |r| r unless (r[:selected] == 'false' || r.keys.size <= 1) }
     end
 
     def item_validations

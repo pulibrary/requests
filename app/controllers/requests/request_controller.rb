@@ -96,6 +96,7 @@ module Requests
       respond_to do |format|
         if @submission.valid?
           @services = []
+          success_message = I18n.t('requests.submit.success')
           service_errors = []
           recap = (recap_services & @submission.service_types).length
           recall = @submission.service_types.include? 'recall'
@@ -117,6 +118,8 @@ module Requests
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
+            ### What happens is if this fails?
+            success_message = "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
           end
 
           if !recap && !recall && !bd
@@ -133,7 +136,7 @@ module Requests
 
         if @submission.valid? && !service_errors.any?
           format.js {
-            flash.now[:success] = I18n.t('requests.submit.success')
+            flash.now[:success] = success_message
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
             unless bd

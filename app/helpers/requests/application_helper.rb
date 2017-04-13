@@ -308,8 +308,9 @@ module Requests
 
     ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)
+      location_label = requestable_list.first.location['label'].blank? ? "" : "- #{requestable_list.first.location['label']}"
       if requestable_list.first.temp_loc?
-        "#{requestable_list.first.location['library']['label']} - #{requestable_list.first.location['label']}"
+        "#{requestable_list.first.location['library']['label']}#{location_label}"
       else
         mfhd_label
       end

@@ -118,7 +118,8 @@ module Requests
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
-            success_message = success_message + ' Your request number is ' + bd_request.sent[0][:request_number]
+            ### What happens is if this fails?
+            success_message = "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
           end
 
           if !recap && !recall && !bd

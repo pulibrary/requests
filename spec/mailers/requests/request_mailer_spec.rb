@@ -477,9 +477,9 @@ describe Requests::RequestMailer, :type => :mailer do
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.recap.email_subject'))
-      expect(mail.to).to eq(['guest@foo.edu'])
-      expect(mail.cc).to eq([submission_for_recap.email])
-      expect(mail.from).to eq(['guest@foo.edu'])
+      expect(mail.to).to eq([submission_for_recap.email])
+      expect(mail.cc).to eq([I18n.t('requests.recap.guest_email_destination')])
+      expect(mail.from).to eq([submission_for_recap.email])
     end
 
     it "renders the body" do

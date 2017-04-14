@@ -82,6 +82,9 @@ module Requests
       destination_email = @submission.email
       @url  = 'http://example.com/login'
       cc_email = [ @submission.email ]
+      if @submission.user['user_barcode'] == 'ACCESS'
+        cc_email = I18n.t('requests.recap.guest_email_destination')
+      end
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,

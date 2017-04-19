@@ -168,8 +168,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     end
 
     describe 'When visiting a voyager ID as a CAS User' do
-
-      it 'allow CAS patrons to request an available ReCAP item.' do
+      it 'allow CAS patrons to request an available ReCAP item.', unless: in_travis? do
         stub_request(:post, Requests.config[:gfa_base]).
           with(headers: {'Accept'=>'*/*'}).
           to_return(status: 201, body: "<document count='1' sent='true'></document>", headers: {})
@@ -184,7 +183,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # expect(page).to have_content 'Request submitted'
       end
 
-      it 'allows CAS patrons to request In-Process items', js: true do
+      it 'allows CAS patrons to request In-Process items', js: true, unless: in_travis? do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
         select('Marquand Library of Art and Archaeology', :from => 'requestable__pickup')
@@ -195,7 +194,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # expect(page).to have_content 'We were unable to process your request'
       end
 
-      it 'allows CAS patrons to request On-Order items' do
+      it 'allows CAS patrons to request On-Order items', unless: in_travis? do
         visit "/requests/#{on_order_id}"
         expect(page).to have_button('Request this Item', disabled: false)
       end
@@ -205,7 +204,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   context 'A barcode holding user' do
     let(:user) { FactoryGirl.create(:valid_barcode_patron) }
 
-    it 'display a request form for a ReCAP item.' do
+    it 'display a request form for a ReCAP item.', unless: in_travis? do
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
         .with(headers: { 'User-Agent' => 'Faraday v0.12.0.1' })
         .to_return(status: 200, body: valid_barcode_patron_response, headers: {})

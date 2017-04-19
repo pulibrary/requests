@@ -1,4 +1,30 @@
 <span class="Z3988" title="<%= @request.openurl_ctx_kev %>"></span>
+
+<script type='text/javascript'>
+  // hide any items that don't match the mfhd param, if there is one
+  $( document ).ready(function() {
+
+      var mfhd_id = '';
+
+      <% if !@request.mfhd.blank? %>
+        mfhd_id = '#holding' + '<%= @request.mfhd %>';
+      <% end %>
+
+      if(mfhd_id.length){
+        var related_items = $( "div[id^='holding']:not(" + mfhd_id + ")" );
+        related_items.hide();
+        related_items.next("div.table-responsive").hide();
+      }
+
+      $( "a#show_item" ).on( "click", function( event ) {
+        event.preventDefault();
+        related_items.slideToggle( "slow" );
+        related_items.next("div.table-responsive").slideToggle( "slow" );
+      });
+
+  });
+</script>
+
 <% if @user.guest && @request.borrow_direct_eligible? %>
   <div class='alert alert-warning'>
     <%= I18n.t("requests.account.pul_user_service_msg") %>
@@ -13,8 +39,12 @@
       <%= hidden_fields_borrow_direct @request %>
       <script type='text/javascript'>
         $( document ).ready(function() {
+
+        var auth_id = $('input#bd_auth_id');
+        var chkbox = $(this).find('input:checkbox.request--select');
         $(':input[type="submit"]').prop('disabled', true);
         $('select.request-options').prop('disabled', true);
+
         $.ajax({
           method: "POST",
           url: "/requests/borrow_direct",
@@ -22,33 +52,42 @@
           contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
           success: function (response) {
             $('#lookup').hide();
+
             if (response.hasOwnProperty("error")){
               $('#bd_error').show();
-              console.log(response);
             } else {
-              if (response.response_hash.Available) {
-                $.each(response.response_hash.PickupLocation, function( k, v ) {
-                  $.each(v, function( key, value ) {
-                    if(key === 'PickupLocationDescription'){
-                      $('#requestable__pickup')
-                        .append($("<option></option>")
-                          .attr("value",value)
-                          .text(value));
-                    }
-                  });
-                });
-                $('input#bd_auth_id').val(response.auth_id);
-                if ($('input:checkbox.request--select').length == 1){
-                  $('input:checkbox.request--select').prop('checked', true);
-                }
-                $('#bd_available').show();
-                $('select.request-options option').not(':eq(1)').remove();
-                $('#requestable__pickup').show();
-              } else {
-                $('#bd_not_available').show();
-              }
-              $('select.request-options').prop('disabled', false);
-              $(':input[type="submit"]').prop('disabled', false);
+
+              var rows = $('tr');
+
+              $.each(rows, function( key, val ) {
+                var pickup_select = $(this).find('.recall-pickup');
+                var request_options = $(this).find('select.request-options');
+
+                  if (response.response_hash.Available) {
+                    $.each(response.response_hash.PickupLocation, function( k, v ) {
+                      $.each(v, function( key, value ) {
+                        if(key === 'PickupLocationDescription'){
+                          pickup_select.append($("<option></option>")
+                              .attr("value",value)
+                              .text(value));
+                        }
+                      });
+                    });
+                    auth_id.val(response.auth_id);
+
+                    chkbox.first().prop('checked', true);
+
+                    $('#bd_available').show();
+                    request_options.find('option').not(':eq(1)').remove();
+                    pickup_select.show();
+                  } else {
+                    $('#bd_not_available').show();
+                  }
+                  request_options.prop('disabled', false);
+                  $(':input[type="submit"]').prop('disabled', false);
+
+              });
+
             }
           },
         error: function () {
@@ -71,9 +110,9 @@
           <img style="display:inline-block" src="<%= asset_path('requests/spinner.gif') %>"/>
           Checking BorrowDirect availablility for you.
         </p>
-        <p id='bd_available' class='alert alert-success' role="alert" style='display: none'>
+        <p id='bd_available' class='alert alert-success' role='alert' style='display: none'>
           <strong>Good news!</strong> This title is available via BorrowDirect,
-          the fastest way to get an item that's not currently on the shelf.
+          the fastest way to get an item that is not currently on the shelf.
         </p>
         <p id='bd_not_available' class='alert alert-warning' role="alert" style='display: none'>
           <strong>You have some options.</strong> Please select one from below.
@@ -82,8 +121,27 @@
           <strong>There seems to be a problem with your account.</strong>
           Please review your current account status and contact circulation to resolve the problem.
         </p>
+        <p id='campus_available' class='alert alert-info' role="alert" style='display: none'>
+          <strong>There is another copy of this item available at Princeton</strong>
+          <a href="">Show me the available item!</a>
+        </p>
       </div>
     </div>
     <% end %>
+  <% else %>
+
+    <p id='campus_available' class='alert alert-info' role="alert" style='display: none'>
+      <strong>There are other copies of this item available at Princeton.</strong>
+      <br> <a id="show_item" href="">Show me the other copies!</a>
+    </p>
+
+    <script type='text/javascript'>
+      // display notice and option to show other loanable copies at Princeton
+      $( document ).ready(function() {
+        <% if !@request.mfhd.blank? %>
+          $('#campus_available').show();
+        <% end %>
+      });
+    </script>
   <% end %>
 <% end %>

@@ -801,11 +801,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "should have an requestable items" do
-        expect(subject.requestable.size).to eq(1)
+        # even though we are passing the mfhd, we are not limiting
+        # it in the requestable so we can check all non-serials against BorrowDirect
+        expect(subject.requestable.size).to eq(17)
       end
 
-      it "should not have any barcode data" do
-        expect(subject.requestable.first.item[:barcode]).to be_nil
+      it "should not have any item data" do
+        expect(subject.requestable.first.item).to be_nil
       end
 
       it "should be eligible for aeon services" do
@@ -897,7 +899,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
-    describe "#isbn_numbers?" do 
+    describe "#isbn_numbers?" do
       it 'Should return true if a request has an isbn' do
         expect(subject.isbn_numbers?).to be true
       end

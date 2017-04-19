@@ -118,7 +118,7 @@ module Requests
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
-            ### What happens is if this fails?
+            ### Failure is handled by the general Error message/notice below
             success_message = "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
           end
 

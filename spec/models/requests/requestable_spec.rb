@@ -204,7 +204,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable }
     describe "#services" do
       it "should return an item status of missing" do
-        expect(requestable.size).to eq(1)
+        expect(requestable.size).to eq(2)
         requestable.first.item["status"] = 'Missing'
         expect(requestable.first.services).to be_truthy
       end
@@ -283,7 +283,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A requestable item from an Aeon EAL Holding with a null barcode' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated) }
-    let(:requestable) { request.requestable.first } # assume only one requestable
+    let(:requestable_holding) {request.requestable.select {|r| r.holding['675722'] }}
+    let(:requestable) { requestable_holding.first } # assume only one requestable
     let(:enumeration) { 'v.7' }
     describe '#aeon_open_url' do
       it 'should return an openurl with enumeration when available' do
@@ -451,7 +452,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged) }
-    let(:requestable_charged) { request_charged.requestable.first }
+    let(:requestable_holding) {request_charged.requestable.select {|r| r.holding['1594698'] }}
+    let(:requestable_charged) { requestable_holding.first }
 
     describe '# checked-out requestable' do
 
@@ -538,7 +540,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged_barcode_patron) }
-    let(:requestable_charged) { request_charged.requestable.first }
+    let(:requestable_holding) {request_charged.requestable.select {|r| r.holding['1594698'] }}
+    let(:requestable_charged) { requestable_holding.first }
 
     describe '#checked-out requestable' do
       it "should have recall request service available" do

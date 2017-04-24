@@ -41,7 +41,7 @@ module Requests
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
       services = []
-
+      
       # here lies the switch case for all request types from the mega chart
       if(requestable.voyager_managed?)
         if(requestable.online?)

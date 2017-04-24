@@ -102,19 +102,19 @@ FactoryGirl.define do
 
   # missing item
   factory :request_missing_item, class: 'Requests::Request' do
-    system_id 2300474
+    system_id 1389121
     user { FactoryGirl.build(:user) }
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
   factory :request_missing_item_barcode_patron, class: 'Requests::Request' do
-    system_id 2300474
+    system_id 1389121
     user { FactoryGirl.build(:valid_barcode_patron) }
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
 
   factory :request_missing_item_unauthenticated_patron, class: 'Requests::Request' do
-    system_id 2300474
+    system_id 1389121
     user { FactoryGirl.build(:unauthenticated_patron) }
     initialize_with { new( { system_id: system_id, user: user } ) }
   end
@@ -184,32 +184,32 @@ FactoryGirl.define do
   end
 
   factory :missing_item, class: 'Requests::Request' do
-    system_id 4106627
-    mfhd_id '4385744'
+    system_id 1389121
+    mfhd_id '1594697'
     source 'pulsearch'
     user { FactoryGirl.build(:user) }
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
   end
 
   factory :request_with_items_charged, class: 'Requests::Request' do
-    system_id 4815239
-    mfhd_id '5039570'
+    system_id 1389121
+    mfhd_id '1594698'
     source 'pulsearch'
     user { FactoryGirl.build(:user) }
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
   end
 
   factory :request_with_items_charged_barcode_patron, class: 'Requests::Request' do
-    system_id 4815239
-    mfhd_id '5039570'
+    system_id 1389121
+    mfhd_id '1594698'
     source 'pulsearch'
     user { FactoryGirl.build(:valid_barcode_patron) }
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
   end
 
   factory :request_with_items_charged_unauthenticated_patron, class: 'Requests::Request' do
-    system_id 4815239
-    mfhd_id '5039570'
+    system_id 1389121
+    mfhd_id '1594698'
     source 'pulsearch'
     user { FactoryGirl.build(:unauthenticated_patron) }
     initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }

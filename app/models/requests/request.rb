@@ -232,7 +232,7 @@ module Requests
       elsif visuals?
         return nil
       else
-        if @mfhd
+        if @mfhd && serial?
           items_as_json = items_by_mfhd(@mfhd)
           if items_as_json.size != 0
             items_with_symbols = items_to_symbols(items_as_json)
@@ -247,8 +247,6 @@ module Requests
               if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
                 [item_info]
               elsif item_info[:status].starts_with?('Online')
-                [item_info]
-              elsif item_info[:status] == 'Missing'
                 [item_info]
               else
                 items_to_symbols(items_by_mfhd(holding_id))

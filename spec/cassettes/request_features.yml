@@ -7026,4 +7026,564 @@ http_interactions:
         Library","code":"engineering"},"delivery_locations":[]}'
     http_version: 
   recorded_at: Thu, 13 Apr 2017 05:38:52 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=4815239
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:00 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 95a82cb9-a509-4b61-a678-26c5347d99a4
+      X-Runtime:
+      - '0.102405'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6dcb3755264d0b1a604b8649ffd07b94"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"5017592":{"more_items":false,"location":"sci","copy_number":1,"item_id":4380458,"on_reserve":"N","due_date":"5/22/2017","status":"Renewed","label":"Lewis
+        Library"},"5018096":{"more_items":false,"location":"spia","temp_loc":"strr","course_reserves":[{"reserve_list_id":9567,"department_name":"Engineering","department_code":"EGR","course_name":"Design
+        for Understanding","course_number":"EGR 381","section_id":1171,"instructor_first_name":"Shelia
+        V.","instructor_last_name":"Pontis"}],"copy_number":1,"item_id":4397582,"on_reserve":"Y","status":"Not
+        Charged","label":"Engineering Library - Reserve"},"5039570":{"more_items":false,"location":"f","copy_number":1,"item_id":4428451,"on_reserve":"N","due_date":"6/15/2017","status":"Renewed","label":"Firestone
+        Library"},"5674398":{"more_items":false,"location":"sa","copy_number":1,"item_id":5084627,"on_reserve":"N","status":"On-Site","label":"Marquand
+        Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5017592
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:00 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ffabc0b6-42be-4c38-8c3a-4e4894474789
+      X-Runtime:
+      - '0.069702'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"906b0422a716f3d9901f130c86f04981"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101059938264","id":4380458,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"5/22/2017","label":"Lewis
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5039570
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - c3347f51-2f9e-4c55-ab24-62b0d81cfe3d
+      X-Runtime:
+      - '0.071009'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"ef9e6aacf3b3918fe96bab12a3df8e0f"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101061133466","id":4428451,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"6/15/2017","label":"Firestone
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5674398
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - ae976501-0e62-41f9-8beb-37d2ba76c484
+      X-Runtime:
+      - '0.068214'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"29a3c83b3abeecb4fbec03844b943121"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101067508992","id":5084627,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Marquand
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=4815239
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 5d8b0a1b-6b9b-4a7a-a575-c0680f8f6c00
+      X-Runtime:
+      - '0.097480'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6dcb3755264d0b1a604b8649ffd07b94"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"5017592":{"more_items":false,"location":"sci","copy_number":1,"item_id":4380458,"on_reserve":"N","due_date":"5/22/2017","status":"Renewed","label":"Lewis
+        Library"},"5018096":{"more_items":false,"location":"spia","temp_loc":"strr","course_reserves":[{"reserve_list_id":9567,"department_name":"Engineering","department_code":"EGR","course_name":"Design
+        for Understanding","course_number":"EGR 381","section_id":1171,"instructor_first_name":"Shelia
+        V.","instructor_last_name":"Pontis"}],"copy_number":1,"item_id":4397582,"on_reserve":"Y","status":"Not
+        Charged","label":"Engineering Library - Reserve"},"5039570":{"more_items":false,"location":"f","copy_number":1,"item_id":4428451,"on_reserve":"N","due_date":"6/15/2017","status":"Renewed","label":"Firestone
+        Library"},"5674398":{"more_items":false,"location":"sa","copy_number":1,"item_id":5084627,"on_reserve":"N","status":"On-Site","label":"Marquand
+        Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5017592
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 9f4623ba-6ead-4f0f-a96d-b0ccc5f9aa31
+      X-Runtime:
+      - '0.068593'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"906b0422a716f3d9901f130c86f04981"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101059938264","id":4380458,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"5/22/2017","label":"Lewis
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5039570
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - fccb6c01-7bb1-410a-b738-eaa483c9af39
+      X-Runtime:
+      - '0.068181'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"ef9e6aacf3b3918fe96bab12a3df8e0f"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101061133466","id":4428451,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"6/15/2017","label":"Firestone
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5674398
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:01 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - abf0a1a8-0530-40e9-9a0c-e1017575b35b
+      X-Runtime:
+      - '0.067393'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"29a3c83b3abeecb4fbec03844b943121"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101067508992","id":5084627,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Marquand
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=1788796
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:05 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 5c54cf77-0a42-47a0-a152-e44d6ee7245f
+      X-Runtime:
+      - '0.066051'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"582efcada124ae31a655cc7a8c81e439"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"2053005":{"more_items":false,"location":"f","copy_number":1,"item_id":2114223,"on_reserve":"N","status":"Not
+        Charged","label":"Firestone Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:37 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=1788796
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:05 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 8754ad10-8608-4295-8fd3-ac9289896b5c
+      X-Runtime:
+      - '0.070190'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"582efcada124ae31a655cc7a8c81e439"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"2053005":{"more_items":false,"location":"f","copy_number":1,"item_id":2114223,"on_reserve":"N","status":"Not
+        Charged","label":"Firestone Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:37 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=1788796
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 21 Apr 2017 21:22:06 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a59b257c-57ba-4ccd-9e85-72c397fe19af
+      X-Runtime:
+      - '0.069372'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"582efcada124ae31a655cc7a8c81e439"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"2053005":{"more_items":false,"location":"f","copy_number":1,"item_id":2114223,"on_reserve":"N","status":"Not
+        Charged","label":"Firestone Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Apr 2017 21:22:37 GMT
 recorded_with: VCR 3.0.3

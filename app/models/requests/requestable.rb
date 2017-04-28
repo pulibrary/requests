@@ -189,13 +189,6 @@ module Requests
       return true if bib[:id].to_i > 0
     end
 
-    ### FIXME - this should be rethought
-    def params
-      if aeon? && !voyager_managed?
-        aeon_mapped_params
-      end
-    end
-
     def online?
       return true if location[:library][:code] == 'online'
     end

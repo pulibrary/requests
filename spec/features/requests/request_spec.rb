@@ -104,7 +104,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
 
       it 'allows guest patrons to request Aeon items' do
-        visit '/requests/561774?mfhd=612742'
+        visit '/requests/2167669'
         click_link(I18n.t('requests.account.other_user_login_msg'))
         fill_in 'request_email', :with => 'name@email.com'
         fill_in 'request_user_name', :with => 'foobar'

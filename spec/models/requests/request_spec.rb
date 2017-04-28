@@ -1255,4 +1255,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context "When passed a system_id for a record with a single aeon holding" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4693146',
+        user: user
+      }
+    }
+    let(:request_with_single_aeon_holding) { described_class.new(params) }
+    subject { request_with_single_aeon_holding }
+
+    describe "#requestable" do
+      describe "#has_single_aeon_requestable?" do
+        it "should identify itself as a single aeon requestable" do
+          expect(subject.has_single_aeon_requestable?).to be_truthy
+        end
+      end
+    end
+  end
 end

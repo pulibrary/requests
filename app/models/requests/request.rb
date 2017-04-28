@@ -110,6 +110,14 @@ module Requests
       return true if requestable.size > 0
     end
 
+    def has_single_aeon_requestable?
+      if requestable.size == 1 and requestable.first.services.include? 'aeon'
+        return true
+      else
+        return false
+      end
+    end
+
     # returns an array of requestable hashes of  grouped under a common mfhd
     def sorted_requestable
       sorted = { }

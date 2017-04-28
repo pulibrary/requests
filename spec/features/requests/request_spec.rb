@@ -162,7 +162,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     before(:each) do
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
-        .with(headers: { 'User-Agent' => 'Faraday v0.12.1' })
         .to_return(status: 200, body: valid_patron_response, headers: {})
       login_as user
     end
@@ -206,7 +205,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     it 'display a request form for a ReCAP item.' do
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
-        .with(headers: { 'User-Agent' => 'Faraday v0.12.1' })
         .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
       login_as user
       visit "/requests/#{voyager_id}"

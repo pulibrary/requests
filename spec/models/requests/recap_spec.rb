@@ -92,7 +92,7 @@ describe Requests::Recap do
 
             stub_request(:post, Requests.config[:gfa_base]).
               with(headers: {'Accept'=>'*/*'}).
-              to_return(status: 201, body: "stubbed response", headers: {})
+              to_return(status: 200, body: "stubbed response", headers: {})
 
             expect(subject.submitted.size).to eq(2)
             expect(subject.errors.size).to eq(0)

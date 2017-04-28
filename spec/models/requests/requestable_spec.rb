@@ -292,7 +292,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       it 'should return an openurl with item id as a value for iteminfo5' do
-        expect(requestable.aeon_openurl(request.ctx)).to include("iteminfo5=#{CGI.escape(requestable.item[:id])}")
+        expect(requestable.aeon_openurl(request.ctx)).to include("iteminfo5=#{requestable.item[:id]}")
       end
 
     end

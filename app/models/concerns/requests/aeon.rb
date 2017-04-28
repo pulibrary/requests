@@ -37,6 +37,9 @@ module Requests
 
     # returns encoded OpenURL string for voyager derived records
     def aeon_openurl(ctx)
+      if has_item_data?
+        ctx.referent.set_metadata('iteminfo5', item[:id].to_s)
+      end
       if enumerated?
         ctx.referent.set_metadata('volume', item[:enum])
       end

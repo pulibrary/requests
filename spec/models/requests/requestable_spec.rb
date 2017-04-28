@@ -118,22 +118,22 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       it "returns a params list with an Aeon Site MUDD" do
-        expect(requestable.params.key?(:Site)).to be_truthy
-        expect(requestable.params[:Site]).to eq('MUDD')
+        expect(requestable.aeon_mapped_params.key?(:Site)).to be_truthy
+        expect(requestable.aeon_mapped_params[:Site]).to eq('MUDD')
       end
 
       it "includes a ReferenceNumber" do
-        expect(requestable.params[:ReferenceNumber]).to eq(request.system_id)
+        expect(requestable.aeon_mapped_params[:ReferenceNumber]).to eq(request.system_id)
       end
 
       it "includes a CallNumber" do
-        expect(requestable.params[:CallNumber]).to be_truthy
-        expect(requestable.params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
+        expect(requestable.aeon_mapped_params[:CallNumber]).to be_truthy
+        expect(requestable.aeon_mapped_params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
       end
 
       it "includes an ItemTitle for a visuals record" do
-        expect(requestable.params[:ItemTitle]).to be_truthy
-        expect(requestable.params[:ItemTitle]).to eq(requestable.bib[:title_display])
+        expect(requestable.aeon_mapped_params[:ItemTitle]).to be_truthy
+        expect(requestable.aeon_mapped_params[:ItemTitle]).to eq(requestable.bib[:title_display])
       end
     end
   end
@@ -154,27 +154,27 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       it "includes a valid aeon site value for a visuals record" do
-        expect(requestable.params.key?(:Site)).to be_truthy
-        expect(requestable.params[:Site]).to eq('RBSC')
+        expect(requestable.aeon_mapped_params.key?(:Site)).to be_truthy
+        expect(requestable.aeon_mapped_params[:Site]).to eq('RBSC')
       end
 
       it "includes a ReferenceNumber" do
-        expect(requestable.params[:ReferenceNumber]).to eq(request.system_id)
+        expect(requestable.aeon_mapped_params[:ReferenceNumber]).to eq(request.system_id)
       end
 
       it "includes the Genre in the ItemTitle for a visuals record" do
-        expect(requestable.params[:ItemTitle]).to be_truthy
-        expect(requestable.params[:ItemTitle]).to eq("#{requestable.bib[:title_display]} #{formatted_genre}")
+        expect(requestable.aeon_mapped_params[:ItemTitle]).to be_truthy
+        expect(requestable.aeon_mapped_params[:ItemTitle]).to eq("#{requestable.bib[:title_display]} #{formatted_genre}")
       end
 
       it "includes a CallNumber" do
-        expect(requestable.params[:CallNumber]).to be_truthy
-        expect(requestable.params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
+        expect(requestable.aeon_mapped_params[:CallNumber]).to be_truthy
+        expect(requestable.aeon_mapped_params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
       end
 
       it "includes a sub location" do
-        expect(requestable.params[:SubLocation]).to be_truthy
-        expect(requestable.params[:SubLocation]).to eq(requestable.holding.first.last[:location_note].first)
+        expect(requestable.aeon_mapped_params[:SubLocation]).to be_truthy
+        expect(requestable.aeon_mapped_params[:SubLocation]).to eq(requestable.holding.first.last[:location_note].first)
       end
     end
   end

@@ -41,7 +41,7 @@ module Requests
       elsif requestable.aeon? && requestable.voyager_managed?
         link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
       elsif requestable.aeon?
-        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.params.to_query}", class: 'btn btn-primary'
+        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
       elsif requestable.on_shelf?
         content_tag(:div) do
           concat link_to 'Where to find it', requestable.map_url
@@ -314,7 +314,7 @@ module Requests
       else
         mfhd_label
       end
-    end 
+    end
 
     def check_box_selected requestable_list
       if requestable_list.size == 1

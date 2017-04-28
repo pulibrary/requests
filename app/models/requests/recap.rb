@@ -18,12 +18,17 @@ module Requests
       items.each do |item|
         params = param_mapping(@submission.bib, @submission.user, item)
         r = response(params)
-        unless r.status == 201
-            xml_response  = Nokogiri::XML(r.body)
-            error_message = "status " + r.status.to_s + ": " + xml_response.xpath("//error").text()
-            @errors <<  { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode], error: error_message }
+                    
+        if r.status != 200
+          @errors <<  { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode], error: r.status }
         else
-            @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode] }
+          xml_response  = Nokogiri::XML(r.body)
+          unless xml_response.xpath("//error").text().empty?
+              error_message = "status " + r.status.to_s + ": " + xml_response.xpath("//error").text()
+              @errors <<  { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode], error: error_message }
+          else
+              @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode] }
+          end
         end
       end
 

@@ -290,6 +290,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'should return an openurl with enumeration when available' do
         expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(enumeration)}")
       end
+
+      it 'should return an openurl with item id as a value for iteminfo5' do
+        expect(requestable.aeon_openurl(request.ctx)).to include("iteminfo5=#{CGI.escape(requestable.item[:id])}")
+      end
+
     end
   end
 

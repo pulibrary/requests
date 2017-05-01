@@ -42,6 +42,8 @@ Coveralls.wear!('rails') do
   add_filter '/lib/requests/engine.rb'
   add_filter '/lib/requests.rb'
 end
+
+
 # Capybara.register_driver :poltergeist do |app|
 #   Capybara::Poltergeist::Driver.new(app, timeout: 60)
 # end

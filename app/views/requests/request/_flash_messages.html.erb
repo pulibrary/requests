@@ -9,7 +9,7 @@
   -%>
   <% if flash[type] %>
       <% if !@submission.nil? %>
-        <div class="alert <%= alert_class %>"><%= flash[type] %>
+        <div class="alert <%= alert_class %>" aria-live="polite"><%= flash[type] %>
           <% if !@submission.errors.empty? %>
             <ul>
               <% @submission.errors.messages.each do |key, value| %>

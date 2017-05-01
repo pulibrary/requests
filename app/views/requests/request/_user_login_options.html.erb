@@ -1,14 +1,19 @@
 <div class="row">
-  <div id="punetid-form" aria-hidden="false" style="display: block; text-align:center; width: 50%; margin: 0 auto; ">
+  <div id="punetid-form" role="menu" aria-hidden="false" style="display: block; text-align:center; width: 50%; margin: 0 auto; ">
+      <script type='text/javascript'>
+        $( document ).ready(function() {
+          //$("#cas-login").focus();
+        });
+      </script>
       <%= current_user_status @user %>
       <hr>
       <p class="or-divider">
         or
       </p>
-      <a id="no_netid" class="btn btn-md btn-default btn-full" href="#other_user_account_info" aria-expanded="false" aria-controls="other_user_account_info"><%= I18n.t('requests.account.other_user_login_msg') %></a>
-      <div style="text-align:left" class='collapse well' id='other_user_account_info'>
+      <a id="no_netid" role="menuitem" class="btn btn-md btn-default btn-full" href="#other_user_account_info" aria-expanded="false" aria-controls="other_user_account_info"><%= I18n.t('requests.account.other_user_login_msg') %></a>
+      <div style="text-align:left" class='collapse well' aria-live='polite' id='other_user_account_info'>
         <fieldset class="form-group required">
-          <label class="control-label col-sm-10" for="user_name">
+          <label class="control-label col-sm-10" for="request_user_name">
               Your Name
           </label>
           <div class="col-sm-10">
@@ -17,7 +22,7 @@
           </div>
         </fieldset>
         <fieldset class="form-group required">
-          <label class="control-label col-sm-10" for="email">
+          <label class="control-label col-sm-10" for="request_email">
               Contact Email
           </label>
           <div class="col-sm-10">

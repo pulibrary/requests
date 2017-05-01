@@ -4,6 +4,7 @@ rvm:
 env:
   - RAILS_VERSION="4.2.7.1"
 dist: trusty
+
 script: bundle exec rake ci
 
 branches:

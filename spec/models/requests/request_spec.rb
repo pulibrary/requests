@@ -57,6 +57,17 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe "#get_language" do
+      it "returns a language_code" do
+        expect(subject.get_language).to be_truthy
+      end
+
+      # Doesn't do this yet
+      # it "returns two-character ISO 639-1 language code" do
+      #   expect(subject.display_metadata[:author]).to be_truthy
+      # end
+    end
+
     describe "#ctx" do
       it "should produce an ILLiad flavored openurl" do
         expect(subject.ctx).to be_an_instance_of(OpenURL::ContextObject)

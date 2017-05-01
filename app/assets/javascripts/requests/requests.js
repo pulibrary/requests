@@ -35,6 +35,15 @@ $(document).ready(function() {
       $( "#other_user_account_info").show();
     });
 
+    $('#no_netid').keydown(function (e) {
+      var keyCode = e.keyCode || e.which;
+
+      if (keyCode == 13) {
+        $( "#no_netid" ).trigger( "click" );
+        return false;
+      }
+    });
+
     $( "#go_back").click(function( event ) {
       event.preventDefault();
       $( "#no_netid").show();
@@ -116,10 +125,12 @@ $(document).ready(function() {
           }else{
             this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the BorrowDirect service."));
           }
+          $('.alert-warning a').focus();
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
           var ctx = this_td.find('.ill-data').attr('data-ill-url')
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
+          $('.alert-warning a').focus();
         }
       }
     });

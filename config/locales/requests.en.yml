@@ -104,3 +104,4 @@ en:
       pul_user_service_msg: 'Princeton Faculty, Staff, and Students need to sign in to see Borrow Direct Services'
       other_user_login_btn: "View Available Request Options"
       cas_user_no_barcode_msg: 'You must register with the library and obtain a barcode before you can request materials. Please contact the Circulation Desk for details.'
+      auth_user_lookup_fail: 'Failed to lookup your library account'

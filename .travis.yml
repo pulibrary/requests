@@ -3,9 +3,7 @@ rvm:
   - 2.3.1
 env:
   - RAILS_VERSION="4.2.7.1"
-# before_script:
-#   - rake engine_cart:generate
-
+dist: trusty
 script: bundle exec rake ci
 
 branches:

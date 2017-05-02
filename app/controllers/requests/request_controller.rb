@@ -44,19 +44,12 @@ module Requests
       if !@user.guest?
         @patron = current_patron(@user.uid)
       elsif email && user_name
-        @patron = {:netid=>nil,
-                 :first_name=>nil,
-                 :last_name=>user_name,
-                 :active_email=>email,
-                 :barcode=>'ACCESS',
-                 :barcode_status=>0,
-                 :barcode_status_date=>nil,
-                 :university_id=>nil,
-                 :patron_group=>nil,
-                 :purge_date=>nil,
-                 :expire_date=>nil,
-                 :patron_id=>nil}.with_indifferent_access
+        @patron = access_patron(email, user_name)
       end
+      if @patron == false
+        flash.now[:error] = "A problem occurred looking up your library account."
+      end
+
       @request = Requests::Request.new({
         system_id: request_params[:system_id],
         mfhd: request_params[:mfhd],
@@ -162,27 +155,28 @@ module Requests
     end
 
     # shim for pageable locations
-    def pageable
-      request_params[:system_id] = sanitize(params[:system_id])
-      @user = current_or_guest_user
-      request_params[:user] = @user.uid
-      unless params[:mfhd].nil?
-        request_params[:mfhd] = sanitize(params[:mfhd])
-      end
-      @request = Requests::Request.new(request_params)
-      if @request.has_pageable?
-        respond_to do | format |
-          format.json { render json: { pageable: true } }
-          format.html { redirect_to "/requests/#{@request.system_id}" }
-        end
-      ## This clause should go away when this systems is in production for all request types
-      else
-        respond_to do | format |
-          format.json { render json: { pageable: false } }
-          format.html { redirect_to "https://library.princeton.edu/requests/#{@request.system_id}" }
-        end
-      end
-    end
+    ## This feature no longer in use
+    # def pageable
+    #   request_params[:system_id] = sanitize(params[:system_id])
+    #   @user = current_or_guest_user
+    #   request_params[:user] = @user.uid
+    #   unless params[:mfhd].nil?
+    #     request_params[:mfhd] = sanitize(params[:mfhd])
+    #   end
+    #   @request = Requests::Request.new(request_params)
+    #   if @request.has_pageable?
+    #     respond_to do | format |
+    #       format.json { render json: { pageable: true } }
+    #       format.html { redirect_to "/requests/#{@request.system_id}" }
+    #     end
+    #   ## This clause should go away when this systems is in production for all request types
+    #   else
+    #     respond_to do | format |
+    #       format.json { render json: { pageable: false } }
+    #       format.html { redirect_to "https://library.princeton.edu/requests/#{@request.system_id}" }
+    #     end
+    #   end
+    # end
 
     private
       # trusted params
@@ -190,9 +184,10 @@ module Requests
           params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
       end
 
-      def mail_services
-        ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
-      end
+      # unused method
+      # def mail_services
+      #   ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
+      # end
 
       def recap_services
         ["recap"]
@@ -221,8 +216,24 @@ module Requests
           return false
         end
         patron = JSON.parse(patron_record.body).with_indifferent_access
-        logger.info(patron.to_hash.to_s)
         patron
+      end
+
+      def access_patron(email, user_name)
+        { 
+          :netid=>nil,
+          :first_name=>nil,
+          :last_name=>user_name,
+          :active_email=>email,
+          :barcode=>'ACCESS',
+          :barcode_status=>0,
+          :barcode_status_date=>nil,
+          :university_id=>nil,
+          :patron_group=>nil,
+          :purge_date=>nil,
+          :expire_date=>nil,
+          :patron_id=>nil
+        }.with_indifferent_access
       end
 
       def sanitize_submission params

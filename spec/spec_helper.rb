@@ -42,10 +42,29 @@ Coveralls.wear!('rails') do
   add_filter '/lib/requests/engine.rb'
   add_filter '/lib/requests.rb'
 end
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, timeout: 60)
+# Capybara.register_driver :poltergeist do |app|
+#   Capybara::Poltergeist::Driver.new(app, timeout: 60)
+# end
+# Capybara.javascript_driver = :poltergeist
+Capybara.default_driver = :rack_test      # This is a faster driver
+Capybara.javascript_driver = :poltergeist # This is slower
+Capybara.default_max_wait_time = ENV['TRAVIS'] ? 30 : 15
+# Adding the below to deal with random Capybara-related timeouts in CI.
+# Found in this thread: https://github.com/teampoltergeist/poltergeist/issues/375
+poltergeist_options = {
+  js_errors: true,
+  timeout: 60,
+  logger: nil,
+  phantomjs_logger: StringIO.new,
+  phantomjs_options: [
+    '--load-images=no',
+    '--ignore-ssl-errors=yes'
+  ]
+}
+Capybara.register_driver(:poltergeist) do |app|
+  Capybara::Poltergeist::Driver.new(app, poltergeist_options)
 end
-Capybara.javascript_driver = :poltergeist
+
 EngineCart.load_application!
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration

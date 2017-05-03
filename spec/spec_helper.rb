@@ -18,7 +18,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
-require 'factory_girl_rails'
+require 'factory_girl'
 require 'webmock/rspec'
 require 'rspec/rails'
 require 'engine_cart'

@@ -1,4 +1,5 @@
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 # Maintain your gem's version:
 require "requests/version"
@@ -32,7 +33,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.4'
-  s.add_development_dependency 'engine_cart', '~> 1.0.1'
+  s.add_development_dependency 'engine_cart', '~> 1.0'
   s.add_development_dependency 'factory_girl_rails', '~> 4.5.0'
   s.add_development_dependency 'faker', '~> 1.4.3'
   s.add_development_dependency 'database_cleaner', '~> 1.3'

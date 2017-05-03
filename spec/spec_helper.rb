@@ -48,7 +48,7 @@ end
 # Capybara.javascript_driver = :poltergeist
 Capybara.default_driver = :rack_test      # This is a faster driver
 Capybara.javascript_driver = :poltergeist # This is slower
-Capybara.default_max_wait_time = ENV['TRAVIS'] ? 30 : 15
+Capybara.default_max_wait_time = ENV['TRAVIS'] ? 60 : 15
 # Adding the below to deal with random Capybara-related timeouts in CI.
 # Found in this thread: https://github.com/teampoltergeist/poltergeist/issues/375
 poltergeist_options = {

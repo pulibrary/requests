@@ -151,6 +151,14 @@ FactoryGirl.define do
     initialize_with { new({ system_id: system_id, user: user, mfhd: mfhd_id, source: source }) }
   end
 
+  factory :aeon_rbsc_enumerated, class: 'Requests::Request' do
+    system_id 6794966
+    mfhd_id '6720550'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new( { system_id: system_id, user: user, mfhd: mfhd_id, source: source } ) }
+  end
+
   factory :aeon_marquand, class: 'Requests::Request' do
     system_id 7915334
     mfhd_id '7697569'

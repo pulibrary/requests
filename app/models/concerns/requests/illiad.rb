@@ -5,19 +5,20 @@ module Requests
 
     # accepts a @ctx object and formats it appropriately for ILL
     def illiad_request_url(ctx = nil, requestable)
+      enum = nil
+      chron = nil
       if requestable.enumerated?
         enum = requestable.item[:enum]
-      else
-        enum = nil
+        chron = requestable.item[:chron]
       end
-      "#{Requests.config[:ill_base]}?#{illiad_query_parameters(ctx, enum)}"
+      "#{Requests.config[:ill_base]}?#{illiad_query_parameters(ctx, enum, chron)}"
     end
 
     ## below take from Umlaut's illiad service adaptor
     # https://github.com/team-umlaut/umlaut/blob/master/app/service_adaptors/illiad.rb
     # takes an existing openURL and illiad-izes it.
     # also attempts to handle the question of enumeration.
-    def illiad_query_parameters(request, enum = nil)
+    def illiad_query_parameters(request, enum = nil, chron = nil)
       metadata = request.referent.metadata
       qp = {}
       qp['genre'] = metadata['genre']
@@ -29,7 +30,7 @@ module Requests
       end
       ## Possible enumeration values
       qp['volume'] = enum unless enum.nil?
-      # qp['issue']     = metadata['issue']
+      qp['issue']  = chron unless chron.nil?
       # qp['month']     = get_month(request.referent)
       qp['issn'] = metadata['issn'] unless metadata['issn'].nil?
       qp['isbn'] = metadata['isbn'] unless metadata['isbn'].nil?

@@ -64,6 +64,7 @@ module Requests
               unless locations.key? item_loc
                 locations[item_loc] = get_location(item_loc)
               end
+
               params = build_requestable_params(
                 {
                   item: item,

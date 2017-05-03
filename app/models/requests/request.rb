@@ -287,8 +287,12 @@ module Requests
     def display_metadata
       {
         title: doc["title_citation_display"],
-        author: doc["author_citation_display"],
+        author: doc["author_citation_display"]
       }
+    end
+
+    def get_language
+        doc["language_code_s"].first
     end
 
     def pickups

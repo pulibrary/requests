@@ -18,7 +18,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
-require 'factory_girl_rails'
+require 'factory_girl'
 require 'webmock/rspec'
 require 'rspec/rails'
 require 'engine_cart'
@@ -54,7 +54,7 @@ Capybara.default_max_wait_time = ENV['TRAVIS'] ? 60 : 15
 # Adding the below to deal with random Capybara-related timeouts in CI.
 # Found in this thread: https://github.com/teampoltergeist/poltergeist/issues/375
 poltergeist_options = {
-  js_errors: true,
+  js_errors: false,
   timeout: 60,
   logger: nil,
   phantomjs_logger: StringIO.new,

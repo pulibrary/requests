@@ -65,7 +65,9 @@
                   </td>
                   <td>
                     <% if requestable.has_item_data? %>
-                      <%= enum_copy_display requestable.item %>
+                      <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
+                        <%= enum_copy_display requestable.item %>
+                      </span>
                     <% end %>
                   </td>
                   <td>
@@ -74,14 +76,15 @@
                       <%= status_label requestable %>
                     <% end %>
                   </td>
-                <td class='request--options'>
+                <td class='request--options' aria-live="polite">
                   <% if requestable.ill_eligible? %>
                     <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
                   <% end %>
                   <% if requestable.services.include?('recap_edd') %>
                       <%= hidden_field_tag "requestable[][type]", "recap" %>
-                      <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print", false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-expanded' => 'true', 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
-                      <%= label_tag "requestable__type_recap_#{requestable.item[:id]}", "Print", class: 'control-label' %>
+                      <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print", false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
+                      <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", "Print", class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
+
                       <br/><small id="requestable__type_recap_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap.brief_msg') %></small>
                       <br/>
                   <% else %>
@@ -93,8 +96,8 @@
                   <% end %>
                   <% if requestable.services.include?('recap_edd') %>
                       <br/>
-                      <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-expanded' => 'false', 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
-                      <%= label_tag "requestable__type_recap_edd_#{requestable.item[:id]}", "Electronic Delivery", class: 'control-label' %>
+                      <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
+                      <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
                       <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
 
                       <%= render partial: "edd_fields", locals: { requestable: requestable } %>

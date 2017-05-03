@@ -238,12 +238,13 @@ module Requests
       hidden
     end
 
-    def format_brief_record_display params
+    def format_brief_record_display request
+      params = request.display_metadata
       content_tag(:dl, class: "dl-horizontal") do
         params.each do |key, value|
           unless value.nil?
             concat content_tag(:dt, "#{display_label[key]}")
-            concat content_tag(:dd, "#{value.first}")
+            concat content_tag(:dd, "#{value.first}", lang: "#{request.get_language}", id: "#{display_label[key].gsub(/[^0-9a-z ]/i, '').downcase}")
           end
         end
       end
@@ -278,7 +279,7 @@ module Requests
     end
 
     def item_checkbox requestable_list, requestable
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), id: "requestable_selected_#{requestable.item['id']}"
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), :aria => {:labelledby => "title enum_#{requestable.preferred_request_id}"}, id: "requestable_selected_#{requestable.item['id']}"
     end
 
     def check_box_disabled requestable
@@ -424,6 +425,12 @@ module Requests
         date: "Published/Created:",
         id: "Bibliographic ID:",
         mfhd: "Holding ID (mfhd):"
+      }.with_indifferent_access
+    end
+
+    def display_language
+      {
+        language: "Language:"
       }.with_indifferent_access
     end
 

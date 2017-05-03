@@ -59,7 +59,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         fill_in 'request_email', :with => 'name@email.com'
         fill_in 'request_user_name', :with => 'foobar'
         click_button(I18n.t('requests.account.other_user_login_btn'))
-        wait_for_ajax
+        # wait_for_ajax
         expect(page).to have_content 'ReCAP Oversize DT549 .E274q'
       end
 
@@ -72,7 +72,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_no_content 'Electronic Delivery'
         select('Firestone Library', :from => 'requestable__pickup')
         click_button 'Request this Item'
-        wait_for_ajax
+        # wait_for_ajax
         expect(page).to have_content 'Request submitted'
       end
 
@@ -133,7 +133,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         check('requestable__selected', exact: true)
         select('Firestone Library', :from => 'requestable__pickup')
         click_button 'Request Selected Items'
-        wait_for_ajax
+        # wait_for_ajax
         expect(page).to have_content 'Request submitted'
       end
     end
@@ -175,7 +175,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         visit "/requests/#{voyager_id}"
         expect(page).to have_content 'Electronic Delivery'
         #some weird issue with this and capybara examining the page source shows it is there.
-        #expect(page).to have_selector '#request_user_barcode'
+        expect(page).to have_selector '#request_user_barcode'
         choose('requestable__delivery_mode_7303228_print') #chooses 'print' radio button
         select('Firestone Library', :from => 'requestable__pickup')
         expect(page).to have_button('Request this Item', disabled: false)
@@ -190,7 +190,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         select('Marquand Library of Art and Archaeology', :from => 'requestable__pickup')
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'
-        wait_for_ajax
+        # wait_for_ajax
         expect(page).to have_content 'Request submitted'
         # expect(page).to have_content 'We were unable to process your request'
       end
@@ -227,7 +227,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       login_as user
       visit "/requests/#{voyager_id}"
       expect(page).to have_content 'Electronic Delivery'
-      #expect(page).to have_selector '#request_user_barcode'
+      expect(page).to have_selector '#request_user_barcode'
     end
   end
 end

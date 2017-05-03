@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Declare your gem's dependencies in requests.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
-gem 'coveralls', require: false
 gemspec
 
 group :development, :test do
@@ -16,11 +15,8 @@ end
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-# To use a debugger
-# gem 'byebug', group: [:development, :test]
-
 # comment in when needed
-#gem 'pul_metadata_services', github:'pulibrary/pul_metadata_services', branch: :master
+# gem 'pul_metadata_services', github:'pulibrary/pul_metadata_services', branch: :master
 
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 0.10.0
@@ -48,9 +44,9 @@ else
 
   case ENV['RAILS_VERSION']
   when /^4.2/
+    gem 'coffee-rails', '~> 4.1.0'
     gem 'responders', '~> 2.0'
     gem 'sass-rails', '>= 5.0'
-    gem 'coffee-rails', '~> 4.1.0'
   when /^4.[01]/
     gem 'sass-rails', '< 5.0'
   end

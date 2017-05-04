@@ -217,7 +217,7 @@ module Requests
       end
       if requestable.item["location"].nil?
         hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.location['code']}", id: "requestable_location_#{requestable.item['id']}"
-      else 
+      else
         hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_location_#{requestable.item['id']}"
       end
       hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}", id: "requestable_item_id_#{requestable.item['id']}"
@@ -227,7 +227,6 @@ module Requests
       unless requestable.item["enum"].nil?
         hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enum"]}", id: "requestable_enum_#{requestable.item['id']}"
       end
-      ### This should cleaned up 
       unless requestable.item["enumeration"].nil?
         hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enumeration"]}", id: "requestable_enum_#{requestable.item['id']}"
       end

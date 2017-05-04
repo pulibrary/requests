@@ -18,10 +18,6 @@ module Requests
       @location ||= location # hash of location matrix data
     end
 
-    def bib
-      @bib
-    end
-
     ## use this in instances where you don't know if an item has item details
     def preferred_request_id
       if item?
@@ -31,24 +27,8 @@ module Requests
       end
     end
 
-    def holding
-      @holding
-    end
-
-    def item
-      @item
-    end
-
-    def location
-      @location
-    end
-
     def set_services service_list
       @services = service_list
-    end
-
-    def services
-      @services
     end
 
     def location_code
@@ -143,7 +123,7 @@ module Requests
       item
     end
 
-    ##FIXME
+    # FIXME
     def has_item_data?
       if item.nil?
         false
@@ -299,7 +279,7 @@ module Requests
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing','On-Site - On Hold', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+         'Missing', 'On-Site - On Hold', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
   end
 end

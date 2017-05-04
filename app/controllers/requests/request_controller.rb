@@ -8,7 +8,6 @@ module Requests
     skip_before_action :verify_authenticity_token, only: [:borrow_direct]
 
     def index
-      flash.now[:notice] = "This form is in development"
       flash.now[:notice] = "Please Supply a valid Library ID to Request"
     end
 

@@ -1,5 +1,6 @@
 require 'borrow_direct'
 require 'faraday'
+require 'requests/scsb_requestable_factory'
 
 module Requests
   class Request
@@ -59,35 +60,37 @@ module Requests
     def build_requestable
       return [] if doc.blank?
       if scsb?
-        # requestable_items = []
-        # ## scsb processing
-        # ## If mfhd present look for only that
-        # ## sort items by keys
-        # ## send query for availability by barcode
-        # ## overlay availability to the 'status' field
-        # ## make sure other fields map to the current data model for item in requestable
-        # ## adjust router to understand SCSB status
-        # holdings.each do |id, values|
-        #   barcodes = values['items'].map { |e| e['barcode']  }
-        #   barcodesort = {}
-        #   values['items'].each {|item| barcodes ort[item['barcode']] = item }
-        #   availability_data = items_by_barcode(barcodes)
-        #   availability_data.each do |item|
-        #     barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
-        #   end
-        #   barcodesort.values.each do |item|
-        #     params = build_requestable_params(
-        #           {
-        #             item: item.with_indifferent_access,
-        #             holding: { "#{id.to_sym}" => holdings[id] },
-        #             location: locations[item_scsb_collection_group(item)]
-        #           }
-        #         )
-        #     requestable_items << Requests::Requestable.new(params)
-        #   end
-        # end
-        scsb_factory = Requests::ScsbRequestableFactory.new(holdings)
-        requestable_items = scsb_factory.requestable
+        requestable_items = []
+        ## scsb processing
+        ## If mfhd present look for only that
+        ## sort items by keys
+        ## send query for availability by barcode
+        ## overlay availability to the 'status' field
+        ## make sure other fields map to the current data model for item in requestable
+        ## adjust router to understand SCSB status
+        availability_data = items_by_id(other_id, record_owning_institution(scsb_location))
+        holdings.each do |id, values|
+          barcodes = values['items'].map { |e| e['barcode']  }
+          barcodesort = {}
+          values['items'].each {|item| barcodesort[item['barcode']] = item }
+          #availability_data = items_by_barcode(barcodes)
+          availability_data.each do |item|
+            barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
+          end
+          barcodesort.values.each do |item|
+            params = build_requestable_params(
+                  {
+                    item: item.with_indifferent_access,
+                    holding: { "#{id.to_sym}" => holdings[id] },
+                    location: locations[item_scsb_collection_group(item)]
+                  }
+                )
+            requestable_items << Requests::Requestable.new(params)
+          end
+        end
+        requestable_items
+        # scsb_factory = Requests::ScsbRequestableFactory.new(holdings, locations)
+        # requestable_items = scsb_factory.items
       elsif !items.nil?
         requestable_items = []
         items.each do |holding_id, items|
@@ -375,6 +378,14 @@ module Requests
 
     def isbn_numbers
       doc['isbn_s']
+    end
+
+    def other_id
+      doc['other_id_s'].first
+    end
+
+    def scsb_location
+      doc['location_code_s'].first
     end
 
     private

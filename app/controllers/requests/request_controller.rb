@@ -5,7 +5,6 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
-
     skip_before_action :verify_authenticity_token, only: [:borrow_direct]
 
     def index
@@ -51,16 +50,16 @@ module Requests
       end
 
       @request = Requests::Request.new({
-        system_id: request_params[:system_id],
-        mfhd: request_params[:mfhd],
-        source: request_params[:source],
-        user: @user
-      })
+                                         system_id: request_params[:system_id],
+                                         mfhd: request_params[:mfhd],
+                                         source: request_params[:source],
+                                         user: @user
+                                       })
       ### redirect to Aeon non-voyager items or single Aeon requestable
       if @request.thesis? || @request.visuals? || @request.has_single_aeon_requestable?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
       end
-      #flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
+      # flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end
 
     # will request recall pickup location options from voyager
@@ -72,7 +71,7 @@ module Requests
 
     def borrow_direct
       @isbns = sanitize(params[:isbns]).split(',')
-      query_params = {isbn: @isbns.first}
+      query_params = { isbn: @isbns.first }
       bd = Requests::BorrowDirectLookup.new
       if params[:barcode].nil?
         bd.find(query_params)
@@ -95,8 +94,8 @@ module Requests
           recall = @submission.service_types.include? 'recall'
           bd = @submission.service_types.include? 'bd'
           if recap
-            if @submission.user['user_barcode']=='ACCESS'
-              #Access users cannot use recap service directly
+            if @submission.user['user_barcode'] == 'ACCESS'
+              # Access users cannot use recap service directly
               @services << Requests::Generic.new(@submission)
             else
               @services << Requests::Recap.new(@submission)
@@ -141,16 +140,15 @@ module Requests
         else
           format.js {
             if @submission.valid? # submission was valid, but service failed
-                flash.now[:error] = I18n.t('requests.submit.service_error')
-                logger.error "Request Service Error"
-                Requests::RequestMailer.send("service_error_email", @services).deliver_now
+              flash.now[:error] = I18n.t('requests.submit.service_error')
+              logger.error "Request Service Error"
+              Requests::RequestMailer.send("service_error_email", @services).deliver_now
             else
-                flash.now[:error] = I18n.t('requests.submit.error')
-                logger.error "Request Submission #{@submission.errors.messages.as_json}"
+              flash.now[:error] = I18n.t('requests.submit.error')
+              logger.error "Request Submission #{@submission.errors.messages.as_json}"
             end
           }
         end
-
       end
     end
 
@@ -179,9 +177,10 @@ module Requests
     # end
 
     private
+
       # trusted params
       def request_params
-          params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
+        params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
       end
 
       # unused method
@@ -192,7 +191,6 @@ module Requests
       def recap_services
         ["recap"]
       end
-
 
       def current_patron(uid)
         return false unless uid
@@ -220,19 +218,19 @@ module Requests
       end
 
       def access_patron(email, user_name)
-        { 
-          :netid=>nil,
-          :first_name=>nil,
-          :last_name=>user_name,
-          :active_email=>email,
-          :barcode=>'ACCESS',
-          :barcode_status=>0,
-          :barcode_status_date=>nil,
-          :university_id=>nil,
-          :patron_group=>nil,
-          :purge_date=>nil,
-          :expire_date=>nil,
-          :patron_id=>nil
+        {
+          :netid => nil,
+          :first_name => nil,
+          :last_name => user_name,
+          :active_email => email,
+          :barcode => 'ACCESS',
+          :barcode_status => 0,
+          :barcode_status_date => nil,
+          :university_id => nil,
+          :patron_group => nil,
+          :purge_date => nil,
+          :expire_date => nil,
+          :patron_id => nil
         }.with_indifferent_access
       end
 
@@ -244,6 +242,5 @@ module Requests
         end
         params
       end
-
   end
 end

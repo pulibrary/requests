@@ -29,7 +29,6 @@ require 'capybara/poltergeist'
 require 'coveralls'
 require 'devise'
 
-
 WebMock.disable_net_connect!(allow_localhost: false)
 
 Coveralls.wear!('rails') do
@@ -42,7 +41,6 @@ Coveralls.wear!('rails') do
   add_filter '/lib/requests/engine.rb'
   add_filter '/lib/requests.rb'
 end
-
 
 # Capybara.register_driver :poltergeist do |app|
 #   Capybara::Poltergeist::Driver.new(app, timeout: 60)
@@ -116,10 +114,10 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
-  #config.include Devise::Test::ControllerHelpers, type: :feature
+  # config.include Devise::Test::ControllerHelpers, type: :feature
   # config.include Devise::Test::IntegrationHelpers, type: :feature
   # config.include Devise::Test::ControllerHelpers, type: :view
-  config.include Warden::Test::Helpers#, type: :feature
+  config.include Warden::Test::Helpers # , type: :feature
   # config.include Warden::Test::Helpers, type: :request
   config.include Features::SessionHelpers, type: :feature
   config.before(:each, type: :feature) do

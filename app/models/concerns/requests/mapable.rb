@@ -8,11 +8,11 @@ module Requests
 
     private
 
-    def map_params
-      {
-        id: bib['id'],
-        loc: location['code']
-      }
-    end
+      def map_params
+        {
+          id: bib['id'],
+          loc: location['code']
+        }
+      end
   end
 end

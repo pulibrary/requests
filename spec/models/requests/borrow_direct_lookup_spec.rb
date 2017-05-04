@@ -5,7 +5,7 @@ describe Requests::BorrowDirectLookup do
   let(:subject) { described_class.new }
 
   context 'An available item in borrow direct' do
-    let(:good_params) { 
+    let(:good_params) {
       {
         :isbn => '0415296633'
       }
@@ -33,11 +33,11 @@ describe Requests::BorrowDirectLookup do
   end
 
   context 'An unavailable item in borrow direct' do
-    let(:bad_params) { 
+    let(:bad_params) {
       {
         :isbn => '121313131313'
       }
-    } 
+    }
     let(:bad_bd_response) {
       instance_double('bd_find_item')
     }

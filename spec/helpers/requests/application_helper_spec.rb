@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe Requests::ApplicationHelper do
-
   let(:isbns) {
       [
         '9780544343757',
@@ -9,7 +8,7 @@ RSpec.describe Requests::ApplicationHelper do
       ]
     }
   let(:isbn_string_helper) { described_class.isbn_string(isbns) }
-  
+
   describe "#pickup_choices" do
     let(:on_order_params) {
       {

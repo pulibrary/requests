@@ -3,7 +3,6 @@ require 'cobravsmongoose'
 
 module Requests
   class PickupLookup
-
     include Requests::Voyager
 
     def initialize(params)
@@ -19,8 +18,8 @@ module Requests
       @xml_response = Nokogiri::XML(r.body)
 
       if @xml_response.xpath("//recall/@allowed").text() == 'N'
-        error_message =  @xml_response.xpath("//note").text()
-        @errors <<  { bibid: @params['bib']['id'], item: @params['requestable'].first['item_id'], patron: @params['request']['patron_id'], error: error_message }
+        error_message = @xml_response.xpath("//note").text()
+        @errors << { bibid: @params['bib']['id'], item: @params['requestable'].first['item_id'], patron: @params['request']['patron_id'], error: error_message }
       end
     end
 

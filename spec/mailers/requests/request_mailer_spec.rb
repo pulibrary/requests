@@ -2,52 +2,50 @@ require 'spec_helper'
 include Requests::ApplicationHelper
 
 describe Requests::RequestMailer, :type => :mailer do
-
   let(:user_info) {
     {
-      "user_name"=>"Foo Request",
-      "user_barcode"=>"22101007797777",
-      "email"=>"foo@princeton.edu",
-      "source"=>"pulsearch"}
+      "user_name" => "Foo Request",
+      "user_barcode" => "22101007797777",
+      "email" => "foo@princeton.edu",
+      "source" => "pulsearch" }
   }
 
   let(:guest_user_info) {
     {
-      "user_name"=>" Guest Request",
-      "user_last_name"=>" Guest Request",
-      "user_barcode"=>"ACCESS",
-      "patron_id"=>"",
-      "patron_group"=>"",
-      "email"=>"guest@foo.edu"
+      "user_name" => " Guest Request",
+      "user_last_name" => " Guest Request",
+      "user_barcode" => "ACCESS",
+      "patron_id" => "",
+      "patron_group" => "",
+      "email" => "guest@foo.edu"
     }
   }
 
   context "send preservation email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9533612",
-          "call_number"=>"TR465 .C666 2016",
-          "location_code"=>"pres",
-          "item_id"=>"3059236",
-          "barcode"=>"32101044283008",
-          "copy_number"=>"0",
-          "status"=>"Not Charged",
-          "type"=>"pres",
-          "pickup"=>"PA"
+          "selected" => "true",
+          "mfhd" => "9533612",
+          "call_number" => "TR465 .C666 2016",
+          "location_code" => "pres",
+          "item_id" => "3059236",
+          "barcode" => "32101044283008",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "pres",
+          "pickup" => "PA"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"9712355",
-        "title"=>"The atlas of water damage on inkjet-printed fine art /",
-        "author"=>"Connor, Meghan Burge, Daniel Rochester Institute of Technology"
+        "id" => "9712355",
+        "title" => "The atlas of water damage on inkjet-printed fine art /",
+        "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }
     }
     let(:params) {
@@ -76,33 +74,31 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.pres.email_conf_msg')
     end
-
   end
 
   context "send annexa email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"2576882",
-          "call_number"=>"Oversize HQ766 .B53f",
-          "location_code"=>"l",
-          "item_id"=>"2286894",
-          "status"=>"Not Charged",
-          "type"=>"annexa",
-          "pickup"=>"PA"
+          "selected" => "true",
+          "mfhd" => "2576882",
+          "call_number" => "Oversize HQ766 .B53f",
+          "location_code" => "l",
+          "item_id" => "2286894",
+          "status" => "Not Charged",
+          "type" => "annexa",
+          "pickup" => "PA"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"2286894",
-        "title"=>"The atlas of water damage on inkjet-printed fine art /",
-        "author"=>"Connor, Meghan Burge, Daniel Rochester Institute of Technology"
+        "id" => "2286894",
+        "title" => "The atlas of water damage on inkjet-printed fine art /",
+        "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }.with_indifferent_access
     }
     let(:params) {
@@ -131,35 +127,33 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.annexa.email_conf_msg')
     end
-
   end
 
   context "send annexb email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9840542",
-          "call_number"=>"QK629.A4 K45 2016",
-          "location_code"=>"anxb",
-          "item_id"=>"7528249",
-          "barcode"=>"32101095859144",
-          "copy_number"=>"0",
-          "status"=>"Not Charged",
-          "type"=>"annexb",
-          "pickup"=>"PA"
+          "selected" => "true",
+          "mfhd" => "9840542",
+          "call_number" => "QK629.A4 K45 2016",
+          "location_code" => "anxb",
+          "item_id" => "7528249",
+          "barcode" => "32101095859144",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "annexb",
+          "pickup" => "PA"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"10042951",
-        "title"=>"Agaricus of North America /",
-        "author"=>"Kerrigan, Richard Wade"
+        "id" => "10042951",
+        "title" => "Agaricus of North America /",
+        "author" => "Kerrigan, Richard Wade"
       }.with_indifferent_access
     }
     let(:params) {
@@ -188,31 +182,29 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.annexb.email_conf_msg')
     end
-
   end
 
   context "send on_order email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9878235",
-          "location_code"=>"j",
-          "item_id"=>"10081566",
-          "status"=>"On-Order",
-          "pickup"=>"PA"
+          "selected" => "true",
+          "mfhd" => "9878235",
+          "location_code" => "j",
+          "item_id" => "10081566",
+          "status" => "On-Order",
+          "pickup" => "PA"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"10081566",
-        "title"=>"Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
-        "author"=>"Goto, Seimei"
+        "id" => "10081566",
+        "title" => "Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
+        "author" => "Goto, Seimei"
       }.with_indifferent_access
     }
     let(:params) {
@@ -241,34 +233,32 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.on_order.email_conf_msg')
     end
-
   end
 
   context "send in_process email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9479064",
-          "call_number"=>"PQ8098.429.E58 C37 2015",
-          "location_code"=>"f",
-          "item_id"=>"7384386",
-          "barcode"=>"32101098590092",
-          "copy_number"=>"0",
-          "status"=>"Not Charged",
-          "type"=>"in_process"
+          "selected" => "true",
+          "mfhd" => "9479064",
+          "call_number" => "PQ8098.429.E58 C37 2015",
+          "location_code" => "f",
+          "item_id" => "7384386",
+          "barcode" => "32101098590092",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "in_process"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"9646099",
-        "title"=>"Cartas romanas /",
-        "author"=>"Serrano del Pozo, Ignacio"
+        "id" => "9646099",
+        "title" => "Cartas romanas /",
+        "author" => "Serrano del Pozo, Ignacio"
       }.with_indifferent_access
     }
     let(:params) {
@@ -297,34 +287,32 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.in_process.email_conf_msg')
     end
-
   end
 
   context "send trace email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9810292",
-          "call_number"=>"GT3405 .L44 2017",
-          "location_code"=>"f",
-          "item_id"=>"7499956",
-          "barcode"=>"32101095686430",
-          "copy_number"=>"0",
-          "status"=>"Not Charged",
-          "type"=>"trace"
+          "selected" => "true",
+          "mfhd" => "9810292",
+          "call_number" => "GT3405 .L44 2017",
+          "location_code" => "f",
+          "item_id" => "7499956",
+          "barcode" => "32101095686430",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "trace"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"10005935",
-        "title"=>"The 21st century meeting and event technologies : powerful tools for better planning, marketing, and evaluation /",
-        "author"=>"Lee, Seungwon Boshnakova, Dessislava Goldblatt, Joe Jeff"
+        "id" => "10005935",
+        "title" => "The 21st century meeting and event technologies : powerful tools for better planning, marketing, and evaluation /",
+        "author" => "Lee, Seungwon Boshnakova, Dessislava Goldblatt, Joe Jeff"
       }.with_indifferent_access
     }
     let(:params) {
@@ -353,44 +341,42 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.trace.email_conf_msg')
     end
-
   end
 
   context "send recap email request for authenticated user" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9757511",
-          "call_number"=>"Oversize DT549 .E274q",
-          "location_code"=>"rcppa",
-          "item_id"=>"7467161",
-          "barcode"=>"32101098722844",
-          "enum"=>"2016",
-          "copy_number"=>"1",
-          "status"=>"Not Charged",
-          "type"=>"recap",
-          "delivery_mode_7467161"=>"print",
-          "pickup"=>"PA",
-          "edd_start_page"=>"",
-          "edd_end_page"=>"",
-          "edd_volume_number"=>"",
-          "edd_issue"=>"",
-          "edd_author"=>"",
-          "edd_art_title"=>"",
-          "edd_note"=>""
+          "selected" => "true",
+          "mfhd" => "9757511",
+          "call_number" => "Oversize DT549 .E274q",
+          "location_code" => "rcppa",
+          "item_id" => "7467161",
+          "barcode" => "32101098722844",
+          "enum" => "2016",
+          "copy_number" => "1",
+          "status" => "Not Charged",
+          "type" => "recap",
+          "delivery_mode_7467161" => "print",
+          "pickup" => "PA",
+          "edd_start_page" => "",
+          "edd_end_page" => "",
+          "edd_volume_number" => "",
+          "edd_issue" => "",
+          "edd_author" => "",
+          "edd_art_title" => "",
+          "edd_note" => ""
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"9944355",
-        "title"=>"L'écrivain, magazine litteraire trimestriel.",
-        "author"=>"Association des écrivains du Sénégal"
+        "id" => "9944355",
+        "title" => "L'écrivain, magazine litteraire trimestriel.",
+        "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
     }
     let(:params) {
@@ -419,44 +405,42 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.recap.email_conf_msg')
     end
-
   end
 
   context "send recap email request for guest user" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"9757511",
-          "call_number"=>"Oversize DT549 .E274q",
-          "location_code"=>"rcppa",
-          "item_id"=>"7467161",
-          "barcode"=>"32101098722844",
-          "enum"=>"2016",
-          "copy_number"=>"1",
-          "status"=>"Not Charged",
-          "type"=>"recap",
-          "delivery_mode_7467161"=>"print",
-          "pickup"=>"PA",
-          "edd_start_page"=>"",
-          "edd_end_page"=>"",
-          "edd_volume_number"=>"",
-          "edd_issue"=>"",
-          "edd_author"=>"",
-          "edd_art_title"=>"",
-          "edd_note"=>""
+          "selected" => "true",
+          "mfhd" => "9757511",
+          "call_number" => "Oversize DT549 .E274q",
+          "location_code" => "rcppa",
+          "item_id" => "7467161",
+          "barcode" => "32101098722844",
+          "enum" => "2016",
+          "copy_number" => "1",
+          "status" => "Not Charged",
+          "type" => "recap",
+          "delivery_mode_7467161" => "print",
+          "pickup" => "PA",
+          "edd_start_page" => "",
+          "edd_end_page" => "",
+          "edd_volume_number" => "",
+          "edd_issue" => "",
+          "edd_author" => "",
+          "edd_art_title" => "",
+          "edd_note" => ""
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"9944355",
-        "title"=>"L'écrivain, magazine litteraire trimestriel.",
-        "author"=>"Association des écrivains du Sénégal"
+        "id" => "9944355",
+        "title" => "L'écrivain, magazine litteraire trimestriel.",
+        "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
     }
     let(:params) {
@@ -485,35 +469,33 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.recap.email_conf_msg')
     end
-
   end
 
   context "send recall email request" do
-
     let(:requestable) {
       [
         {
-          "selected"=>"true",
-          "mfhd"=>"6794304",
-          "call_number"=>"B2430.D484 G54 2011",
-          "location_code"=>"f",
-          "item_id"=>"6195366",
-          "barcode"=>"32101081296699",
-          "copy_number"=>"1",
-          "status"=>"Renewed",
-          "type"=>"recall",
-          "pickup"=>"299|.Firestone Library Circulation Desk"
+          "selected" => "true",
+          "mfhd" => "6794304",
+          "call_number" => "B2430.D484 G54 2011",
+          "location_code" => "f",
+          "item_id" => "6195366",
+          "barcode" => "32101081296699",
+          "copy_number" => "1",
+          "status" => "Renewed",
+          "type" => "recall",
+          "pickup" => "299|.Firestone Library Circulation Desk"
         }.with_indifferent_access,
         {
-          "selected"=>"false",
+          "selected" => "false"
         }.with_indifferent_access
       ]
     }
     let(:bib) {
       {
-        "id"=>"6883125",
-        "title"=>"Derrida : a very short introduction /",
-        "author"=>"Glendinning, Simon"
+        "id" => "6883125",
+        "title" => "Derrida : a very short introduction /",
+        "author" => "Glendinning, Simon"
       }.with_indifferent_access
     }
     let(:params) {
@@ -542,7 +524,5 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.recall.email_conf_msg')
     end
-
   end
-
 end

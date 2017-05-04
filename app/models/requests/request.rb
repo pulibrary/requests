@@ -9,6 +9,7 @@ module Requests
     attr_accessor :user_name
     attr_accessor :source
     attr_accessor :mfhd
+    attr_reader :user
 
     include Requests::Bibdata
     include Requests::BdUtils
@@ -30,16 +31,8 @@ module Requests
       @requestable ||= route_requests(@requestable_unrouted)
     end
 
-    def mfhd
-      @mfhd
-    end
-
-    def source
-      @source
-    end
-
     def doc
-      @doc # ||= solr_doc(system_id)
+      @doc
     end
 
     def scsb?
@@ -47,7 +40,7 @@ module Requests
     end
 
     def requestable
-      @requestable # ||= build_requestable
+      @requestable
     end
 
     def requestable_unrouted
@@ -69,27 +62,23 @@ module Requests
         ## adjust router to understand SCSB status
         availability_data = items_by_id(other_id, record_owning_institution(scsb_location))
         holdings.each do |id, values|
-          barcodes = values['items'].map { |e| e['barcode']  }
           barcodesort = {}
-          values['items'].each {|item| barcodesort[item['barcode']] = item }
-          #availability_data = items_by_barcode(barcodes)
+          values['items'].each { |item| barcodesort[item['barcode']] = item }
           availability_data.each do |item|
             barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
           end
           barcodesort.values.each do |item|
             params = build_requestable_params(
-                  {
-                    item: item.with_indifferent_access,
-                    holding: { "#{id.to_sym}" => holdings[id] },
-                    location: locations[item_scsb_collection_group(item)]
-                  }
-                )
+              {
+                item: item.with_indifferent_access,
+                holding: { "#{id.to_sym}" => holdings[id] },
+                location: locations[holdings[id]['location_code']]
+              }
+            )
             requestable_items << Requests::Requestable.new(params)
           end
         end
         requestable_items
-        # scsb_factory = Requests::ScsbRequestableFactory.new(holdings, locations)
-        # requestable_items = scsb_factory.items
       elsif !items.nil?
         requestable_items = []
         items.each do |holding_id, items|
@@ -225,10 +214,6 @@ module Requests
       routed_requests
     end
 
-    def system_id
-      @system_id
-    end
-
     def serial?
       return true if doc[:format].include? 'Journal'
     end
@@ -239,10 +224,6 @@ module Requests
 
     def items?
       items
-    end
-
-    def user
-      @user
     end
 
     def holdings?

@@ -3,7 +3,7 @@ module Requests
     # for PUL Bibliographic Helpers
     extend ActiveSupport::Concern
 
-    def items_by_id(id, source='scsb')
+    def items_by_id(id, source = 'scsb')
       response = scsb_conn.post do |req|
         req.url '/sharedCollection/bibAvailabilityStatus'
         req.headers['Content-Type'] = 'application/json'
@@ -36,9 +36,9 @@ module Requests
       parse_scsb_response(response)
     end
 
-    def scsb_request(request_params)
+    def scsb_item_information(request_params)
       response = scsb_conn.post do |req|
-        req.url '/requestItem/validateItemRequestInformations'
+        req.url '/requestItem/validateItemRequestInformation'
         req.headers['Content-Type'] = 'application/json'
         req.headers['Accept'] = 'application/json'
         req.headers['api_key'] = scsb_auth_key
@@ -66,20 +66,21 @@ module Requests
     end
 
     def scsb_conn
-      conn = Faraday.new(:url => Requests.config[:scsb_base]) do |faraday|
-        faraday.request  :url_encoded             # form-encode POST params
-        faraday.response :logger if !Rails.env.test? # log requests to STDOUT
-        faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+      conn = Faraday.new(url: Requests.config[:scsb_base]) do |faraday|
+        faraday.request  :url_encoded # form-encode POST params
+        faraday.response :logger unless Rails.env.test? # log requests to STDOUT
+        faraday.adapter  Faraday.default_adapter # make requests with Net::HTTP
       end
       conn
     end
 
     def scsb_param_mapping(bib, user, item)
       delivery_mode_key = "delivery_mode_#{item['item_id']}"
-      delivery_mode = item[delivery_mode_key][0,1]
+      delivery_mode = item[delivery_mode_key][0, 1]
       {
         author: item[:edd_author],
         bibId: bib[:id],
+        # FIXME
         callNumber: "string",
         chapterTitle: item[:edd_art_title],
         deliveryLocation: item[:pickup],
@@ -87,7 +88,7 @@ module Requests
         endPage: item[:edd_end_page],
         issue: item[:edd_issue],
         itemBarcodes: [
-          item[:barcode],
+          item[:barcode]
         ],
         itemOwningInstitution: item_owning_institution(item[:collection_group]),
         patronBarcode: user[:user_barcode],
@@ -97,7 +98,7 @@ module Requests
         startPage: item[:edd_start_page],
         titleIdentifier: bib[:title],
         username: user[:user_last_name],
-        volume: item[:edd_volume_number],
+        volume: item[:edd_volume_number]
       }
     end
 
@@ -136,7 +137,7 @@ module Requests
     end
 
     def record_owning_institution(location)
-      if location == 'scsbnypl' 
+      if location == 'scsbnypl'
         'NYPL'
       elsif location == 'scsbcul'
         'CUL'

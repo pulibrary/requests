@@ -9,9 +9,9 @@ module Requests
         req.headers['Content-Type'] = 'application/json'
         req.headers['Accept'] = 'application/json'
         req.headers['api_key'] = scsb_auth_key
-        req.body scsb_bib_id_request(id,source).to_json
+        req.body = scsb_bib_id_request(id, source).to_json
       end
-      parse_response(response)
+      parse_scsb_response(response)
     end
 
     def items_by_barcode(barcodes)
@@ -48,7 +48,7 @@ module Requests
     end
 
     def parse_scsb_response(response)
-      parsed = response.status == 200 ? parse_json(response.body) : {}
+      parsed = response.status == 200 ? JSON.parse(response.body) : {}
       parsed.class == Hash ? parsed.with_indifferent_access : parsed
     end
 
@@ -58,7 +58,7 @@ module Requests
       }
     end
 
-    def scsb_bib_id_request(id,source)
+    def scsb_bib_id_request(id, source)
       {
         bibliographicId: id,
         institutionId: source
@@ -132,6 +132,16 @@ module Requests
         'scsbcul'
       else
         'scsbnypl'
+      end
+    end
+
+    def record_owning_institution(location)
+      if location == 'scsbnypl' 
+        'NYPL'
+      elsif location == 'scsbcul'
+        'CUL'
+      else
+        'PUL'
       end
     end
 

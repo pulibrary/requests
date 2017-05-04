@@ -51,7 +51,7 @@ module Requests
         end
       else
         unless requestable.services.include? 'recap_edd'
-        #unless !(requestable.services && ['recap','recap_edd']).empty?
+        # unless !(requestable.services && ['recap','recap_edd']).empty?
           content_tag(:ul, class: "service-list") do
             requestable.services.each do |service|
               brief_msg = I18n.t("requests.#{service}.brief_msg")
@@ -78,26 +78,26 @@ module Requests
     end
 
     def hidden_service_options requestable
-      if(requestable.services.include? 'annexa')
+      if requestable.services.include? 'annexa'
         request_input('annexa')
-      elsif(requestable.services.include? 'bd')
+      elsif requestable.services.include? 'bd'
         request_input('bd')
-      elsif(requestable.services.include? 'annexb')
+      elsif requestable.services.include? 'annexb'
         request_input('annexb')
-      elsif(requestable.services.include? 'pres')
+      elsif requestable.services.include? 'pres'
         request_input('pres')
-      elsif(requestable.services.include? 'paging')
+      elsif requestable.services.include? 'paging'
         request_input('paging')
-      elsif(requestable.services.include? 'in_process')
+      elsif requestable.services.include? 'in_process'
         request_input('in_process')
-      elsif(requestable.services.include? 'on_order')
+      elsif requestable.services.include? 'on_order'
         request_input('on_order')
-      elsif(requestable.services.include? 'recap_edd' and requestable.services.include? 'recap')
+      elsif requestable.services.include? 'recap_edd' and requestable.services.include? 'recap'
         recap_radio_button_group requestable
-      elsif(requestable.services.include? 'recap')
-        #request_input('recap')
+      elsif requestable.services.include? 'recap'
+        # request_input('recap')
         recap_print_only_input requestable
-      elsif(requestable.services.include? 'trace')
+      elsif requestable.services.include? 'trace'
         request_input('trace')
       else
         nil
@@ -116,7 +116,7 @@ module Requests
     end
 
     def recap_print_only_input requestable
-      #id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+      # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
       content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{requestable.preferred_request_id}") do
         concat hidden_field_tag "requestable[][type]", "", value: 'recap'
         concat hidden_field_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", "print"
@@ -147,24 +147,24 @@ module Requests
       unless requestable.pickup_locations.nil? || requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty?
         class_list = "well collapse in request--print"
         if requestable.services.include?('recap_edd')
-            class_list = "well collapse request--print"
+          class_list = "well collapse request--print"
         end
-        #id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+        # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-            locs = self.available_pickups(requestable, default_pickups)
-            if(locs.size > 1)
-               concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-            else
-              hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
-              hidden + locs[0][:label]
-            end
+          locs = self.available_pickups(requestable, default_pickups)
+          if locs.size > 1
+            concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+          else
+            hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
+            hidden + locs[0][:label]
+          end
         end
       end
     end
 
     def available_pickups requestable, default_pickups
       locs = []
-      if(requestable.services.include? 'trace')
+      if requestable.services.include? 'trace'
         locs = default_pickups
       elsif requestable.pickup_locations.nil?
         locs = default_pickups
@@ -189,7 +189,7 @@ module Requests
           locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
         end
       end
-      if(locs.size > 1)
+      if locs.size > 1
         select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
       else
         hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
@@ -279,7 +279,7 @@ module Requests
     end
 
     def item_checkbox requestable_list, requestable
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), :aria => {:labelledby => "title enum_#{requestable.preferred_request_id}"}, id: "requestable_selected_#{requestable.item['id']}"
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), :aria => { :labelledby => "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.item['id']}"
     end
 
     def check_box_disabled requestable
@@ -296,7 +296,7 @@ module Requests
       elsif requestable.aeon?
         true
       elsif requestable.charged?
-        #true
+        # true
         false
       elsif requestable.open? && !requestable.pageable?
         true
@@ -330,7 +330,6 @@ module Requests
     end
 
     def submit_button_disabled requestable_list
-
       if requestable_list.size == 1
         if requestable_list.first.services.empty?
           true
@@ -361,7 +360,7 @@ module Requests
     def has_submitable? requestable_list
       submitable = true
       requestable_list.each do |requestable|
-        unless((requestable.services & self.submitable).empty?)
+        unless (requestable.services & self.submitable).empty?
           submitable = false
         end
       end
@@ -388,7 +387,7 @@ module Requests
           elsif requestable_list.first.pageable_loc?
             multi_item
           else
-            single_item #no_item
+            single_item # no_item
           end
         else
           if requestable_list.first.annexa?
@@ -442,12 +441,11 @@ module Requests
 
     def display_urls requestable
       content_tag :ol do
-          requestable.urls.each do |key, value|
-            value.reverse!
-            concat content_tag(:li, link_to(value.join(": "), key), :class => 'link')
-          end
+        requestable.urls.each do |key, value|
+          value.reverse!
+          concat content_tag(:li, link_to(value.join(": "), key), :class => 'link')
+        end
       end
     end
-
   end
 end

@@ -29,6 +29,7 @@ module Requests
     end
 
     private
+
       # assume all keys are multi-valued
       def fallback_keys
         {
@@ -36,7 +37,5 @@ module Requests
           'author_citation_display' => :author
         }
       end
-
-
   end
 end

@@ -38,16 +38,17 @@ module Requests
     end
 
     def doc
-      @doc #||= solr_doc(system_id)
+      @doc # ||= solr_doc(system_id)
     end
 
     def requestable
-      @requestable #||= build_requestable
+      @requestable # ||= build_requestable
     end
 
     def requestable_unrouted
       @requestable_unrouted
     end
+
     ### builds a list of possible requestable items
     # returns a collection of requestable objects or nil
     def build_requestable
@@ -78,7 +79,7 @@ module Requests
               end
             end
           else
-            params = build_requestable_params({holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] } )
+            params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] })
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -87,17 +88,17 @@ module Requests
         unless doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]]} )
+            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]] })
             requestable_items << Requests::Requestable.new(params)
           elsif (thesis?)
-            params = build_requestable_params({ holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]]} )
+            params = build_requestable_params({ holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]] })
             requestable_items << Requests::Requestable.new(params)
           elsif (visuals?)
-            params = build_requestable_params({ holding: { "visuals" => holdings['visuals'].with_indifferent_access }, location: locations[holdings['visuals']["location_code"]]} )
+            params = build_requestable_params({ holding: { "visuals" => holdings['visuals'].with_indifferent_access }, location: locations[holdings['visuals']["location_code"]] })
             requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] } )
+              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] })
               requestable_items << Requests::Requestable.new(params)
             end
           end
@@ -120,13 +121,13 @@ module Requests
 
     # returns an array of requestable hashes of  grouped under a common mfhd
     def sorted_requestable
-      sorted = { }
+      sorted = {}
       requestable.each do |requestable|
         mfhd = requestable.holding.keys[0]
         if sorted.key? mfhd
           sorted[mfhd] << requestable
         else
-          sorted[mfhd] = [ requestable ]
+          sorted[mfhd] = [requestable]
         end
       end
       sorted
@@ -152,7 +153,7 @@ module Requests
     def has_loanable_copy?
       copy_available = []
       requestable_unrouted.each do |request|
-        if request.charged? || (request.aeon? || !request.circulates?) #|| request.enumerated?)
+        if request.charged? || (request.aeon? || !request.circulates?) # || request.enumerated?)
           copy_available << false
         else
           copy_available << true
@@ -247,20 +248,20 @@ module Requests
             mfhd_items[@mfhd] = items_with_symbols
           else
             empty_mfhd = items_by_bib(@system_id)
-            mfhd_items[@mfhd] = [ empty_mfhd[@mfhd] ]
+            mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
           end
         else
           items_by_bib(@system_id).each do |holding_id, item_info|
             items_by_holding = if item_info[:more_items] == false
-              if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
-                [item_info]
-              elsif item_info[:status].starts_with?('Online')
-                [item_info]
-              else
-                items_to_symbols(items_by_mfhd(holding_id))
-              end
-            else
-              items_to_symbols(items_by_mfhd(holding_id))
+                                 if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
+                                   [item_info]
+                                 elsif item_info[:status].starts_with?('Online')
+                                   [item_info]
+                                 else
+                                   items_to_symbols(items_by_mfhd(holding_id))
+                                 end
+                               else
+                                 items_to_symbols(items_by_mfhd(holding_id))
             end
             mfhd_items[holding_id] = items_by_holding
           end
@@ -292,7 +293,7 @@ module Requests
     end
 
     def get_language
-        doc["language_code_s"].first
+      doc["language_code_s"].first
     end
 
     def pickups
@@ -304,10 +305,10 @@ module Requests
       pickup_locations = []
       DELIVERY_LOCATIONS.values.each do |pickup|
         if pickup["pickup_location"] == true
-          pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"]}
+          pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"] }
         end
       end
-      #pickup_locations.sort_by! { |loc| loc[:label] }
+      # pickup_locations.sort_by! { |loc| loc[:label] }
       sort_pickups(pickup_locations)
     end
 
@@ -315,7 +316,7 @@ module Requests
       pickups
     end
 
-    #if a Record is a serial/multivolume no Borrow Direct
+    # if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
       if has_loanable_copy? && has_enumerated?
         false
@@ -341,6 +342,7 @@ module Requests
     end
 
     private
+
       def load_locations
         unless doc[:location_code_s].nil?
           holding_locations = {}
@@ -354,7 +356,6 @@ module Requests
           holding_locations
         end
       end
-
 
       def build_requestable_params(params)
         {
@@ -374,7 +375,7 @@ module Requests
       end
 
       def item_current_location(item)
-          item['temp_loc'] || item['location']
+        item['temp_loc'] || item['location']
       end
   end
 end

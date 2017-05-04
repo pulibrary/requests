@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
-
   let(:voyager_id) { '9493318' }
   let(:thesis_id) { 'dsp01rr1720547' }
   let(:in_process_id) { '10144698' }
@@ -144,20 +143,20 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     let(:recap_params) {
       {
-        :Bbid=>"9493318",
-        :barcode=>"22101008199999",
-        :item=>"7303228",
-        :lname=>"Student",
-        :delivery=>"p",
-        :pickup=>"PN",
-        :startpage=>"",
-        :endpage=>"",
-        :email=>"a@b.com",
-        :volnum=>"",
-        :issue=>"",
-        :aauthor=>"",
-        :atitle=>"",
-        :note=>""
+        :Bbid => "9493318",
+        :barcode => "22101008199999",
+        :item => "7303228",
+        :lname => "Student",
+        :delivery => "p",
+        :pickup => "PN",
+        :startpage => "",
+        :endpage => "",
+        :email => "a@b.com",
+        :volnum => "",
+        :issue => "",
+        :aauthor => "",
+        :atitle => "",
+        :note => ""
       }
     }
 
@@ -170,13 +169,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     describe 'When visiting a voyager ID as a CAS User' do
       it 'allow CAS patrons to request an available ReCAP item.' do
         stub_request(:post, Requests.config[:gfa_base]).
-          with(headers: {'Accept'=>'*/*'}).
+          with(headers: { 'Accept' => '*/*' }).
           to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
         visit "/requests/#{voyager_id}"
         expect(page).to have_content 'Electronic Delivery'
-        #some weird issue with this and capybara examining the page source shows it is there.
+        # some weird issue with this and capybara examining the page source shows it is there.
         expect(page).to have_selector '#request_user_barcode'
-        choose('requestable__delivery_mode_7303228_print') #chooses 'print' radio button
+        choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
         select('Firestone Library', :from => 'requestable__pickup')
         expect(page).to have_button('Request this Item', disabled: false)
         # click_button 'Request this Item'

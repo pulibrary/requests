@@ -2,7 +2,6 @@ require 'faraday'
 
 module Requests
   class Recall
-
     include Requests::Voyager
 
     def initialize(submission)
@@ -19,23 +18,22 @@ module Requests
         params = param_mapping(@submission.bib, @submission.user, item)
         payload = request_payload(item)
         r = put_response(params, payload)
-        xml_response  = Nokogiri::XML(r.body)
+        xml_response = Nokogiri::XML(r.body)
         unless xml_response.xpath("//reply-text").text() == 'ok'
-            error_message =  "Failed request: " + xml_response.xpath("//note").text()
-            @errors <<  { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user[:user_name], patron: params[:patron], error: error_message }
+          error_message = "Failed request: " + xml_response.xpath("//note").text()
+          @errors << { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user[:user_name], patron: params[:patron], error: error_message }
         else
-            @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], patron: params[:patron] }
+          @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], patron: params[:patron] }
         end
       end
     end
 
     def submitted
-        @sent
+      @sent
     end
 
     def errors
       @errors
     end
-
   end
 end

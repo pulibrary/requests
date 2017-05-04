@@ -11,10 +11,10 @@ module Requests
         ItemTitle: title,
         ItemAuthor: author,
         ItemDate: pub_date,
-        ItemVolume: sub_title,
+        ItemVolume: sub_title
       }
       params.merge! aeon_basic_params
-      params.reject { |k,v| v.nil? }
+      params.reject { |k, v| v.nil? }
     end
 
     ## params shared by both voyager and non-voyager aeon requests
@@ -25,9 +25,9 @@ module Requests
         Site: site,
         Location: shelf_location_code,
         SubLocation: sub_location,
-        ItemInfo1: I18n.t("requests.aeon.access_statement"),
+        ItemInfo1: I18n.t("requests.aeon.access_statement")
       }
-      params.reject { |k,v| v.nil? }
+      params.reject { |k, v| v.nil? }
     end
 
     # accepts the base Openurl Context Object and formats it appropriately for Aeon
@@ -89,48 +89,49 @@ module Requests
     end
 
     private
-    def call_number
-      unless bib[:call_number_display].nil?
-        bib[:call_number_display].first
+
+      def call_number
+        unless bib[:call_number_display].nil?
+          bib[:call_number_display].first
+        end
       end
-    end
 
-    def pub_date
-      bib[:pub_date_start_sort]
-    end
-
-    def shelf_location_code
-      holding.first.last['location_code']
-    end
-
-    ## These two params were from Primo think they both go to
-    ## location and location_note in our holdings statement
-    def sub_title
-      holding.first.last[:location]
-    end
-
-    def sub_location
-      unless holding.first.last[:location_note].nil?
-        holding.first.last[:location_note].first
+      def pub_date
+        bib[:pub_date_start_sort]
       end
-    end
-    ### end special params
 
-    def title
-      "#{bib[:title_display]}#{genre}"
-    end
-
-    ## Don T requested this be appended when present
-    def genre
-      unless bib[:form_genre_display].nil?
-        " [ #{bib[:form_genre_display].first} ]"
+      def shelf_location_code
+        holding.first.last['location_code']
       end
-    end
 
-    def author
-      unless bib[:author_display].nil?
-        bib[:author_display].join(" AND ")
+      ## These two params were from Primo think they both go to
+      ## location and location_note in our holdings statement
+      def sub_title
+        holding.first.last[:location]
       end
-    end
+
+      def sub_location
+        unless holding.first.last[:location_note].nil?
+          holding.first.last[:location_note].first
+        end
+      end
+      ### end special params
+
+      def title
+        "#{bib[:title_display]}#{genre}"
+      end
+
+      ## Don T requested this be appended when present
+      def genre
+        unless bib[:form_genre_display].nil?
+          " [ #{bib[:form_genre_display].first} ]"
+        end
+      end
+
+      def author
+        unless bib[:author_display].nil?
+          bib[:author_display].join(" AND ")
+        end
+      end
   end
 end

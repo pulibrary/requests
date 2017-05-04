@@ -1,6 +1,5 @@
 module Requests
   class Requestable
-
     attr_reader :bib
     attr_reader :holding
     attr_reader :item
@@ -166,17 +165,17 @@ module Requests
     end
 
     def ill_eligible?
-      #return true if services.include?('ill')
+      # return true if services.include?('ill')
       services.include?('ill') ? true : false
     end
 
     def on_shelf?
-      #return true if services.include?('on_shelf')
+      # return true if services.include?('on_shelf')
       services.include?('on_shelf') ? true : false
     end
 
     def borrow_direct?
-      #return true if services.include?('bd')
+      # return true if services.include?('bd')
       services.include?('bd') ? true : false
     end
 
@@ -202,8 +201,8 @@ module Requests
     end
 
     def charged?
-      if(item?)
-        if(unavailable_statuses.include?(item[:status]))
+      if item?
+        if unavailable_statuses.include?(item[:status])
           return true
         else
           nil
@@ -271,13 +270,13 @@ module Requests
 
     private
 
-    # From Tampakis
-    def unavailable_statuses
-      ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
-       'In transit on hold', 'At bindery', 'Remote storage request',
-       'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-       'Missing','On-Site - On Hold']
-    end
+      # From Tampakis
+      def unavailable_statuses
+        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
+         'In transit on hold', 'At bindery', 'Remote storage request',
+         'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
+         'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
+         'Missing', 'On-Site - On Hold']
+      end
   end
 end

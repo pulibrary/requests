@@ -31,7 +31,7 @@ module Features
              else
                FactoryGirl.create(:user).username
              end
-      #Devise.mappings[:user]
+      # Devise.mappings[:user]
       OmniAuth.config.add_mock(:cas, uid: user)
       visit main_app.user_cas_omniauth_authorize_path
     end
@@ -42,7 +42,7 @@ module Features
              else
                FactoryGirl.create(:valid_barcode_user).username
              end
-      #Devise.mappings[:user]
+      # Devise.mappings[:user]
       OmniAuth.config.add_mock(:barcode, uid: user)
       visit main_app.user_barcode_omniauth_authorize_path
     end

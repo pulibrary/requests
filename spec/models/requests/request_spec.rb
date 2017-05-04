@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
-
   context "with a bad system_id" do
     let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
@@ -21,7 +20,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   end
 
   context "with a system_id and a mfhd that has a holding record with an attached item record" do
-
     let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
     let(:params) {
@@ -44,7 +42,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it 'returns hash with a valid system id' do
         expect(subject.solr_doc(subject.system_id)).to be_a(Hash)
       end
-
     end
 
     describe "#display_metadata" do
@@ -181,7 +178,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].location).to be_truthy
       end
     end
-
   end
 
   context "with a system_id only that has holdings and item records" do
@@ -226,7 +222,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         end
       end
     end
-
   end
 
   context "with a system_id that only has holdings records" do
@@ -388,13 +383,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].aeon_mapped_params[:Form]).to eq('21')
       end
 
-       it 'shouuld have an Aeon Action Param' do
-        expect(subject.requestable[0].aeon_mapped_params.key? :Action).to be true
-        expect(subject.requestable[0].aeon_mapped_params[:Action]).to eq('10')
-      end
+      it 'shouuld have an Aeon Action Param' do
+       expect(subject.requestable[0].aeon_mapped_params.key? :Action).to be true
+       expect(subject.requestable[0].aeon_mapped_params[:Action]).to eq('10')
+     end
     end
   end
-
 
   context "When passed a system_id for a visuals record" do
     let(:user) { FactoryGirl.build(:user) }
@@ -616,7 +610,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_with_on_order) { described_class.new(params) }
     let(:firestone_circ) {
-        { label: "Firestone Library", gfa_code: "PA" }
+      { label: "Firestone Library", gfa_code: "PA" }
     }
     subject { request_with_on_order }
 
@@ -636,7 +630,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should provide a list of the default pickup locations" do
         expect(subject.default_pickups).to be_truthy
         expect(subject.default_pickups).to be_an(Array)
-        #test that it is an array of hashes
+        # test that it is an array of hashes
         expect(subject.default_pickups.size).to be > 1
         expect(subject.default_pickups.include?(firestone_circ)).to be_truthy
       end
@@ -975,7 +969,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should be eligible for recall" do
         expect(subject.requestable.first.services.include?('on_shelf')).to be_truthy
       end
-
     end
   end
   # 495501
@@ -1179,7 +1172,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-
   context 'When a barcode only user visits the site' do
     let(:user) { FactoryGirl.build(:valid_barcode_patron) }
     let(:params) {
@@ -1219,7 +1211,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should have accessible source param" do
         expect(subject.source).to eq('pulsearch')
       end
-
     end
   end
 

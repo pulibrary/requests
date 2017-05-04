@@ -1,15 +1,14 @@
 module Requests
   class Generic
-
     def initialize(submission)
       @submission = submission
-      @sent = [] #array of hashes of bibid and item_ids for each successfully sent item
-      @errors = [] #array of hashes with bibid and item_id and error message
+      @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
+      @errors = [] # array of hashes with bibid and item_id and error message
       handle
     end
 
     def handle
-        #something will go here eventually
+        # something will go here eventually
     end
 
     def submitted
@@ -19,6 +18,5 @@ module Requests
     def errors
       @errors
     end
-
   end
 end

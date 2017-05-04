@@ -20,6 +20,6 @@ class TestAppGenerator < Rails::Generators::Base
   def run_migrations
     rake 'requests:install:migrations'
     rake "db:migrate"
-    #rake "db:migrate RAILS_ENV=test"
+    # rake "db:migrate RAILS_ENV=test"
   end
 end

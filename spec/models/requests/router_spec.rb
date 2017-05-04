@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new_episodes } do
-
   context "A Princeton Community User has signed in" do
     let(:user) { FactoryGirl.create(:valid_princeton_patron) }
     describe "Online Holding" do
-      let(:params) { {  } }
+      let(:params) { {} }
       let(:requestable) { Requests::Requestable.new(params) }
       let(:subject) { described_class.new(requestable, user) }
       xit "Returns an Online Link" do
@@ -47,7 +46,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
 
     context "When an item is in a pageable location" do
       describe "It has a unavilable status" do
-
       end
     end
 
@@ -83,16 +81,15 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
   # Fill in when we support guest authentication
   # context "An Access Patron has signed in" do
   #   let(:user) { FactoryGirl.create(:valid_access_patron) }
-   
+
   #   describe "Print Holding with Charged Item"
   #   end
   # end
 
   # context "The user has not authenticated but can self-identify as an access patron" do
   #   let(:user) { FactoryGirl.create(:unauthenticated_patron) }
-    
+
   #   describe "Print Holding with Charge Item" do
   #   end
   # end
-
 end

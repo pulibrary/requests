@@ -1,6 +1,5 @@
 require 'borrow_direct'
 require 'faraday'
-require 'requests/scsb_requestable_factory'
 
 module Requests
   class Request

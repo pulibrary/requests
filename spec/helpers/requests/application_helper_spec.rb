@@ -1,6 +1,7 @@
 require 'spec_helper'
 require './app/models/requests/request.rb'
 
+
 RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name: 'request_models', record: :new_episodes } do
   describe '#isbn_string' do
     let(:isbns) {

@@ -31,7 +31,7 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Request-Id:
-      - 6b8b44db-a1ce-43aa-9010-92bd22ffb69d
+      - 92900de8-0e4a-4a20-a121-389368cc000e
       X-Ua-Compatible:
       - IE=edge,chrome=1
       Etag:
@@ -39,11 +39,11 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Runtime:
-      - '0.022780'
+      - '0.022165'
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Tue, 02 May 2017 16:58:15 GMT
+      - Fri, 05 May 2017 13:51:44 GMT
       X-Powered-By:
       - Phusion Passenger 5.0.30
       Server:
@@ -141,7 +141,7 @@ http_interactions:
         Y2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiRFI2MDMgLk4zNSAyMDE3Il0sInRp
         bWVzdGFtcCI6IjIwMTctMDQtMjJUMDY6NTA6MDMuNzg3WiJ9fX0=
     http_version: 
-  recorded_at: Tue, 02 May 2017 16:58:15 GMT
+  recorded_at: Fri, 05 May 2017 13:51:44 GMT
 - request:
     method: get
     uri: https://bibdata.princeton.edu/availability?id=9676483
@@ -161,7 +161,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 May 2017 16:57:52 GMT
+      - Fri, 05 May 2017 13:51:27 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Access-Control-Allow-Origin:
@@ -173,9 +173,9 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 910e1199-93b5-47ed-96e3-5605476b8a17
+      - c4a080db-4597-43a4-90dc-9c4842f51cac
       X-Runtime:
-      - '0.075406'
+      - '0.100351'
       X-Powered-By:
       - Phusion Passenger 4.0.59
       Etag:
@@ -191,7 +191,7 @@ http_interactions:
       string: '{"9504920":{"more_items":false,"location":"rcppa","copy_number":0,"item_id":7406328,"on_reserve":"N","status":"Not
         Charged","label":"ReCAP"}}'
     http_version: 
-  recorded_at: Tue, 02 May 2017 16:58:16 GMT
+  recorded_at: Fri, 05 May 2017 13:51:44 GMT
 - request:
     method: get
     uri: https://bibdata.princeton.edu/availability?mfhd=9504920
@@ -211,7 +211,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 May 2017 16:57:53 GMT
+      - Fri, 05 May 2017 13:51:27 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Access-Control-Allow-Origin:
@@ -223,9 +223,9 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - a5041733-b181-4897-aa11-2679881a6360
+      - 54f209b4-b1a6-47df-a2ca-7b6c35c674f1
       X-Runtime:
-      - '0.082303'
+      - '0.080548'
       X-Powered-By:
       - Phusion Passenger 4.0.59
       Etag:
@@ -241,7 +241,7 @@ http_interactions:
       string: '[{"barcode":"32101099103457","id":7406328,"location":"rcppa","copy_number":0,"item_sequence_number":0,"status":"Not
         Charged","label":"ReCAP"}]'
     http_version: 
-  recorded_at: Tue, 02 May 2017 16:58:16 GMT
+  recorded_at: Fri, 05 May 2017 13:51:44 GMT
 - request:
     method: get
     uri: https://bibdata.princeton.edu/locations/holding_locations/rcppa.json
@@ -261,7 +261,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 May 2017 16:57:53 GMT
+      - Fri, 05 May 2017 13:51:28 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Access-Control-Allow-Origin:
@@ -273,9 +273,9 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 086792e2-417f-4775-ac7d-0c0efb947f30
+      - fa570ec3-fe1b-4f9c-9ef0-132cdba08101
       X-Runtime:
-      - '0.022482'
+      - '0.024427'
       X-Powered-By:
       - Phusion Passenger 4.0.59
       Etag:
@@ -311,7 +311,7 @@ http_interactions:
         Services, Holdings Management","address":"One Washington Rd. Princeton, NJ
         08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false}]}'
     http_version: 
-  recorded_at: Tue, 02 May 2017 16:58:16 GMT
+  recorded_at: Fri, 05 May 2017 13:51:45 GMT
 - request:
     method: get
     uri: https://pulsearch.princeton.edu/catalog/dsp01rr1720547.json
@@ -343,7 +343,7 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Request-Id:
-      - 67ce6c5f-8c1b-4f6e-b22a-358175a40698
+      - f4c2b6e1-8b74-4ab9-9f3a-8f9efb3a603a
       X-Ua-Compatible:
       - IE=edge,chrome=1
       Etag:
@@ -351,11 +351,11 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       X-Runtime:
-      - '0.032659'
+      - '0.024624'
       X-Content-Type-Options:
       - nosniff
       Date:
-      - Tue, 02 May 2017 21:37:15 GMT
+      - Fri, 05 May 2017 13:51:46 GMT
       X-Powered-By:
       - Phusion Passenger 5.0.30
       Server:
@@ -408,7 +408,7 @@ http_interactions:
         aGVzaXMiXSwidGltZXN0YW1wIjoiMjAxNy0wNC0yMVQyMjo1NTowOS42OTZa
         In19fQ==
     http_version: 
-  recorded_at: Tue, 02 May 2017 21:37:15 GMT
+  recorded_at: Fri, 05 May 2017 13:51:46 GMT
 - request:
     method: get
     uri: https://bibdata.princeton.edu/locations/holding_locations/mudd.json
@@ -428,7 +428,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 May 2017 21:36:43 GMT
+      - Fri, 05 May 2017 13:51:30 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Access-Control-Allow-Origin:
@@ -440,9 +440,9 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 881af794-3d80-4206-ba2f-06451784435a
+      - 0f0c4ea8-da3f-4b68-9c02-11cf34bc3f21
       X-Runtime:
-      - '0.027088'
+      - '0.028226'
       X-Powered-By:
       - Phusion Passenger 4.0.59
       Etag:
@@ -460,5 +460,5 @@ http_interactions:
         Manuscript Library and University Archives","code":"mudd"},"delivery_locations":[{"label":"Mudd
         Manuscript Library","address":"65 Olden Street Princeton, NJ 08544","phone_number":"609-258-6345","contact_email":"mudd@princeton.edu","gfa_pickup":"PH","staff_only":false,"pickup_location":false,"digital_location":true}]}'
     http_version: 
-  recorded_at: Tue, 02 May 2017 21:37:15 GMT
+  recorded_at: Fri, 05 May 2017 13:51:47 GMT
 recorded_with: VCR 3.0.3

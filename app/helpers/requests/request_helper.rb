@@ -49,13 +49,11 @@ module Requests
       last_name
     end
 
-    def request_title request
-      if request.has_pageable?
-        "Paging Request"
-      elsif @mode == 'trace'
-        "Trace Materials"
+    def request_title
+      if @mode == 'trace'
+        I18n.t('requests.trace.form_title').html_safe
       else
-        "Library Material Request"
+        I18n.t('requests.default.form_title').html_safe
       end
     end
 

@@ -14,16 +14,17 @@ module Requests
       parse_scsb_response(response)
     end
 
-    def items_by_barcode(barcodes)
-      response = scsb_conn.post do |req|
-        req.url '/sharedCollection/itemAvailabilityStatus'
-        req.headers['Content-Type'] = 'application/json'
-        req.headers['Accept'] = 'application/json'
-        req.headers['api_key'] = scsb_auth_key
-        req.body = scsb_barcode_request(barcodes).to_json
-      end
-      parse_scsb_response(response)
-    end
+    # Prefer lookup by bib over barcode
+    # def items_by_barcode(barcodes)
+    #   response = scsb_conn.post do |req|
+    #     req.url '/sharedCollection/itemAvailabilityStatus'
+    #     req.headers['Content-Type'] = 'application/json'
+    #     req.headers['Accept'] = 'application/json'
+    #     req.headers['api_key'] = scsb_auth_key
+    #     req.body = scsb_barcode_request(barcodes).to_json
+    #   end
+    #   parse_scsb_response(response)
+    # end
 
     def scsb_request(request_params)
       response = scsb_conn.post do |req|
@@ -52,11 +53,12 @@ module Requests
       parsed.class == Hash ? parsed.with_indifferent_access : parsed
     end
 
-    def scsb_barcode_request(barcodes)
-      {
-        barcodes: barcodes
-      }
-    end
+    # Not being used at the moment
+    # def scsb_barcode_request(barcodes)
+    #   {
+    #     barcodes: barcodes
+    #   }
+    # end
 
     def scsb_bib_id_request(id, source)
       {
@@ -136,7 +138,7 @@ module Requests
       end
     end
 
-    def record_owning_institution(location)
+    def scsb_owning_institution(location)
       if location == 'scsbnypl'
         'NYPL'
       elsif location == 'scsbcul'

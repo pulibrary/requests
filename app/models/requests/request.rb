@@ -60,7 +60,7 @@ module Requests
         ## overlay availability to the 'status' field
         ## make sure other fields map to the current data model for item in requestable
         ## adjust router to understand SCSB status
-        availability_data = items_by_id(other_id, record_owning_institution(scsb_location))
+        availability_data = items_by_id(other_id, scsb_owning_institution(scsb_location))
         holdings.each do |id, values|
           barcodesort = {}
           values['items'].each { |item| barcodesort[item['barcode']] = item }

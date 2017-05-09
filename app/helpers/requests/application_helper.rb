@@ -125,10 +125,10 @@ module Requests
 
     def enum_copy_display item
       display = ""
-      unless item[:enum].nil?
-        display += item[:enum]
+      unless item[:enum_display].nil?
+        display += item[:enum_display]
       end
-      if !item[:enum].nil? && !item[:copy_number].nil?
+      if !item[:enum_display].nil? && !item[:copy_number].nil?
         display += " "
       end
       unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1

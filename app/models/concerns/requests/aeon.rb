@@ -42,6 +42,9 @@ module Requests
       end
       if enumerated?
         ctx.referent.set_metadata('volume', item[:enum])
+        unless item[:chron].blank?
+          ctx.referent.set_metadata('issue', item[:chron])
+        end
       end
       aeon_params = aeon_basic_params
       if barcode?

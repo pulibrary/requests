@@ -56,8 +56,10 @@ module Requests
                                          user: @user
                                        })
       ### redirect to Aeon non-voyager items or single Aeon requestable
-      if @request.thesis? || @request.visuals? || @request.has_single_aeon_requestable?
+      if @request.thesis? || @request.visuals?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
+      elsif @request.has_single_aeon_requestable?
+        redirect_to @request.requestable.first.aeon_request_url(@request.ctx)
       end
       # flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end

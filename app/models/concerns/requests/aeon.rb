@@ -42,7 +42,7 @@ module Requests
       end
       if enumerated?
         ctx.referent.set_metadata('volume', item[:enum])
-        if !item[:chron].blank?
+        unless item[:chron].blank?
           ctx.referent.set_metadata('issue', item[:chron])
         end
       end

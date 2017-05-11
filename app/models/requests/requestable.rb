@@ -156,6 +156,16 @@ module Requests
       end
     end
 
+    def on_reserve?
+      if item?
+        if item[:on_reserve] == 'Y'
+          true
+        else
+          false
+        end
+      end
+    end
+
     def set_services service_list
       @services = service_list
     end

@@ -4,6 +4,10 @@
   // hide any items that don't match the mfhd param, if there is one
   $( document ).ready(function() {
 
+    <% if !@request.mfhd.blank? && !@request.borrow_direct_eligible? && @request.has_loanable_copy? %>
+      $('#campus_available').show();
+    <% end %>
+
       var mfhd_id = '';
 
       <% if !@request.mfhd.blank? %>
@@ -80,7 +84,7 @@
                     $('#bd_available').show();
                     request_options.find('option').not(':eq(1)').remove();
                     pickup_select.show();
-                    //$('.recall-pickup').first().focus(); 
+                    //$('.recall-pickup').first().focus();
                   } else {
                     $('#bd_not_available').show();
                   }
@@ -136,13 +140,5 @@
       <br> <a id="show_item" href="">Show me the other copies!</a>
     </p>
 
-    <script type='text/javascript'>
-      // display notice and option to show other loanable copies at Princeton
-      $( document ).ready(function() {
-        <% if !@request.mfhd.blank? %>
-          $('#campus_available').show();
-        <% end %>
-      });
-    </script>
   <% end %>
 <% end %>

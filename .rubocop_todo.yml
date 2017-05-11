@@ -509,3 +509,16 @@ Style/ZeroLengthPredicate:
   Exclude:
     - 'app/models/requests/request.rb'
     - 'app/models/requests/requestable.rb'
+
+Style/SafeNavigation:
+  Exclude:
+    - 'app/helpers/requests/application_helper.rb'
+    - 'app/models/concerns/requests/aeon.rb'
+
+Style/NumericPredicate:
+  Exclude:
+    - 'app/helpers/requests/application_helper.rb'
+    - 'app/models/requests/request.rb'
+    - 'app/models/requests/requestable.rb'
+    - 'spec/models/requests/submission_spec.rb'
+    - 'spec/spec_helper.rb'

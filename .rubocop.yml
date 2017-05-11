@@ -3,9 +3,15 @@ inherit_gem:
 
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  TargetRubyVersion: 2.3
+
 Bundler/DuplicatedGem:
   Exclude:
     - 'Gemfile'
 
 RSpec/MultipleExpectations:
   Max: 5
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

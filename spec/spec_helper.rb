@@ -26,25 +26,25 @@ require 'database_cleaner'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
-require 'simplecov'
 require 'devise'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
-if ENV['CI']
+if ENV['CI'] || ENV['COVERAGE']
+  require 'simplecov'
   require 'coveralls'
   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-end
-SimpleCov.start('rails') do
-  add_filter '/lib/generators/requests/install_generator.rb'
-  add_filter '/lib/generators/requests/templates/borrow_direct.rb'
-  add_filter '/lib/generators/requests/templates/requests_initializer.rb'
-  add_filter '/lib/generators/requests/templates/lib/omniauth/strategies/omniauth-barcode.rb'
-  add_filter '/lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
-  add_filter '/lib/requests/version.rb'
-  add_filter '/lib/requests/engine.rb'
-  add_filter '/lib/requests.rb'
-  add_filter '/spec'
+  SimpleCov.start('rails') do
+    add_filter '/lib/generators/requests/install_generator.rb'
+    add_filter '/lib/generators/requests/templates/borrow_direct.rb'
+    add_filter '/lib/generators/requests/templates/requests_initializer.rb'
+    add_filter '/lib/generators/requests/templates/lib/omniauth/strategies/omniauth-barcode.rb'
+    add_filter '/lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
+    add_filter '/lib/requests/version.rb'
+    add_filter '/lib/requests/engine.rb'
+    add_filter '/lib/requests.rb'
+    add_filter '/spec'
+  end
 end
 
 # Capybara.register_driver :poltergeist do |app|

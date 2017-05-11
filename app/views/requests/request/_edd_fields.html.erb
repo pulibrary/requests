@@ -1,6 +1,6 @@
 <div aria-live='polite' class='well collapse request--edd' id='fields-eed__<%= "#{requestable.item['id']}" %>'>
   <fieldset class="form-group required">
-    <%= label_tag "requestable__edd_start_page", 'Start Page', class: 'control-label col-sm-3' %>
+    <%= label_tag "requestable__edd_start_page", 'Start Page *', class: 'control-label col-sm-3' %>
     <div class="col-sm-7">
       <%= text_field_tag 'requestable[][edd_start_page]', "", value: "", placeholder: "1, xi, toc", maxlength: 20, size: 20 %>
     </div>
@@ -30,7 +30,7 @@
     </div>
   </fieldset>
   <fieldset class="form-group required">
-    <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title', class: 'control-label col-sm-3' %>
+    <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title *', class: 'control-label col-sm-3' %>
     <div class="col-sm-7">
       <%= text_field_tag 'requestable[][edd_art_title]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
     </div>
@@ -41,3 +41,4 @@
       <%= text_field_tag 'requestable[][edd_note]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
     </div>
   </fieldset>
+  <small>* indicates a required field for Electronic Delivery requests.</small>

@@ -233,8 +233,8 @@ module Requests
       hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}", id: "requestable_copy_number_#{requestable.item['id']}"
       hidden += hidden_field_tag "requestable[][status]", "", value: "#{requestable.item["status"]}", id: "requestable_status_#{requestable.item['id']}"
       if requestable.scsb?
-        hidden += hidden_field_tag "requestable[][collection_group]", "", value: "#{requestable.item["collection_group"]}", id: "requestable_collection_group_#{requestable.item['id']}"
-        hidden += hidden_field_tag "requestable[][designation]", "", value: "#{requestable.item["designation"]}", id: "requestable_designation_#{requestable.item['id']}"
+        hidden += hidden_field_tag "requestable[][cgc]", "", value: "#{requestable.item["cgc"]}", id: "requestable_cgc_#{requestable.item['id']}"
+        hidden += hidden_field_tag "requestable[][cc]", "", value: "#{requestable.item["collection_code"]}", id: "requestable_collection_code_#{requestable.item['id']}"
         hidden += hidden_field_tag "requestable[][use_statement]", "", value: "#{requestable.item["use_statement"]}", id: "requestable_use_statement_#{requestable.item['id']}"
       end
       hidden

@@ -92,7 +92,7 @@ module Requests
         itemBarcodes: [
           item[:barcode]
         ],
-        itemOwningInstitution: item_owning_institution(item[:collection_group]),
+        itemOwningInstitution: item_owning_institution(item[:collection_code]),
         patronBarcode: user[:user_barcode],
         requestNotes: item[:edd_note],
         requestType: scsb_request_map(delivery_mode),
@@ -118,23 +118,13 @@ module Requests
       'PUL'
     end
 
-    def item_owning_institution(collection_group)
-      if collection_group == 'NA'
+    def item_owning_institution(collection_code)
+      if collection_code == 'NA'
         'NYPL'
-      elsif collection_group == 'CU'
+      elsif collection_code == 'CU'
         'CUL'
       else
         'PUL'
-      end
-    end
-
-    def item_scsb_collection_group(item)
-      if item['collection_group'] == 'CU'
-        'scsbcul'
-      elsif item['collection_group'] == 'AR'
-        'scsbcul'
-      else
-        'scsbnypl'
       end
     end
 

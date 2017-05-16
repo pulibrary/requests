@@ -101,7 +101,7 @@ http_interactions:
         bGxfbnVtYmVyX2Rpc3BsYXkiOlsiUUIyMTMgLkMzNiAyMDA5Il0sImNhbGxf
         bnVtYmVyX2Jyb3dzZV9zIjpbIlFCMjEzIC5DMzYgMjAwOSJdLCJ0aW1lc3Rh
         bXAiOiIyMDE2LTA0LTI1VDIwOjMyOjE1LjAzOVoifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 04:06:47 GMT
 - request:
     method: get
@@ -153,7 +153,7 @@ http_interactions:
         Library","code":"firestone"},"hours_location":{"label":"Firestone Library
         - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
         Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 04:06:48 GMT
 - request:
     method: get
@@ -203,7 +203,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"6068387":{"more_items":false,"location":"f","copy_number":1,"item_id":5667334,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 04:06:48 GMT
 - request:
     method: get
@@ -327,7 +327,7 @@ http_interactions:
         IDIwMTQiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiSE44MC5ONSBNMzYg
         MjAxNCJdLCJ0aW1lc3RhbXAiOiIyMDE2LTA0LTI1VDIyOjIyOjQ4LjE3WiJ9
         fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:20 GMT
 - request:
     method: get
@@ -377,7 +377,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"label":"Architecture Library","code":"ues","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Architecture
         Library","code":"architecture"},"hours_location":{"label":"Architecture Library","code":"architecture"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:20 GMT
 - request:
     method: get
@@ -427,7 +427,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101092469293","id":7040389,"location":"ues","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:20 GMT
 - request:
     method: get
@@ -510,7 +510,7 @@ http_interactions:
         Books and Special Collections - Rare Books"],"location":["Rare Books and Special
         Collections"],"call_number_display":["PR3664 .C4 1798"],"call_number_browse_s":["PR3664
         .C4 1798"],"timestamp":"2016-04-25T17:35:06.459Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:21 GMT
 - request:
     method: get
@@ -563,7 +563,7 @@ http_interactions:
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[{"label":"Firestone
         Library, Rare Books \u0026 Special Collections Reading Room","address":"One
         Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:21 GMT
 - request:
     method: get
@@ -610,7 +610,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2056183 not found.'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:21 GMT
 - request:
     method: get
@@ -728,7 +728,7 @@ http_interactions:
         NzUwMC41MDMiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiSkExIC5KNjg3
         IiwiNzUwMC41MDMiXSwidGltZXN0YW1wIjoiMjAxNi0wNC0yNVQxOToxMTow
         Ni40NzZaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:21 GMT
 - request:
     method: get
@@ -798,7 +798,7 @@ http_interactions:
         Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
         Services, Holdings Management","address":"One Washington Rd. Princeton, NJ
         08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:21 GMT
 - request:
     method: get
@@ -849,7 +849,7 @@ http_interactions:
       string: '{"533224":{"more_items":true,"location":"f","copy_number":1,"item_id":2637860,"status":"Not
         Charged"},"4740830":{"more_items":true,"location":"rcppa","copy_number":1,"item_id":584923,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:21 GMT
 - request:
     method: get
@@ -912,7 +912,7 @@ http_interactions:
         Charged","enum":"vol. 67, no. 3-4 (Aug.-Nov. 2005)"},{"barcode":"32101065991919","id":4849206,"location":"f","copy_number":1,"status":"Not
         Charged","enum":"vol. 68, no. 1-2 (Feb.-May 2006)"},{"barcode":"32101065991760","id":4849212,"location":"f","copy_number":1,"status":"Not
         Charged","enum":"vol. 68, no. 3-4 (Aug.-Nov. 2006)"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:22 GMT
 - request:
     method: get
@@ -1045,7 +1045,7 @@ http_interactions:
         Charged","enum":"v. 45, no. 3-4 (1983)"},{"barcode":"32101055804999","id":4020350,"location":"rcppa","copy_number":1,"status":"Not
         Charged","enum":"v. 46, no. 1-2 (1984)"},{"barcode":"32101055804981","id":4020352,"location":"rcppa","copy_number":1,"status":"Not
         Charged","enum":"v. 46, no. 3-4 (1984)"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:23 GMT
 - request:
     method: get
@@ -1117,7 +1117,7 @@ http_interactions:
         4730\",\"call_number_browse\":\"4730\"}}","location_code_s":["hsvc"],"location_display":["Rare
         Books and Special Collections - South East (CTSN)"],"location":["Rare Books
         and Special Collections"],"call_number_display":["ManuscriptsQ 4730"],"call_number_browse_s":["4730"],"timestamp":"2016-04-25T19:40:06.706Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:24 GMT
 - request:
     method: get
@@ -1168,7 +1168,7 @@ http_interactions:
       string: '{"label":"South East (CTSN)","code":"hsvc","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"library":{"label":"Rare
         Books and Special Collections","code":"rare"},"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:24 GMT
 - request:
     method: get
@@ -1217,7 +1217,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"4977668":{"more_items":false,"location":"hsvc","status":"Limited"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:24 GMT
 - request:
     method: get
@@ -1320,7 +1320,7 @@ http_interactions:
         1878","3715.1.389 1878","3715.1.389 1878","3715.1.389 1878","PS2225 .M3 1878","RHT
         American-65","3598.566","3715.1.389","3604.1.3564"],"call_number_browse_s":["3715.1.389
         1878","PS2225 .M3 1878","American-65","3598.566","3715.1.389","3604.1.3564"],"timestamp":"2016-04-25T18:03:10.953Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:24 GMT
 - request:
     method: get
@@ -1371,7 +1371,7 @@ http_interactions:
       string: '{"label":"South East (RB)","code":"hsvr","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"library":{"label":"Rare
         Books and Special Collections","code":"rare"},"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:24 GMT
 - request:
     method: get
@@ -1421,7 +1421,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"2779466":{"more_items":false,"location":"ex","status":"Limited"},"2779467":{"more_items":false,"location":"ex","status":"Limited"},"2779468":{"more_items":false,"location":"ex","status":"Limited"},"2779469":{"more_items":false,"location":"ex","status":"Limited"},"2779470":{"more_items":false,"location":"f","copy_number":1,"item_id":2375978,"status":"Not
         Charged"},"2779471":{"more_items":false,"location":"hsvr","status":"Limited"},"2779472":{"more_items":false,"location":"ex","status":"Limited"},"2779473":{"more_items":false,"location":"ex","status":"Limited"},"3527325":{"more_items":false,"location":"ex","status":"Limited"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:25 GMT
 - request:
     method: get
@@ -1562,7 +1562,7 @@ http_interactions:
         MjAxMCIsIlFBMzAzLjIgLlc0NSAyMDEwIiwiUUEzMDMuMiAuVzQ1IDIwMTAi
         XSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiUUEzMDMuMiAuVzQ1IDIwMTAi
         XSwidGltZXN0YW1wIjoiMjAxNi0wNC0yNVQyMDozODo0Mi42OTJaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:25 GMT
 - request:
     method: get
@@ -1612,66 +1612,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"label":"","code":"sci","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
         Library","code":"lewis"},"hours_location":{"label":"Lewis Library","code":"lewis"},"delivery_locations":[]}'
-    http_version: 
-  recorded_at: Thu, 26 May 2016 17:13:25 GMT
-- request:
-    method: get
-    uri: https://bibdata.princeton.edu/availability?id=6195942
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 26 May 2016 17:13:02 GMT
-      Server:
-      - Apache/2.4.7 (Ubuntu)
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Request-Method:
-      - GET
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      X-Request-Id:
-      - a65b445c-6d16-445e-83a7-771d2c8c162a
-      X-Runtime:
-      - '0.149540'
-      X-Powered-By:
-      - Phusion Passenger 4.0.59
-      Etag:
-      - W/"1e56f66de163ea6e11c1402590d3e652"
-      Status:
-      - 200 OK
-      Transfer-Encoding:
-      - chunked
-      Content-Type:
-      - application/json; charset=utf-8
-    body:
-      encoding: UTF-8
-      string: '{"6214112":{"more_items":false,"location":"sci","on_reserve":"Lewis
-        Library - Course Reserve","copy_number":1,"item_id":5825431,"status":"Not
-        Charged","temp_loc":"scires"},"6218590":{"more_items":false,"location":"sci","on_reserve":"Lewis
-        Library - Course Reserve","copy_number":2,"item_id":5825441,"status":"Not
-        Charged","temp_loc":"scires"},"6218592":{"more_items":false,"location":"sci","on_reserve":"Lewis
-        Library - Course Reserve","copy_number":3,"item_id":5825449,"status":"Not
-        Charged","temp_loc":"scires"},"6218596":{"more_items":false,"location":"sci","copy_number":4,"item_id":5825451,"status":"Not
-        Charged"},"6218598":{"more_items":false,"location":"sci","copy_number":5,"item_id":5825455,"status":"Not
-        Charged"},"6218599":{"more_items":false,"location":"sci","copy_number":6,"item_id":5825458,"status":"Not
-        Charged"},"6218600":{"more_items":false,"location":"sci","copy_number":7,"item_id":5825459,"status":"Not
-        Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:25 GMT
 - request:
     method: get
@@ -1721,7 +1662,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"label":"Course Reserve","code":"scires","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
         Library","code":"lewis"},"hours_location":{"label":"Lewis Library","code":"lewis"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:25 GMT
 - request:
     method: get
@@ -1789,7 +1730,7 @@ http_interactions:
         and index."],"language_facet":["English"],"language_code_s":["eng"],"subject_display":["Electric
         filters"],"subject_facet":["Electric filters"],"related_name_json_1display":"{\"Author\":[\"Zverev,
         Anatol I.\"]}","isbn_display":["0471986798"],"lccn_display":["   76000120  "],"lccn_s":["76000120"],"isbn_s":["9780471986799"],"isbn_t":["9780471986799"],"oclc_s":["1994091"],"other_version_s":["9780471986799","ocm01994091"],"timestamp":"2016-04-25T23:17:19.888Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:26 GMT
 - request:
     method: get
@@ -1836,7 +1777,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2385868 not found.'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:26 GMT
 - request:
     method: get
@@ -1927,7 +1868,7 @@ http_interactions:
         dWJfZGF0ZV9lbmRfc29ydCI6MjAxNSwiZm9ybWF0IjpbIlNlbmlvciBUaGVz
         aXMiXSwidGltZXN0YW1wIjoiMjAxNi0wNS0xOVQxNTozNjo0OC41MjdaIn19
         fQ==
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:26 GMT
 - request:
     method: get
@@ -1979,7 +1920,7 @@ http_interactions:
         Manuscript Library","code":"mudd"},"hours_location":{"label":"Mudd Manuscript
         Library and University Archives","code":"mudd"},"delivery_locations":[{"label":"Mendel
         Music Library","address":"Woolworth Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:26 GMT
 - request:
     method: get
@@ -2077,7 +2018,7 @@ http_interactions:
         ZeKAlFVuaXRlZCBTdGF0ZXPigJRIaXN0b3J54oCUMTl0aCBjZW50dXJ54oCU
         SW4gYXJ0Il0sImZvcm1hdCI6WyJWaXN1YWwgTWF0ZXJpYWwiXSwidGltZXN0
         YW1wIjoiMjAxNi0wNS0xM1QxODozNTo1Ny42NDNaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:26 GMT
 - request:
     method: get
@@ -2128,7 +2069,7 @@ http_interactions:
       string: '{"label":"Graphic Arts Collection","code":"ga","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Rare
         Books and Special Collections","code":"rare"},"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:26 GMT
 - request:
     method: get
@@ -2169,7 +2110,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:27 GMT
 - request:
     method: get
@@ -2282,7 +2223,7 @@ http_interactions:
         MzE2NzUgMjAwMyJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJONTM0NSAu
         QTQ1MzE2NzUgMjAwMyJdLCJ0aW1lc3RhbXAiOiIyMDE2LTA0LTI1VDE5OjMx
         OjI4LjcyWiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:27 GMT
 - request:
     method: get
@@ -2334,7 +2275,7 @@ http_interactions:
         Library","code":"firestone"},"hours_location":{"label":"Firestone Library
         - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
         Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:27 GMT
 - request:
     method: get
@@ -2384,7 +2325,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"4725563":{"more_items":false,"location":"nec","copy_number":1,"item_id":3999863,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:27 GMT
 - request:
     method: get
@@ -2511,7 +2452,7 @@ http_interactions:
         XSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJEUzYyLjIgLkIzNDYgMTk1NCJd
         LCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJEUzYyLjIgLkIzNDYgMTk1NCJd
         LCJ0aW1lc3RhbXAiOiIyMDE2LTA0LTI1VDE4OjIwOjI1Ljc3OFoifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:27 GMT
 - request:
     method: get
@@ -2561,7 +2502,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"3251699":{"more_items":false,"location":"nec","copy_number":1,"item_id":5520315,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:27 GMT
 - request:
     method: get
@@ -2693,7 +2634,7 @@ http_interactions:
         NzguUDc1IEszODUgMTk3MCIsIkJKMTY3OC5QNzUgSzM4NSAxOTcwIl0sImNh
         bGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkJKMTY3OC5QNzUgSzM4NSAxOTcwIl0s
         InRpbWVzdGFtcCI6IjIwMTYtMDQtMjVUMTg6MjE6MjMuMjk2WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:28 GMT
 - request:
     method: get
@@ -2744,7 +2685,7 @@ http_interactions:
       string: '{"4504821":{"more_items":false,"location":"nec","copy_number":2,"item_id":4478736,"status":"Not
         Charged"},"6889523":{"more_items":false,"location":"nec","copy_number":3,"item_id":6271069,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:28 GMT
 - request:
     method: get
@@ -2836,7 +2777,7 @@ http_interactions:
         Y2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiUFEzOTE5LjMuVDczNyBTOTQ2IDIw
         MDQiXSwidGltZXN0YW1wIjoiMjAxNi0wNC0yNVQxOToyNDo0Mi4wNzdaIn19
         fQ==
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:28 GMT
 - request:
     method: get
@@ -2886,7 +2827,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"4594920":{"more_items":false,"location":"f","copy_number":1,"item_id":3960398,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:28 GMT
 - request:
     method: get
@@ -3046,7 +2987,7 @@ http_interactions:
         YnJhcnkiXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJBTTcgLkozNjUgMjAx
         NiJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJBTTcgLkozNjUgMjAxNiJd
         LCJ0aW1lc3RhbXAiOiIyMDE2LTA0LTI1VDIyOjQwOjQ3LjA1WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:28 GMT
 - request:
     method: get
@@ -3096,7 +3037,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9396713":{"more_items":false,"location":"f","copy_number":0,"item_id":7326328,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:28 GMT
 - request:
     method: get
@@ -3183,7 +3124,7 @@ http_interactions:
         XSwibG9jYXRpb25fZGlzcGxheSI6WyJGaXJlc3RvbmUgTGlicmFyeSJdLCJs
         b2NhdGlvbiI6WyJGaXJlc3RvbmUgTGlicmFyeSJdLCJ0aW1lc3RhbXAiOiIy
         MDE2LTA0LTI1VDIyOjQzOjQ3LjM4NFoifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:29 GMT
 - request:
     method: get
@@ -3232,7 +3173,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"9442916":{"more_items":false,"location":"f","status":"On-Order 04-06-2016"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:13:29 GMT
 - request:
     method: get
@@ -3368,7 +3309,7 @@ http_interactions:
         cl9kaXNwbGF5IjpbIlBKMTUyMSAuQzM3MiAyMDE2ZiJdLCJjYWxsX251bWJl
         cl9icm93c2VfcyI6WyJQSjE1MjEgLkMzNzIgMjAxNmYiXSwidGltZXN0YW1w
         IjoiMjAxNi0wNS0wNVQwNjozMDo1MVoifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:42:55 GMT
 - request:
     method: get
@@ -3420,7 +3361,7 @@ http_interactions:
         Library","code":"firestone"},"hours_location":{"label":"Firestone Library
         - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
         Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:42:55 GMT
 - request:
     method: get
@@ -3470,7 +3411,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9437529":{"more_items":false,"location":"xl","copy_number":0,"item_id":7355620,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 26 May 2016 17:42:56 GMT
 - request:
     method: get
@@ -3517,7 +3458,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 4977668 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:31:42 GMT
 - request:
     method: get
@@ -3564,7 +3505,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779466 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:31:43 GMT
 - request:
     method: get
@@ -3611,7 +3552,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779467 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:31:51 GMT
 - request:
     method: get
@@ -3658,7 +3599,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779468 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:31:55 GMT
 - request:
     method: get
@@ -3705,7 +3646,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779469 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:31:59 GMT
 - request:
     method: get
@@ -3755,7 +3696,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101010941647","id":2375978,"location":"f","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:03 GMT
 - request:
     method: get
@@ -3802,7 +3743,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779471 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:08 GMT
 - request:
     method: get
@@ -3849,7 +3790,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779472 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:09 GMT
 - request:
     method: get
@@ -3896,7 +3837,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2779473 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:09 GMT
 - request:
     method: get
@@ -3943,7 +3884,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 3527325 not found.'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:10 GMT
 - request:
     method: get
@@ -3993,7 +3934,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899620","id":5825431,"location":"sci","on_reserve":"Lewis
         Library - Term Loan Reserves","copy_number":1,"status":"Not Charged","temp_loc":"sciresp"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:11 GMT
 - request:
     method: get
@@ -4043,7 +3984,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899638","id":5825441,"location":"sci","on_reserve":"Lewis
         Library - Term Loan Reserves","copy_number":2,"status":"Not Charged","temp_loc":"sciresp"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:12 GMT
 - request:
     method: get
@@ -4093,7 +4034,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899661","id":5825449,"location":"sci","on_reserve":"Lewis
         Library - Term Loan Reserves","copy_number":3,"status":"Not Charged","temp_loc":"sciresp"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:13 GMT
 - request:
     method: get
@@ -4143,7 +4084,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899653","id":5825451,"location":"sci","copy_number":4,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:13 GMT
 - request:
     method: get
@@ -4193,7 +4134,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899604","id":5825455,"location":"sci","copy_number":5,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:14 GMT
 - request:
     method: get
@@ -4243,7 +4184,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899646","id":5825458,"location":"sci","copy_number":6,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:14 GMT
 - request:
     method: get
@@ -4293,7 +4234,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101078899422","id":5825459,"location":"sci","copy_number":7,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:15 GMT
 - request:
     method: get
@@ -4344,7 +4285,7 @@ http_interactions:
       string: '{"label":"Term Loan Reserves","code":"sciresp","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
         Library","code":"lewis"},"holding_library":null,"hours_location":{"label":"Lewis
         Library","code":"lewis"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:15 GMT
 - request:
     method: get
@@ -4394,7 +4335,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101057079434","id":3999863,"location":"nec","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:17 GMT
 - request:
     method: get
@@ -4444,7 +4385,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101077709341","id":5520315,"location":"nec","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:18 GMT
 - request:
     method: get
@@ -4494,7 +4435,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101000924850","id":4478736,"location":"nec","copy_number":2,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:18 GMT
 - request:
     method: get
@@ -4544,7 +4485,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101080891441","id":6271069,"location":"nec","copy_number":3,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:19 GMT
 - request:
     method: get
@@ -4594,7 +4535,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101056115783","id":3960398,"location":"f","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:19 GMT
 - request:
     method: get
@@ -4644,7 +4585,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101079581698","id":5667334,"location":"f","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:20 GMT
 - request:
     method: get
@@ -4694,7 +4635,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101095438303","id":7326328,"location":"f","copy_number":0,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:21 GMT
 - request:
     method: get
@@ -4744,7 +4685,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101096007537","id":7355620,"location":"xl","copy_number":0,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 13 Jun 2016 22:32:21 GMT
 - request:
     method: get
@@ -4875,7 +4816,7 @@ http_interactions:
         OHEiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiUUsxNC41IC5KNjQgMTk5
         OHEiXSwidGltZXN0YW1wIjoiMjAxNi0wNi0wOFQwNDo0Mjo0OS42MzJaIn19
         fQ==
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jun 2016 06:23:16 GMT
 - request:
     method: get
@@ -4925,7 +4866,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"4091680":{"more_items":false,"location":"f","copy_number":1,"item_id":3396382,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jun 2016 06:23:16 GMT
 - request:
     method: get
@@ -4975,7 +4916,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101048662488","id":3396382,"location":"f","copy_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jun 2016 06:23:17 GMT
 - request:
     method: get
@@ -5038,7 +4979,7 @@ http_interactions:
         Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\"}}","location_code_s":["f"],"location_display":["Firestone
         Library"],"location":["Firestone Library"],"advanced_location_s":["f","Firestone
         Library"],"timestamp":"2016-06-08T09:07:04.986Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jun 2016 06:50:25 GMT
 - request:
     method: get
@@ -5087,7 +5028,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"9442912":{"more_items":false,"location":"f","status":"On-Order 04-06-2016"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jun 2016 06:50:26 GMT
 - request:
     method: get
@@ -5155,7 +5096,7 @@ http_interactions:
         Library"],"name_title_245_s":["Bandelier, Adolph. Mitos y tradiciones aborigenes
         concernientes alas islas del lago Titicaca"],"name_title_browse_s":["Bandelier,
         Adolph. Mitos y tradiciones aborigenes concernientes alas islas del lago Titicaca"],"timestamp":"2016-07-01T08:18:44.193Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 15 Jul 2016 12:39:45 GMT
 - request:
     method: get
@@ -5204,7 +5145,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"9442918":{"more_items":false,"location":"f","status":"On-Order 04-06-2016"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 15 Jul 2016 12:39:46 GMT
 - request:
     method: get
@@ -5251,7 +5192,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 9442918 not found.'
-    http_version: 
+    http_version:
   recorded_at: Fri, 15 Jul 2016 12:41:13 GMT
 - request:
     method: get
@@ -5300,7 +5241,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"2056183":{"more_items":false,"location":"ex","status":"On-Site"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 15 Jul 2016 14:24:40 GMT
 - request:
     method: get
@@ -5474,7 +5415,7 @@ http_interactions:
         NjAgLkE2M3EiLCJPdmVyc2l6ZSBONTQ2MC5BNjNxIl0sImNhbGxfbnVtYmVy
         X2Jyb3dzZV9zIjpbIk41NDYwIC5BNjNxIiwiTjU0NjAuQTYzcSJdLCJ0aW1l
         c3RhbXAiOiIyMDE2LTA3LTAxVDAyOjQ1OjIwLjA2N1oifX19
-    http_version: 
+    http_version:
   recorded_at: Mon, 18 Jul 2016 22:22:10 GMT
 - request:
     method: get
@@ -5525,7 +5466,7 @@ http_interactions:
       string: '{"label":"","code":"sa","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Marquand
         Library","code":"marquand"},"holding_library":null,"hours_location":{"label":"Marquand
         Library of Art and Archaeology","code":"marquand"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 18 Jul 2016 22:22:11 GMT
 - request:
     method: get
@@ -5589,7 +5530,7 @@ http_interactions:
         Library","address":"Wallace Hall, Lower Level Princeton, NJ 08544","phone_number":"609-258-5455","contact_email":"piaprlib@princeton.edu","gfa_pickup":"PM","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Lewis
         Library","address":"Washington Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Firestone
         Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 18 Jul 2016 22:22:11 GMT
 - request:
     method: get
@@ -5640,7 +5581,7 @@ http_interactions:
       string: '{"label":"Numismatics Collection: Reference","code":"numrf","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Rare
         Books and Special Collections","code":"rare"},"holding_library":null,"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 18 Jul 2016 22:22:11 GMT
 - request:
     method: get
@@ -5691,7 +5632,7 @@ http_interactions:
       string: '[{"barcode":"32101026169985","id":2278268,"location":"sa","copy_number":1,"item_sequence_number":6,"status":"On-Site","enum":"v.5"},{"barcode":"32101026132058","id":2278267,"location":"sa","copy_number":1,"item_sequence_number":5,"status":"On-Site","enum":"v.4,
         pt.2"},{"barcode":"32101025668078","id":2278266,"location":"sa","copy_number":1,"item_sequence_number":4,"status":"On-Site
         - Missing","enum":"v.4, pt.1"},{"barcode":"32101025649177","id":2278265,"location":"sa","copy_number":1,"item_sequence_number":3,"status":"On-Site","enum":"v.3"},{"barcode":"32101025649169","id":2278264,"location":"sa","copy_number":1,"item_sequence_number":2,"status":"On-Site","enum":"v.2"},{"barcode":"32101026173334","id":2278263,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site","enum":"v.1"}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 18 Jul 2016 22:22:11 GMT
 - request:
     method: get
@@ -5797,7 +5738,7 @@ http_interactions:
         Library","code":"firestone"}},{"label":"Preservation","address":"One Washington
         Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/29.json","library":{"label":"Firestone
         Library","code":"firestone"}}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 19 Jul 2016 22:28:33 GMT
 - request:
     method: get
@@ -5903,7 +5844,7 @@ http_interactions:
         Library","code":"firestone"}},{"label":"Preservation","address":"One Washington
         Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/29.json","library":{"label":"Firestone
         Library","code":"firestone"}}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 19 Jul 2016 22:47:47 GMT
 - request:
     method: get
@@ -6009,7 +5950,7 @@ http_interactions:
         Library","code":"firestone"}},{"label":"Preservation","address":"One Washington
         Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/29.json","library":{"label":"Firestone
         Library","code":"firestone"}}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 19 Jul 2016 22:52:43 GMT
 - request:
     method: get
@@ -6115,7 +6056,7 @@ http_interactions:
         Library","code":"firestone"}},{"label":"Preservation","address":"One Washington
         Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata.princeton.edu/locations/delivery_locations/29.json","library":{"label":"Firestone
         Library","code":"firestone"}}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 19 Jul 2016 22:52:52 GMT
 - request:
     method: get
@@ -6245,7 +6186,7 @@ http_interactions:
         MDE2Il0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIml0ZW0gNzM5Mjg5NHEi
         LCJaOTk3LkEyIEI2NyAyMDE2Il0sInRpbWVzdGFtcCI6IjIwMTYtMDctMDdU
         MDU6MzA6NTAuODU3WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:16 GMT
 - request:
     method: get
@@ -6295,7 +6236,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9478752":{"more_items":false,"location":"ex","copy_number":0,"item_id":7392894,"status":"On-Site"},"9516392":{"more_items":false,"location":"f","copy_number":0,"item_id":7408689,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:16 GMT
 - request:
     method: get
@@ -6344,7 +6285,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '[{"barcode":"32101097152910","id":7392894,"location":"ex","copy_number":0,"item_sequence_number":1,"status":"On-Site"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:16 GMT
 - request:
     method: get
@@ -6394,7 +6335,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101098558560","id":7408689,"location":"f","copy_number":0,"item_sequence_number":1,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:16 GMT
 - request:
     method: get
@@ -6649,7 +6590,7 @@ http_interactions:
         LCIzMC4zLjEiLCIzMC4zLjIiLCIzMC4zLjMiLCIzMC4zLjQiLCIzMC4zLjUi
         LCIzMC4zLjYiLCIzMC4zLjciLCJFbGVjdHJvbmljIFJlc291cmNlIl0sInRp
         bWVzdGFtcCI6IjIwMTYtMDctMDFUMDE6NDM6MDcuODc2WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:16 GMT
 - request:
     method: get
@@ -6700,7 +6641,7 @@ http_interactions:
       string: '{"label":"William H. Scheide Library","code":"whs","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Rare
         Books and Special Collections","code":"rare"},"holding_library":null,"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:17 GMT
 - request:
     method: get
@@ -6749,7 +6690,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"label":"*ONLINE*","code":"elf1","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Online","code":"online"},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:17 GMT
 - request:
     method: get
@@ -6798,7 +6739,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"675720":{"more_items":false,"location":"hsvr","status":"On-Site"},"675721":{"more_items":false,"location":"hsvr","status":"On-Site"},"675722":{"more_items":true,"location":"ex","copy_number":1,"item_id":7078770,"status":"On-Site"},"5132983":{"more_items":false,"location":"whs","status":"On-Site"},"5132984":{"more_items":false,"location":"whs","status":"On-Site"},"5132985":{"more_items":false,"location":"whs","status":"On-Site"},"5132988":{"more_items":false,"location":"whs","status":"On-Site"},"5132991":{"more_items":false,"location":"whs","status":"On-Site"},"5132995":{"more_items":false,"location":"whs","status":"On-Site"},"5133005":{"more_items":false,"location":"whs","status":"On-Site"},"9460600":{"more_items":false,"location":"elf1","status":"Online"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:17 GMT
 - request:
     method: get
@@ -6845,7 +6786,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 675720 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:17 GMT
 - request:
     method: get
@@ -6892,7 +6833,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 675721 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:17 GMT
 - request:
     method: get
@@ -6941,7 +6882,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '[{"barcode":"32101091130938","id":7078793,"location":"ex","copy_number":1,"item_sequence_number":7,"status":"On-Site","enum":"v.7"},{"barcode":"32101091130920","id":7078791,"location":"ex","copy_number":1,"item_sequence_number":6,"status":"On-Site","enum":"v.6"},{"barcode":"32101091130912","id":7078788,"location":"ex","copy_number":1,"item_sequence_number":5,"status":"On-Site","enum":"v.5"},{"barcode":"32101091130904","id":7078784,"location":"ex","copy_number":1,"item_sequence_number":4,"status":"On-Site","enum":"v.4"},{"barcode":"32101091130896","id":7078780,"location":"ex","copy_number":1,"item_sequence_number":3,"status":"On-Site","enum":"v.3"},{"barcode":"32101091130888","id":7078775,"location":"ex","copy_number":1,"item_sequence_number":2,"status":"On-Site","enum":"v.2"},{"barcode":"32101091130870","id":7078770,"location":"ex","copy_number":1,"item_sequence_number":1,"status":"On-Site","enum":"v.1"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:17 GMT
 - request:
     method: get
@@ -6988,7 +6929,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5132983 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7035,7 +6976,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5132984 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7082,7 +7023,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5132985 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7129,7 +7070,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5132988 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7176,7 +7117,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5132991 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7223,7 +7164,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5132995 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7270,7 +7211,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 5133005 not found.'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:18 GMT
 - request:
     method: get
@@ -7413,7 +7354,7 @@ http_interactions:
         ImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiRFI2MDMgLk4zNSAyMDE3Il0sImNh
         bGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkRSNjAzIC5OMzUgMjAxNyJdLCJ0aW1l
         c3RhbXAiOiIyMDE2LTA3LTAxVDA4OjE0OjQ2LjUxNVoifX19
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:19 GMT
 - request:
     method: get
@@ -7463,7 +7404,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9504920":{"more_items":false,"location":"rcppa","copy_number":0,"item_id":7406328,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:19 GMT
 - request:
     method: get
@@ -7513,7 +7454,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101099103457","id":7406328,"location":"rcppa","copy_number":0,"item_sequence_number":0,"status":"Not
         Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:19 GMT
 - request:
     method: get
@@ -7651,7 +7592,7 @@ http_interactions:
         ODAwMS42NzMiLCJRMSAuTjMiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsi
         ODAwMS42NzMiLCJRMSAuTjMiXSwidGltZXN0YW1wIjoiMjAxNi0wNy0yMFQw
         NTozMTo1MC44MzlaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:19 GMT
 - request:
     method: get
@@ -7702,7 +7643,7 @@ http_interactions:
       string: '{"label":"Serials (shelved by serial title)","code":"sciss","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Lewis
         Library","code":"lewis"},"holding_library":null,"hours_location":{"label":"Lewis
         Library","code":"lewis"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:20 GMT
 - request:
     method: get
@@ -7753,7 +7694,7 @@ http_interactions:
       string: '{"label":"Serials","code":"stss","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Engineering
         Library","code":"engineering"},"holding_library":null,"hours_location":{"label":"Engineering
         Library","code":"engineering"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:20 GMT
 - request:
     method: get
@@ -7808,7 +7749,7 @@ http_interactions:
         08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Preservation","address":"One
         Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
         Services","address":"693 Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":false,"digital_location":false}]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:20 GMT
 - request:
     method: get
@@ -7872,7 +7813,7 @@ http_interactions:
         Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"ReCAP
         Reading Room","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"IL","staff_only":false,"pickup_location":true,"digital_location":false},{"label":"Preservation","address":"One
         Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false}]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:20 GMT
 - request:
     method: get
@@ -7925,7 +7866,7 @@ http_interactions:
         06-22-2000"},"464640":{"more_items":true,"location":"rcppn","copy_number":1,"item_id":504294,"status":"Not
         Charged"},"3538795":{"more_items":true,"location":"anxb","copy_number":1,"item_id":504625,"status":"Not
         Charged"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:20 GMT
 - request:
     method: get
@@ -8489,7 +8430,7 @@ http_interactions:
         Charged","enum":"vol. 3 (Nov. 1870-Apr. 1871)"},{"barcode":"32101043002193","id":3225240,"location":"sciss","copy_number":1,"item_sequence_number":2,"status":"Not
         Charged","enum":"vol. 2 (May-Nov. 1870)"},{"barcode":"32101013543804","id":2920264,"location":"sciss","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","enum":"vol. 1 (Nov. 1869-Apr. 1870)"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:21 GMT
 - request:
     method: get
@@ -9181,7 +9122,7 @@ http_interactions:
         Charged","enum":"vol. 11 (Nov. 1874-Apr. 1875)"},{"barcode":"32101059790103","id":2912660,"location":"rcppn","copy_number":1,"item_sequence_number":2,"status":"Not
         Charged","enum":"vol. 10 (May-Oct. 1874)"},{"barcode":"32101060199229","id":2912662,"location":"rcppn","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","enum":"vol. 9 (Nov. 1873-Apr. 1874)"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:23 GMT
 - request:
     method: get
@@ -9430,7 +9371,7 @@ http_interactions:
         Charged","enum":"v.212  no.5062-5065 (Nov. 1966)"},{"barcode":"32101039863343","id":2578967,"location":"anxb","copy_number":1,"item_sequence_number":2,"status":"Not
         Charged","enum":"v.212  no.5057-5061 (Oct. 1966)"},{"barcode":"32101039863350","id":2578961,"location":"anxb","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","enum":"v.210-211 Indices (Apr.-Sept. 1966)"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 20 Jul 2016 20:51:23 GMT
 - request:
     method: get
@@ -9574,7 +9515,7 @@ http_interactions:
         X251bWJlcl9kaXNwbGF5IjpbIkpaNTU4NC5BMzMgRzg3IDIwMTYiXSwiY2Fs
         bF9udW1iZXJfYnJvd3NlX3MiOlsiSlo1NTg0LkEzMyBHODcgMjAxNiJdLCJ0
         aW1lc3RhbXAiOiIyMDE2LTA4LTIwVDA0OjM2OjEwLjU2N1oifX19
-    http_version: 
+    http_version:
   recorded_at: Tue, 23 Aug 2016 16:12:45 GMT
 - request:
     method: get
@@ -9623,7 +9564,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '[{"barcode":"32101098656844","id":7431878,"location":"f","copy_number":0,"item_sequence_number":1,"status":"Charged"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 23 Aug 2016 16:12:46 GMT
 - request:
     method: get
@@ -9670,7 +9611,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record: 2385868 not found.'
-    http_version: 
+    http_version:
   recorded_at: Thu, 01 Sep 2016 16:45:39 GMT
 - request:
     method: get
@@ -9711,7 +9652,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 01 Sep 2016 16:45:40 GMT
 - request:
     method: get
@@ -9752,7 +9693,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 01 Sep 2016 16:45:40 GMT
 - request:
     method: get
@@ -9793,7 +9734,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 01 Sep 2016 16:45:41 GMT
 - request:
     method: get
@@ -9999,7 +9940,7 @@ http_interactions:
         ZGlzcGxheSI6WyJQOTYuQTM3IEE1OCAyMDE3Il0sImNhbGxfbnVtYmVyX2Jy
         b3dzZV9zIjpbIlA5Ni5BMzcgQTU4IDIwMTciXSwidGltZXN0YW1wIjoiMjAx
         Ni0wOS0wN1QxODoxNjo0OC40NDJaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Sat, 17 Sep 2016 03:36:06 GMT
 - request:
     method: get
@@ -10049,7 +9990,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101099644534","id":7448875,"location":"f","copy_number":0,"item_sequence_number":1,"status":"Not
         Charged","label":"Firestone Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Sat, 17 Sep 2016 03:36:06 GMT
 - request:
     method: get
@@ -10119,7 +10060,7 @@ http_interactions:
         Library"],"location":["Firestone Library"],"advanced_location_s":["f","Firestone
         Library"],"call_number_display":["Oversize AP2 .L665q"],"call_number_browse_s":["AP2
         .L665q"],"timestamp":"2016-09-07T16:52:40.960Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Oct 2016 01:26:46 GMT
 - request:
     method: get
@@ -10169,7 +10110,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"538750":{"more_items":true,"location":"f","copy_number":1,"item_id":617576,"status":"Not
         Charged","label":"Firestone Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Oct 2016 01:26:48 GMT
 - request:
     method: get
@@ -10279,7 +10220,7 @@ http_interactions:
         Charged","enum":"1954 (July-Dec.)","label":"Firestone Library"},{"barcode":"32101003735873","id":617577,"location":"f","copy_number":1,"item_sequence_number":2,"status":"Not
         Charged","enum":"1954 (Apr.-June)","label":"Firestone Library"},{"barcode":"32101031883521","id":617576,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","enum":"1954 (Feb.-June)","label":"Firestone Library"},{"barcode":null,"id":null,"location":null,"copy_number":null,"item_sequence_number":null,"status":null}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Oct 2016 01:26:50 GMT
 - request:
     method: get
@@ -10385,7 +10326,7 @@ http_interactions:
           </div>
         </body>
         </html>
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Oct 2016 01:26:50 GMT
 - request:
     method: get
@@ -10440,7 +10381,7 @@ http_interactions:
             <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
           </div>
         </div>
-    http_version: 
+    http_version:
   recorded_at: Tue, 24 Jan 2017 21:13:23 GMT
 - request:
     method: get
@@ -10495,7 +10436,7 @@ http_interactions:
             <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
           </div>
         </div>
-    http_version: 
+    http_version:
   recorded_at: Tue, 24 Jan 2017 23:16:49 GMT
 - request:
     method: get
@@ -10550,7 +10491,7 @@ http_interactions:
             <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
           </div>
         </div>
-    http_version: 
+    http_version:
   recorded_at: Tue, 24 Jan 2017 23:24:32 GMT
 - request:
     method: get
@@ -10605,7 +10546,7 @@ http_interactions:
             <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
           </div>
         </div>
-    http_version: 
+    http_version:
   recorded_at: Tue, 24 Jan 2017 23:24:44 GMT
 - request:
     method: get
@@ -10751,7 +10692,7 @@ http_interactions:
         ImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiRWxlY3Ryb25pYyBSZXNvdXJjZSJd
         LCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJFbGVjdHJvbmljIFJlc291cmNl
         Il0sInRpbWVzdGFtcCI6IjIwMTctMDEtMDRUMDg6NDM6NTcuNjgwWiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Feb 2017 16:19:37 GMT
 - request:
     method: get
@@ -10801,7 +10742,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9800910":{"more_items":false,"location":"elf1","status":"Online","label":"Online
         - *ONLINE*"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Feb 2017 16:19:37 GMT
 - request:
     method: get
@@ -10995,7 +10936,7 @@ http_interactions:
         ZSJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJRQjEgLkE4OCAyMDE1Iiwi
         RWxlY3Ryb25pYyBSZXNvdXJjZSJdLCJ0aW1lc3RhbXAiOiIyMDE3LTAxLTA0
         VDA4OjM1OjU3LjIxNFoifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Feb 2017 16:22:53 GMT
 - request:
     method: get
@@ -11046,7 +10987,7 @@ http_interactions:
       string: '{"9565269":{"more_items":false,"location":"rcppa","copy_number":0,"item_id":7439566,"on_reserve":"N","status":"Not
         Charged","label":"ReCAP"},"9774306":{"more_items":false,"location":"elf1","status":"Online","label":"Online
         - *ONLINE*"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Feb 2017 16:22:53 GMT
 - request:
     method: get
@@ -11096,7 +11037,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101098576554","id":7439566,"location":"rcppa","copy_number":0,"item_sequence_number":1,"status":"Not
         Charged","label":"ReCAP"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Feb 2017 16:22:53 GMT
 - request:
     method: get
@@ -11174,7 +11115,7 @@ http_interactions:
         Edward R., 1942-. Beautiful evidence"],"name_title_browse_s":["Tufte, Edward
         R., 1942-. Beautiful evidence"],"call_number_display":["P93.5 .T847 2006"],"call_number_browse_s":["P93.5
         .T847 2006"],"timestamp":"2017-01-04T04:49:07.581Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:06 GMT
 - request:
     method: get
@@ -11229,7 +11170,7 @@ http_interactions:
         Charged","label":"Engineering Library - Reserve"},"5039570":{"more_items":false,"location":"f","copy_number":1,"item_id":4428451,"on_reserve":"N","due_date":"2017-06-15T23:00:00.000-05:00","status":"Renewed","label":"Firestone
         Library"},"5674398":{"more_items":false,"location":"sa","copy_number":1,"item_id":5084627,"on_reserve":"N","status":"On-Site","label":"Marquand
         Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:06 GMT
 - request:
     method: get
@@ -11279,7 +11220,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101059938264","id":4380458,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"2017-05-22T23:59:00.000-05:00","label":"Lewis
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
 - request:
     method: get
@@ -11329,7 +11270,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101059892883","id":4397582,"location":"spia","temp_loc":"strr","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","label":"Engineering Library - Reserve"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
 - request:
     method: get
@@ -11379,7 +11320,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101061133466","id":4428451,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"2017-06-15T23:00:00.000-05:00","label":"Firestone
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
 - request:
     method: get
@@ -11429,7 +11370,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101067508992","id":5084627,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Marquand
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
 - request:
     method: get
@@ -11480,7 +11421,7 @@ http_interactions:
       string: '{"label":"SPIA","code":"spia","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Stokes
         Library","code":"stokes","order":2},"holding_library":null,"hours_location":{"label":"Stokes
         Library","code":"stokes"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
 - request:
     method: get
@@ -11531,7 +11472,7 @@ http_interactions:
       string: '{"label":"Reserve","code":"strr","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Engineering
         Library","code":"engineering","order":2},"holding_library":null,"hours_location":{"label":"Engineering
         Library","code":"engineering"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 17:59:07 GMT
 - request:
     method: get
@@ -11625,7 +11566,7 @@ http_interactions:
         T. J. (Thomas Jonathan), 1786?-1853. The kettle abusing the pot"],"name_title_browse_s":["Wooler,
         T. J. (Thomas Jonathan), 1786?-1853. The kettle abusing the pot"],"call_number_display":["DA30
         .H377 v.14","2004-0069N"],"call_number_browse_s":["DA30 .H377 v.14","2004-0069N"],"timestamp":"2017-01-04T03:02:07.139Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 23:03:18 GMT
 - request:
     method: get
@@ -11676,7 +11617,7 @@ http_interactions:
       string: '{"3539546":{"more_items":false,"location":"f","copy_number":1,"item_id":6555616,"on_reserve":"N","status":"Missing","label":"Firestone
         Library"},"4238081":{"more_items":false,"location":"ex","copy_number":1,"item_id":3533136,"on_reserve":"N","status":"On-Site","label":"Rare
         Books and Special Collections - Rare Books"}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 23:03:18 GMT
 - request:
     method: get
@@ -11726,7 +11667,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101010196770","id":3533136,"location":"ex","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Rare
         Books and Special Collections - Rare Books"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 21 Feb 2017 23:03:19 GMT
 - request:
     method: get
@@ -11767,7 +11708,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Feb 2017 06:55:14 GMT
 - request:
     method: get
@@ -11902,7 +11843,7 @@ http_interactions:
         MDE0Il0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkhOODAuTjUgTTM2IDIw
         MTQiXSwidGltZXN0YW1wIjoiMjAxNy0wMS0wNFQwODowNDowOC4yNjNaIn19
         fQ==
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Feb 2017 06:55:21 GMT
 - request:
     method: get
@@ -11943,7 +11884,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Feb 2017 07:01:35 GMT
 - request:
     method: get
@@ -11984,7 +11925,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Feb 2017 07:02:19 GMT
 - request:
     method: get
@@ -12039,7 +11980,7 @@ http_interactions:
             <p>For help, please email <a href="mailto:catalog-feedback@princeton.edu">catalog-feedback@princeton.edu</a> or <a href="/">start over</a> with a new search. </p>
           </div>
         </div>
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Feb 2017 14:26:05 GMT
 - request:
     method: get
@@ -12080,7 +12021,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"status":"500","error":"Internal Server Error"}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Feb 2017 14:26:05 GMT
 - request:
     method: get
@@ -12184,7 +12125,7 @@ http_interactions:
         ZXJfZGlzcGxheSI6WyJKUTI5NDcuQTk1IEQzNzgiXSwiY2FsbF9udW1iZXJf
         YnJvd3NlX3MiOlsiSlEyOTQ3LkE5NSBEMzc4Il0sInRpbWVzdGFtcCI6IjIw
         MTctMDEtMDRUMDY6NDk6MzQuMTAwWiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:07 GMT
 - request:
     method: get
@@ -12234,7 +12175,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"7313959":{"more_items":true,"location":"rcppa","copy_number":1,"item_id":6609713,"on_reserve":"N","status":"Not
         Charged","label":"ReCAP"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:07 GMT
 - request:
     method: get
@@ -12287,7 +12228,7 @@ http_interactions:
         Charged","enum":"no.3 (Sept./Oct. 2012)","label":"ReCAP"},{"barcode":"32101087922140","id":6749612,"location":"rcppa","copy_number":1,"item_sequence_number":2,"status":"Not
         Charged","enum":"no.2 (July/Aug. 2012)","label":"ReCAP"},{"barcode":"32101092034501","id":6609713,"location":"rcppa","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","enum":"no.1 (June 2012)","label":"ReCAP"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:08 GMT
 - request:
     method: get
@@ -12421,7 +12362,7 @@ http_interactions:
         bGxfbnVtYmVyX2Jyb3dzZV9zIjpbIk4tMDAwNjgzIiwiWjI1MC41LlAzNSBC
         NzUgMjAxNiJdLCJ0aW1lc3RhbXAiOiIyMDE3LTAxLTA0VDA4OjMyOjI3LjAy
         N1oifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:09 GMT
 - request:
     method: get
@@ -12472,7 +12413,7 @@ http_interactions:
       string: '{"9563400":{"more_items":false,"location":"ga","copy_number":0,"item_id":7453760,"on_reserve":"N","status":"On-Site","label":"Rare
         Books and Special Collections - Graphic Arts Collection"},"9814851":{"more_items":false,"location":"f","copy_number":0,"item_id":7503818,"on_reserve":"N","status":"On
         Hold","label":"Firestone Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:09 GMT
 - request:
     method: get
@@ -12522,7 +12463,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101091149862","id":7453760,"location":"ga","copy_number":0,"item_sequence_number":1,"status":"On-Site","label":"Rare
         Books and Special Collections - Graphic Arts Collection"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:09 GMT
 - request:
     method: get
@@ -12572,7 +12513,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101095208888","id":7503818,"location":"f","copy_number":0,"item_sequence_number":1,"status":"On
         Hold","label":"Firestone Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 14:51:10 GMT
 - request:
     method: get
@@ -12695,7 +12636,7 @@ http_interactions:
         WyJPdmVyc2l6ZSBNTDM3OTAgLlI0M3EiXSwiY2FsbF9udW1iZXJfYnJvd3Nl
         X3MiOlsiTUwzNzkwIC5SNDNxIl0sInRpbWVzdGFtcCI6IjIwMTctMDItMTVU
         MDY6MDE6MTQuNjk4WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:15 GMT
 - request:
     method: get
@@ -12747,7 +12688,7 @@ http_interactions:
         Library"},"9916655":{"more_items":false,"location":"sv","copy_number":1,"item_id":7554089,"on_reserve":"N","due_date":"2017-06-15T22:00:00.000-05:00","status":"Charged","label":"Mendel
         Music Library - Reference"},"9916866":{"more_items":false,"location":"dr","copy_number":1,"item_id":7554094,"on_reserve":"N","status":"On-Site","label":"Firestone
         Library - Trustee Reading Room Reference"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:16 GMT
 - request:
     method: get
@@ -12797,7 +12738,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101069419883","id":7554093,"location":"f","temp_loc":"f","copy_number":1,"item_sequence_number":1,"status":"Charged","due_date":"2017-04-14T23:45:00.000-05:00","enum":"2016","label":"Firestone
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:17 GMT
 - request:
     method: get
@@ -12847,7 +12788,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101069419974","id":7554089,"location":"sv","copy_number":1,"item_sequence_number":1,"status":"Charged","due_date":"2017-06-15T22:00:00.000-05:00","enum":"2016","label":"Mendel
         Music Library - Reference"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:17 GMT
 - request:
     method: get
@@ -12897,7 +12838,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101069419685","id":7554094,"location":"dr","copy_number":1,"item_sequence_number":1,"status":"On-Site","enum":"2016","label":"Firestone
         Library - Trustee Reading Room Reference"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:18 GMT
 - request:
     method: get
@@ -12948,7 +12889,7 @@ http_interactions:
       string: '{"label":"Data and Statistical Services","code":"dss","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":false,"library":{"label":"Firestone
         Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
         Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:18 GMT
 - request:
     method: get
@@ -12999,7 +12940,7 @@ http_interactions:
       string: '{"label":"Reference","code":"sv","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":false,"library":{"label":"Mendel
         Music Library","code":"mendel","order":2},"holding_library":null,"hours_location":{"label":"Mendel
         Music Library","code":"music"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:19 GMT
 - request:
     method: get
@@ -13050,7 +12991,7 @@ http_interactions:
       string: '{"label":"Trustee Reading Room Reference","code":"dr","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":false,"library":{"label":"Firestone
         Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
         Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:21:19 GMT
 - request:
     method: get
@@ -13450,7 +13391,7 @@ http_interactions:
         ICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICAg
         IDxhIGhyZWY9IiMiIGNsYXNzPSJiYWNrLXRvLXRvcCI+VG9wPC9hPgo8L2Zv
         b3Rlcj4KCiAgPC9ib2R5Pgo8L2h0bWw+Cg==
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 16:25:25 GMT
 - request:
     method: get
@@ -13573,7 +13514,7 @@ http_interactions:
         Il0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiR042NzAgLlA3NCJdLCJjYWxs
         X251bWJlcl9icm93c2VfcyI6WyJHTjY3MCAuUDc0Il0sInRpbWVzdGFtcCI6
         IjIwMTctMDItMTlUMTg6Mjk6MDUuMjY0WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 17:29:54 GMT
 - request:
     method: get
@@ -13623,7 +13564,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"538419":{"more_items":true,"location":"rcppa","copy_number":1,"item_id":615996,"on_reserve":"N","status":"Not
         Charged","label":"ReCAP"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 17:29:54 GMT
 - request:
     method: get
@@ -13783,7 +13724,7 @@ http_interactions:
         Charged","enum":"vol. 3 (1894)","label":"ReCAP"},{"barcode":"32101091857167","id":3710036,"location":"rcppa","copy_number":1,"item_sequence_number":2,"status":"Not
         Charged","enum":"vol. 2 (1893)","label":"ReCAP"},{"barcode":"32101091857175","id":3710035,"location":"rcppa","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","enum":"vol. 1 (1892)","label":"ReCAP"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 17:29:55 GMT
 - request:
     method: get
@@ -13972,7 +13913,7 @@ http_interactions:
         Njk1OTMyOHEiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiTkE3NTkuQzMg
         RzM3NCAyMDA4IiwiTkE3NTkuQzM1IEE0IDIwMDgiLCJpdGVtIDY5NTkzMjhx
         Il0sInRpbWVzdGFtcCI6IjIwMTctMDItMjBUMDA6NTU6MDUuMTQwWiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:37 GMT
 - request:
     method: get
@@ -14035,7 +13976,7 @@ http_interactions:
         and Environmental Engineering","department_code":"CEE","course_name":"Structures
         and the Urban Environment","course_number":"CEE 262a/b","section_id":1170,"instructor_first_name":"M.","instructor_last_name":"Garlock"}],"copy_number":0,"item_id":7352433,"on_reserve":"Y","status":"Not
         Charged","label":"Engineering Library - Reserve"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:37 GMT
 - request:
     method: get
@@ -14085,7 +14026,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101069044061","id":5106650,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site
         - Charged","due_date":"2017-06-01T23:45:00.000-05:00","label":"Marquand Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:38 GMT
 - request:
     method: get
@@ -14135,7 +14076,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101073079434","id":5205353,"location":"uesrf","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","label":"Architecture Library - Reference"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:38 GMT
 - request:
     method: get
@@ -14185,7 +14126,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101077115911","id":5425397,"location":"strp","temp_loc":"strr","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","label":"Engineering Library - Reserve"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:39 GMT
 - request:
     method: get
@@ -14235,7 +14176,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101077447819","id":5664048,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","label":"Lewis Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:39 GMT
 - request:
     method: get
@@ -14285,7 +14226,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101076774684","id":5689800,"location":"strp","copy_number":2,"item_sequence_number":1,"status":"Lost--Library
         Applied","label":"Engineering Library - Term Loan Reserve"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:40 GMT
 - request:
     method: get
@@ -14335,7 +14276,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101088375348","id":6959328,"location":"exb","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Rare
         Books and Special Collections - Reference Collection in Dulles Reading Room"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:40 GMT
 - request:
     method: get
@@ -14385,7 +14326,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101098762006","id":7322682,"location":"strp","temp_loc":"strr","copy_number":0,"item_sequence_number":1,"status":"Not
         Charged","label":"Engineering Library - Reserve"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:41 GMT
 - request:
     method: get
@@ -14435,7 +14376,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101098767740","id":7352433,"location":"strp","temp_loc":"strr","copy_number":0,"item_sequence_number":1,"status":"Not
         Charged","label":"Engineering Library - Reserve"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:41 GMT
 - request:
     method: get
@@ -14488,7 +14429,7 @@ http_interactions:
         Library","code":"architecture"},"delivery_locations":[{"label":"Architecture
         Library","address":"School of Architecture Building, Second Floor Princeton,
         NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:42 GMT
 - request:
     method: get
@@ -14539,7 +14480,7 @@ http_interactions:
       string: '{"label":"Term Loan Reserve","code":"strp","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Engineering
         Library","code":"engineering","order":2},"holding_library":null,"hours_location":{"label":"Engineering
         Library","code":"engineering"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:42 GMT
 - request:
     method: get
@@ -14590,7 +14531,7 @@ http_interactions:
       string: '{"label":"Reference Collection in Dulles Reading Room","code":"exb","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Rare
         Books and Special Collections","code":"rare","order":2},"holding_library":null,"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 23 Feb 2017 18:01:42 GMT
 - request:
     method: get
@@ -14712,7 +14653,7 @@ http_interactions:
         LkE3MTMgMTk5OHEiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiTjY0OTAg
         LkE3MTMgMTk5OHEiXSwidGltZXN0YW1wIjoiMjAxNy0wMi0xOVQyMDoyNTo1
         Ni40MDJaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Wed, 01 Mar 2017 19:54:40 GMT
 - request:
     method: get
@@ -14762,7 +14703,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101034667780","id":2262190,"location":"anxa","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","label":"Forrestal Annex"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 01 Mar 2017 19:54:40 GMT
 - request:
     method: get
@@ -14891,7 +14832,7 @@ http_interactions:
         eSI6WyJUUjQ2NSAuQzY2NiAyMDE2Il0sImNhbGxfbnVtYmVyX2Jyb3dzZV9z
         IjpbIlRSNDY1IC5DNjY2IDIwMTYiXSwidGltZXN0YW1wIjoiMjAxNy0wMy0y
         M1QyMToyMTozMS4yNzRaIn19fQ==
-    http_version: 
+    http_version:
   recorded_at: Wed, 05 Apr 2017 19:18:30 GMT
 - request:
     method: get
@@ -14941,7 +14882,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9533612":{"more_items":false,"location":"pres","copy_number":0,"item_id":7454276,"on_reserve":"N","status":"Not
         Charged","label":"Firestone Library - Preservation Office"}}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 05 Apr 2017 19:18:30 GMT
 - request:
     method: get
@@ -14991,7 +14932,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101098990656","id":7454276,"location":"pres","copy_number":0,"item_sequence_number":1,"status":"Not
         Charged","label":"Firestone Library - Preservation Office"}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 05 Apr 2017 19:18:30 GMT
 - request:
     method: get
@@ -15042,7 +14983,7 @@ http_interactions:
       string: '{"label":"Preservation Office","code":"pres","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
         Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
         Library - Rare Books and Special Collections","code":"rbsc"},"delivery_locations":[]}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 05 Apr 2017 19:18:30 GMT
 - request:
     method: get
@@ -15092,7 +15033,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"8805567":{"more_items":false,"location":"ues","copy_number":1,"item_id":7040389,"on_reserve":"N","due_date":"6/15/2017","status":"Charged","label":"Architecture
         Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 10 Apr 2017 16:34:42 GMT
 - request:
     method: get
@@ -15154,7 +15095,7 @@ http_interactions:
         Majma'' al-Atrash"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["157
         p."],"description_t":["157 p."],"language_code_s":["und"],"holdings_1display":"{\"9929808\":{\"location\":\"ReCAP\",\"library\":\"ReCAP\",\"location_code\":\"rcppa\"}}","location_code_s":["rcppa"],"location_display":["ReCAP"],"location":["ReCAP"],"advanced_location_s":["rcppa","ReCAP"],"name_title_browse_s":["Falful
         , Habib. Adab al-Tunisi al-Farankfuni"],"timestamp":"2017-03-23T21:38:05.736Z"}}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 11 Apr 2017 17:04:43 GMT
 - request:
     method: get
@@ -15203,7 +15144,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"9929808":{"more_items":false,"location":"rcppa","copy_number":0,"item_id":7590215,"on_reserve":"N","due_date":"6/15/2017","status":"Charged","label":"ReCAP"}}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 11 Apr 2017 17:04:44 GMT
 - request:
     method: get
@@ -15252,7 +15193,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '[{"barcode":"32101101254694","id":7590215,"location":"rcppa","copy_number":0,"item_sequence_number":0,"status":"Charged","due_date":"6/15/2017","label":"ReCAP"}]'
-    http_version: 
+    http_version:
   recorded_at: Tue, 11 Apr 2017 17:04:44 GMT
 - request:
     method: get
@@ -15302,7 +15243,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"8805567":{"more_items":false,"location":"ues","copy_number":1,"item_id":7040389,"on_reserve":"N","due_date":"6/15/2017","status":"Charged","label":"Architecture
         Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:42 GMT
 - request:
     method: get
@@ -15357,7 +15298,7 @@ http_interactions:
         Transit Discharged","label":"Forrestal Annex"},"3674857":{"more_items":false,"location":"sa","copy_number":3,"item_id":3810258,"on_reserve":"N","due_date":"6/1/2017","status":"On-Site
         - Charged","label":"Marquand Library"},"5333514":{"more_items":false,"location":"numrf","copy_number":1,"item_id":4591386,"on_reserve":"N","status":"On-Site","label":"Rare
         Books and Special Collections - Numismatics Collection: Reference"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:52 GMT
 - request:
     method: get
@@ -15411,7 +15352,7 @@ http_interactions:
         pt.1","enum_display":"vol.4, pt.1","label":"Marquand Library"},{"barcode":"32101060619622","id":4526750,"location":"sa","copy_number":2,"item_sequence_number":1,"status":"On-Site
         - Charged","due_date":"6/1/2017","enum":"v.3","enum_display":"v.3","label":"Marquand
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:52 GMT
 - request:
     method: get
@@ -15466,7 +15407,7 @@ http_interactions:
         Library"},{"barcode":"32101019552445","id":3195825,"location":"f","copy_number":1,"item_sequence_number":2,"status":"Renewed","due_date":"6/15/2017","enum":"vol.2","enum_display":"vol.2","label":"Firestone
         Library"},{"barcode":"32101019552437","id":2278269,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Renewed","due_date":"6/15/2017","enum":"vol.1","enum_display":"vol.1","label":"Firestone
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:52 GMT
 - request:
     method: get
@@ -15517,7 +15458,7 @@ http_interactions:
       string: '[{"barcode":"32101035897121","id":2278271,"location":"anxa","copy_number":1,"item_sequence_number":2,"status":"Charged","due_date":"5/4/2017","enum":"v.3","enum_display":"v.3","label":"Forrestal
         Annex"},{"barcode":"32101034803849","id":2278270,"location":"anxa","copy_number":1,"item_sequence_number":1,"status":"In
         Transit Discharged","enum":"v.2","enum_display":"v.2","label":"Forrestal Annex"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:52 GMT
 - request:
     method: get
@@ -15568,7 +15509,7 @@ http_interactions:
       string: '[{"barcode":"32101042251031","id":3810258,"location":"sa","copy_number":3,"item_sequence_number":1,"status":"On-Site
         - Charged","due_date":"6/1/2017","enum":"vol.3","enum_display":"vol.3","label":"Marquand
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:53 GMT
 - request:
     method: get
@@ -15619,7 +15560,7 @@ http_interactions:
       string: '[{"barcode":"32101037469333","id":4591386,"location":"numrf","copy_number":1,"item_sequence_number":1,"status":"On-Site","enum":"v.4,
         pt.2","enum_display":"v.4, pt.2","label":"Rare Books and Special Collections
         - Numismatics Collection: Reference"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:53 GMT
 - request:
     method: get
@@ -15669,7 +15610,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9558038":{"more_items":false,"location":"f","copy_number":0,"item_id":7431878,"on_reserve":"N","status":"Not
         Charged","label":"Firestone Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:57 GMT
 - request:
     method: get
@@ -15719,7 +15660,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"9723988":{"more_items":false,"location":"f","copy_number":0,"item_id":7448875,"on_reserve":"N","status":"Not
         Charged","label":"Firestone Library"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:22:59 GMT
 - request:
     method: get
@@ -15769,7 +15710,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":null,"id":6555616,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Missing","label":"Firestone
         Library"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:23:03 GMT
 - request:
     method: get
@@ -15820,7 +15761,7 @@ http_interactions:
       string: '{"2246633":{"more_items":false,"location":"anxa","copy_number":1,"item_id":2262190,"on_reserve":"N","status":"Not
         Charged","label":"Forrestal Annex"},"2246634":{"more_items":false,"location":"uesrf","copy_number":1,"item_id":2262191,"on_reserve":"N","status":"Not
         Charged","label":"Architecture Library - Reference"}}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:23:04 GMT
 - request:
     method: get
@@ -15870,7 +15811,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101031850843","id":2262191,"location":"uesrf","copy_number":1,"item_sequence_number":1,"status":"Not
         Charged","label":"Architecture Library - Reference"}]'
-    http_version: 
+    http_version:
   recorded_at: Fri, 21 Apr 2017 21:23:04 GMT
 - request:
     method: get
@@ -15982,7 +15923,7 @@ http_interactions:
         cl9kaXNwbGF5IjpbIjIwMDYtMTY5OE4iXSwiY2FsbF9udW1iZXJfYnJvd3Nl
         X3MiOlsiMjAwNi0xNjk4TiJdLCJ0aW1lc3RhbXAiOiIyMDE3LTA0LTIyVDAy
         OjUzOjMzLjYyM1oifX19
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Apr 2017 19:42:47 GMT
 - request:
     method: get
@@ -16032,7 +15973,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"4919837":{"more_items":false,"location":"ex","copy_number":1,"item_id":4257687,"on_reserve":"N","status":"On-Site","label":"Rare
         Books and Special Collections - Rare Books"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Apr 2017 19:42:47 GMT
 - request:
     method: get
@@ -16082,7 +16023,7 @@ http_interactions:
       encoding: UTF-8
       string: '[{"barcode":"32101036983532","id":4257687,"location":"ex","copy_number":1,"item_sequence_number":1,"status":"On-Site","label":"Rare
         Books and Special Collections - Rare Books"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Apr 2017 19:42:47 GMT
 - request:
     method: get
@@ -16199,7 +16140,7 @@ http_interactions:
         WFItNjcyMDU1MCJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJSQ1BYUi02
         NzIwNTUwIl0sInRpbWVzdGFtcCI6IjIwMTctMDQtMjJUMDQ6Mzk6MTAuMDQ0
         WiJ9fX0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 04 May 2017 19:54:14 GMT
 - request:
     method: get
@@ -16246,7 +16187,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: 'Record:  not found.'
-    http_version: 
+    http_version:
   recorded_at: Thu, 04 May 2017 19:54:15 GMT
 - request:
     method: get
@@ -16296,7 +16237,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"6720550":{"more_items":false,"location":"rcpxr","copy_number":1,"item_id":6141011,"on_reserve":"N","status":"On-Site","label":"ReCAP
         - Rare Books Off-Site Storage"}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 04 May 2017 19:54:15 GMT
 - request:
     method: get
@@ -16347,7 +16288,7 @@ http_interactions:
       string: '[{"barcode":"32101069337713","id":6141011,"location":"rcpxr","copy_number":1,"item_sequence_number":1,"status":"On-Site","enum":"Ano
         1, no. 1-6","chron":"Mayo 2004 - Oct. 2004","enum_display":"Ano 1, no. 1-6
         (Mayo 2004 - Oct. 2004)","label":"ReCAP - Rare Books Off-Site Storage"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 04 May 2017 19:56:11 GMT
 - request:
     method: get
@@ -16399,6 +16340,362 @@ http_interactions:
         Books and Special Collections","code":"rare","order":2},"hours_location":null,"delivery_locations":[{"label":"Rare
         Books and Special Collections","address":"One Washington Rd. Princeton, NJ
         08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true}]}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 04 May 2017 19:56:11 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=6195942
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 May 2017 20:20:19 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4835a622-1653-4fa3-be02-74447a744b9e
+      X-Runtime:
+      - '0.102900'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"a8d58c7743658a1177a283d9bd0095ea"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"6214112":{"more_items":false,"location":"sci","temp_loc":"scires","course_reserves":[{"reserve_list_id":4441,"department_name":"Mathematics","department_code":"MAT","course_name":"Calculus
+        II","course_number":"MAT 104","section_id":0,"instructor_first_name":null,"instructor_last_name":"Fickenscher
+        J. et al"}],"copy_number":1,"item_id":5825431,"on_reserve":"Y","status":"Not
+        Charged","label":"Lewis Library - Course Reserve"},"6218590":{"more_items":false,"location":"sci","temp_loc":"scires","course_reserves":[{"reserve_list_id":4441,"department_name":"Mathematics","department_code":"MAT","course_name":"Calculus
+        II","course_number":"MAT 104","section_id":0,"instructor_first_name":null,"instructor_last_name":"Fickenscher
+        J. et al"}],"copy_number":2,"item_id":5825441,"on_reserve":"Y","status":"Not
+        Charged","label":"Lewis Library - Course Reserve"},"6218592":{"more_items":false,"location":"sci","temp_loc":"scires","course_reserves":[{"reserve_list_id":4441,"department_name":"Mathematics","department_code":"MAT","course_name":"Calculus
+        II","course_number":"MAT 104","section_id":0,"instructor_first_name":null,"instructor_last_name":"Fickenscher
+        J. et al"}],"copy_number":3,"item_id":5825449,"on_reserve":"Y","status":"Not
+        Charged","label":"Lewis Library - Course Reserve"},"6218596":{"more_items":false,"location":"sci","copy_number":4,"item_id":5825451,"on_reserve":"N","due_date":"6/15/2017","status":"Renewed","label":"Lewis
+        Library"},"6218598":{"more_items":false,"location":"sci","copy_number":5,"item_id":5825455,"on_reserve":"N","status":"Not
+        Charged","label":"Lewis Library"},"6218599":{"more_items":false,"location":"sci","copy_number":6,"item_id":5825458,"on_reserve":"N","status":"Not
+        Charged","label":"Lewis Library"},"6218600":{"more_items":false,"location":"sci","copy_number":7,"item_id":5825459,"on_reserve":"N","status":"Not
+        Charged","label":"Lewis Library"}}'
+    http_version:
+  recorded_at: Thu, 11 May 2017 20:20:49 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/8179402.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 6b862a01-d7c7-4a18-bf90-bd049b143462
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"01840672e1b4e9ca36def56d9b65545b"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.022570'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 11 May 2017 20:23:48 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjgxNzk0MDIiLCJhdXRo
+        b3JfZGlzcGxheSI6WyJNb29yZSwgTG9ycmllIl0sImF1dGhvcl9jaXRhdGlv
+        bl9kaXNwbGF5IjpbIk1vb3JlLCBMb3JyaWUiXSwiYXV0aG9yX3JvbGVzXzFk
+        aXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXCJNb29yZSwgTG9y
+        cmllXCJdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNv
+        bXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIk1vb3JlLCBMb3Jy
+        aWVcIn0iLCJhdXRob3JfcyI6WyJNb29yZSwgTG9ycmllIl0sIm9wZW5zZWFy
+        Y2hfZGlzcGxheSI6WyJNb29yZSwgTG9ycmllIiwiQmFyayA6IHN0b3JpZXMg
+        LyBMb3JyaWUgTW9vcmUuIiwiU2hvcnQgc3RvcmllcywgQW1lcmljYW4iLCJV
+        bml0ZWQgU3RhdGVzIiwiU29jaWFsIGxpZmUgYW5kIGN1c3RvbXMiXSwibWFy
+        Y19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInVuaWZvcm1fdGl0bGVf
+        cyI6WyJTaG9ydCBzdG9yaWVzLiBTZWxlY3Rpb25zIl0sInRpdGxlX2Rpc3Bs
+        YXkiOiJCYXJrIDogc3RvcmllcyAvIExvcnJpZSBNb29yZS4iLCJ0aXRsZV90
+        IjpbIkJhcmsgOiBzdG9yaWVzIC8gTG9ycmllIE1vb3JlLiJdLCJ0aXRsZV9j
+        aXRhdGlvbl9kaXNwbGF5IjpbIkJhcmsgOiBzdG9yaWVzIC8iXSwiY29tcGls
+        ZWRfY3JlYXRlZF90IjpbIkJhcmsgOiBzdG9yaWVzIC8gTG9ycmllIE1vb3Jl
+        LiJdLCJlZGl0aW9uX2Rpc3BsYXkiOlsiRmlyc3QgRWRpdGlvbi4iXSwicHVi
+        X2NyZWF0ZWRfZGlzcGxheSI6WyJOZXcgWW9yayA6IEFsZnJlZCBBLiBLbm9w
+        ZiwgMjAxNC4iXSwicHViX2NyZWF0ZWRfcyI6WyJOZXcgWW9yayA6IEFsZnJl
+        ZCBBLiBLbm9wZiwgMjAxNC4iXSwicHViX2NpdGF0aW9uX2Rpc3BsYXkiOlsi
+        TmV3IFlvcms6IEFsZnJlZCBBLiBLbm9wZiJdLCJwdWJfZGF0ZV9kaXNwbGF5
+        IjpbIjIwMTQiXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxNCwiY2F0YWxv
+        Z2VkX3RkdCI6IjIwMTQtMDMtMTlUMTg6Mjk6NDRaIiwiZm9ybWF0IjpbIkJv
+        b2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyIxOTIgcGFnZXMgOyAyMiBj
+        bS4iXSwiZGVzY3JpcHRpb25fdCI6WyIxOTIgcGFnZXMgOyAyMiBjbS4iXSwi
+        c3VtbWFyeV9ub3RlX2Rpc3BsYXkiOlsiSW4gdGhlc2UgZWlnaHQgbWFzdGVy
+        ZnVsIHN0b3JpZXMsIExvcnJpZSBNb29yZSwgaW4gYSBwZXJmZWN0IGJsZW5k
+        IG9mIGNyYWZ0IGFuZCBiZXdpdGNoZWQgc3Bpcml0LCBleHBsb3JlcyB0aGUg
+        cGFzc2FnZSBvZiB0aW1lIGFuZCBzdW1tb25zIHVwIGl0cyBpbmV2aXRhYmxl
+        IHNvcnJvd3MgYW5kIGhpbGFyaW91cyBwaXRmYWxscyB0byByZXZlYWwgaGVy
+        IG93biBleHF1aXNpdGUsIHNpbmd1bGFyIHdpc2RvbS4gSW4gXCJEZWJhcmtp
+        bmcsXCIgYSBuZXdseSBkaXZvcmNlZCBtYW4gdHJpZXMgdG8ga2VlcCBoaXMg
+        d2l0cyBhYm91dCBoaW0gYXMgdGhlIFVuaXRlZCBTdGF0ZXMgcHJlcGFyZXMg
+        dG8gaW52YWRlIElyYXEsIGFuZCBhZ2FpbnN0IHRoaXMgb21pbm91cyBtb21l
+        bnQsIHdlIHNlZS0taW4gYWxsIGl0cyBpcnJlc2lzdGlibGUgaGlsYXJpdHkg
+        YW5kIGRhcmtuZXNzLS10aGUgcGVyaWxzIG9mIGRpdm9yY2UgYW5kIHdoYXQg
+        Y2FuIGZvbGxvdyBpbiBpdHMgd2FrZS4gSW4gXCJGb2VzLFwiIGEgcG9saXRp
+        Y2FsIGFyZ3VtZW50IGdvZXMgZ3JvdGVzcXVlbHkgYXdyeSBhcyB0aGUgZXZl
+        bnRzIG9mIDkvMTEgdW5leHBlY3RlZGx5IG1hbmlmZXN0IGF0IGEgZnVuZC1y
+        YWlzaW5nIGRpbm5lciBpbiBHZW9yZ2V0b3duLiBJbiBcIlRoZSBKdW5pcGVy
+        IFRyZWUsXCIgYSB0ZWFjaGVyLCB2aXNpdGVkIGJ5IHRoZSBnaG9zdCBvZiBo
+        ZXIgcmVjZW50bHkgZGVjZWFzZWQgZnJpZW5kLCBpcyBmb3JjZWQgdG8gc2lu
+        ZyBcIlRoZSBTdGFyLVNwYW5nbGVkIEJhbm5lclwiIGluIGEga2luZCBvZiBu
+        aWdodG1hcmUgcmV1bmlvbi4gQW5kIGluIFwiV2luZ3MsXCIgd2Ugd2F0Y2gg
+        dGhlIHVucmF2ZWxpbmcgb2YgdHdvIG9uY2UtaG9wZWZ1bCBtdXNpY2lhbnMg
+        d2hvIG5laXRoZXIgaGVsZCBmYXN0IHRvIHRoZWlyIGRyZWFtcyBub3Igc3Ry
+        dWNrIG91dCBhbG9uZyBvdGhlciBwYXRocyBhcyBNb29yZSBkZWZ0bHkgZGVw
+        aWN0cyB0aGUgaW50cmljYWNpZXMgb2YgZGVhZCBlbmRzIGFuZCB0aGUgd29y
+        a2luZ3Mgb2YgcmVncmV0Il0sIm5vdGVzX2Rpc3BsYXkiOlsiXCJUaGlzIGlz
+        IGEgQm9yem9pIEJvb2suXCIiXSwibGFuZ3VhZ2VfZmFjZXQiOlsiRW5nbGlz
+        aCJdLCJsYW5ndWFnZV9jb2RlX3MiOlsiZW5nIl0sImNvbnRlbnRzX2Rpc3Bs
+        YXkiOlsiRGViYXJraW5nIC0tIFRoZSBqdW5pcGVyIHRyZWUgLS0gUGFwZXIg
+        bG9zc2VzIC0tIEZvZXMgLS0gV2luZ3MgLS0gUmVmZXJlbnRpYWwgLS0gU3Vi
+        amVjdCB0byBzZWFyY2ggLS0gVGhhbmsgeW91IGZvciBoYXZpbmcgbWUuIl0s
+        InN1YmplY3RfZGlzcGxheSI6WyJTaG9ydCBzdG9yaWVzLCBBbWVyaWNhbiIs
+        IlVuaXRlZCBTdGF0ZXPigJRTb2NpYWwgbGlmZSBhbmQgY3VzdG9tc+KAlDIx
+        c3QgY2VudHVyeeKAlEZpY3Rpb24iXSwic3ViamVjdF90IjpbIlNob3J0IHN0
+        b3JpZXMsIEFtZXJpY2FuIiwiVW5pdGVkIFN0YXRlc+KAlFNvY2lhbCBsaWZl
+        IGFuZCBjdXN0b21z4oCUMjFzdCBjZW50dXJ54oCURmljdGlvbiJdLCJzdWJq
+        ZWN0X2ZhY2V0IjpbIlNob3J0IHN0b3JpZXMsIEFtZXJpY2FuIiwiVW5pdGVk
+        IFN0YXRlc+KAlFNvY2lhbCBsaWZlIGFuZCBjdXN0b21z4oCUMjFzdCBjZW50
+        dXJ54oCURmljdGlvbiJdLCJmb3JtX2dlbnJlX2Rpc3BsYXkiOlsiU2hvcnQg
+        c3Rvcmllcy4iXSwiY29udGFpbnNfMWRpc3BsYXkiOiJbW1wiTW9vcmUsIExv
+        cnJpZS5cIixcIkRlYmFya2luZy5cIl1dIiwiaXNibl9kaXNwbGF5IjpbIjk3
+        ODAzMDc1OTQxMzYgKGhhcmRjb3ZlciA6IGFsay4gcGFwZXIpIiwiMDMwNzU5
+        NDEzMCAoaGFyZGNvdmVyIDogYWxrLiBwYXBlcikiXSwibGNjbl9kaXNwbGF5
+        IjpbIiAgMjAxMzAxNDc3NyJdLCJsY2NuX3MiOlsiMjAxMzAxNDc3NyJdLCJp
+        c2JuX3MiOlsiOTc4MDMwNzU5NDEzNiJdLCJpc2JuX3QiOlsiOTc4MDMwNzU5
+        NDEzNiJdLCJvY2xjX3MiOlsiODQwOTM3MjU1Il0sIm90aGVyX3ZlcnNpb25f
+        cyI6WyJvY244NDA5MzcyNTUiLCI5NzgwMzA3NTk0MTM2IiwiOTc4MDM4NTM1
+        MTcxMyJdLCJzdWJqZWN0X2VyYV9mYWNldCI6WyIyMXN0IGNlbnR1cnkiXSwi
+        aG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCI3OTQ2MDQyXCI6e1wibG9jYXRpb25c
+        IjpcIkZpcmVzdG9uZSBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJGaXJlc3Rv
+        bmUgTGlicmFyeVwiLFwibG9jYXRpb25fY29kZVwiOlwiZlwiLFwiY2FsbF9u
+        dW1iZXJcIjpcIlBTMzU2My5PNjIyNSBCMzcgMjAxNFwiLFwiY2FsbF9udW1i
+        ZXJfYnJvd3NlXCI6XCJQUzM1NjMuTzYyMjUgQjM3IDIwMTRcIn19IiwibG9j
+        YXRpb25fY29kZV9zIjpbImYiXSwibG9jYXRpb24iOlsiRmlyZXN0b25lIExp
+        YnJhcnkiXSwibG9jYXRpb25fZGlzcGxheSI6WyJGaXJlc3RvbmUgTGlicmFy
+        eSJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbImYiLCJGaXJlc3RvbmUgTGli
+        cmFyeSJdLCJuYW1lX3VuaWZvcm1fdGl0bGVfMWRpc3BsYXkiOiJbW1wiTW9v
+        cmUsIExvcnJpZS5cIixcIlNob3J0IHN0b3JpZXMuXCIsXCJTZWxlY3Rpb25z
+        XCJdXSIsIm5hbWVfdGl0bGVfYnJvd3NlX3MiOlsiTW9vcmUsIExvcnJpZS4g
+        RGViYXJraW5nIiwiTW9vcmUsIExvcnJpZS4gU2hvcnQgc3RvcmllcyIsIk1v
+        b3JlLCBMb3JyaWUuIFNob3J0IHN0b3JpZXMuIFNlbGVjdGlvbnMiXSwiY2Fs
+        bF9udW1iZXJfZGlzcGxheSI6WyJQUzM1NjMuTzYyMjUgQjM3IDIwMTQiXSwi
+        Y2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiUFMzNTYzLk82MjI1IEIzNyAyMDE0
+        Il0sInRpbWVzdGFtcCI6IjIwMTctMDQtMjJUMDU6MzU6MzcuODQzWiJ9fX0=
+    http_version:
+  recorded_at: Thu, 11 May 2017 20:23:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=8179402
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 May 2017 20:23:18 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - a9a11bba-bc8c-4b9a-a9a2-9ca7cb375aa4
+      X-Runtime:
+      - '0.084895'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"ddf7212892892836d0abc8910c9e1eff"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"7946042":{"more_items":false,"location":"f","temp_loc":"resc","course_reserves":[{"reserve_list_id":915,"department_name":"African
+        American Studies","department_code":"AAS","course_name":"Creative Explorations
+        of Justice","course_number":"AAS 200","section_id":0,"instructor_first_name":"Christopher
+        L.","instructor_last_name":"Hedges"}],"copy_number":1,"item_id":6828086,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"}}'
+    http_version:
+  recorded_at: Thu, 11 May 2017 20:23:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=7946042
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 May 2017 20:23:18 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - f45f704e-579f-4752-be84-38eb6a02f742
+      X-Runtime:
+      - '0.067939'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"382377956f7fd3de674ed56d433b1cb7"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101089774630","id":6828086,"location":"f","on_reserve":"Y","temp_loc":"resc","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"}]'
+    http_version:
+  recorded_at: Thu, 11 May 2017 20:23:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/resc.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 May 2017 20:23:18 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 669b05b8-a001-4690-bb65-5cb6f236fe93
+      X-Runtime:
+      - '0.031434'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"dc53901eaa4e77f8118090599b2c2b3e"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Circulation Desk (3 Hour Reserve)","code":"resc","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
+        Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
+        Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[]}'
+    http_version:
+  recorded_at: Thu, 11 May 2017 20:23:48 GMT
 recorded_with: VCR 3.0.3

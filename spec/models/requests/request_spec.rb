@@ -280,6 +280,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context "A system id that has a holding with item on reserve" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '8179402',
+        user: user
+      }
+    }
+    let(:request_with_items_on_reserve) { described_class.new(params) }
+    subject { request_with_items_on_reserve }
+
+    describe "#requestable" do
+      it "should be on reserve" do
+        expect(subject.requestable.first.on_reserve?).to be_truthy
+      end
+    end
+  end
+
   context "A system id that has a holding with items in a temporary location" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {

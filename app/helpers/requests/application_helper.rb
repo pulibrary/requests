@@ -285,6 +285,8 @@ module Requests
     def check_box_disabled requestable
       if requestable.services.empty?
         true
+      elsif requestable.on_reserve?
+        true
       elsif requestable.on_order?
         false
       elsif requestable.in_process?
@@ -332,6 +334,8 @@ module Requests
     def submit_button_disabled requestable_list
       if requestable_list.size == 1
         if requestable_list.first.services.empty?
+          true
+        elsif requestable_list.first.on_reserve?
           true
         elsif requestable_list.first.charged?
           if requestable_list.first.annexa?

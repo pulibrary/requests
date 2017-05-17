@@ -103,9 +103,11 @@ module Requests
               services << 'paging'
             else
               services << 'on_shelf' # goes to stack mapping
-              if (requestable.open? && auth_user?)
-                services << 'trace' # all open stacks items are traceable
-              end
+              # suppressing Trace service for the moment, but leaving this code
+              # see https://github.com/pulibrary/requests/issues/164 for info
+              # if (requestable.open? && auth_user?)
+              #   services << 'trace' # all open stacks items are traceable
+              # end
             end
           end
         end

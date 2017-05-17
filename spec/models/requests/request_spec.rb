@@ -975,17 +975,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      it "should be eligible for multiple services" do
+      it "should be on the shelf" do
+        expect(subject.requestable.first.services.include?('on_shelf')).to be_truthy
+      end
+
+      # these tests are temporarily pending until trace feature is resolved
+      # see https://github.com/pulibrary/requests/issues/164 for info
+      xit "should be eligible for multiple services" do
         expect(subject.requestable.first.services.size).to eq(2)
       end
 
-      it "should be eligible for trace services" do
+      xit "should be eligible for trace services" do
         expect(subject.requestable.first.services.include?('trace')).to be_truthy
         expect(subject.requestable.first.traceable?).to be true
-      end
-
-      it "should be eligible for recall" do
-        expect(subject.requestable.first.services.include?('on_shelf')).to be_truthy
       end
     end
   end

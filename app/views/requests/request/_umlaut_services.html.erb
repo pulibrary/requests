@@ -4,7 +4,7 @@
   // hide any items that don't match the mfhd param, if there is one
   $( document ).ready(function() {
 
-    <% if !@request.mfhd.blank? && !@request.borrow_direct_eligible? && @request.has_loanable_copy? %>
+    <% if @request.requestable.size > 1 && !@request.serial? && !@request.mfhd.blank? && !@request.borrow_direct_eligible? && @request.has_loanable_copy? %>
       $('#campus_available').show();
     <% end %>
 

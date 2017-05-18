@@ -17,7 +17,7 @@ module Requests
           end
 
           if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
-            if selected['pickup'].empty? && selected['item_id'].blank?
+            if selected['pickup'].blank? && selected['item_id'].blank?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
             elsif selected['pickup'].empty?
               record.errors[:items] << { selected['item_id'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }

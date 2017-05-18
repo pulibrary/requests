@@ -54,26 +54,48 @@
             <th>Delivery Options</th>
           </thead>
           <tbody>
-            <% requestable_list.each do |requestable| %>
-              <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
-                  <td class='request--select'>
-                    <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
-                      <%= hidden_field_tag 'requestable[][selected]', false %>
-                      <%= item_checkbox @request.requestable, requestable %>
-                      <%= hidden_fields_item requestable %>
+            <% if fill_in_eligible? requestable_list %>
+              <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
+            <% else %>
+              <% requestable_list.each do |requestable| %>
+                <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
+                    <td class='request--select'>
+                      <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
+                        <%= hidden_field_tag 'requestable[][selected]', false %>
+                        <%= item_checkbox @request.requestable, requestable %>
+                        <%= hidden_fields_item requestable %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if requestable.has_item_data? %>
+                        <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
+                          <%= enum_copy_display requestable.item %>
+                        </span>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
+                        <%= requestable.item["status"] %><br/>
+                        <%= status_label requestable %>
+                      <% end %>
+                    </td>
+                  <td class='request--options' aria-live="polite">
+                    <% if requestable.ill_eligible? %>
+                      <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
                     <% end %>
-                  </td>
-                  <td>
-                    <% if requestable.has_item_data? %>
-                      <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
-                        <%= enum_copy_display requestable.item %>
-                      </span>
+                    <% if requestable.services.include?('recap_edd') %>
+                        <%= hidden_field_tag "requestable[][type]", "recap" %>
+                        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "print", false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
+                        <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", "Print", class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
+
+                        <br/><small id="requestable__type_recap_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap.brief_msg') %></small>
+                        <br/>
+                    <% else %>
+                        <%= show_service_options requestable %>
+                        <%= hidden_service_options requestable %>
                     <% end %>
-                  </td>
-                  <td>
-                    <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
-                      <%= requestable.item["status"] %><br/>
-                      <%= status_label requestable %>
+                    <% unless requestable.aeon? %>
+                      <%= pickup_choices requestable, @request.default_pickups %>
                     <% end %>
                     <% if requestable.use_restriction? %>
                       <br/>
@@ -103,17 +125,14 @@
                       <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
                       <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
                       <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
-
-                      <%= render partial: "edd_fields", locals: { requestable: requestable } %>
-                  <% end %>
-                </td>
-              </tr>
-              <% if requestable.online? %>
-                <%= render partial: "online_items", locals: { requestable: requestable } %>
+                        <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+                    <% end %>
+                  </td>
+                </tr>
+                <% if requestable.online? %>
+                  <%= render partial: "online_items", locals: { requestable: requestable } %>
+                <% end %>
               <% end %>
-            <% end %>
-            <% if fill_in_eligible? requestable_list %>
-              <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
             <% end %>
           </tbody>
         </table>

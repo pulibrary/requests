@@ -21,7 +21,7 @@ module Requests
         else
           @find_response = ::BorrowDirect::FindItem.new(barcode).find(query_params)
         end
-      rescue *BorrowDirect::Error => error
+      rescue ::BorrowDirect::Error => error
         @find_response = { error: error.message }
       end
     end

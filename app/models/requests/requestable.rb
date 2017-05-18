@@ -18,10 +18,6 @@ module Requests
       @location ||= location # hash of location matrix data
     end
 
-    def bib
-      @bib
-    end
-
     ## use this in instances where you don't know if an item has item details
     def preferred_request_id
       if item?
@@ -31,24 +27,8 @@ module Requests
       end
     end
 
-    def holding
-      @holding
-    end
-
-    def item
-      @item
-    end
-
-    def location
-      @location
-    end
-
     def set_services service_list
       @services = service_list
-    end
-
-    def services
-      @services
     end
 
     def location_code
@@ -114,6 +94,15 @@ module Requests
       return true if location[:always_requestable] == true
     end
 
+    def scsb?
+      return true if scsb_locations.include?(location['code'])
+    end
+
+    def use_restriction?
+      return false if item.nil?
+      return true unless item[:use_statement].nil?
+    end
+
     def in_process?
       if item?
         if item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
@@ -134,6 +123,7 @@ module Requests
       item
     end
 
+    # FIXME
     def has_item_data?
       if item.nil?
         false
@@ -280,13 +270,16 @@ module Requests
 
     private
 
-      # From Tampakis
+      def scsb_locations
+        ['scsbnypl', 'scsbcul']
+      end
+
       def unavailable_statuses
         ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold']
+         'Missing', 'On-Site - On Hold', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
   end
 end

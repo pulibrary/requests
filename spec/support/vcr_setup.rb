@@ -5,8 +5,11 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.ignore_localhost = true
   c.configure_rspec_metadata!
-  c.ignore_hosts 'catalog.princeton.edu', 'libweb5.princeton.edu'
+  c.ignore_hosts 'catalog.princeton.edu', 'libweb5.princeton.edu', Requests.config[:scsb_base]
   c.ignore_request do |request|
     request.uri.include? 'patron'
+  end
+  c.ignore_request do |request|
+    request.uri.include? 'SCSB-' # don't load SCSB calls to pulsearch
   end
 end

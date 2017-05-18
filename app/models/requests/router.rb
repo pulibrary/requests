@@ -41,7 +41,7 @@ module Requests
       services = []
 
       # here lies the switch case for all request types from the mega chart
-      if requestable.voyager_managed?
+      if (requestable.voyager_managed? || requestable.scsb?)
         if requestable.online?
           services << 'online'
         else

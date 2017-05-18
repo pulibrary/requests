@@ -41,10 +41,6 @@ Lint/UnusedBlockArgument:
     - 'app/models/requests/request.rb'
     - 'spec/factories/requests/users.rb'
 
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'app/helpers/requests/request_helper.rb'
-
 Lint/UselessAssignment:
   Exclude:
     - 'app/helpers/requests/application_helper.rb'
@@ -117,6 +113,7 @@ Metrics/MethodLength:
     - 'app/models/concerns/requests/ctx.rb'
     - 'app/models/concerns/requests/gfa.rb'
     - 'app/models/concerns/requests/illiad.rb'
+    - 'app/models/concerns/requests/scsb.rb'
     - 'app/models/requests/recap.rb'
     - 'app/models/requests/request.rb'
     - 'app/models/requests/router.rb'
@@ -129,6 +126,7 @@ Metrics/ModuleLength:
     - 'app/helpers/requests/application_helper.rb'
     - 'app/helpers/requests/request_helper.rb'
     - 'app/models/concerns/requests/aeon.rb'
+    - 'app/models/concerns/requests/scsb.rb'
 
 Metrics/PerceivedComplexity:
   Exclude:
@@ -489,7 +487,6 @@ Style/TrivialAccessors:
     - 'app/models/requests/recall.rb'
     - 'app/models/requests/recap.rb'
     - 'app/models/requests/request.rb'
-    - 'app/models/requests/requestable.rb'
     - 'app/models/requests/service.rb'
     - 'app/models/requests/submission.rb'
 

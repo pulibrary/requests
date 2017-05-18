@@ -1297,4 +1297,48 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context "A SCSB id with a single holding" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:scsb_single_holding_item) { fixture('/SCSB-5290772.json') }
+    let(:location_code) { 'scsbcul' }
+    let(:params) {
+      {
+        system_id: 'SCSB-5290772',
+        user: user,
+        source: 'pulsearch'
+      }
+    }
+    let(:scsb_availability_params) {
+      {
+        bibliographicId: "12134967",
+        institutionId: "CUL"
+      }
+    }
+    let(:scsb_availability_response) { fixture('/scsb_single_avail.json') }
+    let(:request_scsb) { described_class.new(params) }
+    subject { request_scsb }
+    before(:each) do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+        .to_return(status: 200, body: scsb_single_holding_item, headers: {})
+      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
+        .to_return(status: 200, body: scsb_availability_response)
+    end
+    describe '#requestable' do
+      it 'should have one requestable item' do
+        expect(subject.requestable.size).to eq(1)
+      end
+    end
+    describe '#other_id' do
+      it 'should provide an other id value' do
+        expect(subject.other_id).to eq('12134967')
+      end
+    end
+    describe '#scsb_owning_institution' do
+      it 'should provide the SCSB owning institution ID' do
+        expect(subject.scsb_owning_institution(location_code)).to eq('CUL')
+      end
+    end
+  end
 end

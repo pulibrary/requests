@@ -5,6 +5,7 @@ en:
       email_destination: "libcir@princeton.edu"
       pickup_placeholder: "Select a Delivery Location"
       request_method_placeholder: "Select a Request Method"
+      form_title: "Library Material Request"
     error:
       service_error_email: "lsupport@princeton.edu"
       service_error_subject: "Request Service Error"
@@ -90,6 +91,7 @@ en:
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
       access_msg: 'Access Users are not eligible for ILL services.'
     trace:
+      form_title: "Trace Materials"
       email: "trace@princeton.edu"
       email_subject: "Trace Request"
       brief_msg: "Trace a Missing Item. Library staff will search for this item and contact you with an outcome."

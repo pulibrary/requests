@@ -131,7 +131,7 @@ module Requests
       if !item[:enum_display].nil? && !item[:copy_number].nil?
         display += " "
       end
-      unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1
+      unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1 || item[:copy_number] == '1'
         display += "Copy #{item[:copy_number]}"
       end
       display
@@ -144,7 +144,7 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
-      unless requestable.pickup_locations.nil? || requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty?
+      unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
         class_list = "well collapse in request--print"
         if requestable.services.include?('recap_edd')
           class_list = "well collapse request--print"
@@ -174,10 +174,6 @@ module Requests
         end
       end
       locs
-    end
-
-    def default_pickup_services
-      ["on_order", "in_process"]
     end
 
     def pickup_choices_fill_in requestable, default_pickups
@@ -215,7 +211,11 @@ module Requests
       unless requestable.holding.first[1]["call_number"].nil?
         hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{requestable.holding.first[1]['call_number']}", id: "requestable_call_number_#{requestable.item['id']}"
       end
-      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_location_#{requestable.item['id']}"
+      if requestable.item["location"].nil?
+        hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.location['code']}", id: "requestable_location_#{requestable.item['id']}"
+      else
+        hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_location_#{requestable.item['id']}"
+      end
       hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}", id: "requestable_item_id_#{requestable.item['id']}"
       unless requestable.item["barcode"].nil?
         hidden += hidden_field_tag "requestable[][barcode]", "", value: "#{requestable.item["barcode"]}", id: "requestable_barcode_#{requestable.item['id']}"
@@ -223,8 +223,16 @@ module Requests
       unless requestable.item["enum"].nil?
         hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enum"]}", id: "requestable_enum_#{requestable.item['id']}"
       end
+      unless requestable.item["enumeration"].nil?
+        hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enumeration"]}", id: "requestable_enum_#{requestable.item['id']}"
+      end
       hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}", id: "requestable_copy_number_#{requestable.item['id']}"
       hidden += hidden_field_tag "requestable[][status]", "", value: "#{requestable.item["status"]}", id: "requestable_status_#{requestable.item['id']}"
+      if requestable.scsb?
+        hidden += hidden_field_tag "requestable[][cgc]", "", value: "#{requestable.item["cgc"]}", id: "requestable_cgc_#{requestable.item['id']}"
+        hidden += hidden_field_tag "requestable[][cc]", "", value: "#{requestable.item["collection_code"]}", id: "requestable_collection_code_#{requestable.item['id']}"
+        hidden += hidden_field_tag "requestable[][use_statement]", "", value: "#{requestable.item["use_statement"]}", id: "requestable_use_statement_#{requestable.item['id']}"
+      end
       hidden
     end
 

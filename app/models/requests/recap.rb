@@ -3,6 +3,7 @@ require 'faraday'
 module Requests
   class Recap
     include Requests::Gfa
+    include Requests::Scsb
 
     def initialize(submission)
       @service_type = 'recap'
@@ -15,6 +16,7 @@ module Requests
     def handle
       items = @submission.filter_items_by_service(@service_type)
       items.each do |item|
+        ## if standard item
         params = param_mapping(@submission.bib, @submission.user, item)
         r = response(params)
 

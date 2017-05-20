@@ -29,21 +29,23 @@ module Requests
     end
 
     def paging_locations
-      ['f', 'fnc', 'xl', 'xlnc', 'nec', 'necnc']
+      # ['f', 'fnc', 'xl', 'xlnc', 'nec', 'necnc']
+      []
     end
 
     def paging_ranges
-      f_ranges = [['A1', 'AZ9999'], ['Q1', 'ZZ9999']]
-      nec_ranges = [['A1', 'BL9999'], ['BT1', 'DR9999'], ['DT1', 'KA9999'], ['KG1', 'VM9999']]
-      xl_ranges = [['A1', 'ZZ9999']]
-      {
-        'f' => f_ranges,
-        'fnc' => f_ranges,
-        'nec' => nec_ranges,
-        'necnc' => nec_ranges,
-        'xl' => xl_ranges,
-        'xlnc' => xl_ranges
-      }
+      # f_ranges = [['A1', 'AZ9999'], ['Q1', 'ZZ9999']]
+      # nec_ranges = [['A1', 'BL9999'], ['BT1', 'DR9999'], ['DT1', 'KA9999'], ['KG1', 'VM9999']]
+      # xl_ranges = [['A1', 'ZZ9999']]
+      # {
+      #   'f' => f_ranges,
+      #   'fnc' => f_ranges,
+      #   'nec' => nec_ranges,
+      #   'necnc' => nec_ranges,
+      #   'xl' => xl_ranges,
+      #   'xlnc' => xl_ranges
+      # }
+      {}
     end
   end
 end

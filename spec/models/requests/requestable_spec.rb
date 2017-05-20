@@ -178,24 +178,24 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
-  context "It is in a paging location" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_paging_available) }
-    let(:requestable) { request.requestable }
-    describe "#pageable?" do
-      it "should return nil when item status is unavailable" do
-        expect(requestable.size).to eq(1)
-        # change status
-        requestable.first.item["status"] = 'Charged'
-        expect(requestable.first.pageable?).to be_falsey
-      end
+  # context "It is in a paging location" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:request) { FactoryGirl.build(:request_paging_available) }
+  #   let(:requestable) { request.requestable }
+  #   describe "#pageable?" do
+  #     it "should return nil when item status is unavailable" do
+  #       expect(requestable.size).to eq(1)
+  #       # change status
+  #       requestable.first.item["status"] = 'Charged'
+  #       expect(requestable.first.pageable?).to be_falsey
+  #     end
 
-      it "should return true when item status is available" do
-        expect(requestable.size).to eq(1)
-        expect(requestable.first.pageable?).to be_truthy
-      end
-    end
-  end
+  #     it "should return true when item status is available" do
+  #       expect(requestable.size).to eq(1)
+  #       expect(requestable.first.pageable?).to be_truthy
+  #     end
+  #   end
+  # end
 
   context 'A requestable item with a missing status' do
     let(:user) { FactoryGirl.build(:user) }
@@ -511,14 +511,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    let(:request_paging) { FactoryGirl.build(:request_paging_available) }
-    let(:requestable_paging) { request_paging.requestable.first }
+    # let(:request_paging) { FactoryGirl.build(:request_paging_available) }
+    # let(:requestable_paging) { request_paging.requestable.first }
 
-    describe '# paging requestable' do
-      it "should have the Paging request service available" do
-        expect(requestable_paging.services.include?('paging')).to be true
-      end
-    end
+    # describe '# paging requestable' do
+    #   it "should have the Paging request service available" do
+    #     expect(requestable_paging.services.include?('paging')).to be true
+    #   end
+    # end
   end
 
   context 'When a barcode only user visits the site' do
@@ -541,14 +541,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    let(:request_paging) { FactoryGirl.build(:request_paging_available_barcode_patron) }
-    let(:requestable_paging) { request_paging.requestable.first }
+    # let(:request_paging) { FactoryGirl.build(:request_paging_available_barcode_patron) }
+    # let(:requestable_paging) { request_paging.requestable.first }
 
-    describe '#paging requestable' do
-      it "should have the Paging request service available" do
-        expect(requestable_paging.services.include?('paging')).to be true
-      end
-    end
+    # describe '#paging requestable' do
+    #   it "should have the Paging request service available" do
+    #     expect(requestable_paging.services.include?('paging')).to be true
+    #   end
+    # end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged_barcode_patron) }
     let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['1594698'] } }
@@ -601,14 +601,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    describe '#paging-requestable' do
-      let(:request_paging) { FactoryGirl.build(:request_paging_available_unauthenticated_patron) }
-      let(:requestable_paging) { request_paging.requestable.first }
+    # describe '#paging-requestable' do
+    #   let(:request_paging) { FactoryGirl.build(:request_paging_available_unauthenticated_patron) }
+    #   let(:requestable_paging) { request_paging.requestable.first }
 
-      it "should have the Paging request service available" do
-        expect(requestable_paging.services.include?('paging')).to be true
-      end
-    end
+    #   it "should have the Paging request service available" do
+    #     expect(requestable_paging.services.include?('paging')).to be true
+    #   end
+    # end
 
     let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd_unauthenticated_patron) }
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }

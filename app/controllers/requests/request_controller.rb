@@ -14,19 +14,19 @@ module Requests
     def generate
       request_params[:system_id] = sanitize(params[:system_id])
 
-      unless params[:source].blank?
+      if params[:source].present?
         request_params[:source] = sanitize(params[:source])
       end
 
-      unless params[:mfhd].blank?
+      if params[:mfhd].present?
         request_params[:mfhd] = sanitize(params[:mfhd])
       end
 
       if request.post?
-        unless params[:request][:email].blank?
+        if params[:request][:email].present?
           email = format_email(sanitize(params[:request][:email]))
         end
-        unless params[:request][:user_name].blank?
+        if params[:request][:user_name].present?
           user_name = sanitize(params[:request][:user_name])
         end
       end

@@ -78,6 +78,5 @@ module Requests
         ctx.referent.add_identifier("info:lccn/#{doc['lccn_s'].first}") unless doc['lccn_s'].nil?
         ctx
       end
-
   end
 end

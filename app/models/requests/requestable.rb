@@ -19,7 +19,7 @@ module Requests
     end
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
-    ## when one is needed. Primarily for non-barcoded Annex items. 
+    ## when one is needed. Primarily for non-barcoded Annex items.
     def preferred_request_id
       if item?
         item['id']

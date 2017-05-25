@@ -27,13 +27,16 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 require 'devise'
+require 'simplecov'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
-if ENV['CI'] || ENV['COVERAGE']
-  require 'simplecov'
+if ENV['CI']
   require 'coveralls'
   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+end
+
+if ENV['CI'] || ENV['COVERAGE']
   SimpleCov.start('rails') do
     add_filter '/lib/generators/requests/install_generator.rb'
     add_filter '/lib/generators/requests/templates/borrow_direct.rb'

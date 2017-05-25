@@ -49,7 +49,7 @@ module Requests
       # doesn't use actual OpenURL rft_val_fmt
       if request.referent.format == "dissertation"
         qp['genre'] = 'dissertation'
-      elsif qp['isbn'].present? && qp['genre'] == 'book' && qp['atitle'] && (!qp['issn'].present?)
+      elsif qp['isbn'].present? && qp['genre'] == 'book' && qp['atitle'] && (qp['issn'].blank?)
         # actually a book chapter, not a book, fix it.
         qp['genre'] = 'bookitem'
       elsif qp['issn'].present? && qp['atitle'].present?
@@ -93,7 +93,7 @@ module Requests
       if (identifiers.blank? && ['lccn', 'oclcnum', 'isbn', 'issn', 'doi', 'pmid'].include?(sub_scheme))
         # try the referent metadata
         from_rft = referent.metadata[sub_scheme]
-        identifiers = [from_rft] unless from_rft.blank?
+        identifiers = [from_rft] if from_rft.present?
       end
       if (options[:multiple])
         identifiers

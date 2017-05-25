@@ -18,7 +18,8 @@ module Requests
       @location ||= location # hash of location matrix data
     end
 
-    ## use this in instances where you don't know if an item has item details
+    ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
+    ## when one is needed. Primarily for non-barcoded Annex items. 
     def preferred_request_id
       if item?
         item['id']

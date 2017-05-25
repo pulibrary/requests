@@ -48,6 +48,7 @@ module Requests
         flash.now[:error] = "A problem occurred looking up your library account."
       end
 
+      # FIXME - Only create the object if needed. Right now it is getting created twice upon a user loging.
       @request = Requests::Request.new({
                                          system_id: request_params[:system_id],
                                          mfhd: request_params[:mfhd],

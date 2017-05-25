@@ -34,10 +34,7 @@ module Requests
         corp_author = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
         publisher_info = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
         edition = doc['edition_display'].first unless doc['edition_display'].nil?
-        # unless format.nil?
         format = doc['format'].is_a?(Array) ? doc['format'].first.downcase.strip : doc['format'].downcase.strip
-        # genre = format_to_openurl_genre(format)
-        # end
         if format == 'book'
           ctx.referent.set_format('book')
           ctx.referent.set_metadata('genre', 'book')
@@ -52,14 +49,14 @@ module Requests
           ctx.referent.set_metadata('isbn', doc['isbn_s'].first) unless doc['isbn_s'].nil?
         elsif format =~ /journal/i # checking using include because institutions may use formats like Journal or Journal/Magazine
           ctx.referent.set_format('journal')
-          ctx.referent.set_metadata('genre', 'serial')
+          ctx.referent.set_metadata('genre', 'journal')
           ctx.referent.set_metadata('atitle', title)
           ctx.referent.set_metadata('title', title)
           # use author display as corp author for journals
           ctx.referent.set_metadata('aucorp', author)
           ctx.referent.set_metadata('issn', doc['issn_s'].first) unless doc['issn_s'].nil?
         else
-          ctx.referent.set_format(genre) # do we need to do this?
+          ctx.referent.set_format('unknown') # do we need to do this?
           ctx.referent.set_metadata('genre', format)
           ctx.referent.set_metadata('title', title)
           ctx.referent.set_metadata('creator', author)
@@ -81,5 +78,6 @@ module Requests
         ctx.referent.add_identifier("info:lccn/#{doc['lccn_s'].first}") unless doc['lccn_s'].nil?
         ctx
       end
+
   end
 end

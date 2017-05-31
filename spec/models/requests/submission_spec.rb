@@ -1066,6 +1066,72 @@ describe Requests::Submission do
     end
   end
 
-  context 'Submission with SCSB Managed data' do
+  context 'Single Submission for a Print with SCSB Managed data' do
+    let(:user_info) {
+      {
+        "user_name" => "Foo Request",
+        "user_barcode" => "22101007797777",
+        "email" => "foo@princeton.edu",
+        "source" => "pulsearch" }
+    }
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "4222673",
+          "call_number" => "708.9 B91",
+          "location_code" => "scsbcul",
+          "item_id" => "6348205",
+          "barcode" => "CU13232533",
+          "enum" => "",
+          "copy_number" => "1",
+          "status" => "Available",
+          "cgc" => "",
+          "cc" => "",
+          "use_statement" => "",
+          "type" => "recap",
+          "delivery_mode_6348205" => "Physical Item Delivery",
+          "pickup" => "QV",
+          "edd_start_page" => "",
+          "edd_end_page" => "",
+          "edd_volume_number" => "",
+          "edd_issue" => "",
+          "edd_author" => "",
+          "edd_art_title" => "",
+          "edd_note" => ""
+        },
+        {
+          "selected" => "false"
+        }
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "491654",
+        "title" => "County and city data book.",
+        "author" => "United States",
+        "date" => "1949"
+      }
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission) {
+      Requests::Submission.new(params)
+    }
+  end
+
+  context 'A submission with multiple SCSB items' do
+  end
+
+  context 'A submission with a single SCSB EDD request' do
+  end
+
+  context '' do
   end
 end

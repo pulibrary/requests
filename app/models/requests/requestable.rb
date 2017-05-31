@@ -157,6 +157,16 @@ module Requests
       end
     end
 
+    def inaccessible?
+      if item?
+        if item[:status] == 'Inaccessible'
+          true
+        else
+          false
+        end
+      end
+    end
+
     def set_services service_list
       @services = service_list
     end
@@ -280,7 +290,7 @@ module Requests
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+         'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
   end
 end

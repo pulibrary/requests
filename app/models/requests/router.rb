@@ -60,7 +60,7 @@ module Requests
             end
             # for mongraphs - title level check
             if !has_loanable? && auth_user?
-              unless requestable.missing?
+              unless requestable.missing? || requestable.inaccessible?
                 services << 'recall'
               end
             end

@@ -8882,4 +8882,39 @@ http_interactions:
         08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true}]}'
     http_version: 
   recorded_at: Thu, 27 Apr 2017 19:02:01 GMT
+- request:
+    method: post
+    uri: https://uat-recap.htcinc.com:9093/requestItem/requestItem
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Api-Key:
+      - TESTME
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: ''
+    headers:
+      Date:
+      - Wed, 31 May 2017 22:19:08 GMT
+      Content-Length:
+      - '22'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: 'Authentication Failed
+
+'
+    http_version: 
+  recorded_at: Wed, 31 May 2017 22:19:08 GMT
 recorded_with: VCR 3.0.3

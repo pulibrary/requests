@@ -131,6 +131,10 @@ module Requests
       if !item[:enum_display].nil? && !item[:copy_number].nil?
         display += " "
       end
+      # For scsb materials
+      if item[:enumeration]
+        display += item[:enumeration]
+      end
       unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1 || item[:copy_number] == '1'
         display += "Copy #{item[:copy_number]}"
       end
@@ -287,7 +291,7 @@ module Requests
     end
 
     def item_checkbox requestable_list, requestable
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), :aria => { :labelledby => "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.item['id']}"
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), :aria => { :labelledby => "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
     def check_box_disabled requestable

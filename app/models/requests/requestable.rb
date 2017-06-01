@@ -18,7 +18,8 @@ module Requests
       @location ||= location # hash of location matrix data
     end
 
-    ## use this in instances where you don't know if an item has item details
+    ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
+    ## when one is needed. Primarily for non-barcoded Annex items.
     def preferred_request_id
       if item?
         item['id']
@@ -156,6 +157,16 @@ module Requests
       end
     end
 
+    def inaccessible?
+      if item?
+        if item[:status] == 'Inaccessible'
+          true
+        else
+          false
+        end
+      end
+    end
+
     def set_services service_list
       @services = service_list
     end
@@ -279,7 +290,7 @@ module Requests
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+         'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
   end
 end

@@ -61,3 +61,13 @@ div#go-back-link {
   transform: translateZ(0);
   width: 1em;
 }
+
+#lookup {
+  display: none;
+  color: #333;
+  h1, p {
+    margin:auto;
+    text-align: center;
+    max-width: 30em;
+  }
+}

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
   let(:voyager_id) { '9493318' }
+  let(:online_id) { '10150938' }
   let(:thesis_id) { 'dsp01rr1720547' }
   let(:in_process_id) { '10144698' }
   let(:on_order_id) { '10081566' }
@@ -181,6 +182,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # click_button 'Request this Item'
         # wait_for_ajax
         # expect(page).to have_content 'Request submitted'
+      end
+
+      it 'does display the online access message' do
+        visit "/requests/#{online_id}"
+        expect(page).to have_content 'Online'
+        expect(page).to have_content I18n.t("requests.online.brief_msg")
       end
 
       it 'allows CAS patrons to request In-Process items', js: true do

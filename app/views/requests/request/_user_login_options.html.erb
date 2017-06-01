@@ -1,45 +1,45 @@
 <div class="row">
-  <div class="user user-pul col-sm-12 col-md-6">
-      <h3>Princeton Faculty, Staff, and Students</h3>
-      <div>
-        <%= current_user_status @user %>
+  <div id="punetid-form" role="menu" aria-hidden="false" style="display: block; text-align:center; width: 50%; margin: 0 auto; ">
+      <script type='text/javascript'>
+        $( document ).ready(function() {
+          //$("#cas-login").focus();
+        });
+      </script>
+      <%= current_user_status @user %>
+      <hr>
+      <p class="or-divider">
+        or
+      </p>
+      <a id="no_netid" role="menuitem" class="btn btn-md btn-default btn-full" href="#other_user_account_info" aria-expanded="false" aria-controls="other_user_account_info"><%= I18n.t('requests.account.other_user_login_msg') %></a>
+      <div style="text-align:left" class='collapse well' aria-live='polite' id='other_user_account_info'>
+        <fieldset class="form-group required">
+          <label class="control-label col-sm-10" for="request_user_name">
+              Your Name
+          </label>
+          <div class="col-sm-10">
+            <%= l.text_field :user_name, size: 50, maxlength: 50, class: 'form-control', error: 'User Name' %>
+            <span class="error error-user_name"></span>
+          </div>
+        </fieldset>
+        <fieldset class="form-group required">
+          <label class="control-label col-sm-10" for="request_email">
+              Contact Email
+          </label>
+          <div class="col-sm-10">
+            <%= l.text_field :email, size: 50, maxlength: 50, class: 'form-control', error: 'Email' %>
+            <span class="error error-email"></span>
+          </div>
+        </fieldset>
+        <% unless @request.mfhd.nil? %>
+          <%= l.hidden_field :mfhd, value: @request.mfhd %>
+        <% end %>
+        <%= l.hidden_field :source, value: @request.source %>
+        <%= l.submit I18n.t("requests.account.other_user_login_btn"), class: "btn btn-primary submit--login" %>
+        <div id="go-back-link">
+          <a href="#punetid-form" id="go_back">
+            <span aria-hidden="true">‹ </span>Go back (show the login option)
+          </a>
+        </div>
       </div>
-  </div>
-  <div class="user col-sm-12 col-md-6">
-    <h3>Other Users</h3>
-    <div>
-      <a class="btn btn-primary" role="button" data-toggle="collapse" href="#other_user_account_info" aria-expanded="false" aria-controls="other_user_account_info">
-      <%= I18n.t('requests.account.other_user_login_msg') %>
-      </a>
-    </div>
-    <div class='collapse well' id='other_user_account_info'>
-      <fieldset class="form-group required">
-        <label class="control-label col-sm-10" for="user_name">
-            Your Name
-        </label>
-        <div class="col-sm-10">
-          <%= f.text_field :user_name, size: 50, maxlength: 50, class: 'form-control', error: 'User Name' %>
-          <span class="error error-user_name"></span>
-        </div>
-      </fieldset>
-      <fieldset class="form-group required">
-        <label class="control-label col-sm-10" for="user_barcode">
-          Your Barcode (Access only patrons, may enter 'access' as their barcode in order to request materials.)
-        </label>
-        <div class="col-sm-10">
-          <%= f.text_field :user_barcode, size: 14, maxlength: 14, class: 'form-control', error: 'Barcode', value: '22101' %>
-          <span class="error error-user_barcode"></span>
-        </div>
-      </fieldset>
-      <fieldset class="form-group required">
-        <label class="control-label col-sm-10" for="email">
-            Contact Email
-        </label>
-        <div class="col-sm-10">
-          <%= f.text_field :email, size: 50, maxlength: 50, class: 'form-control', error: 'Email' %>
-          <span class="error error-email"></span>
-        </div>
-      </fieldset>
-    </div>
   </div>
 </div>

@@ -1,58 +1,34 @@
 require 'spec_helper'
+require './app/models/requests/request.rb'
 
-RSpec.describe ApplicationHelper do
-
-  describe "#pickup_choices" do
-    let(:on_order_params) {
-      {
-        item: {
-
-        },
-        location: {
-
-        }
-      }
+RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name: 'request_models', record: :new_episodes } do
+  describe '#isbn_string' do
+    let(:isbns) {
+      [
+        '9780544343757',
+        '179758877'
+      ]
     }
-    let(:in_process_params) {
-      {
-        item: {
-
-        },
-        location: {
-
-        }
-      }
-    }
-
-    let(:standard_params) {
-      {
-        item: {
-
-        },
-        location: {
-
-        }
-      }
-    }
-
-    let(:requestable_on_order) { Requests::Requestable(on_order_params) }
-    let(:requestable_in_process) { Requests::Requestable(in_process_params) }
-    let(:requestable_default_behavior) { Requests::Requestable(standard_params) }
-    let(:default_pickups) { ['Firestone Library'] }
-
-    context "When an item is on order" do
-      xit "Shows the default pickups when on order" do
-      end
+    let(:isbn_string) { helper.isbn_string(isbns) }
+    it 'returns a list of formatted isbns' do
+      expect(isbn_string).to eq('9780544343757,179758877')
     end
+  end
 
-    context "When an item is in process" do
-      xit "Shows the default pickups when in process" do
-      end
-    end
+  describe '#submit_disabled' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '8179402',
+        user: user
+      }
+    }
+    let(:request_with_items_on_reserve) { Requests::Request.new(params) }
+    let(:requestable_list) { request_with_items_on_reserve.requestable }
+    let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
 
-    context "When an item is not in process or on order" do
-      xit "Shows the pickups selected for the holding location" do
-      end
+    it 'returns a boolean to disable/enable submit' do
+      expect(submit_button_disabled).to be_truthy
     end
   end
 end

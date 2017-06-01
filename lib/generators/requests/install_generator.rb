@@ -17,6 +17,10 @@ module Requests
       copy_file 'requests_initializer.rb', 'config/initializers/requests_initializer.rb'
     end
 
+    def bd_initializer
+      copy_file 'borrow_direct.rb', 'config/initializers/borrow_direct.rb'
+    end
+
     def requests_config
       copy_file './config/requests.yml', 'config/requests.yml'
     end
@@ -37,8 +41,8 @@ module Requests
     end
 
     def devise
-      #puts "#{options.to_s}"
-      #if options[:devise]
+      # puts "#{options.to_s}"
+      # if options[:devise]
       gem 'devise'
       gem "devise-guests", '~> 0.5'
       gem "omniauth-cas"
@@ -49,7 +53,48 @@ module Requests
       generate "devise:install"
       generate "devise", 'User'
       generate "devise_guests", 'User'
-      #end
+      # end
+      inject_into_file 'app/models/user.rb', before: %(end\n) do
+        %(  devise :omniauthable\n)\
+      end
+      inject_into_file 'config/initializers/devise.rb', after: %(  # ==> OmniAuth\n) do
+        "  config.omniauth :cas, host: 'fed.princeton.edu', url: 'https://fed.princeton.edu/cas'\n" \
+        "  config.omniauth :barcode\n" \
+      end
+      inject_into_file 'config/routes.rb', after: %(  devise_for :users) do
+        %(, :controllers => { omniauth_callbacks: "users/omniauth_callbacks", sessions: 'sessions' }, skip: [:passwords, :registration])
+      end
+      copy_file './app/controllers/users/omniauth_callbacks_controller.rb', 'app/controllers/users/omniauth_callbacks_controller.rb'
+      copy_file './lib/omniauth/strategies/omniauth-barcode.rb', 'lib/omniauth/strategies/omniauth-barcode.rb'
+      inject_into_file 'config/application.rb', before: %(  end\n) do
+        %(    require Rails.root.join('lib/omniauth/strategies/omniauth-barcode')\n)
+      end
+      inject_into_file 'app/controllers/application_controller.rb', before: %(end\n) do
+        "  def after_sign_in_path_for(_resource)\n" \
+        "    request.env['omniauth.origin']\n" \
+        "  end\n" \
+      end
+      inject_into_file 'app/models/user.rb', before: %(end\n) do
+        "  def self.from_cas(access_token)\n" \
+        "    User.where(provider: access_token.provider, uid: access_token.uid).first_or_create do |user|\n" \
+        "      user.uid = access_token.uid\n" \
+        "      user.username = access_token.uid\n" \
+        '      user.email = "#{access_token.uid}@princeton.edu"' \
+        "\n      user.password = SecureRandom.urlsafe_base64\n" \
+        "      user.provider = access_token.provider\n" \
+        "    end\n" \
+        "  end\n" \
+        "  def self.from_barcode(access_token)\n" \
+        "    User.where(provider: access_token.provider, uid: access_token.uid,\n" \
+        "             username: access_token.info.last_name).first_or_initialize do |user|\n" \
+        "      user.uid = access_token.uid\n" \
+        "      user.username = access_token.info.last_name\n" \
+        "      user.email = access_token.uid\n" \
+        "      user.password = SecureRandom.urlsafe_base64\n" \
+        "      user.provider = access_token.provider\n" \
+        "    end\n" \
+        "  end\n" \
+      end
     end
   end
 end

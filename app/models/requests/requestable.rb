@@ -1,13 +1,10 @@
 module Requests
   class Requestable
-
     attr_reader :bib
     attr_reader :holding
     attr_reader :item
     attr_reader :location
-    attr_reader :provider
     attr_accessor :services
-    attr_accessor :preferred_id
 
     include Requests::Pageable
     include Requests::Aeon
@@ -21,22 +18,8 @@ module Requests
       @location ||= location # hash of location matrix data
     end
 
-    # remove unused
-    # def type
-    #   if @item
-    #     'item'
-    #   elsif @holding
-    #     'holding'
-    #   else
-    #     'bib'
-    #   end
-    # end
-
-    def bib
-      @bib
-    end
-
-    ## use this in instances where you don't know if an item has item details
+    ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
+    ## when one is needed. Primarily for non-barcoded Annex items.
     def preferred_request_id
       if item?
         item['id']
@@ -45,24 +28,8 @@ module Requests
       end
     end
 
-    def holding
-      @holding
-    end
-
-    def item
-      @item
-    end
-
-    def location
-      @location
-    end
-
     def set_services service_list
       @services = service_list
-    end
-
-    def services
-      @services
     end
 
     def location_code
@@ -106,6 +73,10 @@ module Requests
       return true if item[:status] == 'Missing'
     end
 
+    def preservation?
+      return true if location[:code] == 'pres'
+    end
+
     # merge these two
     def annexa?
       return true if location[:library][:code] == 'annexa'
@@ -122,6 +93,15 @@ module Requests
 
     def always_requestable?
       return true if location[:always_requestable] == true
+    end
+
+    def scsb?
+      return true if scsb_locations.include?(location['code'])
+    end
+
+    def use_restriction?
+      return false if item.nil?
+      return true unless item[:use_statement].nil?
     end
 
     def in_process?
@@ -144,6 +124,7 @@ module Requests
       item
     end
 
+    # FIXME
     def has_item_data?
       if item.nil?
         false
@@ -156,20 +137,61 @@ module Requests
       end
     end
 
+    def temp_loc?
+      if item?
+        if item[:temp_loc]
+          true
+        else
+          false
+        end
+      end
+    end
+
+    def on_reserve?
+      if item?
+        if item[:on_reserve] == 'Y'
+          true
+        else
+          false
+        end
+      end
+    end
+
+    def inaccessible?
+      if item?
+        if item[:status] == 'Inaccessible'
+          true
+        else
+          false
+        end
+      end
+    end
+
     def set_services service_list
       @services = service_list
     end
 
     def traceable?
-      return true if services.include?('trace')
+      services.include?('trace') ? true : false
     end
 
     def ill_eligible?
-      return true if services.include?('ill')
+      # return true if services.include?('ill')
+      services.include?('ill') ? true : false
     end
 
     def on_shelf?
-      return true if services.include?('on_shelf')
+      # return true if services.include?('on_shelf')
+      services.include?('on_shelf') ? true : false
+    end
+
+    def borrow_direct?
+      # return true if services.include?('bd')
+      services.include?('bd') ? true : false
+    end
+
+    def recallable?
+      services.include?('recall') ? true : false
     end
 
     # assume numeric ids come from voyager
@@ -177,19 +199,21 @@ module Requests
       return true if bib[:id].to_i > 0
     end
 
-    def params
-      if aeon? && !voyager_managed?
-        aeon_mapped_params
-      end
-    end
-
     def online?
       return true if location[:library][:code] == 'online'
     end
 
+    def urls
+      if online?
+        return JSON.parse(bib['electronic_access_1display'])
+      else
+        return {}
+      end
+    end
+
     def charged?
-      if(item?)
-        if(unavailable_statuses.include?(item[:status]))
+      if item?
+        if unavailable_statuses.include?(item[:status])
           return true
         else
           nil
@@ -257,13 +281,16 @@ module Requests
 
     private
 
-    # From Tampakis
-    def unavailable_statuses
-      ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
-       'In transit on hold', 'At bindery', 'Remote storage request',
-       'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-       'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-       'Missing','On-Site - On Hold']
-    end
+      def scsb_locations
+        ['scsbnypl', 'scsbcul']
+      end
+
+      def unavailable_statuses
+        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
+         'In transit on hold', 'At bindery', 'Remote storage request',
+         'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
+         'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
+         'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+      end
   end
 end

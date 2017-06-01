@@ -1,11 +1,20 @@
 language: ruby
 rvm:
   - 2.3.1
+  - 2.4.0
 env:
-  - RAILS_VERSION="4.2.7.1"
-# before_script:
-#   - rake engine_cart:generate
+  - RAILS_VERSION="4.2.8"
+dist: trusty
 
+before_install:
+  - gem update --system
+  - gem install bundler
+  - "phantomjs --version"
+  - "export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH"
+  - "if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi"
+  - "if [ $(phantomjs --version) != '2.1.1' ]; then wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi"
+  - "if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi"
+  - "phantomjs --version"
 script: bundle exec rake ci
 
 branches:
@@ -14,9 +23,11 @@ branches:
 notifications:
   email:
     recipients:
-      - "tampakis@princeton.edu"
-      - "jstroop@princeton.edu"
       - "kr2@princeton.edu"
+    on_success: "change"
+    on_failure: "always"
+    template:
+      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
     on_success: "change"
     on_failure: "always"
     template:

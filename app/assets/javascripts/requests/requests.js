@@ -2,9 +2,52 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function() {
 
-    $( "#returnToRecordLink" ).click(function( event ) {
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+
+    $( "form#logins" ).submit(function( event ) {
+      if ( !isEmail($( "#request_email" ).val()) ) {
+        event.preventDefault();
+        $( "#request_email" ).css("background-color","#f2dede");
+        $( "span.error-email").css("color", "red");
+        $( "span.error-email").text("Please supply a valid email address.");
+      } else {
+        $( "#request_email" ).css("background-color","#ffffff");
+        $( "span.error-email").text("");
+      }
+      if ($.trim($('#request_user_name').val()) == "")
+      {
+        event.preventDefault();
+        $( "#request_user_name" ).css("background-color","#f2dede");
+        $( "span.error-user_name").css("color", "red");
+        $( "span.error-user_name").text("Please supply your full name.");
+      } else {
+        $( "#request_user_name" ).css("background-color","#ffffff");
+        $( "span.error-user_name").text("");
+      }
+    });
+
+    $( "#no_netid").click(function( event ) {
       event.preventDefault();
-      location.href= document.referrer;
+      $( "#no_netid").hide();
+      $( "#other_user_account_info").show();
+    });
+
+    $('#no_netid').keydown(function (e) {
+      var keyCode = e.keyCode || e.which;
+
+      if (keyCode == 13) {
+        $( "#no_netid" ).trigger( "click" );
+        return false;
+      }
+    });
+
+    $( "#go_back").click(function( event ) {
+      event.preventDefault();
+      $( "#no_netid").show();
+      $( "#other_user_account_info").hide();
     });
 
     // Enhance the Bootstrap collapse utility to toggle hide/show for other options
@@ -82,10 +125,12 @@ $(document).ready(function() {
           }else{
             this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the BorrowDirect service."));
           }
+          $('.alert-warning a').focus();
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
           var ctx = this_td.find('.ill-data').attr('data-ill-url')
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
+          $('.alert-warning a').focus();
         }
       }
     });

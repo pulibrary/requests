@@ -18,7 +18,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
-require 'factory_girl_rails'
+require 'factory_girl'
 require 'webmock/rspec'
 require 'rspec/rails'
 require 'engine_cart'
@@ -26,13 +26,53 @@ require 'database_cleaner'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
-require 'coveralls'
-
+require 'devise'
+require 'simplecov'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
-Coveralls.wear!('rails')
-Capybara.javascript_driver = :poltergeist
+if ENV['CI']
+  require 'coveralls'
+  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+end
+
+if ENV['CI'] || ENV['COVERAGE']
+  SimpleCov.start('rails') do
+    add_filter '/lib/generators/requests/install_generator.rb'
+    add_filter '/lib/generators/requests/templates/borrow_direct.rb'
+    add_filter '/lib/generators/requests/templates/requests_initializer.rb'
+    add_filter '/lib/generators/requests/templates/lib/omniauth/strategies/omniauth-barcode.rb'
+    add_filter '/lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
+    add_filter '/lib/requests/version.rb'
+    add_filter '/lib/requests/engine.rb'
+    add_filter '/lib/requests.rb'
+    add_filter '/spec'
+  end
+end
+
+# Capybara.register_driver :poltergeist do |app|
+#   Capybara::Poltergeist::Driver.new(app, timeout: 60)
+# end
+# Capybara.javascript_driver = :poltergeist
+Capybara.default_driver = :rack_test      # This is a faster driver
+Capybara.javascript_driver = :poltergeist # This is slower
+Capybara.default_max_wait_time = ENV['TRAVIS'] ? 60 : 15
+# Adding the below to deal with random Capybara-related timeouts in CI.
+# Found in this thread: https://github.com/teampoltergeist/poltergeist/issues/375
+poltergeist_options = {
+  js_errors: false,
+  timeout: 60,
+  logger: nil,
+  phantomjs_logger: StringIO.new,
+  phantomjs_options: [
+    '--load-images=no',
+    '--ignore-ssl-errors=yes'
+  ]
+}
+Capybara.register_driver(:poltergeist) do |app|
+  Capybara::Poltergeist::Driver.new(app, poltergeist_options)
+end
+
 EngineCart.load_application!
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -81,7 +121,20 @@ RSpec.configure do |config|
   config.include Requests::Engine.routes.url_helpers
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
-
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  # config.include Devise::Test::ControllerHelpers, type: :feature
+  # config.include Devise::Test::IntegrationHelpers, type: :feature
+  # config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Warden::Test::Helpers # , type: :feature
+  # config.include Warden::Test::Helpers, type: :request
+  config.include Features::SessionHelpers, type: :feature
+  config.before(:each, type: :feature) do
+    Warden.test_mode!
+    OmniAuth.config.test_mode = true
+  end
+  config.after(:each, type: :feature) do
+    Warden.test_reset!
+  end
   # config.before(:each) do
   #
   #     stub_request(:post, "http://libweb5.princeton.edu/RecapRequestService").
@@ -143,4 +196,21 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+def wait_for_ajax
+  counter = 0
+  while page.execute_script('return $.active').to_i > 0
+    counter += 1
+    sleep(0.1)
+    raise 'AJAX request took longer than 20 seconds.' if counter >= 20
+  end
+end
+
+def in_travis?
+  !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
+end
+
+def fixture(file)
+  File.open(File.join(File.dirname(__FILE__), 'fixtures', file), 'rb')
 end

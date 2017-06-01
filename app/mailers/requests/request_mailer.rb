@@ -3,30 +3,41 @@ module Requests
     def paging_email(submission)
       @submission = submission
       destination_email = "fstpage@princeton.edu"
-      cc_email = [ "wange@princeton.edu", @submission.email ]
-      @url  = 'http://example.com/login'
+      cc_email = ["wange@princeton.edu", @submission.email]
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.paging.email_subject'), @submission.user_barcode))
     end
 
-    def annexa_email(submission)
+    def pres_email(submission)
       @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [ @submission.email ]
-      @url  = 'http://example.com/login'
+      destination_email = I18n.t('requests.pres.email')
+      cc_email = [@submission.email]
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
-           subject: subject_line( I18n.t('requests.annexa.email_subject'), @submission.user_barcode))
+           subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
+    end
+
+    def annexa_email(submission)
+      @submission = submission
+      destination_email = I18n.t('requests.default.email_destination')
+      cc_email = [@submission.email]
+      @url = 'http://example.com/login'
+      mail(to: destination_email,
+           cc: cc_email,
+           from: destination_email,
+           subject: subject_line(I18n.t('requests.annexa.email_subject'), @submission.user_barcode))
     end
 
     def annexb_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [ @submission.email ]
-      @url  = 'http://example.com/login'
+      cc_email = [@submission.email]
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -36,8 +47,8 @@ module Requests
     def on_order_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [ @submission.email ]
-      @url  = 'http://example.com/login'
+      cc_email = [@submission.email]
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -47,8 +58,8 @@ module Requests
     def in_process_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [ @submission.email ]
-      @url  = 'http://example.com/login'
+      cc_email = [@submission.email]
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -58,8 +69,8 @@ module Requests
     def trace_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [ @submission.email ]
-      @url  = 'http://example.com/login'
+      cc_email = [@submission.email]
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -69,8 +80,11 @@ module Requests
     def recap_email(submission)
       @submission = submission
       destination_email = @submission.email
-      @url  = 'http://example.com/login'
-      cc_email = [ @submission.email ]
+      @url = 'http://example.com/login'
+      cc_email = [@submission.email]
+      if @submission.user['user_barcode'] == 'ACCESS'
+        cc_email = I18n.t('requests.recap.guest_email_destination')
+      end
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -80,8 +94,8 @@ module Requests
     def recap_edd_email(submission)
       @submission = submission
       destination_email = @submission.email
-      @url  = 'http://example.com/login'
-      cc_email = [ @submission.email ]
+      @url = 'http://example.com/login'
+      cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -91,8 +105,8 @@ module Requests
     def recall_email(submission)
       @submission = submission
       destination_email = @submission.email
-      @url  = 'http://example.com/login'
-      cc_email = [ @submission.email ]
+      @url = 'http://example.com/login'
+      cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -102,20 +116,20 @@ module Requests
     def service_error_email(service)
       @service = service
       destination_email = I18n.t('requests.error.service_error_email')
-      @url  = 'http://example.com/login'
+      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: I18n.t('requests.error.service_error_subject'))
     end
 
     private
-    def subject_line(request_subject, barcode)
-      if(barcode == 'ACCESS' || barcode == 'access')
-        "#{request_subject} - ACCESS"
-      else
-        request_subject
-      end
-    end
 
+      def subject_line(request_subject, barcode)
+        if barcode == 'ACCESS' || barcode == 'access'
+          "#{request_subject} - ACCESS"
+        else
+          request_subject
+        end
+      end
   end
 end

@@ -1,7 +1,16 @@
 module Requests
   module ApplicationHelper
     def sanitize(str)
-      str.gsub(/[^A-Za-z0-9]/, '')
+      if str.is_a? String
+        str.gsub(/[^A-Za-z0-9@\-_\.]/, '')
+      end
+      str
+    end
+
+    def format_email(email)
+      unless email.nil?
+        email.downcase
+      end
     end
 
     def format_label(key)
@@ -25,20 +34,24 @@ module Requests
     end
 
     def show_service_options requestable
-      if requestable.charged?
+      if requestable.services.empty?
+        content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
+      elsif requestable.charged?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon? && requestable.voyager_managed?
         link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
       elsif requestable.aeon?
-        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.params.to_query}", class: 'btn btn-primary'
-      elsif requestable.traceable?
+        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
+      elsif requestable.on_shelf?
         content_tag(:div) do
           concat link_to 'Where to find it', requestable.map_url
-          concat content_tag(:span, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
+          if requestable.traceable?
+            concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
+          end
         end
       else
         unless requestable.services.include? 'recap_edd'
-        #unless !(requestable.services && ['recap','recap_edd']).empty?
+        # unless !(requestable.services && ['recap','recap_edd']).empty?
           content_tag(:ul, class: "service-list") do
             requestable.services.each do |service|
               brief_msg = I18n.t("requests.#{service}.brief_msg")
@@ -55,6 +68,8 @@ module Requests
           brief_msg = I18n.t("requests.annexa.brief_msg")
         elsif requestable.annexb?
           brief_msg = I18n.t("requests.annexb.brief_msg")
+        elsif requestable.preservation?
+          brief_msg = I18n.t("requests.pres.brief_msg")
         else
           brief_msg = I18n.t("requests.paging.brief_msg")
         end
@@ -63,22 +78,26 @@ module Requests
     end
 
     def hidden_service_options requestable
-      if(requestable.services.include? 'annexa')
+      if requestable.services.include? 'annexa'
         request_input('annexa')
-      elsif(requestable.services.include? 'annexb')
+      elsif requestable.services.include? 'bd'
+        request_input('bd')
+      elsif requestable.services.include? 'annexb'
         request_input('annexb')
-      elsif(requestable.services.include? 'paging')
+      elsif requestable.services.include? 'pres'
+        request_input('pres')
+      elsif requestable.services.include? 'paging'
         request_input('paging')
-      elsif(requestable.services.include? 'in_process')
+      elsif requestable.services.include? 'in_process'
         request_input('in_process')
-      elsif(requestable.services.include? 'on_order')
+      elsif requestable.services.include? 'on_order'
         request_input('on_order')
-      elsif(requestable.services.include? 'recap_edd' and requestable.services.include? 'recap')
+      elsif requestable.services.include? 'recap_edd' and requestable.services.include? 'recap'
         recap_radio_button_group requestable
-      elsif(requestable.services.include? 'recap')
-        #request_input('recap')
+      elsif requestable.services.include? 'recap'
+        # request_input('recap')
         recap_print_only_input requestable
-      elsif(requestable.services.include? 'trace')
+      elsif requestable.services.include? 'trace'
         request_input('trace')
       else
         nil
@@ -97,7 +116,7 @@ module Requests
     end
 
     def recap_print_only_input requestable
-      #id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+      # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
       content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{requestable.preferred_request_id}") do
         concat hidden_field_tag "requestable[][type]", "", value: 'recap'
         concat hidden_field_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", "print"
@@ -106,13 +125,17 @@ module Requests
 
     def enum_copy_display item
       display = ""
-      unless item[:enum].nil?
-        display += item[:enum]
+      unless item[:enum_display].nil?
+        display += item[:enum_display]
       end
-      if !item[:enum].nil? && !item[:copy_number].nil?
+      if !item[:enum_display].nil? && !item[:copy_number].nil?
         display += " "
       end
-      unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1
+      # For scsb materials
+      if item[:enumeration]
+        display += item[:enumeration]
+      end
+      unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1 || item[:copy_number] == '1'
         display += "Copy #{item[:copy_number]}"
       end
       display
@@ -125,29 +148,27 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
-      unless (requestable.pickup_locations.nil? && !requestable.on_order?) || requestable.charged? #(requestable.services & self.default_pickup_services).empty?
+      unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
         class_list = "well collapse in request--print"
         if requestable.services.include?('recap_edd')
-            class_list = "well collapse request--print"
+          class_list = "well collapse request--print"
         end
-        #id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+        # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-            locs = self.available_pickups(requestable, default_pickups)
-            if(locs.size > 1)
-               concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-            else
-              hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
-              hidden + locs[0][:label]
-            end
+          locs = self.available_pickups(requestable, default_pickups)
+          if locs.size > 1
+            concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+          else
+            hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
+            hidden + locs[0][:label]
+          end
         end
       end
     end
 
     def available_pickups requestable, default_pickups
       locs = []
-      if !(requestable.services & self.default_pickup_services).empty?
-        locs = default_pickups
-      elsif(requestable.services.include? 'trace')
+      if requestable.services.include? 'trace'
         locs = default_pickups
       elsif requestable.pickup_locations.nil?
         locs = default_pickups
@@ -159,10 +180,6 @@ module Requests
       locs
     end
 
-    def default_pickup_services
-      ["on_order", "in_process"]
-    end
-
     def pickup_choices_fill_in requestable, default_pickups
       locs = []
       if requestable.pickup_locations.nil? || requestable.location['delivery_locations'].empty?
@@ -172,7 +189,7 @@ module Requests
           locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
         end
       end
-      if(locs.size > 1)
+      if locs.size > 1
         select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
       else
         hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
@@ -198,7 +215,11 @@ module Requests
       unless requestable.holding.first[1]["call_number"].nil?
         hidden += hidden_field_tag "requestable[][call_number]", "", value: "#{requestable.holding.first[1]['call_number']}", id: "requestable_call_number_#{requestable.item['id']}"
       end
-      hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_location_#{requestable.item['id']}"
+      if requestable.item["location"].nil?
+        hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.location['code']}", id: "requestable_location_#{requestable.item['id']}"
+      else
+        hidden += hidden_field_tag "requestable[][location_code]", "", value: "#{requestable.item["location"]}", id: "requestable_location_#{requestable.item['id']}"
+      end
       hidden += hidden_field_tag "requestable[][item_id]", "", value: "#{requestable.item["id"]}", id: "requestable_item_id_#{requestable.item['id']}"
       unless requestable.item["barcode"].nil?
         hidden += hidden_field_tag "requestable[][barcode]", "", value: "#{requestable.item["barcode"]}", id: "requestable_barcode_#{requestable.item['id']}"
@@ -206,8 +227,16 @@ module Requests
       unless requestable.item["enum"].nil?
         hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enum"]}", id: "requestable_enum_#{requestable.item['id']}"
       end
+      unless requestable.item["enumeration"].nil?
+        hidden += hidden_field_tag "requestable[][enum]", "", value: "#{requestable.item["enumeration"]}", id: "requestable_enum_#{requestable.item['id']}"
+      end
       hidden += hidden_field_tag "requestable[][copy_number]", "", value: "#{requestable.item["copy_number"]}", id: "requestable_copy_number_#{requestable.item['id']}"
       hidden += hidden_field_tag "requestable[][status]", "", value: "#{requestable.item["status"]}", id: "requestable_status_#{requestable.item['id']}"
+      if requestable.scsb?
+        hidden += hidden_field_tag "requestable[][cgc]", "", value: "#{requestable.item["cgc"]}", id: "requestable_cgc_#{requestable.item['id']}"
+        hidden += hidden_field_tag "requestable[][cc]", "", value: "#{requestable.item["collection_code"]}", id: "requestable_collection_code_#{requestable.item['id']}"
+        hidden += hidden_field_tag "requestable[][use_statement]", "", value: "#{requestable.item["use_statement"]}", id: "requestable_use_statement_#{requestable.item['id']}"
+      end
       hidden
     end
 
@@ -221,15 +250,27 @@ module Requests
       hidden
     end
 
-    def format_brief_record_display params
+    def format_brief_record_display request
+      params = request.display_metadata
       content_tag(:dl, class: "dl-horizontal") do
         params.each do |key, value|
           unless value.nil?
             concat content_tag(:dt, "#{display_label[key]}")
-            concat content_tag(:dd, "#{value.first}")
+            concat content_tag(:dd, "#{value.first}", lang: "#{request.get_language}", id: "#{display_label[key].gsub(/[^0-9a-z ]/i, '').downcase}")
           end
         end
       end
+    end
+
+    def hidden_fields_borrow_direct request
+      hidden_bd_tags = ''
+      hidden_bd_tags += hidden_field_tag 'bd[auth_id]', '', value: ''
+      hidden_bd_tags += hidden_field_tag 'bd[query_params]', '', value: request.isbn_numbers.first
+      hidden_bd_tags.html_safe
+    end
+
+    def isbn_string array_of_isbns
+      array_of_isbns.join(',')
     end
 
     def hidden_fields_request request
@@ -250,11 +291,15 @@ module Requests
     end
 
     def item_checkbox requestable_list, requestable
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), id: "requestable_selected_#{requestable.item['id']}"
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), :aria => { :labelledby => "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
     def check_box_disabled requestable
-      if requestable.on_order?
+      if requestable.services.empty?
+        true
+      elsif requestable.on_reserve?
+        true
+      elsif requestable.on_order?
         false
       elsif requestable.in_process?
         false
@@ -265,7 +310,7 @@ module Requests
       elsif requestable.aeon?
         true
       elsif requestable.charged?
-        #true
+        # true
         false
       elsif requestable.open? && !requestable.pageable?
         true
@@ -276,9 +321,19 @@ module Requests
       end
     end
 
+    ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
+    def current_location_label(mfhd_label, requestable_list)
+      location_label = requestable_list.first.location['label'].blank? ? "" : "- #{requestable_list.first.location['label']}"
+      if requestable_list.first.temp_loc?
+        "#{requestable_list.first.location['library']['label']}#{location_label}"
+      else
+        mfhd_label
+      end
+    end
+
     def check_box_selected requestable_list
       if requestable_list.size == 1
-        if requestable_list.first.charged?
+        if requestable_list.first.charged? || requestable_list.first.services.empty?
           false
         else
           true
@@ -290,8 +345,14 @@ module Requests
 
     def submit_button_disabled requestable_list
       if requestable_list.size == 1
-        if requestable_list.first.charged?
+        if requestable_list.first.services.empty?
+          true
+        elsif requestable_list.first.on_reserve?
+          true
+        elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
+            false
+          elsif requestable_list.first.services.include? 'bd'
             false
           elsif requestable_list.first.annexb?
             false
@@ -315,15 +376,15 @@ module Requests
     def has_submitable? requestable_list
       submitable = true
       requestable_list.each do |requestable|
-        unless((requestable.services & self.submitable).empty?)
-          submitable = nil
+        unless (requestable.services & self.submitable).empty?
+          submitable = false
         end
       end
       submitable
     end
 
     def submitable
-      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging']
+      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd']
     end
 
     def submit_message requestable_list
@@ -332,7 +393,9 @@ module Requests
       no_item = "No Items Available"
       trace = "Trace this item"
       if requestable_list.size == 1
-        if requestable_list.first.charged?
+        if requestable_list.first.services.empty?
+          no_item
+        elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
             multi_item
           elsif requestable_list.first.annexb?
@@ -340,7 +403,7 @@ module Requests
           elsif requestable_list.first.pageable_loc?
             multi_item
           else
-            single_item #no_item
+            single_item # no_item
           end
         else
           if requestable_list.first.annexa?
@@ -378,6 +441,27 @@ module Requests
         id: "Bibliographic ID:",
         mfhd: "Holding ID (mfhd):"
       }.with_indifferent_access
+    end
+
+    def display_language
+      {
+        language: "Language:"
+      }.with_indifferent_access
+    end
+
+    def display_status requestable
+      unless requestable.item.nil?
+        content_tag(:span, requestable.item['status'])
+      end
+    end
+
+    def display_urls requestable
+      content_tag :ol do
+        requestable.urls.each do |key, value|
+          value.reverse!
+          concat content_tag(:li, link_to(value.join(": "), key), :class => 'link')
+        end
+      end
     end
   end
 end

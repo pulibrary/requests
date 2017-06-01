@@ -11,7 +11,12 @@ module Requests
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
       elsif current_user.guest == true
-        link_to I18n.t('requests.account.guest'), '/users/auth/cas', class: 'btn btn-primary' #, current_user_name: current_user.uid)
+        content_tag(:div) do
+          concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', role: 'menuitem', class: 'btn btn-md btn-primary btn-full', id: 'cas-login' # , current_user_name: current_user.uid)
+          concat content_tag(:hr)
+          concat content_tag(:p, "or", class: "or-divider")
+          concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/sign_in', role: 'menuitem', class: 'btn btn-md btn-default btn-full', id: 'barcode-login'
+        end
       else
         I18n.t('requests.account.unauthenticated')
       end
@@ -44,13 +49,11 @@ module Requests
       last_name
     end
 
-    def request_title request
-      if request.has_pageable?
-        "Paging Request"
-      elsif @mode == 'trace'
-        "Trace Materials"
+    def request_title
+      if @mode == 'trace'
+        I18n.t('requests.trace.form_title').html_safe
       else
-        "Library Material Request"
+        I18n.t('requests.default.form_title').html_safe
       end
     end
 
@@ -80,18 +83,18 @@ module Requests
         if requestable.aeon?
           enums = false
         elsif requestable.item?
-          if requestable.item.key?('enum') #if there are any enums show the fill in request row
+          if requestable.item.key?('enum') # if there are any enums show the fill in request row
             enums = true
           end
         end
         unless (requestable.services & fill_in_services).empty?
           fill_in = true
         end
-        if requestable_list.size == 1
-          if requestable_list.first.pageable_loc?
-            fill_in = true
-          end
-        end
+        # if requestable_list.size == 1
+        #   if requestable_list.first.pageable_loc?
+        #     fill_in = true
+        #   end
+        # end
       end
       if enums
         fill_in = nil
@@ -104,9 +107,21 @@ module Requests
     end
 
     def return_message(submission)
-      unless @submission.source.nil?
-        link_to "Return to Record", return_url(@submission.source, @submission.id), class: 'btn btn-default icon-moveback', title: 'Return to Record'
+      unless submission.source.nil?
+        link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-default icon-moveback', title: 'Return to Record'
       end
+    end
+
+    def login_url(request)
+      url = "/requests/#{request.requestable.first.bib['id']}?"
+      params = []
+      if !request.mfhd.nil?
+        params.push("mfhd=#{request.mfhd}")
+      end
+      if !request.source.nil?
+        params.push("source=#{request.source}")
+      end
+      url += params.join("&")
     end
 
     def return_url(source, id)

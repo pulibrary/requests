@@ -1,6 +1,5 @@
 module Requests
   class Service
-
     def initialize(params)
       @type = params[:type]
     end
@@ -10,18 +9,17 @@ module Requests
     end
 
     def submitted
-      #this should return an array of items successfully submitted to the service on a request
+      # this should return an array of items successfully submitted to the service on a request
       raise Exception.new("#{self.class}: submitted() is not implemented")
     end
 
     def errors
-      #this should return an array of errors returned by the service on a request
+      # this should return an array of errors returned by the service on a request
       raise Exception.new("#{self.class}: errors() is not implemented")
     end
 
     def type
       @type
     end
-
   end
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
-
   context "with a bad system_id" do
     let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
@@ -14,14 +13,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:bad_request) { described_class.new(params) }
     subject { bad_request }
     describe '#solr_doc' do
-      it 'returns an 404 response without a valid system id' do
+      it 'returns an empty document response without a valid system id' do
         expect(subject.solr_doc(bad_system_id).empty?).to be true
       end
     end
   end
 
   context "with a system_id and a mfhd that has a holding record with an attached item record" do
-
     let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
     let(:params) {
@@ -44,7 +42,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it 'returns hash with a valid system id' do
         expect(subject.solr_doc(subject.system_id)).to be_a(Hash)
       end
-
     end
 
     describe "#display_metadata" do
@@ -55,6 +52,17 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "returns a author display" do
         expect(subject.display_metadata[:author]).to be_truthy
       end
+    end
+
+    describe "#get_language" do
+      it "returns a language_code" do
+        expect(subject.get_language).to be_truthy
+      end
+
+      # Doesn't do this yet
+      # it "returns two-character ISO 639-1 language code" do
+      #   expect(subject.display_metadata[:author]).to be_truthy
+      # end
     end
 
     describe "#ctx" do
@@ -117,6 +125,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
+    describe '#user' do
+      it 'returns a user object' do
+        expect(subject.user.is_a? User).to be true
+      end
+    end
+
+    describe '#holdings?' do
+      it 'returns holdings data' do
+        expect(subject.holdings?).to be_truthy
+      end
+    end
+
+    describe '#available?' do
+      it 'returns a list of items' do
+        expect(subject.available?).to be_truthy
+      end
+    end
+
     describe "#thesis?" do
       it "should not identify itself as a thesis request" do
         expect(subject.thesis?).to be_falsy
@@ -152,7 +178,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].location).to be_truthy
       end
     end
-
   end
 
   context "with a system_id only that has holdings and item records" do
@@ -171,7 +196,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a list of request objects" do
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(98)
-        expect(subject.has_pageable?).to be_nil
+        expect(subject.has_pageable?).to be(false)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
@@ -197,7 +222,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         end
       end
     end
-
   end
 
   context "with a system_id that only has holdings records" do
@@ -256,6 +280,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context "A system id that has a holding with item on reserve" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '8179402',
+        user: user
+      }
+    }
+    let(:request_with_items_on_reserve) { described_class.new(params) }
+    subject { request_with_items_on_reserve }
+
+    describe "#requestable" do
+      it "should be on reserve" do
+        expect(subject.requestable.first.on_reserve?).to be_truthy
+      end
+    end
+  end
+
   context "A system id that has a holding with items in a temporary location" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
@@ -297,7 +339,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "should not have a list of request objects" do
-        expect(subject.requestable).to be_falsy
+        expect(subject.requestable.empty?).to be true
       end
     end
   end
@@ -359,13 +401,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].aeon_mapped_params[:Form]).to eq('21')
       end
 
-       it 'shouuld have an Aeon Action Param' do
-        expect(subject.requestable[0].aeon_mapped_params.key? :Action).to be true
-        expect(subject.requestable[0].aeon_mapped_params[:Action]).to eq('10')
-      end
+      it 'shouuld have an Aeon Action Param' do
+       expect(subject.requestable[0].aeon_mapped_params.key? :Action).to be true
+       expect(subject.requestable[0].aeon_mapped_params[:Action]).to eq('10')
+     end
     end
   end
-
 
   context "When passed a system_id for a visuals record" do
     let(:user) { FactoryGirl.build(:user) }
@@ -417,24 +458,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an ID for a paging location within allowed call number range" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '4472547',
-        user: user
-      }
-    }
-    let(:request_at_paging_charged) { described_class.new(params) }
-    subject { request_at_paging_charged }
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.has_pageable?).to be(true)
-        expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.requestable[0].pageable?).to be_truthy
-      end
-    end
-  end
+  # context "When passed an ID for a paging location within allowed call number range" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '4472547',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_charged) { described_class.new(params) }
+  #   subject { request_at_paging_charged }
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.requestable[0].location['code']).to eq('nec')
+  #       expect(subject.requestable[0].pageable?).to be_truthy
+  #     end
+  #   end
+  # end
 
   context "When passed an ID for a paging location in nec outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
@@ -450,49 +491,49 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.has_pageable?).to be_nil
+        expect(subject.has_pageable?).to be(false)
         expect(subject.requestable[0].pageable?).to be_nil
       end
     end
   end
 
-  context "When passed an ID for a paging location in nec  within a paging call number range" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '2942771',
-        user: user
-      }
-    }
-    let(:request_at_paging_nec_multiple) { described_class.new(params) }
-    subject { request_at_paging_nec_multiple }
+  # context "When passed an ID for a paging location in nec  within a paging call number range" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '2942771',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_nec_multiple) { described_class.new(params) }
+  #   subject { request_at_paging_nec_multiple }
 
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.requestable[0].pageable?).to eq(true)
-      end
-    end
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.requestable[0].location['code']).to eq('nec')
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #     end
+  #   end
 
-    describe "#has_pageable?" do
-      it "should return true when all requestable items are pageable?" do
-        expect(subject.has_pageable?).to be_truthy
-      end
+  #   describe "#has_pageable?" do
+  #     it "should return true when all requestable items are pageable?" do
+  #       expect(subject.has_pageable?).to be_truthy
+  #     end
 
-      it "should return true when only some of the requestable items are pageable?" do
-        subject.requestable.first.item["status"] = 'Charged'
-        expect(subject.has_pageable?).to be_truthy
-      end
+  #     it "should return true when only some of the requestable items are pageable?" do
+  #       subject.requestable.first.item["status"] = 'Charged'
+  #       expect(subject.has_pageable?).to be_truthy
+  #     end
 
-      it "should return false when all requestable items are not pageable?" do
-        subject.requestable.each do |requestable|
-          requestable.item["status"] = 'Charged'
-          requestable.services = []
-        end
-        expect(subject.has_pageable?).to be_falsy
-      end
-    end
-  end
+  #     it "should return false when all requestable items are not pageable?" do
+  #       subject.requestable.each do |requestable|
+  #         requestable.item["status"] = 'Charged'
+  #         requestable.services = []
+  #       end
+  #       expect(subject.has_pageable?).to be_falsy
+  #     end
+  #   end
+  # end
 
   context "When passed an ID for a paging location in f outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
@@ -513,26 +554,26 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
   # 6009363 returned
-  context "When passed an ID for a paging location f within a call in a range" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '6009363',
-        user: user
-      }
-    }
-    let(:request_at_paging_f) { described_class.new(params) }
-    subject { request_at_paging_f }
+  # context "When passed an ID for a paging location f within a call in a range" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '6009363',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_f) { described_class.new(params) }
+  #   subject { request_at_paging_f }
 
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.has_pageable?).to be(true)
-        expect(subject.requestable[0].location['code']).to eq('f')
-        expect(subject.requestable[0].pageable?).to eq(true)
-        expect(subject.requestable[0].pickup_locations.size).to eq(1)
-      end
-    end
-  end
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.requestable[0].location['code']).to eq('f')
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #       expect(subject.requestable[0].pickup_locations.size).to eq(1)
+  #     end
+  #   end
+  # end
 
   # from the A range in "f"
   context "When passed an ID for a paging location f outside of call number range" do
@@ -549,33 +590,33 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
-        expect(subject.requestable[0].pageable?).to eq(true)
-        expect(subject.has_pageable?).to be(true)
+        expect(subject.requestable[0].pageable?).to eq(nil)
+        expect(subject.has_pageable?).to be(false)
         expect(subject.requestable[0].voyager_managed?).to eq(true)
       end
     end
   end
 
-  context "When passed an ID for an xl paging location" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '9596359',
-        user: user
-      }
-    }
-    let(:request_at_paging_f) { described_class.new(params) }
-    subject { request_at_paging_f }
+  # context "When passed an ID for an xl paging location" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '9596359',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_f) { described_class.new(params) }
+  #   subject { request_at_paging_f }
 
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.requestable[0].location['code']).to eq('xl')
-        expect(subject.requestable[0].pageable?).to eq(true)
-        expect(subject.has_pageable?).to be(true)
-        expect(subject.requestable[0].voyager_managed?).to eq(true)
-      end
-    end
-  end
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.requestable[0].location['code']).to eq('xl')
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.requestable[0].voyager_managed?).to eq(true)
+  #     end
+  #   end
+  # end
 
   context "When passed an ID for an On Order Title" do
     let(:user) { FactoryGirl.build(:user) }
@@ -587,7 +628,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_with_on_order) { described_class.new(params) }
     let(:firestone_circ) {
-        { label: "Firestone Library", gfa_code: "PA" }
+      { label: "Firestone Library", gfa_code: "PA" }
     }
     subject { request_with_on_order }
 
@@ -607,7 +648,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "should provide a list of the default pickup locations" do
         expect(subject.default_pickups).to be_truthy
         expect(subject.default_pickups).to be_an(Array)
-        #test that it is an array of hashes
+        # test that it is an array of hashes
         expect(subject.default_pickups.size).to be > 1
         expect(subject.default_pickups.include?(firestone_circ)).to be_truthy
       end
@@ -645,37 +686,37 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  # Oversize ID
-  context "When passed an ID for an Item with that is Oversize" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '3785401',
-        user: user
-      }
-    }
-    let(:request_oversize) { described_class.new(params) }
-    subject { request_oversize }
+  # Oversize ID pageable
+  # context "When passed an ID for an Item with that is Oversize" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '3785401',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_oversize) { described_class.new(params) }
+  #   subject { request_oversize }
 
-    describe "#requestable" do
-      it "should have an requestable items" do
-        expect(subject.requestable.size).to be >= 1
-      end
+  #   describe "#requestable" do
+  #     it "should have an requestable items" do
+  #       expect(subject.requestable.size).to be >= 1
+  #     end
 
-      it "should be in a location that contains some pageable items" do
-        expect(subject.requestable[0].location['code']).to eq('f')
-        expect(subject.requestable[0].voyager_managed?).to eq(true)
-      end
+  #     it "should be in a location that contains some pageable items" do
+  #       expect(subject.requestable[0].location['code']).to eq('f')
+  #       expect(subject.requestable[0].voyager_managed?).to eq(true)
+  #     end
 
-      it "should be have pageable items" do
-        expect(subject.has_pageable?).to be(true)
-      end
+  #     it "should be have pageable items" do
+  #       expect(subject.has_pageable?).to be(true)
+  #     end
 
-      it "should have a pageable item" do
-        expect(subject.requestable[0].pageable?).to eq(true)
-      end
-    end
-  end
+  #     it "should have a pageable item" do
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #     end
+  #   end
+  # end
 
   # Item with no call number 9602545
   context "When passed an ID for an Item in a pageable location that has no call number" do
@@ -700,7 +741,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "should not have any pageable items" do
-        expect(subject.has_pageable?).to be_nil
+        expect(subject.has_pageable?).to be(false)
       end
 
       it "should have a pageable item" do
@@ -783,11 +824,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "should have an requestable items" do
-        expect(subject.requestable.size).to eq(1)
+        # even though we are passing the mfhd, we are not limiting
+        # it in the requestable so we can check all non-serials against BorrowDirect
+        expect(subject.requestable.size).to eq(17)
       end
 
-      it "should not have any barcode data" do
-        expect(subject.requestable.first.item[:barcode]).to be_nil
+      it "should not have any item data" do
+        expect(subject.requestable.first.item).to be_nil
       end
 
       it "should be eligible for aeon services" do
@@ -847,6 +890,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.last.services.include?('recap_edd')).to be_falsy
       end
     end
+
+    describe '#serial?' do
+      it 'returns true when the item is a serial' do
+        expect(subject.serial?).to be true
+      end
+    end
   end
 
   context "When passed a Recallable Item that is eligible for Borrow Direct" do
@@ -870,6 +919,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#ill_eligible?" do
       it 'Should be ILL Eligible' do
         expect(subject.ill_eligible?).to be true
+      end
+    end
+
+    describe "#isbn_numbers?" do
+      it 'Should return true if a request has an isbn' do
+        expect(subject.isbn_numbers?).to be true
+      end
+    end
+
+    describe "#isbn_numbers" do
+      it 'returns an array of all attached isbn numbers' do
+        expect(subject.isbn_numbers.is_a?(Array)).to be true
+        expect(subject.isbn_numbers.size).to eq(1)
       end
     end
 
@@ -913,19 +975,20 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      it "should be eligible for multiple services" do
-        expect(subject.requestable.first.services.size).to eq(2)
-      end
-
-      it "should be eligible for trace services" do
-        expect(subject.requestable.first.services.include?('trace')).to be_truthy
-        expect(subject.requestable.first.traceable?).to be true
-      end
-
-      it "should be eligible for recall" do
+      it "should be on the shelf" do
         expect(subject.requestable.first.services.include?('on_shelf')).to be_truthy
       end
 
+      # these tests are temporarily pending until trace feature is resolved
+      # see https://github.com/pulibrary/requests/issues/164 for info
+      xit "should be eligible for multiple services" do
+        expect(subject.requestable.first.services.size).to eq(2)
+      end
+
+      xit "should be eligible for trace services" do
+        expect(subject.requestable.first.services.include?('trace')).to be_truthy
+        expect(subject.requestable.first.traceable?).to be true
+      end
     end
   end
   # 495501
@@ -943,6 +1006,338 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe '#requestable' do
       it "should have an requestable items" do
         expect(subject.requestable.size).to be >= 1
+      end
+    end
+  end
+
+  # 9994692
+  context 'When passed a holding with all online items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9994692',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should be all online" do
+        expect(subject.all_items_online?).to be true
+      end
+    end
+  end
+
+  # 9746776
+  context 'When passed a holdings with mixed physical and online items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9746776',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should be all online" do
+        expect(subject.all_items_online?).to be false
+      end
+    end
+  end
+
+  # 4815239
+  context 'When passed a non-enumerated holdings with at least one loanable item' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4815239',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Enumerated record with charged items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '495220',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Enumerated record without charged items' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '7494358',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#has_enumerated?' do
+      it 'should be enumerated' do
+        expect(subject.has_enumerated?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Multi-holding record with charged items and items available at non-restricted locations' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '5596067',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be true
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+    end
+  end
+
+  context 'Multi-holding record with charged items and items available at restricted locations' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9696811',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#has_loanable_copy?' do
+      it "should have available copy" do
+        expect(subject.has_loanable_copy?).to be false
+      end
+    end
+
+    describe '#borrow_direct_eligible?' do
+      it 'should not be borrow_direct_eligible' do
+        expect(subject.borrow_direct_eligible?).to be true
+      end
+    end
+  end
+
+  ### Review this test
+  context 'RBSC Items and Borrow Direct' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2631265',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#borrow_direct_eligible?' do
+      it 'should be borrow_direct_eligible?' do
+        expect(subject.borrow_direct_eligible?).to be true
+      end
+    end
+
+    describe '#isbn_numbers?' do
+      it 'returns false when there are no isbns present' do
+        expect(subject.isbn_numbers?).to be false
+      end
+    end
+  end
+
+  context 'When a barcode only user visits the site' do
+    let(:user) { FactoryGirl.build(:valid_barcode_patron) }
+    let(:params) {
+      {
+        system_id: '495501',
+        mfhd: '538750',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+    describe '#requestable' do
+      it "should have an requestable items" do
+        expect(subject.requestable.size).to be >= 1
+      end
+    end
+  end
+
+  context "When passed mfhd and source params" do
+    let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:params) {
+      {
+        system_id: '1969881',
+        mfhd: '2246633',
+        source: 'pulsearch',
+        user: user
+      }
+    }
+    let(:request_with_optional_params) { described_class.new(params) }
+    subject { request_with_optional_params }
+
+    describe "#request" do
+      it "should have accessible mfhd param" do
+        expect(subject.mfhd).to eq('2246633')
+      end
+
+      it "should have accessible source param" do
+        expect(subject.source).to eq('pulsearch')
+      end
+    end
+  end
+
+  context "When passed an ID for a preservation office location" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9712355',
+        user: user
+      }
+    }
+    let(:request_for_preservation) { described_class.new(params) }
+    subject { request_for_preservation }
+    describe "#requestable" do
+      it "should have a preservation location code" do
+        expect(subject.requestable[0].location['code']).to eq('pres')
+      end
+    end
+  end
+
+  context 'A borrow Direct item that is not available' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '10140054',
+        user: user
+      }
+    }
+    let(:request_with_title_author) { described_class.new(params) }
+    subject { request_with_title_author }
+
+    describe '#fallback_query_params' do
+      it 'has a title and author parameters when both are present' do
+        expect(subject.fallback_query_params.key? :title).to be true
+        expect(subject.fallback_query_params.key? :author).to be true
+      end
+    end
+
+    describe '#fallback_query' do
+      it 'returns a borrow direct fallback query url' do
+        expect(subject.fallback_query).to be_truthy
+        expect(subject.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
+        expect(subject.fallback_query).to include(CGI.escape(subject.fallback_query_params[:title].downcase))
+      end
+    end
+  end
+
+  context "When passed a system_id for a record with a single aeon holding" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '4693146',
+        user: user
+      }
+    }
+    let(:request_with_single_aeon_holding) { described_class.new(params) }
+    subject { request_with_single_aeon_holding }
+
+    describe "#requestable" do
+      describe "#has_single_aeon_requestable?" do
+        it "should identify itself as a single aeon requestable" do
+          expect(subject.has_single_aeon_requestable?).to be_truthy
+        end
+      end
+    end
+  end
+
+  context "A SCSB id with a single holding" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:scsb_single_holding_item) { fixture('/SCSB-5290772.json') }
+    let(:location_code) { 'scsbcul' }
+    let(:params) {
+      {
+        system_id: 'SCSB-5290772',
+        user: user,
+        source: 'pulsearch'
+      }
+    }
+    let(:scsb_availability_params) {
+      {
+        bibliographicId: "12134967",
+        institutionId: "CUL"
+      }
+    }
+    let(:scsb_availability_response) { fixture('/scsb_single_avail.json') }
+    let(:request_scsb) { described_class.new(params) }
+    subject { request_scsb }
+    before(:each) do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+        .to_return(status: 200, body: scsb_single_holding_item, headers: {})
+      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
+        .to_return(status: 200, body: scsb_availability_response)
+    end
+    describe '#requestable' do
+      it 'should have one requestable item' do
+        expect(subject.requestable.size).to eq(1)
+      end
+    end
+    describe '#other_id' do
+      it 'should provide an other id value' do
+        expect(subject.other_id).to eq('12134967')
+      end
+    end
+    describe '#scsb_owning_institution' do
+      it 'should provide the SCSB owning institution ID' do
+        expect(subject.scsb_owning_institution(location_code)).to eq('CUL')
       end
     end
   end

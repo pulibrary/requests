@@ -56,7 +56,7 @@
           contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
           success: function (response) {
             $('#lookup').hide();
-
+            $('.results-spinner-large').hide();
             if (response.hasOwnProperty("error")){
               $('#bd_error').show();
             } else {
@@ -111,8 +111,8 @@
       </script>
       <div class='umlaut-services'>
       <div id="borrow_direct" class='availability--panel availability_borrow-direct'>
-        <p id="lookup" role="alert">
-          <img alt="" style="display:inline-block" src="<%= asset_path('requests/spinner.gif') %>"/>
+        <div class='results-spinner-large'></div>
+        <p id="lookup" role="alert" class="alert alert-info">
           Checking BorrowDirect availablility for you.
         </p>
         <p id='bd_available' class='alert alert-success' aria-live="polite" style='display: none'>

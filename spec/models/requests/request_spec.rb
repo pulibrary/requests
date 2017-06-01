@@ -458,24 +458,24 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an ID for a paging location within allowed call number range" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '4472547',
-        user: user
-      }
-    }
-    let(:request_at_paging_charged) { described_class.new(params) }
-    subject { request_at_paging_charged }
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.has_pageable?).to be(true)
-        expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.requestable[0].pageable?).to be_truthy
-      end
-    end
-  end
+  # context "When passed an ID for a paging location within allowed call number range" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '4472547',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_charged) { described_class.new(params) }
+  #   subject { request_at_paging_charged }
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.requestable[0].location['code']).to eq('nec')
+  #       expect(subject.requestable[0].pageable?).to be_truthy
+  #     end
+  #   end
+  # end
 
   context "When passed an ID for a paging location in nec outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
@@ -497,43 +497,43 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an ID for a paging location in nec  within a paging call number range" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '2942771',
-        user: user
-      }
-    }
-    let(:request_at_paging_nec_multiple) { described_class.new(params) }
-    subject { request_at_paging_nec_multiple }
+  # context "When passed an ID for a paging location in nec  within a paging call number range" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '2942771',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_nec_multiple) { described_class.new(params) }
+  #   subject { request_at_paging_nec_multiple }
 
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.requestable[0].pageable?).to eq(true)
-      end
-    end
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.requestable[0].location['code']).to eq('nec')
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #     end
+  #   end
 
-    describe "#has_pageable?" do
-      it "should return true when all requestable items are pageable?" do
-        expect(subject.has_pageable?).to be_truthy
-      end
+  #   describe "#has_pageable?" do
+  #     it "should return true when all requestable items are pageable?" do
+  #       expect(subject.has_pageable?).to be_truthy
+  #     end
 
-      it "should return true when only some of the requestable items are pageable?" do
-        subject.requestable.first.item["status"] = 'Charged'
-        expect(subject.has_pageable?).to be_truthy
-      end
+  #     it "should return true when only some of the requestable items are pageable?" do
+  #       subject.requestable.first.item["status"] = 'Charged'
+  #       expect(subject.has_pageable?).to be_truthy
+  #     end
 
-      it "should return false when all requestable items are not pageable?" do
-        subject.requestable.each do |requestable|
-          requestable.item["status"] = 'Charged'
-          requestable.services = []
-        end
-        expect(subject.has_pageable?).to be_falsy
-      end
-    end
-  end
+  #     it "should return false when all requestable items are not pageable?" do
+  #       subject.requestable.each do |requestable|
+  #         requestable.item["status"] = 'Charged'
+  #         requestable.services = []
+  #       end
+  #       expect(subject.has_pageable?).to be_falsy
+  #     end
+  #   end
+  # end
 
   context "When passed an ID for a paging location in f outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
@@ -554,26 +554,26 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
   # 6009363 returned
-  context "When passed an ID for a paging location f within a call in a range" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '6009363',
-        user: user
-      }
-    }
-    let(:request_at_paging_f) { described_class.new(params) }
-    subject { request_at_paging_f }
+  # context "When passed an ID for a paging location f within a call in a range" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '6009363',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_f) { described_class.new(params) }
+  #   subject { request_at_paging_f }
 
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.has_pageable?).to be(true)
-        expect(subject.requestable[0].location['code']).to eq('f')
-        expect(subject.requestable[0].pageable?).to eq(true)
-        expect(subject.requestable[0].pickup_locations.size).to eq(1)
-      end
-    end
-  end
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.requestable[0].location['code']).to eq('f')
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #       expect(subject.requestable[0].pickup_locations.size).to eq(1)
+  #     end
+  #   end
+  # end
 
   # from the A range in "f"
   context "When passed an ID for a paging location f outside of call number range" do
@@ -590,33 +590,33 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "should be unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
-        expect(subject.requestable[0].pageable?).to eq(true)
-        expect(subject.has_pageable?).to be(true)
+        expect(subject.requestable[0].pageable?).to eq(nil)
+        expect(subject.has_pageable?).to be(false)
         expect(subject.requestable[0].voyager_managed?).to eq(true)
       end
     end
   end
 
-  context "When passed an ID for an xl paging location" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '9596359',
-        user: user
-      }
-    }
-    let(:request_at_paging_f) { described_class.new(params) }
-    subject { request_at_paging_f }
+  # context "When passed an ID for an xl paging location" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '9596359',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_at_paging_f) { described_class.new(params) }
+  #   subject { request_at_paging_f }
 
-    describe "#requestable" do
-      it "should be unavailable" do
-        expect(subject.requestable[0].location['code']).to eq('xl')
-        expect(subject.requestable[0].pageable?).to eq(true)
-        expect(subject.has_pageable?).to be(true)
-        expect(subject.requestable[0].voyager_managed?).to eq(true)
-      end
-    end
-  end
+  #   describe "#requestable" do
+  #     it "should be unavailable" do
+  #       expect(subject.requestable[0].location['code']).to eq('xl')
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.requestable[0].voyager_managed?).to eq(true)
+  #     end
+  #   end
+  # end
 
   context "When passed an ID for an On Order Title" do
     let(:user) { FactoryGirl.build(:user) }
@@ -686,37 +686,37 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  # Oversize ID
-  context "When passed an ID for an Item with that is Oversize" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '3785401',
-        user: user
-      }
-    }
-    let(:request_oversize) { described_class.new(params) }
-    subject { request_oversize }
+  # Oversize ID pageable
+  # context "When passed an ID for an Item with that is Oversize" do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '3785401',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_oversize) { described_class.new(params) }
+  #   subject { request_oversize }
 
-    describe "#requestable" do
-      it "should have an requestable items" do
-        expect(subject.requestable.size).to be >= 1
-      end
+  #   describe "#requestable" do
+  #     it "should have an requestable items" do
+  #       expect(subject.requestable.size).to be >= 1
+  #     end
 
-      it "should be in a location that contains some pageable items" do
-        expect(subject.requestable[0].location['code']).to eq('f')
-        expect(subject.requestable[0].voyager_managed?).to eq(true)
-      end
+  #     it "should be in a location that contains some pageable items" do
+  #       expect(subject.requestable[0].location['code']).to eq('f')
+  #       expect(subject.requestable[0].voyager_managed?).to eq(true)
+  #     end
 
-      it "should be have pageable items" do
-        expect(subject.has_pageable?).to be(true)
-      end
+  #     it "should be have pageable items" do
+  #       expect(subject.has_pageable?).to be(true)
+  #     end
 
-      it "should have a pageable item" do
-        expect(subject.requestable[0].pageable?).to eq(true)
-      end
-    end
-  end
+  #     it "should have a pageable item" do
+  #       expect(subject.requestable[0].pageable?).to eq(true)
+  #     end
+  #   end
+  # end
 
   # Item with no call number 9602545
   context "When passed an ID for an Item in a pageable location that has no call number" do

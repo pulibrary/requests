@@ -82,8 +82,7 @@ module Requests
       {
         author: item[:edd_author],
         bibId: bib[:id],
-        # FIXME
-        callNumber: "string",
+        callNumber: item[:call_number],
         chapterTitle: item[:edd_art_title],
         deliveryLocation: item[:pickup],
         emailAddress: user[:email],
@@ -99,7 +98,7 @@ module Requests
         requestingInstitution: requesting_institution,
         startPage: item[:edd_start_page],
         titleIdentifier: bib[:title],
-        username: user[:user_last_name],
+        username: user[:user_name],
         volume: item[:edd_volume_number]
       }
     end
@@ -136,6 +135,10 @@ module Requests
       else
         'PUL'
       end
+    end
+
+    def scsb_locations
+      ["scsbcul", "scsbnypl"]
     end
 
     private

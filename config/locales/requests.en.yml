@@ -2,7 +2,7 @@
 en:
   requests:
     default:
-      email_destination: "libcir@princeton.edu"
+      email_destination: "fstcirc@princeton.edu"
       pickup_placeholder: "Select a Delivery Location"
       request_method_placeholder: "Select a Request Method"
       form_title: "Library Material Request"

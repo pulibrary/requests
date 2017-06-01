@@ -8917,4 +8917,238 @@ http_interactions:
 '
     http_version: 
   recorded_at: Wed, 31 May 2017 22:19:08 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/10150938.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 0023740b-1625-499a-91e3-da8a35696c96
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"8af1c271d8bdfb07eadd0b96e8f537b8"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.052066'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 01 Jun 2017 23:05:01 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"10150938","author_display":["Gray, Brayton,
+        1940-"],"author_citation_display":["Gray, Brayton"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Gray,
+        Brayton\"}","author_s":["Gray, Brayton, 1940-"],"opensearch_display":["Gray,
+        Brayton, 1940-","Abelian Properties of Anick Spaces / Brayton Gray.","Abelian
+        groups","Topological groups","Topological spaces","Loop spaces","H-spaces"],"marc_relator_display":["Author"],"title_display":"Abelian
+        Properties of Anick Spaces / Brayton Gray.","title_t":["Abelian Properties
+        of Anick Spaces / Brayton Gray."],"title_citation_display":["Abelian Properties
+        of Anick Spaces /"],"compiled_created_t":["Abelian Properties of Anick Spaces
+        / Brayton Gray."],"pub_created_display":["Providence, RI : American Mathematical
+        Society, 2017."],"pub_created_s":["Providence, RI : American Mathematical
+        Society, 2017."],"pub_citation_display":["Providence, RI: American Mathematical
+        Society"],"pub_date_display":["2017"],"pub_date_start_sort":2017,"cataloged_tdt":"2017-03-09T15:12:32Z","format":["Book"],"electronic_access_1display":"{\"https://doi.org/10.1090/memo/1162\":[\"doi.org\"]}","description_display":["v,
+        111 pages : illustrations ; 26 cm."],"description_t":["v, 111 pages : illustrations
+        ; 26 cm."],"series_display":["Memoirs of the American Mathematical Society
+        ; volume 246, number 1162.","Memoirs of the American Mathematical Society,
+        0065-9266 ; volume 246, number 1162"],"more_in_this_series_t":["Memoirs of
+        the American Mathematical Society ;"],"notes_display":["\"Volume 246, number
+        1162 (first of 6 numbers), March 2017.\""],"bib_ref_notes_display":["Includes
+        bibliographical references and index."],"language_display":["Text in English."],"language_facet":["English"],"language_code_s":["eng"],"other_format_display":["Also
+        available in an electronic version."],"subject_display":["Abelian groups","Topological
+        groups","Topological spaces","Loop spaces","H-spaces"],"subject_t":["Abelian
+        groups","Topological groups","Topological spaces","Loop spaces","H-spaces"],"subject_facet":["Abelian
+        groups","Topological groups","Topological spaces","Loop spaces","H-spaces"],"isbn_display":["9781470423087
+        (alk. paper)","1470423081 (alk. paper)"],"lccn_display":["  2016055094"],"lccn_s":["2016055094"],"isbn_s":["9781470423087"],"isbn_t":["9781470423087"],"oclc_s":["965446111"],"other_version_s":["ocn965446111","9781470423087"],"holdings_1display":"{\"9939337\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"call_number\":\"QA3
+        .A57 no.1162\",\"call_number_browse\":\"QA3 .A57 no.1162\"},\"9956499\":{\"location\":\"Online
+        - *ONLINE*\",\"library\":\"Online\",\"location_code\":\"elf1\",\"call_number\":\"Electronic
+        Resource\",\"call_number_browse\":\"Electronic Resource\"}}","location_code_s":["sci","elf1"],"location":["Lewis
+        Library"],"location_display":["Lewis Library","Online - *ONLINE*"],"advanced_location_s":["sci","elf1","Lewis
+        Library","Online"],"name_title_browse_s":["Gray, Brayton, 1940-. Abelian Properties
+        of Anick Spaces"],"call_number_display":["QA3 .A57 no.1162","Electronic Resource"],"call_number_browse_s":["QA3
+        .A57 no.1162","Electronic Resource"],"timestamp":"2017-04-22T07:14:25.173Z"}}}'
+    http_version: 
+  recorded_at: Thu, 01 Jun 2017 23:05:00 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10150938
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Jun 2017 23:04:26 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 909bbc05-d810-4eba-a3c9-09b4281846d2
+      X-Runtime:
+      - '0.142732'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"2800d464709dda3c7e5e6382d2c032c7"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9939337":{"more_items":false,"location":"sci","copy_number":0,"item_id":7572217,"on_reserve":"N","status":"Inaccessible","label":"Lewis
+        Library"},"9956499":{"more_items":false,"location":"elf1","status":"Online","label":"Online
+        - *ONLINE*"}}'
+    http_version: 
+  recorded_at: Thu, 01 Jun 2017 23:05:01 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9939337
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Jun 2017 23:04:27 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 0d207254-55ca-44d9-a072-4dd0070e8b7b
+      X-Runtime:
+      - '0.071406'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"2c99df2aac3c1dd23c19d1d86fd072dc"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101097688129","id":7572217,"location":"sci","copy_number":0,"item_sequence_number":1,"status":"Inaccessible","on_reserve":"N","label":"Lewis
+        Library"}]'
+    http_version: 
+  recorded_at: Thu, 01 Jun 2017 23:05:02 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/elf1.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Jun 2017 23:04:28 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 40ee32ad-7b0d-43ca-8614-5301883a1398
+      X-Runtime:
+      - '0.025651'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"68a9c211cc39a3aada16691cca02adba"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"*ONLINE*","code":"elf1","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Online","code":"online","order":4},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 01 Jun 2017 23:05:03 GMT
 recorded_with: VCR 3.0.3

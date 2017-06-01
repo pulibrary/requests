@@ -43,84 +43,96 @@
       <%= hidden_fields_borrow_direct @request %>
       <script type='text/javascript'>
         $( document ).ready(function() {
+          $('.table-responsive').hide();
+          $('.submit--request').hide();
 
-        var auth_id = $('input#bd_auth_id');
-        var chkbox = $(this).find('input:checkbox.request--select');
-        $(':input[type="submit"]').prop('disabled', true);
-        $('select.request-options').prop('disabled', true);
+          $('#lookup').slideDown(1000);
+          var auth_id = $('input#bd_auth_id');
+          var chkbox = $(this).find('input:checkbox.request--select');
+          $(':input[type="submit"]').prop('disabled', true);
+          $('select.request-options').prop('disabled', true);
 
-        $.ajax({
-          method: "POST",
-          url: "/requests/borrow_direct",
-          data: jQuery.param({barcode: '<%= @patron[:barcode] %>', isbns: '<%= @request.isbn_numbers.first %>'}),
-          contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-          success: function (response) {
-            $('#lookup').hide();
-            $('.results-spinner-large').hide();
-            if (response.hasOwnProperty("error")){
-              $('#bd_error').show();
-            } else {
+          $.ajax({
+            method: "POST",
+            url: "/requests/borrow_direct",
+            data: jQuery.param({barcode: '<%= @patron[:barcode] %>', isbns: '<%= @request.isbn_numbers.first %>'}),
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (response) {
+              $('#lookup').fadeOut(500);
+              $('.table-responsive').delay(500).fadeIn(500);
+              $('.submit--request').delay(500).fadeIn(500);
+              if (response.hasOwnProperty("error")){
+                $('#bd_error').show();
+              } else {
 
-              var rows = $('tr');
+                var rows = $('tr');
 
-              $.each(rows, function( key, val ) {
-                var pickup_select = $(this).find('.recall-pickup');
-                var request_options = $(this).find('select.request-options');
+                $.each(rows, function( key, val ) {
+                  var pickup_select = $(this).find('.recall-pickup');
+                  var request_options = $(this).find('select.request-options');
 
-                  if (response.response_hash.Available) {
-                    $.each(response.response_hash.PickupLocation, function( k, v ) {
-                      $.each(v, function( key, value ) {
-                        if(key === 'PickupLocationDescription'){
-                          pickup_select.append($("<option></option>")
-                              .attr("value",value)
-                              .text(value));
-                        }
+                    if (response.response_hash.Available) {
+                      $.each(response.response_hash.PickupLocation, function( k, v ) {
+                        $.each(v, function( key, value ) {
+                          if(key === 'PickupLocationDescription'){
+                            pickup_select.append($("<option></option>")
+                                .attr("value",value)
+                                .text(value));
+                          }
+                        });
                       });
-                    });
-                    auth_id.val(response.auth_id);
+                      auth_id.val(response.auth_id);
 
-                    chkbox.first().prop('checked', true);
+                      chkbox.first().prop('checked', true);
 
-                    $('#bd_available').show();
-                    request_options.find('option').not(':eq(1)').remove();
-                    pickup_select.show();
-                    //$('.recall-pickup').first().focus();
-                  } else {
-                    $('#bd_not_available').show();
-                  }
-                  request_options.prop('disabled', false);
-                  $(':input[type="submit"]').prop('disabled', false);
+                      $('#bd_available').delay(500).fadeIn(500);
+                      request_options.find('option').not(':eq(1)').remove();
+                      pickup_select.show();
+                      //$('.recall-pickup').first().focus();
+                    } else {
+                      $('#bd_not_available').delay(500).fadeIn(500);
+                    }
+                    request_options.prop('disabled', false);
+                    $(':input[type="submit"]').prop('disabled', false);
 
-              });
+                });
 
+              }
+            },
+          error: function () {
+            alert("We are sorry for the inconvenience, but we were unable to complete your request.");
             }
-          },
-        error: function () {
-          alert("We are sorry for the inconvenience, but we were unable to complete your request.");
+          }).done(function( msg ) {
+
+            // if successful update the auth_id created in hidden_fields_borrow_direct
+            // if successful update the pickup location widget for the bd requestable item
+            // if failed due to patron auth error - print message about account issues
+            // if failed due to search bd item should display fallback link
+
           }
-        }).done(function( msg ) {
-
-          // if successful update the auth_id created in hidden_fields_borrow_direct
-          // if successful update the pickup location widget for the bd requestable item
-          // if failed due to patron auth error - print message about account issues
-          // if failed due to search bd item should display fallback link
-
-        }
-      );
+        );
       });
       </script>
       <div class='umlaut-services'>
       <div id="borrow_direct" class='availability--panel availability_borrow-direct'>
+
+      <div id="lookup" role="alert" class='alert alert-info' aria-live="polite">
+        <h1>Give us a moment to check Borrow Direct for your item.</h1>
         <div class='results-spinner-large'></div>
-        <p id="lookup" role="alert" class="alert alert-info">
-          Checking BorrowDirect availablility for you.
+        <p>
+          Sometimes this search fails, even when Borrow Direct has what you are looking for.
+          If that happens, your next step should be to check Borrow Direct yourself by selecting
+          it from the Delivery Options list and following the link provided.
         </p>
+      </div>
+
         <p id='bd_available' class='alert alert-success' aria-live="polite" style='display: none'>
-          <strong>Good news!</strong> This title is available via BorrowDirect,
-          the fastest way to get an item that is not currently on the shelf.
+          <strong>Good news!</strong> This title is available via Borrow Direct,
+          the fastest way to get an item that is not currently on the shelf. You just need to select a delivery location below.
         </p>
         <p id='bd_not_available' class='alert alert-warning' aria-live="polite" style='display: none'>
-          <strong>You have some options.</strong> Please select one from below.
+          <strong>Don't worry!</strong> Your best bet is still Borrow Direct, so check that first. If you can't
+          find it you have some other options in the form below.
         </p>
         <p id='bd_error' class='alert alert-danger' aria-live="polite" style='display: none'>
           <strong>There seems to be a problem with your account.</strong>

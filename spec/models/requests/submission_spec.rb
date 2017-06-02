@@ -972,7 +972,7 @@ describe Requests::Submission do
             "edd_volume_number" => "",
             "edd_issue" => "",
             "edd_author" => "",
-            "edd_art_title" => "foo",
+            "edd_art_title" => "",
             "edd_note" => "",
             "pickup" => ""
           },

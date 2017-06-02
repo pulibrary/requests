@@ -66,7 +66,7 @@ module Requests
             end
             # for serials - copy level check
             if (auth_user? && requestable.enumerated?)
-              unless requestable.missing?
+              unless requestable.missing? || requestable.inaccessible?
                 services << 'recall'
               end
             end

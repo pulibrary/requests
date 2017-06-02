@@ -25,6 +25,9 @@ module Requests
       if delivery_mode == 'e'
         item[:pickup] = 'PA'
       end
+      if item[:edd_start_page].blank?
+        item[:edd_start_page] = '?'
+      end
       {
         Bbid: bib[:id],
         barcode: user[:user_barcode],

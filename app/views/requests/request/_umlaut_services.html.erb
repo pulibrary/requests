@@ -61,15 +61,21 @@
               $('#lookup').fadeOut(500);
               $('.table-responsive').delay(500).fadeIn(500);
               $('.submit--request').delay(500).fadeIn(500);
+              var rows = $('tr');
+
               if (response.hasOwnProperty("error")){
+                if (response.error.indexOf("Timeout") > -1) {
+                  $('#bd_error').append("<strong>Borrow Direct is too slow for us at the moment, but you can still search for your item through their site.</strong><p>Choose one of the options below.</p>");
+                } else {
+                  $('#bd_error').append("<strong>There was a problem with Borrow Direct.</strong><p>Choose one of the options below.</p>");
+                }
                 $('#bd_error').show();
+                $('select.request-options').prop('disabled', false);
+                // $('.recall-pickup').show();
               } else {
-
-                var rows = $('tr');
-
                 $.each(rows, function( key, val ) {
-                  var pickup_select = $(this).find('.recall-pickup');
-                  var request_options = $(this).find('select.request-options');
+                    var pickup_select = $(this).find('.recall-pickup');
+                    var request_options = $(this).find('select.request-options');
 
                     if (response.response_hash.Available) {
                       $.each(response.response_hash.PickupLocation, function( k, v ) {
@@ -87,17 +93,15 @@
 
                       $('#bd_available').delay(500).fadeIn(500);
                       request_options.find('option').not(':eq(1)').remove();
-                      pickup_select.show();
+                      request_options.prop('disabled', false);
                       //$('.recall-pickup').first().focus();
                     } else {
                       $('#bd_not_available').delay(500).fadeIn(500);
                     }
-                    request_options.prop('disabled', false);
-                    $(':input[type="submit"]').prop('disabled', false);
-
                 });
-
               }
+              // $('.recall-pickup').show();
+              $(':input[type="submit"]').prop('disabled', false);
             },
           error: function () {
             alert("We are sorry for the inconvenience, but we were unable to complete your request.");
@@ -134,10 +138,7 @@
           <strong>Don't worry!</strong> Your best bet is still Borrow Direct, so check that first. If you can't
           find it you have some other options in the form below.
         </p>
-        <p id='bd_error' class='alert alert-danger' aria-live="polite" style='display: none'>
-          <strong>There seems to be a problem with your account.</strong>
-          Please review your current account status and contact circulation to resolve the problem.
-        </p>
+        <p id='bd_error' class='alert alert-danger' aria-live="polite" style='display: none'></p>
         <p id='campus_available' class='alert alert-info' aria-live="polite" style='display: none'>
           <strong>There is another copy of this item available at Princeton</strong>
           <a href="">Show me the available item!</a>

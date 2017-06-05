@@ -6,7 +6,7 @@ defaults: &defaults
   pulsearch_base: https://pulsearch.princeton.edu
   proxy_base: https://library.princeton.edu/resolve/lookup?url=
   stackmap_base: https://library.princeton.edu/utils/map
-  voyager_api_base: http://catalog.princeton.edu:7014
+  voyager_api_base: https://catalog.princeton.edu:7014
   #gfa_base: http://libweb5.princeton.edu/RecapRequestService
   gfa_base: http://libweb5.princeton.edu/ReCAPNoUI/Default.aspx
   aeon_base: https://library.princeton.edu/aeon/aeon.dll

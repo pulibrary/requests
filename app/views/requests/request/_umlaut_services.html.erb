@@ -49,8 +49,6 @@
           $('#lookup').slideDown(1000);
           var auth_id = $('input#bd_auth_id');
           var chkbox = $(this).find('input:checkbox.request--select');
-          $(':input[type="submit"]').prop('disabled', true);
-          $('select.request-options').prop('disabled', true);
 
           $.ajax({
             method: "POST",
@@ -70,8 +68,6 @@
                   $('#bd_error').append("<strong>There was a problem with Borrow Direct.</strong><p>Choose one of the options below.</p>");
                 }
                 $('#bd_error').show();
-                $('select.request-options').prop('disabled', false);
-                // $('.recall-pickup').show();
               } else {
                 $.each(rows, function( key, val ) {
                     var pickup_select = $(this).find('.recall-pickup');
@@ -93,27 +89,16 @@
 
                       $('#bd_available').delay(500).fadeIn(500);
                       request_options.find('option').not(':eq(1)').remove();
-                      request_options.prop('disabled', false);
-                      //$('.recall-pickup').first().focus();
                     } else {
                       $('#bd_not_available').delay(500).fadeIn(500);
                     }
                 });
               }
-              // $('.recall-pickup').show();
-              $(':input[type="submit"]').prop('disabled', false);
             },
           error: function () {
             alert("We are sorry for the inconvenience, but we were unable to complete your request.");
             }
-          }).done(function( msg ) {
-
-            // if successful update the auth_id created in hidden_fields_borrow_direct
-            // if successful update the pickup location widget for the bd requestable item
-            // if failed due to patron auth error - print message about account issues
-            // if failed due to search bd item should display fallback link
-
-          }
+          }).done(function( msg ) { }
         );
       });
       </script>

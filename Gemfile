@@ -11,7 +11,7 @@ group :development, :test do
   gem 'pry' unless ENV['CI']
   gem 'pry-byebug' unless ENV['CI']
   gem 'rubocop', '0.48'
-  gem "simplecov", require: false
+  gem "simplecov"
 end
 
 # Declare any dependencies that are still in development here instead of in

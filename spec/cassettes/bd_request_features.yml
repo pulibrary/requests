@@ -1,0 +1,368 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/1358454.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 973811ff-3911-4541-8b95-94d71a1685ea
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"4c34a2571cbf577bc4dc3b111ca56435"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.050262'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Wed, 07 Jun 2017 19:20:28 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"1358454","author_display":["Rahman,
+        Fazlur, 1919-1988"],"author_citation_display":["Rahman, Fazlur"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Rahman,
+        Fazlur\"}","author_s":["Rahman, Fazlur, 1919-1988"],"opensearch_display":["Rahman,
+        Fazlur, 1919-1988","Islam / Fazlur Rahman.","Islam"],"marc_relator_display":["Author"],"title_display":"Islam
+        / Fazlur Rahman.","title_t":["Islam / Fazlur Rahman."],"title_citation_display":["Islam
+        /"],"compiled_created_t":["Islam / Fazlur Rahman."],"edition_display":["2d
+        ed."],"pub_created_display":["Chicago : University of Chicago Press, 1979."],"pub_created_s":["Chicago
+        : University of Chicago Press, 1979."],"pub_citation_display":["Chicago: University
+        of Chicago Press"],"pub_date_display":["1979"],"pub_date_start_sort":1979,"cataloged_tdt":"2000-06-13T04:00:00Z","format":["Book"],"description_display":["ix,
+        285 p. ; 24 cm."],"description_t":["ix, 285 p. ; 24 cm."],"notes_display":["Includes
+        index."],"bib_ref_notes_display":["Bibliography: p. 275-279."],"language_facet":["English"],"language_code_s":["eng"],"subject_display":["Islam"],"subject_t":["Islam"],"subject_facet":["Islam"],"isbn_display":["0226702804
+        0226702812"],"lccn_display":["   78068547  "],"lccn_s":["78068547"],"isbn_s":["9780226702803","9780226702810"],"isbn_t":["9780226702803","9780226702810"],"oclc_s":["4592775"],"other_version_s":["9780226702803","9780226702810","ocm04592775"],"holdings_1display":"{\"1559826\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"copy_number\":\"1\",\"call_number\":\"BP161.2
+        .R29 1979\",\"call_number_browse\":\"BP161.2 .R29 1979\"},\"1559827\":{\"location\":\"Firestone
+        Library - Near East Collections\",\"library\":\"Firestone Library\",\"location_code\":\"nec\",\"copy_number\":\"1\",\"call_number\":\"BP161.2
+        .R29 1979\",\"call_number_browse\":\"BP161.2 .R29 1979\"}}","location_code_s":["f","nec"],"location":["Firestone
+        Library"],"location_display":["Firestone Library","Firestone Library - Near
+        East Collections"],"advanced_location_s":["f","nec","Firestone Library"],"name_title_browse_s":["Rahman,
+        Fazlur, 1919-1988. Islam"],"call_number_display":["BP161.2 .R29 1979"],"call_number_browse_s":["BP161.2
+        .R29 1979"],"timestamp":"2017-04-22T00:02:06.290Z"}}}'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 19:20:28 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=1358454
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 Jun 2017 19:20:28 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 3c6eb8b1-7d2c-4376-91b1-44013ed1682d
+      X-Runtime:
+      - '0.088605'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"99e4d1324f74e712fadef3f195fa3515"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"1559826":{"more_items":false,"location":"f","copy_number":1,"item_id":1646211,"on_reserve":"N","due_date":"6/16/2017","status":"Renewed","label":"Firestone
+        Library"},"1559827":{"more_items":false,"location":"nec","copy_number":1,"item_id":1646212,"on_reserve":"N","due_date":"6/16/2017","status":"Renewed","label":"Firestone
+        Library - Near East Collections"}}'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 19:20:28 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=1559826
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 Jun 2017 19:20:28 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - e26009b8-f6f0-418d-9923-549c892c36a2
+      X-Runtime:
+      - '0.073138'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"9bac4dc2644077b8653150a54f034583"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101006880221","id":1646211,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Renewed","on_reserve":"N","due_date":"6/16/2017","label":"Firestone
+        Library"}]'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 19:20:28 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=1559827
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 Jun 2017 19:20:28 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4215829f-697e-4ae3-aa60-c3e846bb48ce
+      X-Runtime:
+      - '0.069172'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"0ae6b839fc7f368df516b4a6d54b27d2"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101008540922","id":1646212,"location":"nec","copy_number":1,"item_sequence_number":1,"status":"Renewed","on_reserve":"N","due_date":"6/16/2017","label":"Firestone
+        Library - Near East Collections"}]'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 19:20:28 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/f.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 Jun 2017 19:20:28 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 7e2cd556-d49d-4d45-8d36-7d94aac07713
+      X-Runtime:
+      - '0.065458'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"1c714b39527cf4e5879bcc7824294043"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"f","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
+        Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
+        Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 19:20:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/nec.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 Jun 2017 19:20:29 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 00514dbf-eb33-4452-a1a8-de7ab94b9868
+      X-Runtime:
+      - '0.026085'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"c1a34e1e8cee56e8b65394847d03016c"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Near East Collections","code":"nec","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
+        Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
+        Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 19:20:29 GMT
+- request:
+    method: post
+    uri: https://borrow-direct.relais-host.com/portal-service/user/authentication
+    body:
+      encoding: UTF-8
+      string: '{"ApiKey":"Q6piuhuKatvTRZS9/SKGb5HgmV+PPC+ePoiDI6/o/CdwG3PxvXo=","PartnershipId":"BD","UserGroup":"patron","LibrarySymbol":"PRINCETON","PatronId":"22101008199999"}'
+    headers:
+      User-Agent:
+      - ruby borrow_direct gem 1.2.0 (HTTPClient 2.8.3) https://github.com/jrochkind/borrow_direct
+      Accept:
+      - "*/*"
+      Date:
+      - Wed, 07 Jun 2017 20:43:18 GMT
+      Content-Type:
+      - application/json
+      Accept-Language:
+      - en
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.1
+      Date:
+      - Wed, 07 Jun 2017 20:43:21 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Content-Length:
+      - '128'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"Problem":{"Code":"PUBAN003","Message":"Authentication failed","ILSMessage":"Patron
+        does not exist. Patron barcode not found"}}'
+    http_version: 
+  recorded_at: Wed, 07 Jun 2017 20:43:22 GMT
+recorded_with: VCR 3.0.3

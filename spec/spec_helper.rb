@@ -27,7 +27,6 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
 require 'devise'
-require 'simplecov'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
@@ -204,6 +203,15 @@ def wait_for_ajax
     counter += 1
     sleep(0.1)
     raise 'AJAX request took longer than 20 seconds.' if counter >= 20
+  end
+end
+
+def wait_for_bd
+  counter = 0
+  while page.execute_script('return $.active').to_i > 0
+    counter += 1
+    sleep(0.1)
+    raise 'Borrow Direct request took longer than 60 seconds.' if counter >= 60
   end
 end
 

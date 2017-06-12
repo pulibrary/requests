@@ -145,6 +145,15 @@ module Requests
       hidden_field_tag "requestable[][type]", "", value: type
     end
 
+    def gfa_lookup lib_code
+      if lib_code == "firestone"
+        gfa_code = "PA"
+      else
+        lib = DELIVERY_LOCATIONS.select { |_key, hash| hash["library"]["code"] == lib_code }
+        gfa_code = lib.keys.first.to_s
+      end
+    end
+
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
@@ -155,7 +164,15 @@ module Requests
         end
         # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-          locs = self.available_pickups(requestable, default_pickups)
+          if (requestable.services & ['on_order', 'in_process']).empty?
+            locs = self.available_pickups(requestable, default_pickups)
+          else
+            if requestable.location[:holding_library].blank?
+              locs = [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
+            else
+              locs = [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
+            end
+          end
           if locs.size > 1
             concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
           else

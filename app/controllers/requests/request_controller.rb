@@ -123,7 +123,6 @@ module Requests
           end
 
           if !recap && !recall && !bd
-            #msg = I18n.t('requests.submit.#{@submission.service_types[0]}_success')
             @services << Requests::Generic.new(@submission)
           end
 
@@ -132,7 +131,7 @@ module Requests
           end
 
           if @submission.service_types.include? 'in_process'
-            success_message = I18n.t('requests.submit.in_process_success')  
+            success_message = I18n.t('requests.submit.in_process_success')
           end
 
           @services.each do |service|

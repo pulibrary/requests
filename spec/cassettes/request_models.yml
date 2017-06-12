@@ -16778,4 +16778,230 @@ http_interactions:
         NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PB","staff_only":false,"pickup_location":false,"digital_location":false}]}'
     http_version: 
   recorded_at: Tue, 16 May 2017 21:49:46 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/10144698.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - f1b32965-540d-490d-80c6-d520c9b568c5
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"ec9679c82e51d4ad37cd6cbfc2aa1233"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.020914'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 13 Jun 2017 18:14:12 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"10144698","author_display":["Dyk, Janna"],"author_citation_display":["Dyk,
+        Janna"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Dyk,
+        Janna\"}","author_s":["Dyk, Janna"],"opensearch_display":["Dyk, Janna","ADAM
+        GOLFER: A HOUSE WITHOUT A ROOF. Janna Dyk."],"marc_relator_display":["Author"],"title_display":"ADAM
+        GOLFER: A HOUSE WITHOUT A ROOF. Janna Dyk.","title_t":["ADAM GOLFER: A HOUSE
+        WITHOUT A ROOF. Janna Dyk."],"title_citation_display":["ADAM GOLFER: A HOUSE
+        WITHOUT A ROOF."],"compiled_created_t":["ADAM GOLFER: A HOUSE WITHOUT A ROOF.
+        Janna Dyk."],"pub_created_display":["Booklyn, Brooklyn. Distributed by Artbook/D.A.P.,
+        New York. 2017"],"pub_created_s":["Booklyn, Brooklyn. Distributed by Artbook/D.A.P.,
+        New York. 2017"],"pub_citation_display":["Booklyn, Brooklyn. Distributed by
+        Artbook/D.A.P., New York"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"cataloged_tdt":"2017-03-30T18:46:00Z","format":["Book"],"description_display":["164
+        pp. with 83 ills. (48 col.). 30 x 22 cm."],"description_t":["164 pp. with
+        83 ills. (48 col.). 30 x 22 cm."],"language_display":["Bilingual in English,
+        Hebrew and Arabic."],"language_facet":["English"],"language_code_s":["eng"],"isbn_display":["9780692726501
+        (Paperbound)"],"isbn_s":["9780692726501"],"isbn_t":["9780692726501"],"other_version_s":["9780692726501"],"holdings_1display":"{\"9933878\":{\"location\":\"ReCAP
+        - Marquand Library use only\",\"library\":\"ReCAP\",\"location_code\":\"rcppj\"}}","location_code_s":["rcppj"],"location":["ReCAP","Marquand
+        Library"],"location_display":["ReCAP - Marquand Library use only"],"advanced_location_s":["rcppj","ReCAP","Marquand
+        Library"],"name_title_browse_s":["Dyk, Janna. ADAM GOLFER: A HOUSE WITHOUT
+        A ROOF"],"timestamp":"2017-06-09T04:45:08.274Z"}}}'
+    http_version: 
+  recorded_at: Tue, 13 Jun 2017 18:14:12 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10144698
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Jun 2017 18:14:12 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 8a14f47e-3efb-4781-888d-31ff2d415f1b
+      X-Runtime:
+      - '0.071186'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"29bb341b40a86a232531d92d0d09377e"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9933878":{"more_items":false,"location":"rcppj","copy_number":0,"item_id":7584750,"on_reserve":"N","status":"On-Site
+        - In Process","label":"ReCAP - Marquand Library use only"}}'
+    http_version: 
+  recorded_at: Tue, 13 Jun 2017 18:14:12 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9933878
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Jun 2017 18:14:12 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4868edba-158b-4269-94c8-91669ea182af
+      X-Runtime:
+      - '0.065859'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b5da94465c62daa4cde2e50fb1775a03"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101099207571","id":7584750,"location":"rcppj","copy_number":0,"item_sequence_number":1,"status":"On-Site
+        - In Process","on_reserve":"N","label":"ReCAP - Marquand Library use only"}]'
+    http_version: 
+  recorded_at: Tue, 13 Jun 2017 18:14:12 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/rcppj.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Jun 2017 18:14:12 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 1b8016f0-19dc-4bbe-ab2e-a90c821aea43
+      X-Runtime:
+      - '0.014412'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6cc20f57f7cd4360c3826833bb10b8e9"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Marquand Library use only","code":"rcppj","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":true,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":{"label":"Marquand
+        Library","code":"marquand","order":2},"hours_location":null,"delivery_locations":[{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Technical
+        Services, Holdings Management","address":"One Washington Rd. Princeton, NJ
+        08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services","address":"693 Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Preservation","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Tue, 13 Jun 2017 18:14:12 GMT
 recorded_with: VCR 3.0.3

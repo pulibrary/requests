@@ -12,6 +12,16 @@ en:
       service_error_conf_msg: "The following errors were reported with a Library Request Service:"
     submit:
       success: "Request submitted. See confirmation email with details about when your item(s) will be available."
+      recap_success: "Request submitted to ReCAP, our offsite storage facility. You can expect delivery within 48 hours. See confirmation email with details about when your item(s) will be available."
+      recall_success: "You have successfully placed a recall. The item may not be available for pickup for several weeks, at which point you will be notified. See confirmation email with details about when your item(s) will be available."
+      bd_success: "Request submitted to BorrowDirect. You can expect delivery within four business days or less. See confirmation email with details about when your item(s) will be available."
+      on_order_success: "Request of On Order item submitted. We will notify you when this item is available."
+      in_process_success: "Request of In Process item submitted. We will notify you when this item is available."
+      annex_success: "Annex item has been Requested."
+      annexa_success: "Annex item has been Requested."
+      annexb_success: "Annex item has been Requested."
+      paging_success: "Item has been paged."
+      trace_success: "Item is now being traced."
       error: "We were unable to process your request. Correct the highlighted errors."
       service_error: "We were unable to process your request due to a system error. Our staff has been notified and we will contact you shortly."
     no_services:

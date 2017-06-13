@@ -93,10 +93,13 @@ module Requests
           @services = []
           success_message = I18n.t('requests.submit.success')
           service_errors = []
-          recap = (recap_services & @submission.service_types).length
+          if (recap_services & @submission.service_types).length > 1
+            recap = true
+          end
           recall = @submission.service_types.include? 'recall'
           bd = @submission.service_types.include? 'bd'
           if recap
+            success_message = I18n.t('requests.submit.recap_success')
             if @submission.user['user_barcode'] == 'ACCESS'
               # Access users cannot use recap service directly
               @services << Requests::Generic.new(@submission)
@@ -106,10 +109,12 @@ module Requests
           end
 
           if recall
+            success_message = I18n.t('requests.submit.recall_success')
             @services << Requests::Recall.new(@submission)
           end
 
           if bd
+            success_message = I18n.t('requests.submit.bd_success')
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
@@ -119,6 +124,14 @@ module Requests
 
           if !recap && !recall && !bd
             @services << Requests::Generic.new(@submission)
+          end
+
+          if @submission.service_types.include? 'on_order'
+            success_message = I18n.t('requests.submit.on_order_success')
+          end
+
+          if @submission.service_types.include? 'in_process'
+            success_message = I18n.t('requests.submit.in_process_success')
           end
 
           @services.each do |service|

@@ -179,9 +179,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
         select('Firestone Library', :from => 'requestable__pickup')
         expect(page).to have_button('Request this Item', disabled: false)
-        # click_button 'Request this Item'
-        # wait_for_ajax
-        # expect(page).to have_content 'Request submitted'
       end
 
       it 'does display the online access message' do
@@ -196,9 +193,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         select('Marquand Library of Art and Archaeology', :from => 'requestable__pickup')
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'
-        # wait_for_ajax
-        expect(page).to have_content 'Request submitted'
-        # expect(page).to have_content 'We were unable to process your request'
+        expect(page).to have_content 'Request of In Process item submitted.'
       end
 
       it 'allows CAS patrons to request On-Order items' do

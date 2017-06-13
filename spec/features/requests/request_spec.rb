@@ -190,7 +190,16 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       it 'allows CAS patrons to request In-Process items', js: true do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
-        select('Marquand Library of Art and Archaeology', :from => 'requestable__pickup')
+        expect(page).to have_button('Request this Item', disabled: false)
+        click_button 'Request this Item'
+        expect(page).to have_content 'Request of In Process item submitted.'
+      end
+
+      it 'makes sure In-Process items can only be delivered to their holding library', js: true do
+        visit "/requests/#{in_process_id}"
+        expect(page).to have_content 'In Process'
+        pickup_code = page.find_by_id('requestable__pickup', :visible => false).value
+        expect(pickup_code).to eq 'PJ'
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'
         expect(page).to have_content 'Request of In Process item submitted.'

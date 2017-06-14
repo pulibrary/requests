@@ -175,6 +175,14 @@ module Requests
       services.include?('trace') ? true : false
     end
 
+    def pending?
+      if on_order? || in_process? || preservation?
+        true
+      else
+        false
+      end
+    end
+
     def ill_eligible?
       # return true if services.include?('ill')
       services.include?('ill') ? true : false

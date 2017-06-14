@@ -134,6 +134,10 @@ module Requests
             success_message = I18n.t('requests.submit.in_process_success')
           end
 
+          if @submission.service_types.include? 'pres'
+            success_message = I18n.t('requests.submit.pres_success')
+          end
+
           @services.each do |service|
             service.errors.each do |error|
               service_errors << error
@@ -150,6 +154,9 @@ module Requests
             unless bd
               @submission.service_types.each do |type|
                 Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+                if ['on_order', 'in_process', 'pres'].include? type
+                  Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
+                end
               end
             end
           }

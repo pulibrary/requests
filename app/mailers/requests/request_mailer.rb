@@ -14,10 +14,17 @@ module Requests
     def pres_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.pres.email')
-      cc_email = [@submission.email]
       @url = 'http://example.com/login'
       mail(to: destination_email,
-           cc: cc_email,
+           from: @submission.email,
+           subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
+    end
+
+    def pres_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      @url = 'http://example.com/login'
+      mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
     end
@@ -47,10 +54,17 @@ module Requests
     def on_order_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [@submission.email]
       @url = 'http://example.com/login'
       mail(to: destination_email,
-           cc: cc_email,
+           from: destination_email,
+           subject: subject_line(I18n.t('requests.on_order.email_subject'), @submission.user_barcode))
+    end
+
+    def on_order_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      @url = 'http://example.com/login'
+      mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.on_order.email_subject'), @submission.user_barcode))
     end
@@ -58,10 +72,17 @@ module Requests
     def in_process_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [@submission.email]
       @url = 'http://example.com/login'
       mail(to: destination_email,
-           cc: cc_email,
+           from: destination_email,
+           subject: subject_line(I18n.t('requests.in_process.email_subject'), @submission.user_barcode))
+    end
+
+    def in_process_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      @url = 'http://example.com/login'
+      mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.in_process.email_subject'), @submission.user_barcode))
     end

@@ -67,12 +67,65 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.pres.email')])
-      expect(mail.cc).to eq([submission_for_preservation.email])
-      expect(mail.from).to eq([I18n.t('requests.pres.email')])
+      expect(mail.from).to eq([submission_for_preservation.email])
     end
 
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.pres.email_conf_msg')
+    end
+  end
+
+  context "send preservation email patron confirmation" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9533612",
+          "call_number" => "TR465 .C666 2016",
+          "location_code" => "pres",
+          "item_id" => "3059236",
+          "barcode" => "32101044283008",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "pres",
+          "pickup" => "PA"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "9712355",
+        "title" => "The atlas of water damage on inkjet-printed fine art /",
+        "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
+      }
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_preservation) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("pres_confirmation", submission_for_preservation).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
+      expect(mail.to).to eq([submission_for_preservation.email])
+      expect(mail.from).to eq([submission_for_preservation.email])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.pres.patron_conf_msg')
     end
   end
 
@@ -226,12 +279,61 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.on_order.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
-      expect(mail.cc).to eq([submission_for_on_order.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
     end
 
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.on_order.email_conf_msg')
+    end
+  end
+
+  context "send on_order email patron confirmation" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9878235",
+          "location_code" => "j",
+          "item_id" => "10081566",
+          "status" => "On-Order",
+          "pickup" => "PA"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "10081566",
+        "title" => "Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
+        "author" => "Goto, Seimei"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_on_order) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("on_order_confirmation", submission_for_on_order).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.on_order.email_subject'))
+      expect(mail.to).to eq([submission_for_on_order.email])
+      expect(mail.from).to eq([submission_for_on_order.email])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.on_order.patron_conf_msg')
     end
   end
 
@@ -280,12 +382,64 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.in_process.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
-      expect(mail.cc).to eq([submission_for_in_process.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
     end
 
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.in_process.email_conf_msg')
+    end
+  end
+
+  context "send in_process email patron confirmation" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9479064",
+          "call_number" => "PQ8098.429.E58 C37 2015",
+          "location_code" => "f",
+          "item_id" => "7384386",
+          "barcode" => "32101098590092",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "in_process"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "9646099",
+        "title" => "Cartas romanas /",
+        "author" => "Serrano del Pozo, Ignacio"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_in_process) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("in_process_confirmation", submission_for_in_process).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.in_process.email_subject'))
+      expect(mail.to).to eq([submission_for_in_process.email])
+      expect(mail.from).to eq([submission_for_in_process.email])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.in_process.patron_conf_msg')
     end
   end
 

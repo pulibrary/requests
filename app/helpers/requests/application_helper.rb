@@ -164,14 +164,14 @@ module Requests
         end
         # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-          if (requestable.services & ['on_order', 'in_process']).empty?
-            locs = self.available_pickups(requestable, default_pickups)
-          else
+          if requestable.pending?
             if requestable.location[:holding_library].blank?
               locs = [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
             else
               locs = [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
             end
+          else
+            locs = self.available_pickups(requestable, default_pickups)
           end
           if locs.size > 1
             concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")

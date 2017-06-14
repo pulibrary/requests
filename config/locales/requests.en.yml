@@ -16,6 +16,7 @@ en:
       recall_success: "You have successfully placed a recall. The item may not be available for pickup for several weeks, at which point you will be notified. See confirmation email with details about when your item(s) will be available."
       bd_success: "Request submitted to BorrowDirect. You can expect delivery within four business days or less. See confirmation email with details about when your item(s) will be available."
       on_order_success: "Request of On Order item submitted. We will notify you when this item is available."
+      pres_success: "Request of Preservation item submitted. We will notify you when the preservation work is complete and this item is available."
       in_process_success: "Request of In Process item submitted. We will notify you when this item is available."
       annex_success: "Annex item has been Requested."
       annexa_success: "Annex item has been Requested."
@@ -44,7 +45,8 @@ en:
       email: "fstcirc@princeton.edu"
       email_subject: "Preservation Office Request"
       brief_msg: "Item in Preservation Office."
-      email_conf_msg: "You will be notified via email when your item is ready for pickup from the Preservation Office."
+      email_conf_msg: "The following Preservation item has been requested:"
+      patron_conf_msg: "You will be notified via email when your item is ready for pickup from the Preservation Office."
     on_shelf:
       brief_msg: "Item on Shelf. Consult shelf location map."
       access_msg: 'Access Users must obtain a pass to enter the Library.'
@@ -52,7 +54,8 @@ en:
       email: "fstcirc@princeton.edu"
       email_subject: "On Order Request"
       brief_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pickup."
-      email_conf_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived."
+      email_conf_msg: "The following On Order item has been requested:"
+      patron_conf_msg: "On Order books have not yet been received by the library. You have placed a request to be notified when this item has arrived."
       access_msg: 'Access Users are not eligible for On Order requests.'
     paging:
       email_subject: "Firestone Library Paging Request"
@@ -91,7 +94,8 @@ en:
       email: "fstcirc@princeton.edu"
       email_subject: "In Process Request"
       brief_msg: "In Process materials are typically available in several business days."
-      email_conf_msg: "In Process materials can typically be picked up at the Circulation Desk of your choice in several business days. You will receive an email notification when the material is available."
+      email_conf_msg: "The following In Process materials have been requested:"
+      patron_conf_msg: "In Process materials can typically be picked up at the Circulation Desk of your choice in several business days. You will receive an email notification when the material is available."
       access_msg: 'Access Users are not eligible for In Process requests.'
     aeon:
       brief_msg: "Item available for Use in Reading Room Only. Request at least 24 hours in advance."

@@ -55,14 +55,13 @@
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
+              <% unless @request.fill_in_eligible.include? mfhd and !requestable.has_item_data? %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                   <td class='request--select'>
-                    <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process", "annexa", "annexb"]).present? %>
-                      <%= hidden_field_tag 'requestable[][selected]', false %>
-                      <%= item_checkbox @request.requestable, requestable %>
-                      <% if requestable.has_item_data? %>
-                        <%= hidden_fields_item requestable %>
-                      <% end %>
+                    <%= hidden_field_tag 'requestable[][selected]', false %>
+                    <%= item_checkbox @request.requestable, requestable %>
+                    <% if requestable.has_item_data? %>
+                      <%= hidden_fields_item requestable %>
                     <% end %>
                   </td>
                   <td>
@@ -110,11 +109,12 @@
                   <% end %>
                 </td>
               </tr>
+              <% end %>
               <% if requestable.online? %>
                 <%= render partial: "online_items", locals: { requestable: requestable } %>
               <% end %>
             <% end %>
-            <% if fill_in_eligible? requestable_list %>
+            <% if @request.fill_in_eligible.include? mfhd %>
               <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
             <% end %>
           </tbody>

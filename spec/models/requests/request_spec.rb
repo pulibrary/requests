@@ -1298,6 +1298,46 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context "When passed a system_id for a record with a mixed holding, one of which has no item data and is at an annex." do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '2286894',
+        user: user
+      }
+    }
+    let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
+    subject { request_with_fill_in_eligible_holding }
+
+    describe "#requestable" do
+      describe "#fill_in_eligible" do
+        it "should identify any mfhds that require fill in option" do
+          expect(subject.fill_in_eligible.include? "2576882").to be_truthy
+        end
+      end
+    end
+  end
+
+  context "When passed a system_id for a record with enumerable items at annex" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '3845517',
+        user: user
+      }
+    }
+    let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
+    subject { request_with_fill_in_eligible_holding }
+
+    describe "#requestable" do
+      describe "#fill_in_eligible" do
+        it "should identify any mfhds that require fill in option" do
+          expect(subject.fill_in_eligible.include? "4148813").to be_truthy
+        end
+      end
+    end
+  end
+
   context "A SCSB id with a single holding" do
     let(:user) { FactoryGirl.build(:user) }
     let(:scsb_single_holding_item) { fixture('/SCSB-5290772.json') }

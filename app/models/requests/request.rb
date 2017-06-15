@@ -176,6 +176,26 @@ module Requests
       end
     end
 
+    def fill_in_eligible
+      fill_in = []
+      unless requestable.any? { |request| request.services.include? 'on_order' }
+        requestable.each do |request|
+          unless (request.services & fill_in_services).empty?
+            if request.has_item_data?
+              fill_in << request.holding.first.first if request.item.key?('enum')
+            else
+              fill_in << request.holding.first.first
+            end
+          end
+        end
+      end
+      return fill_in
+    end
+
+    def fill_in_services
+      ["annexa", "annexb"]
+    end
+
     # Does this request object have any available copies?
     def has_loanable_copy?
       copy_available = []

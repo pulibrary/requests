@@ -59,7 +59,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         fill_in 'request_email', :with => 'name@email.com'
         fill_in 'request_user_name', :with => 'foobar'
         click_button(I18n.t('requests.account.other_user_login_btn'))
-        # wait_for_ajax
+        wait_for_ajax
         expect(page).to have_content 'ReCAP Oversize DT549 .E274q'
       end
 
@@ -130,11 +130,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         click_button I18n.t('requests.account.other_user_login_btn')
         expect(page).to have_field 'requestable__selected', disabled: false
         expect(page).to have_field 'requestable_selected_7484608', disabled: true
+        expect(page).to have_field 'requestable_user_supplied_enum_2576882'
         check('requestable__selected', exact: true)
-        # FIXME: comment out in lieu of https://github.com/pulibrary/requests/issues/173
-        # select('Firestone Library', :from => 'requestable__pickup')
-        # click_button 'Request Selected Items'
-        # expect(page).to have_content 'Request submitted'
+        fill_in 'requestable_user_supplied_enum_2576882', :with => 'test'
+        select('Firestone Library', :from => 'requestable__pickup')
+        click_button 'Request Selected Items'
+        expect(page).to have_content 'Request submitted'
       end
     end
   end

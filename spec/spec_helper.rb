@@ -202,7 +202,7 @@ def wait_for_ajax
   while page.execute_script('return $.active').to_i > 0
     counter += 1
     sleep(0.1)
-    raise 'AJAX request took longer than 20 seconds.' if counter >= 20
+    raise 'AJAX request took longer than 60 seconds.' if counter >= 60
   end
 end
 

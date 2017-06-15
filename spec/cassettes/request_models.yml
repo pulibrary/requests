@@ -17004,4 +17004,447 @@ http_interactions:
         Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false}]}'
     http_version: 
   recorded_at: Tue, 13 Jun 2017 18:14:12 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/2286894.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - ef8283b5-0925-4605-98b7-3965211098c1
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"c5020ad1e3fcfac24c9bd4e63d930817"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.045643'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 15 Jun 2017 19:02:32 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"2286894","author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[]}","title_display":"Birth
+        control news.","title_t":["Birth control news."],"opensearch_display":["Birth
+        control news."],"title_citation_display":["Birth control news."],"compiled_created_t":["Birth
+        control news."],"pub_created_display":["London."],"pub_created_s":["London."],"pub_citation_display":["London"],"pub_date_display":["1000"],"pub_date_start_sort":1000,"pub_date_end_sort":1000,"cataloged_tdt":"2006-05-10T14:30:23Z","format":["Journal"],"notes_display":["Caption
+        title."],"language_facet":["English"],"language_code_s":["eng"],"oclc_s":["1536494"],"other_version_s":["ocm01536494"],"holdings_1display":"{\"2576882\":{\"location\":\"Forrestal
+        Annex - Locked Books\",\"library\":\"Forrestal Annex\",\"location_code\":\"l\",\"copy_number\":\"1\",\"call_number\":\"Oversize
+        HQ766 .B53f\",\"call_number_browse\":\"HQ766 .B53f\",\"location_has\":[\"v.[1]-7\"]},\"2576883\":{\"location\":\"Firestone
+        Library\",\"library\":\"Firestone Library\",\"location_code\":\"f\",\"copy_number\":\"1\",\"call_number\":\"HQ766
+        .B53\",\"call_number_browse\":\"HQ766 .B53\",\"location_has\":[\"v.8-23\"]}}","location_code_s":["l","f"],"location":["Forrestal
+        Annex","Firestone Library"],"location_display":["Forrestal Annex - Locked
+        Books","Firestone Library"],"advanced_location_s":["l","f","Forrestal Annex","Firestone
+        Library"],"call_number_display":["Oversize HQ766 .B53f","HQ766 .B53"],"call_number_browse_s":["HQ766
+        .B53f","HQ766 .B53"],"timestamp":"2017-04-22T00:47:02.448Z"}}}'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:02:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=2286894
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Jun 2017 19:02:32 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - df4c2a9b-7a77-4b78-ab09-8e23525e15fe
+      X-Runtime:
+      - '0.127114'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"18a478de4dc8a9c8f4849b6e54a5b3bf"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"2576882":{"more_items":false,"location":"l","status":"On Shelf","label":"Forrestal
+        Annex - Locked Books"},"2576883":{"more_items":true,"location":"f","copy_number":1,"item_id":4288427,"on_reserve":"N","status":"Not
+        Charged","label":"Firestone Library"}}'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:02:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2576882
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Thu, 15 Jun 2017 19:02:33 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - cab47397-5c81-4de4-b3d6-85926caca430
+      X-Runtime:
+      - '0.072186'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 2576882 not found.'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:02:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=2576883
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Jun 2017 19:02:33 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 116d8502-c3dc-42e0-a934-72cb7e604513
+      X-Runtime:
+      - '0.109267'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"e7d530a3584765d3956298cd90d5c645"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101100259603","id":7484608,"location":"f","copy_number":1,"item_sequence_number":8,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 19-23","chron":"1947-44","enum_display":"v.
+        19-23 (1947-44)","label":"Firestone Library"},{"barcode":"32101100259595","id":7484602,"location":"f","copy_number":1,"item_sequence_number":7,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 17-18","chron":"1938-40","enum_display":"v.
+        17-18 (1938-40)","label":"Firestone Library"},{"barcode":"32101100259538","id":6157295,"location":"f","copy_number":1,"item_sequence_number":6,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 15-16","chron":"1936-38","enum_display":"v.
+        15-16 (1936-38)","label":"Firestone Library"},{"barcode":"32101100259546","id":7484598,"location":"f","copy_number":1,"item_sequence_number":5,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 13-14","chron":"1934-36","enum_display":"v.
+        13-14 (1934-36)","label":"Firestone Library"},{"barcode":"32101100259553","id":4288427,"location":"f","copy_number":1,"item_sequence_number":4,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 11-12","chron":"1932-34","enum_display":"v.
+        11-12 (1932-34)","label":"Firestone Library"},{"barcode":"32101100259579","id":7079627,"location":"f","copy_number":1,"item_sequence_number":3,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 10","chron":"1931-32","enum_display":"v.
+        10 (1931-32)","label":"Firestone Library"},{"barcode":"32101100259587","id":7079626,"location":"f","copy_number":1,"item_sequence_number":2,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 9","chron":"1930-31","enum_display":"v.
+        9 (1930-31)","label":"Firestone Library"},{"barcode":"32101100259561","id":4288428,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","enum":"v. 8","chron":"1929-30","enum_display":"v.
+        8 (1929-30)","label":"Firestone Library"}]'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:02:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/l.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Jun 2017 19:02:33 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 64177561-af82-4c7c-b6b3-5596a8de0c37
+      X-Runtime:
+      - '0.068091'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"ef2d73f1c907b46033bd8382a8624af1"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Locked Books","code":"l","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"Forrestal
+        Annex","code":"annexa","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:02:34 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/3845517.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 4506c732-433c-4429-857d-d3f173ac5e9e
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"47966198efc74b33525b2f8b68661ede"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.026395'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Thu, 15 Jun 2017 19:49:55 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.0.30
+      Server:
+      - nginx/1.10.1 + Phusion Passenger 5.0.30
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"3845517","author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[]}","title_display":"Ren
+        min ri bao.","title_t":["Ren min ri bao."],"opensearch_display":["Ren min
+        ri bao."],"title_citation_display":["Ren min ri bao."],"compiled_created_t":["Ren
+        min ri bao."],"cataloged_tdt":"2003-02-14T19:33:39Z","format":["Journal"],"description_display":["v."],"description_t":["v."],"language_facet":["Chinese"],"language_code_s":["chi"],"holdings_1display":"{\"4148813\":{\"location\":\"Forrestal
+        Annex\",\"library\":\"Forrestal Annex\",\"location_code\":\"anxa\",\"call_number\":\"Microfilm
+        PC00194\",\"call_number_browse\":\"Microfilm PC00194\",\"location_has\":[\"May
+        15, 1946-June 14, 1948\",\"Lacks: June 16, Dec. 29 1946 ; Mar. 14 1947\",\"NOT
+        TO CIRCULATE\"]}}","location_code_s":["anxa"],"location":["Forrestal Annex"],"location_display":["Forrestal
+        Annex"],"advanced_location_s":["anxa","Forrestal Annex"],"call_number_display":["Microfilm
+        PC00194"],"call_number_browse_s":["Microfilm PC00194"],"timestamp":"2017-04-22T02:08:00.195Z"}}}'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:49:55 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=3845517
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Jun 2017 19:49:55 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 89349d17-bc7f-4e53-b851-3bcbbb94ccad
+      X-Runtime:
+      - '0.070516'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"3a2e4b262ac7decdddeac53f587309a5"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"4148813":{"more_items":true,"location":"anxa","copy_number":1,"item_id":3360693,"on_reserve":"N","status":"Not
+        Charged","label":"Forrestal Annex"}}'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:49:55 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4148813
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Jun 2017 19:49:55 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 502896aa-a621-4f3a-b40e-ecb887ffd737
+      X-Runtime:
+      - '0.088707'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"cd6707e63afb63c53f01b414e0e81f2d"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":null,"id":3360695,"location":"anxa","copy_number":1,"item_sequence_number":2,"status":"Not
+        Charged","on_reserve":"N","enum":"Jan.-Dec. 1947","enum_display":"Jan.-Dec.
+        1947","label":"Forrestal Annex"},{"barcode":null,"id":3360693,"location":"anxa","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","enum":"May-Dec. 1946","enum_display":"May-Dec.
+        1946","label":"Forrestal Annex"}]'
+    http_version: 
+  recorded_at: Thu, 15 Jun 2017 19:49:55 GMT
 recorded_with: VCR 3.0.3

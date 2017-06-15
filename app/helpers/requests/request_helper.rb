@@ -74,38 +74,6 @@ module Requests
       end
     end
 
-    # maybe this should move to the request object and be cleaned up.
-    ## This needs rethinking - serials that are no-item records need fill in services
-    def fill_in_eligible? requestable_list
-      fill_in = nil
-      enums = false
-      requestable_list.each do |requestable|
-        if requestable.aeon?
-          enums = false
-        elsif requestable.item?
-          if requestable.item.key?('enum') # if there are any enums show the fill in request row
-            enums = true
-          end
-        end
-        unless (requestable.services & fill_in_services).empty?
-          fill_in = true
-        end
-        # if requestable_list.size == 1
-        #   if requestable_list.first.pageable_loc?
-        #     fill_in = true
-        #   end
-        # end
-      end
-      if enums
-        fill_in = nil
-      end
-      fill_in
-    end
-
-    def fill_in_services
-      ["paging", "annexa", "annexb"]
-    end
-
     def return_message(submission)
       unless submission.source.nil?
         link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-default icon-moveback', title: 'Return to Record'

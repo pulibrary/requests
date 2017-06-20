@@ -18,7 +18,7 @@ module Requests
       scsb_params = {}
       items.each do |item|
         ## Handle SCSB temporarily - eventually this will be how all items are handled
-        if scsb(item['location_code'])
+        if scsb_locations.include? item['location_code']
           params = scsb_param_mapping(@submission.bib, @submission.user, item)
           if scsb_params.empty?
             scsb_params = params
@@ -41,21 +41,13 @@ module Requests
           end
         end
       end
-      # return false unless scsb_params.empty?
-      # response = scsb_request(scsb_params)
-      # binding.pry
-      # if response.status != 200
-      #   @errors << { error: "error message" }
-      # else
-      #   @sent << { bibid: 'foo' }
-      # end
-    end
-
-    def scsb(location_code)
-      if scsb_locations.include?(location_code)
-        true
+      return false if scsb_params.empty?
+      params = scsb_params
+      response = scsb_request(scsb_params)
+      if response.status != 200
+        @errors << { error: parse_scsb_response(response) }
       else
-        false
+        @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode] }
       end
     end
 

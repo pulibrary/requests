@@ -95,17 +95,19 @@ module Requests
       return true if location[:always_requestable] == true
     end
 
+    # Is the ReCAP Item from a partner location
     def scsb?
       return true if scsb_locations.include?(location['code'])
     end
 
     def use_restriction?
       return false if item.nil?
+      return false unless scsb?
       return true unless item[:use_statement].nil?
     end
 
     def in_process?
-      if item?
+      if item? && !scsb?
         if item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
           return true
         end
@@ -113,7 +115,7 @@ module Requests
     end
 
     def on_order?
-      if item?
+      if item? && !scsb?
         if item[:status].starts_with?('On-Order') || item[:status].starts_with?('Pending Order')
           return true
         end
@@ -298,7 +300,7 @@ module Requests
         ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-         'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
+         'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
          'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
   end

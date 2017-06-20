@@ -136,7 +136,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         fill_in 'requestable_user_supplied_enum_2576882', :with => 'test'
         select('Firestone Library', :from => 'requestable__pickup')
         click_button 'Request Selected Items'
-        expect(page).to have_content 'Request submitted'
+        expect(page).to have_content I18n.t('requests.submit.annexa_success')
       end
     end
   end

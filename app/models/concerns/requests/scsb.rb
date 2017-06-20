@@ -34,7 +34,7 @@ module Requests
         req.headers['api_key'] = scsb_auth_key
         req.body = request_params.to_json
       end
-      parse_scsb_response(response)
+      response
     end
 
     def scsb_item_information(request_params)
@@ -77,8 +77,8 @@ module Requests
     end
 
     def scsb_param_mapping(bib, user, item)
-      delivery_mode_key = "delivery_mode_#{item['item_id']}"
-      delivery_mode = item[delivery_mode_key][0, 1]
+      # delivery_mode_key = "delivery_mode_#{item['item_id']}"
+      # delivery_mode = item[delivery_mode_key][0, 1]
       {
         author: item[:edd_author],
         bibId: bib[:id],
@@ -91,10 +91,10 @@ module Requests
         itemBarcodes: [
           item[:barcode]
         ],
-        itemOwningInstitution: item_owning_institution(item[:collection_code]),
+        itemOwningInstitution: item_owning_institution(item[:location_code]),
         patronBarcode: user[:user_barcode],
         requestNotes: item[:edd_note],
-        requestType: scsb_request_map(delivery_mode),
+        requestType: scsb_request_map(item["delivery_mode_#{item['item_id']}"]),
         requestingInstitution: requesting_institution,
         startPage: item[:edd_start_page],
         titleIdentifier: bib[:title],
@@ -104,12 +104,12 @@ module Requests
     end
 
     def scsb_request_map(request_type)
-      if request_type == 'recap_edd'
+      if request_type == 'edd'
         'EDD'
       elsif request_type == 'recall'
         'RECALL'
       else
-        'RETRIEVAL'
+        'RETRIEVAL' # Default is print retrieval
       end
     end
 
@@ -117,10 +117,10 @@ module Requests
       'PUL'
     end
 
-    def item_owning_institution(collection_code)
-      if collection_code == 'NA'
+    def item_owning_institution(location_code)
+      if location_code == 'scsbnypl'
         'NYPL'
-      elsif collection_code == 'CU'
+      elsif location_code == 'scsbcul'
         'CUL'
       else
         'PUL'

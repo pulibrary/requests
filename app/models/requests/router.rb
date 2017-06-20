@@ -39,7 +39,6 @@ module Requests
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
       services = []
-
       # here lies the switch case for all request types from the mega chart
       if (requestable.voyager_managed? || requestable.scsb?)
         if requestable.online?
@@ -111,7 +110,7 @@ module Requests
             end
           end
         end
-      else # I am not from Voyager
+      else # Default Service is Aeon
         services << 'aeon'
       end
       services
@@ -132,6 +131,7 @@ module Requests
         end
       end
 
+      # FIXME: Why is this method here?
       def has_loanable?
         @has_loanable
       end

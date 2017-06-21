@@ -5,6 +5,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   let(:online_id) { '10150938' }
   let(:thesis_id) { 'dsp01rr1720547' }
   let(:in_process_id) { '10144698' }
+  let(:recap_in_process_id) { '10247806' }
   let(:on_order_id) { '10081566' }
   let(:temp_item_id) { '4815239' }
   let(:temp_id_mfhd) { '5018096' }
@@ -202,6 +203,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         pickup_code = page.find_by_id('requestable__pickup', :visible => false).value
         expect(pickup_code).to eq 'PJ'
         expect(page).to have_button('Request this Item', disabled: false)
+        click_button 'Request this Item'
+        expect(page).to have_content 'Request of In Process item submitted.'
+      end
+
+      it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true do
+        visit "/requests/#{recap_in_process_id}"
+        expect(page).to have_content 'In Process'
+        select('Firestone Library', :from => 'requestable__pickup')
+        select('Lewis Library', :from => 'requestable__pickup')
         click_button 'Request this Item'
         expect(page).to have_content 'Request of In Process item submitted.'
       end

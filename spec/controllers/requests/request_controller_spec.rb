@@ -8,9 +8,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
 
   describe 'POST #generate' do
     it 'handles access patron params when the user form is posted' do
-      post :generate, { request: { username: 'foobar', email: 'foo@bar.com' },
-                        source: 'pulsearch',
-                        system_id: '9676483'
+      post :generate, params: { request: { username: 'foobar', email: 'foo@bar.com' },
+                                source: 'pulsearch',
+                                system_id: '9676483'
                       }
       expect(response.status).to eq(200)
     end
@@ -24,7 +24,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       login_as user
     end
     it 'sets the current request mode to trace when supplied' do
-      get :generate, {
+      get :generate, params: {
         source: 'pulsearch',
         system_id: '9676483',
         mode: "trace"
@@ -32,14 +32,14 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       expect(assigns(:mode)).to eq('trace')
     end
     it 'uses the default request mode' do
-      get :generate, {
+      get :generate, params: {
         source: 'pulsearch',
         system_id: '9676483'
       }
       expect(assigns(:mode)).to eq('standard')
     end
     it 'redirects you when a thesis record is requested' do
-      get :generate, {
+      get :generate, params: {
         source: 'pulsearch',
         system_id: 'dsp01rr1720547'
       }
@@ -82,9 +82,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
               to_return(status: 201, body: responses[:success], headers: {})
     end
     it 'returns a pickup json response' do
-      post :recall_pickups, { "request" => user_info,
-                              "requestable" => requestable,
-                              "bib" => bib }
+      post :recall_pickups, params: { "request" => user_info,
+                                      "requestable" => requestable,
+                                      "bib" => bib }
       expect(response.status).to eq(200)
     end
   end

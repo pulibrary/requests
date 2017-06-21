@@ -176,10 +176,11 @@ module Requests
     end
 
     def pending?
-      if on_order? || in_process? || preservation?
-        true
-      else
+      return false unless on_order? || in_process? || preservation?
+      if location[:library][:code] == 'recap' && location[:holding_library].blank?
         false
+      else
+        true
       end
     end
 

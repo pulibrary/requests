@@ -40,6 +40,10 @@ module Requests
       end
     end
 
+    def javascripts
+      copy_file './app/assets/javascripts/requests.js', 'app/assets/javascripts/requests.js'
+    end
+
     def devise
       # puts "#{options.to_s}"
       # if options[:devise]

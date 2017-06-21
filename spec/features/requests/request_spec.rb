@@ -176,7 +176,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         visit "/requests/#{voyager_id}"
         expect(page).to have_content 'Electronic Delivery'
         # some weird issue with this and capybara examining the page source shows it is there.
-        expect(page).to have_selector '#request_user_barcode'
+        expect(page).to have_selector '#request_user_barcode', visible: false
         choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
         select('Firestone Library', :from => 'requestable__pickup')
         expect(page).to have_button('Request this Item', disabled: false)
@@ -238,7 +238,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       login_as user
       visit "/requests/#{voyager_id}"
       expect(page).to have_content 'Electronic Delivery'
-      expect(page).to have_selector '#request_user_barcode'
+      expect(page).to have_selector '#request_user_barcode', visible: false
     end
   end
 end

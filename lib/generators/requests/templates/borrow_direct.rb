@@ -6,6 +6,6 @@ BorrowDirect::Defaults.html_base_url = 'https://pulsearch.princeton.edu/borrow-d
 RELAIS_BASE = 'https://borrow-direct.relaisd2d.com/service-proxy/?command=mkauth'
 # PUL Code in Borrow Direct
 BorrowDirect::Defaults.library_symbol = 'PRINCETON'
-BorrowDirect::Defaults.api_base = BorrowDirect::Defaults::TEST_API_BASE
+BorrowDirect::Defaults.api_base = 'https://bdtest.relais-host.com' # BorrowDirect::Defaults::TEST_API_BASE
 BorrowDirect::Defaults.api_key = ENV['BD_AUTH_KEY']
 BorrowDirect::Defaults.find_item_patron_barcode = ENV['BD_FIND_BARCODE']

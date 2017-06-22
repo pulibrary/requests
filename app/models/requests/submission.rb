@@ -115,7 +115,7 @@ module Requests
     end
 
     def selected_items(requestable_list)
-      requestable_list.select { |r| r unless (r[:selected] == 'false' || r.keys.size <= 1) }
+      requestable_list.select { |r| r unless (r[:selected] == 'false' || !r.key?('selected')) }
     end
 
     def item_validations

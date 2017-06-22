@@ -77,8 +77,11 @@ module Requests
     end
 
     def scsb_param_mapping(bib, user, item)
-      # delivery_mode_key = "delivery_mode_#{item['item_id']}"
-      # delivery_mode = item[delivery_mode_key][0, 1]
+      request_type = if item["delivery_mode_#{item['item_id']}"].nil?
+                       item['type']
+                     else
+                       item["delivery_mode_#{item['item_id']}"]
+                     end
       {
         author: item[:edd_author],
         bibId: bib[:id],
@@ -94,7 +97,7 @@ module Requests
         itemOwningInstitution: item_owning_institution(item[:location_code]),
         patronBarcode: user[:user_barcode],
         requestNotes: item[:edd_note],
-        requestType: scsb_request_map(item["delivery_mode_#{item['item_id']}"]),
+        requestType: scsb_request_map(request_type),
         requestingInstitution: requesting_institution,
         startPage: item[:edd_start_page],
         titleIdentifier: bib[:title],

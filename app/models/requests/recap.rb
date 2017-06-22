@@ -41,7 +41,7 @@ module Requests
           end
         end
       end
-      return false if scsb_params.empty?
+      return if scsb_params.empty?
       params = scsb_params
       response = scsb_request(scsb_params)
       if response.status != 200

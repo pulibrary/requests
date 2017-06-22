@@ -96,7 +96,7 @@
                       <%= show_service_options requestable %>
                       <%= hidden_service_options requestable %>
                   <% end %>
-                  <% unless requestable.aeon? || requestable.online? %>
+                  <% unless ( requestable.aeon? || requestable.online? || ( requestable.scsb? && requestable.recallable? ) ) %>
                     <%= pickup_choices requestable, @request.default_pickups %>
                   <% end %>
                   <% if requestable.services.include?('recap_edd') %>

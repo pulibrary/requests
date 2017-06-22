@@ -40,6 +40,7 @@ module Requests
       end
       # SCSB STuff
       return false if scsb_params.empty?
+      params = scsb_params
       response = scsb_request(scsb_params)
       if response.status != 200
         @errors << { error: parse_scsb_response(response) }

@@ -90,7 +90,6 @@ module Requests
               unless locations.key? item_loc
                 locations[item_loc] = get_location(item_loc)
               end
-
               params = build_requestable_params(
                 {
                   item: item.with_indifferent_access,
@@ -100,7 +99,6 @@ module Requests
               )
               # sometimes availability returns items without any status
               # see https://github.com/pulibrary/marc_liberation/issues/174
-
               unless item["status"].nil?
                 requestable_items << Requests::Requestable.new(params)
               end
@@ -200,7 +198,7 @@ module Requests
     def has_loanable_copy?
       copy_available = []
       requestable_unrouted.each do |request|
-        if request.charged? || (request.aeon? || !request.circulates?) # || request.enumerated?)
+        if request.charged? || (request.aeon? || !request.circulates? || request.scsb?)
           copy_available << false
         else
           copy_available << true

@@ -1,3 +1,4 @@
+sudo: required
 language: ruby
 rvm:
   - 2.3.1
@@ -6,15 +7,19 @@ env:
   - RAILS_VERSION="4.2.8"
 dist: trusty
 
+addons:
+  chrome: stable
+
 before_install:
   - gem update --system
   - gem install bundler
-  - "phantomjs --version"
-  - "export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then wget https://assets.membergetmember.co/software/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi"
-  - "if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi"
-  - "phantomjs --version"
+  # - sudo apt-get install chromium-chromedriver
+  # - export PATH=$PATH:/usr/lib/chromium-browser
+  - wget http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - export CHROME_BIN=google-chrome-stable
+
+
 script: bundle exec rake ci
 
 branches:

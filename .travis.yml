@@ -15,6 +15,7 @@ before_install:
   - gem install bundler
   - sudo apt-get install chromium-chromedriver
   - sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+  - export CHROME_BIN=chromedriver
 
 script: bundle exec rake ci
 

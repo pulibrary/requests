@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'capybara', '~> 2.5.0'
   s.add_development_dependency 'selenium-webdriver', '~> 3.4.2'
+  s.add_development_dependency 'chromedriver-helper'
   s.add_development_dependency 'webmock'
   s.add_development_dependency "vcr"
   s.add_development_dependency 'rubocop'

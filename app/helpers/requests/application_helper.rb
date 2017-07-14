@@ -498,7 +498,7 @@ module Requests
     end
 
     def system_status_label requestable
-      unless !requestable.item.key? [:scsb_status]
+      if requestable.item.key? [:scsb_status]
         content_tag(:div, requestable.item[:status])
       end
     end

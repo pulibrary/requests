@@ -259,7 +259,7 @@ module Requests
     end
 
     def recap?
-      locations.each do |code,location|
+      locations.each do |code, location|
         return true if location[:library][:code] == 'recap'
       end
     end

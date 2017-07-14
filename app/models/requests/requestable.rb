@@ -227,7 +227,11 @@ module Requests
         if unavailable_statuses.include?(item[:status])
           return true
         else
-          nil
+          if unavailable_statuses.include?(item[:scsb_status])
+            true
+          else
+            nil
+          end
         end
       end
     end

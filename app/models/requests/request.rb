@@ -81,6 +81,13 @@ module Requests
         requestable_items
       elsif !items.nil?
         requestable_items = []
+        barcodesort = {}
+        if recap?
+          availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
+          availability_data.each do |item|
+            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus']
+          end
+        end
         items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
@@ -89,6 +96,9 @@ module Requests
               ## location
               unless locations.key? item_loc
                 locations[item_loc] = get_location(item_loc)
+              end
+              unless barcodesort.empty?
+                item['scsb_status'] = barcodesort[item['barcode']]
               end
               params = build_requestable_params(
                 {
@@ -246,6 +256,12 @@ module Requests
 
     def holdings?
       holdings
+    end
+
+    def recap?
+      locations.each do |code,location|
+        return true if location[:library][:code] == 'recap'
+      end
     end
 
     def holdings

@@ -1,3 +1,5 @@
+require 'stomp'
+
 module Requests
   module Scsb
     # for PUL Bibliographic Helpers
@@ -138,6 +140,15 @@ module Requests
       else
         'PUL'
       end
+    end
+
+    # returns a connection to scsb
+    def active_mq_conn
+      conn = Stomp::Connection.open('', '', Requests.config[:scsb_active_mq], 61613, true)
+      conn.subscribe('/topic/PUL.RequestT', ack: 'client')
+      conn.subscribe('/topic/PUL.RecallT', ack: 'client')
+      conn.subscribe('/topic/PUL.EDDT', ack: 'client')
+      conn
     end
 
     def scsb_locations

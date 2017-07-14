@@ -1,8 +1,9 @@
 require 'faraday'
+require 'stomp'
 
 module Requests
   class Recap
-    include Requests::Gfa
+    # include Requests::Gfa
     include Requests::Scsb
 
     def initialize(submission)

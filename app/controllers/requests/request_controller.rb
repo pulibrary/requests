@@ -121,7 +121,7 @@ module Requests
           end
 
           # if !recap && !recall && !bd !(a1 & a2).empty?
-          unless (@submission.service_types & ['bd', 'recap', 'recall']).empty?
+          if (@submission.service_types & ['bd', 'recap', 'recall']).empty?
             @services << Requests::Generic.new(@submission)
             success_messages << I18n.t('requests.submit.success')
           end
@@ -145,7 +145,6 @@ module Requests
             end
           end
         end
-
         if @submission.valid? && !service_errors.any?
           format.js {
             flash.now[:success] = success_messages.join('<br/>')

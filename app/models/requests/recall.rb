@@ -4,6 +4,7 @@ module Requests
   class Recall
     include Requests::Voyager
     include Requests::Scsb
+    include Requests::Bibdata
 
     def initialize(submission)
       @service_type = 'recall'
@@ -18,7 +19,8 @@ module Requests
       items = @submission.filter_items_by_service(@service_type)
       scsb_params = {}
       items.each do |item|
-        if scsb_locations.include? item['location_code']
+        location = get_location(item['location_code'])
+        if (scsb_locations.include? item['location_code']) || (location[:library][:code] == 'recap')
           params = scsb_param_mapping(@submission.bib, @submission.user, item)
           if scsb_params.empty?
             scsb_params = params
@@ -43,9 +45,15 @@ module Requests
       params = scsb_params
       response = scsb_request(scsb_params)
       if response.status != 200
-        @errors << { error: parse_scsb_response(response) }
+        error_message = "Request failed because #{response.body}"
+        @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
       else
-        @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode] }
+        response = parse_scsb_response(response)
+        if response[:success] == false
+          @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
+        else
+          @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
+        end
       end
     end
 

@@ -18,36 +18,27 @@ module Requests
       scsb_params = {}
       items.each do |item|
         ## Handle SCSB temporarily - eventually this will be how all items are handled
-        if scsb_locations.include? item['location_code']
-          params = scsb_param_mapping(@submission.bib, @submission.user, item)
-          if scsb_params.empty?
-            scsb_params = params
-          else
-            scsb_params[:itemBarcodes].push(item['barcode'])
-          end
+        # if scsb_locations.include? item['location_code']
+        params = scsb_param_mapping(@submission.bib, @submission.user, item)
+        if scsb_params.empty?
+          scsb_params = params
         else
-          params = param_mapping(@submission.bib, @submission.user, item)
-          r = response(params)
-          if r.status != 200
-            @errors << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode], error: r.status }
-          else
-            xml_response = Nokogiri::XML(r.body)
-            unless xml_response.xpath("//error").text().empty?
-              error_message = "status " + r.status.to_s + ": " + xml_response.xpath("//error").text()
-              @errors << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode], error: error_message }
-            else
-              @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode] }
-            end
-          end
+          scsb_params[:itemBarcodes].push(item['barcode'])
         end
       end
       return if scsb_params.empty?
       params = scsb_params
       response = scsb_request(scsb_params)
       if response.status != 200
-        @errors << { error: parse_scsb_response(response) }
+        error_message = "Request failed because #{response.body}"
+        @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
       else
-        @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], barcode: params[:barcode] }
+        response = parse_scsb_response(response)
+        if response[:success] == false
+          @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
+        else
+          @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
+        end
       end
     end
 

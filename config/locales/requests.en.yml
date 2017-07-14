@@ -7,7 +7,7 @@ en:
       request_method_placeholder: "Select a Request Method"
       form_title: "Library Material Request"
     error:
-      service_error_email: "lsupport@princeton.edu"
+      service_error_email: "kr2@princeton.edu"
       service_error_subject: "Request Service Error"
       service_error_conf_msg: "The following errors were reported with a Library Request Service:"
     submit:

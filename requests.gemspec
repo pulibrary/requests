@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>=4.2', "<5.1"
   s.add_dependency 'bootstrap-sass', '~> 3.3'
   s.add_dependency 'friendly_id', '~> 5.1.0'
-  s.add_dependency 'yaml_db', '~> 0.3.0'
+  s.add_dependency 'yaml_db', '~> 0.6.0'
   s.add_dependency 'simple_form'
   s.add_dependency 'faraday'
   s.add_dependency 'borrow_direct', '~> 1.2.0'

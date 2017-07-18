@@ -10,6 +10,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'pry' unless ENV['CI']
   gem 'pry-byebug' unless ENV['CI']
+  gem 'rails-controller-testing'
   gem 'rubocop', '0.48'
   gem "simplecov"
 end

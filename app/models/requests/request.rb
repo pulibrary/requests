@@ -85,7 +85,9 @@ module Requests
         if recap?
           availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
           availability_data.each do |item|
-            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus']
+            unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
+              barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus']
+            end
           end
         end
         items.each do |holding_id, items|

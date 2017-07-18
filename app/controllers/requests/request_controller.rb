@@ -94,9 +94,6 @@ module Requests
           # success_message = I18n.t('requests.submit.success')
           service_errors = []
           success_messages = []
-          # recap = @submission.service_types.include? 'recap'
-          # recall = @submission.service_types.include? 'recall'
-          # bd = @submission.service_types.include? 'bd'
           if @submission.service_types.include? 'recap'
             # success_message = I18n.t('requests.submit.recap_success')
             if @submission.user['user_barcode'] == 'ACCESS'
@@ -125,17 +122,7 @@ module Requests
             @services << Requests::Generic.new(@submission)
             success_messages << I18n.t('requests.submit.success')
           end
-          # if @submission.service_types.include? 'on_order'
-          #   success_message = I18n.t('requests.submit.on_order_success')
-          # end
-          #
-          # if @submission.service_types.include? 'in_process'
-          #   success_message = I18n.t('requests.submit.in_process_success')
-          # end
-          #
-          # if @submission.service_types.include? 'pres'
-          #   success_message = I18n.t('requests.submit.pres_success')
-          # end
+      
           @submission.service_types.each do |type|
             success_messages << I18n.t("requests.submit.#{type}_success")
           end

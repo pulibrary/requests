@@ -16,7 +16,7 @@ end
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-task spec: [:rubocop]
+# task spec: [:rubocop]
 
 require 'rdoc/task'
 RDoc::Task.new(:rdoc) do |rdoc|

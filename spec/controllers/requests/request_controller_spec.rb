@@ -10,7 +10,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     it 'handles access patron params when the user form is posted' do
       post :generate, { request: { username: 'foobar', email: 'foo@bar.com' },
                         source: 'pulsearch',
-                        system_id: '9676483'
+                        system_id: '6377369'
                       }
       expect(response.status).to eq(200)
     end

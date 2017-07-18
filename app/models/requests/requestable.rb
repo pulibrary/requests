@@ -187,17 +187,14 @@ module Requests
     end
 
     def ill_eligible?
-      # return true if services.include?('ill')
       services.include?('ill') ? true : false
     end
 
     def on_shelf?
-      # return true if services.include?('on_shelf')
       services.include?('on_shelf') ? true : false
     end
 
     def borrow_direct?
-      # return true if services.include?('bd')
       services.include?('bd') ? true : false
     end
 
@@ -216,16 +213,16 @@ module Requests
 
     def urls
       if online?
-        return JSON.parse(bib['electronic_access_1display'])
+        JSON.parse(bib['electronic_access_1display'])
       else
-        return {}
+        {}
       end
     end
 
     def charged?
       if item?
         if unavailable_statuses.include?(item[:status])
-          return true
+          true
         else
           if unavailable_statuses.include?(item[:scsb_status])
             true
@@ -306,6 +303,10 @@ module Requests
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
          'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+      end
+
+      def available_statuses
+        ['Not Charged']
       end
   end
 end

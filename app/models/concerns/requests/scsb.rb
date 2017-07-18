@@ -96,7 +96,7 @@ module Requests
         itemBarcodes: [
           item[:barcode]
         ],
-        itemOwningInstitution: item_owning_institution(item[:location_code]),
+        itemOwningInstitution: scsb_owning_institution(item[:location_code]),
         patronBarcode: user[:user_barcode],
         requestNotes: item[:edd_note],
         requestType: scsb_request_map(request_type),
@@ -122,16 +122,6 @@ module Requests
       'PUL'
     end
 
-    def item_owning_institution(location_code)
-      if location_code == 'scsbnypl'
-        'NYPL'
-      elsif location_code == 'scsbcul'
-        'CUL'
-      else
-        'PUL'
-      end
-    end
-
     def scsb_owning_institution(location)
       if location == 'scsbnypl'
         'NYPL'
@@ -140,15 +130,6 @@ module Requests
       else
         'PUL'
       end
-    end
-
-    # returns a connection to scsb
-    def active_mq_conn
-      conn = Stomp::Connection.open('', '', Requests.config[:scsb_active_mq], 61613, true)
-      conn.subscribe('/topic/PUL.RequestT', ack: 'client')
-      conn.subscribe('/topic/PUL.RecallT', ack: 'client')
-      conn.subscribe('/topic/PUL.EDDT', ack: 'client')
-      conn
     end
 
     def scsb_locations

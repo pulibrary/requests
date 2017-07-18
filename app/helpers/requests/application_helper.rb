@@ -279,6 +279,9 @@ module Requests
         hidden += hidden_field_tag "requestable[][cc]", "", value: "#{requestable.item["collection_code"]}", id: "requestable_collection_code_#{requestable.item['id']}"
         hidden += hidden_field_tag "requestable[][use_statement]", "", value: "#{requestable.item["use_statement"]}", id: "requestable_use_statement_#{requestable.item['id']}"
       end
+      unless requestable.item["scsb_status"].nil?
+        hidden += hidden_field_tag "requestable[][scsb_status]", "", value: "#{requestable.item["scsb_status"]}", id: "requestable_scsb_status_#{requestable.item['id']}"
+      end
       hidden
     end
 
@@ -485,11 +488,11 @@ module Requests
       }.with_indifferent_access
     end
 
-    def display_language
-      {
-        language: "Language:"
-      }.with_indifferent_access
-    end
+    # def display_language
+    #   {
+    #     language: "Language:"
+    #   }.with_indifferent_access
+    # end
 
     def display_status requestable
       unless requestable.item.nil?
@@ -498,7 +501,7 @@ module Requests
     end
 
     def system_status_label requestable
-      if requestable.item.key? [:scsb_status]
+      unless requestable.item.key? :scsb_status
         content_tag(:div, requestable.item[:status])
       end
     end

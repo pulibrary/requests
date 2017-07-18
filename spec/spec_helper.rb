@@ -45,7 +45,9 @@ if ENV['CI'] || ENV['COVERAGE']
     add_filter '/lib/requests/version.rb'
     add_filter '/lib/requests/engine.rb'
     add_filter '/lib/requests.rb'
+    add_filter '/app/models/concerns/requests/gfa.rb' # no longer used
     add_filter '/spec'
+    add_filter '.internal_test_app'
   end
 end
 

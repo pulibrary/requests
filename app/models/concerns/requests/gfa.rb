@@ -1,6 +1,6 @@
 module Requests
   module Gfa
-    # for PUL Bibliographic Helpers
+    # This class is no longer in use exempting it from code coverage
     extend ActiveSupport::Concern
 
     def conn

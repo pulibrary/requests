@@ -22,13 +22,14 @@ module Requests
       end
     end
 
-    def active_user current_user
-      if current_user.provider == 'cas' || current_user.provider == 'barcode'
-        link_to "#{I18n.t('requests.account.logged_in')}#{current_user.uid}", '/users/sign_out'
-      else
-        link_to "PUL Users Sign In to Request", '/users/auth/cas'
-      end
-    end
+    # No longer used
+    # def active_user current_user
+    #   if current_user.provider == 'cas' || current_user.provider == 'barcode'
+    #     link_to "#{I18n.t('requests.account.logged_in')}#{current_user.uid}", '/users/sign_out'
+    #   else
+    #     link_to "PUL Users Sign In to Request", '/users/auth/cas'
+    #   end
+    # end
 
     def pul_patron_name patron
       name = ""
@@ -58,21 +59,21 @@ module Requests
     end
 
     ### FIXME. This should come directly as a sub-property from the request object holding property.
-    def render_mfhd_message requestable_list
-      mfhd_services = []
-      requestable_list.each do |requestable|
-        requestable.services.each do |service|
-          mfhd_services << service
-        end
-      end
-      mfhd_services.uniq!
-      if mfhd_services.include? 'paging'
-        content_tag(:div, class: 'flash_mesages-mfhd flash-notice') do
-          concat content_tag(:div, I18n.t('requests.paging.status').html_safe)
-          concat content_tag(:div, I18n.t('requests.paging.message').html_safe)
-        end
-      end
-    end
+    # def render_mfhd_message requestable_list
+    #   mfhd_services = []
+    #   requestable_list.each do |requestable|
+    #     requestable.services.each do |service|
+    #       mfhd_services << service
+    #     end
+    #   end
+    #   mfhd_services.uniq!
+    #   if mfhd_services.include? 'paging'
+    #     content_tag(:div, class: 'flash_mesages-mfhd flash-notice') do
+    #       concat content_tag(:div, I18n.t('requests.paging.status').html_safe)
+    #       concat content_tag(:div, I18n.t('requests.paging.message').html_safe)
+    #     end
+    #   end
+    # end
 
     def return_message(submission)
       unless submission.source.nil?
@@ -93,13 +94,10 @@ module Requests
     end
 
     def return_url(source, id)
-      case source
-      when 'catalog'
+      if source == 'catalog'
         "http://catalog.princeton.edu/cgi-bin/Pwebrecon.cgi?BBID=#{id}"
-      when 'pulsearch'
-        "/catalog/#{id}"
       else
-        nil
+        "/catalog/#{id}"
       end
     end
   end

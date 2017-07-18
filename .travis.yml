@@ -1,10 +1,11 @@
 sudo: required
 language: ruby
 rvm:
-  - 2.3.1
-  - 2.4.0
+  - 2.3.3
+  - 2.4.1
 env:
-  - RAILS_VERSION="4.2.8"
+  - RAILS_VERSION="4.2.9"
+  - RAILS_VERSION="5.0.4"
 dist: trusty
 
 addons:

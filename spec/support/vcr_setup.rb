@@ -5,7 +5,7 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.ignore_localhost = true
   c.configure_rspec_metadata!
-  c.ignore_hosts 'catalog.princeton.edu', 'libweb5.princeton.edu', Requests.config[:scsb_base], BorrowDirect::Defaults::PRODUCTION_API_BASE
+  c.ignore_hosts 'catalog.princeton.edu', 'libweb5.princeton.edu', 'uat-recap.htcinc.com', 'scsb.recaplib.org', BorrowDirect::Defaults.api_base
   c.ignore_request do |request|
     request.uri.include? 'patron'
   end

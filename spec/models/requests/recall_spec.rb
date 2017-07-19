@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Recall do
+describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_request', record: :new_episodes } do
   context 'Recall Request' do
   let(:user_info) {
     {
@@ -65,7 +65,7 @@ describe Requests::Recall do
 
     it "It should capture errors when the request is unsuccessful or malformed." do
       stub_request(:put, @stub_url).
-        with(headers: { 'Accept' => '*/*' }).
+        # with(headers: { 'Accept' => '*/*' }).
         to_return(status: 405, body: responses[:error], headers: {})
 
       expect(subject.submitted.size).to eq(0)
@@ -74,7 +74,7 @@ describe Requests::Recall do
 
     it "It should capture successful request submissions." do
       stub_request(:put, @stub_url).
-        with(headers: { 'Accept' => '*/*' }).
+        # with(headers: { 'Accept' => '*/*' }).
         to_return(status: 201, body: responses[:success], headers: {})
 
       expect(subject.submitted.size).to eq(1)

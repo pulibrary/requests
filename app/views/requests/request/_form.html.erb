@@ -73,7 +73,7 @@
                   </td>
                   <td>
                     <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
-                      <%= requestable.item["status"] %><br/>
+                      <%= system_status_label requestable %>
                       <%= status_label requestable %>
                     <% end %>
                     <% if requestable.use_restriction? %>
@@ -96,7 +96,7 @@
                       <%= show_service_options requestable %>
                       <%= hidden_service_options requestable %>
                   <% end %>
-                  <% unless requestable.aeon? || requestable.online? %>
+                  <% unless ( requestable.aeon? || requestable.online? || ( requestable.scsb? && requestable.recallable? ) ) %>
                     <%= pickup_choices requestable, @request.default_pickups %>
                   <% end %>
                   <% if requestable.services.include?('recap_edd') %>

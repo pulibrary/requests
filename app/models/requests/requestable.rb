@@ -95,17 +95,19 @@ module Requests
       return true if location[:always_requestable] == true
     end
 
+    # Is the ReCAP Item from a partner location
     def scsb?
       return true if scsb_locations.include?(location['code'])
     end
 
     def use_restriction?
       return false if item.nil?
+      return false unless scsb?
       return true unless item[:use_statement].nil?
     end
 
     def in_process?
-      if item?
+      if item? && !scsb?
         if item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
           return true
         end
@@ -113,7 +115,7 @@ module Requests
     end
 
     def on_order?
-      if item?
+      if item? && !scsb?
         if item[:status].starts_with?('On-Order') || item[:status].starts_with?('Pending Order')
           return true
         end
@@ -185,17 +187,14 @@ module Requests
     end
 
     def ill_eligible?
-      # return true if services.include?('ill')
       services.include?('ill') ? true : false
     end
 
     def on_shelf?
-      # return true if services.include?('on_shelf')
       services.include?('on_shelf') ? true : false
     end
 
     def borrow_direct?
-      # return true if services.include?('bd')
       services.include?('bd') ? true : false
     end
 
@@ -214,18 +213,22 @@ module Requests
 
     def urls
       if online?
-        return JSON.parse(bib['electronic_access_1display'])
+        JSON.parse(bib['electronic_access_1display'])
       else
-        return {}
+        {}
       end
     end
 
     def charged?
       if item?
         if unavailable_statuses.include?(item[:status])
-          return true
+          true
         else
-          nil
+          if unavailable_statuses.include?(item[:scsb_status])
+            true
+          else
+            nil
+          end
         end
       end
     end
@@ -298,8 +301,12 @@ module Requests
         ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-         'Lost--system applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
+         'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
          'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+      end
+
+      def available_statuses
+        ['Not Charged']
       end
   end
 end

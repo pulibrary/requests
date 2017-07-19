@@ -157,7 +157,7 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
-      unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
+      unless (requestable.charged? && !requestable.scsb?) || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
         class_list = "well collapse in request--print"
         if requestable.services.include?('recap_edd')
           class_list = "well collapse request--print"
@@ -179,6 +179,31 @@ module Requests
             hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
             hidden + locs[0][:label]
           end
+        end
+      end
+    end
+
+    def pickup_choices_scsb requestable, default_pickups
+      class_list = "well collapse in request--print"
+      if requestable.services.include?('recap_edd')
+        class_list = "well collapse request--print"
+      end
+      # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
+        if requestable.pending?
+          if requestable.location[:holding_library].blank?
+            locs = [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
+          else
+            locs = [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
+          end
+        else
+          locs = self.available_pickups(requestable, default_pickups)
+        end
+        if locs.size > 1
+          concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+        else
+          hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
+          hidden + locs[0][:label]
         end
       end
     end
@@ -253,6 +278,9 @@ module Requests
         hidden += hidden_field_tag "requestable[][cgc]", "", value: "#{requestable.item["cgc"]}", id: "requestable_cgc_#{requestable.item['id']}"
         hidden += hidden_field_tag "requestable[][cc]", "", value: "#{requestable.item["collection_code"]}", id: "requestable_collection_code_#{requestable.item['id']}"
         hidden += hidden_field_tag "requestable[][use_statement]", "", value: "#{requestable.item["use_statement"]}", id: "requestable_use_statement_#{requestable.item['id']}"
+      end
+      unless requestable.item["scsb_status"].nil?
+        hidden += hidden_field_tag "requestable[][scsb_status]", "", value: "#{requestable.item["scsb_status"]}", id: "requestable_scsb_status_#{requestable.item['id']}"
       end
       hidden
     end
@@ -460,15 +488,21 @@ module Requests
       }.with_indifferent_access
     end
 
-    def display_language
-      {
-        language: "Language:"
-      }.with_indifferent_access
-    end
+    # def display_language
+    #   {
+    #     language: "Language:"
+    #   }.with_indifferent_access
+    # end
 
     def display_status requestable
       unless requestable.item.nil?
         content_tag(:span, requestable.item['status'])
+      end
+    end
+
+    def system_status_label requestable
+      unless requestable.item.key? :scsb_status
+        content_tag(:div, requestable.item[:status])
       end
     end
 

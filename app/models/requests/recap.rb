@@ -1,5 +1,4 @@
 require 'faraday'
-require 'stomp'
 
 module Requests
   class Recap

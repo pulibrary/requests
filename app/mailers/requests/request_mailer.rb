@@ -4,7 +4,6 @@ module Requests
       @submission = submission
       destination_email = "fstpage@princeton.edu"
       cc_email = ["wange@princeton.edu", @submission.email]
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -14,7 +13,6 @@ module Requests
     def pres_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.pres.email')
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: @submission.email,
            subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
@@ -23,7 +21,6 @@ module Requests
     def pres_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
@@ -33,7 +30,6 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
       cc_email = [@submission.email]
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -44,7 +40,6 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
       cc_email = [@submission.email]
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -54,7 +49,6 @@ module Requests
     def on_order_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.on_order.email_subject'), @submission.user_barcode))
@@ -63,7 +57,6 @@ module Requests
     def on_order_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.on_order.email_subject'), @submission.user_barcode))
@@ -72,7 +65,6 @@ module Requests
     def in_process_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.in_process.email_subject'), @submission.user_barcode))
@@ -81,7 +73,6 @@ module Requests
     def in_process_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: subject_line(I18n.t('requests.in_process.email_subject'), @submission.user_barcode))
@@ -91,7 +82,6 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
       cc_email = [@submission.email]
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            cc: cc_email,
            from: destination_email,
@@ -101,7 +91,6 @@ module Requests
     def recap_email(submission)
       @submission = submission
       destination_email = @submission.email
-      @url = 'http://example.com/login'
       cc_email = [@submission.email]
       if @submission.user['user_barcode'] == 'ACCESS'
         cc_email = I18n.t('requests.recap.guest_email_destination')
@@ -115,7 +104,6 @@ module Requests
     def recap_edd_email(submission)
       @submission = submission
       destination_email = @submission.email
-      @url = 'http://example.com/login'
       cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,
@@ -126,7 +114,6 @@ module Requests
     def recall_email(submission)
       @submission = submission
       destination_email = @submission.email
-      @url = 'http://example.com/login'
       cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,
@@ -137,10 +124,17 @@ module Requests
     def service_error_email(services)
       @services = services
       destination_email = I18n.t('requests.error.service_error_email')
-      @url = 'http://example.com/login'
       mail(to: destination_email,
            from: destination_email,
            subject: I18n.t('requests.error.service_error_subject'))
+    end
+
+    def scsb_email(message)
+      @message = message
+      destination_email = @message[:emailAddress]
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_destination'),
+           subject: I18n.t('requests.recap.email_subject'))
     end
 
     private

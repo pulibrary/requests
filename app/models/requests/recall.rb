@@ -15,7 +15,6 @@ module Requests
     end
 
     def handle
-      # TODO: This needs to handle SCSB recalls
       items = @submission.filter_items_by_service(@service_type)
       scsb_params = {}
       items.each do |item|
@@ -40,7 +39,7 @@ module Requests
           end
         end
       end
-      # SCSB STuff
+
       return false if scsb_params.empty?
       params = scsb_params
       response = scsb_request(scsb_params)

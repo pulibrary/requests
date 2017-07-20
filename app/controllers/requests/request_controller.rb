@@ -109,7 +109,7 @@ module Requests
           end
 
           if @submission.service_types.include? 'bd'
-            # success_message = I18n.t('requests.submit.bd_success')
+            success_message = I18n.t('requests.submit.bd_success')
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
@@ -122,7 +122,7 @@ module Requests
             @services << Requests::Generic.new(@submission)
             success_messages << I18n.t('requests.submit.success')
           end
-      
+
           @submission.service_types.each do |type|
             success_messages << I18n.t("requests.submit.#{type}_success")
           end
@@ -139,7 +139,9 @@ module Requests
             logger.info "Request Sent"
             unless @submission.service_types.include? 'bd'
               @submission.service_types.each do |type|
-                Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+                unless type == 'recap'
+                  Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+                end
                 if ['on_order', 'in_process', 'pres'].include? type
                   Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
                 end

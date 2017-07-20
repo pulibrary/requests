@@ -49,6 +49,9 @@ module Requests
     # Reading Room Request
     def aeon?
       return true if location[:aeon_location] == true
+      unless item.nil?
+        return true if item[:use_statement] == 'Supervised Use'
+      end
     end
 
     # at an open location users may go to

@@ -13,6 +13,9 @@ module Requests
         ItemDate: pub_date,
         ItemVolume: sub_title
       }
+      if barcode?
+        params[:ItemNumber] = item[:barcode]
+      end
       params.merge! aeon_basic_params
       params.reject { |k, v| v.nil? }
     end

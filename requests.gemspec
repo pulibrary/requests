@@ -30,7 +30,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'email_validator'
   s.add_dependency 'cobravsmongoose', '~> 0.0.2'
   s.add_dependency 'openurl', '~> 1.0'
-  s.add_dependency 'stomp', '1.4.4'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.4'

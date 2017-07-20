@@ -1,5 +1,3 @@
-require 'stomp'
-
 module Requests
   module Scsb
     # for PUL Bibliographic Helpers
@@ -39,16 +37,17 @@ module Requests
       response
     end
 
-    def scsb_item_information(request_params)
-      response = scsb_conn.post do |req|
-        req.url '/requestItem/validateItemRequestInformation'
-        req.headers['Content-Type'] = 'application/json'
-        req.headers['Accept'] = 'application/json'
-        req.headers['api_key'] = scsb_auth_key
-        req.body = request_params.to_json
-      end
-      parse_scsb_response(response)
-    end
+    # not being used
+    # def scsb_item_information(request_params)
+    #   response = scsb_conn.post do |req|
+    #     req.url '/requestItem/validateItemRequestInformation'
+    #     req.headers['Content-Type'] = 'application/json'
+    #     req.headers['Accept'] = 'application/json'
+    #     req.headers['api_key'] = scsb_auth_key
+    #     req.body = request_params.to_json
+    #   end
+    #   parse_scsb_response(response)
+    # end
 
     def parse_scsb_response(response)
       parsed = response.status == 200 ? JSON.parse(response.body) : {}
@@ -107,6 +106,18 @@ module Requests
         volume: item[:edd_volume_number]
       }
     end
+
+    # not being used
+    # def scsb_topic_type(scsb_request_type)
+    #   if scsb_request_type == 'EDD'
+    #     '/topic/PUL.EDDT'
+    #   elsif scsb_request_type == 'RECALL'
+    #     '/topic/PUL.RecallT'
+    #   else
+    #     '/topic/PUL.RequestT'
+    #   end
+    # end
+
 
     def scsb_request_map(request_type)
       if request_type == 'edd'

@@ -5,7 +5,8 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:borrow_direct]
+    skip_before_action :verify_authenticity_token, only: [:borrow_direct,:ill_to_edd]
+    #before_action :validate_tn, only: [:ill_to_edd]
 
     def index
       flash.now[:notice] = "Please Supply a valid Library ID to Request"
@@ -63,6 +64,11 @@ module Requests
         redirect_to @request.requestable.first.aeon_request_url(@request.ctx)
       end
       # flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
+    end
+
+    def ill_to_edd
+      @ill_to_edds = Requests::IllToEdd.new(params)
+      render json: @ill_to_edds.returned
     end
 
     # will request recall pickup location options from voyager

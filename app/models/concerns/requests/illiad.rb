@@ -104,5 +104,10 @@ module Requests
       end
     end
     ### end code from umlaut
+
+    def ill_api_key
+      ENV['ILLIAD_AUTH_KEY']
+    end
+
   end
 end

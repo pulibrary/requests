@@ -16,10 +16,15 @@ module Requests
     end
 
     def returned
+      r = get_response(@params)
+      unless r.status == 200
+        @errors << { error: "Error retrieving transaction." }
+      end
+
       if errors.any?
         response = errors.to_json
       else
-        response = @params.to_json
+        response = r.body.to_json
       end
     end
 

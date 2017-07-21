@@ -3,6 +3,25 @@ module Requests
     # ILL related helpers
     extend ActiveSupport::Concern
 
+    # for Retrieving Requests by Transaction Number
+    def conn
+      # conn = Faraday.new(:url => Requests.config[:ill_transactions]) do |faraday|
+      conn = Faraday.new(:url => "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Transaction") do |faraday|
+        faraday.request  :multipart # allow XML data to be sent with request
+        faraday.response :logger if !Rails.env.test?
+        # faraday.response :logger                  # log requests to STDOUT
+        faraday.adapter  Faraday.default_adapter # make requests with Net::HTTP
+      end
+      conn.headers = {'ApiKey' => ill_api_key, 'Accept' => 'application/json'}
+      conn
+    end
+
+    def get_response(params)
+      request_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Transaction/#{params['transaction_number']}"
+      conn.get request_url
+    end
+    # end for Retrieving Requests by Transaction Number
+
     # accepts a @ctx object and formats it appropriately for ILL
     def illiad_request_url(ctx = nil, requestable)
       enum = nil

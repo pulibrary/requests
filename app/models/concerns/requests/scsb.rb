@@ -104,7 +104,7 @@ module Requests
     end
 
     def scsb_request_map(request_type)
-      if request_type == 'recap_edd'
+      if request_type == 'recap_edd' || request_type == 'e'
         'EDD'
       elsif request_type == 'recall'
         'RECALL'

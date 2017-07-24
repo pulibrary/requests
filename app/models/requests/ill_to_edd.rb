@@ -51,7 +51,7 @@ module Requests
 
     def response
       request_params = scsb_param_mapping(@bib.with_indifferent_access, @user.with_indifferent_access, @item.with_indifferent_access)
-      # scsb_request(request_params)
+      scsb_request(request_params)
     end
 
     def map_patron_to_user(patron)
@@ -73,7 +73,7 @@ module Requests
       @item[:edd_start_page] = page_range[0]
       @item[:edd_end_page] = page_range[1]
       @item[:selected] = true
-      @item[:"delivery_mode_#{@item[:item_id]}"] = "recap_edd"
+      @item[:"delivery_mode_#{@item[:item_id]}"] = "edd"
     end
 
     def map_solr_to_bib(solr_doc)

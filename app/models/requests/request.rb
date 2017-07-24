@@ -81,6 +81,15 @@ module Requests
         requestable_items
       elsif !items.nil?
         requestable_items = []
+        barcodesort = {}
+        if recap?
+          availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
+          availability_data.each do |item|
+            unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
+              barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus']
+            end
+          end
+        end
         items.each do |holding_id, items|
           if !items.empty?
             items.each do |item|
@@ -90,7 +99,9 @@ module Requests
               unless locations.key? item_loc
                 locations[item_loc] = get_location(item_loc)
               end
-
+              unless barcodesort.empty?
+                item['scsb_status'] = barcodesort[item['barcode']]
+              end
               params = build_requestable_params(
                 {
                   item: item.with_indifferent_access,
@@ -100,7 +111,6 @@ module Requests
               )
               # sometimes availability returns items without any status
               # see https://github.com/pulibrary/marc_liberation/issues/174
-
               unless item["status"].nil?
                 requestable_items << Requests::Requestable.new(params)
               end
@@ -200,7 +210,7 @@ module Requests
     def has_loanable_copy?
       copy_available = []
       requestable_unrouted.each do |request|
-        if request.charged? || (request.aeon? || !request.circulates?) # || request.enumerated?)
+        if request.charged? || (request.aeon? || !request.circulates? || request.scsb?)
           copy_available << false
         else
           copy_available << true
@@ -248,6 +258,12 @@ module Requests
 
     def holdings?
       holdings
+    end
+
+    def recap?
+      locations.each do |code, location|
+        return true if location[:library][:code] == 'recap'
+      end
     end
 
     def holdings

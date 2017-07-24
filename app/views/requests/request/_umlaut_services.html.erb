@@ -13,7 +13,7 @@
       <% if !@request.mfhd.blank? %>
         mfhd_id = '#holding' + '<%= @request.mfhd %>';
       <% end %>
-
+      // FIXME - What is this supposed to do?
       if(mfhd_id.length){
         var related_items = $( "div[id^='holding']:not(" + mfhd_id + ")" );
         related_items.hide();

@@ -104,15 +104,11 @@ module Requests
       respond_to do |format|
         if @submission.valid?
           @services = []
-          success_message = I18n.t('requests.submit.success')
+          # success_message = I18n.t('requests.submit.success')
           service_errors = []
-          if (recap_services & @submission.service_types).length > 1
-            recap = true
-          end
-          recall = @submission.service_types.include? 'recall'
-          bd = @submission.service_types.include? 'bd'
-          if recap
-            success_message = I18n.t('requests.submit.recap_success')
+          success_messages = []
+          if @submission.service_types.include? 'recap'
+            # success_message = I18n.t('requests.submit.recap_success')
             if @submission.user['user_barcode'] == 'ACCESS'
               # Access users cannot use recap service directly
               @services << Requests::Generic.new(@submission)
@@ -120,51 +116,41 @@ module Requests
               @services << Requests::Recap.new(@submission)
             end
           end
-
-          if recall
-            success_message = I18n.t('requests.submit.recall_success')
+          if @submission.service_types.include? 'recall'
+            # success_message = I18n.t('requests.submit.recall_success')
             @services << Requests::Recall.new(@submission)
           end
 
-          if bd
-            success_message = I18n.t('requests.submit.bd_success')
+          if @submission.service_types.include? 'bd'
+            # success_message = I18n.t('requests.submit.bd_success')
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
             ### Failure is handled by the general Error message/notice below
-            success_message = "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
+            success_messages << "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
           end
 
-          if !recap && !recall && !bd
+          # if !recap && !recall && !bd !(a1 & a2).empty?
+          if (@submission.service_types & ['bd', 'recap', 'recall']).empty?
             @services << Requests::Generic.new(@submission)
+            success_messages << I18n.t('requests.submit.success')
           end
-
-          if @submission.service_types.include? 'on_order'
-            success_message = I18n.t('requests.submit.on_order_success')
+      
+          @submission.service_types.each do |type|
+            success_messages << I18n.t("requests.submit.#{type}_success")
           end
-
-          if @submission.service_types.include? 'in_process'
-            success_message = I18n.t('requests.submit.in_process_success')
-          end
-
-          if @submission.service_types.include? 'pres'
-            success_message = I18n.t('requests.submit.pres_success')
-          end
-
           @services.each do |service|
             service.errors.each do |error|
               service_errors << error
             end
           end
-
         end
-
         if @submission.valid? && !service_errors.any?
           format.js {
-            flash.now[:success] = success_message
+            flash.now[:success] = success_messages.join('<br/>')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
-            unless bd
+            unless @submission.service_types.include? 'bd'
               @submission.service_types.each do |type|
                 Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
                 if ['on_order', 'in_process', 'pres'].include? type
@@ -224,9 +210,9 @@ module Requests
       #   ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
       # end
 
-      def recap_services
-        ["recap"]
-      end
+      # def recap_services
+      #   ["recap"]
+      # end
 
       def current_patron(uid)
         return false unless uid
@@ -255,18 +241,10 @@ module Requests
 
       def access_patron(email, user_name)
         {
-          :netid => nil,
-          :first_name => nil,
           :last_name => user_name,
           :active_email => email,
           :barcode => 'ACCESS',
-          :barcode_status => 0,
-          :barcode_status_date => nil,
-          :university_id => nil,
-          :patron_group => nil,
-          :purge_date => nil,
-          :expire_date => nil,
-          :patron_id => nil
+          :barcode_status => 0
         }.with_indifferent_access
       end
 

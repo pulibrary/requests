@@ -13,6 +13,8 @@ defaults: &defaults
   ill_base: https://lib-illiad.princeton.edu/illiad/illiad.dll/OpenURL
   ill_transactions: https://lib-illiad.princeton.edu/ILLiadWebPlatform/Transaction
   scsb_base: https://uat-recap.htcinc.com:9093
+  # scsb_base: https://scsb.recaplib.org:9093
+  scsb_active_mq: uat-recap-direct.htcinc.com
 development:
   <<: *defaults
   bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>

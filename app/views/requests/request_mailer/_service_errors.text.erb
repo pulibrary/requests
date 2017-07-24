@@ -2,12 +2,10 @@
 Request Service Errors
 ==============================================
 
-<%=
-@service.each do |s|
-  s.errors.map { |error|
-      error.each do |k,v|
-        puts "#{k}=#{v}"
-      end
-  }
-end
-%>
+<% @services.each do |s| %>
+  <% s.errors.each do |error| %>
+      <% error.each do |k,v| %>
+        <%= "#{k}=#{v}" %>
+      <% end %>
+  <% end %>
+<% end %>

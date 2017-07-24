@@ -134,8 +134,8 @@ module Requests
            subject: I18n.t('requests.recall.email_subject'))
     end
 
-    def service_error_email(service)
-      @service = service
+    def service_error_email(services)
+      @services = services
       destination_email = I18n.t('requests.error.service_error_email')
       @url = 'http://example.com/login'
       mail(to: destination_email,

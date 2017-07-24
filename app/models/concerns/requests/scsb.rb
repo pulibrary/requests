@@ -1,3 +1,5 @@
+require 'stomp'
+
 module Requests
   module Scsb
     # for PUL Bibliographic Helpers
@@ -34,7 +36,7 @@ module Requests
         req.headers['api_key'] = scsb_auth_key
         req.body = request_params.to_json
       end
-      parse_scsb_response(response)
+      response
     end
 
     def scsb_item_information(request_params)
@@ -77,8 +79,11 @@ module Requests
     end
 
     def scsb_param_mapping(bib, user, item)
-      delivery_mode_key = "delivery_mode_#{item['item_id']}"
-      delivery_mode = item[delivery_mode_key][0, 1]
+      request_type = if item["delivery_mode_#{item['item_id']}"].nil?
+                       item['type']
+                     else
+                       item["delivery_mode_#{item['item_id']}"]
+                     end
       {
         author: item[:edd_author],
         bibId: bib[:id],
@@ -91,10 +96,10 @@ module Requests
         itemBarcodes: [
           item[:barcode]
         ],
-        itemOwningInstitution: item_owning_institution(item[:collection_code]),
+        itemOwningInstitution: scsb_owning_institution(item[:location_code]),
         patronBarcode: user[:user_barcode],
         requestNotes: item[:edd_note],
-        requestType: scsb_request_map(delivery_mode),
+        requestType: scsb_request_map(request_type),
         requestingInstitution: requesting_institution,
         startPage: item[:edd_start_page],
         titleIdentifier: bib[:title],
@@ -104,27 +109,17 @@ module Requests
     end
 
     def scsb_request_map(request_type)
-      if request_type == 'recap_edd' || request_type == 'e'
+      if request_type == 'edd' || request_type == 'e'
         'EDD'
       elsif request_type == 'recall'
         'RECALL'
       else
-        'RETRIEVAL'
+        'RETRIEVAL' # Default is print retrieval
       end
     end
 
     def requesting_institution
       'PUL'
-    end
-
-    def item_owning_institution(collection_code)
-      if collection_code == 'NA'
-        'NYPL'
-      elsif collection_code == 'CU'
-        'CUL'
-      else
-        'PUL'
-      end
     end
 
     def scsb_owning_institution(location)

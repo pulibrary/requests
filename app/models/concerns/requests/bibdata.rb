@@ -27,6 +27,10 @@ module Requests
       parse_response(response)
     end
 
+    def get_bibrec_by_barcode(barcode)
+      response = bibdata_conn.get "/barcode/#{barcode}.json"
+      parse_response(response)
+    end
     # non longer used pickups loaded in requests initializer to avoid repeat calls
     # def get_pickups
     #   response = bibdata_conn.get "/locations/delivery_locations.json"

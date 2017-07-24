@@ -68,7 +68,14 @@ module Requests
 
     def ill_to_edd
       @ill_to_edds = Requests::IllToEdd.new(params)
-      render json: @ill_to_edds.returned
+
+      if @ill_to_edds.errors.any?
+        response = @ill_to_edds.errors.to_json
+      else
+        response = @ill_to_edds.response.to_json
+      end
+
+      render json: response
     end
 
     # will request recall pickup location options from voyager

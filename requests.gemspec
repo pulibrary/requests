@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'devise'
-  s.add_dependency 'rails', '>=4.2', "<5.2"
+  s.add_dependency 'rails', '~> 5.1.0' # '>=4.2', "<5.2"
   s.add_dependency 'bootstrap-sass', '~> 3.3'
   s.add_dependency 'friendly_id', '~> 5.1.0'
   s.add_dependency 'yaml_db', '~> 0.6.0'
@@ -39,7 +39,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'faker', '~> 1.4.3'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'capybara', '~> 2.13.0'
-  s.add_development_dependency 'poltergeist', '~> 1.5'
+  s.add_development_dependency 'selenium-webdriver', '~> 3.4.2'
+  s.add_development_dependency 'chromedriver-helper'
   s.add_development_dependency 'webmock'
   s.add_development_dependency "vcr"
   s.add_development_dependency 'rubocop'

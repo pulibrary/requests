@@ -118,7 +118,6 @@ module Requests
     #   end
     # end
 
-
     def scsb_request_map(request_type)
       if request_type == 'edd'
         'EDD'

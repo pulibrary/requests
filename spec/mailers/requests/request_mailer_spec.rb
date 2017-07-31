@@ -664,19 +664,33 @@ describe Requests::RequestMailer, :type => :mailer do
       Requests::Submission.new(params)
     }
 
+    let(:conf_mail) {
+      Requests::RequestMailer.send("recall_confirmation", submission_for_recall).deliver_now
+    }
+
     let(:mail) {
       Requests::RequestMailer.send("recall_email", submission_for_recall).deliver_now
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq(I18n.t('requests.recall.email_subject'))
-      expect(mail.to).to eq(['foo@princeton.edu'])
-      expect(mail.cc).to eq([submission_for_recall.email])
-      expect(mail.from).to eq(['foo@princeton.edu'])
+      expect(conf_mail.subject).to eq(I18n.t('requests.recall.email_subject'))
+      expect(conf_mail.to).to eq(['foo@princeton.edu'])
+      expect(conf_mail.cc).to eq([submission_for_recall.email])
+      expect(conf_mail.from).to eq(['foo@princeton.edu'])
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.recall.email_conf_msg')
+      expect(conf_mail.body.encoded).to have_content I18n.t('requests.recall.email_conf_msg')
+    end
+
+    it "renders the headers for a staff email" do
+      expect(mail.subject).to eq(I18n.t('requests.recall.staff_email_subject'))
+      expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+    end
+
+    it "renders the body for a staff email" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.recall.staff_conf_msg')
     end
   end
 end

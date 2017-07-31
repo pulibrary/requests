@@ -81,8 +81,10 @@ en:
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     recall:
       email_subject: "Recalled Item Information"
+      staff_email_subject: "Patron Recall of Item - Please Review"
       request_label: "Recall (could take several weeks)"
       brief_msg: "Recall item charged to another Library user. This process can take up to several weeks."
+      staff_conf_msg: "For items at ReCAP or from Colubmia or NYPL recalls must be manually placed in SCSB."
       email_conf_msg: "Your are requesting that another Library user return this book for your use. This process can take up to several weeks. Contact the Library Circulation Desk for Details. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
       service_error: "You cannot recall this item. "
       access_msg: 'Access Users are not eligible for Recall requests.'

@@ -111,7 +111,7 @@ module Requests
            subject: I18n.t('requests.recap_edd.email_subject'))
     end
 
-    def recall_email(submission)
+    def recall_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
       cc_email = [@submission.email]
@@ -119,6 +119,14 @@ module Requests
            cc: cc_email,
            from: destination_email,
            subject: I18n.t('requests.recall.email_subject'))
+    end
+
+    def recall_email(submission)
+      @submission = submission
+      destination_email = I18n.t('requests.default.email_destination')
+      mail(to: destination_email,
+           from: destination_email,
+           subject: I18n.t('requests.recall.staff_email_subject'))
     end
 
     def service_error_email(services)

@@ -42,18 +42,18 @@ module Requests
 
       return false if scsb_params.empty?
       params = scsb_params
-      response = scsb_request(scsb_params)
-      if response.status != 200
-        error_message = "Request failed because #{response.body}"
-        @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
-      else
-        response = parse_scsb_response(response)
-        if response[:success] == false
-          @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
-        else
-          @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
-        end
-      end
+      # response = scsb_request(scsb_params)
+      # if response.status != 200
+      #   error_message = "Request failed because #{response.body}"
+      #   @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
+      # else
+      #   response = parse_scsb_response(response)
+      #   if response[:success] == false
+      #     @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
+      #   else
+      @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
+      #   end
+      # end
     end
 
     def submitted

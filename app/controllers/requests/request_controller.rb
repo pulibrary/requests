@@ -142,7 +142,7 @@ module Requests
                 unless type == 'recap'
                   Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
                 end
-                if ['on_order', 'in_process', 'pres'].include? type
+                if ['on_order', 'in_process', 'pres', 'recall'].include? type
                   Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
                 end
               end

@@ -236,6 +236,18 @@ module Requests
       end
     end
 
+    def hold_request?
+      if item?
+        if item[:status] == 'Hold Request'
+          true
+        else
+          false
+        end
+      else
+        false
+      end
+    end
+
     def enumerated?
       if item?
         unless item[:enum].nil?

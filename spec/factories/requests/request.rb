@@ -222,4 +222,12 @@ FactoryGirl.define do
     user { FactoryGirl.build(:unauthenticated_patron) }
     initialize_with { new({ system_id: system_id, user: user, mfhd: mfhd_id, source: source }) }
   end
+
+  factory :request_serial_with_item_on_hold, class: 'Requests::Request' do
+    system_id 4563519
+    mfhd_id '4808685'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new({ system_id: system_id, user: user, mfhd: mfhd_id, source: source }) }
+  end
 end

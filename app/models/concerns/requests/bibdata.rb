@@ -63,7 +63,7 @@ module Requests
       locs.sort_by! { |loc| loc[:staff_only] ? 0 : 1 }
       locs.each do |loc|
         if loc[:staff_only]
-          loc[:label] = loc[:label] + " (staff only)"
+          loc[:label] = loc[:label] + " (Staff Only)"
         end
       end
       locs.reverse!

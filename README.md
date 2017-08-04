@@ -4,7 +4,7 @@
 
 ## Dependencies
 
-The engine requires a working copy of marc_liberation aka bibdata to be running. Defaults to https://bibdata.princeton.edu. If you wish to override that value while doing development work and point a local working copy you can set your local environment variable of ```BIBDATA_BASE``` to the root of the marc_liberation application you want to work with. 
+The engine requires a working copy of marc_liberation aka bibdata to be running. Defaults to https://bibdata.princeton.edu. If you wish to override that value while doing development work and point a local working copy you can set your local environment variable of ```BIBDATA_BASE``` to the root of the marc_liberation application you want to work with.
 
 The gem also is dependent on Orangelight to service requests for non-voyager IDs. By default it utilizes the production Orangelight system at https://pulsearch.princeton.edu/.
 
@@ -14,8 +14,12 @@ After you've cloned the repo:
 
 ```
 $ bundle install
-$ rake engine_cart:regenerate
-$ rake spec
+$ rake ci
+```
+
+With Code Coverage Report
+```
+$ COVERAGE=true bundle exec rake ci
 ```
 
 ## Working within Orangelight locally
@@ -51,5 +55,5 @@ This project rocks and uses MIT-LICENSE.
   a. Optional Params
     1. ```mfhd``` https://pulsearch.princeton.edu/requests/9702169?mfhd=9525518 - Ask for a specifif holding recoord
     2. ```source``` https://pulsearch.princeton.edu/requests/9702169?mfhd=9525518&source=pulsearch - Facilitates redirection to the source system that generated the request. Currently responds to ```pulsearch``` or ```catalog```, other values will be ignored.
-2. ```/requests/{thesis_id}``` Example: https://pulsearch.princeton.edu/requests/dsp01vx021h212. This will result in a redirect to the AEON system. 
+2. ```/requests/{thesis_id}``` Example: https://pulsearch.princeton.edu/requests/dsp01vx021h212. This will result in a redirect to the AEON system.
 3. ```/requests/{graphic_arts_id}``` Example: https://pulsearch.princeton.edu/requests/visuals47795. This will result in a redirect to the AEON system.

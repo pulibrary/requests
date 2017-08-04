@@ -124,7 +124,9 @@ module Requests
           end
 
           @submission.service_types.each do |type|
-            success_messages << I18n.t("requests.submit.#{type}_success")
+            unless type == 'bd'
+              success_messages << I18n.t("requests.submit.#{type}_success")
+            end
           end
           @services.each do |service|
             service.errors.each do |error|
@@ -134,7 +136,7 @@ module Requests
         end
         if @submission.valid? && !service_errors.any?
           format.js {
-            flash.now[:success] = success_messages.join('<br/>')
+            flash.now[:success] = success_messages.join(', ')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
             unless @submission.service_types.include? 'bd'

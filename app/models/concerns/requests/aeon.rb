@@ -16,6 +16,9 @@ module Requests
       if barcode?
         params[:ItemNumber] = item[:barcode]
       end
+      if thesis?
+        params[:genre] = 'thesis'
+      end
       params.merge! aeon_basic_params
       params.reject { |k, v| v.nil? }
     end

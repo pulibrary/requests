@@ -38,11 +38,13 @@ module Requests
 
     # non voyager options
     def thesis?
+      return false unless holding.key? "thesis"
       return true if holding["thesis"][:location_code] == 'mudd'
     end
 
     # graphic arts non voyager collection
     def visuals?
+      return false unless holding.key? "visuals"
       return true if holding["visuals"][:location_code] == 'ga'
     end
 

@@ -91,11 +91,9 @@ module Requests
       respond_to do |format|
         if @submission.valid?
           @services = []
-          # success_message = I18n.t('requests.submit.success')
           service_errors = []
           success_messages = []
           if @submission.service_types.include? 'recap'
-            # success_message = I18n.t('requests.submit.recap_success')
             if @submission.user['user_barcode'] == 'ACCESS'
               # Access users cannot use recap service directly
               @services << Requests::Generic.new(@submission)
@@ -104,12 +102,10 @@ module Requests
             end
           end
           if @submission.service_types.include? 'recall'
-            # success_message = I18n.t('requests.submit.recall_success')
             @services << Requests::Recall.new(@submission)
           end
 
           if @submission.service_types.include? 'bd'
-            success_message = I18n.t('requests.submit.bd_success')
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
@@ -124,7 +120,7 @@ module Requests
           end
 
           @submission.service_types.each do |type|
-            unless type == 'bd'
+            unless ['bd'].include? type
               success_messages << I18n.t("requests.submit.#{type}_success")
             end
           end
@@ -136,7 +132,7 @@ module Requests
         end
         if @submission.valid? && !service_errors.any?
           format.js {
-            flash.now[:success] = success_messages.join(', ')
+            flash.now[:success] = success_messages.join(' ')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
             unless @submission.service_types.include? 'bd'

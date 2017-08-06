@@ -3,6 +3,7 @@ en:
   requests:
     default:
       email_destination: "fstcirc@princeton.edu"
+      email_from: "libcir@princeton.edu"
       pickup_placeholder: "Select a Delivery Location"
       request_method_placeholder: "Select a Request Method"
       form_title: "Library Material Request"
@@ -65,19 +66,19 @@ en:
       success: "Request submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
       email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
     recap_guest:
-      email_subject: "Recap Guest Request"
+      email_subject: "Patron Initiated Catalog Request - ReCAP Access Only Request"
       brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
-      email_conf_msg: "Your will receive an email in 1-2 business days when your item is delivered and ready for pickup."
+      email_conf_msg: "Your will receive an email in 1-2 business days when your item is delivered and ready for pickup. If there is a problem fulfilling this request a member of the Library Staff will contact you."
     recap:
-      email_subject: "Off-site Request Confirmation"
+      email_subject: "Patron Initiated Catalog Request Confirmation"
       delivery_label: "Physical Item Delivery"
       brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
-      email_conf_msg: "Your will receive an email in 1-2 business days when your item is delivered and ready for pickup."
+      email_conf_msg: "You will receive an email in 1-2 business days when your item is delivered and ready for pickup or receive an email including a link where you can download a scanned copy of your specified selection as a PDF file. If there is a problem fulfilling this request a member of the Library Staff will contact you."
       guest_email_destination: "fstcirc@princeton.edu"
     recap_edd:
       email_subject: "Recap Electronic Delivery Confirmation"
       brief_msg: "Item offsite at ReCAP facility. Request a selection be scanned for you and delivered as a PDF file in 1-2 business days."
-      email_conf_msg: "Electronic copy requests typically take 1-2 days to process. You receive an email including a link where you can download your scanned section in the that timeframe."
+      email_conf_msg: "Electronic copy requests typically take 1-2 days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you."
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     recall:
       email_subject: "Recalled Item Information"

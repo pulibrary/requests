@@ -121,7 +121,7 @@ $(document).ready(function() {
         if($(this)[0].selectedOptions[0].value === 'bd'){
           var bd_link = $( "body" ).data( "bd" ).link
           if(typeof bd_link !== "undefined"){
-            this_td.append($("<div class='alert alert-warning'></div>").html("Good choice! Your <strong>best bet</strong> is Borrow Direct. See if a version of this item is available via <a href='" + bd_link + "' target='_blank'>the BorrowDirect site</a>. Checkout period is 12 weeks, with no renewals."));
+            this_td.append($("<div class='alert alert-warning'></div>").html("Your <strong>best bet</strong> is Borrow Direct. See if a version of this item is available via <a href='" + bd_link + "' target='_blank'>the BorrowDirect site</a>. Checkout period is 12 weeks, with no renewals."));
           }else{
             this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the Borrow Direct service."));
           }

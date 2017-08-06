@@ -67,7 +67,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.pres.email')])
-      expect(mail.from).to eq([submission_for_preservation.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -121,7 +121,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
       expect(mail.to).to eq([submission_for_preservation.email])
-      expect(mail.from).to eq([submission_for_preservation.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -174,7 +174,7 @@ describe Requests::RequestMailer, :type => :mailer do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
       expect(mail.cc).to eq([submission_for_annexa.email])
-      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -229,7 +229,7 @@ describe Requests::RequestMailer, :type => :mailer do
       expect(mail.subject).to eq(I18n.t('requests.annexb.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
       expect(mail.cc).to eq([submission_for_annexb.email])
-      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -279,7 +279,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.on_order.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
-      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -329,7 +329,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.on_order.email_subject'))
       expect(mail.to).to eq([submission_for_on_order.email])
-      expect(mail.from).to eq([submission_for_on_order.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -382,7 +382,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.in_process.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
-      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -435,7 +435,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.in_process.email_subject'))
       expect(mail.to).to eq([submission_for_in_process.email])
-      expect(mail.from).to eq([submission_for_in_process.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -489,7 +489,7 @@ describe Requests::RequestMailer, :type => :mailer do
       expect(mail.subject).to eq(I18n.t('requests.trace.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
       expect(mail.cc).to eq([submission_for_trace.email])
-      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -553,7 +553,7 @@ describe Requests::RequestMailer, :type => :mailer do
       expect(mail.subject).to eq(I18n.t('requests.recap.email_subject'))
       expect(mail.to).to eq(["foo@princeton.edu"])
       expect(mail.cc).to eq([submission_for_recap.email])
-      expect(mail.from).to eq(["foo@princeton.edu"])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -614,14 +614,14 @@ describe Requests::RequestMailer, :type => :mailer do
     }
 
     it "renders the headers" do
-      expect(mail.subject).to eq(I18n.t('requests.recap.email_subject'))
+      expect(mail.subject).to eq(I18n.t('requests.recap_guest.email_subject'))
       expect(mail.to).to eq([submission_for_recap.email])
       expect(mail.cc).to eq([I18n.t('requests.recap.guest_email_destination')])
-      expect(mail.from).to eq([submission_for_recap.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.recap.email_conf_msg')
+      expect(mail.body.encoded).to have_content I18n.t('requests.recap_guest.email_conf_msg')
     end
   end
 
@@ -676,7 +676,7 @@ describe Requests::RequestMailer, :type => :mailer do
       expect(conf_mail.subject).to eq(I18n.t('requests.recall.email_subject'))
       expect(conf_mail.to).to eq(['foo@princeton.edu'])
       expect(conf_mail.cc).to eq([submission_for_recall.email])
-      expect(conf_mail.from).to eq(['foo@princeton.edu'])
+      expect(conf_mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
@@ -686,7 +686,7 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers for a staff email" do
       expect(mail.subject).to eq(I18n.t('requests.recall.staff_email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
-      expect(mail.from).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body for a staff email" do

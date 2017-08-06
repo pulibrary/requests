@@ -106,11 +106,13 @@ module Requests
           end
 
           if @submission.service_types.include? 'bd'
+            bd_success_message = I18n.t('requests.submit.bd_success')
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
-            ### Failure is handled by the general Error message/notice below
-            success_messages << "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
+            unless bd_request.errors.count >= 1
+              success_messages << "#{bd_success_message} Your request number is #{bd_request.sent[0][:request_number]}"
+            end
           end
 
           # if !recap && !recall && !bd !(a1 & a2).empty?

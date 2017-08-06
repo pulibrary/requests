@@ -139,9 +139,9 @@ module Requests
             logger.info "Request Sent"
             unless @submission.service_types.include? 'bd'
               @submission.service_types.each do |type|
-                unless type == 'recap'
-                  Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
-                end
+                # unless type == 'recap'
+                Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
+                # end
                 if ['on_order', 'in_process', 'pres', 'recall'].include? type
                   Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
                 end

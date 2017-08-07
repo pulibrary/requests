@@ -91,11 +91,9 @@ module Requests
       respond_to do |format|
         if @submission.valid?
           @services = []
-          # success_message = I18n.t('requests.submit.success')
           service_errors = []
           success_messages = []
           if @submission.service_types.include? 'recap'
-            # success_message = I18n.t('requests.submit.recap_success')
             if @submission.user['user_barcode'] == 'ACCESS'
               # Access users cannot use recap service directly
               @services << Requests::Generic.new(@submission)
@@ -104,17 +102,17 @@ module Requests
             end
           end
           if @submission.service_types.include? 'recall'
-            # success_message = I18n.t('requests.submit.recall_success')
             @services << Requests::Recall.new(@submission)
           end
 
           if @submission.service_types.include? 'bd'
-            # success_message = I18n.t('requests.submit.bd_success')
+            bd_success_message = I18n.t('requests.submit.bd_success')
             bd_request = Requests::BorrowDirect.new(@submission)
             bd_request.handle
             @services << bd_request
-            ### Failure is handled by the general Error message/notice below
-            success_messages << "#{success_message} Your request number is #{bd_request.sent[0][:request_number]}"
+            unless bd_request.errors.count >= 1
+              success_messages << "#{bd_success_message} Your request number is #{bd_request.sent[0][:request_number]}"
+            end
           end
 
           # if !recap && !recall && !bd !(a1 & a2).empty?
@@ -122,9 +120,11 @@ module Requests
             @services << Requests::Generic.new(@submission)
             success_messages << I18n.t('requests.submit.success')
           end
-      
+
           @submission.service_types.each do |type|
-            success_messages << I18n.t("requests.submit.#{type}_success")
+            unless ['bd'].include? type
+              success_messages << I18n.t("requests.submit.#{type}_success")
+            end
           end
           @services.each do |service|
             service.errors.each do |error|
@@ -134,13 +134,15 @@ module Requests
         end
         if @submission.valid? && !service_errors.any?
           format.js {
-            flash.now[:success] = success_messages.join('<br/>')
+            flash.now[:success] = success_messages.join(' ')
             logger.info "#Request Submission - #{@submission.as_json}"
             logger.info "Request Sent"
             unless @submission.service_types.include? 'bd'
               @submission.service_types.each do |type|
+                # unless type == 'recap'
                 Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
-                if ['on_order', 'in_process', 'pres'].include? type
+                # end
+                if ['on_order', 'in_process', 'pres', 'recall'].include? type
                   Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
                 end
               end

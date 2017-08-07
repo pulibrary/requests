@@ -222,6 +222,28 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context 'A requestable item with hold_request status' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_serial_with_item_on_hold) }
+    let(:requestable_on_hold) { request.requestable[8] }
+    let(:requestable_not_on_hold) { request.requestable.first }
+    describe '#hold_request?' do
+      it 'with a Hold Request status it should be on hold' do
+        expect(requestable_on_hold.hold_request?).to be true
+      end
+      it 'should be on hold with a Not Charged status' do
+        expect(requestable_not_on_hold.hold_request?).to be false
+      end
+    end
+
+    describe '#services' do
+      it 'should not be recallable' do
+        expect(requestable_on_hold.services.include? 'recall').to be false
+        expect(requestable_on_hold.recallable?).to be false
+      end
+    end
+  end
+
   context 'A requestable item eligible for borrow direct' do
     let(:request) { FactoryGirl.build(:missing_item) }
     let(:requestable) { request.requestable }

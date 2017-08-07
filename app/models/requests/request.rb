@@ -65,7 +65,9 @@ module Requests
           barcodesort = {}
           values['items'].each { |item| barcodesort[item['barcode']] = item }
           availability_data.each do |item|
-            barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
+            unless barcodesort[item['itemBarcode']].nil?
+              barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
+            end
           end
           barcodesort.values.each do |item|
             params = build_requestable_params(

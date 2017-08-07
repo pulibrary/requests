@@ -402,9 +402,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it 'shouuld have an Aeon Action Param' do
-       expect(subject.requestable[0].aeon_mapped_params.key? :Action).to be true
-       expect(subject.requestable[0].aeon_mapped_params[:Action]).to eq('10')
-     end
+        expect(subject.requestable[0].aeon_mapped_params.key? :Action).to be true
+        expect(subject.requestable[0].aeon_mapped_params[:Action]).to eq('10')
+      end
+
+      it 'should have a genre param set to thesis' do
+        expect(subject.requestable[0].aeon_mapped_params.key? :genre).to be true
+        expect(subject.requestable[0].aeon_mapped_params[:genre]).to eq('thesis')
+      end
     end
   end
 

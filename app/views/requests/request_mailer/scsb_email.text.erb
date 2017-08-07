@@ -1,0 +1,10 @@
+==============================================
+Remote Storage Request
+
+<%= I18n.t('requests.recap.email_conf_msg') %>
+
+<%= I18n.t('requests.recap_edd.email_conf_msg') %>
+
+<% @message.each do |key,value| %>
+  <%= "#{key}=#{value}" %>
+<% end %>

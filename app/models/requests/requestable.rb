@@ -38,17 +38,22 @@ module Requests
 
     # non voyager options
     def thesis?
+      return false unless holding.key? "thesis"
       return true if holding["thesis"][:location_code] == 'mudd'
     end
 
     # graphic arts non voyager collection
     def visuals?
+      return false unless holding.key? "visuals"
       return true if holding["visuals"][:location_code] == 'ga'
     end
 
     # Reading Room Request
     def aeon?
       return true if location[:aeon_location] == true
+      unless item.nil?
+        return true if item[:use_statement] == 'Supervised Use'
+      end
     end
 
     # at an open location users may go to
@@ -233,6 +238,18 @@ module Requests
       end
     end
 
+    def hold_request?
+      if item?
+        if item[:status] == 'Hold Request'
+          true
+        else
+          false
+        end
+      else
+        false
+      end
+    end
+
     def enumerated?
       if item?
         unless item[:enum].nil?
@@ -298,7 +315,7 @@ module Requests
       end
 
       def unavailable_statuses
-        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'In transit',
+        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
          'In transit on hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',

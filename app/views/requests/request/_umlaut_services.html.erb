@@ -65,7 +65,11 @@
                 if (response.error.indexOf("Timeout") > -1) {
                   $('#bd_error').append("<strong>Borrow Direct is too slow for us at the moment, but you can still search for your item through their site.</strong><p>Choose one of the options below.</p>");
                 } else {
-                  $('#bd_error').append("<strong>There was a problem with Borrow Direct.</strong><p>Choose one of the options below.</p>");
+                  if (response.error === "PUBAN003: Authentication failed")
+                    $('#bd_error').append("<strong>There was a problem using your library account with Borrow Direct.</strong><p>Please consult your <a href='/account'>account</a> to see if you have a block you need to resolve.</p>");
+                  else {
+                    $('#bd_error').append("<strong>There was a problem with Borrow Direct.</strong><p>Choose one of the options below.</p>");
+                  }
                 }
                 $('#bd_error').show();
               } else {
@@ -127,7 +131,7 @@
         <p id='bd_error' class='alert alert-danger' aria-live="polite" style='display: none'></p>
         <p id='campus_available' class='alert alert-info' aria-live="polite" style='display: none'>
           <strong>There is another copy of this item available at Princeton</strong>
-          <a href="">Show me the available item!</a>
+          <a href="">View other copy.</a>
         </p>
       </div>
     </div>
@@ -135,7 +139,7 @@
   <% else %>
     <p id='campus_available' class='alert alert-info' aria-live="polite" style='display: none'>
       <strong>There are other copies of this item available at Princeton.</strong>
-      <br> <a id="show_item" href="">Show me the other copies!</a>
+      <br> <a id="show_item" href="">View other copies.</a>
     </p>
 
   <% end %>

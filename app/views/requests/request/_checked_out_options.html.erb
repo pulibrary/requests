@@ -12,7 +12,7 @@
 </select>
 <br/>
 
-<% if ((requestable.scsb? || requestable.recap?) && requestable.recallable?) %>
+<% if (requestable.scsb? && requestable.recallable?) %>
   <div class="recall-pickup">
     <%= pickup_choices_scsb requestable, [] %>
   </div>

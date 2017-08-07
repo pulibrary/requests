@@ -15,7 +15,7 @@ module Requests
           concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', role: 'menuitem', class: 'btn btn-md btn-primary btn-full', id: 'cas-login' # , current_user_name: current_user.uid)
           concat content_tag(:hr)
           concat content_tag(:p, "or", class: "or-divider")
-          concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/sign_in', role: 'menuitem', class: 'btn btn-md btn-default btn-full', id: 'barcode-login'
+          concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/auth/barcode', role: 'menuitem', class: 'btn btn-md btn-default btn-full', id: 'barcode-login'
         end
       else
         I18n.t('requests.account.unauthenticated')

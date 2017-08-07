@@ -675,7 +675,6 @@ describe Requests::RequestMailer, :type => :mailer do
     it "renders the headers" do
       expect(conf_mail.subject).to eq(I18n.t('requests.recall.email_subject'))
       expect(conf_mail.to).to eq(['foo@princeton.edu'])
-      expect(conf_mail.cc).to eq([submission_for_recall.email])
       expect(conf_mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 

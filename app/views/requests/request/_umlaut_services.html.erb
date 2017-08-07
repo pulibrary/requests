@@ -121,17 +121,17 @@
       </div>
 
         <p id='bd_available' class='alert alert-success' aria-live="polite" style='display: none'>
-          <strong>Good news!</strong> This title is available via Borrow Direct,
+          This title is available via Borrow Direct,
           the fastest way to get an item that is not currently on the shelf. You just need to select a delivery location below.
         </p>
         <p id='bd_not_available' class='alert alert-warning' aria-live="polite" style='display: none'>
-          <strong>Don't worry!</strong> Your best bet is still Borrow Direct, so check that first. If you can't
+          Don't worry, your best bet is still Borrow Direct, so check that first. If you can't
           find it you have some other options in the form below.
         </p>
         <p id='bd_error' class='alert alert-danger' aria-live="polite" style='display: none'></p>
         <p id='campus_available' class='alert alert-info' aria-live="polite" style='display: none'>
-          <strong>There is another copy of this item available at Princeton</strong>
-          <a href="">View other copy.</a>
+          <strong>There is another copy of this item available at Princeton.</strong><br/>
+          <a id="show_item" title "View other copy" href="#">View other copy</a>
         </p>
       </div>
     </div>
@@ -139,7 +139,7 @@
   <% else %>
     <p id='campus_available' class='alert alert-info' aria-live="polite" style='display: none'>
       <strong>There are other copies of this item available at Princeton.</strong>
-      <br> <a id="show_item" href="">View other copies.</a>
+      <br> <a id="show_item" title="View other copies" href="#">View other copies</a>
     </p>
 
   <% end %>

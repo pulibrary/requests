@@ -194,7 +194,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content 'In Process'
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'
-        expect(page).to have_content 'Request of In Process item submitted.'
+        expect(page).to have_content I18n.t("requests.submit.in_process_success")
       end
 
       it 'makes sure In-Process items can only be delivered to their holding library', js: true, unless: in_travis? do
@@ -204,7 +204,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(pickup_code).to eq 'PJ'
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'
-        expect(page).to have_content 'Request of In Process item submitted.'
+        expect(page).to have_content I18n.t("requests.submit.in_process_success")
       end
 
       it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true, unless: in_travis? do
@@ -213,7 +213,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         select('Firestone Library', :from => 'requestable__pickup')
         select('Lewis Library', :from => 'requestable__pickup')
         click_button 'Request this Item'
-        expect(page).to have_content 'Request of In Process item submitted.'
+        expect(page).to have_content I18n.t("requests.submit.in_process_success")
       end
 
       it 'allows CAS patrons to request On-Order items' do

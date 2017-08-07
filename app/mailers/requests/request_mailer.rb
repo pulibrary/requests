@@ -103,22 +103,10 @@ module Requests
            subject: subject)
     end
 
-    def recap_edd_email(submission)
-      @submission = submission
-      destination_email = @submission.email
-      cc_email = [@submission.email]
-      mail(to: destination_email,
-           cc: cc_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: I18n.t('requests.recap_edd.email_subject'))
-    end
-
     def recall_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
-      cc_email = [@submission.email]
       mail(to: destination_email,
-           cc: cc_email,
            from: I18n.t('requests.default.email_from'),
            subject: I18n.t('requests.recall.email_subject'))
     end
@@ -137,14 +125,6 @@ module Requests
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: I18n.t('requests.error.service_error_subject'))
-    end
-
-    def scsb_email(message)
-      @message = message
-      destination_email = @message[:emailAddress]
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: I18n.t('requests.recap.email_subject'))
     end
 
     private

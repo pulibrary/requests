@@ -45,7 +45,7 @@ module Requests
           services << 'online'
         else
           ## my item status is negative
-          if requestable.charged?
+          if requestable.charged? && !requestable.aeon?
             if (!requestable.enumerated? && cas_user? && !has_loanable?)
               services << 'bd'
             end

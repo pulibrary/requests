@@ -36,7 +36,7 @@ module Requests
     def show_service_options requestable
       if requestable.services.empty?
         content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
-      elsif requestable.charged?
+      elsif requestable.charged? && !requestable.aeon?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon? && requestable.voyager_managed?
         link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'

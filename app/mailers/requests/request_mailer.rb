@@ -103,7 +103,7 @@ module Requests
            subject: subject)
     end
 
-    def recall_confirmation(submission)
+    def recall_email(submission)
       @submission = submission
       destination_email = @submission.email
       mail(to: destination_email,
@@ -111,7 +111,7 @@ module Requests
            subject: I18n.t('requests.recall.email_subject'))
     end
 
-    def recall_email(submission)
+    def scsb_recall_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
       mail(to: destination_email,

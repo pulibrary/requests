@@ -81,12 +81,12 @@ en:
       email_conf_msg: "Electronic copy requests typically take 1-2 days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you."
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     recall:
-      email_subject: "Recalled Item Information"
+      email_subject: "Recall Confirmation"
       staff_email_subject: "Patron Recall of Item - Please Review"
       request_label: "Recall (could take several weeks)"
       brief_msg: "Recall item charged to another Library user. This process can take up to several weeks."
       staff_conf_msg: "For items at ReCAP or from Columbia or New York Public Library recalls must be manually placed in SCSB."
-      email_conf_msg: "Your are requesting that another Library user return this book for your use. This process can take up to several weeks. Contact the Library Circulation Desk for details. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
+      email_conf_msg: "You have requested that another Library user return this book for your use. This process can take several weeks. In the future, please consider using Borrow Direct or Interlibrary Loan if those options are available to you."
       service_error: "You cannot recall this item. "
       access_msg: 'Access Users are not eligible for Recall requests.'
     bd:

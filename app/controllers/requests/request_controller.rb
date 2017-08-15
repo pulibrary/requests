@@ -66,6 +66,11 @@ module Requests
       # flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end
 
+    def ill_to_edd_form
+      render layout: false
+      flash.now[:notice] = "Please Supply a valid Transaction Number."
+    end
+
     def ill_to_edd
       @ill_to_edds = Requests::IllToEdd.new(params)
 

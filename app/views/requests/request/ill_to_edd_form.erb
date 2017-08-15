@@ -1,0 +1,7 @@
+<div class="col-md-12">
+  <h1>ILL EDD Request</h1>
+  <%= simple_form_for :ill_to_edd, { url: "/requests/ill2edd", method: :post } do |f| %>
+    <%= f.input :transaction_number %>
+    <%= f.button :submit, "Submit Request" %>
+  <% end %>
+</div>

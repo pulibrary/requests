@@ -72,7 +72,7 @@ module Requests
       if @ill_to_edds.errors.any?
         response = @ill_to_edds.errors.to_json
       else
-        response = @ill_to_edds.response.to_json
+        response = @ill_to_edds.response.body.encode("UTF-8", invalid: :replace, undef: :replace).to_json
       end
 
       render json: response
@@ -135,7 +135,7 @@ module Requests
             @services << Requests::Generic.new(@submission)
             success_messages << I18n.t('requests.submit.success')
           end
-      
+
           @submission.service_types.each do |type|
             success_messages << I18n.t("requests.submit.#{type}_success")
           end

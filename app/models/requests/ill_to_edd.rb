@@ -1,5 +1,4 @@
 require 'faraday'
-require 'cobravsmongoose'
 
 module Requests
   class IllToEdd
@@ -34,7 +33,7 @@ module Requests
 
     def handle
       validate_tn
-      r = get_response(@params)
+      r = get_transaction_response(@params)
       unless r.status == 200
         @errors << { error: "Error retrieving ILLiad transaction." }
       end

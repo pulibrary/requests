@@ -34,6 +34,7 @@ module Requests
         req.headers['Content-Type'] = 'application/json'
         req.headers['Accept'] = 'application/json'
         req.headers['api_key'] = scsb_auth_key
+        binding.pry
         req.body = request_params.to_json
       end
       response
@@ -84,6 +85,10 @@ module Requests
                      else
                        item["delivery_mode_#{item['item_id']}"]
                      end
+      transaction_number_note = ''
+      unless item[:transaction_number].blank?
+        transaction_number_note = "Transaction Number: #{@item[:transaction_number]}"
+      end
       {
         author: item[:edd_author],
         bibId: bib[:id],
@@ -104,7 +109,8 @@ module Requests
         startPage: item[:edd_start_page],
         titleIdentifier: bib[:title],
         username: user[:user_name],
-        volume: item[:edd_volume_number]
+        volume: item[:edd_volume_number],
+        notes: transaction_number_note
       }
     end
 

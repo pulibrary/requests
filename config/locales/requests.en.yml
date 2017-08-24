@@ -68,12 +68,12 @@ en:
     recap_guest:
       email_subject: "Patron Initiated Catalog Request - ReCAP Access Only Request"
       brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
-      email_conf_msg: "You will receive an email in 1-2 business days when your item is delivered and ready for pickup. If there is a problem fulfilling this request a member of the Library Staff will contact you."
+      email_conf_msg: "You will be notified via email when your item is available. Most items are ready in 1 to 2 business days."
     recap:
       email_subject: "Patron Initiated Catalog Request Confirmation"
       delivery_label: "Physical Item Delivery"
       brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
-      email_conf_msg: "You will receive an email in 1-2 business days when your item is delivered and ready for pickup or receive an email including a link where you can download a scanned copy of your specified selection as a PDF file. If there is a problem fulfilling this request a member of the Library Staff will contact you."
+      email_conf_msg: "You will be notified via email when your item is available. Most items are ready in 1 to 2 business days."
       guest_email_destination: "fstcirc@princeton.edu"
     recap_edd:
       email_subject: "Recap Electronic Delivery Confirmation"

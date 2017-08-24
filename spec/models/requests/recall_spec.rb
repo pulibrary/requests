@@ -45,6 +45,8 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
     Requests::Submission.new(params)
   }
 
+  let(:todays_date) { Date.today }
+  
   let(:subject) { described_class.new(submission) }
 
   let(:responses) {
@@ -79,6 +81,14 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
 
       expect(subject.submitted.size).to eq(1)
       expect(subject.errors.size).to eq(0)
+    end
+
+    it 'Should construct a expiration date for the recall request' do
+      expect(subject.request_payload(submission.items.first)).to include("<last-interest-date>#{subject.recall_expiration_date}</last-interest-date>")
+    end
+
+    it 'should have an expiry date 60 days from today formatted as yyyy-mm-dd' do
+      expect(subject.recall_expiration_date).to eq((todays_date+60).strftime("%Y%m%d"))
     end
   end
 end

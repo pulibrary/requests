@@ -1,3 +1,5 @@
+require 'date'
+
 module Requests
   module Voyager
     # for PUL Bibliographic Helpers
@@ -49,11 +51,17 @@ module Requests
         xml.send(:"recall-parameters") {
           xml.send(:"pickup-location", pickup[0])
           xml.send(:"last-pickup-date", "20091006")
+          xml.send(:"last-interest-date",recall_expiration_date)
           xml.comment "testing recall request"
           xml.dbkey URI.escape(voyager_ub_id)
         }
       end
       recall_request.to_xml
+    end
+
+    def recall_expiration_date
+      expiry_date = Date.today + 60
+      expiry_date.strftime("%Y%m%d")
     end
   end
 end

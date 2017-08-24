@@ -66,21 +66,29 @@ module Requests
       # flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end
 
-    def ill_to_edd_form
-      render layout: false
+    def ill_to_edd_show
+      render layout: 'requests/ill_to_edd'
+    end
+
+    def ill_to_edd_new
+      render layout: 'requests/ill_to_edd'
       flash.now[:notice] = "Please Supply a valid Transaction Number."
     end
 
-    def ill_to_edd
+    def ill_to_edd_create
+      render layout: 'requests/ill_to_edd'
       @ill_to_edds = Requests::IllToEdd.new(params)
 
-      if @ill_to_edds.errors.any?
-        response = @ill_to_edds.errors.to_json
-      else
-        response = @ill_to_edds.response.body.encode("UTF-8", invalid: :replace, undef: :replace).to_json
+      respond_to do |format|
+        if !@ill_to_edds.errors.any?
+          format.html { render :ill_to_edd_show, notice: 'Ill to EDD transaction was successfully created.' }
+          format.json { render json: @ill_to_edds.response.body.encode("UTF-8", invalid: :replace, undef: :replace).to_json, status: :unprocessable_entity }
+        else
+          format.html { render :ill_to_edd_new, notice: 'There was a problem with your request.' }
+          format.json { render json: @ill_to_edds.errors.to_json, status: :unprocessable_entity }
+        end
       end
 
-      render json: response
     end
 
     # will request recall pickup location options from voyager

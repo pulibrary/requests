@@ -3,8 +3,8 @@ Requests::Engine.routes.draw do
   post '/borrow_direct', to: 'request#borrow_direct'
   post '/recall_pickups', to: 'request#recall_pickups'
   post '/submit', to: 'request#submit'
-  post '/ill2edd', to: 'request#ill_to_edd'
-  get '/ill2edd', to: 'request#ill_to_edd_form'
+  post '/ill2edd', to: 'request#ill_to_edd_create'
+  get '/ill2edd/new', to: 'request#ill_to_edd_new'
   # no longer in use
   # get '/pageable', to: 'request#pageable'
   get ':system_id', to: 'request#generate', constraints: { system_id: /(\d+|dsp\w+|visuals\d+|SCSB-\d+)/i }

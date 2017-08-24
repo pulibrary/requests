@@ -1,0 +1,5 @@
+<%= form_tag("/requests/ill2edd", method: "post") do %>
+  <%= label_tag(:transaction_number, "transaction_number") %>
+  <%= text_field_tag(:transaction_number) %>
+  <%= submit_tag("Save") %>
+<% end %>

@@ -74,6 +74,10 @@ module Requests
       @bib[:title] = solr_doc[:title_display]
     end
 
+    def transaction_number
+      @params['transaction_number']
+    end
+
     def bib
       @bib
     end

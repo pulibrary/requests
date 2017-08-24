@@ -121,7 +121,7 @@ module Requests
 
     def service_error_email(services)
       @services = services
-      destination_email = ['Recapproblems@princeton.edu', I18n.t('requests.error.service_error_email')]
+      destination_email = I18n.t('requests.error.service_error_email')
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: I18n.t('requests.error.service_error_subject'))

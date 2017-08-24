@@ -63,10 +63,12 @@ module Requests
         availability_data = items_by_id(other_id, scsb_owning_institution(scsb_location))
         holdings.each do |id, values|
           barcodesort = {}
-          values['items'].each { |item| barcodesort[item['barcode']] = item }
-          availability_data.each do |item|
-            unless barcodesort[item['itemBarcode']].nil?
-              barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
+          unless values['items'].nil?
+            values['items'].each { |item| barcodesort[item['barcode']] = item }
+            availability_data.each do |item|
+              unless barcodesort[item['itemBarcode']].nil?
+                barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
+              end
             end
           end
           barcodesort.values.each do |item|

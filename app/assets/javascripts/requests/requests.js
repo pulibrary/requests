@@ -111,23 +111,30 @@ $(document).ready(function() {
         }
       } else {
         $('.alert').hide();
-        chbx.prop("disabled", true);
-        chbx.prop("checked", false);
-        $('.submit--request').prop("disabled", true);
-
         if(recall_pickup_select.is(':visible')){
           recall_pickup_select.hide();
         }
         if($(this)[0].selectedOptions[0].value === 'bd'){
           var bd_link = $( "body" ).data( "bd" ).link
           if(typeof bd_link !== "undefined"){
-            this_td.append($("<div class='alert alert-warning'></div>").html("Your <strong>best bet</strong> is Borrow Direct. See if a version of this item is available via <a href='" + bd_link + "' target='_blank'>the BorrowDirect site</a>."));
+            pickup_select = $( "body" ).data( "bd_pickups" ).pickup_select
+            if(typeof pickup_select !== "undefined"){
+              pickup_select.show();
+            }else{
+              chbx.prop("disabled", true);
+              chbx.prop("checked", false);
+              $('.submit--request').prop("disabled", true);
+              this_td.append($("<div class='alert alert-warning'></div>").html("Your <strong>best bet</strong> is Borrow Direct. See if a version of this item is available via <a href='" + bd_link + "' target='_blank'>the BorrowDirect site</a>."));
+            }
           }else{
             this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the Borrow Direct service."));
           }
           $('.alert-warning a').focus();
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
+          chbx.prop("disabled", true);
+          chbx.prop("checked", false);
+          $('.submit--request').prop("disabled", true);
           var ctx = this_td.find('.ill-data').attr('data-ill-url')
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
           $('.alert-warning a').focus();

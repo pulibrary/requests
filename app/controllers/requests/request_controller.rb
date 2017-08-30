@@ -143,6 +143,9 @@ module Requests
                 if ['on_order', 'in_process', 'pres'].include? type
                   Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
                 end
+                if type == 'recall' && @submission.scsb?
+                  Requests::RequestMailer.send("scsb_recall_email", @submission).deliver_now
+                end
               end
             end
           }

@@ -69,6 +69,7 @@ $(document).ready(function() {
       event.stopPropagation();
       var this_td = $( this ).closest( "td" );
       var recall_pickup_select = this_td.find( ".recall-pickup" );
+      var bd_pickup_select = this_td.find( ".bd-pickup" );
       var chbx =  $( this ).closest( "tr" ).find( "input:checkbox" );
 
       if($(this)[0].selectedOptions[0].value === 'recall'){
@@ -77,9 +78,8 @@ $(document).ready(function() {
         $('.submit--request').prop("disabled", false);
         $('.alert').hide();
         recall_pickup_select.show();
+        bd_pickup_select.hide();
 
-        // don't keep hitting the service if the pickup locs are populated
-        if(recall_pickup_select.find('option').length == 1){
           var item_inputs = $( this ).closest( "tr" ).find( "input" );
           var bib_inputs =  $('input[name^="bib["]');
           var user_inputs = $('input[name^="request["]');
@@ -99,27 +99,31 @@ $(document).ready(function() {
             if(msg.response.recall['@allowed'] == 'Y'){
               var opts = msg.response.recall['pickup-locations']['pickup-location'];
               var length = opts.length;
-
+              recall_pickup_select.empty();
               for ( i=0; i < length; i++) {
                recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code'] + '|' + opts[i]['$']).text(opts[i]['$']));
               }
+
             } else {
               recall_pickup_select.hide();
               this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
             }
           });
-        }
+
       } else {
         $('.alert').hide();
         if(recall_pickup_select.is(':visible')){
           recall_pickup_select.hide();
         }
+        if(bd_pickup_select.is(':visible')){
+          bd_pickup_select.hide();
+        }
         if($(this)[0].selectedOptions[0].value === 'bd'){
           var bd_link = $( "body" ).data( "bd" ).link
           if(typeof bd_link !== "undefined"){
-            pickup_select = $( "body" ).data( "bd_pickups" ).pickup_select
-            if(typeof pickup_select !== "undefined"){
-              pickup_select.show();
+            bd_pickup_select = $( "body" ).data( "bd_pickups" ).pickup_select
+            if(typeof bd_pickup_select !== "undefined"){
+              bd_pickup_select.show();
             }else{
               chbx.prop("disabled", true);
               chbx.prop("checked", false);

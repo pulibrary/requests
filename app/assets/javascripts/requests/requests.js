@@ -69,6 +69,7 @@ $(document).ready(function() {
       event.stopPropagation();
       var this_td = $( this ).closest( "td" );
       var recall_pickup_select = this_td.find( ".recall-pickup" );
+      var bd_pickup_select = this_td.find( ".bd-pickup" );
       var chbx =  $( this ).closest( "tr" ).find( "input:checkbox" );
 
       if($(this)[0].selectedOptions[0].value === 'recall'){
@@ -76,6 +77,7 @@ $(document).ready(function() {
         chbx.prop("disabled", false);
         $('.submit--request').prop("disabled", false);
         $('.alert').hide();
+        bd_pickup_select.hide();
         recall_pickup_select.show();
 
         // don't keep hitting the service if the pickup locs are populated
@@ -118,14 +120,24 @@ $(document).ready(function() {
         if(recall_pickup_select.is(':visible')){
           recall_pickup_select.hide();
         }
+        if(bd_pickup_select.is(':visible')){
+          bd_pickup_select.hide();
+        }
         if($(this)[0].selectedOptions[0].value === 'bd'){
-          var bd_link = $( "body" ).data( "bd" ).link
-          if(typeof bd_link !== "undefined"){
-            this_td.append($("<div class='alert alert-warning'></div>").html("Your <strong>best bet</strong> is Borrow Direct. See if a version of this item is available via <a href='" + bd_link + "' target='_blank'>the BorrowDirect site</a>."));
+          if(bd_pickup_select.find('option').length > 1){
+            bd_pickup_select.show();
+            chbx.prop("disabled", false);
+            chbx.prop("checked", true);
+            $('.submit--request').prop("disabled", false);
           }else{
-            this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the Borrow Direct service."));
+            var bd_link = $( "body" ).data( "bd" ).link
+            if(typeof bd_link !== "undefined"){
+              this_td.append($("<div class='alert alert-warning'></div>").html("Your <strong>best bet</strong> is Borrow Direct. See if a version of this item is available via <a href='" + bd_link + "' target='_blank'>the BorrowDirect site</a>."));
+            }else{
+              this_td.append($("<div class='alert alert-warning'></div>").html("Sorry, an error occurred with the Borrow Direct service."));
+            }
+            $('.alert-warning a').focus();
           }
-          $('.alert-warning a').focus();
         }
         if($(this)[0].selectedOptions[0].value === 'ill'){
           var ctx = this_td.find('.ill-data').attr('data-ill-url')

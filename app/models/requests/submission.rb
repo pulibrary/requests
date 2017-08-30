@@ -134,6 +134,12 @@ module Requests
       @bib[:id]
     end
 
+    def scsb?
+      items = @items.select { |item| ['scsbnypl', 'scsbcul'].include? item["location_code"] }
+      return true unless items.empty?
+      return false if items.empty?
+    end
+
     def service_types
       types = []
       @items.each do |item|

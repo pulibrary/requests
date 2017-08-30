@@ -74,7 +74,7 @@
                 $('#bd_error').show();
               } else {
                 $.each(rows, function( key, val ) {
-                    var pickup_select = $(this).find('.recall-pickup');
+                    var pickup_select = $(this).find('.bd-pickup');
                     var request_options = $(this).find('select.request-options');
 
                     if (response.response_hash.Available) {
@@ -92,7 +92,7 @@
                       chkbox.first().prop('checked', true);
 
                       $('#bd_available').delay(500).fadeIn(500);
-                      
+                      request_options.find('option:eq(1)').prop("selected", true)
                       pickup_select.show();
                     } else {
                       $('#bd_not_available').delay(500).fadeIn(500);

@@ -82,7 +82,7 @@ en:
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     recall:
       email_subject: "Recall Confirmation"
-      staff_email_subject: "Patron Recall of Item - Please Review"
+      staff_email_subject: "Patron Recall of ReCAP Partner Item - Please Review"
       request_label: "Recall (could take several weeks)"
       brief_msg: "Recall item charged to another Library user. This process can take up to several weeks."
       staff_conf_msg: "For items at ReCAP or from Columbia or New York Public Library recalls must be manually placed in SCSB."

@@ -93,6 +93,10 @@ describe Requests::Submission do
         expect(submission.service_types).to be_truthy
         expect(submission.service_types).to be_an(Array)
       end
+
+      it 'does identify as a scsb partner item' do
+        expect(submission.scsb?).to be false
+      end
     end
   end
 
@@ -1066,7 +1070,7 @@ describe Requests::Submission do
     end
   end
 
-  context 'Single Submission for a Print with SCSB Managed data' do
+  describe 'Single Submission for a Print with SCSB Managed data' do
     let(:user_info) {
       {
         "user_name" => "Foo Request",
@@ -1124,14 +1128,13 @@ describe Requests::Submission do
     let(:submission) {
       Requests::Submission.new(params)
     }
-  end
 
-  context 'A submission with multiple SCSB items' do
-  end
+    before(:each) do
+      submission.valid?
+    end
 
-  context 'A submission with a single SCSB EDD request' do
-  end
-
-  context '' do
+    it 'Identifies as a SCSB partner item' do
+      expect(submission.scsb?).to be true
+    end
   end
 end

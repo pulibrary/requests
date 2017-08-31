@@ -77,7 +77,9 @@ $(document).ready(function() {
         chbx.prop("disabled", false);
         $('.submit--request').prop("disabled", false);
         $('.alert').hide();
+        bd_pickup_select.attr( "name", "not_used" );
         bd_pickup_select.hide();
+        recall_pickup_select.attr( "name", "requestable[][pickup]" );
         recall_pickup_select.show();
 
         // don't keep hitting the service if the pickup locs are populated
@@ -119,13 +121,16 @@ $(document).ready(function() {
 
         if(recall_pickup_select.is(':visible')){
           recall_pickup_select.hide();
+          recall_pickup_select.attr( "name", "not_used" );
         }
         if(bd_pickup_select.is(':visible')){
           bd_pickup_select.hide();
+          bd_pickup_select.attr( "name", "not_used" );
         }
         if($(this)[0].selectedOptions[0].value === 'bd'){
           if(bd_pickup_select.find('option').length > 1){
             bd_pickup_select.show();
+            bd_pickup_select.attr( "name", "requestable[][pickup]" );
             chbx.prop("disabled", false);
             chbx.prop("checked", true);
             $('.submit--request').prop("disabled", false);

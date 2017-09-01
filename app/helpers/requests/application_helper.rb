@@ -328,13 +328,14 @@ module Requests
     end
 
     def all_aeon_items request
-      false
+      all_aeon = false
       unless request.mfhd.blank?
         not_aeon = request.sorted_requestable[request.mfhd].select { |req| !req.aeon? }
-        if not_aeon.size == 0
-          true
+        if not_aeon.empty?
+          all_aeon = true
         end
-      end  
+      end
+      all_aeon
     end
 
     def status_label requestable

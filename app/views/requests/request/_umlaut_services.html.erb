@@ -14,6 +14,8 @@
         mfhd_id = '#holding' + '<%= @request.mfhd %>';
       <% end %>
       // FIXME - What is this supposed to do?
+      // NOFIXNEEDED - this hides the other holdings when a mfhd is supplied.
+      //   We need to be able to make users aware of other holdings.
       if(mfhd_id.length){
         var related_items = $( "div[id^='holding']:not(" + mfhd_id + ")" );
         related_items.hide();
@@ -22,8 +24,10 @@
 
       $( "a#show_item" ).on( "click", function( event ) {
         event.preventDefault();
-        related_items.slideToggle( "slow" );
-        related_items.next("div.table-responsive").slideToggle( "slow" );
+        window.location.href = location.protocol + '//' + location.host + location.pathname
+        // Temporarily commented out to fix #282
+        // related_items.slideToggle( "slow" );
+        // related_items.next("div.table-responsive").slideToggle( "slow" );
       });
 
   });

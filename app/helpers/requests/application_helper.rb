@@ -327,15 +327,15 @@ module Requests
       hidden_request_tags.html_safe
     end
 
-    def all_aeon_items request
-      all_aeon = false
+    def suppress_login request
+      suppress_login = false
       unless request.mfhd.blank?
         not_aeon = request.sorted_requestable[request.mfhd].select { |req| !req.aeon? }
         if not_aeon.empty?
-          all_aeon = true
+          suppress_login = true
         end
       end
-      all_aeon
+      suppress_login
     end
 
     def status_label requestable

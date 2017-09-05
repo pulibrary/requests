@@ -31,4 +31,21 @@ RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name:
       expect(submit_button_disabled).to be_truthy
     end
   end
+
+  describe '#suppress_login' do
+    let(:unauthenticated_patron) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:params) {
+      {
+        system_id: '7352936',
+        mfhd: '7179463',
+        user: unauthenticated_patron
+      }
+    }
+    let(:aeon_only_request) { Requests::Request.new(params) }
+    let(:login_suppressed) { helper.suppress_login(aeon_only_request) }
+
+    it 'returns a boolean to disable/enable submit' do
+      expect(login_suppressed).to be true
+    end
+  end
 end

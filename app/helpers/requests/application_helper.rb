@@ -327,6 +327,17 @@ module Requests
       hidden_request_tags.html_safe
     end
 
+    def suppress_login request
+      suppress_login = false
+      unless request.mfhd.blank?
+        not_aeon = request.sorted_requestable[request.mfhd].select { |req| !req.aeon? }
+        if not_aeon.empty?
+          suppress_login = true
+        end
+      end
+      suppress_login
+    end
+
     def status_label requestable
       if requestable.charged?
         content_tag(:span, 'Not Available', class: "availability--label badge-alert label label-danger")

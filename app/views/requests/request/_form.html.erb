@@ -1,4 +1,4 @@
-<% if @user.guest && @patron.blank? %>
+<% if @user.guest && @patron.blank? && !suppress_login(@request)%>
   <%= simple_form_for(:request, { url: login_url(@request), method: :post, html: { id: 'logins'}} ) do |l| %>
     <%= render partial: 'user_login_options', locals: { l: l } %>
   <% end %>
@@ -9,13 +9,14 @@
 <% else %>
   <%= simple_form_for(:request, { url: '/requests/submit.js', method: :post, remote: true, data: {type: 'script'}} ) do |f| %>
   <%= hidden_fields_request @request %>
-
-    <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
-    <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
-    <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
-    <%= f.hidden_field :patron_id, value: @patron[:patron_id] %>
-    <%= f.hidden_field :patron_group, value: @patron[:patron_group] %>
-    <%= f.hidden_field :email, value: format_email(@patron[:active_email]) %>
+    <% unless suppress_login(@request) %>
+      <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
+      <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
+      <%= f.hidden_field :user_barcode, value: @patron[:barcode] %>
+      <%= f.hidden_field :patron_id, value: @patron[:patron_id] %>
+      <%= f.hidden_field :patron_group, value: @patron[:patron_group] %>
+      <%= f.hidden_field :email, value: format_email(@patron[:active_email]) %>
+    <% end %>
 
     <% unless @request.source.nil? %>
       <%= f.hidden_field :source, value: @request.source %>

@@ -71,7 +71,12 @@ module Requests
     end
 
     def recap_edd?
-      return true if location[:recap_electronic_delivery_location] == true
+      if scsb?
+        return true if scsb_edd_cullection_codes.include? item[:collection_code]
+        false
+      else
+        return true if location[:recap_electronic_delivery_location] == true
+      end
     end
 
     def missing?
@@ -320,6 +325,10 @@ module Requests
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
          'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+      end
+
+      def scsb_edd_cullection_codes
+        %w(AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP)
       end
 
       def available_statuses

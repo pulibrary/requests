@@ -100,9 +100,7 @@ module Requests
     private
 
       def call_number
-        unless bib[:call_number_display].nil?
-          bib[:call_number_display].first
-        end
+        holding.first.last['call_number']
       end
 
       def pub_date

@@ -414,12 +414,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.aeon_basic_params[:Site]).to eq('RBSC')
       end
 
-      it 'shouuld have a Referennce NUmber' do
+      it 'should have a Reference NUmber' do
         expect(requestable.aeon_basic_params.key? :ReferenceNumber).to be true
         expect(requestable.aeon_basic_params[:ReferenceNumber]).to eq(requestable.bib[:id])
       end
 
-      it 'shouuld have Location Param' do
+      it 'should have Location Param' do
        expect(requestable.aeon_basic_params.key? :Location).to be true
        expect(requestable.aeon_basic_params[:Location]).to eq(requestable.holding.first.last['location_code'])
      end
@@ -656,6 +656,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "should NOT have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be false
+      end
+    end
+  end
+  context 'A requestable item from a RBSC holding without an item record, but holding volume info' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_aeon_holding_volume_note) }
+    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '5132984' }.first }
+    let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
+    describe '#aeon_openurl' do
+      it 'includes the location_has note as the volume' do
+        expect(aeon_ctx).to include('rft.volume=vol.2')
+      end
+
+      it 'includes the call number of the holding' do
+        expect(aeon_ctx).to include('CallNumber=30.3.2')
       end
     end
   end

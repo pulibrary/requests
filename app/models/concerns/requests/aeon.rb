@@ -45,12 +45,20 @@ module Requests
     def aeon_openurl(ctx)
       if has_item_data?
         ctx.referent.set_metadata('iteminfo5', item[:id].to_s)
+      else
+        ctx.referent.set_metadata('iteminfo5', nil)
       end
       if enumerated?
         ctx.referent.set_metadata('volume', item[:enum])
         if item[:chron].present?
           ctx.referent.set_metadata('issue', item[:chron])
         end
+      elsif holding.first.last['location_has']
+        ctx.referent.set_metadata('volume', holding.first.last['location_has'].first)
+        ctx.referent.set_metadata('issue', nil)
+      else
+        ctx.referent.set_metadata('volume', nil)
+        ctx.referent.set_metadata('issue', nil)
       end
       aeon_params = aeon_basic_params
       if barcode?

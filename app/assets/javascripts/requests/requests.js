@@ -67,12 +67,13 @@ $(document).ready(function() {
 
     $( ".table-responsive" ).on( "change", ".request-options", function(event) {
       event.stopPropagation();
-      var this_td = $( this ).closest( "td" );
+      var this_select = event.target;
+      var this_td = $( this_select ).closest( "td" );
       var recall_pickup_select = this_td.find( ".recall-pickup" );
       var bd_pickup_select = this_td.find( ".bd-pickup" );
-      var chbx =  $( this ).closest( "tr" ).find( "input:checkbox" );
+      var chbx =  $( this_select ).closest( "tr" ).find( "input:checkbox" );
 
-      if($(this)[0].selectedOptions[0].value === 'recall'){
+      if($(this_select)[0].selectedOptions[0].value === 'recall'){
 
         chbx.prop("disabled", false);
         $('.submit--request').prop("disabled", false);
@@ -84,7 +85,7 @@ $(document).ready(function() {
 
         // don't keep hitting the service if the pickup locs are populated
         if(recall_pickup_select.find('option').length == 1){
-          var item_inputs = $( this ).closest( "tr" ).find( "input" );
+          var item_inputs = $( this_select ).closest( "tr" ).find( "input" );
           var bib_inputs =  $('input[name^="bib["]');
           var user_inputs = $('input[name^="request["]');
 
@@ -127,7 +128,7 @@ $(document).ready(function() {
           bd_pickup_select.hide();
           bd_pickup_select.attr( "name", "not_used" );
         }
-        if($(this)[0].selectedOptions[0].value === 'bd'){
+        if($(this_select)[0].selectedOptions[0].value === 'bd'){
           if(bd_pickup_select.find('option').length > 1){
             bd_pickup_select.show();
             bd_pickup_select.attr( "name", "requestable[][pickup]" );
@@ -144,7 +145,7 @@ $(document).ready(function() {
             $('.alert-warning a').focus();
           }
         }
-        if($(this)[0].selectedOptions[0].value === 'ill'){
+        if($(this_select)[0].selectedOptions[0].value === 'ill'){
           var ctx = this_td.find('.ill-data').attr('data-ill-url')
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
           $('.alert-warning a').focus();

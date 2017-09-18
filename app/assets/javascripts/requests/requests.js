@@ -73,7 +73,7 @@ $(document).ready(function() {
       var bd_pickup_select = this_td.find( ".bd-pickup" );
       var chbx =  $( this_select ).closest( "tr" ).find( "input:checkbox" );
 
-      if($(this_select)[0].selectedOptions[0].value === 'recall'){
+      if($(this_select)[0].options[this_select.selectedIndex].value === 'recall'){
 
         chbx.prop("disabled", false);
         $('.submit--request').prop("disabled", false);
@@ -128,7 +128,7 @@ $(document).ready(function() {
           bd_pickup_select.hide();
           bd_pickup_select.attr( "name", "not_used" );
         }
-        if($(this_select)[0].selectedOptions[0].value === 'bd'){
+        if($(this_select)[0].options[this_select.selectedIndex].value === 'bd'){
           if(bd_pickup_select.find('option').length > 1){
             bd_pickup_select.show();
             bd_pickup_select.attr( "name", "requestable[][pickup]" );
@@ -145,7 +145,7 @@ $(document).ready(function() {
             $('.alert-warning a').focus();
           }
         }
-        if($(this_select)[0].selectedOptions[0].value === 'ill'){
+        if($(this_select)[0].options[this_select.selectedIndex].value === 'ill'){
           var ctx = this_td.find('.ill-data').attr('data-ill-url')
           this_td.append($("<div class='alert alert-warning'></div>").html("Due to the nature of this service, you must use the <a href='"+ ctx +"' target='_blank'>the InterLibrary Loan system interface</a> to request this item."));
           $('.alert-warning a').focus();

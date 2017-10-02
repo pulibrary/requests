@@ -903,6 +903,25 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  context "When passed an unavailable item where other local copies are on reserve." do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '9168829',
+        mfhd: '9048082',
+        user: user
+      }
+    }
+    let(:request) { described_class.new(params) }
+    subject { request }
+
+    describe "#borrow_direct_eligible?" do
+      it "Should be Borrow Direct Eligible" do
+        expect(subject.borrow_direct_eligible?).to be true
+      end
+    end
+  end
+
   context "When passed a Recallable Item that is eligible for Borrow Direct" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {

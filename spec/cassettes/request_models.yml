@@ -17728,4 +17728,750 @@ http_interactions:
         08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true}]}'
     http_version: 
   recorded_at: Tue, 05 Sep 2017 15:17:18 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/9168829.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 6e220419-2593-42bd-9559-91942c697c65
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"8825c684d0f1187b381119d2625f9c64"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.019295'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Mon, 02 Oct 2017 17:47:48 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.8
+      Server:
+      - nginx/1.12.1 + Phusion Passenger 5.1.8
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjkxNjg4MjkiLCJhdXRo
+        b3JfZGlzcGxheSI6WyJSYWNoZWxzLCBTdHVhcnQsIDE5NjktIl0sImF1dGhv
+        cl9jaXRhdGlvbl9kaXNwbGF5IjpbIlJhY2hlbHMsIFN0dWFydCIsIlJhY2hl
+        bHMsIEphbWVzIl0sImF1dGhvcl9yb2xlc18xZGlzcGxheSI6IntcInNlY29u
+        ZGFyeV9hdXRob3JzXCI6W1wiUmFjaGVscywgSmFtZXNcIl0sXCJ0cmFuc2xh
+        dG9yc1wiOltdLFwiZWRpdG9yc1wiOltdLFwiY29tcGlsZXJzXCI6W10sXCJw
+        cmltYXJ5X2F1dGhvclwiOlwiUmFjaGVscywgU3R1YXJ0XCJ9IiwiYXV0aG9y
+        X3MiOlsiUmFjaGVscywgU3R1YXJ0LCAxOTY5LSIsIlJhY2hlbHMsIEphbWVz
+        LCAxOTQxLTIwMDMiXSwib3BlbnNlYXJjaF9kaXNwbGF5IjpbIlJhY2hlbHMs
+        IFN0dWFydCwgMTk2OS0iLCJSYWNoZWxzLCBKYW1lcywgMTk0MS0yMDAzIiwi
+        VGhlIGVsZW1lbnRzIG9mIG1vcmFsIHBoaWxvc29waHkgLyBKYW1lcyBSYWNo
+        ZWxzIDsgRWRpdGlvbnMgNS04IGJ5IFN0dWFydCBSYWNoZWxzLiIsIkV0aGlj
+        cyJdLCJtYXJjX3JlbGF0b3JfZGlzcGxheSI6WyJBdXRob3IiXSwidGl0bGVf
+        ZGlzcGxheSI6IlRoZSBlbGVtZW50cyBvZiBtb3JhbCBwaGlsb3NvcGh5IC8g
+        SmFtZXMgUmFjaGVscyA7IEVkaXRpb25zIDUtOCBieSBTdHVhcnQgUmFjaGVs
+        cy4iLCJ0aXRsZV90IjpbIlRoZSBlbGVtZW50cyBvZiBtb3JhbCBwaGlsb3Nv
+        cGh5IC8gSmFtZXMgUmFjaGVscyA7IEVkaXRpb25zIDUtOCBieSBTdHVhcnQg
+        UmFjaGVscy4iXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyJUaGUgZWxl
+        bWVudHMgb2YgbW9yYWwgcGhpbG9zb3BoeSAvIl0sImNvbXBpbGVkX2NyZWF0
+        ZWRfdCI6WyJUaGUgZWxlbWVudHMgb2YgbW9yYWwgcGhpbG9zb3BoeSAvIEph
+        bWVzIFJhY2hlbHMgOyBFZGl0aW9ucyA1LTggYnkgU3R1YXJ0IFJhY2hlbHMu
+        Il0sImVkaXRpb25fZGlzcGxheSI6WyJFaWdodGggZWRpdGlvbi4iXSwicHVi
+        X2NyZWF0ZWRfZGlzcGxheSI6WyJbRHVidXF1ZV0gOiBNY0dyYXctSGlsbCBF
+        ZHVjYXRpb24sIFsyMDE1XSJdLCJwdWJfY3JlYXRlZF9zIjpbIltEdWJ1cXVl
+        XSA6IE1jR3Jhdy1IaWxsIEVkdWNhdGlvbiwgWzIwMTVdIl0sInB1Yl9jaXRh
+        dGlvbl9kaXNwbGF5IjpbIkR1YnVxdWU6IE1jR3Jhdy1IaWxsIEVkdWNhdGlv
+        biJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTUiXSwicHViX2RhdGVfc3Rh
+        cnRfc29ydCI6MjAxNSwiY2F0YWxvZ2VkX3RkdCI6IjIwMTUtMDktMDlUMTQ6
+        NDc6MjFaIiwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxh
+        eSI6WyJ4aWksIDIwOSBwYWdlcyA7IDIyIGNtIl0sImRlc2NyaXB0aW9uX3Qi
+        OlsieGlpLCAyMDkgcGFnZXMgOyAyMiBjbSJdLCJiaWJfcmVmX25vdGVzX2Rp
+        c3BsYXkiOlsiSW5jbHVkZXMgYmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMg
+        YW5kIGluZGV4LiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImxh
+        bmd1YWdlX2NvZGVfcyI6WyJlbmciXSwic3ViamVjdF9kaXNwbGF5IjpbIkV0
+        aGljc+KAlFRleHRib29rcyJdLCJzdWJqZWN0X3QiOlsiRXRoaWNz4oCUVGV4
+        dGJvb2tzIl0sInN1YmplY3RfZmFjZXQiOlsiRXRoaWNz4oCUVGV4dGJvb2tz
+        Il0sImZvcm1fZ2VucmVfZGlzcGxheSI6WyJUZXh0Ym9va3MuIl0sInJlbGF0
+        ZWRfd29ya3NfMWRpc3BsYXkiOiJbW1wiUmFjaGVscywgSmFtZXMsIDE5NDEt
+        MjAwMy5cIixcIkVsZW1lbnRzIG9mIG1vcmFsIHBoaWxvc29waHkuXCJdXSIs
+        ImlzYm5fZGlzcGxheSI6WyI5NzgwMDc4MTE5MDY0IChhbGsuIHBhcGVyKSIs
+        IjAwNzgxMTkwNjUgKGFsay4gcGFwZXIpIl0sImxjY25fZGlzcGxheSI6WyIg
+        IDIwMTQwMjI2MTEiXSwibGNjbl9zIjpbIjIwMTQwMjI2MTEiXSwiaXNibl9z
+        IjpbIjk3ODAwNzgxMTkwNjQiXSwiaXNibl90IjpbIjk3ODAwNzgxMTkwNjQi
+        XSwib2NsY19zIjpbIjg4MTU5MjEyNyJdLCJvdGhlcl92ZXJzaW9uX3MiOlsi
+        b2NuODgxNTkyMTI3IiwiOTc4MDA3ODExOTA2NCIsIm9jbjg5ODQyMjIyNCIs
+        Im9jbjkwMzQyMTUxNyJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjkwNDgw
+        ODJcIjp7XCJsb2NhdGlvblwiOlwiRmlyZXN0b25lIExpYnJhcnlcIixcImxp
+        YnJhcnlcIjpcIkZpcmVzdG9uZSBMaWJyYXJ5XCIsXCJsb2NhdGlvbl9jb2Rl
+        XCI6XCJmXCIsXCJjYWxsX251bWJlclwiOlwiQkoxMDEyIC5SMjkgMjAxNVwi
+        LFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJCSjEwMTIgLlIyOSAyMDE1XCJ9
+        LFwiOTA1MTY1M1wiOntcImxvY2F0aW9uXCI6XCJGb3JyZXN0YWwgQW5uZXgg
+        LSBSZXNlcnZlXCIsXCJsaWJyYXJ5XCI6XCJGb3JyZXN0YWwgQW5uZXhcIixc
+        ImxvY2F0aW9uX2NvZGVcIjpcInJlc1wiLFwiY29weV9udW1iZXJcIjpcIjUw
+        XCIsXCJjYWxsX251bWJlclwiOlwiQkoxMDEyIC5SMjkgMjAxNVwiLFwiY2Fs
+        bF9udW1iZXJfYnJvd3NlXCI6XCJCSjEwMTIgLlIyOSAyMDE1XCJ9LFwiOTA1
+        MTY1OFwiOntcImxvY2F0aW9uXCI6XCJGb3JyZXN0YWwgQW5uZXggLSBSZXNl
+        cnZlXCIsXCJsaWJyYXJ5XCI6XCJGb3JyZXN0YWwgQW5uZXhcIixcImxvY2F0
+        aW9uX2NvZGVcIjpcInJlc1wiLFwiY29weV9udW1iZXJcIjpcIjUxXCIsXCJj
+        YWxsX251bWJlclwiOlwiQkoxMDEyIC5SMjkgMjAxNVwiLFwiY2FsbF9udW1i
+        ZXJfYnJvd3NlXCI6XCJCSjEwMTIgLlIyOSAyMDE1XCJ9LFwiOTA1MTY2MFwi
+        OntcImxvY2F0aW9uXCI6XCJGb3JyZXN0YWwgQW5uZXggLSBSZXNlcnZlXCIs
+        XCJsaWJyYXJ5XCI6XCJGb3JyZXN0YWwgQW5uZXhcIixcImxvY2F0aW9uX2Nv
+        ZGVcIjpcInJlc1wiLFwiY29weV9udW1iZXJcIjpcIjUyXCIsXCJjYWxsX251
+        bWJlclwiOlwiQkoxMDEyIC5SMjkgMjAxNVwiLFwiY2FsbF9udW1iZXJfYnJv
+        d3NlXCI6XCJCSjEwMTIgLlIyOSAyMDE1XCJ9LFwiOTA1MTY2NVwiOntcImxv
+        Y2F0aW9uXCI6XCJGb3JyZXN0YWwgQW5uZXggLSBSZXNlcnZlXCIsXCJsaWJy
+        YXJ5XCI6XCJGb3JyZXN0YWwgQW5uZXhcIixcImxvY2F0aW9uX2NvZGVcIjpc
+        InJlc1wiLFwiY29weV9udW1iZXJcIjpcIjUzXCIsXCJjYWxsX251bWJlclwi
+        OlwiQkoxMDEyIC5SMjkgMjAxNVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6
+        XCJCSjEwMTIgLlIyOSAyMDE1XCJ9LFwiOTA1MTY3MFwiOntcImxvY2F0aW9u
+        XCI6XCJGb3JyZXN0YWwgQW5uZXggLSBSZXNlcnZlXCIsXCJsaWJyYXJ5XCI6
+        XCJGb3JyZXN0YWwgQW5uZXhcIixcImxvY2F0aW9uX2NvZGVcIjpcInJlc1wi
+        LFwiY29weV9udW1iZXJcIjpcIjU0XCIsXCJjYWxsX251bWJlclwiOlwiQkox
+        MDEyIC5SMjkgMjAxNVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJCSjEw
+        MTIgLlIyOSAyMDE1XCJ9LFwiOTA1MTY3NFwiOntcImxvY2F0aW9uXCI6XCJG
+        b3JyZXN0YWwgQW5uZXggLSBSZXNlcnZlXCIsXCJsaWJyYXJ5XCI6XCJGb3Jy
+        ZXN0YWwgQW5uZXhcIixcImxvY2F0aW9uX2NvZGVcIjpcInJlc1wiLFwiY29w
+        eV9udW1iZXJcIjpcIjU1XCIsXCJjYWxsX251bWJlclwiOlwiQkoxMDEyIC5S
+        MjkgMjAxNVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJCSjEwMTIgLlIy
+        OSAyMDE1XCJ9LFwiOTA1MTY3OFwiOntcImxvY2F0aW9uXCI6XCJGb3JyZXN0
+        YWwgQW5uZXggLSBSZXNlcnZlXCIsXCJsaWJyYXJ5XCI6XCJGb3JyZXN0YWwg
+        QW5uZXhcIixcImxvY2F0aW9uX2NvZGVcIjpcInJlc1wiLFwiY29weV9udW1i
+        ZXJcIjpcIjU2XCIsXCJjYWxsX251bWJlclwiOlwiQkoxMDEyIC5SMjkgMjAx
+        NVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJCSjEwMTIgLlIyOSAyMDE1
+        XCJ9LFwiOTA1MTY4MVwiOntcImxvY2F0aW9uXCI6XCJGb3JyZXN0YWwgQW5u
+        ZXggLSBSZXNlcnZlXCIsXCJsaWJyYXJ5XCI6XCJGb3JyZXN0YWwgQW5uZXhc
+        IixcImxvY2F0aW9uX2NvZGVcIjpcInJlc1wiLFwiY29weV9udW1iZXJcIjpc
+        IjU3XCIsXCJjYWxsX251bWJlclwiOlwiQkoxMDEyIC5SMjkgMjAxNVwiLFwi
+        Y2FsbF9udW1iZXJfYnJvd3NlXCI6XCJCSjEwMTIgLlIyOSAyMDE1XCJ9fSIs
+        ImxvY2F0aW9uX2NvZGVfcyI6WyJmIiwicmVzIl0sImxvY2F0aW9uIjpbIkZp
+        cmVzdG9uZSBMaWJyYXJ5IiwiRm9ycmVzdGFsIEFubmV4Il0sImxvY2F0aW9u
+        X2Rpc3BsYXkiOlsiRmlyZXN0b25lIExpYnJhcnkiLCJGb3JyZXN0YWwgQW5u
+        ZXggLSBSZXNlcnZlIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsiZiIsInJl
+        cyIsIkZpcmVzdG9uZSBMaWJyYXJ5IiwiRm9ycmVzdGFsIEFubmV4Il0sIm5h
+        bWVfdGl0bGVfYnJvd3NlX3MiOlsiUmFjaGVscywgSmFtZXMsIDE5NDEtMjAw
+        My4gRWxlbWVudHMgb2YgbW9yYWwgcGhpbG9zb3BoeSIsIlJhY2hlbHMsIFN0
+        dWFydCwgMTk2OS0uIFRoZSBlbGVtZW50cyBvZiBtb3JhbCBwaGlsb3NvcGh5
+        Il0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiQkoxMDEyIC5SMjkgMjAxNSJd
+        LCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJCSjEwMTIgLlIyOSAyMDE1Il0s
+        InRpbWVzdGFtcCI6IjIwMTctMDktMjRUMDQ6Mjc6MTMuNDk4WiJ9fX0=
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:48 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=9168829
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:48 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 7a762562-8198-4931-85aa-4960e9bd5971
+      X-Runtime:
+      - '0.555652'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"10af46f0d02870348112c4e4f006e160"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9048082":{"more_items":false,"location":"f","copy_number":1,"item_id":7210081,"on_reserve":"N","due_date":"10/7/2017","status":"Charged","label":"Firestone
+        Library"},"9051653":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":50,"item_id":7211416,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051658":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":51,"item_id":7211419,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051660":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":52,"item_id":7211421,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051665":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":53,"item_id":7211424,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051670":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":54,"item_id":7211428,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051674":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":55,"item_id":7211429,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051678":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":56,"item_id":7211432,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"},"9051681":{"more_items":false,"location":"res","temp_loc":"resc","course_reserves":[{"reserve_list_id":1029,"department_name":"Center
+        for Human Values","department_code":"CHV","course_name":"Practical Ethics","course_number":"CHV
+        310","section_id":0,"instructor_first_name":"Peter","instructor_last_name":"Singer"}],"copy_number":57,"item_id":7211435,"on_reserve":"Y","status":"Not
+        Charged","label":"Firestone Library - Circulation Desk (3 Hour Reserve)"}}'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:49 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9048082
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 0cd648bb-5477-497a-a3d7-fd60ea8e4e7d
+      X-Runtime:
+      - '0.098162'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"50ed00cba14387db2c7beea2b8041b9d"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101096756257","id":7210081,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Charged","on_reserve":"N","due_date":"10/7/2017","label":"Firestone
+        Library"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:49 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051653
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 790870fe-999a-48cd-8329-b9126c7d5e1d
+      X-Runtime:
+      - '0.095016'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"326c76a5445c223a1231938523fb1cce"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744602","id":7211416,"location":"res","temp_loc":"resc","copy_number":50,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:49 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051658
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 87cdca14-7bea-43c1-9f41-a482387c0a36
+      X-Runtime:
+      - '0.093899'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"a997cc8eea0f78a2899b8b8bc2f7d0c7"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744594","id":7211419,"location":"res","temp_loc":"resc","copy_number":51,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:49 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051660
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 3bc68af4-54f3-49fe-b244-f79a4b0cec0f
+      X-Runtime:
+      - '0.095840'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"890fab7a295f941ac334c933ed0c67cc"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744586","id":7211421,"location":"res","temp_loc":"resc","copy_number":52,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:49 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051665
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:49 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 1f1fccf9-986b-4ed9-84f8-941511344b4d
+      X-Runtime:
+      - '0.101225'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"fdf312ce615b3ee4e18ad57e48e139ec"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744578","id":7211424,"location":"res","temp_loc":"resc","copy_number":53,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051670
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - cd128a7f-72da-40cc-9f2b-2d1604f5f25c
+      X-Runtime:
+      - '0.106178'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"1f2d68c3fc2e73af413d26d7e8395c21"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744560","id":7211428,"location":"res","temp_loc":"resc","copy_number":54,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051674
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 6bb5a23c-1a8b-4d2e-9ad1-ba4309edeef2
+      X-Runtime:
+      - '0.095154'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"194b5ecc3b2603521b7d9eefd57fd0ea"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744552","id":7211429,"location":"res","temp_loc":"resc","copy_number":55,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051678
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d922cf40-59f0-4d95-bcd3-0441dc8352e4
+      X-Runtime:
+      - '0.095125'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"705ac1e0e5e8ca819b505bf919c2aa70"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744545","id":7211432,"location":"res","temp_loc":"resc","copy_number":56,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9051681
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 23307e01-50cf-4ec6-93c9-3d4e62563a25
+      X-Runtime:
+      - '0.095416'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"5188e78bfd8b2a61d51f7d322ae01d97"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101094744537","id":7211435,"location":"res","temp_loc":"resc","copy_number":57,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"Y","label":"Firestone Library - Circulation Desk (3
+        Hour Reserve)"}]'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:50 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/res.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Oct 2017 17:47:50 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - b75481d3-46b0-4c83-8ee1-6aae2ca6aa03
+      X-Runtime:
+      - '0.028607'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6b55662a14d1237b6666c3c422732675"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Reserve","code":"res","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"Forrestal
+        Annex","code":"annexa","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Architecture
+        Library","address":"School of Architecture Building, Second Floor Princeton,
+        NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"East
+        Asian Library","address":"Frist Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"PL","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Engineering
+        Library","address":"Friend Center for Engineering Education Princeton, NJ
+        08544","phone_number":"609-258-3200","contact_email":"englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Mendel
+        Music Library","address":"Woolworth Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Stokes
+        Library","address":"Wallace Hall, Lower Level Princeton, NJ 08544","phone_number":"609-258-5455","contact_email":"piaprlib@princeton.edu","gfa_pickup":"PM","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Lewis
+        Library, Geosciences and Map Library","address":"Washington Road and Ivy Lane
+        Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":false,"digital_location":false},{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Mon, 02 Oct 2017 17:47:50 GMT
 recorded_with: VCR 3.0.3

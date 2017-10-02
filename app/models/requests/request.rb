@@ -214,7 +214,7 @@ module Requests
     def has_loanable_copy?
       copy_available = []
       requestable_unrouted.each do |request|
-        if request.charged? || (request.aeon? || !request.circulates? || request.scsb?)
+        if request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)
           copy_available << false
         else
           copy_available << true

@@ -28,7 +28,12 @@ module Requests
 
     def annexa_email(submission)
       @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
+      destination_email = []
+      @submission.items.each do |item|
+        if item["type"] == 'annexa'
+          destination_email.push(DELIVERY_LOCATIONS[item["pickup"]]["contact_email"])
+        end
+      end
       cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,
@@ -38,7 +43,12 @@ module Requests
 
     def annexb_email(submission)
       @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
+      destination_email = []
+      @submission.items.each do |item|
+        if item["type"] == 'annexb'
+          destination_email.push(DELIVERY_LOCATIONS[item["pickup"]]["contact_email"])
+        end
+      end
       cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,

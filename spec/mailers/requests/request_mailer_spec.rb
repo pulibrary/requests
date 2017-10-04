@@ -203,7 +203,7 @@ describe Requests::RequestMailer, :type => :mailer do
     let(:bib) {
       {
         "id" => "6592589",
-        "title" => "The Coast Guard's fiscal year 2007 budget request : hearing before the Subcommittee on Fisheries and the Coast Guard of the Committee on Commerce, Science, and Transportation, United States Senate, One Hundred Ninth Congress, second session, June 15, 2006.",
+        "title" => "The Coast Guard's fiscal year 2007 budget request.",
         "author" => "United States"
       }.with_indifferent_access
     }

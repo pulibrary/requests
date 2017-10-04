@@ -140,7 +140,7 @@ describe Requests::RequestMailer, :type => :mailer do
           "item_id" => "2286894",
           "status" => "Not Charged",
           "type" => "annexa",
-          "pickup" => "PA"
+          "pickup" => "PQ"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -172,7 +172,7 @@ describe Requests::RequestMailer, :type => :mailer do
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
-      expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.to).to eq(["ppllib@princeton.edu"])
       expect(mail.cc).to eq([submission_for_annexa.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
@@ -195,7 +195,7 @@ describe Requests::RequestMailer, :type => :mailer do
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "annexb",
-          "pickup" => "PA"
+          "pickup" => "PN"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -227,7 +227,7 @@ describe Requests::RequestMailer, :type => :mailer do
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexb.email_subject'))
-      expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
+      expect(mail.to).to eq(["lewislib@princeton.edu"])
       expect(mail.cc).to eq([submission_for_annexb.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end

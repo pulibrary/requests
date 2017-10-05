@@ -200,7 +200,7 @@ module Requests
           locs = self.available_pickups(requestable, default_pickups)
         end
         if locs.size > 1
-          concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+          content_tag options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
         else
           hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
           hidden + locs[0][:label]

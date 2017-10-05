@@ -182,6 +182,59 @@ describe Requests::RequestMailer, :type => :mailer do
     end
   end
 
+  context "send anxadoc email request" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "6549667",
+          "call_number" => "Y 4.C 73/7:S.HRG.109-1132",
+          "location_code" => "anxadoc",
+          "item_id" => "6068846",
+          "status" => "Not Charged",
+          "type" => "annexa",
+          "pickup" => "PA"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "6592589",
+        "title" => "The Coast Guard's fiscal year 2007 budget request.",
+        "author" => "United States"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_anxadoc) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("annexa_email", submission_for_anxadoc).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
+      expect(mail.to).to eq([I18n.t('requests.anxadoc.email')])
+      expect(mail.cc).to eq([submission_for_anxadoc.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.annexa.email_conf_msg')
+    end
+  end
+
   context "send annexb email request" do
     let(:requestable) {
       [

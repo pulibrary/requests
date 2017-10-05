@@ -31,7 +31,7 @@ module Requests
       destination_email = []
       @submission.items.each do |item|
         if item["type"] == 'annexa'
-          destination_email.push(DELIVERY_LOCATIONS[item["pickup"]]["contact_email"])
+          item["location_code"] == 'anxadoc' ? destination_email.push(I18n.t('requests.anxadoc.email')) : destination_email.push(DELIVERY_LOCATIONS[item["pickup"]]["contact_email"])
         end
       end
       cc_email = [@submission.email]

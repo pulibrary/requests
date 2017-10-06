@@ -34,7 +34,11 @@ module Requests
         corp_author = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
         publisher_info = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
         edition = doc['edition_display'].first unless doc['edition_display'].nil?
-        format = doc['format'].is_a?(Array) ? doc['format'].first.downcase.strip : doc['format'].downcase.strip
+        format = if doc['format'].blank?
+                   'unknown'
+                 else
+                   doc['format'].is_a?(Array) ? doc['format'].first.downcase.strip : doc['format'].downcase.strip
+                 end
         if format == 'book'
           ctx.referent.set_format('book')
           ctx.referent.set_metadata('genre', 'book')

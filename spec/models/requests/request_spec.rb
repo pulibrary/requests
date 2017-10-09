@@ -1449,4 +1449,38 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
   end
+
+  context "A SCSB with an unknown format" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:scsb_no_format) { fixture('/SCSB-7935196.json') }
+    let(:location_code) { 'scsbnypl' }
+    let(:params) {
+      {
+        system_id: 'SCSB-7935196',
+        user: user,
+        source: 'pulsearch'
+      }
+    }
+    let(:scsb_availability_params) {
+      {
+        bibliographicId: ".b106574619",
+        institutionId: "NYPL"
+      }
+    }
+    let(:scsb_availability_response) { fixture('/scsb_single_avail.json') }
+    let(:request_scsb) { described_class.new(params) }
+    subject { request_scsb }
+    before(:each) do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+        .to_return(status: 200, body: scsb_no_format, headers: {})
+      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
+        .to_return(status: 200, body: scsb_availability_response)
+    end
+    describe '#requestable' do
+      it 'should have an unknown format' do
+        expect(subject.ctx.referent.format).to eq('unknown')
+      end
+    end
+  end
 end

@@ -70,6 +70,7 @@ $(document).ready(function() {
       var this_select = event.target;
       var this_td = $( this_select ).closest( "td" );
       var recall_pickup_select = this_td.find( ".recall-pickup" );
+      var recall_pickup_single = this_td.find( ".single-pickup" );
       var bd_pickup_select = this_td.find( ".bd-pickup" );
       var chbx =  $( this_select ).closest( "tr" ).find( "input:checkbox" );
 
@@ -81,10 +82,12 @@ $(document).ready(function() {
         bd_pickup_select.attr( "name", "not_used" );
         bd_pickup_select.hide();
         recall_pickup_select.attr( "name", "requestable[][pickup]" );
-        recall_pickup_select.show();
+        recall_pickup_single.attr( "name", "requestable[][pickup]" );
 
         // don't keep hitting the service if the pickup locs are populated
-        if(recall_pickup_select.find('option').length == 1){
+        if(recall_pickup_select.find('option').length == 0){
+          recall_pickup_single.show();
+        } else if(recall_pickup_select.find('option').length == 1) {
           var item_inputs = $( this_select ).closest( "tr" ).find( "input" );
           var bib_inputs =  $('input[name^="bib["]');
           var user_inputs = $('input[name^="request["]');
@@ -108,11 +111,17 @@ $(document).ready(function() {
               for ( i=0; i < length; i++) {
                recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code'] + '|' + opts[i]['$']).text(opts[i]['$']));
               }
+              recall_pickup_select.show();
+              recall_pickup_single.show();
             } else {
               recall_pickup_select.hide();
+              recall_pickup_single.hide();
               this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
             }
           });
+        } else {
+          recall_pickup_select.show();
+          recall_pickup_single.show();
         }
       } else {
         $('.alert').hide();
@@ -120,9 +129,11 @@ $(document).ready(function() {
         chbx.prop("checked", false);
         $('.submit--request').prop("disabled", true);
 
-        if(recall_pickup_select.is(':visible')){
+        if(recall_pickup_select.is(':visible') || recall_pickup_single.is(':visible')){
           recall_pickup_select.hide();
           recall_pickup_select.attr( "name", "not_used" );
+          recall_pickup_single.hide();
+          recall_pickup_single.attr( "name", "not_used" );
         }
         if(bd_pickup_select.is(':visible')){
           bd_pickup_select.hide();

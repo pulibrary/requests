@@ -14,7 +14,7 @@
 
 <% if (requestable.scsb? && requestable.recallable?) %>
   <select name="updated_by_client" id="requestable__pickup" class="recall-pickup" aria-live="polite">
-      <%= pickup_choices_scsb requestable, [] %>
+      <%= pickup_choices requestable, [] %>
   </select>
 <% else %>
   <select name="updated_by_client" id="requestable__pickup" class="recall-pickup" aria-live="polite">

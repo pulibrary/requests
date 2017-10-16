@@ -177,33 +177,9 @@ module Requests
             concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
           else
             hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
-            hidden + locs[0][:label]
+            label = label_tag 'requestable[][pickup]', "#{locs[0][:label]}", class: 'single-pickup', style: 'display:none;margin-top:10px;'
+            hidden + label
           end
-        end
-      end
-    end
-
-    def pickup_choices_scsb requestable, default_pickups
-      class_list = "well collapse in request--print"
-      if requestable.services.include?('recap_edd')
-        class_list = "well collapse request--print"
-      end
-      # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
-      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-        if requestable.pending?
-          if requestable.location[:holding_library].blank?
-            locs = [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
-          else
-            locs = [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
-          end
-        else
-          locs = self.available_pickups(requestable, default_pickups)
-        end
-        if locs.size > 1
-          content_tag options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-        else
-          hidden = hidden_field_tag "requestable[][pickup]", "", value: "#{locs[0][:gfa_code]}"
-          hidden + locs[0][:label]
         end
       end
     end

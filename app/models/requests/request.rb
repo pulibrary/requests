@@ -194,7 +194,7 @@ module Requests
       fill_in = []
       unless requestable.any? { |request| request.services.include? 'on_order' }
         requestable.each do |request|
-          unless (request.services & fill_in_services).empty?
+          unless (request.services & fill_in_services).empty? && request.has_item_data?
             if request.has_item_data?
               fill_in << request.holding.first.first if request.item.key?('enum')
             else

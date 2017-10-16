@@ -18525,4 +18525,167 @@ http_interactions:
         258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
     http_version: 
   recorded_at: Mon, 09 Oct 2017 17:58:25 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/10139326.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 1ebadf55-8db4-406c-bdfa-54e6bb6f5016
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"db8d5a86579b45b05173196aedab8362"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.020216'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 17 Oct 2017 14:17:17 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.8
+      Server:
+      - nginx/1.12.1 + Phusion Passenger 5.1.8
+    body:
+      encoding: UTF-8
+      string: '{"response":{"document":{"id":"10139326","author_display":["Jab al-Khayr,
+        Sa''id"],"author_citation_display":["Jab al-Khayr, Sa''id"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Jab
+        al-Khayr, Sa''id\"}","author_s":["Jab al-Khayr, Sa''id"],"opensearch_display":["Jab
+        al-Khayr, Sa''id","Abhath fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah
+        wa al-marja''iyah al-diniyah.."],"marc_relator_display":["Author"],"title_display":"Abhath
+        fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah wa al-marja''iyah al-diniyah..","title_t":["Abhath
+        fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah wa al-marja''iyah al-diniyah.."],"title_citation_display":["Abhath
+        fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah wa al-marja''iyah al-diniyah.."],"compiled_created_t":["Abhath
+        fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah wa al-marja''iyah al-diniyah.."],"edition_display":["c1/F"],"pub_created_display":["Jaza''ir:
+        D. al-Fayruz lil-Intaj al-Thaqafi, 2013"],"pub_created_s":["Jaza''ir: D. al-Fayruz
+        lil-Intaj al-Thaqafi, 2013"],"pub_citation_display":["Jaza''ir: D. al-Fayruz
+        lil-Intaj al-Thaqafi"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["343
+        p. HC."],"description_t":["343 p. HC."],"language_code_s":["und"],"holdings_1display":"{\"9929080\":{\"location\":\"ReCAP\",\"library\":\"ReCAP\",\"location_code\":\"rcppa\"}}","location_code_s":["rcppa"],"location":["ReCAP"],"location_display":["ReCAP"],"advanced_location_s":["rcppa","ReCAP"],"name_title_browse_s":["Jab
+        al-Khayr, Sa''id. Abhath fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah
+        wa al-marja''iyah al-diniyah.."],"timestamp":"2017-09-24T05:26:53.165Z"}}}'
+    http_version: 
+  recorded_at: Tue, 17 Oct 2017 14:17:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10139326
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 17 Oct 2017 14:17:17 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 57dc4cb9-d34b-45fc-a6f3-e255b4c89544
+      X-Runtime:
+      - '0.124841'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"b882ef6157e7de4d2cd882166158d966"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"9929080":{"more_items":false,"location":"rcppa","status":"On Shelf","label":"ReCAP"}}'
+    http_version: 
+  recorded_at: Tue, 17 Oct 2017 14:17:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9929080
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 17 Oct 2017 14:17:17 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - cc2cb62d-8094-43e2-8f11-fce26586ff02
+      X-Runtime:
+      - '0.072263'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 9929080 not found.'
+    http_version: 
+  recorded_at: Tue, 17 Oct 2017 14:17:18 GMT
 recorded_with: VCR 3.0.3

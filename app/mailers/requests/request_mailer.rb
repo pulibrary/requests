@@ -2,12 +2,18 @@ module Requests
   class RequestMailer < ApplicationMailer
     def paging_email(submission)
       @submission = submission
+      pickups = []
+      @submission.items.each do |item|
+        pickups.push(DELIVERY_LOCATIONS[item["pickup"]]["label"])
+      end
+      subject = I18n.t('requests.paging.email_subject') + ' for '
+      subject += pickups.join(", ")
       destination_email = "fstpage@princeton.edu"
       cc_email = ["wange@princeton.edu", @submission.email]
       mail(to: destination_email,
            cc: cc_email,
            from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.paging.email_subject'), @submission.user_barcode))
+           subject: subject_line(subject, @submission.user_barcode))
     end
 
     def pres_email(submission)

@@ -192,7 +192,7 @@ module Requests
 
     def fill_in_eligible
       fill_in = []
-      unless requestable.any? { |request| request.services.include? 'on_order' }
+      unless requestable.any? { |request| request.services.include? 'on_order' } || requestable.any? { |request| request.services.include? 'online' }
         requestable.each do |request|
           unless (request.services & fill_in_services).empty? && request.has_item_data?
             if request.has_item_data?

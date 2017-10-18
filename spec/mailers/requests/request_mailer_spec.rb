@@ -129,6 +129,66 @@ describe Requests::RequestMailer, :type => :mailer do
     end
   end
 
+  context "send page record with no_items email request" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9929080",
+          "location_code" => "rcppa",
+          "item_id" => "10139326",
+          "status" => "Not Charged",
+          "type" => "paging",
+          "pickup" => "PN"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "10139326",
+        "title" => "Abhath fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah wa al-marja'iyah al-diniyah..",
+        "author" => "Jab al-Khayr, Sa'id"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_no_items) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("paging_email", submission_for_no_items).deliver_now
+    }
+
+    let(:sub) {
+      pickups = []
+      submission_for_no_items.items.each do |item|
+        pickups.push(DELIVERY_LOCATIONS[item["pickup"]]["label"])
+      end
+      I18n.t('requests.paging.email_subject') + ' for ' + pickups.join(", ")
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(sub)
+      expect(mail.to).to eq(["fstpage@princeton.edu"])
+      expect(mail.cc).to eq(["wange@princeton.edu", submission_for_no_items.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.paging.email_conf_msg')
+    end
+  end
+
   context "send annexa email request" do
     let(:requestable) {
       [

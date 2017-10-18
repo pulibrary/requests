@@ -83,13 +83,9 @@
 
                     if (response.response_hash.Available) {
                       $.each(response.response_hash.PickupLocation, function( k, v ) {
-                        $.each(v, function( key, value ) {
-                          if(key === 'PickupLocationDescription'){
-                            pickup_select.append($("<option></option>")
-                                .attr("value",value)
-                                .text(value));
-                          }
-                        });
+                        pickup_select.append($("<option></option>")
+                            .attr("value",v.PickupLocationCode)
+                            .text(v.PickupLocationDescription));
                       });
                       auth_id.val(response.auth_id);
 

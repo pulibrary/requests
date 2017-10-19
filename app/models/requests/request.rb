@@ -190,9 +190,10 @@ module Requests
       end
     end
 
-    def fill_in_eligible
+    def fill_in_eligible_test(mfhd)
       fill_in = []
-      unless requestable.any? { |request| request.services.include? 'on_order' } || requestable.any? { |request| request.services.include? 'online' }
+      unless requestable.any? { |request| request.services.include? 'on_order' }
+        binding.pry
         requestable.each do |request|
           unless (request.services & fill_in_services).empty? && request.has_item_data?
             if request.has_item_data?
@@ -202,12 +203,30 @@ module Requests
             end
           end
         end
+
+      end
+      return fill_in
+    end
+
+    def fill_in_eligible
+      fill_in = []
+      unless requestable.any? { |request| request.services.include? 'on_order' }
+        requestable.each do |request|
+          unless (request.services & fill_in_services).empty? && request.has_item_data?
+            if request.has_item_data?
+              fill_in << request.holding.first.first if request.item.key?('enum')
+            else
+              fill_in << request.holding.first.first
+            end
+          end
+        end
+
       end
       return fill_in
     end
 
     def fill_in_services
-      ["annexa", "annexb"]
+      ["annexa", "annexb", "recap_no_items"]
     end
 
     # Does this request object have any available copies?

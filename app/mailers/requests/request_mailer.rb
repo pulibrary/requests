@@ -104,6 +104,14 @@ module Requests
            subject: subject_line(I18n.t('requests.trace.email_subject'), @submission.user_barcode))
     end
 
+    def recap_no_items(submission)
+      @submission = submission
+      destination_email = I18n.t('requests.recap_no_items.email')
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.recap_no_items.email_subject', @submission.user_barcode))
+    end
+
     def recap_email(submission)
       @submission = submission
       destination_email = @submission.email

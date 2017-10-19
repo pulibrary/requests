@@ -116,6 +116,7 @@
               <% end %>
             <% end %>
             <% if @request.fill_in_eligible.include? mfhd %>
+                        <% binding.pry %>
               <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
             <% end %>
           </tbody>

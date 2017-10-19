@@ -94,9 +94,13 @@ module Requests
             # elsif(requestable.on_order? && auth_user?)
             #   services << 'on_order'
             elsif requestable.recap?
-              services << 'recap'
-              if (requestable.recap_edd? && auth_user?)
-                services << 'recap_edd'
+              if requestable.has_item_data?
+                services << 'recap'
+                if (requestable.recap_edd? && auth_user?)
+                  services << 'recap_edd'
+                end
+              else
+                services << 'recap_no_items'
               end
             elsif requestable.pageable?
               services << 'paging'

@@ -104,12 +104,27 @@ module Requests
            subject: subject_line(I18n.t('requests.trace.email_subject'), @submission.user_barcode))
     end
 
-    def recap_no_items(submission)
+    def recap_no_items_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.recap_no_items.email')
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.recap_no_items.email_subject', @submission.user_barcode))
+           subject: subject_line(I18n.t('requests.recap_no_items.email_subject'), @submission.user_barcode))
+    end
+
+    def recap_no_items_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      cc_email = [@submission.email]
+      subject = I18n.t('requests.recap.email_subject')
+      if @submission.user['user_barcode'] == 'ACCESS'
+        cc_email = I18n.t('requests.recap.guest_email_destination')
+        subject = I18n.t('requests.recap_guest.email_subject')
+      end
+      mail(to: destination_email,
+           cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject)
     end
 
     def recap_email(submission)

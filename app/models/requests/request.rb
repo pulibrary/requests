@@ -191,19 +191,19 @@ module Requests
     end
 
     def fill_in_eligible_test(mfhd)
-      fill_in = []
-      unless requestable.any? { |request| request.services.include? 'on_order' }
-        binding.pry
-        requestable.each do |request|
-          unless (request.services & fill_in_services).empty? && request.has_item_data?
-            if request.has_item_data?
-              fill_in << request.holding.first.first if request.item.key?('enum')
+      fill_in = false
+      unless sorted_requestable[mfhd].size > 1
+        unless (sorted_requestable[mfhd].first.services.include? 'on_order') || ((sorted_requestable[mfhd].first.services & fill_in_services).empty?)
+          unless (sorted_requestable[mfhd].first.services.include? 'on_shelf') || (sorted_requestable[mfhd].first.services.include? 'online')
+            if sorted_requestable[mfhd].first.has_item_data?
+              if sorted_requestable[mfhd].first.item.key?('enum')
+                fill_in = true
+              end
             else
-              fill_in << request.holding.first.first
+              fill_in = true
             end
           end
         end
-
       end
       return fill_in
     end

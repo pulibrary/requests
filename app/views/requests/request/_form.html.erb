@@ -56,7 +56,7 @@
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
-              <% unless @request.fill_in_eligible.include? mfhd and !requestable.has_item_data? %>
+              <% unless @request.fill_in_eligible_test mfhd %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                   <td class='request--select'>
                     <%= hidden_field_tag 'requestable[][selected]', false %>
@@ -115,8 +115,7 @@
                 <%= render partial: "online_items", locals: { requestable: requestable } %>
               <% end %>
             <% end %>
-            <% if @request.fill_in_eligible.include? mfhd %>
-                        <% binding.pry %>
+            <% if @request.fill_in_eligible_test mfhd %>
               <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
             <% end %>
           </tbody>

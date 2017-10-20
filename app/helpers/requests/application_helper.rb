@@ -70,6 +70,8 @@ module Requests
           brief_msg = I18n.t("requests.annexb.brief_msg")
         elsif requestable.preservation?
           brief_msg = I18n.t("requests.pres.brief_msg")
+        elsif requestable.services.include? 'recap_no_items'
+          brief_msg = I18n.t("requests.recap_no_items.brief_msg")
         else
           brief_msg = I18n.t("requests.paging.brief_msg")
         end
@@ -382,6 +384,8 @@ module Requests
         if requestable_list.first.services.empty?
           true
         elsif requestable_list.first.on_reserve?
+          true
+        elsif requestable_list.first.services.include? 'on_shelf'
           true
         elsif requestable_list.first.charged?
           if requestable_list.first.annexa?

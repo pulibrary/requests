@@ -737,7 +737,7 @@ describe Requests::RequestMailer, :type => :mailer do
 
     it "renders the headers for a staff email" do
       expect(scsb_recall_mail.subject).to eq(I18n.t('requests.recall.staff_email_subject'))
-      expect(scsb_recall_mail.to).to eq([I18n.t('requests.default.email_destination')])
+      expect(scsb_recall_mail.to).to eq([I18n.t('requests.recap.scsb_recall_destination')])
       expect(scsb_recall_mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 

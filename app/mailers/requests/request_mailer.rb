@@ -123,7 +123,7 @@ module Requests
 
     def scsb_recall_email(submission)
       @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
+      destination_email = I18n.t('requests.recap.scsb_recall_destination')
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: I18n.t('requests.recall.staff_email_subject'))

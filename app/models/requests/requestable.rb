@@ -321,7 +321,7 @@ module Requests
 
       def unavailable_statuses
         ['Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
-         'In transit on hold', 'At bindery', 'Remote storage request',
+         'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
          'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]

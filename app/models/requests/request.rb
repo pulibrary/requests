@@ -190,43 +190,24 @@ module Requests
       end
     end
 
-    def fill_in_eligible_test(mfhd)
+    def fill_in_eligible(mfhd)
       fill_in = false
-      unless sorted_requestable[mfhd].size > 1
-        unless (sorted_requestable[mfhd].first.services.include? 'on_order') || ((sorted_requestable[mfhd].first.services & fill_in_services).empty?)
-          unless (sorted_requestable[mfhd].first.services.include? 'on_shelf') || (sorted_requestable[mfhd].first.services.include? 'online')
-            if sorted_requestable[mfhd].first.has_item_data?
-              if sorted_requestable[mfhd].first.item.key?('enum')
-                fill_in = true
-              end
-            else
+      unless (sorted_requestable[mfhd].first.services.include? 'on_order') || ((sorted_requestable[mfhd].first.services & fill_in_services).empty?)
+        unless (sorted_requestable[mfhd].first.services.include? 'on_shelf') || (sorted_requestable[mfhd].first.services.include? 'online')
+          if sorted_requestable[mfhd].first.has_item_data?
+            if sorted_requestable[mfhd].first.item.key?('enum')
               fill_in = true
             end
+          else
+            fill_in = true
           end
         end
-      end
-      return fill_in
-    end
-
-    def fill_in_eligible
-      fill_in = []
-      unless requestable.any? { |request| request.services.include? 'on_order' }
-        requestable.each do |request|
-          unless (request.services & fill_in_services).empty? && request.has_item_data?
-            if request.has_item_data?
-              fill_in << request.holding.first.first if request.item.key?('enum')
-            else
-              fill_in << request.holding.first.first
-            end
-          end
-        end
-
       end
       return fill_in
     end
 
     def fill_in_services
-      ["annexa", "annexb", "recap_no_items"]
+      ["recap_no_items"]
     end
 
     # Does this request object have any available copies?

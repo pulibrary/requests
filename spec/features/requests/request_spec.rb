@@ -187,7 +187,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       it 'does display the online access message' do
         visit "/requests/#{online_id}"
         expect(page).to have_content 'Online'
-        expect(page).to have_content I18n.t("requests.online.brief_msg")
       end
 
       it 'allows CAS patrons to request In-Process items', js: true do

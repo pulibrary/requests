@@ -86,7 +86,8 @@ en:
     recap_no_items:
       email: "recapproblems@princeton.edu"
       email_subject: "ReCAP Non-Barcoded Request."
-      brief_msg: "A request was made on a record that has no barcoded item data. This is likely a data issue that should be corrected."
+      brief_msg: "Please select the delivery location for this off-site ReCAP request."
+      email_msg: "A request was made on a record that has no barcoded item data. This is likely a data issue that should be corrected."
       email_conf_msg: "The following record has been requested:"
     recall:
       email_subject: "Recall Confirmation"

@@ -367,6 +367,7 @@ Style/IfUnlessModifier:
     - 'app/models/concerns/requests/pageable.rb'
     - 'app/models/requests/requestable.rb'
     - 'app/models/requests/router.rb'
+    - 'app/models/requests/request.rb'
 
 Style/MethodCallWithoutArgsParentheses:
   Exclude:

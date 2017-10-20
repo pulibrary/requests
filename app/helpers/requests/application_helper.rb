@@ -110,6 +110,8 @@ module Requests
         request_input('annexa')
       elsif requestable.annexb?
         request_input('annexb')
+      elsif requestable.services.include? 'recap_no_items'
+        request_input('recap_no_items')
       else
         request_input('paging')
       end
@@ -416,7 +418,7 @@ module Requests
     end
 
     def submitable
-      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd']
+      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items']
     end
 
     def submit_message requestable_list

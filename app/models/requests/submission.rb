@@ -46,6 +46,12 @@ module Requests
             end
           end
 
+          if selected["type"] == 'recap_no_items'
+            if selected['pickup'].empty?
+              record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location for your selected ReCAP item', 'type' => 'pickup' } }
+            end
+          end
+
           if selected["type"] == 'recap'
             if selected['item_id'].empty?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be Requested from Recap, see circulation desk.', 'type' => 'options' } }

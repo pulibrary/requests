@@ -1072,53 +1072,52 @@ describe Requests::Submission do
 
   describe 'A recap_no_items submission without a pickup location' do
     let(:requestable) {
-     [
-       {
-         "selected" => "true",
-         "mfhd" => "4978217",
-         "call_number" => "B52/140.fehb vol.7",
-         "location_code" => "rcppl",
-         "location" => "ReCAP - East Asian Library use only",
-         "user_supplied_enum" => "test",
-         "type" => "recap_no_items",
-         "pickup" => ""
-       },
-       {
-         "selected" => "false"
-       }
-     ]
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "4978217",
+          "call_number" => "B52/140.fehb vol.7",
+          "location_code" => "rcppl",
+          "location" => "ReCAP - East Asian Library use only",
+          "user_supplied_enum" => "test",
+          "type" => "recap_no_items",
+          "pickup" => ""
+        },
+        {
+          "selected" => "false"
+        }
+      ]
     }
     let(:user_info) {
-     {
-       "user_name" => "Foo Request",
-       "user_barcode" => "22101007797777",
-       "email" => "foo@princeton.edu",
-       "source" => "pulsearch" }
+      {
+        "user_name" => "Foo Request",
+        "user_barcode" => "22101007797777",
+        "email" => "foo@princeton.edu",
+        "source" => "pulsearch" }
     }
     let(:params) {
-     {
-       request: user_info,
-       requestable: requestable
-     }
+      {
+        request: user_info,
+        requestable: requestable }
+    }
+    let(:submission) {
+      Requests::Submission.new(params)
     }
 
-    let(:submission) {
-     Requests::Submission.new(params)
-    }
     before(:each) do
-     submission.valid?
+      submission.valid?
     end
 
     it 'is invalid' do
-     expect(submission.valid?).to be false
+      expect(submission.valid?).to be false
     end
 
     it 'has an error message' do
-     expect(submission.errors.messages).to be_truthy
+      expect(submission.errors.messages).to be_truthy
     end
 
     it 'has an error message with the mfhd ID as the message key' do
-     expect(submission.errors.messages[:items].first.keys.include?('4978217')).to be true
+      expect(submission.errors.messages[:items].first.keys.include?('4978217')).to be true
     end
   end
 

@@ -9478,4 +9478,314 @@ http_interactions:
       string: 'Record: 9929080 not found.'
     http_version: 
   recorded_at: Tue, 17 Oct 2017 14:02:15 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/308.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 188774a0-a1cb-4e25-99bf-0994cfd86f5b
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"9ef411c8f4c49eebc9f1648ad34633ed"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.021661'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Tue, 24 Oct 2017 19:41:32 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.11
+      Server:
+      - nginx/1.12.1 + Phusion Passenger 5.1.11
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjMwOCIsImF1dGhvcl9y
+        b2xlc18xZGlzcGxheSI6IntcInNlY29uZGFyeV9hdXRob3JzXCI6W10sXCJ0
+        cmFuc2xhdG9yc1wiOltdLFwiZWRpdG9yc1wiOltdLFwiY29tcGlsZXJzXCI6
+        W119IiwidW5pZm9ybV90aXRsZV9zIjpbIkhhcmQgdGltZXMgKFdhc2hpbmd0
+        b24sIEQuQy4pIl0sInRpdGxlX2Rpc3BsYXkiOiJIYXJkIHRpbWVzLiIsInRp
+        dGxlX3QiOlsiSGFyZCB0aW1lcy4iXSwib3BlbnNlYXJjaF9kaXNwbGF5Ijpb
+        IkhhcmQgdGltZXMuIiwiUmFkaWNhbGlzbSIsIlVuaXRlZCBTdGF0ZXMiLCJQ
+        ZXJpb2RpY2FscyJdLCJ0aXRsZV9jaXRhdGlvbl9kaXNwbGF5IjpbIkhhcmQg
+        dGltZXMuIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJIYXJkIHRpbWVzLiJd
+        LCJwdWJfY3JlYXRlZF9kaXNwbGF5IjpbIldhc2hpbmd0b24sIEQuQy4gOiBO
+        ZXcgV2Vla2x5IFByb2plY3QsIl0sInB1Yl9jcmVhdGVkX3MiOlsiV2FzaGlu
+        Z3RvbiwgRC5DLiA6IE5ldyBXZWVrbHkgUHJvamVjdCwiXSwicHViX2NpdGF0
+        aW9uX2Rpc3BsYXkiOlsiV2FzaGluZ3RvbiwgRC5DLjogTmV3IFdlZWtseSBQ
+        cm9qZWN0Il0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMTk2OSJdLCJwdWJfZGF0
+        ZV9zdGFydF9zb3J0IjoxOTY5LCJwdWJfZGF0ZV9lbmRfc29ydCI6MTk3MCwi
+        Zm9ybWF0IjpbIkpvdXJuYWwiXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyI2
+        NiB2LiA7IDI4IGNtLiIsIk5vLiAyMiAoTWFyLiAxMC8xNyAxOTY5KS1uby4g
+        ODcgKFNlcHQuIDE0LCAxOTcwKS4iXSwiZGVzY3JpcHRpb25fdCI6WyI2NiB2
+        LiA7IDI4IGNtLiIsIk5vLiAyMiAoTWFyLiAxMC8xNyAxOTY5KS1uby4gODcg
+        KFNlcHQuIDE0LCAxOTcwKS4iXSwiZ2VvY29kZV9kaXNwbGF5IjpbIlVuaXRl
+        ZCBTdGF0ZXMiXSwiY29udGludWVzX2Rpc3BsYXkiOlsiTWF5ZGF5IChXYXNo
+        aW5ndG9uLCBELiBDLikiXSwiYWJzb3JiZWRfYnlfZGlzcGxheSI6WyJSYW1w
+        YXJ0cyAoQmVya2VsZXksIENhbGlmLikiXSwiZnJlcXVlbmN5X2Rpc3BsYXki
+        OlsiV2Vla2x5IChiaXdlZWtseSBkdXJpbmcgSnVseSBhbmQgQXVnLikiXSwi
+        bGFuZ3VhZ2VfZmFjZXQiOlsiRW5nbGlzaCJdLCJsYW5ndWFnZV9jb2RlX3Mi
+        OlsiZW5nIl0sInN1YmplY3RfZGlzcGxheSI6WyJSYWRpY2FsaXNt4oCUVW5p
+        dGVkIFN0YXRlc+KAlFBlcmlvZGljYWxzIl0sInN1YmplY3RfdCI6WyJSYWRp
+        Y2FsaXNt4oCUVW5pdGVkIFN0YXRlc+KAlFBlcmlvZGljYWxzIl0sInN1Ympl
+        Y3RfZmFjZXQiOlsiUmFkaWNhbGlzbeKAlFVuaXRlZCBTdGF0ZXPigJRQZXJp
+        b2RpY2FscyJdLCJpc3NuX2Rpc3BsYXkiOlsiMDAyNS02MTQ1Il0sImlzc25f
+        cyI6WyIwMDI1NjE0NSJdLCJvY2xjX3MiOlsiMjI0NDYxOCJdLCJvdGhlcl92
+        ZXJzaW9uX3MiOlsiMDAyNTYxNDUiLCJvY20wMjI0NDYxOCJdLCJob2xkaW5n
+        c18xZGlzcGxheSI6IntcIjM0MVwiOntcImxvY2F0aW9uXCI6XCJSZUNBUCAt
+        IFVzZSBpbiBGaXJlc3RvbmUgTWljcm9mb3JtcyBvbmx5XCIsXCJsaWJyYXJ5
+        XCI6XCJSZUNBUFwiLFwibG9jYXRpb25fY29kZVwiOlwicmNwcGZcIixcImNv
+        cHlfbnVtYmVyXCI6XCIxXCIsXCJjYWxsX251bWJlclwiOlwiTUlDUk9GSUxN
+        IFMwMDUzNFwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJNSUNST0ZJTE0g
+        UzAwNTM0XCIsXCJsb2NhdGlvbl9oYXNcIjpbXCJOby4gMjIgKE1hci4gMTAv
+        MTcgMTk2OSktbm8uIDQ3IChPY3QuIDYsIDE5NjkpXCIsXCJOby4gMjItNDcg
+        b24gcmVlbCB3aXRoIG5vLiAxLTIxIG9mIHRoZSBlYXJsaWVyIHRpdGxlLlwi
+        XX0sXCIzNDJcIjp7XCJsb2NhdGlvblwiOlwiRmlyZXN0b25lIExpYnJhcnlc
+        IixcImxpYnJhcnlcIjpcIkZpcmVzdG9uZSBMaWJyYXJ5XCIsXCJsb2NhdGlv
+        bl9jb2RlXCI6XCJmXCIsXCJjb3B5X251bWJlclwiOlwiMVwiLFwiY2FsbF9u
+        dW1iZXJcIjpcIk92ZXJzaXplIEhYMSAuSDM3M3FcIixcImNhbGxfbnVtYmVy
+        X2Jyb3dzZVwiOlwiSFgxIC5IMzczcVwiLFwibG9jYXRpb25faGFzXCI6W1wi
+        Tm8uIDgyIChKdW5lIDI5LCAxOTcwKS1uby4gODcgKFNlcHQuIDE0LCAxOTcw
+        KVwiLFwiTEFDS1M6IG5vLiA4M1wiXX19IiwibG9jYXRpb25fY29kZV9zIjpb
+        InJjcHBmIiwiZiJdLCJsb2NhdGlvbiI6WyJSZUNBUCIsIkZpcmVzdG9uZSBM
+        aWJyYXJ5Il0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiUmVDQVAgLSBVc2UgaW4g
+        RmlyZXN0b25lIE1pY3JvZm9ybXMgb25seSIsIkZpcmVzdG9uZSBMaWJyYXJ5
+        Il0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsicmNwcGYiLCJmIiwiUmVDQVAi
+        LCJGaXJlc3RvbmUgTGlicmFyeSJdLCJjYWxsX251bWJlcl9kaXNwbGF5Ijpb
+        Ik1JQ1JPRklMTSBTMDA1MzQiLCJPdmVyc2l6ZSBIWDEgLkgzNzNxIl0sImNh
+        bGxfbnVtYmVyX2Jyb3dzZV9zIjpbIk1JQ1JPRklMTSBTMDA1MzQiLCJIWDEg
+        LkgzNzNxIl0sInRpbWVzdGFtcCI6IjIwMTctMDktMjNUMjA6MTM6MjcuODAx
+        WiJ9fX0=
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 19:41:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=308
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 24 Oct 2017 19:41:32 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - c03b9afd-cad4-4c18-b349-da2b75bb9dfa
+      X-Runtime:
+      - '0.195346'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"6282ad34a932a3c60a22a9b6f4528864"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"341":{"more_items":false,"location":"rcppf","status":"On Shelf","label":"ReCAP
+        - Use in Firestone Microforms only"},"342":{"more_items":false,"location":"f","status":"On
+        Shelf","label":"Firestone Library"}}'
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 19:41:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=341
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 24 Oct 2017 19:41:32 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 85c42a4e-d187-4592-a072-dd4e40072854
+      X-Runtime:
+      - '0.065307'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 341 not found.'
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 19:41:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=342
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 24 Oct 2017 19:41:32 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - b8d12db0-ed85-4378-b0b7-3ad0af31c26a
+      X-Runtime:
+      - '0.080412'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Status:
+      - 404 Not Found
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: 'Record: 342 not found.'
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 19:41:33 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/rcppf.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 24 Oct 2017 19:41:33 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Request-Method:
+      - GET
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 7d0eda9e-1ab3-49b8-a90b-9fcdf3ad1afa
+      X-Runtime:
+      - '0.030765'
+      X-Powered-By:
+      - Phusion Passenger 4.0.59
+      Etag:
+      - W/"7bb00808bf45c1413176c31b704f9060"
+      Status:
+      - 200 OK
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"label":"Use in Firestone Microforms only","code":"rcppf","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":{"label":"Firestone
+        Library","code":"firestone","order":1},"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Library, Microforms","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PF","staff_only":false,"pickup_location":false,"digital_location":false},{"label":"Firestone
+        Library, Resource Sharing","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QA","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services 693","address":"693 Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Preservation","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services HMT","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"ReCAP
+        ILL","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"IL","staff_only":true,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 19:41:33 GMT
 recorded_with: VCR 3.0.3

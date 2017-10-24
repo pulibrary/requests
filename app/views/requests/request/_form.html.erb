@@ -56,7 +56,7 @@
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
-              <% if requestable.has_item_data? %>
+              <% if requestable.has_item_data? || (requestable.services & ["on_shelf"]).present? %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                   <td class='request--select'>
                     <%= hidden_field_tag 'requestable[][selected]', false %>
@@ -87,6 +87,7 @@
                     <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
                   <% end %>
                   <% if requestable.services.include?('recap_edd') %>
+
                       <%= hidden_field_tag "requestable[][type]", "recap" %>
                       <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
                       <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>

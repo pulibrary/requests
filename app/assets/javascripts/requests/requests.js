@@ -71,6 +71,7 @@ $(document).ready(function() {
       var this_td = $( this_select ).closest( "td" );
       var recall_pickup_select = this_td.find( ".recall-pickup" );
       var recall_pickup_single = this_td.find( ".single-pickup" );
+      var recall_pickup_single_hidden = this_td.find( ".single-pickup-hidden" );
       var bd_pickup_select = this_td.find( ".bd-pickup" );
       var chbx =  $( this_select ).closest( "tr" ).find( "input:checkbox" );
 
@@ -82,7 +83,7 @@ $(document).ready(function() {
         bd_pickup_select.attr( "name", "not_used" );
         bd_pickup_select.hide();
         recall_pickup_select.attr( "name", "requestable[][pickup]" );
-        recall_pickup_single.attr( "name", "requestable[][pickup]" );
+        recall_pickup_single_hidden.attr( "name", "requestable[][pickup]" );
 
         // don't keep hitting the service if the pickup locs are populated
         if(recall_pickup_select.find('option').length == 0){
@@ -133,7 +134,7 @@ $(document).ready(function() {
           recall_pickup_select.hide();
           recall_pickup_select.attr( "name", "not_used" );
           recall_pickup_single.hide();
-          recall_pickup_single.attr( "name", "not_used" );
+          recall_pickup_single_hidden.attr( "name", "not_used" );
         }
         if(bd_pickup_select.is(':visible')){
           bd_pickup_select.hide();

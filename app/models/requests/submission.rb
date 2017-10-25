@@ -15,7 +15,6 @@ module Requests
           if selected["type"].blank?
             record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please choose a Request Method for your selected item.', 'type' => 'pickup' } }
           end
-
           if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
             if selected['pickup'].blank? && selected['item_id'].blank?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }

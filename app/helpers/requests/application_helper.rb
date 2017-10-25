@@ -181,8 +181,9 @@ module Requests
             concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
           else
             style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-            hidden = hidden_field_tag "updated_later", "", value: "#{locs[0][:gfa_code]}", class: 'single-pickup-hidden'
-            label = label_tag 'updated_later', "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: "#{style}"
+            name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
+            hidden = hidden_field_tag "#{name}", "", value: "#{locs[0][:gfa_code]}", class: 'single-pickup-hidden'
+            label = label_tag "#{name}", "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: "#{style}"
             hidden + label
           end
         end

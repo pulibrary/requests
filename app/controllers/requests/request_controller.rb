@@ -62,7 +62,6 @@ module Requests
       elsif @request.has_single_aeon_requestable?
         redirect_to @request.requestable.first.aeon_request_url(@request.ctx)
       end
-      # flash.now[:notice] = "You are eligible to request this item. This form is in development and DOES not submit requests yet."
     end
 
     # will request recall pickup location options from voyager

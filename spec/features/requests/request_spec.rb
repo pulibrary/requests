@@ -66,6 +66,16 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content 'ReCAP Oversize DT549 .E274q'
       end
 
+      it 'allows guest patrons to see aeon requests' do
+        visit '/requests/336525'
+        # click_link(I18n.t('requests.account.other_user_login_msg'))
+        fill_in 'request_email', :with => 'name@email.com'
+        fill_in 'request_user_name', :with => 'foobar'
+        click_button(I18n.t('requests.account.other_user_login_btn'))
+        wait_for_ajax
+        expect(page).to have_content 'Request to View in Reading Room'
+      end
+
       it 'allows guest patrons to request a physical recap item' do
         visit '/requests/9944355'
         # click_link(I18n.t('requests.account.other_user_login_msg'))

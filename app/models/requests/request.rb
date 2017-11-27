@@ -249,7 +249,7 @@ module Requests
     end
 
     def serial?
-      unless doc[:format].blank?
+      if doc[:format].present?
         return true if doc[:format].include? 'Journal'
       end
     end

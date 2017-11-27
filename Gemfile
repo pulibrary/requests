@@ -11,7 +11,7 @@ group :development, :test do
   gem 'pry' unless ENV['CI']
   gem 'pry-byebug' unless ENV['CI']
   gem 'rails-controller-testing'
-  gem 'rubocop', '0.48'
+  gem 'rubocop', '0.49'
   gem "simplecov"
 end
 

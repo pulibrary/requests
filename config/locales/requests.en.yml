@@ -26,7 +26,7 @@ en:
       paging_success: "Item has been paged."
       trace_success: "Item is now being traced."
       error: "We were unable to process your request. Correct the highlighted errors."
-      service_error: "We were unable to process your request due to a system error. Our staff has been notified and we will contact you shortly."
+      service_error: "There was a problem with this request which Library staff need to investigate. You'll be notified once it's resolved and requested for you."
     no_services:
       brief_msg: "Item is not requestable."
       access_msg: 'Some resources may only be requested by Princeton Users.'

@@ -211,7 +211,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       it 'makes sure In-Process items can only be delivered to their holding library', js: true, unless: in_travis? do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
-        pickup_code = page.find_by_id('requestable__pickup', :visible => false).value
+        pickup_code = page.find_by('#requestable__pickup', :visible => false).value
         expect(pickup_code).to eq 'PJ'
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'

@@ -311,7 +311,7 @@ module Requests
 
     def suppress_login request
       suppress_login = false
-      unless request.mfhd.blank?
+      if request.mfhd.present?
         not_aeon = request.sorted_requestable[request.mfhd].select { |req| !req.aeon? }
         if not_aeon.empty?
           suppress_login = true

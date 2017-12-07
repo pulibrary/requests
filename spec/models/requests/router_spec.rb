@@ -2,7 +2,44 @@ require 'spec_helper'
 
 describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new_episodes } do
   context "A Princeton Community User has signed in" do
-    let(:user) { FactoryGirl.create(:valid_princeton_patron) }
+    let(:user) { FactoryGirl.create(:user) }
+
+    let(:scsb_single_holding_item) { fixture('/SCSB-2635660.json') }
+    let(:location_code) { 'scsbcul' }
+    let(:params) {
+      {
+        system_id: 'SCSB-2635660',
+        user: user,
+        source: 'CUL'
+      }
+    }
+    let(:scsb_availability_params) {
+      {
+        bibliographicId: "667075",
+        institutionId: "CUL"
+      }
+    }
+    let(:scsb_availability_response) { '[{"itemBarcode":"CU53020880","itemAvailabilityStatus":"Not Available","errorMessage":null}]' }
+    let(:request_scsb) { Requests::Request.new(params) }
+    let(:requestable) { request_scsb.requestable.first }
+    let(:router) { described_class.new(requestable: requestable, user: user) }
+
+    describe "SCSB item that is charged" do
+      before(:each) do
+        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+          .to_return(status: 200, body: scsb_single_holding_item, headers: {})
+        stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+          .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
+          .to_return(status: 200, body: scsb_availability_response)
+      end
+
+      it "has Borrow Direct, ILL, but not Recall as a request service option" do
+        expect(router.calculate_services.include?('bd')).to be_truthy
+        expect(router.calculate_services.include?('ill')).to be_truthy
+        expect(router.calculate_services.include?('recall')).to be_falsy
+      end
+    end
+
     describe "Online Holding" do
       let(:params) { {} }
       let(:requestable) { Requests::Requestable.new(params) }

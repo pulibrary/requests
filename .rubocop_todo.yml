@@ -218,7 +218,7 @@ RSpec/RepeatedDescription:
 Rails/Blank:
   Exclude:
     - 'app/models/requests/request.rb'
-    
+
 Rails/FilePath:
   Exclude:
     - 'lib/generators/requests/templates/requests_initializer.rb'
@@ -271,6 +271,7 @@ Style/BlockDelimiters:
     - 'spec/models/requests/recap_spec.rb'
     - 'spec/models/requests/request_spec.rb'
     - 'spec/models/requests/requestable_spec.rb'
+    - 'spec/models/requests/router_spec.rb'
     - 'spec/models/requests/submission_spec.rb'
 
 Style/BracesAroundHashParameters:

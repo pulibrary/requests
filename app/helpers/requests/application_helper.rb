@@ -161,7 +161,7 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
-      unless (requestable.charged? && !requestable.scsb?) || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
+      unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
         class_list = "well collapse in request--print"
         if requestable.services.include?('recap_edd')
           class_list = "well collapse request--print"

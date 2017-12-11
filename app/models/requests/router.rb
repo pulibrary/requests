@@ -59,13 +59,13 @@ module Requests
             end
             # for mongraphs - title level check
             if !has_loanable? && auth_user?
-              unless requestable.missing? || requestable.inaccessible? || requestable.hold_request?
+              unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.scsb?
                 services << 'recall'
               end
             end
             # for serials - copy level check
             if (auth_user? && requestable.enumerated?)
-              unless requestable.missing? || requestable.inaccessible? || requestable.hold_request?
+              unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.scsb?
                 services << 'recall'
               end
             end

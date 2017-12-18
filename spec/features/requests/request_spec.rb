@@ -16,6 +16,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
 
+  before(:each) { stub_delivery_locations }
+
   context 'all patrons' do
     describe 'When visiting without a system ID' do
       it "Displays a Not Valid System ID error" do

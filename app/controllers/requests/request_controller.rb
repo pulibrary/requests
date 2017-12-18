@@ -5,7 +5,8 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:borrow_direct]
+    skip_before_action :verify_authenticity_token, only: [:borrow_direct,:ill_to_edd]
+    #before_action :validate_tn, only: [:ill_to_edd]
 
     def index
       flash.now[:notice] = "Please Supply a valid Library ID to Request"
@@ -62,6 +63,23 @@ module Requests
       elsif @request.has_single_aeon_requestable?
         redirect_to @request.requestable.first.aeon_request_url(@request.ctx)
       end
+    end
+
+    def ill_to_edd_form
+      render layout: false
+      flash.now[:notice] = "Please Supply a valid Transaction Number."
+    end
+
+    def ill_to_edd
+      @ill_to_edds = Requests::IllToEdd.new(params)
+
+      if @ill_to_edds.errors.any?
+        response = @ill_to_edds.errors.to_json
+      else
+        response = @ill_to_edds.response.body.encode("UTF-8", invalid: :replace, undef: :replace).to_json
+      end
+
+      render json: response
     end
 
     # will request recall pickup location options from voyager

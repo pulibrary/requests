@@ -21,6 +21,8 @@ describe Requests::RequestMailer, :type => :mailer do
     }
   }
 
+  before(:each) { stub_delivery_locations }
+
   context "send preservation email request" do
     let(:requestable) {
       [
@@ -172,7 +174,7 @@ describe Requests::RequestMailer, :type => :mailer do
     let(:sub) {
       pickups = []
       submission_for_no_items.items.each do |item|
-        pickups.push(DELIVERY_LOCATIONS[item["pickup"]]["label"])
+        pickups.push(Requests::BibdataService.delivery_locations[item["pickup"]]["label"])
       end
       I18n.t('requests.paging.email_subject') + ' for ' + pickups.join(", ")
     }

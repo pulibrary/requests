@@ -92,9 +92,11 @@ Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
+  config.fixture_path = "#{Requests::Engine.root}/spec/fixtures"
 
   config.before :suite do
     DatabaseCleaner.clean_with(:truncation)
+    Rails.cache.clear
   end
   config.before :each do
     DatabaseCleaner.strategy = :transaction
@@ -102,7 +104,9 @@ RSpec.configure do |config|
   end
   config.after :each do
     DatabaseCleaner.clean
+    Rails.cache.clear
   end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

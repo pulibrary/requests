@@ -364,7 +364,7 @@ module Requests
     # should probably happen in the initializer
     def build_pickups
       pickup_locations = []
-      DELIVERY_LOCATIONS.values.each do |pickup|
+      Requests::BibdataService.delivery_locations.values.each do |pickup|
         if pickup["pickup_location"] == true
           pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"] }
         end

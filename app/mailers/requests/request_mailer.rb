@@ -4,7 +4,7 @@ module Requests
       @submission = submission
       pickups = []
       @submission.items.each do |item|
-        pickups.push(DELIVERY_LOCATIONS[item["pickup"]]["label"])
+        pickups.push(Requests::BibdataService.delivery_locations[item["pickup"]]["label"])
       end
       subject = I18n.t('requests.paging.email_subject') + ' for '
       subject += pickups.join(", ")
@@ -32,12 +32,16 @@ module Requests
            subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
     end
 
+    # rubocop:disable MethodLength
     def annexa_email(submission)
       @submission = submission
       destination_email = []
       @submission.items.each do |item|
-        if item["type"] == 'annexa'
-          item["location_code"] == 'anxadoc' ? destination_email.push(I18n.t('requests.anxadoc.email')) : destination_email.push(DELIVERY_LOCATIONS[item["pickup"]]["contact_email"])
+        next unless item["type"] == 'annexa'
+        if item["location_code"] == 'anxadoc'
+          destination_email.push(I18n.t('requests.anxadoc.email'))
+        else
+          destination_email.push(Requests::BibdataService.delivery_locations[item["pickup"]]["contact_email"])
         end
       end
       cc_email = [@submission.email]
@@ -52,7 +56,7 @@ module Requests
       destination_email = []
       @submission.items.each do |item|
         if item["type"] == 'annexb'
-          destination_email.push(DELIVERY_LOCATIONS[item["pickup"]]["contact_email"])
+          destination_email.push(Requests::BibdataService.delivery_locations[item["pickup"]]["contact_email"])
         end
       end
       cc_email = [@submission.email]

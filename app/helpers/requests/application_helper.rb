@@ -153,7 +153,7 @@ module Requests
       if lib_code == "firestone"
         gfa_code = "PA"
       else
-        lib = DELIVERY_LOCATIONS.select { |_key, hash| hash["library"]["code"] == lib_code }
+        lib = Requests::BibdataService.delivery_locations.select { |_key, hash| hash["library"]["code"] == lib_code }
         gfa_code = lib.keys.first.to_s
       end
     end

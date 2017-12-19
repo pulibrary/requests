@@ -27,12 +27,6 @@ module Requests
       parse_response(response)
     end
 
-    # non longer used pickups loaded in requests initializer to avoid repeat calls
-    # def get_pickups
-    #   response = bibdata_conn.get "/locations/delivery_locations.json"
-    #   parse_response(response)
-    # end
-
     def patron(patron_id)
       response = bibdata_conn.get "/patron/#{patron_id}"
       parse_response(response)

@@ -1,4 +1,4 @@
-<select name="requestable[][type]" class="request-options">
+<select aria-labelledby="delivery_options" name="requestable[][type]" class="request-options">
   <option value=""><%= I18n.t("requests.default.request_method_placeholder") %></option>
   <% if requestable.borrow_direct? %>
     <option value="bd"><%= I18n.t("requests.bd.request_label") %></option>
@@ -13,14 +13,14 @@
 <br/>
 
 <% if (requestable.scsb? && requestable.recallable?) %>
-  <select name="updated_by_client" id="requestable__pickup" class="recall-pickup" aria-live="polite">
+  <select aria-label="Select a pickup location" name="updated_by_client" id="requestable__pickup" class="recall-pickup" aria-live="polite">
       <%= pickup_choices requestable, [] %>
   </select>
 <% else %>
-  <select name="updated_by_client" id="requestable__pickup" class="recall-pickup" aria-live="polite">
+  <select aria-label="Select a pickup location" name="updated_by_client" id="requestable__pickup" class="recall-pickup" aria-live="polite">
     <option value=""><%= I18n.t("requests.default.pickup_placeholder") %></option>
   </select>
 <% end %>
-<select name="requestable[][pickup]" id="requestable__pickup" class="bd-pickup" style="display:none;margin-top:10px;" aria-live="polite">
+<select aria-label="Select a pickup location" name="requestable[][pickup]" id="requestable__pickup" class="bd-pickup" style="display:none;margin-top:10px;" aria-live="polite">
  <option value=""><%= I18n.t("requests.default.pickup_placeholder") %></option>
 </select>

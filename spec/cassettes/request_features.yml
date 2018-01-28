@@ -8685,4 +8685,218 @@ http_interactions:
         Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[]}'
     http_version: 
   recorded_at: Wed, 08 Nov 2017 23:29:58 GMT
+- request:
+    method: get
+    uri: https://pulsearch.princeton.edu/catalog/4888494.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - f42bda8f-40e0-486f-bb7a-2bc2f257ef6b
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"951e3676bc440e35f071bb372cec532c"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.021506'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Sat, 27 Jan 2018 21:24:21 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.12
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.1.12
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6IjQ4ODg0OTQiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIlNhbmJvcm4gTWFwIENvbXBhbnkiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiU2FuYm9ybiBNYXAgQ29tcGFueSIsIkxpYnJhcnkgb2YgQ29uZ3Jlc3MiXSwiYXV0aG9yX3JvbGVzXzFkaXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXCJMaWJyYXJ5IG9mIENvbmdyZXNzXCJdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIlNhbmJvcm4gTWFwIENvbXBhbnlcIn0iLCJhdXRob3JfcyI6WyJTYW5ib3JuIE1hcCBDb21wYW55IiwiTGlicmFyeSBvZiBDb25ncmVzcy4gTWFwIERpdmlzaW9uIl0sIm9wZW5zZWFyY2hfZGlzcGxheSI6WyJTYW5ib3JuIE1hcCBDb21wYW55IiwiTGlicmFyeSBvZiBDb25ncmVzcy4gTWFwIERpdmlzaW9uIiwiRnJlZWhvbGQsIE4uIEouIFttYXBdLiIsIlJlYWwgcHJvcGVydHkiLCJOZXcgSmVyc2V5IiwiRnJlZWhvbGQiLCJGcmVlaG9sZCAoTi5KLikiXSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rpc3BsYXkiOiJGcmVlaG9sZCwgTi4gSi4gW21hcF0uIiwidGl0bGVfdCI6WyJGcmVlaG9sZCwgTi4gSi4gW21hcF0uIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiRnJlZWhvbGQsIE4uIEouIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJGcmVlaG9sZCwgTi4gSi4gW21hcF0uIl0sInB1Yl9jcmVhdGVkX2Rpc3BsYXkiOlsiW05ldyBZb3JrOiBTYW5ib3JuIE1hcCBcdTAwMjYgUHVibGlzaGluZyBDby4sIExpbWl0ZWQsIDE4ODVdIl0sInB1Yl9jcmVhdGVkX3MiOlsiW05ldyBZb3JrOiBTYW5ib3JuIE1hcCBcdTAwMjYgUHVibGlzaGluZyBDby4sIExpbWl0ZWQsIDE4ODVdIl0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5IjpbIk5ldyBZb3JrOiBTYW5ib3JuIE1hcCBcdTAwMjYgUHVibGlzaGluZyBDby4sIExpbWl0ZWQiXSwicHViX2RhdGVfZGlzcGxheSI6WyIxODg1Il0sInB1Yl9kYXRlX3N0YXJ0X3NvcnQiOjE4ODUsImNhdGFsb2dlZF90ZHQiOiIyMDA2LTEwLTE4VDE4OjU5OjAwWiIsImZvcm1hdCI6WyJNYXAiXSwiZWxlY3Ryb25pY19hY2Nlc3NfMWRpc3BsYXkiOiJ7XCJodHRwczovL3B1bHNlYXJjaC5wcmluY2V0b24uZWR1L2NhdGFsb2cvNDg4ODQ5NCN2aWV3XCI6W1wiYXJrcy5wcmluY2V0b24uZWR1XCJdLFwiaWlpZl9tYW5pZmVzdF9wYXRoc1wiOntcImh0dHA6Ly9hcmtzLnByaW5jZXRvbi5lZHUvYXJrOi84ODQzNS9uNTgzeHg5MXhcIjpcImh0dHBzOi8vZmlnZ3kucHJpbmNldG9uLmVkdS9jb25jZXJuL21hcF9zZXRzL3BjcjU2cW0wOG0vbWFuaWZlc3RcIn19IiwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyJTY2FsZSBbY2EuIDE6NjAwXS4gNTAgZnQuIHRvIGFuIGluY2guIiwiMSBtYXAgb24gMyBzaGVldHMgOiBjb2wuIDsgZWFjaCA2NCB4IDU0IGNtLiJdLCJkZXNjcmlwdGlvbl90IjpbIlNjYWxlIFtjYS4gMTo2MDBdLiA1MCBmdC4gdG8gYW4gaW5jaC4iLCIxIG1hcCBvbiAzIHNoZWV0cyA6IGNvbC4gOyBlYWNoIDY0IHggNTQgY20uIl0sImdlb2NvZGVfZGlzcGxheSI6WyJOZXcgSmVyc2V5Il0sInNjYWxlX2Rpc3BsYXkiOlsiU2NhbGUgW2NhLiAxOjYwMF0uIDUwIGZ0LiB0byBhbiBpbmNoLiJdLCJub3Rlc19kaXNwbGF5IjpbIlwiSmFuLiAxODg1LlwiIiwiSW5jbHVkZXMga2V5IGFuZCB0ZXh0LiIsIk5vcnRoIG9yaWVudGVkIHRvd2FyZCB1cHBlciBsZWZ0LiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJlbmciXSwicHJvdmVuYW5jZV9kaXNwbGF5IjpbIkhpc3RvcmljIE1hcHMgY29weSBoYXMgc3RhbXAgb2YgTWFwIERpdmlzaW9uLCBMaWJyYXJ5IG9mIENvbmdyZXNzLCBkYXRlZCBNYXIuIDYsIDE4ODUuIl0sInN1YmplY3RfZGlzcGxheSI6WyJSZWFsIHByb3BlcnR54oCUTmV3IEplcnNleeKAlEZyZWVob2xk4oCUTWFwcyIsIkZyZWVob2xkIChOLkouKeKAlE1hcHMiXSwic3ViamVjdF90IjpbIlJlYWwgcHJvcGVydHnigJROZXcgSmVyc2V54oCURnJlZWhvbGTigJRNYXBzIiwiRnJlZWhvbGQgKE4uSi4p4oCUTWFwcyJdLCJzdWJqZWN0X2ZhY2V0IjpbIlJlYWwgcHJvcGVydHnigJROZXcgSmVyc2V54oCURnJlZWhvbGTigJRNYXBzIiwiRnJlZWhvbGQgKE4uSi4p4oCUTWFwcyJdLCJmb3JtX2dlbnJlX2Rpc3BsYXkiOlsiRmlyZSBpbnN1cmFuY2UgbWFwcyBOZXcgSmVyc2V5IEZyZWVob2xkIDE4ODUuIiwiTWFwcyBOZXcgSmVyc2V5IEZyZWVob2xkIDE4ODUuIl0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNwbGF5Ijoie1wiRm9ybWVyIG93bmVyXCI6W1wiTGlicmFyeSBvZiBDb25ncmVzcy4gTWFwIERpdmlzaW9uXCJdfSIsImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wiNTA4NTQ5M1wiOntcImxvY2F0aW9uXCI6XCJSZUNBUCAtIEhpc3RvcmljIE1hcHMgT2ZmLVNpdGUgU3RvcmFnZVwiLFwibGlicmFyeVwiOlwiUmVDQVBcIixcImxvY2F0aW9uX2NvZGVcIjpcInJjcHhwXCIsXCJjYWxsX251bWJlclwiOlwiSE1DMDQgKEZyZWVob2xkKVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJITUMwNCAoRnJlZWhvbGQpXCJ9LFwiNzQyNjI3MlwiOntcImxvY2F0aW9uXCI6XCJPbmxpbmUgLSAqT05MSU5FKlwiLFwibGlicmFyeVwiOlwiT25saW5lXCIsXCJsb2NhdGlvbl9jb2RlXCI6XCJlbGYxXCIsXCJjYWxsX251bWJlclwiOlwiRWxlY3Ryb25pYyBSZXNvdXJjZVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJFbGVjdHJvbmljIFJlc291cmNlXCJ9fSIsImxvY2F0aW9uX2NvZGVfcyI6WyJyY3B4cCIsImVsZjEiXSwibG9jYXRpb24iOlsiUmVDQVAiLCJSYXJlIEJvb2tzIGFuZCBTcGVjaWFsIENvbGxlY3Rpb25zIl0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiUmVDQVAgLSBIaXN0b3JpYyBNYXBzIE9mZi1TaXRlIFN0b3JhZ2UiLCJPbmxpbmUgLSAqT05MSU5FKiJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbInJjcHhwIiwiZWxmMSIsIlJlQ0FQIiwiT25saW5lIiwiUmFyZSBCb29rcyBhbmQgU3BlY2lhbCBDb2xsZWN0aW9ucyJdLCJuYW1lX3RpdGxlX2Jyb3dzZV9zIjpbIlNhbmJvcm4gTWFwIENvbXBhbnkuIEZyZWVob2xkLCBOLiBKLiJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIkhNQzA0IChGcmVlaG9sZCkiLCJFbGVjdHJvbmljIFJlc291cmNlIl0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkhNQzA0IChGcmVlaG9sZCkiLCJFbGVjdHJvbmljIFJlc291cmNlIl0sInRpbWVzdGFtcCI6IjIwMTgtMDEtMjRUMjE6MTE6MDcuNzA4WiJ9fX0=
+    http_version: 
+  recorded_at: Sat, 27 Jan 2018 21:24:21 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=4888494
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"1a6676d8c85343b7b209a62cd856b883"
+      X-Runtime:
+      - '0.168937'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 4102d634-6d0e-4bcf-a755-7fd37987c229
+      Date:
+      - Sat, 27 Jan 2018 21:24:20 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.12
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.1.12
+    body:
+      encoding: ASCII-8BIT
+      string: '{"5085493":{"more_items":true,"location":"rcpxp","copy_number":1,"item_id":4420352,"on_reserve":"N","status":"On-Site","label":"ReCAP
+        - Historic Maps Off-Site Storage"},"7426272":{"more_items":false,"location":"elf1","status":"Online","label":"Online
+        - *ONLINE*"}}'
+    http_version: 
+  recorded_at: Sat, 27 Jan 2018 21:24:22 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5085493
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"45fa43e757a7632934c0c38477b32ea6"
+      X-Runtime:
+      - '0.058859'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 121040d7-278e-474a-98e9-400befed1a82
+      Date:
+      - Sat, 27 Jan 2018 21:24:21 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.12
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.1.12
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"barcode":"32101054078611","id":4420357,"location":"rcpxp","copy_number":1,"item_sequence_number":3,"status":"On-Site","on_reserve":"N","enum":"Sheet
+        3","enum_display":"Sheet 3","label":"ReCAP - Historic Maps Off-Site Storage"},{"barcode":"32101054078603","id":4420354,"location":"rcpxp","copy_number":1,"item_sequence_number":2,"status":"On-Site","on_reserve":"N","enum":"Sheet
+        2","enum_display":"Sheet 2","label":"ReCAP - Historic Maps Off-Site Storage"},{"barcode":"32101054078595","id":4420352,"location":"rcpxp","copy_number":1,"item_sequence_number":1,"status":"On-Site","on_reserve":"N","enum":"Sheet
+        1","enum_display":"Sheet 1","label":"ReCAP - Historic Maps Off-Site Storage"}]'
+    http_version: 
+  recorded_at: Sat, 27 Jan 2018 21:24:22 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/rcpxp.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"0d7658e989c5317611ea94cc39f264a1"
+      X-Runtime:
+      - '0.008227'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 2c2366ea-60e0-4953-bad2-18c534bf9da2
+      Date:
+      - Sat, 27 Jan 2018 21:24:21 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.1.12
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.1.12
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"Historic Maps Off-Site Storage","code":"rcpxp","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":{"label":"Rare
+        Books and Special Collections","code":"rare","order":2},"hours_location":null,"delivery_locations":[{"label":"Firestone,
+        Historic Maps","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Sat, 27 Jan 2018 21:24:22 GMT
 recorded_with: VCR 3.0.3

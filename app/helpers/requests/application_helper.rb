@@ -504,8 +504,10 @@ module Requests
     def display_urls requestable
       content_tag :ol do
         requestable.urls.each do |key, value|
-          value.reverse!
-          concat content_tag(:li, link_to(value.join(": "), key), :class => 'link')
+          unless key == 'iiif_manifest_paths'
+            value.reverse!
+            concat content_tag(:li, link_to(value.join(": "), key), :class => 'link')
+          end
         end
       end
     end

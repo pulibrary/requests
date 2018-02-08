@@ -75,6 +75,7 @@ describe Requests::Recap do
   let(:subject) { described_class.new(submission) }
   let(:good_request) { fixture('/scsb_find_request.json') }
   let(:good_response) { fixture('/scsb_request_item_response.json') }
+  let(:bad_response) { fixture('/scsb_request_item_response_errors.json') }
 
   describe 'All ReCAP Requests' do
     it "It should capture errors when the request is unsuccessful or malformed." do
@@ -82,14 +83,22 @@ describe Requests::Recap do
         # with(headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
         to_return(status: 401, body: "Unauthorized", headers: {})
       expect(subject.submitted.size).to eq(0)
-      expect(subject.errors.size).to eq(1)
+      expect(subject.errors.size).to eq(2)
+    end
+
+    it "It should capture errors when response is a 200 but the request is unsuccessful" do
+      stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
+        # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+        to_return(status: 200, body: bad_response, headers: {})
+      expect(subject.submitted.size).to eq(0)
+      expect(subject.errors.size).to eq(2)
     end
 
     it "It should capture successful request submissions." do
       stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
         # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
         to_return(status: 200, body: good_response, headers: {})
-      expect(subject.submitted.size).to eq(1)
+      expect(subject.submitted.size).to eq(2)
       expect(subject.errors.size).to eq(0)
     end
   end

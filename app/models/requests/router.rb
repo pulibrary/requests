@@ -89,6 +89,8 @@ module Requests
               services << 'annexa'
             elsif requestable.annexb?
               services << 'annexb'
+            elsif requestable.plasma?
+              services << 'ppl'
             # elsif(requestable.in_process? && auth_user?)
             #   services << 'in_process'
             # elsif(requestable.on_order? && auth_user?)

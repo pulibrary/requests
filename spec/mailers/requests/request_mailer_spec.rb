@@ -807,4 +807,112 @@ describe Requests::RequestMailer, :type => :mailer do
       expect(scsb_recall_mail.body.encoded).to have_content I18n.t('requests.recall.staff_conf_msg')
     end
   end
+
+  context "send plasma email request" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "10066344",
+          "call_number" => "QC92.U54 A36 2017",
+          "location_code" => "ppl",
+          "item_id" => "7659317",
+          "barcode" => "32101101395745",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "ppl",
+          "pickup" => "PA"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "10292269",
+        "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
+        "author" => "Kosti, Ourania"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_ppl) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("ppl_email", submission_for_ppl).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.ppl.email_subject'))
+      expect(mail.to).to eq(["ppllib@princeton.edu"])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.ppl.email_conf_msg')
+    end
+  end
+
+  context "send plasma email patron confirmation" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "10066344",
+          "call_number" => "QC92.U54 A36 2017",
+          "location_code" => "ppl",
+          "item_id" => "7659317",
+          "barcode" => "32101101395745",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "ppl",
+          "pickup" => "PA"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "10292269",
+        "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
+        "author" => "Kosti, Ourania"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_plasma) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("ppl_confirmation", submission_for_plasma).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.ppl.email_subject'))
+      expect(mail.to).to eq([submission_for_plasma.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.ppl.patron_conf_msg')
+    end
+  end
 end

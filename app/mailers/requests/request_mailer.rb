@@ -66,6 +66,22 @@ module Requests
            subject: subject_line(I18n.t('requests.annexb.email_subject'), @submission.user_barcode))
     end
 
+    def ppl_email(submission)
+      @submission = submission
+      destination_email = I18n.t('requests.ppl.email')
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.ppl.email_subject'), @submission.user_barcode))
+    end
+
+    def ppl_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.ppl.email_subject'), @submission.user_barcode))
+    end
+
     def on_order_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')

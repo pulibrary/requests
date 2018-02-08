@@ -83,6 +83,10 @@ module Requests
       return true if item[:status] == 'Missing'
     end
 
+    def plasma?
+      return true if location[:code] == 'ppl'
+    end
+
     def preservation?
       return true if location[:code] == 'pres'
     end
@@ -177,10 +181,6 @@ module Requests
           false
         end
       end
-    end
-
-    def set_services service_list
-      @services = service_list
     end
 
     def traceable?

@@ -45,6 +45,11 @@ en:
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
       email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
+    ppl:
+      email: "ppllib@princeton.edu"
+      email_subject: "Harold P. Furth Plasma Physics Library Request"
+      brief_msg: "Pageable item at Plasma Physics Library. Request for delivery in 1-2 business days."
+      email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
     pres:
       email: "fstcirc@princeton.edu"
       email_subject: "Preservation Office Request"

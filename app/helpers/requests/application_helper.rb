@@ -88,6 +88,8 @@ module Requests
         request_input('annexb')
       elsif requestable.services.include? 'pres'
         request_input('pres')
+      elsif requestable.services.include? 'ppl'
+        request_input('ppl')
       elsif requestable.services.include? 'paging'
         request_input('paging')
       elsif requestable.services.include? 'in_process'

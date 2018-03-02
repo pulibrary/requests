@@ -234,7 +234,7 @@ describe Requests::RequestMailer, :type => :mailer do
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
-      expect(mail.to).to eq(["ppllib@princeton.edu"])
+      expect(mail.to).to eq([I18n.t('requests.annexa.email')])
       expect(mail.cc).to eq([submission_for_annexa.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
@@ -342,7 +342,7 @@ describe Requests::RequestMailer, :type => :mailer do
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexb.email_subject'))
-      expect(mail.to).to eq(["lewislib@princeton.edu"])
+      expect(mail.to).to eq([I18n.t('requests.annexb.email')])
       expect(mail.cc).to eq([submission_for_annexb.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end

@@ -41,7 +41,7 @@ module Requests
         if item["location_code"] == 'anxadoc'
           destination_email.push(I18n.t('requests.anxadoc.email'))
         else
-          destination_email.push(Requests::BibdataService.delivery_locations[item["pickup"]]["contact_email"])
+          destination_email.push(I18n.t('requests.annexa.email'))
         end
       end
       cc_email = [@submission.email]
@@ -56,7 +56,7 @@ module Requests
       destination_email = []
       @submission.items.each do |item|
         if item["type"] == 'annexb'
-          destination_email.push(Requests::BibdataService.delivery_locations[item["pickup"]]["contact_email"])
+          destination_email.push(I18n.t('requests.annexb.email'))
         end
       end
       cc_email = [@submission.email]

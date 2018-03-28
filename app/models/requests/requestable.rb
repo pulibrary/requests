@@ -32,10 +32,6 @@ module Requests
       @services = service_list
     end
 
-    def location_code
-      holding[:location_code]
-    end
-
     # non voyager options
     def thesis?
       return false unless holding.key? "thesis"
@@ -59,11 +55,6 @@ module Requests
     # at an open location users may go to
     def open?
       return true if location[:open] == true
-    end
-
-    # A closed location where items need to be retrieved from by default
-    def requestable?
-      return true if location[:requestable] == true
     end
 
     def recap?
@@ -329,10 +320,6 @@ module Requests
 
       def scsb_edd_cullection_codes
         %w[AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP]
-      end
-
-      def available_statuses
-        ['Not Charged']
       end
   end
 end

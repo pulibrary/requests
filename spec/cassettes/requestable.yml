@@ -4948,4 +4948,218 @@ http_interactions:
         (1st)","label":"ReCAP"}]'
     http_version: 
   recorded_at: Wed, 02 Aug 2017 20:10:13 GMT
-recorded_with: VCR 3.0.3
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/scsbcul.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"21b2d03545516ab6b2a8ef97b390917c"
+      X-Runtime:
+      - '0.009898'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 50aa533d-eafb-4289-b529-2565f6a75528
+      Date:
+      - Fri, 11 May 2018 23:13:52 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"","code":"scsbcul","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
+        258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Fri, 11 May 2018 23:13:54 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/rcppj.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"ddaf95b79a4107ef75d5501f0619e2c6"
+      X-Runtime:
+      - '0.010295'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 154d72e8-4fa9-4567-b97a-75c904af5ae7
+      Date:
+      - Fri, 11 May 2018 23:14:31 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"Marquand Library use only","code":"rcppj","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":true,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":{"label":"Marquand
+        Library","code":"marquand","order":2},"hours_location":null,"delivery_locations":[{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Technical
+        Services HMT","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services 693","address":"693 Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Preservation","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false}]}'
+    http_version: 
+  recorded_at: Fri, 11 May 2018 23:14:31 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10744175
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"f02ae4b885aa66f3ab2e526229f3b6ee"
+      X-Runtime:
+      - '0.059782'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 8bdcf422-f38d-4b75-9720-e8a6534e5680
+      Date:
+      - Thu, 17 May 2018 00:04:38 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: '{"10476309":{"more_items":false,"location":"spr","status":"Pending
+        Order","label":"Stokes Library - SPR"}}'
+    http_version: 
+  recorded_at: Thu, 17 May 2018 00:04:38 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/spr.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"941646eef3d52d800e9990eeccc640fa"
+      X-Runtime:
+      - '0.011508'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - af9b388b-1f40-49f2-8830-906fdcefdc8d
+      Date:
+      - Thu, 17 May 2018 00:04:36 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"SPR","code":"spr","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Stokes
+        Library","code":"stokes","order":2},"holding_library":null,"hours_location":{"label":"Stokes
+        Library","code":"stokes"},"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 17 May 2018 00:04:38 GMT
+recorded_with: VCR 4.0.0

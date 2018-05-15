@@ -13,7 +13,7 @@ FactoryGirl.define do
   end
 
   factory :request_on_order, class: 'Requests::Request' do
-    system_id 7_338_297
+    system_id 10744175
     user { FactoryGirl.build(:user) }
     initialize_with { new({ system_id: system_id, user: user }) }
   end
@@ -237,5 +237,26 @@ FactoryGirl.define do
     source 'pulsearch'
     user { FactoryGirl.build(:user) }
     initialize_with { new({ system_id: system_id, user: user, mfhd: mfhd_id, source: source }) }
+  end
+
+  factory :request_scsb_cu, class: 'Requests::Request' do
+    system_id 'SCSB-5235419'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new({ system_id: system_id, user: user, source: source }) }
+  end
+
+  factory :request_scsb_ar, class: 'Requests::Request' do
+    system_id 'SCSB-2650865'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new({ system_id: system_id, user: user, source: source }) }
+  end
+
+  factory :request_scsb_mr, class: 'Requests::Request' do
+    system_id 'SCSB-2901229'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new({ system_id: system_id, user: user, source: source }) }
   end
 end

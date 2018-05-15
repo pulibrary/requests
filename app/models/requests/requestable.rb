@@ -39,10 +39,10 @@ module Requests
     end
 
     # graphic arts non voyager collection
-    def visuals?
-      return false unless holding.key? "visuals"
-      return true if holding["visuals"][:location_code] == 'ga'
-    end
+    # def visuals?
+    #   return false unless holding.key? "visuals"
+    #   return true if holding["visuals"][:location_code] == 'ga'
+    # end
 
     # Reading Room Request
     def aeon?
@@ -284,6 +284,21 @@ module Requests
 
     def pickup_locations
       if location[:delivery_locations].size > 0
+        if scsb?
+          scsb_pickup_override(item[:collection_code])
+        else
+          location[:delivery_locations]
+        end
+      end
+    end
+
+    # override the default delivery location for SCSB at certain collection codes
+    def scsb_pickup_override collection_code
+      if collection_code == 'AR'
+        [Requests::BibdataService.delivery_locations[:PJ]]
+      elsif collection_code == 'MR'
+        [Requests::BibdataService.delivery_locations[:PK]]
+      else
         location[:delivery_locations]
       end
     end

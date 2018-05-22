@@ -7,7 +7,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   let(:in_process_id) { '10144698' }
   let(:recap_in_process_id) { '10247806' }
   let(:on_order_id) { '10081566' }
-  let(:no_items_id) { '10139326' }
+  let(:no_items_id) { '3018567' }
   let(:on_shelf_no_items_id) { '308' }
   let(:temp_item_id) { '4815239' }
   let(:temp_id_mfhd) { '5018096' }
@@ -239,7 +239,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         visit "/requests/#{no_items_id}"
         check('requestable__selected', exact: true)
         fill_in 'requestable[][user_supplied_enum]', :with => 'Some Volume'
-        expect(page).to have_button('Request this Item', disabled: false)
+        expect(page).to have_button('Request Selected Items', disabled: false)
       end
 
       it 'allows CAS patrons to locate an on_shelf record that has no item data' do
@@ -249,7 +249,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
       it 'displays an ark link for a plum item' do
         visit "/requests/#{iiif_manifest_item}"
-        expect(page).to have_link('arks.princeton.edu')
+        expect(page).to have_link('Digital content below', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
       end
     end
   end

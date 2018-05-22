@@ -47,72 +47,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.aeon_mapped_params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
       end
 
-      it "includes an ItemTitle for a visuals record" do
+      it "includes an ItemTitle for a senior thesis record" do
         expect(requestable.aeon_mapped_params[:ItemTitle]).to be_truthy
         expect(requestable.aeon_mapped_params[:ItemTitle]).to eq(requestable.bib[:title_display])
       end
     end
   end
-
-  # context "Is a bibliographic record from the Graphic Arts collection" do
-  #   let(:user) { FactoryGirl.build(:user) }
-  #   let(:request) { FactoryGirl.build(:request_visuals) }
-  #   let(:requestable) { request.requestable.first }
-  #   let(:holding_id) { 'visuals' }
-  #   let(:formatted_genre) { '[ Print ]' }
-  #   describe "#visuals?" do
-  #     it "returns true when record is a Graphic Arts record" do
-  #       expect(requestable.visuals?).to be_truthy
-  #     end
-  #
-  #     it "reports as a non Voyager aeon resource" do
-  #       expect(requestable.aeon?).to be_truthy
-  #     end
-  #
-  #     it "includes a valid aeon site value for a visuals record" do
-  #       expect(requestable.aeon_mapped_params.key?(:Site)).to be_truthy
-  #       expect(requestable.aeon_mapped_params[:Site]).to eq('RBSC')
-  #     end
-  #
-  #     it "includes a ReferenceNumber" do
-  #       expect(requestable.aeon_mapped_params[:ReferenceNumber]).to eq(request.system_id)
-  #     end
-  #
-  #     it "includes the Genre in the ItemTitle for a visuals record" do
-  #       expect(requestable.aeon_mapped_params[:ItemTitle]).to be_truthy
-  #       expect(requestable.aeon_mapped_params[:ItemTitle]).to eq("#{requestable.bib[:title_display]} #{formatted_genre}")
-  #     end
-  #
-  #     it "includes a CallNumber" do
-  #       expect(requestable.aeon_mapped_params[:CallNumber]).to be_truthy
-  #       expect(requestable.aeon_mapped_params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
-  #     end
-  #
-  #     it "includes a sub location" do
-  #       expect(requestable.aeon_mapped_params[:SubLocation]).to be_truthy
-  #       expect(requestable.aeon_mapped_params[:SubLocation]).to eq(requestable.holding.first.last[:location_note].first)
-  #     end
-  #   end
-  # end
-
-  # context "It is in a paging location" do
-  #   let(:user) { FactoryGirl.build(:user) }
-  #   let(:request) { FactoryGirl.build(:request_paging_available) }
-  #   let(:requestable) { request.requestable }
-  #   describe "#pageable?" do
-  #     it "should return nil when item status is unavailable" do
-  #       expect(requestable.size).to eq(1)
-  #       # change status
-  #       requestable.first.item["status"] = 'Charged'
-  #       expect(requestable.first.pageable?).to be_falsey
-  #     end
-
-  #     it "should return true when item status is available" do
-  #       expect(requestable.size).to eq(1)
-  #       expect(requestable.first.pageable?).to be_truthy
-  #     end
-  #   end
-  # end
 
   context 'A requestable item with a missing status' do
     let(:user) { FactoryGirl.build(:user) }

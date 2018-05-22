@@ -57,7 +57,7 @@ module Requests
                                          user: @user
                                        })
       ### redirect to Aeon non-voyager items or single Aeon requestable
-      if @request.thesis? # || @request.visuals?
+      if @request.thesis?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
       elsif @request.has_single_aeon_requestable?
         redirect_to @request.requestable.first.aeon_request_url(@request.ctx)

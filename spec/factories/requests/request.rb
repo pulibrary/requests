@@ -70,12 +70,6 @@ FactoryGirl.define do
     initialize_with { new({ system_id: system_id, user: user }) }
   end
 
-  factory :request_visuals, class: 'Requests::Request' do
-    system_id "visuals46165"
-    user { FactoryGirl.build(:user) }
-    initialize_with { new({ system_id: system_id, user: user }) }
-  end
-
   factory :request_paging_available, class: 'Requests::Request' do
     system_id 6009363
     user { FactoryGirl.build(:user) }

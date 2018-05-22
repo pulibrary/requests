@@ -134,9 +134,6 @@ module Requests
           elsif (thesis?)
             params = build_requestable_params({ holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]] })
             requestable_items << Requests::Requestable.new(params)
-          # elsif (visuals?)
-          #   params = build_requestable_params({ holding: { "visuals" => holdings['visuals'].with_indifferent_access }, location: locations[holdings['visuals']["location_code"]] })
-          #   requestable_items << Requests::Requestable.new(params)
           else
             holdings.each do |holding_id, holding_details|
               params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] })
@@ -299,8 +296,6 @@ module Requests
       mfhd_items = {}
       if thesis?
         return nil
-      # elsif visuals?
-      #   return nil
       else
         if @mfhd && serial?
           items_as_json = items_by_mfhd(@mfhd)
@@ -336,12 +331,6 @@ module Requests
         return true if parse_json(doc[:holdings_1display]).key?('thesis')
       end
     end
-
-    # def visuals?
-    #   unless doc[:holdings_1display].nil?
-    #     return true if parse_json(doc[:holdings_1display]).key?('visuals')
-    #   end
-    # end
 
     # returns basic metadata for display on the request from via solr_doc values
     # Fields to return all keys are arrays

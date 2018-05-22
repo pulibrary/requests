@@ -38,12 +38,6 @@ module Requests
       return true if holding["thesis"][:location_code] == 'mudd'
     end
 
-    # graphic arts non voyager collection
-    # def visuals?
-    #   return false unless holding.key? "visuals"
-    #   return true if holding["visuals"][:location_code] == 'ga'
-    # end
-
     # Reading Room Request
     def aeon?
       return true if location[:aeon_location] == true

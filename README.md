@@ -56,4 +56,3 @@ This project rocks and uses MIT-LICENSE.
     1. ```mfhd``` https://pulsearch.princeton.edu/requests/9702169?mfhd=9525518 - Ask for a specifif holding recoord
     2. ```source``` https://pulsearch.princeton.edu/requests/9702169?mfhd=9525518&source=pulsearch - Facilitates redirection to the source system that generated the request. Currently responds to ```pulsearch``` or ```catalog```, other values will be ignored.
 2. ```/requests/{thesis_id}``` Example: https://pulsearch.princeton.edu/requests/dsp01vx021h212. This will result in a redirect to the AEON system.
-3. ```/requests/{graphic_arts_id}``` Example: https://pulsearch.princeton.edu/requests/visuals47795. This will result in a redirect to the AEON system.

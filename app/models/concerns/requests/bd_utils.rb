@@ -25,6 +25,7 @@ module Requests
           params[value] = doc[key].first
         end
       end
+      params[:max_title_words] = 10
       params
     end
 

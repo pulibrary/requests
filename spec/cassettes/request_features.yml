@@ -8899,4 +8899,157 @@ http_interactions:
         Historic Maps","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":false}]}'
     http_version: 
   recorded_at: Sat, 27 Jan 2018 21:24:22 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=3018567
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"9a65065ae526801643279da37598a369"
+      X-Runtime:
+      - '0.057786'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - e7dba8df-5dd4-42a8-a3b3-6548050e27ea
+      Date:
+      - Thu, 17 May 2018 00:07:41 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: '{"3334792":{"more_items":false,"location":"p","status":"On Shelf","label":"Forrestal
+        Annex - Princeton Collection"}}'
+    http_version: 
+  recorded_at: Thu, 17 May 2018 00:07:44 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=3334792
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.053255'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - a395459a-3580-41fa-bddb-0c2c547723ea
+      Date:
+      - Thu, 17 May 2018 00:07:42 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: 'Record: 3334792 not found.'
+    http_version: 
+  recorded_at: Thu, 17 May 2018 00:07:44 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/p.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"297fd8a3eaed2ec132f7b7865a2b407e"
+      X-Runtime:
+      - '0.008274'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 25233045-e427-46b7-b5d1-c7ec039a966b
+      Date:
+      - Thu, 17 May 2018 00:07:42 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.2.3
+      Server:
+      - nginx/1.12.2 + Phusion Passenger 5.2.3
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"Princeton Collection","code":"p","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"Forrestal
+        Annex","code":"annexa","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+    http_version: 
+  recorded_at: Thu, 17 May 2018 00:07:44 GMT
 recorded_with: VCR 3.0.3

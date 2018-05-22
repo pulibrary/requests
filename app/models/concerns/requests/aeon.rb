@@ -3,7 +3,7 @@ module Requests
     # for Aeon Related Bibliographic Helpers
     extend ActiveSupport::Concern
 
-    # for use with only non-voyager visuals and thesis records
+    # for use with only non-voyager thesis records
     def aeon_mapped_params
       params = {
         Action: '10',
@@ -72,8 +72,6 @@ module Requests
     def non_voyager?(holding_id)
       if holding_id == 'thesis'
         return true
-      elsif holding_id == 'visuals'
-        return true
       else
         return false
       end
@@ -82,8 +80,6 @@ module Requests
     def site
       if holding.key? 'thesis'
         'MUDD'
-      elsif holding.key? 'visuals'
-        'RBSC'
       elsif !location[:holding_library].nil?
         if location['holding_library']['code'] == 'eastasian' && location['aeon_location'] == true
           'EAL'

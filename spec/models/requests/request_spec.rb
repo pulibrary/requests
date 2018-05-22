@@ -413,75 +413,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed a system_id for a visuals record" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: 'visuals45246',
-        user: user
-      }
-    }
-    let(:request_with_only_system_id) { described_class.new(params) }
-    subject { request_with_only_system_id }
-
-    describe "#requestable" do
-      it "has a list of request objects" do
-        expect(subject.requestable).to be_truthy
-        expect(subject.requestable.size).to eq(1)
-        expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
-      end
-
-      it "should not have a Voyager location" do
-        expect(subject.requestable[0].holding.key? 'visuals').to be_truthy
-        expect(subject.requestable[0].location.key? 'code').to be_truthy
-        expect(subject.requestable[0].location['code']).to eq ('ga')
-        expect(subject.requestable[0].voyager_managed?).to be_nil
-      end
-    end
-
-    describe "#visuals?" do
-      it "should identify itself as a visuals request" do
-        expect(subject.visuals?).to be_truthy
-      end
-    end
-
-    describe "#sorted_requestable" do
-      it "returns a list of requestable objects grouped by mfhd" do
-        expect(subject.sorted_requestable.size).to eq(1)
-      end
-
-      it "should not have any items attached" do
-        expect(subject.items?).to be_nil
-      end
-    end
-
-    describe "#aeon_mapped_params" do
-      it 'should include a Site param' do
-        expect(subject.requestable[0].aeon_mapped_params.key? :Site).to be true
-        expect(subject.requestable[0].aeon_mapped_params[:Site]).to eq('RBSC')
-      end
-    end
-  end
-
-  # context "When passed an ID for a paging location within allowed call number range" do
-  #   let(:user) { FactoryGirl.build(:user) }
-  #   let(:params) {
-  #     {
-  #       system_id: '4472547',
-  #       user: user
-  #     }
-  #   }
-  #   let(:request_at_paging_charged) { described_class.new(params) }
-  #   subject { request_at_paging_charged }
-  #   describe "#requestable" do
-  #     it "should be unavailable" do
-  #       expect(subject.has_pageable?).to be(true)
-  #       expect(subject.requestable[0].location['code']).to eq('nec')
-  #       expect(subject.requestable[0].pageable?).to be_truthy
-  #     end
-  #   end
-  # end
-
   context "When passed an ID for a paging location in nec outside of call number range" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
@@ -1279,7 +1210,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
-        system_id: '10140054',
+        system_id: '9907486',
         user: user
       }
     }
@@ -1297,7 +1228,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it 'returns a borrow direct fallback query url' do
         expect(subject.fallback_query).to be_truthy
         expect(subject.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
-        expect(subject.fallback_query).to include(CGI.escape(subject.fallback_query_params[:title].downcase))
+        expect(subject.fallback_query).to include('a+history+of+the+modern+middle+east')
       end
     end
   end
@@ -1342,25 +1273,26 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed a system_id for a record that has no item data and is not at an annex." do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
-      {
-        system_id: '10139326',
-        user: user
-      }
-    }
-    let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
-    subject { request_with_fill_in_eligible_holding }
-
-    describe "#requestable" do
-      describe "#fill_in_eligible" do
-        it "should identify any mfhds that require fill in option" do
-          expect(subject.fill_in_eligible "9929080").to be_truthy
-        end
-      end
-    end
-  end
+  # This is an error condition
+  # context "When passed a system_id for a record that has no item data and is not at an annex." do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) {
+  #     {
+  #       system_id: '10139326',
+  #       user: user
+  #     }
+  #   }
+  #   let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
+  #   subject { request_with_fill_in_eligible_holding }
+  #
+  #   describe "#requestable" do
+  #     describe "#fill_in_eligible" do
+  #       it "should identify any mfhds that require fill in option" do
+  #         expect(subject.fill_in_eligible "9929080").to be_truthy
+  #       end
+  #     end
+  #   end
+  # end
 
   context "When passed a system_id for a record with enumerable items at annex" do
     let(:user) { FactoryGirl.build(:user) }

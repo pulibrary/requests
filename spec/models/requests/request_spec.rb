@@ -746,12 +746,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an Aeon holding ID with no items" do
+  context "Aeon item with holdings without items" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
         system_id: '616086',
-        mfhd: '5132984',
         user: user
       }
     }
@@ -759,10 +758,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     subject { request }
 
     describe "#requestable" do
-      it "should have an requestable items" do
-        # even though we are passing the mfhd, we are not limiting
-        # it in the requestable so we can check all non-serials against BorrowDirect
-        expect(subject.requestable.size).to eq(17)
+      it "should have a requestable items" do
+        expect(subject.requestable.length).to eq(10)
       end
 
       it "should not have any item data" do

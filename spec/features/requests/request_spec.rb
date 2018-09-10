@@ -249,7 +249,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
       it 'displays an ark link for a plum item' do
         visit "/requests/#{iiif_manifest_item}"
-        expect(page).to have_link('Digital content below', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
+        expect(page).to have_link('Digital content', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
       end
     end
   end

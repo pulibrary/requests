@@ -227,10 +227,9 @@ FactoryGirl.define do
 
   factory :request_aeon_holding_volume_note, class: 'Requests::Request' do
     system_id 616086
-    mfhd_id '5132984'
     source 'pulsearch'
     user { FactoryGirl.build(:user) }
-    initialize_with { new({ system_id: system_id, user: user, mfhd: mfhd_id, source: source }) }
+    initialize_with { new({ system_id: system_id, user: user, source: source }) }
   end
 
   factory :request_scsb_cu, class: 'Requests::Request' do

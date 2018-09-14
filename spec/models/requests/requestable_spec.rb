@@ -31,6 +31,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it "reports as a non Voyager aeon resource" do
         expect(requestable.aeon?).to be_truthy
+        expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
 
       it "returns a params list with an Aeon Site MUDD" do
@@ -144,12 +145,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    describe '#site' do
-      it 'should return the correct Aeon Site param' do
-        expect(requestable.site).to eq('EAL')
-      end
-    end
-
     describe '#barcode' do
       it 'should not report there is a barocode' do
         expect(requestable.barcode?).to be false
@@ -177,9 +172,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['675722'] } }
+    let(:holding_id) { '675722' }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     let(:enumeration) { 'v.7' }
+
     describe '#aeon_open_url' do
+      it 'identifies as an aeon eligible voyager mananaged item' do
+        expect(requestable.aeon?).to be true
+        expect(requestable.non_voyager?(holding_id)).to be false
+      end
+
       it 'should return an openurl with enumeration when available' do
         expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(enumeration)}")
       end
@@ -516,18 +518,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
   end
-  context 'A requestable item from a RBSC holding without an item record, but holding volume info' do
+  context 'A requestable item from a RBSC holding creates an openurl with volume and call number info' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_aeon_holding_volume_note) }
-    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '5132984' }.first }
+    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '675722' }.first }
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#aeon_openurl' do
       it 'includes the location_has note as the volume' do
-        expect(aeon_ctx).to include('rft.volume=vol.2')
+        expect(aeon_ctx).to include('rft.volume=v.7')
       end
 
       it 'includes the call number of the holding' do
-        expect(aeon_ctx).to include('CallNumber=30.3.2')
+        expect(aeon_ctx).to include('CallNumber=2015-0801N')
       end
     end
   end

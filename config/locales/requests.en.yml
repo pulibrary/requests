@@ -81,7 +81,7 @@ en:
       email_subject: "Patron Initiated Catalog Request Confirmation"
       delivery_label: "Physical Item Delivery"
       brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
-      email_conf_msg: "You will be notified via email when your item is available. Most items are ready in 1 to 2 business days."
+      email_conf_msg: "You will be notified via email when your item is available."
       guest_email_destination: "fstcirc@princeton.edu"
       scsb_recall_destination: 'recapproblems@princeton.edu'
     recap_edd:
@@ -131,11 +131,11 @@ en:
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
       access_msg: 'Access Users are not eligible for trace requests.'
     account:
-      netid_login_msg: "Log in to request with a Princeton University NetID"
-      barcode_login_msg: "Log in to request with a Barcode"
+      netid_login_msg: "Princeton faculty, staff, and students log in with NetID"
+      barcode_login_msg: "Log in with a barcode (affiliates, family members, guest borrowers, etc)"
       unauthenticated: "Please sign in to see all requests"
       logged_in: "Logged in as:"
-      other_user_login_msg: "I don't have a NetID or a Barcode."
+      other_user_login_msg: "I don’t have a barcode"
       pul_user_service_msg: 'Princeton Faculty, Staff, and Students need to sign in to see Borrow Direct Services'
       other_user_login_btn: "View Available Request Options"
       cas_user_no_barcode_msg: 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'

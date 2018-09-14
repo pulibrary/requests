@@ -77,7 +77,7 @@ module Requests
         # canonical identifier for the citation?
         ctx.referent.add_identifier("https://bibdata.princeton.edu/bibliographic/#{id}")
         # add pulsearch refererrer
-        ctx.referrer.add_identifier('info:sid/pulsearch.princeton.edu:generator')
+        ctx.referrer.add_identifier('info:sid/catalog.princeton.edu:generator')
         ctx.referent.add_identifier("info:oclcnum/#{doc['oclc_s'].first}") unless doc['oclc_s'].nil?
         ctx.referent.add_identifier("info:lccn/#{doc['lccn_s'].first}") unless doc['lccn_s'].nil?
         ctx

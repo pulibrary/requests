@@ -27,7 +27,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
     end
 
-    describe 'When unauthenticated patron visits a request item', js: true, unless: in_travis? do
+    describe 'When unauthenticated patron visits a request item', js: true do
       it "displays three authentication options" do
         visit '/requests/9944355'
         expect(page).to have_content(I18n.t('requests.account.netid_login_msg'))
@@ -203,7 +203,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content 'Online'
       end
 
-      it 'allows CAS patrons to request In-Process items', js: true do
+      it 'allows CAS patrons to request In-Process items', js: true, unless: in_travis? do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
         expect(page).to have_button('Request this Item', disabled: false)
@@ -214,8 +214,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       it 'makes sure In-Process items can only be delivered to their holding library', js: true, unless: in_travis? do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
-        pickup_code = page.find_by('#requestable__pickup', :visible => false).value
-        expect(pickup_code).to eq 'PJ'
+        expect(page).to have_content 'Pickup location: Marquand Library'
         expect(page).to have_button('Request this Item', disabled: false)
         click_button 'Request this Item'
         expect(page).to have_content I18n.t("requests.submit.in_process_success")
@@ -262,7 +261,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       login_as user
     end
 
-    describe 'Visits a request page', js: true do
+    describe 'Visits a request page', js: true, unless: in_travis? do
       it 'Tells the user their patron record is not available' do
         visit "/requests/#{on_order_id}"
         expect(page).to have_content(I18n.t("requests.account.auth_user_lookup_fail"))

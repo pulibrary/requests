@@ -124,20 +124,6 @@ module Requests
 
     private
 
-      ## Behave differently if provider is cas, voyager, or access
-      ## cas - access to all services
-      ## barcode - no access to ill/borrow direct
-      ## access - only access to recap|aeon
-      def current_user_provider
-        if @user.provider.nil?
-          'access'
-        else
-          # assume it is an access/anonymous patron
-          @user.provider
-        end
-      end
-
-      # FIXME: Why is this method here?
       def has_loanable?
         @has_loanable
       end

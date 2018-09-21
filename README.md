@@ -8,13 +8,17 @@ The engine requires a working copy of marc_liberation aka bibdata to be running.
 
 The gem also is dependent on Orangelight to service requests for non-voyager IDs. By default it utilizes the production Orangelight system at https://pulsearch.princeton.edu/.
 
+### Chromedriver for Feature tests
+
+You need to have a working version of Chromedriver http://chromedriver.chromium.org/ on your path to successfully run the feature tests associated with this project. Homebrew is a good way to accomplish this. It is currently part of https://github.com/Homebrew/homebrew-cask. 
+
 ## To Install for Development
 
 After you've cloned the repo:
 
 ```
 $ bundle install
-$ rake ci
+$ bundle exec rake ci
 ```
 
 With Code Coverage Report

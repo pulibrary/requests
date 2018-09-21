@@ -13,7 +13,19 @@ before_install:
   - gem update --system
   - gem install bundler
 
-script: bundle exec rake ci
+install:
+  - wget -N http://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip -P ~/
+  - unzip ~/chromedriver_linux64.zip -d ~/
+  - rm ~/chromedriver_linux64.zip
+  - sudo mv -f ~/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+
+script:
+  - whereis google-chrome-stable
+  - whereis chromedriver
+  - bundle install
+  - bundle exec rake ci
 
 branches:
   only:

@@ -10439,4 +10439,430 @@ http_interactions:
         2006"],"call_number_browse_s":["P93.5 .T847 2006"],"_version_":1611608287253364736,"timestamp":"2018-09-14T18:23:51.638Z"}}}'
     http_version: 
   recorded_at: Fri, 21 Sep 2018 00:13:32 GMT
-recorded_with: VCR 3.0.3
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/10958705.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 1afe2b4a-1100-45e8-87d8-3344f4eb773a
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"2e34f81b96b4f275c297d767e4083cc5"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.018289'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 21 Sep 2018 14:00:10 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"response":{"document":{"id":"10958705","numeric_id_b":true,"author_display":["Burrows,
+        Roger"],"author_citation_display":["Burrows, Roger"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Burrows,
+        Roger\"}","author_s":["Burrows, Roger"],"marc_relator_display":["Author"],"title_display":"3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows.","title_t":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows."],"title_citation_display":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE"],"compiled_created_t":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows."],"pub_created_display":["Thames
+        and Hudson Ltd, London.  Published in the U.S.A. by Thames and Hudson Inc.,
+        New York. 2018"],"pub_created_s":["Thames and Hudson Ltd, London.  Published
+        in the U.S.A. by Thames and Hudson Inc., New York. 2018"],"pub_citation_display":["Thames
+        and Hudson Ltd, London.  Published in the U.S.A. by Thames and Hudson Inc.,
+        New York"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["328
+        pp. with 956 ills. (683 col.). 29 x 21 cm."],"description_t":["328 pp. with
+        956 ills. (683 col.). 29 x 21 cm."],"number_of_pages_citation_display":["328
+        pp. with 956 ills. (683 col.)."],"language_display":["In English."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"isbn_display":["9780500519547
+        (Hardcover)"],"lccn_display":["2017-958127"],"lccn_s":["2017958127"],"isbn_s":["9780500519547"],"isbn_t":["9780500519547"],"other_version_s":["9780500519547"],"holdings_1display":"{\"10672583\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\"}}","location_code_s":["sa"],"location":["Marquand
+        Library"],"location_display":["Marquand Library"],"advanced_location_s":["sa","Marquand
+        Library"],"name_title_browse_s":["Burrows, Roger. 3D THINKING IN DESIGN AND
+        ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE"],"_version_":1612048154518093824,"timestamp":"2018-09-19T14:55:21.689Z"}}}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:00:10 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10958705
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"47220d148ee015c7b028804b4d486403"
+      X-Runtime:
+      - '0.057979'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 045f95df-53db-484a-a0e7-0686a3284d4a
+      Date:
+      - Fri, 21 Sep 2018 14:00:07 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"10672583":{"more_items":false,"location":"sa","status":"Pending Order","label":"Marquand
+        Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:00:10 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/10958705.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - b24da78f-7188-4a14-bdb8-32ab3165fceb
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"09911d8015cf7a6cba709241aa82db04"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.016620'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 21 Sep 2018 14:00:25 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"response":{"document":{"id":"10958705","numeric_id_b":true,"author_display":["Burrows,
+        Roger"],"author_citation_display":["Burrows, Roger"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Burrows,
+        Roger\"}","author_s":["Burrows, Roger"],"marc_relator_display":["Author"],"title_display":"3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows.","title_t":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows."],"title_citation_display":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE"],"compiled_created_t":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows."],"pub_created_display":["Thames
+        and Hudson Ltd, London.  Published in the U.S.A. by Thames and Hudson Inc.,
+        New York. 2018"],"pub_created_s":["Thames and Hudson Ltd, London.  Published
+        in the U.S.A. by Thames and Hudson Inc., New York. 2018"],"pub_citation_display":["Thames
+        and Hudson Ltd, London.  Published in the U.S.A. by Thames and Hudson Inc.,
+        New York"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["328
+        pp. with 956 ills. (683 col.). 29 x 21 cm."],"description_t":["328 pp. with
+        956 ills. (683 col.). 29 x 21 cm."],"number_of_pages_citation_display":["328
+        pp. with 956 ills. (683 col.)."],"language_display":["In English."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"isbn_display":["9780500519547
+        (Hardcover)"],"lccn_display":["2017-958127"],"lccn_s":["2017958127"],"isbn_s":["9780500519547"],"isbn_t":["9780500519547"],"other_version_s":["9780500519547"],"holdings_1display":"{\"10672583\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\"}}","location_code_s":["sa"],"location":["Marquand
+        Library"],"location_display":["Marquand Library"],"advanced_location_s":["sa","Marquand
+        Library"],"name_title_browse_s":["Burrows, Roger. 3D THINKING IN DESIGN AND
+        ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE"],"_version_":1612048154518093824,"timestamp":"2018-09-19T14:55:21.693Z"}}}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:00:25 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10958705
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"47220d148ee015c7b028804b4d486403"
+      X-Runtime:
+      - '0.059106'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 39d77749-2873-4bd0-a9dd-b6911bdddb15
+      Date:
+      - Fri, 21 Sep 2018 14:00:24 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"10672583":{"more_items":false,"location":"sa","status":"Pending Order","label":"Marquand
+        Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:00:25 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/10958705.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 80cc11db-b9fd-41c9-91e2-b9b78297556d
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"09911d8015cf7a6cba709241aa82db04"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.015461'
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Fri, 21 Sep 2018 14:21:18 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"response":{"document":{"id":"10958705","numeric_id_b":true,"author_display":["Burrows,
+        Roger"],"author_citation_display":["Burrows, Roger"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Burrows,
+        Roger\"}","author_s":["Burrows, Roger"],"marc_relator_display":["Author"],"title_display":"3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows.","title_t":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows."],"title_citation_display":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE"],"compiled_created_t":["3D
+        THINKING IN DESIGN AND ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE. Roger Burrows."],"pub_created_display":["Thames
+        and Hudson Ltd, London.  Published in the U.S.A. by Thames and Hudson Inc.,
+        New York. 2018"],"pub_created_s":["Thames and Hudson Ltd, London.  Published
+        in the U.S.A. by Thames and Hudson Inc., New York. 2018"],"pub_citation_display":["Thames
+        and Hudson Ltd, London.  Published in the U.S.A. by Thames and Hudson Inc.,
+        New York"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"format":["Book"],"description_display":["328
+        pp. with 956 ills. (683 col.). 29 x 21 cm."],"description_t":["328 pp. with
+        956 ills. (683 col.). 29 x 21 cm."],"number_of_pages_citation_display":["328
+        pp. with 956 ills. (683 col.)."],"language_display":["In English."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"isbn_display":["9780500519547
+        (Hardcover)"],"lccn_display":["2017-958127"],"lccn_s":["2017958127"],"isbn_s":["9780500519547"],"isbn_t":["9780500519547"],"other_version_s":["9780500519547"],"holdings_1display":"{\"10672583\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\"}}","location_code_s":["sa"],"location":["Marquand
+        Library"],"location_display":["Marquand Library"],"advanced_location_s":["sa","Marquand
+        Library"],"name_title_browse_s":["Burrows, Roger. 3D THINKING IN DESIGN AND
+        ARCHITECTURE: FROM ANTIQUITY TO THE FUTURE"],"_version_":1612048154518093824,"timestamp":"2018-09-19T14:55:21.693Z"}}}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:21:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10958705
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"47220d148ee015c7b028804b4d486403"
+      X-Runtime:
+      - '0.054964'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 731aacff-2624-47f9-931e-37d5693de71a
+      Date:
+      - Fri, 21 Sep 2018 14:21:17 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"10672583":{"more_items":false,"location":"sa","status":"Pending Order","label":"Marquand
+        Library"}}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:21:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/sa.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.3
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"f766cd7ea84932e7f76b8b9db600dbd7"
+      X-Runtime:
+      - '0.010868'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 83d6cb68-abaf-4744-974e-d73bf9acb68e
+      Date:
+      - Fri, 21 Sep 2018 14:21:18 GMT
+      X-Powered-By:
+      - Phusion Passenger 5.3.4
+      Server:
+      - nginx/1.14.0 + Phusion Passenger 5.3.4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"","code":"sa","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":false,"always_requestable":true,"circulates":false,"library":{"label":"Marquand
+        Library","code":"marquand","order":2},"holding_library":null,"hours_location":{"label":"Marquand
+        Library of Art and Archaeology","code":"marquand"},"delivery_locations":[{"label":"Marquand
+        Library of Art and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+    http_version: 
+  recorded_at: Fri, 21 Sep 2018 14:21:18 GMT
+recorded_with: VCR 4.0.0

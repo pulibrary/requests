@@ -6,7 +6,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   let(:thesis_id) { 'dsp01rr1720547' }
   let(:in_process_id) { '10144698' }
   let(:recap_in_process_id) { '10247806' }
-  let(:on_order_id) { '10081566' }
+  let(:on_order_id) { '10958705' }
   let(:no_items_id) { '3018567' }
   let(:on_shelf_no_items_id) { '308' }
   let(:temp_item_id) { '4815239' }
@@ -38,7 +38,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   end
 
   context 'Temporary Shelf Locations' do
-    describe 'Holding headings', js: true, unless: in_travis? do
+    describe 'Holding headings', js: true do
       it 'displays the temporary holding location library label' do
         visit "/requests/#{temp_item_id}?mfhd=#{temp_id_mfhd}"
         fill_in 'request_email', :with => 'name@email.com'
@@ -58,7 +58,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   end
 
   context 'unauthenticated patron' do
-    describe 'When visiting a request item without logging in', js: true, unless: in_travis? do
+    describe 'When visiting a request item without logging in', js: true do
       it 'allows guest patrons to identify themselves and view the form' do
         visit '/requests/9944355'
         # click_link(I18n.t('requests.account.other_user_login_msg'))
@@ -98,7 +98,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         fill_in 'request_email', :with => 'name@email.com'
         fill_in 'request_user_name', :with => 'foobar'
         click_button I18n.t('requests.account.other_user_login_btn')
-        # expect(page).to have_content 'In Process'
         expect(page).to have_content 'Item is not requestable.'
       end
 
@@ -108,7 +107,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         fill_in 'request_email', :with => 'name@email.com'
         fill_in 'request_user_name', :with => 'foobar'
         click_button I18n.t('requests.account.other_user_login_btn')
-        expect(page).to have_content 'Item is not requestable.'
+        expect(page).not_to have_selector('.btn--primary')
       end
 
       it 'allows guest patrons to access Online items' do
@@ -203,7 +202,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content 'Online'
       end
 
-      it 'allows CAS patrons to request In-Process items', js: true, unless: in_travis? do
+      it 'allows CAS patrons to request In-Process items', js: true do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
         expect(page).to have_button('Request this Item', disabled: false)
@@ -211,7 +210,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content I18n.t("requests.submit.in_process_success")
       end
 
-      it 'makes sure In-Process items can only be delivered to their holding library', js: true, unless: in_travis? do
+      it 'makes sure In-Process items can only be delivered to their holding library', js: true do
         visit "/requests/#{in_process_id}"
         expect(page).to have_content 'In Process'
         expect(page).to have_content 'Pickup location: Marquand Library'
@@ -220,7 +219,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content I18n.t("requests.submit.in_process_success")
       end
 
-      it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true, unless: in_travis? do
+      it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true do
         visit "/requests/#{recap_in_process_id}"
         expect(page).to have_content 'In Process'
         select('Firestone Library', :from => 'requestable__pickup')
@@ -261,7 +260,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       login_as user
     end
 
-    describe 'Visits a request page', js: true, unless: in_travis? do
+    describe 'Visits a request page', js: true do
       it 'Tells the user their patron record is not available' do
         visit "/requests/#{on_order_id}"
         expect(page).to have_content(I18n.t("requests.account.auth_user_lookup_fail"))

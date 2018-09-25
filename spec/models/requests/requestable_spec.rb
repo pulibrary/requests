@@ -233,6 +233,19 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context 'A requestable item from a RBSC holding that has a long title' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:aeon_w_long_title) }
+    let(:requestable) { request.requestable.first } # assume only one requestable
+    let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
+    describe '#aeon_basic_params' do
+     it 'includes a Title Param that is less than 250 characters' do
+       expect(requestable.aeon_mapped_params.key? :ItemTitle).to be true
+       expect(requestable.aeon_mapped_params[:ItemTitle].length).to be <= 250
+     end
+    end
+  end
+
   context 'A requestable item from a RBSC holding with an item record including a barcode' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_w_barcode) }

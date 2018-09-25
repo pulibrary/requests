@@ -8,7 +8,7 @@ module Requests
       params = {
         Action: '10',
         Form: '21',
-        ItemTitle: title,
+        ItemTitle: title.truncate(247),
         ItemAuthor: author,
         ItemDate: pub_date,
         ItemVolume: sub_title

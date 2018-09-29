@@ -18,7 +18,7 @@ module Requests
           if mail_services.include?(selected["type"]) || selected["type"] == 'recall'
             if selected['pickup'].blank? && selected['item_id'].blank?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
-            elsif selected['pickup'].empty?
+            elsif selected['pickup'].blank?
               record.errors[:items] << { selected['item_id'] => { 'text' => 'Please select a pickup location.', 'type' => 'pickup' } }
             end
           end
@@ -28,7 +28,7 @@ module Requests
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be requested via Borrow Direct, see circulation desk.', 'type' => 'options' } }
             else
               item_id = selected['item_id']
-              if selected['pickup'].empty?
+              if selected['pickup'].blank?
                 record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for delivery of your borrow direct item', 'type' => 'pickup' } }
               end
             end
@@ -39,14 +39,14 @@ module Requests
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Item Cannot be Recalled, see circulation desk.', 'type' => 'options' } }
             else
               item_id = selected['item_id']
-              if selected['pickup'].empty?
+              if selected['pickup'].blank?
                 record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recall item', 'type' => 'pickup' } }
               end
             end
           end
 
           if selected["type"] == 'recap_no_items'
-            if selected['pickup'].empty?
+            if selected['pickup'].blank?
               record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location for your selected ReCAP item', 'type' => 'pickup' } }
             end
           end

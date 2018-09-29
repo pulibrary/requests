@@ -131,6 +131,12 @@ FactoryGirl.define do
     initialize_with { new({ system_id: system_id, user: user }) }
   end
 
+  factory :aeon_w_long_title, class: 'Requests::Request' do
+    system_id 2990846
+    user { FactoryGirl.build(:user) }
+    initialize_with { new({ system_id: system_id, user: user }) }
+  end
+
   factory :aeon_no_item_record, class: 'Requests::Request' do
     system_id 2535845
     user { FactoryGirl.build(:user) }

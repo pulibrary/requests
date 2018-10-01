@@ -59,6 +59,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.get_language).to be_truthy
       end
 
+      it "returns a language IANA code" do
+        expect(subject.get_language).to eq 'en'
+      end
+
       # Doesn't do this yet
       # it "returns two-character ISO 639-1 language code" do
       #   expect(subject.display_metadata[:author]).to be_truthy

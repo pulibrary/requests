@@ -13,7 +13,7 @@ en:
       service_error_conf_msg: "The following errors were reported with a Library Request Service:"
     submit:
       success: "Request submitted. See confirmation email with details about when your item(s) will be available."
-      recap_success: "Request submitted to ReCAP, our offsite storage facility. You can expect delivery within 1-2 business days. See confirmation email with details about when your item(s) will be available."
+      recap_success: "Request submitted to ReCAP, our offsite storage facility. See confirmation email with details about when your item(s) will be available."
       recap_no_items_success: "Request submitted to ReCAP, our offsite storage facility. See confirmation email with details about when your item(s) will be available."
       recall_success: "You have successfully placed a recall. You will be notified when the item is available."
       bd_success: "Request submitted to BorrowDirect. You can expect delivery within four business days or less. See confirmation email with details about when your item(s) will be available."
@@ -75,8 +75,8 @@ en:
       email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
     recap_guest:
       email_subject: "Patron Initiated Catalog Request - ReCAP Access Only Request"
-      brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
-      email_conf_msg: "You will be notified via email when your item is available. Most items are ready in 1 to 2 business days."
+      brief_msg: "Item off-site at ReCAP facility."
+      email_conf_msg: "You will be notified via email when your item is available."
     recap:
       email_subject: "Patron Initiated Catalog Request Confirmation"
       delivery_label: "Physical Item Delivery"

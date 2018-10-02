@@ -568,10 +568,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     }
     let(:request_with_on_order) { described_class.new(params) }
     let(:firestone_circ) {
-      { label: "Firestone Library", gfa_code: "PA" }
+      { label: "Firestone Library", gfa_code: "PA", staff_only: false }
     }
     let(:architecture) {
-      { label: "Architecture Library", gfa_code: "PW" }
+      { label: "Architecture Library", gfa_code: "PW", staff_only: false }
     }
     subject { request_with_on_order }
 

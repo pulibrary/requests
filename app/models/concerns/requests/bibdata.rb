@@ -69,7 +69,6 @@ module Requests
       staff_locs.each do |loc|
         loc[:label] = loc[:label] + " (Staff Only)"
       end
-
       public_locs + staff_locs
     end
   end

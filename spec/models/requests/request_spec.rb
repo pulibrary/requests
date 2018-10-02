@@ -570,6 +570,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:firestone_circ) {
       { label: "Firestone Library", gfa_code: "PA" }
     }
+    let(:architecture) {
+      { label: "Architecture Library", gfa_code: "PW" }
+    }
     subject { request_with_on_order }
 
     describe "#requestable" do
@@ -595,6 +598,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "should list Firestone as the first choice" do
         expect(subject.default_pickups.first).to eq(firestone_circ)
+      end
+
+      it "should alpha sort the pickups between Firestone and staff locations" do
+        expect(subject.default_pickups[1]).to eq(architecture)
       end
     end
   end

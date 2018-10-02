@@ -54,18 +54,23 @@ module Requests
     ## Accepts an array of location hashes and sorts them according to our quirks
     def sort_pickups locs
       # staff only locations go at the bottom of the list and Firestone to the top
-      locs.sort_by! { |loc| loc[:staff_only] ? 0 : 1 }
-      locs.each do |loc|
-        if loc[:staff_only]
-          loc[:label] = loc[:label] + " (Staff Only)"
-        end
-      end
-      locs.reverse!
-      firestone = locs.find { |loc| loc[:label] == "Firestone Library" }
+
+      public_locs = locs.select { |loc| loc[:staff_only] == false }
+      public_locs.sort_by! { |loc| loc[:label] }
+
+      firestone = public_locs.find { |loc| loc[:label] == "Firestone Library" }
       unless firestone.nil?
-        locs.insert(0, locs.delete_at(locs.index(firestone)))
+        public_locs.insert(0, public_locs.delete_at(public_locs.index(firestone)))
       end
-      locs
+
+      staff_locs = locs.select { |loc| loc[:staff_only] == true }
+      staff_locs.sort_by! { |loc| loc[:label] }
+
+      staff_locs.each do |loc|
+        loc[:label] = loc[:label] + " (Staff Only)"
+      end
+
+      public_locs + staff_locs
     end
   end
 end

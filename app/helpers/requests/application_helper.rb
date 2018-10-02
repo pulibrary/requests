@@ -225,6 +225,7 @@ module Requests
 
     def hidden_fields_mfhd mfhd
       hidden = ""
+      return hidden if mfhd.nil?
       unless mfhd["call_number"].nil?
         hidden += hidden_field_tag "mfhd[][call_number]", "", value: "#{mfhd['call_number']}"
       end

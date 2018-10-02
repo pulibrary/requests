@@ -48,4 +48,32 @@ RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name:
       expect(login_suppressed).to be true
     end
   end
+
+  describe '#hidden_fields_mfhd' do
+    let(:mfhd) do
+      {
+        "location" => "ReCAP - Use in Firestone Microforms only",
+        "library" => "ReCAP",
+        "location_code" => "rcppf",
+        "copy_number" => "1",
+        "call_number" => "MICROFILM S00534",
+        "call_number_browse" => "MICROFILM S00534",
+        "location_has" => [
+          "No. 22 (Mar. 10/17 1969)-no. 47 (Oct. 6, 1969)",
+          "No. 22-47 on reel with no. 1-21 of the earlier title."
+        ]
+      }
+    end
+
+    it 'generates the <input type="hidden"> element markup using MFHD values' do
+      expect(helper.hidden_fields_mfhd(mfhd)).to eq \
+        "<input type=\"hidden\" name=\"mfhd[][call_number]\" id=\"mfhd__call_number\" value=\"MICROFILM S00534\" /><input type=\"hidden\" name=\"mfhd[][location]\" id=\"mfhd__location\" value=\"ReCAP - Use in Firestone Microforms only\" /><input type=\"hidden\" name=\"mfhd[][library]\" id=\"mfhd__library\" value=\"ReCAP\" />"
+    end
+
+    context 'when the MFHD is nil' do
+      it 'generates no markup' do
+        expect(helper.hidden_fields_mfhd(nil)).to be_empty
+      end
+    end
+  end
 end

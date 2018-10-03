@@ -355,7 +355,7 @@ module Requests
       pickup_locations = []
       Requests::BibdataService.delivery_locations.values.each do |pickup|
         if pickup["pickup_location"] == true
-          pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"] }
+          pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"], staff_only: pickup["staff_only"] }
         end
       end
       # pickup_locations.sort_by! { |loc| loc[:label] }

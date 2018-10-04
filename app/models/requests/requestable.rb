@@ -52,6 +52,7 @@ module Requests
     end
 
     def recap?
+      return false unless location_valid?
       return true if location[:library][:code] == 'recap'
     end
 
@@ -78,11 +79,13 @@ module Requests
 
     # merge these two
     def annexa?
+      return false unless location_valid?
       return true if location[:library][:code] == 'annexa'
     end
 
     # locations temporarily moved to annex should work
     def annexb?
+      return false unless location_valid?
       return true if location[:library][:code] == 'annexb'
     end
 
@@ -173,6 +176,7 @@ module Requests
     end
 
     def pending?
+      return false unless location_valid?
       return false unless on_order? || in_process? || preservation?
       if location[:library][:code] == 'recap' && location[:holding_library].blank?
         false
@@ -203,6 +207,7 @@ module Requests
     end
 
     def online?
+      return false unless location_valid?
       return true if location[:library][:code] == 'online'
     end
 
@@ -329,6 +334,10 @@ module Requests
 
       def scsb_edd_cullection_codes
         %w[AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP]
+      end
+
+      def location_valid?
+        location.key?(:library) && location[:library].key?(:code)
       end
   end
 end

@@ -10,6 +10,19 @@ Bundler/DuplicatedGem:
   Exclude:
     - 'Gemfile'
 
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/models/requests/requestable.rb'
+    - 'app/controllers/requests/request_controller.rb'
+    - 'app/helpers/requests/application_helper.rb'
+    - 'app/models/concerns/requests/aeon.rb'
+    - 'app/models/concerns/requests/ctx.rb'
+    - 'app/models/concerns/requests/illiad.rb'
+    - 'app/models/requests/recall.rb'
+    - 'app/models/requests/request.rb'
+    - 'app/models/requests/router.rb'
+    - 'app/models/requests/submission.rb'
+
 Metrics/LineLength:
   Exclude:
     - 'app/helpers/requests/application_helper.rb'
@@ -21,6 +34,19 @@ Metrics/LineLength:
     - 'spec/controllers/requests/request_controller_spec.rb'
     - 'spec/models/requests/pickup_lookup_spec.rb'
     - 'spec/models/requests/recall_spec.rb'
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'app/models/requests/requestable.rb'
+    - 'app/controllers/requests/request_controller.rb'
+    - 'app/helpers/requests/application_helper.rb'
+    - 'app/models/concerns/requests/aeon.rb'
+    - 'app/models/concerns/requests/ctx.rb'
+    - 'app/models/concerns/requests/illiad.rb'
+    - 'app/models/requests/recall.rb'
+    - 'app/models/requests/request.rb'
+    - 'app/models/requests/router.rb'
+    - 'app/models/requests/submission.rb'
 
 RSpec/MultipleExpectations:
   Max: 5

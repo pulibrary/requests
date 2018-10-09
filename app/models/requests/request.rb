@@ -343,7 +343,7 @@ module Requests
     end
 
     def get_language
-      doc["language_iana_s"].first
+      doc["language_iana_s"]&.first
     end
 
     def pickups

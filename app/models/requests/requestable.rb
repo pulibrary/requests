@@ -260,9 +260,9 @@ module Requests
     def pageable?
       if charged?
         nil
-      elsif !holding.first[1].key?('call_number_browse')
+      elsif holding.first[1] && !holding.first[1].key?('call_number_browse')
         nil
-      elsif paging_locations.include? location['code']
+      elsif (paging_locations.include? location['code']) && holding.first[1]
         call_num = holding.first[1]['call_number_browse']
         if lc_number?(call_num)
           in_call_num_range(call_num, paging_ranges[location['code']])
@@ -271,9 +271,9 @@ module Requests
     end
 
     def pageable_loc?
-      if !holding.first[1].key?('call_number_browse')
+      if holding.first[1] && !holding.first[1].key?('call_number_browse')
         nil
-      elsif paging_locations.include? location['code']
+      elsif (paging_locations.include? location['code']) && holding.first[1]
         call_num = holding.first[1]['call_number_browse']
         if lc_number?(call_num)
           in_call_num_range(call_num, paging_ranges[location['code']])

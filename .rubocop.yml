@@ -48,8 +48,16 @@ Metrics/PerceivedComplexity:
     - 'app/models/requests/router.rb'
     - 'app/models/requests/submission.rb'
 
+RSpec/MessageSpies:
+  Exclude:
+    - 'spec/models/requests/recap_spec.rb'
+
 RSpec/MultipleExpectations:
   Max: 5
+
+RSpec/NestedGroups:
+  Exclude:
+    - 'spec/models/requests/recap_spec.rb'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

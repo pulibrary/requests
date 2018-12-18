@@ -101,6 +101,22 @@ describe Requests::Recap do
       expect(subject.submitted.size).to eq(2)
       expect(subject.errors.size).to eq(0)
     end
+
+    context 'when the SCSB web service responds with an invalid response' do
+      subject(:recap) { described_class.new(submission) }
+
+      before(:context) do
+        stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").to_return(status: 200, body: '{invalid', headers: {})
+      end
+
+      it 'logs an error' do
+        allow(Rails.logger).to receive(:error)
+
+        expect(recap.submitted.size).to eq(0)
+        expect(recap.errors.size).to eq(2)
+        expect(Rails.logger).to have_received(:error).with(/Invalid response from the SCSB server/).twice
+      end
+    end
   end
 end
 end

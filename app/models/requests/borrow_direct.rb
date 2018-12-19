@@ -15,14 +15,15 @@ module Requests
 
     def handle
       items = @submission.filter_items_by_service(@service_type)
-      ## hack there can only be one
+      ## bd is only a valid type for non-enumerated works so there will always only be a single item with a 'bd' service type.
       bd_item = items.first
       begin
-        request_number = if @submission.bd['auth_id'].nil?
-                           ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
-                         else
-                           ::BorrowDirect::RequestItem.new(@submission.user_barcode).with_auth_id(@submission.bd['auth_id']).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
-                         end
+        request_number = ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
+        # request_number = if @submission.bd['auth_id'].nil?
+        #                    ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
+        #                  else
+        #                    ::BorrowDirect::RequestItem.new(@submission.user_barcode).with_auth_id(@submission.bd['auth_id']).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
+        #                  end
         ## request number response indicates attempt was successful
         @sent << { request_number: request_number }
       rescue *::BorrowDirect::Error => error

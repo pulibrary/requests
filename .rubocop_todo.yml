@@ -191,9 +191,6 @@ RSpec/LeadingSubject:
   Exclude:
     - 'spec/models/requests/request_spec.rb'
 
-RSpec/MessageSpies:
-  EnforcedStyle: receive
-
 RSpec/NamedSubject:
   Exclude:
     - 'spec/controllers/requests/request_controller_spec.rb'
@@ -203,11 +200,6 @@ RSpec/NamedSubject:
     - 'spec/models/requests/recall_spec.rb'
     - 'spec/models/requests/recap_spec.rb'
     - 'spec/models/requests/request_spec.rb'
-
-RSpec/NestedGroups:
-  Exclude:
-    - 'spec/models/requests/request_spec.rb'
-    - 'spec/models/requests/router_spec.rb'
 
 RSpec/RepeatedDescription:
   Exclude:

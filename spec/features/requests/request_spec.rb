@@ -20,13 +20,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   before(:each) { stub_delivery_locations }
 
   context 'all patrons' do
-    describe 'When visiting without a system ID' do
-      it "Displays a Not Valid System ID error" do
-        visit '/requests'
-        expect(page).to have_content "Please Supply a valid Library ID to Request"
-      end
-    end
-
     describe 'When unauthenticated patron visits a request item', js: true do
       it "displays three authentication options" do
         visit '/requests/9944355'

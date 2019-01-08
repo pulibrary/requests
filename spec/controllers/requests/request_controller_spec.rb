@@ -46,6 +46,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       expect(response.status).to eq(302)
     end
   end
+
   describe 'POST #recall_pickups' do
     let(:user_info) {
       {
@@ -86,6 +87,13 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
                                       "requestable" => requestable,
                                       "bib" => bib }
       expect(response.status).to eq(200)
+    end
+  end
+
+  describe 'GET #index' do
+    it 'redirects to the root url' do
+      get :index
+      expect(response).to redirect_to("/")
     end
   end
 

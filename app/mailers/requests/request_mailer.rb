@@ -32,7 +32,6 @@ module Requests
            subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
     end
 
-    # rubocop:disable MethodLength
     def annexa_email(submission)
       @submission = submission
       destination_email = []

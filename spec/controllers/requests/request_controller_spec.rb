@@ -4,6 +4,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
+  let(:user) { FactoryGirl.create(:user) }
+
   routes { Requests::Engine.routes }
 
   describe 'POST #generate' do
@@ -17,12 +19,11 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   end
 
   describe 'GET #generate' do
-    let(:user) { FactoryGirl.create(:user) }
     before(:each) do
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
         .to_return(status: 200, body: valid_patron_response, headers: {})
-      login_as user
     end
+
     it 'sets the current request mode to trace when supplied' do
       get :generate, params: {
         source: 'pulsearch',
@@ -110,11 +111,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   end
   context 'A user with a valid princeton net id patron record' do
     describe '#current_patron' do
-      let(:user) { FactoryGirl.create(:user) }
       before(:each) do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 200, body: valid_patron_response, headers: {})
-        login_as user
       end
       it 'Handles an authorized princeton net ID holder' do
         patron = subject.send(:current_patron, user.uid)
@@ -130,7 +129,6 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       before(:each) do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
-        login_as user
       end
       it 'Handles an authorized princeton net ID holder' do
         patron = subject.send(:current_patron, user.uid)
@@ -142,11 +140,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   end
   context 'A user with a netid that does not have a matching patron record' do
     describe '#current_patron' do
-      let(:user) { FactoryGirl.create(:user) }
       before(:each) do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 404, body: invalid_patron_response, headers: {})
-        login_as user
       end
       it 'Handles an authorized princeton net ID holder' do
         patron = subject.send(:current_patron, user.uid)
@@ -156,11 +152,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   end
   context 'Cannot connect to Patron Data service' do
     describe '#current_patron' do
-      let(:user) { FactoryGirl.create(:user) }
       before(:each) do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 403, body: invalid_patron_response, headers: {})
-        login_as user
       end
       it 'Handles an authorized princeton net ID holder' do
         patron = subject.send(:current_patron, user.uid)
@@ -170,11 +164,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   end
   context 'System Error from Patron data service' do
     describe '#current_patron' do
-      let(:user) { FactoryGirl.create(:user) }
       before(:each) do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 500, body: invalid_patron_response, headers: {})
-        login_as user
       end
       it 'cannot return a patron record' do
         patron = subject.send(:current_patron, user.uid)

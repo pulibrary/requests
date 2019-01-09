@@ -6,12 +6,11 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'bixby', '0.2.0'
+  gem 'bixby', '~> 1.0'
   gem 'coveralls', require: false
   gem 'pry' unless ENV['CI']
   gem 'pry-byebug' unless ENV['CI']
   gem 'rails-controller-testing'
-  gem 'rubocop', '0.49'
   gem "simplecov"
 end
 

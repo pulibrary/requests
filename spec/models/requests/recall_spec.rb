@@ -80,14 +80,14 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
       expect(subject.errors.size).to eq(0)
     end
 
-    it 'Should construct a expiration date for the recall request', unless: in_travis? do
+    it 'Should construct a expiration date for the recall request' do
       stub_request(:put, @stub_url).
         with(headers: { 'X-Accept' => 'application/xml' }).
         to_return(status: 201, body: responses[:success], headers: {})
       expect(subject.request_payload(submission.items.first)).to include("<last-interest-date>#{subject.recall_expiration_date}</last-interest-date>")
     end
 
-    it 'should have an expiry date 60 days from today formatted as yyyy-mm-dd', unless: in_travis? do
+    it 'should have an expiry date 60 days from today formatted as yyyy-mm-dd' do
       stub_request(:put, @stub_url).
         with(headers: { 'X-Accept' => 'application/xml' }).
         to_return(status: 201, body: responses[:success], headers: {})

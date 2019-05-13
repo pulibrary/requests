@@ -1,6 +1,6 @@
 # PUL Requests Engine
 
-[![Build Status](https://travis-ci.org/pulibrary/requests.svg?branch=master)](https://travis-ci.org/pulibrary/requests)
+[![CircleCI](https://circleci.com/gh/pulibrary/requests.svg?style=svg)](https://circleci.com/gh/pulibrary/requests)
 
 ## Dependencies
 

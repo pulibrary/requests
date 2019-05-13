@@ -228,10 +228,6 @@ def wait_for_bd
   end
 end
 
-def in_travis?
-  !ENV['TRAVIS'].nil? && ENV['TRAVIS'] == 'true'
-end
-
 def fixture(file)
   File.open(File.join(File.dirname(__FILE__), 'fixtures', file), 'rb')
 end

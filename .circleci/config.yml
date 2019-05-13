@@ -1,0 +1,77 @@
+---
+version: 2
+jobs:
+  build:
+
+    # Primary command image where all commands run
+    docker:
+      - image: circleci/ruby:2.4.5-node-browsers
+        environment:
+          RAILS_VERSION: "5.1.2"
+          RAILS_ENV: test
+          COVERAGE: true
+
+    working_directory: ~/requests
+
+    steps:
+      - checkout
+
+      # Set timezone to EST/EDT
+      - run:
+          name: Set Timezone to EST/EDT
+          command: echo 'America/New_York' = /etc/timezone
+
+      - run:
+          name: Install system packages
+          command: |
+            sudo apt update -y
+            sudo apt install -y postgresql-client phantomjs
+
+      # Install the Gem dependencies
+      - restore_cache:
+          keys:
+          - requests-{{ checksum "Gemfile.lock" }}
+          - requests-
+
+      - run:
+          name: Install the Gem dependencies
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+
+      - save_cache:
+          key: requests-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+
+      # Generate the Rails Engine
+      - restore_cache:
+          name: Restore test app from cache
+          keys: v1-internal-test-app-{{ checksum "requests.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}
+
+      - run:
+          name: Generate the Rails engine
+          command: |
+            bundle exec rake engine_cart:generate
+
+      - save_cache:
+          name: Save test app cache
+          key: v1-internal-test-app-{{ checksum "requests.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}
+          paths: ./.internal_test_app
+
+      # Install additional Gem dependencies (required by the test app.)
+      - restore_cache:
+          keys:
+          - requests-{{ checksum "Gemfile.lock" }}
+          - requests-
+
+      - run:
+          name: Install additional Gem dependencies (required by the test app.)
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
+
+      - save_cache:
+          key: requests-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+
+      - run:
+          name: Run Rubocop and the RSpec test suites
+          command: bundle exec rake

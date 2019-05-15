@@ -35,6 +35,10 @@ Metrics/LineLength:
     - 'spec/models/requests/pickup_lookup_spec.rb'
     - 'spec/models/requests/recall_spec.rb'
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'app/helpers/requests/application_helper.rb'
+
 Metrics/PerceivedComplexity:
   Exclude:
     - 'app/models/requests/requestable.rb'

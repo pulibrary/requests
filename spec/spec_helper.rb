@@ -19,15 +19,15 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
 require 'factory_girl'
-require 'webmock/rspec'
-require 'rspec/rails'
+require 'devise'
 require 'engine_cart'
 require 'database_cleaner'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'rspec/rails'
 require 'selenium/webdriver'
 require 'webdrivers'
-require 'devise'
+require 'webmock/rspec'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 

@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'devise'
   s.add_dependency 'rails', '~> 5.1.0'
-  s.add_dependency 'bootstrap-sass', '~> 3.3'
+  s.add_dependency 'bootstrap'
   s.add_dependency 'friendly_id', '~> 5.1.0'
   s.add_dependency 'yaml_db', '~> 0.6.0'
   s.add_dependency 'simple_form'
@@ -40,8 +40,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'faker', '~> 1.9'
   s.add_development_dependency 'database_cleaner', '~> 1.3'
   s.add_development_dependency 'capybara', '~> 2.13.0'
-  s.add_development_dependency 'selenium-webdriver', '~> 3.14.0'
-  s.add_development_dependency 'chromedriver-helper', '~> 2.1.0'
+  s.add_development_dependency 'webdrivers'
   s.add_development_dependency 'webmock'
   s.add_development_dependency "vcr"
   s.add_development_dependency 'rubocop-rspec', '~> 1.22'

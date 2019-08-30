@@ -50,7 +50,7 @@
   background-color: #fff;
   color: #737373;
   font-size: 1.1em;
-  margin: -32px auto 10px;
+  margin: -20px auto 8px;
   text-align: center;
   width: 10ch;
 }
@@ -86,5 +86,25 @@ div#go-back-link {
     margin:auto;
     text-align: center;
     max-width: 30em;
+  }
+}
+
+div#punetid-form hr {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* updates card_body in the #other_user_account_info*/
+div#other_user_account_info div.card-body {
+  background-color: $other_user_account;
+}
+
+/* replaces btn-default*/
+.btn-outline-secondary {
+  color: $dark;
+  border-color: #ccc;
+  &:hover {
+    background-color: #ddd;
+    color: $dark;
   }
 }

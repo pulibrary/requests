@@ -341,9 +341,9 @@ module Requests
 
     def status_label requestable
       if requestable.charged?
-        content_tag(:span, 'Not Available', class: "availability--label badge-alert label label-danger")
+        content_tag(:span, 'Not Available', class: "availability--label badge-alert badge badge-danger")
       else
-        content_tag(:span, 'Available', class: "availability--label badge-success label label-success")
+        content_tag(:span, 'Available', class: "availability--label badge badge-success")
       end
     end
 

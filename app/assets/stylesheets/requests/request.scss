@@ -12,6 +12,11 @@
 .badge-success {
   background-color: #3B863B;
 }
+
+.badge {
+  padding: 0.6em 0.6em;
+}
+
 .show_item {
   margin-top: 10px;
 }
@@ -102,7 +107,7 @@ div#other_user_account_info div.card-body {
   background-color: $other_user_account;
 }
 
-/* replaces btn-default*/
+/* replaces btn-default */
 .btn-outline-secondary {
   color: $dark;
   border-color: #ccc;

@@ -164,9 +164,9 @@ module Requests
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
       unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
-        class_list = "well collapse in request--print"
+        class_list = "card card-body bg-light collapse in request--print"
         if requestable.services.include?('recap_edd')
-          class_list = "well collapse request--print"
+          class_list = "card card-body bg-light collapse in request--print"
         end
         # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do

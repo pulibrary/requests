@@ -1,4 +1,5 @@
-<div aria-live='polite' class='well collapse request--edd' id='fields-eed__<%= "#{requestable.item['id']}" %>'>
+<div aria-live='polite' class='card card-body bg-light collapse' id='fields-eed__<%= "#{requestable.item['id']}" %>'>
+  <div class="card card-body">
   <fieldset class="form-group required">
     <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title *', class: 'control-label col-sm-4' %>
     <div class="col-sm-6">
@@ -41,4 +42,6 @@
       <%= text_field_tag 'requestable[][edd_note]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
     </div>
   </fieldset>
+  </div>
   <small>* indicates a required field for Electronic Delivery requests.</small>
+</div>

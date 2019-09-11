@@ -164,9 +164,9 @@ module Requests
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
       unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
-        class_list = "well collapse in request--print"
+        class_list = "card card-body bg-light collapse show request--print"
         if requestable.services.include?('recap_edd')
-          class_list = "well collapse request--print"
+          class_list = "card card-body bg-light collapse request--print"
         end
         # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
@@ -341,9 +341,9 @@ module Requests
 
     def status_label requestable
       if requestable.charged?
-        content_tag(:span, 'Not Available', class: "availability--label badge-alert label label-danger")
+        content_tag(:span, 'Not Available', class: "availability--label badge-alert badge badge-danger")
       else
-        content_tag(:span, 'Available', class: "availability--label badge-success label label-success")
+        content_tag(:span, 'Available', class: "availability--label badge badge-success")
       end
     end
 

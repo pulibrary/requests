@@ -77,7 +77,7 @@ module Requests
 
     def return_message(submission)
       unless submission.source.nil?
-        link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-default icon-moveback', title: 'Return to Record'
+        link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-secondary icon-moveback', title: 'Return to Record'
       end
     end
 

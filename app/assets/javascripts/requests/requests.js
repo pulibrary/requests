@@ -65,7 +65,7 @@ $(document).ready(function() {
 
     var data = {}; //generic data object to package ajax pickup locations request
 
-    $( ".table-responsive" ).on( "change", ".request-options", function(event) {
+    $( ".table-responsive-sm" ).on( "change", ".request-options", function(event) {
       event.stopPropagation();
       var this_select = event.target;
       var this_td = $( this_select ).closest( "td" );
@@ -109,7 +109,7 @@ $(document).ready(function() {
             data: data
           })
           .done(function( msg ) {
-            console.log(msg)
+            console.log(msg);
             if(msg.response.recall['@allowed'] == 'Y'){
               var opts = msg.response.recall['pickup-locations']['pickup-location'];
               var length = opts.length;

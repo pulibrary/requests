@@ -12,10 +12,10 @@ module Requests
         end
       elsif current_user.guest == true
         content_tag(:div) do
-          concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', role: 'menuitem', class: 'btn btn-md btn-primary btn-full', id: 'cas-login' # , current_user_name: current_user.uid)
+          concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', role: 'menuitem', class: 'btn btn-primary', id: 'cas-login' # , current_user_name: current_user.uid)
           concat content_tag(:hr)
           concat content_tag(:p, "or", class: "or-divider")
-          concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/auth/barcode', role: 'menuitem', class: 'btn btn-md btn-default btn-full', id: 'barcode-login'
+          concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/auth/barcode', role: 'menuitem', class: 'btn btn-outline-secondary', id: 'barcode-login'
         end
       else
         I18n.t('requests.account.unauthenticated')
@@ -77,7 +77,7 @@ module Requests
 
     def return_message(submission)
       unless submission.source.nil?
-        link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-default icon-moveback', title: 'Return to Record'
+        link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-secondary icon-moveback', title: 'Return to Record'
       end
     end
 

@@ -19,14 +19,15 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
 require 'factory_girl'
-require 'webmock/rspec'
-require 'rspec/rails'
+require 'devise'
 require 'engine_cart'
 require 'database_cleaner'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'rspec/rails'
 require 'selenium/webdriver'
-require 'devise'
+require 'webdrivers'
+require 'webmock/rspec'
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
@@ -65,21 +66,27 @@ puts "Looking for google-chrome-stable"
 puts `which google-chrome-stable`
 puts "Selenium default #{Selenium::WebDriver::Chrome.path}"
 
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
-end
+# Capybara.register_driver :chrome do |app|
+#   Capybara::Selenium::Driver.new(app, browser: :chrome)
+# end
 
-Capybara.register_driver :headless_chrome do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu] }
-  )
-
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.load_selenium
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+    opts.args << '--headless'
+    opts.args << '--disable-gpu'
+    opts.args << '--window-size=1280,1024'
+  end
+  http_client = Selenium::WebDriver::Remote::Http::Default.new
+  http_client.read_timeout = 120
+  http_client.open_timeout = 120
   Capybara::Selenium::Driver.new app,
                                  browser: :chrome,
-                                 desired_capabilities: capabilities
+                                 http_client: http_client,
+                                 options: browser_options
 end
 
-Capybara.javascript_driver = :headless_chrome
+Capybara.javascript_driver = :selenium
 
 EngineCart.load_application!
 

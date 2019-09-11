@@ -32,21 +32,23 @@
     <%= render partial: 'umlaut_services' %>
     <% @request.sorted_requestable.each do |mfhd, requestable_list| %>
       <%= hidden_fields_mfhd @request.holdings[mfhd] %>
-      <div id="holding<%= mfhd %>" class="table-responsive items">
-        <h2><%= current_location_label(@request.holdings[mfhd]["location"], requestable_list) %> <%= @request.holdings[mfhd]["call_number"] %></h2>
-
-          <% unless @request.holdings[mfhd]["location_has"].nil? %>
-              <div>
-                <h3>Location has: </h3>
-              </div>
-              <p>
-                <% @request.holdings[mfhd]["location_has"].each do |loc| %>
-                  <%= loc %><br/>
-                <% end %>
-              </p>
-          <% end %>
-      </div>
       <div class="table-responsive">
+        <div id="holding<%= mfhd %>" class="table items table">
+          <h2><%= current_location_label(@request.holdings[mfhd]["location"], requestable_list) %> <%= @request.holdings[mfhd]["call_number"] %></h2>
+
+            <% unless @request.holdings[mfhd]["location_has"].nil? %>
+                <div>
+                  <h3>Location has: </h3>
+                </div>
+                <p>
+                  <% @request.holdings[mfhd]["location_has"].each do |loc| %>
+                    <%= loc %><br/>
+                  <% end %>
+                </p>
+            <% end %>
+        </div>
+      </div>
+      <div class="table-responsive-sm">
         <table class="table table-striped table-bordered request--available_items <%= show_tablesorter requestable_list%>">
           <thead>
             <th>Select</th>

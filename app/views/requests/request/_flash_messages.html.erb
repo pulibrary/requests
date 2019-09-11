@@ -11,6 +11,7 @@
       <% if !@submission.nil? %>
         <div class="alert <%= alert_class %>" aria-live="polite"><%= flash[type] %>
           <% if !@submission.errors.empty? %>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
             <ul>
               <% @submission.errors.messages.each do |key, value| %>
                 <% if key == :items %>
@@ -23,7 +24,6 @@
           <% else %>
             <%= return_message @submission %>
           <% end %>
-          <a class="close" data-dismiss="alert" href="#">&times;</a>
         </div>
       <% end %>
   <% end %>

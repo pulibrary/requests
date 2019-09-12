@@ -244,6 +244,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.aeon_mapped_params[:ItemTitle].length).to be <= 250
       end
     end
+    describe '#ctx' do
+      it 'truncates the open url ctx title' do
+        expect(request.ctx.referent.metadata['btitle'].length).to be <= 250
+        expect(request.ctx.referent.metadata['title'].length).to be <= 250
+      end
+    end
   end
 
   context 'A requestable item from a RBSC holding with an item record including a barcode' do

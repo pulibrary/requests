@@ -28,7 +28,7 @@ module Requests
       def build_ctx
         ctx = ContextObject.new
         id = doc['id']
-        title = doc['title_citation_display'].first unless doc['title_citation_display'].nil?
+        title = set_title unless doc['title_citation_display'].nil?
         date = doc['pub_date_display'].first unless doc['pub_date_display'].nil?
         author = doc['author_citation_display'].first unless doc['author_citation_display'].nil?
         corp_author = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
@@ -81,6 +81,10 @@ module Requests
         ctx.referent.add_identifier("info:oclcnum/#{doc['oclc_s'].first}") unless doc['oclc_s'].nil?
         ctx.referent.add_identifier("info:lccn/#{doc['lccn_s'].first}") unless doc['lccn_s'].nil?
         ctx
+      end
+
+      def set_title
+        doc['title_citation_display'].first.truncate(247)
       end
   end
 end

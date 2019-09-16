@@ -4,12 +4,8 @@ module Requests
     extend ActiveSupport::Concern
 
     def solr_doc(system_id)
-      response = Faraday.get "#{Requests.config[:pulsearch_base]}/catalog/#{system_id}.json"
-      if (response = parse_response(response)).empty?
-        response
-      else
-        response[:response][:document]
-      end
+      response = Faraday.get "#{Requests.config[:pulsearch_base]}/catalog/#{system_id}/raw"
+      parse_response(response)
     end
 
     def items_by_bib(system_id)

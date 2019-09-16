@@ -710,4 +710,166 @@ http_interactions:
         eyJyZXNwb25zZSI6eyJkb2N1bWVudCI6eyJpZCI6ImRzcDAxcnIxNzIwNTQ3IiwidGl0bGVfdCI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXHJcbkFuIEV4YW1pbmF0aW9uIG9mIEh1bWFuIE1lZGljYWwgRXhwZXJpbWVudGF0aW9uIGluIE5hemkgR2VybWFueSBhbmQgdGhlIFVuaXRlZCBTdGF0ZXMiXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXHJcbkFuIEV4YW1pbmF0aW9uIG9mIEh1bWFuIE1lZGljYWwgRXhwZXJpbWVudGF0aW9uIGluIE5hemkgR2VybWFueSBhbmQgdGhlIFVuaXRlZCBTdGF0ZXMiXSwidGl0bGVfZGlzcGxheSI6IuKAnEFuZCBUaGVuIFRoZXkgQ2FtZSBGb3IgTWXigJ1cclxuQW4gRXhhbWluYXRpb24gb2YgSHVtYW4gTWVkaWNhbCBFeHBlcmltZW50YXRpb24gaW4gTmF6aSBHZXJtYW55IGFuZCB0aGUgVW5pdGVkIFN0YXRlcyIsImVsZWN0cm9uaWNfYWNjZXNzXzFkaXNwbGF5Ijoie1wiaHR0cDovL2Fya3MucHJpbmNldG9uLmVkdS9hcms6Lzg4NDM1L2RzcDAxcnIxNzIwNTQ3XCI6W1wiRGF0YVNwYWNlXCIsXCJDaXRhdGlvbiBvbmx5XCJdfSIsInJlc3RyaWN0aW9uc19ub3RlX2Rpc3BsYXkiOlsiV2Fsay1pbiBBY2Nlc3MuIFRoaXMgdGhlc2lzIGNhbiBvbmx5IGJlIHZpZXdlZCBvbiBjb21wdXRlciB0ZXJtaW5hbHMgYXQgdGhlIFx1MDAzY2EgaHJlZj1odHRwOi8vbXVkZC5wcmluY2V0b24uZWR1XHUwMDNlTXVkZCBNYW51c2NyaXB0IExpYnJhcnlcdTAwM2MvYVx1MDAzZS4iXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJBQzEwMiJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJBQzEwMiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImF1dGhvcl9kaXNwbGF5IjpbIkRvZHlrLCBIaWxsYXJ5IEFseXNlIl0sImF1dGhvcl9zIjpbIkRvZHlrLCBIaWxsYXJ5IEFseXNlIiwiUm91c2UsIENhcm9seW4gTS4iLCJQcmluY2V0b24gVW5pdmVyc2l0eS4gRGVwYXJ0bWVudCBvZiBIaXN0b3J5Il0sImFkdmlzb3JfZGlzcGxheSI6WyJSb3VzZSwgQ2Fyb2x5biBNLiJdLCJkZXBhcnRtZW50X2Rpc3BsYXkiOlsiUHJpbmNldG9uIFVuaXZlcnNpdHkuIERlcGFydG1lbnQgb2YgSGlzdG9yeSJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjEwMyBwYWdlcyJdLCJsb2NhdGlvbiI6WyJNdWRkIE1hbnVzY3JpcHQgTGlicmFyeSJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0sImxvY2F0aW9uX2NvZGVfcyI6WyJtdWRkIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsibXVkZCIsIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1widGhlc2lzXCI6e1wibG9jYXRpb25cIjpcIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJNdWRkIE1hbnVzY3JpcHQgTGlicmFyeVwiLFwibG9jYXRpb25fY29kZVwiOlwibXVkZFwiLFwiY2FsbF9udW1iZXJcIjpcIkFDMTAyXCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIkFDMTAyXCIsXCJkc3BhY2VcIjp0cnVlfX0iLCJjbGFzc195ZWFyX3MiOlsiMjAxNSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE1LCJwdWJfZGF0ZV9lbmRfc29ydCI6MjAxNSwiZm9ybWF0IjpbIlNlbmlvciB0aGVzaXMiXSwiX3ZlcnNpb25fIjoxNjExODYzNzAwMjg2NzM0MzM2LCJ0aW1lc3RhbXAiOiIyMDE4LTA5LTE3VDE0OjAzOjE4LjE3NloifX19
     http_version: 
   recorded_at: Thu, 20 Sep 2018 20:59:28 GMT
-recorded_with: VCR 3.0.3
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/6377369/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.3
+      Date:
+      - Mon, 16 Sep 2019 13:34:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 8a0cae06-2926-45aa-a6e0-41f3114997ae
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"95a6af8cd88c6b4d490015f689cec054"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.010579'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.2
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjYzNzczNjkiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIkxlZ2Fzb3ZhLCBNLiBNLiJdLCJhdXRob3JfY2l0YXRpb25fZGlzcGxheSI6WyJMZWdhc292YSwgTS4gTS4iXSwiYXV0aG9yX3JvbGVzXzFkaXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXSxcInRyYW5zbGF0b3JzXCI6W10sXCJlZGl0b3JzXCI6W10sXCJjb21waWxlcnNcIjpbXSxcInByaW1hcnlfYXV0aG9yXCI6XCJMZWdhc292YSwgTS4gTS5cIn0iLCJhdXRob3JfcyI6WyJMZWdhc292YSwgTS4gTS4iXSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rpc3BsYXkiOiJBa2FkZW1payBWYWxlcmlpzIYgQWxla3NlZXZpY2ggTGVnYXNvdiAvIE0uTS4gTGVnYXNvdmEuIiwidGl0bGVfdCI6WyJBa2FkZW1payBWYWxlcmlpzIYgQWxla3NlZXZpY2ggTGVnYXNvdiAvIE0uTS4gTGVnYXNvdmEuIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiQWthZGVtaWsgVmFsZXJpacyGIEFsZWtzZWV2aWNoIExlZ2Fzb3YiXSwiY29tcGlsZWRfY3JlYXRlZF90IjpbIkFrYWRlbWlrIFZhbGVyaWnMhiBBbGVrc2VldmljaCBMZWdhc292IC8gTS5NLiBMZWdhc292YS4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJNb3NrdmEgOiBTcGVrdHIgLCAyMDEwLiJdLCJwdWJfY3JlYXRlZF9zIjpbIk1vc2t2YSA6IFNwZWt0ciAsIDIwMTAuIl0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5IjpbIk1vc2t2YTogU3Bla3RyIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMjAxMCJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDEwLCJjYXRhbG9nZWRfdGR0IjoiMjAxMS0wMS0yNVQxOToyODo0N1oiLCJmb3JtYXQiOlsiQm9vayJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjM5OSBwLiA6IGlsbC4gOyAyMSBjbS4iXSwiZGVzY3JpcHRpb25fdCI6WyIzOTkgcC4gOiBpbGwuIDsgMjEgY20uIl0sIm51bWJlcl9vZl9wYWdlc19jaXRhdGlvbl9kaXNwbGF5IjpbIjM5OSBwLiJdLCJnZW9jb2RlX2Rpc3BsYXkiOlsiUnVzc2lhLiBSdXNzaWFuIEVtcGlyZS4gU292aWV0IFVuaW9uLiBGb3JtZXIgU292aWV0IFJlcHVibGljcyJdLCJsYW5ndWFnZV9mYWNldCI6WyJSdXNzaWFuIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJydXMiXSwibGFuZ3VhZ2VfaWFuYV9zIjpbInJ1Il0sInN1YmplY3RfZGlzcGxheSI6WyJTb3ZpZXQgVW5pb27igJRCaW9ncmFwaHkiXSwic3ViamVjdF9mYWNldCI6WyJTb3ZpZXQgVW5pb27igJRCaW9ncmFwaHkiXSwiaXNibl9kaXNwbGF5IjpbIjk3ODU5MDQyNzAzMzkiXSwiaXNibl9zIjpbIjk3ODU5MDQyNzAzMzkiXSwib3RoZXJfdmVyc2lvbl9zIjpbIjk3ODU5MDQyNzAzMzkiXSwiaG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCI2MzY2NDk5XCI6e1wibG9jYXRpb25cIjpcIkZpbmUgQW5uZXhcIixcImxpYnJhcnlcIjpcIkZpbmUgQW5uZXhcIixcImxvY2F0aW9uX2NvZGVcIjpcImFueGJcIixcImNhbGxfbnVtYmVyXCI6XCJDVDEyMTIgLkw0NDMgMjAxMFwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJDVDEyMTIgLkw0NDMgMjAxMFwifX0iLCJsb2NhdGlvbl9jb2RlX3MiOlsiYW54YiJdLCJsb2NhdGlvbiI6WyJGaW5lIEFubmV4Il0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiRmluZSBBbm5leCJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbImFueGIiLCJGaW5lIEFubmV4Il0sIm5hbWVfdGl0bGVfYnJvd3NlX3MiOlsiTGVnYXNvdmEsIE0uIE0uLiBBa2FkZW1payBWYWxlcmlpzIYgQWxla3NlZXZpY2ggTGVnYXNvdiJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIkNUMTIxMiAuTDQ0MyAyMDEwIl0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkNUMTIxMiAuTDQ0MyAyMDEwIl0sIl92ZXJzaW9uXyI6MTYyNzE3MDUwNjI1OTAzODIwOCwidGltZXN0YW1wIjoiMjAxOS0wMy0wNVQxMjo1ODo0MC4xMTJaIn0=
+    http_version: 
+  recorded_at: Mon, 16 Sep 2019 13:34:19 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/9676483/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.3
+      Date:
+      - Mon, 16 Sep 2019 13:34:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - c6b75916-0310-4a6b-9d15-835d23f38e4c
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"680eec684dfb338ea99001736b8ef445"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.013279'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.2
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk2NzY0ODMiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIk5hzIRqacyELCDKu0FsacyELCAxOTg3LSIsItmG2KfYrNmK2Iwg2LnZhNmK2IwiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiTmHMhGppzIQsIMq7QWxpzIQiXSwiYXV0aG9yX3JvbGVzXzFkaXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXCLZhtin2KzZitiMINi52YTZitiMXCJdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIk5hzIRqacyELCDKu0FsacyEXCJ9IiwiYXV0aG9yX3MiOlsiTmHMhGppzIQsIMq7QWxpzIQsIDE5ODctIiwi2YbYp9is2YrYjCDYudmE2YrYjCJdLCJtYXJjX3JlbGF0b3JfZGlzcGxheSI6WyJBdXRob3IiXSwidGl0bGVfZGlzcGxheSI6IkJhbmHMhGRpcSBsaWwtc2FsYcyEbSA6IFR1cmtpzIR5YcyEIHdhIFwiUEtLXCIgbWluIFXMhHNsdcyEIGlsYcyBIEltcmHMhGxpzIQgLyDKu0FsacyEIE5hzIRqacyELiIsInRpdGxlX3Zlcm5fZGlzcGxheSI6Itio2YbYp9iv2YIg2YTZhNiz2YTYp9mFIDog2KrYsdmD2YrYpyDZiCBcIlBLS1wiINmF2YYg2KPZiNiz2YTZiCDYpdmE2Ykg2KXZhdix2KfZhNmKIC8g2LnZhNmKINmG2KfYrNmKLiIsInRpdGxlX3QiOlsiQmFuYcyEZGlxIGxpbC1zYWxhzIRtIDogVHVya2nMhHlhzIQgd2EgXCJQS0tcIiBtaW4gVcyEc2x1zIQgaWxhzIEgSW1yYcyEbGnMhCAvIMq7QWxpzIQgTmHMhGppzIQuIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiQmFuYcyEZGlxIGxpbC1zYWxhzIRtIDogVHVya2nMhHlhzIQgd2EgXCJQS0tcIiBtaW4gVcyEc2x1zIQgaWxhzIEgSW1yYcyEbGnMhCIsItio2YbYp9iv2YIg2YTZhNiz2YTYp9mFIDog2KrYsdmD2YrYpyDZiCBcIlBLS1wiINmF2YYg2KPZiNiz2YTZiCDYpdmE2Ykg2KXZhdix2KfZhNmKIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJCYW5hzIRkaXEgbGlsLXNhbGHMhG0gOiBUdXJracyEeWHMhCB3YSBcIlBLS1wiIG1pbiBVzIRzbHXMhCBpbGHMgSBJbXJhzIRsacyEIC8gyrtBbGnMhCBOYcyEamnMhC4iLCLYqNmG2KfYr9mCINmE2YTYs9mE2KfZhSA6INiq2LHZg9mK2Kcg2YggXCJQS0tcIiDZhdmGINij2YjYs9mE2Ygg2KXZhNmJINil2YXYsdin2YTZiiAvINi52YTZiiDZhtin2KzZii4iXSwiZWRpdGlvbl9kaXNwbGF5IjpbImFsLVTMo2FiyrthaCBhbC11zIRsYcyBLiIsItin2YTYt9io2LnYqSDYp9mE2KPZiNmE2YkuIl0sInB1Yl9jcmVhdGVkX3Zlcm5fZGlzcGxheSI6WyLZhNmG2K/ZhiA6INiv2KfYsSDYp9mE2K3Zg9mF2Kkg2Jsg2KjYutiv2KfYryA6INiv2KfYsSDYqNin2KjZhCDZhNmE2LfYqNin2LnYqSDZiNin2YTZhti02LEg2YjYp9mE2KrZiNiy2YrYudiMIDIwMTcuIl0sInB1Yl9jcmVhdGVkX2Rpc3BsYXkiOlsiTGFuZGFuIDogRGHMhHIgYWwtSMyjaWttYWggOyBCYWdoZGHMhGQgOiBEYcyEciBCYcyEYmlsIGxpbC1UzKNpYmHMhMq7YWggd2EtYWwtTmFzaHIgd2EtYWwtVGF3emnMhMq7LCAyMDE3LiIsItmE2YbYr9mGIDog2K/Yp9ixINin2YTYrdmD2YXYqSDYmyDYqNi62K/Yp9ivIDog2K/Yp9ixINio2KfYqNmEINmE2YTYt9io2KfYudipINmI2KfZhNmG2LTYsSDZiNin2YTYqtmI2LLZiti52IwgMjAxNy4iXSwicHViX2NyZWF0ZWRfcyI6WyJMYW5kYW4gOiBEYcyEciBhbC1IzKNpa21haCA7IEJhZ2hkYcyEZCA6IERhzIRyIEJhzIRiaWwgbGlsLVTMo2liYcyEyrthaCB3YS1hbC1OYXNociB3YS1hbC1UYXd6acyEyrssIDIwMTcuIiwi2YTZhtiv2YYgOiDYr9in2LEg2KfZhNit2YPZhdipINibINio2LrYr9in2K8gOiDYr9in2LEg2KjYp9io2YQg2YTZhNi32KjYp9i52Kkg2YjYp9mE2YbYtNixINmI2KfZhNiq2YjYstmK2LnYjCAyMDE3LiJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJCYWdoZGHMhGQ6IERhzIRyIEJhzIRiaWwgbGlsLVTMo2liYcyEyrthaCB3YS1hbC1OYXNociB3YS1hbC1UYXd6acyEyrsiLCLYqNi62K/Yp9ivOiDYr9in2LEg2KjYp9io2YQg2YTZhNi32KjYp9i52Kkg2YjYp9mE2YbYtNixINmI2KfZhNiq2YjYstmK2LnYjCJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTciXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxNywiY2F0YWxvZ2VkX3RkdCI6IjIwMTYtMDYtMTdUMTc6MDY6MzhaIiwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyIxMzAgcGFnZXMgOiBpbGx1c3RyYXRpb25zIDsgMjIgY20iXSwiZGVzY3JpcHRpb25fdCI6WyIxMzAgcGFnZXMgOiBpbGx1c3RyYXRpb25zIDsgMjIgY20iXSwibnVtYmVyX29mX3BhZ2VzX2NpdGF0aW9uX2Rpc3BsYXkiOlsiMTMwIHBhZ2VzIl0sImdlb2NvZGVfZGlzcGxheSI6WyJUdXJrZXkiXSwiYmliX3JlZl9ub3Rlc19kaXNwbGF5IjpbIkluY2x1ZGVzIGJpYmxpb2dyYXBoaWNhbCByZWZlcmVuY2VzIChwYWdlcyAxMjctMTMwKS4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiQXJhYmljIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJhcmEiXSwibGFuZ3VhZ2VfaWFuYV9zIjpbImFyIl0sInN1YmplY3RfZGlzcGxheSI6WyJUdXJrZXnigJRQb2xpdGljcyBhbmQgZ292ZXJubWVudOKAlDIxc3QgY2VudHVyeSIsIlBhcnRpeWEgS2Fya2VyZcyCbiBLdXJkaXN0YW5lzILigJRQb2xpdGljcyBhbmQgZ292ZXJubWVudOKAlDIxc3QgY2VudHVyeSIsIkt1cmRz4oCUVHVya2V54oCUUG9saXRpY3MgYW5kIGdvdmVybm1lbnTigJQyMXN0IGNlbnR1cnkiXSwic3ViamVjdF9mYWNldCI6WyJUdXJrZXnigJRQb2xpdGljcyBhbmQgZ292ZXJubWVudOKAlDIxc3QgY2VudHVyeSIsIlBhcnRpeWEgS2Fya2VyZcyCbiBLdXJkaXN0YW5lzILigJRQb2xpdGljcyBhbmQgZ292ZXJubWVudOKAlDIxc3QgY2VudHVyeSIsIkt1cmRz4oCUVHVya2V54oCUUG9saXRpY3MgYW5kIGdvdmVybm1lbnTigJQyMXN0IGNlbnR1cnkiXSwiaXNibl9kaXNwbGF5IjpbIjk3ODE3ODQ4MTA2MjciLCIxNzg0ODEwNjIyIl0sImlzYm5fcyI6WyI5NzgxNzg0ODEwNjI3Il0sIm9jbGNfcyI6WyI5NTE5ODg3NjgiXSwib3RoZXJfdmVyc2lvbl9zIjpbIjk3ODE3ODQ4MTA2MjciLCJvY245NTE5ODg3NjgiXSwic3ViamVjdF9lcmFfZmFjZXQiOlsiMjFzdCBjZW50dXJ5Il0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wiOTUwNDkyMFwiOntcImxvY2F0aW9uXCI6XCJSZUNBUFwiLFwibGlicmFyeVwiOlwiUmVDQVBcIixcImxvY2F0aW9uX2NvZGVcIjpcInJjcHBhXCIsXCJjYWxsX251bWJlclwiOlwiRFI2MDMgLk4zNSAyMDE3XCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIkRSNjAzIC5OMzUgMjAxN1wifX0iLCJsb2NhdGlvbl9jb2RlX3MiOlsicmNwcGEiXSwibG9jYXRpb24iOlsiUmVDQVAiXSwibG9jYXRpb25fZGlzcGxheSI6WyJSZUNBUCJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbInJjcHBhIiwiUmVDQVAiXSwibmFtZV90aXRsZV9icm93c2VfcyI6WyJOYcyEamnMhCwgyrtBbGnMhCwgMTk4Ny0uIEJhbmHMhGRpcSBsaWwtc2FsYcyEbSIsItmG2KfYrNmK2Iwg2LnZhNmK2IwuINio2YbYp9iv2YIg2YTZhNiz2YTYp9mFIl0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiRFI2MDMgLk4zNSAyMDE3Il0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkRSNjAzIC5OMzUgMjAxNyJdLCJfdmVyc2lvbl8iOjE2NDQ1MzM4NjA4NTgzMzExMzYsInRpbWVzdGFtcCI6IjIwMTktMDktMTNUMDQ6NDE6NDUuNDA4WiJ9
+    http_version: 
+  recorded_at: Mon, 16 Sep 2019 13:34:19 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/dsp01rr1720547/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.3
+      Date:
+      - Mon, 16 Sep 2019 13:34:20 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 717e0bdc-25d6-431d-9f06-98aa09623efa
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"ec0c0d26b216edcc590bd1c4efa15cd4"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.012126'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.2
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImRzcDAxcnIxNzIwNTQ3IiwidGl0bGVfdCI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXHJcbkFuIEV4YW1pbmF0aW9uIG9mIEh1bWFuIE1lZGljYWwgRXhwZXJpbWVudGF0aW9uIGluIE5hemkgR2VybWFueSBhbmQgdGhlIFVuaXRlZCBTdGF0ZXMiXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXHJcbkFuIEV4YW1pbmF0aW9uIG9mIEh1bWFuIE1lZGljYWwgRXhwZXJpbWVudGF0aW9uIGluIE5hemkgR2VybWFueSBhbmQgdGhlIFVuaXRlZCBTdGF0ZXMiXSwidGl0bGVfZGlzcGxheSI6IuKAnEFuZCBUaGVuIFRoZXkgQ2FtZSBGb3IgTWXigJ1cclxuQW4gRXhhbWluYXRpb24gb2YgSHVtYW4gTWVkaWNhbCBFeHBlcmltZW50YXRpb24gaW4gTmF6aSBHZXJtYW55IGFuZCB0aGUgVW5pdGVkIFN0YXRlcyIsImVsZWN0cm9uaWNfYWNjZXNzXzFkaXNwbGF5Ijoie1wiaHR0cDovL2Fya3MucHJpbmNldG9uLmVkdS9hcms6Lzg4NDM1L2RzcDAxcnIxNzIwNTQ3XCI6W1wiRGF0YVNwYWNlXCIsXCJDaXRhdGlvbiBvbmx5XCJdfSIsInJlc3RyaWN0aW9uc19ub3RlX2Rpc3BsYXkiOlsiV2Fsay1pbiBBY2Nlc3MuIFRoaXMgdGhlc2lzIGNhbiBvbmx5IGJlIHZpZXdlZCBvbiBjb21wdXRlciB0ZXJtaW5hbHMgYXQgdGhlIFx1MDAzY2EgaHJlZj1odHRwOi8vbXVkZC5wcmluY2V0b24uZWR1XHUwMDNlTXVkZCBNYW51c2NyaXB0IExpYnJhcnlcdTAwM2MvYVx1MDAzZS4iXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJBQzEwMiJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJBQzEwMiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImF1dGhvcl9kaXNwbGF5IjpbIkRvZHlrLCBIaWxsYXJ5IEFseXNlIl0sImF1dGhvcl9zIjpbIkRvZHlrLCBIaWxsYXJ5IEFseXNlIiwiUm91c2UsIENhcm9seW4gTS4iLCJQcmluY2V0b24gVW5pdmVyc2l0eS4gRGVwYXJ0bWVudCBvZiBIaXN0b3J5Il0sImFkdmlzb3JfZGlzcGxheSI6WyJSb3VzZSwgQ2Fyb2x5biBNLiJdLCJkZXBhcnRtZW50X2Rpc3BsYXkiOlsiUHJpbmNldG9uIFVuaXZlcnNpdHkuIERlcGFydG1lbnQgb2YgSGlzdG9yeSJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjEwMyBwYWdlcyJdLCJsb2NhdGlvbiI6WyJNdWRkIE1hbnVzY3JpcHQgTGlicmFyeSJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0sImxvY2F0aW9uX2NvZGVfcyI6WyJtdWRkIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsibXVkZCIsIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1widGhlc2lzXCI6e1wibG9jYXRpb25cIjpcIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJNdWRkIE1hbnVzY3JpcHQgTGlicmFyeVwiLFwibG9jYXRpb25fY29kZVwiOlwibXVkZFwiLFwiY2FsbF9udW1iZXJcIjpcIkFDMTAyXCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIkFDMTAyXCIsXCJkc3BhY2VcIjp0cnVlfX0iLCJjbGFzc195ZWFyX3MiOlsiMjAxNSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE1LCJwdWJfZGF0ZV9lbmRfc29ydCI6MjAxNSwiZm9ybWF0IjpbIlNlbmlvciB0aGVzaXMiXSwiX3ZlcnNpb25fIjoxNjQ0NTk3MTAzNTY5MTQxNzYwLCJ0aW1lc3RhbXAiOiIyMDE5LTA5LTEzVDIxOjI2OjM5Ljc0NloifQ==
+    http_version: 
+  recorded_at: Mon, 16 Sep 2019 13:34:20 GMT
+recorded_with: VCR 5.0.0

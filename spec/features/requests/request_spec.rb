@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
   let(:voyager_id) { '9493318' }
-  let(:online_id) { '10150938' }
+  let(:online_id) { '11169709' }
   let(:thesis_id) { 'dsp01rr1720547' }
   let(:in_process_id) { '10144698' }
   let(:recap_in_process_id) { '10247806' }

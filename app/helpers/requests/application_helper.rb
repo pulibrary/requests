@@ -33,7 +33,7 @@ module Requests
       error_keys.any? { |item| user_errors.include? item }
     end
 
-    def show_service_options requestable
+    def show_service_options requestable, mfhd_id
       if requestable.services.empty?
         content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
       elsif requestable.charged? && !requestable.aeon?
@@ -44,7 +44,7 @@ module Requests
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
       elsif requestable.on_shelf?
         content_tag(:div) do
-          concat link_to 'Where to find it', requestable.map_url
+          concat link_to 'Where to find it', requestable.map_url(mfhd_id)
           if requestable.traceable?
             concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
           end

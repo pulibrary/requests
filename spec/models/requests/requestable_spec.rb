@@ -5,6 +5,10 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_on_shelf) }
     let(:requestable) { request.requestable.first }
+    let(:mfhd_id) { requestable.holding.first[0] }
+    let(:call_number) { CGI.escape(requestable.holding[mfhd_id]['call_number']) }
+    let(:location_code) { requestable.holding[mfhd_id]['location_code'] }
+    let(:stackmap_url) { requestable.map_url(mfhd_id) }
 
     describe '#services' do
       it 'has a service on on_shelf' do
@@ -13,8 +17,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     describe '#map_url' do
-      it 'returns a map url' do
-        expect(requestable.map_url).to match(/^#{Requests.config[:stackmap_base]}/)
+      it 'returns a stackmap url' do
+        expect(stackmap_url).to include("#{requestable.bib[:id]}/stackmap?cn=#{call_number}&loc=#{location_code}")
       end
     end
   end

@@ -212,7 +212,7 @@ module Requests
     end
 
     def urls
-      if online?
+      if online? && bib['electronic_access_1display']
         JSON.parse(bib['electronic_access_1display'])
       else
         {}

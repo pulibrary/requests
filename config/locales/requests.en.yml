@@ -23,6 +23,7 @@ en:
       annex_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       annexa_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       annexb_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
+      ppl_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       paging_success: "Item has been paged."
       trace_success: "Item is now being traced."
       error: "We were unable to process your request. Correct the highlighted errors."

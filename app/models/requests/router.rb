@@ -91,10 +91,8 @@ module Requests
               services << 'annexb'
             elsif requestable.plasma?
               services << 'ppl'
-            # elsif(requestable.in_process? && auth_user?)
-            #   services << 'in_process'
-            # elsif(requestable.on_order? && auth_user?)
-            #   services << 'on_order'
+            elsif requestable.lewis?
+              services << 'lewis'
             elsif requestable.recap?
               if requestable.has_item_data?
                 services << 'recap'

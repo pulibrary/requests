@@ -70,7 +70,7 @@ module Requests
     end
 
     def lewis?
-      return true if ['sci', 'scith', 'sciref', 'sciefa', 'scinb'].include?(location[:code])
+      return true if ['sci', 'scith', 'sciref', 'sciefa'].include?(location[:code])
     end
 
     def plasma?

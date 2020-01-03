@@ -194,15 +194,6 @@ module Requests
         params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
       end
 
-      # unused method
-      # def mail_services
-      #   ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
-      # end
-
-      # def recap_services
-      #   ["recap"]
-      # end
-
       def current_patron(uid)
         return false unless uid
         begin

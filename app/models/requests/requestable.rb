@@ -69,6 +69,10 @@ module Requests
       return true if item[:status] == 'Missing'
     end
 
+    def lewis?
+      return true if ['sci', 'scith', 'sciref', 'sciefa', 'scinb'].include?(location[:code])
+    end
+
     def plasma?
       return true if location[:code] == 'ppl'
     end

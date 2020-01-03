@@ -139,7 +139,7 @@ module Requests
             unless @submission.service_types.include? 'bd'
               @submission.service_types.each do |type|
                 Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
-                if ['on_order', 'in_process', 'pres', 'recap_no_items'].include? type
+                if ['on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl'].include? type
                   Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now
                 end
                 if type == 'recall' && @submission.scsb?
@@ -193,15 +193,6 @@ module Requests
       def request_params
         params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
       end
-
-      # unused method
-      # def mail_services
-      #   ["paging", "annexa", "annexb", "trace", "on_order", "in_process"]
-      # end
-
-      # def recap_services
-      #   ["recap"]
-      # end
 
       def current_patron(uid)
         return false unless uid

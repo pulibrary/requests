@@ -90,6 +90,8 @@ module Requests
         request_input('pres')
       elsif requestable.services.include? 'ppl'
         request_input('ppl')
+      elsif requestable.services.include? 'lewis'
+        request_input('lewis')
       elsif requestable.services.include? 'paging'
         request_input('paging')
       elsif requestable.services.include? 'in_process'
@@ -99,7 +101,6 @@ module Requests
       elsif requestable.services.include? 'recap_edd' and requestable.services.include? 'recap'
         recap_radio_button_group requestable
       elsif requestable.services.include? 'recap'
-        # request_input('recap')
         recap_print_only_input requestable
       elsif requestable.services.include? 'trace'
         request_input('trace')

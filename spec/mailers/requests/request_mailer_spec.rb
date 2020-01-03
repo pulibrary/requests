@@ -912,7 +912,114 @@ describe Requests::RequestMailer, :type => :mailer do
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.ppl.patron_conf_msg')
+      expect(mail.body.encoded).to have_content I18n.t('requests.ppl.email_conf_msg')
+    end
+  end
+  context "send lewis email request" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "10066344",
+          "call_number" => "QC92.U54 A36 2017",
+          "location_code" => "sci",
+          "item_id" => "7659317",
+          "barcode" => "32101101395745",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "lewis",
+          "pickup" => "PN"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "10292269",
+        "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
+        "author" => "Kosti, Ourania"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_lewis) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("lewis_email", submission_for_lewis).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.lewis.email_subject'))
+      expect(mail.to).to eq([I18n.t('requests.lewis.email')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.lewis.email_conf_msg')
+    end
+  end
+
+  context "send lewis email patron confirmation" do
+    let(:requestable) {
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "10066344",
+          "call_number" => "QC92.U54 A36 2017",
+          "location_code" => "sci",
+          "item_id" => "7659317",
+          "barcode" => "32101101395745",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "lewis",
+          "pickup" => "PN"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    }
+    let(:bib) {
+      {
+        "id" => "10292269",
+        "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
+        "author" => "Kosti, Ourania"
+      }.with_indifferent_access
+    }
+    let(:params) {
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    }
+
+    let(:submission_for_lewis) {
+      Requests::Submission.new(params)
+    }
+
+    let(:mail) {
+      Requests::RequestMailer.send("lewis_confirmation", submission_for_lewis).deliver_now
+    }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.lewis.email_subject'))
+      expect(mail.to).to eq([submission_for_lewis.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.lewis.email_conf_msg')
     end
   end
 end

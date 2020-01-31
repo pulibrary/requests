@@ -32,6 +32,22 @@ RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name:
     end
   end
 
+  describe 'lewis paging' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '3848872',
+        user: user
+      }
+    }
+    let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
+    let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
+    let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
+    it 'lewis is a submitable request' do
+      expect(submit_button_disabled).to be false
+    end
+  end
+
   describe '#suppress_login' do
     let(:unauthenticated_patron) { FactoryGirl.build(:unauthenticated_patron) }
     let(:params) {

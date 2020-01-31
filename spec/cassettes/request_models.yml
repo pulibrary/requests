@@ -20827,4 +20827,287 @@ http_interactions:
         PC00194"],"call_number_browse_s":["Microfilm PC00194"],"_version_":1621120200489304064,"timestamp":"2018-12-28T18:11:38.981Z"}'
     http_version: 
   recorded_at: Mon, 16 Sep 2019 14:02:44 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/3848872/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.6
+      Date:
+      - Fri, 31 Jan 2020 07:23:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 40a0c771-4a10-4154-9462-a0820f3d5619
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"0a12d4f2a7a427d0c6fb9ece1e6f1f28"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.014040'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '{"id":"3848872","numeric_id_b":true,"author_display":["Ryden, Barbara
+        Sue"],"author_citation_display":["Ryden, Barbara Sue"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Ryden,
+        Barbara Sue\"}","author_s":["Ryden, Barbara Sue"],"marc_relator_display":["Author"],"title_display":"Introduction
+        to cosmology / Barbara Ryden.","title_t":["Introduction to cosmology / Barbara
+        Ryden."],"title_citation_display":["Introduction to cosmology"],"compiled_created_t":["Introduction
+        to cosmology / Barbara Ryden."],"pub_created_display":["San Francisco : Addison-Wesley,
+        c2003."],"pub_created_s":["San Francisco : Addison-Wesley, c2003."],"pub_citation_display":["San
+        Francisco: Addison-Wesley"],"pub_date_display":["2003"],"pub_date_start_sort":2003,"cataloged_tdt":"2003-04-07T18:52:04Z","format":["Book"],"description_display":["ix,
+        244 p. : ill. ; 24 cm."],"description_t":["ix, 244 p. : ill. ; 24 cm."],"number_of_pages_citation_display":["ix,
+        244 p."],"bib_ref_notes_display":["Includes bibliographical references (p.
+        [235]-237) and index."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"subject_display":["Cosmology"],"lc_subject_display":["Cosmology"],"subject_facet":["Cosmology"],"isbn_display":["0805389121
+        (hardcover)"],"lccn_display":["  2002013176"],"lccn_s":["2002013176"],"isbn_s":["9780805389128"],"oclc_s":["50478401"],"other_version_s":["9780805389128","ocm50478401"],"holdings_1display":"{\"4151880\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"call_number\":\"QB981
+        .R93 2003\",\"call_number_browse\":\"QB981 .R93 2003\"},\"4364328\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"copy_number\":\"2\",\"call_number\":\"QB981
+        .R93 2003\",\"call_number_browse\":\"QB981 .R93 2003\"},\"6153968\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"copy_number\":\"5\",\"call_number\":\"QB981
+        .R93 2003\",\"call_number_browse\":\"QB981 .R93 2003\"}}","location_code_s":["sci"],"location":["Lewis
+        Library"],"location_display":["Lewis Library"],"advanced_location_s":["sci","Lewis
+        Library"],"name_title_browse_s":["Ryden, Barbara Sue. Introduction to cosmology"],"call_number_display":["QB981
+        .R93 2003"],"call_number_browse_s":["QB981 .R93 2003"],"_version_":1656005504420282368,"timestamp":"2020-01-17T19:38:37.393Z"}'
+    http_version: 
+  recorded_at: Fri, 31 Jan 2020 07:23:41 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=3848872
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.6
+      Date:
+      - Fri, 31 Jan 2020 07:23:42 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"309e1f8a12f16b7be39bac4d55e59a06"
+      X-Runtime:
+      - '0.188573'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 1a5dfb9b-36a5-4b6c-b0e9-ae4eed717ced
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '{"4151880":{"more_items":false,"location":"sci","copy_number":1,"item_id":3399747,"on_reserve":"N","due_date":"2/15/2020","status":"Renewed","label":"Lewis
+        Library"},"4364328":{"more_items":false,"location":"sci","copy_number":2,"item_id":3636476,"on_reserve":"N","status":"On
+        Hold","label":"Lewis Library"},"6153968":{"more_items":false,"location":"sci","copy_number":3,"item_id":5747528,"on_reserve":"N","status":"Not
+        Charged","label":"Lewis Library"}}'
+    http_version: 
+  recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4151880
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.6
+      Date:
+      - Fri, 31 Jan 2020 07:23:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"c898310da74ccf8c8d9529372b61b6d6"
+      X-Runtime:
+      - '0.060846'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 6fbf9fc6-cc6f-49f6-b00b-81b4e7d25ced
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101048628455","id":3399747,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Renewed","on_reserve":"N","due_date":"2/15/2020","label":"Lewis
+        Library"}]'
+    http_version: 
+  recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4364328
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.6
+      Date:
+      - Fri, 31 Jan 2020 07:23:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"55e9d421ced93080f110c9ac182fb8b9"
+      X-Runtime:
+      - '0.049520'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 8c31fd45-d11f-4f64-97a3-80347d4ca1ee
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101050539475","id":3636476,"location":"sci","copy_number":2,"item_sequence_number":1,"status":"On
+        Hold","on_reserve":"N","label":"Lewis Library"}]'
+    http_version: 
+  recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6153968
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.6
+      Date:
+      - Fri, 31 Jan 2020 07:23:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"a9caeb2e1e71d1ee55e841a62daa1ae4"
+      X-Runtime:
+      - '0.056473'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 1366e22e-a7c5-4878-b90e-7e0d651aabb5
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078062997","id":5747528,"location":"sci","copy_number":3,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","label":"Lewis Library"}]'
+    http_version: 
+  recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
 recorded_with: VCR 5.0.0

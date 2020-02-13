@@ -578,15 +578,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
   end
-  context 'A SCSB Item from a location with no pickup restrictions' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_scsb_mr) }
-    let(:requestable) { request.requestable.first }
-    describe '#pickup_locations' do
-      it 'has a single pickup location' do
-        expect(requestable.pickup_locations.size).to eq(1)
-        expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PK')
-      end
-    end
-  end
+  # context 'A SCSB Item from a location with no pickup restrictions' do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:request) { FactoryGirl.build(:request_scsb_mr) }
+  #   let(:requestable) { request.requestable.first }
+  #   describe '#pickup_locations' do
+  #     it 'has a single pickup location' do
+  #       expect(requestable.pickup_locations.size).to eq(1)
+  #       expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PK')
+  #     end
+  #   end
+  # end
 end

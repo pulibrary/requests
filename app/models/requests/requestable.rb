@@ -299,8 +299,8 @@ module Requests
     def scsb_pickup_override collection_code
       if collection_code == 'AR'
         [Requests::BibdataService.delivery_locations[:PJ]]
-      elsif collection_code == 'MR'
-        [Requests::BibdataService.delivery_locations[:PK]]
+      # elsif collection_code == 'MR'
+      #   [Requests::BibdataService.delivery_locations[:PK]]
       else
         location[:delivery_locations]
       end

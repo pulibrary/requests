@@ -716,7 +716,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      it "should show missing items as eligible for ill" do
+      # TODO: Remove when campus has re-opened
+      it "should not show missing items as eligible for ill" do
+        expect(subject.requestable[2].services.include?('ill')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should show missing items as eligible for ill" do
         expect(subject.requestable[2].services.include?('ill')).to be_truthy
       end
 
@@ -867,7 +873,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     subject { request }
 
     describe "#borrow_direct_eligible?" do
-      it "Should be Borrow Direct Eligible" do
+      # TODO: Remove when campus has re-opened
+      it "should not be Borrow Direct Eligible" do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "Should be Borrow Direct Eligible" do
         expect(subject.borrow_direct_eligible?).to be true
       end
     end
@@ -886,13 +898,25 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     subject { request }
 
     describe "#borrow_direct_eligible?" do
-      it "Should be Borrow Direct Eligible" do
+      # TODO: Remove when campus has re-opened
+      it "should not be Borrow Direct Eligible" do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "Should be Borrow Direct Eligible" do
         expect(subject.borrow_direct_eligible?).to be true
       end
     end
 
     describe "#ill_eligible?" do
-      it 'Should be ILL Eligible' do
+      # TODO: Remove when campus has re-opened
+      it 'should not be ILL Eligible' do
+        expect(subject.ill_eligible?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'Should be ILL Eligible' do
         expect(subject.ill_eligible?).to be true
       end
     end
@@ -915,19 +939,44 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      it "should be eligible for recap services" do
+      # TODO: Remove when campus has re-opened
+      it "should not be eligible for recap services" do
+        expect(subject.requestable.first.services.size).to eq(0)
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should be eligible for recap services" do
         expect(subject.requestable.first.services.size).to eq(3)
       end
 
-      it "should be eligible for ill services" do
+      # TODO: Remove when campus has re-opened
+      it "should not be eligible for ill services" do
+        expect(subject.requestable.first.services.include?('ill')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should be eligible for ill services" do
         expect(subject.requestable.first.services.include?('ill')).to be_truthy
       end
 
-      it "should be eligible for borrow direct services" do
+      # TODO: Remove when campus has re-opened
+      it "should not be eligible for borrow direct services" do
+        expect(subject.requestable.first.services.include?('bd')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should be eligible for borrow direct services" do
         expect(subject.requestable.first.services.include?('bd')).to be_truthy
       end
 
-      it "should be eligible for recall" do
+      # TODO: Remove when campus has re-opened
+      it "should not be eligible for recall" do
+        expect(subject.requestable.first.services.include?('recall')).to be_falsey
+        expect(subject.requestable.first.ill_eligible?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should be eligible for recall" do
         expect(subject.requestable.first.services.include?('recall')).to be_truthy
         expect(subject.requestable.first.ill_eligible?).to be true
       end
@@ -956,6 +1005,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       # these tests are temporarily pending until trace feature is resolved
       # see https://github.com/pulibrary/requests/issues/164 for info
+
       xit "should be eligible for multiple services" do
         expect(subject.requestable.first.services.size).to eq(2)
       end
@@ -1138,7 +1188,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe '#borrow_direct_eligible?' do
       it 'should not be borrow_direct_eligible' do
-        expect(subject.borrow_direct_eligible?).to be true
+        expect(subject.borrow_direct_eligible?).to be false
       end
     end
   end
@@ -1155,7 +1205,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request) { described_class.new(params) }
     subject { request }
     describe '#borrow_direct_eligible?' do
-      it 'should be borrow_direct_eligible?' do
+      # TODO: Remove when campus has re-opened
+      it 'should not be borrow_direct_eligible?' do
+        expect(subject.borrow_direct_eligible?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'should be borrow_direct_eligible?' do
         expect(subject.borrow_direct_eligible?).to be true
       end
     end

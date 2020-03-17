@@ -188,7 +188,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     end
 
     describe 'When visiting a voyager ID as a CAS User' do
-      it 'allow CAS patrons to request an available ReCAP item.' do
+      # TODO: Activate test when campus has re-opened
+      xit 'allow CAS patrons to request an available ReCAP item.' do
         stub_request(:post, Requests.config[:scsb_base]).
           with(headers: { 'Accept' => '*/*' }).
           to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})

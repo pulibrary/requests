@@ -725,7 +725,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a requestable with 'on order' service" do
-        pending "ask_me"
         expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
       end
 
@@ -768,7 +767,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a requestable with 'on order' service" do
-        pending "ask_me"
         expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
       end
 
@@ -949,7 +947,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "is eligible for recap_edd services" do
-        pending "ask_me"
         expect(request.requestable.first.services.include?('recap_edd')).to be_truthy
       end
     end
@@ -1072,7 +1069,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       # TODO: Remove when campus has re-opened
       it "is not eligible for recap services" do
-        pending "ask_me"
         expect(request.requestable.first.services.size).to eq(0)
       end
 
@@ -1131,7 +1127,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "is on the shelf" do
-        pending "ask_me"
         expect(request.requestable.first.services.include?('on_shelf')).to be_truthy
       end
 
@@ -1461,7 +1456,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       describe "#fill_in_eligible" do
         it "identifies any mfhds that require fill in option" do
-          pending "ask_me"
           expect(request_with_fill_in_eligible_holding.fill_in_eligible("2576882")).to be_truthy
         end
       end
@@ -1502,7 +1496,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       describe "#fill_in_eligible" do
         it "identifies any mfhds that require fill in option" do
-          pending "ask_me"
           expect(request_with_fill_in_eligible_holding.fill_in_eligible("4148813")).to be_truthy
         end
       end

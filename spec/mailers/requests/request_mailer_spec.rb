@@ -1,7 +1,7 @@
 require 'spec_helper'
 include Requests::ApplicationHelper
 
-describe Requests::RequestMailer, type: :mailer do
+describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
   let(:user_info) do
     {
       "user_name" => "Foo Request",
@@ -236,7 +236,7 @@ describe Requests::RequestMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.annexa.email')])
-      expect(mail.cc).to eq([submission_for_annexa.email])
+      expect(mail.cc).to eq([submission_for_annexa.email, "fstcirc@princeton.edu"])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -289,7 +289,7 @@ describe Requests::RequestMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.anxadoc.email')])
-      expect(mail.cc).to eq([submission_for_anxadoc.email])
+      expect(mail.cc).to eq([submission_for_anxadoc.email, "fstcirc@princeton.edu"])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -1022,5 +1022,120 @@ describe Requests::RequestMailer, type: :mailer do
     it "renders the body" do
       expect(mail.body.encoded).to have_content I18n.t('requests.lewis.email_conf_msg')
     end
+  end
+
+  context "Item on shelf in firestone" do
+    let(:requestable) do
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9092827",
+          "call_number" => "PS3566.I428 A6 2015",
+          "location_code" => "f",
+          "item_id" => "7267874",
+          "barcode" => "32101096297443",
+          "copy_number" => "1",
+          "status" => "Not Charged",
+          "type" => "on_shelf",
+          "pickup" => "PA"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    end
+    let(:bib) do
+      {
+        "id" => "9222024",
+        "title" => "This angel on my chest : stories",
+        "author" => "Pietrzyk, Leslie"
+      }.with_indifferent_access
+    end
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+
+    let(:submission_for_on_shelf) do
+      Requests::Submission.new(params)
+    end
+    # rubocop:disable RSpec/ExampleLength
+    it "sends the email and renders the headers and body" do
+      mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
+      expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
+      expect(mail.cc).to eq([I18n.t('requests.on_shelf.email')])
+      expect(mail.to).to eq([I18n.t('requests.on_shelf.email')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+    end
+
+    it "sends the confirmation email and renders the headers and body" do
+      mail = Requests::RequestMailer.send("on_shelf_confirmation", submission_for_on_shelf).deliver_now
+      expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
+      expect(mail.to).to eq([submission_for_on_shelf.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+    end
+    # rubocop:enable RSpec/ExampleLength
+  end
+
+  context "Item on shelf in East Asian" do
+    let(:requestable) do
+      [
+        { "selected" => "true",
+          "mfhd" => "3892744",
+          "call_number" => "PL2727.S2 C574 1998",
+          "location_code" => "c",
+          "item_id" => "3020750",
+          "barcode" => "32101042398345",
+          "copy_number" => "1",
+          "status" => "Not Charged",
+          "type" => "on_shelf",
+          "pickup" => "PA" }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    end
+    let(:bib) do
+      {
+        "id" => "3573258",
+        "title" => "Hong lou fang zhen : Da guan yuan zai Gong wang fu 红楼访真　: 大观园在恭王府　",
+        "author" => "Zhou, Ruchang"
+      }.with_indifferent_access
+    end
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+
+    let(:submission_for_on_shelf) do
+      Requests::Submission.new(params)
+    end
+
+    # rubocop:disable RSpec/ExampleLength
+    it "sends the email and renders the headers and body" do
+      mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
+      expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
+      expect(mail.to).to eq(["gestcirc@princeton.edu"])
+      expect(mail.cc).to eq([I18n.t('requests.on_shelf.email')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+    end
+
+    it "sends the confirmation email and renders the headers and body" do
+      mail = Requests::RequestMailer.send("on_shelf_confirmation", submission_for_on_shelf).deliver_now
+      expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
+      expect(mail.to).to eq([submission_for_on_shelf.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+    end
+    # rubocop:enable RSpec/ExampleLength
   end
 end

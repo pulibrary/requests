@@ -1,5 +1,8 @@
 module Requests
   class RequestMailer < ApplicationMailer
+    # temporary changes issue 438
+    include Requests::Bibdata
+
     def paging_email(submission)
       @submission = submission
       pickups = []
@@ -35,7 +38,9 @@ module Requests
     def annexa_email(submission)
       @submission = submission
       destination_email = annexa_email_destinations(submission: @submission)
-      cc_email = [@submission.email]
+      # temporary changes issue 438
+      # cc_email = [@submission.email]
+      cc_email = [@submission.email, I18n.t('requests.on_shelf.email')]
       mail(to: destination_email,
            cc: cc_email,
            from: I18n.t('requests.default.email_from'),
@@ -59,6 +64,8 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.ppl.email')
       mail(to: destination_email,
+           # temporary changes issue 438
+           cc: [I18n.t('requests.on_shelf.email')],
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.ppl.email_subject'), @submission.user_barcode))
     end
@@ -75,6 +82,8 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.lewis.email')
       mail(to: destination_email,
+           # temporary changes issue 438
+           cc: [I18n.t('requests.on_shelf.email')],
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.lewis.email_subject'), @submission.user_barcode))
     end
@@ -85,6 +94,26 @@ module Requests
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.lewis.email_subject'), @submission.user_barcode))
+    end
+
+    # temporary changes issue 438
+    def on_shelf_email(submission)
+      location_email = get_location_contact_email(submission.items.first[:location_code])
+      @submission = submission
+      destination_email = I18n.t('requests.on_shelf.email')
+      mail(to: location_email,
+           cc: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.on_shelf.email_subject'), @submission.user_barcode))
+    end
+
+    # temporary changes issue 438
+    def on_shelf_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.on_shelf.email_subject'), @submission.user_barcode))
     end
 
     def on_order_email(submission)

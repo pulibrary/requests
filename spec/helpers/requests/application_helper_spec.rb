@@ -31,21 +31,81 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     it 'returns a boolean to disable/enable submit' do
       expect(submit_button_disabled).to be_truthy
     end
+
+    # temporary for #348
+    context "Firestone Classics Collection (Clas)" do
+      let(:params) do
+        {
+          system_id: '9222024',
+          user: user
+        }
+      end
+      it 'returns a boolean to enable submit for logged in user' do
+        assign(:user, user)
+        expect(submit_button_disabled).to be_falsey
+      end
+
+      it 'returns a boolean to disable submit for guest' do
+        assign(:user, nil)
+        expect(submit_button_disabled).to be_truthy
+      end
+    end
+
+    describe 'lewis library' do
+      let(:params) do
+        {
+          system_id: '3848872',
+          user: user
+        }
+      end
+      it 'lewis is a submitable request' do
+        assign(:user, user)
+        expect(submit_button_disabled).to be false
+      end
+    end
   end
 
-  describe 'lewis paging' do
+  describe 'firestone pickup_choices' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '3848872',
+        system_id: '491654',
+        mfhd: '534140',
         user: user
       }
+    end
+    let(:default_pickups) do
+      [{ label: "Firestone Library", gfa_code: "PA", staff_only: false }, { label: "Architecture Library", gfa_code: "PW", staff_only: false }, { label: "East Asian Library", gfa_code: "PL", staff_only: false }, { label: "Lewis Library", gfa_code: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_code: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_code: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_code: "PQ", staff_only: false }, { label: "Stokes Library", gfa_code: "PM", staff_only: false }]
     end
     let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
     let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
-      expect(submit_button_disabled).to be false
+      choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
+      # temporary all pickup locations are Firestone
+      # expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PN\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
+      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
+    end
+  end
+
+  describe 'multiple delivery options' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) do
+      {
+        system_id: '426420',
+        mfhd: '3538795',
+        user: user
+      }
+    end
+    let(:default_pickups) do
+      [{ label: "Firestone Library", gfa_code: "PA", staff_only: false }, { label: "Architecture Library", gfa_code: "PW", staff_only: false }, { label: "East Asian Library", gfa_code: "PL", staff_only: false }, { label: "Lewis Library", gfa_code: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_code: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_code: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_code: "PQ", staff_only: false }, { label: "Stokes Library", gfa_code: "PM", staff_only: false }]
+    end
+    let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
+    let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
+    let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
+    it 'lewis is a submitable request' do
+      choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
+      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
     end
   end
 
@@ -102,7 +162,9 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: ['lewis'], charged?: false, aeon?: false, on_shelf?: false } }
       it 'a message for lewis' do
         expect(helper.show_service_options(requestable, 'acb')).to eq \
-          "<ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library, will be delivered to Lewis Library Service desk on first floor.</li></ul>"
+          "<ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library. Request for delivery in 1-2 business days.</li></ul>"
+        # temporary all items are delivered to Firestone
+        # "<ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library, will be delivered to Lewis Library Service desk on first floor.</li></ul>"
       end
     end
 
@@ -143,11 +205,13 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) do
         { services: ['on_shelf'], charged?: false, aeon?: false,
           voyager_managed?: false, ask_me?: false, on_shelf?: true,
-          map_url: 'map_abc', traceable?: false }
+          map_url: 'map_abc', traceable?: false, location: { library: { label: 'abc' } } }
       end
       it 'a link to a map' do
         assign(:request, request)
-        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
+        # temporary change no maps everything is pageable
+        # expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
+        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item text-muted\">Pageable item at abc. Request for delivery in 1-2 business days.</li></ul></div>"
       end
     end
 
@@ -155,11 +219,13 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) do
         { services: ['on_shelf'], charged?: false, aeon?: false,
           voyager_managed?: false, ask_me?: false, on_shelf?: true,
-          map_url: 'map_abc', traceable?: true }
+          map_url: 'map_abc', traceable?: true, location: { library: { label: 'abc' } } }
       end
       it 'a link to a map' do
         assign(:request, request)
-        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
+        # temporary change no maps everything is pageable
+        # expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
+        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item text-muted\">Pageable item at abc. Request for delivery in 1-2 business days.</li></ul></div>"
       end
     end
 
@@ -190,7 +256,9 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false } }
       it 'shows default pickup location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          card_div + '<select name="requestable[][pickup]" id="requestable__pickup"><option value="">Select a Delivery Location</option><option value="xx">place</option>' + "\n" + '<option value="xz">place two</option></select></div>'
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: place</label></div>'
+        # temporary change on pageable to one location
+        # card_div + '<select name="requestable[][pickup]" id="requestable__pickup"><option value="">Select a Delivery Location</option><option value="xx">place</option>' + "\n" + '<option value="xz">place two</option></select></div>'
       end
     end
 
@@ -353,21 +421,21 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "services and open? and not pageable?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: true, pageable?: false } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: true, pageable?: false, on_shelf?: false } }
       it 'does disable' do
         expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 
     context "services and always_requestable?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false, on_shelf?: false } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 
     context "services" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false, on_shelf?: false } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_falsey
       end

@@ -90,14 +90,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:in_process?] = true
         end
         it "returns in_process in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['in_process'])
         end
         context "unauthorized user" do
           let(:user) { FactoryGirl.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
-            pending "ask_me"
             expect(router.calculate_services).to eq([])
           end
         end
@@ -108,14 +106,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:on_order?] = true
         end
         it "returns on_order in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['on_order'])
         end
         context "unauthorized user" do
           let(:user) { FactoryGirl.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
-            pending "ask_me"
             expect(router.calculate_services).to eq([])
           end
         end
@@ -126,7 +122,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:aeon?] = true
         end
         it "returns aeon in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['aeon'])
         end
       end
@@ -136,7 +131,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:preservation?] = true
         end
         it "returns pres in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['pres'])
         end
       end
@@ -146,7 +140,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:annexa?] = true
         end
         it "returns annexa in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['annexa'])
         end
       end
@@ -156,7 +149,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:annexb?] = true
         end
         it "returns annexb in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['annexb'])
         end
       end
@@ -166,7 +158,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:plasma?] = true
         end
         it "returns ppl in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['ppl'])
         end
       end
@@ -176,7 +167,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:lewis?] = true
         end
         it "returns lewis in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['lewis'])
         end
       end
@@ -188,14 +178,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:recap_edd?] = true
         end
         it "returns recap_edd in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['recap_edd'])
         end
         context "unauthorized user" do
           let(:user) { FactoryGirl.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
-            pending "ask_me"
             expect(router.calculate_services).to eq([])
           end
         end
@@ -204,7 +192,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
             stubbed_questions[:item_data?] = false
           end
           it "returns recap_no_items in the services" do
-            pending "ask_me"
             expect(router.calculate_services).to eq(['recap_no_items'])
           end
         end
@@ -215,14 +202,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:pageable?] = true
         end
         it "returns paging in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['paging'])
         end
       end
 
       context "on_shelf" do
         it "returns on_shelf in the services" do
-          pending "ask_me"
           expect(router.calculate_services).to eq(['on_shelf'])
         end
       end

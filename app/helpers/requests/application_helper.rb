@@ -33,7 +33,7 @@ module Requests
       error_keys.any? { |item| user_errors.include? item }
     end
 
-    def show_service_options requestable, mfhd_id
+    def show_service_options requestable, _mfhd_id
       if requestable.services.empty?
         content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
       elsif requestable.charged? && !requestable.aeon?
@@ -43,12 +43,17 @@ module Requests
       elsif requestable.aeon?
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
       elsif requestable.on_shelf?
-        content_tag(:div) do
-          concat link_to 'Where to find it', requestable.map_url(mfhd_id)
-          if requestable.traceable?
-            concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
-          end
+        brief_msg = I18n.t("requests.on_shelf.brief_msg", location: requestable.location[:library][:label])
+        content_tag(:ul, class: "service-list") do
+          concat content_tag(:li, brief_msg, class: 'service-item text-muted')
         end
+      # temporary changes issue 438
+      #  content_tag(:div) do
+      #    concat link_to 'Where to find it', requestable.map_url(mfhd_id)
+      #    if requestable.traceable?
+      #      concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item')
+      #    end
+      #  end
       else
         unless requestable.services.include? 'recap_edd'
         # unless !(requestable.services && ['recap','recap_edd']).empty?
@@ -104,6 +109,9 @@ module Requests
         recap_print_only_input requestable
       elsif requestable.services.include? 'trace'
         request_input('trace')
+      # temporary #348
+      elsif requestable.services.include? 'on_shelf'
+        request_input('on_shelf')
       else
         nil
       end
@@ -164,11 +172,14 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices requestable, default_pickups
-      unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
+      unless requestable.charged? || requestable.services.empty? # requestable.pickup_locations.nil?
+      # temporary changes issue 438
+      # unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
         class_list = "card card-body bg-light collapse show request--print"
         if requestable.services.include?('recap_edd')
           class_list = "card card-body bg-light collapse request--print"
         end
+        # temporary changes issue 438
         # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
           if requestable.pending?
@@ -180,15 +191,18 @@ module Requests
           else
             locs = self.available_pickups(requestable, default_pickups)
           end
-          if locs.size > 1
-            concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-          else
-            style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-            name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
-            hidden = hidden_field_tag "#{name}", "", value: "#{locs[0][:gfa_code]}", class: 'single-pickup-hidden'
-            label = label_tag "#{name}", "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: "#{style}"
-            hidden + label
-          end
+          # temporary changes issue 438
+          # if locs.size > 1
+          #  concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+          # else
+          style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
+          name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
+          hidden = hidden_field_tag "#{name}", "", value: "#{locs[0][:gfa_code]}", class: 'single-pickup-hidden'
+            # temporary changes for issue 438.
+            # label = label_tag "#{name}", "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: "#{style}"
+          label = label_tag "#{name}", "Pickup location: Firestone Library", class: 'single-pickup', style: "#{style}"
+          hidden + label
+          # end
         end
       end
     end
@@ -370,6 +384,10 @@ module Requests
       elsif requestable.charged?
         # true
         false
+      # temporary changes issue 438 do not disable the checkbox for circulating items
+      elsif requestable.on_shelf?
+        !requestable.location[:circulates] || @user.blank? || @user.guest
+        # false
       elsif requestable.open? && !requestable.pageable?
         true
       elsif requestable.always_requestable?
@@ -408,7 +426,9 @@ module Requests
         elsif requestable_list.first.on_reserve?
           true
         elsif requestable_list.first.services.include? 'on_shelf'
-          true
+          # temporary changes issue 438 do not disable the button for circulating items
+          !requestable_list.first.location[:circulates] || @user.blank? || @user.guest
+          # false
         elsif requestable_list.first.charged?
           if requestable_list.first.annexa?
             false
@@ -425,7 +445,7 @@ module Requests
           false
         end
       else
-        if has_submitable? requestable_list
+        if not_submitable? requestable_list
           true
         else
           false
@@ -433,14 +453,14 @@ module Requests
       end
     end
 
-    def has_submitable? requestable_list
-      submitable = true
+    def not_submitable? requestable_list
+      not_submitable = true
       requestable_list.each do |requestable|
-        unless (requestable.services & self.submitable).empty?
-          submitable = false
+        if (requestable.services & self.submitable).present?
+          not_submitable = false
         end
       end
-      submitable
+      not_submitable
     end
 
     def submitable

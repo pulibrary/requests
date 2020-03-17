@@ -95,7 +95,8 @@ module Requests
               services << 'lewis'
             elsif requestable.recap?
               if requestable.has_item_data?
-                services << 'recap'
+                # No physical recap delivery during campus closure
+                # services << 'recap'
                 if (requestable.recap_edd? && auth_user?)
                   services << 'recap_edd'
                 end

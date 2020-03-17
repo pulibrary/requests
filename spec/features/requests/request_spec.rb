@@ -93,7 +93,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_no_content 'Electronic Delivery'
           # temporary change issue 438
-          # select('Firestone Library', :from => 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           # wait_for_ajax
           expect(page).to have_content 'Request submitted'
@@ -203,7 +203,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_selector '#request_user_barcode', visible: false
           choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
           # temporary changes issue 438
-          # select('Firestone Library', :from => 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pickup')
           expect(page).to have_button('Request this Item', disabled: false)
         end
 
@@ -233,8 +233,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
           # temporary changes issue 438
-          # select('Firestone Library', :from => 'requestable__pickup')
-          # select('Lewis Library', :from => 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pickup')
+          # select('Lewis Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
         end

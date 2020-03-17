@@ -1094,7 +1094,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "on_shelf",
-          "pickup" => "PA" }.with_indifferent_access,
+          "pickup" => "PA"
+        }.with_indifferent_access,
         {
           "selected" => "false"
         }.with_indifferent_access

@@ -799,7 +799,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      it "should be eligible for recap services" do
+      # TODO: Remove when campus has re-opened
+      it "should not be eligible for recap services during campus closure" do
+        expect(subject.requestable.last.services.include?('recap')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should be eligible for recap services" do
         expect(subject.requestable.first.services.include?('recap')).to be_truthy
       end
 
@@ -826,7 +832,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      it "should be eligible for recap services" do
+      # TODO: Remove when campus has re-opened
+      it "should not be eligible for recap services during campus closure" do
+        expect(subject.requestable.last.services.include?('recap')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should be eligible for recap services" do
         expect(subject.requestable.last.services.include?('recap')).to be_truthy
       end
 

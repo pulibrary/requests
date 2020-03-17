@@ -72,7 +72,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).to have_content 'Request to View in Reading Room'
       end
 
-      it 'allows guest patrons to request a physical recap item' do
+      # TODO: Remove when campus has re-opened
+      it 'guest patrons can not request a physical recap item during the closure' do
+        visit '/requests/9944355'
+        fill_in 'request_email', :with => 'name@email.com'
+        fill_in 'request_user_name', :with => 'foobar'
+        click_button I18n.t('requests.account.other_user_login_btn')
+        expect(page).to have_no_content 'Electronic Delivery'
+        expect(page).to have_content 'Item is not requestable'
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'allows guest patrons to request a physical recap item' do
         visit '/requests/9944355'
         # click_link(I18n.t('requests.account.other_user_login_msg'))
         fill_in 'request_email', :with => 'name@email.com'

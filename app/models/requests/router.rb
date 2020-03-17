@@ -100,6 +100,7 @@ module Requests
                 if (requestable.recap_edd? && auth_user?)
                   services << 'recap_edd'
                 end
+              # No physical recap delivery during campus closure
               else
                 services << 'recap_no_items'
               end

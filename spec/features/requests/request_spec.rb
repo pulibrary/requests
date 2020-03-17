@@ -92,7 +92,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_no_content 'Electronic Delivery'
-          select('Firestone Library', from: 'requestable__pickup')
+          # temporary change issue 438
+          # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           # wait_for_ajax
           expect(page).to have_content 'Request submitted'
@@ -200,7 +201,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
           choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
-          select('Firestone Library', from: 'requestable__pickup')
+          # temporary changes issue 438
+          # select('Firestone Library', from: 'requestable__pickup')
           expect(page).to have_button('Request this Item', disabled: false)
         end
 
@@ -229,8 +231,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
-          select('Firestone Library', from: 'requestable__pickup')
-          select('Lewis Library', from: 'requestable__pickup')
+          # temporary changes issue 438
+          # select('Firestone Library', from: 'requestable__pickup')
+          # select('Lewis Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
         end
@@ -249,7 +252,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
-          expect(page).to have_link('Where to find it')
+          # temporary changes 438
+          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pageable item at Firestone Library. Request for delivery in 1-2 business days.'
+          # expect(page).to have_link('Where to find it')
         end
 
         it 'displays an ark link for a plum item' do

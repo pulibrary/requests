@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module Requests
   module ApplicationHelper
     def sanitize(str)
@@ -61,19 +62,25 @@ module Requests
     end
 
     def hidden_service_options(requestable)
+      return if output_request_input(requestable)
+
+      if requestable.services.include?('recap_edd') && requestable.services.include?('recap')
+        recap_radio_button_group requestable
+      elsif requestable.services.include? 'recap'
+        recap_print_only_input requestable
+      # temporary #348
+      elsif requestable.services.include? 'on_shelf'
+        request_input('on_shelf')
+      end
+    end
+
+    def output_request_input(requestable)
       found = false
       ['annexa', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace'].each do |type|
         next unless requestable.services.include?(type)
         found = true
         request_input(type)
         break
-      end
-      return if found
-
-      if requestable.services.include?('recap_edd') && requestable.services.include?('recap')
-        recap_radio_button_group requestable
-      elsif requestable.services.include? 'recap'
-        recap_print_only_input requestable
       end
     end
 
@@ -126,7 +133,9 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices(requestable, default_pickups)
-      return if requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
+      # temporary changes issue 438
+      # return if requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
+      return if requestable.charged? || requestable.services.empty? # requestable.pickup_locations.nil?
       # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
       prefered_request_content_tag(requestable, default_pickups)
     end
@@ -136,15 +145,16 @@ module Requests
       class_list = "card card-body bg-light collapse request--print" if requestable.services.include?('recap_edd')
       content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
         locs = pickup_locations(requestable, default_pickups)
-        if locs.size > 1
-          concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-        else
-          style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-          name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
-          hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_code]).to_s, class: 'single-pickup-hidden'
-          label = label_tag name.to_s, "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
-          hidden + label
-        end
+        # temporary changes issue 438
+        # if locs.size > 1
+        #  concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+        # else
+        style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
+        name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
+        hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_code]).to_s, class: 'single-pickup-hidden'
+        label = label_tag name.to_s, "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
+        hidden + label
+        # end
       end
     end
 
@@ -282,6 +292,7 @@ module Requests
       check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
+    # rubocop:disable Metrics/MethodLength
     def check_box_disabled(requestable)
       if requestable.services.empty? || requestable.on_reserve?
         true
@@ -292,12 +303,16 @@ module Requests
       elsif requestable.charged?
         # true
         false
+      # temporary changes issue 438 do not disable the checkbox for circulating items
+      elsif requestable.on_shelf?
+        !requestable.location[:circulates] || @user.blank? || @user.guest
       elsif (requestable.open? && !requestable.pageable?) || requestable.always_requestable?
         true
       else
         false
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)
@@ -322,8 +337,12 @@ module Requests
     end
 
     def submit_button_disabled(requestable_list)
+      # temporary chane issue 438 guest can no longer check out materials
+      return true if @user.blank? || @user.guest
       return unsubmittable? requestable_list unless requestable_list.size == 1
-      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf') || requestable_list.first.ask_me?
+      # temporary changes issue 438 do not disable the button for circulating items
+      # requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf') || requestable_list.first.ask_me?
+      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || requestable_list.first.ask_me?
     end
 
     def unsubmittable?(requestable_list)
@@ -331,7 +350,9 @@ module Requests
     end
 
     def submitable_services
-      ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
+      # temporary changes issue 438 do not disable the button for circulating items
+      # ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
+      ['on_shelf', 'in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
     end
 
     def submit_message(requestable_list)
@@ -417,10 +438,15 @@ module Requests
         end
       end
 
-      def display_on_shelf(requestable, mfhd_id)
+      def display_on_shelf(requestable, _mfhd_id)
         content_tag(:div) do
-          concat link_to 'Where to find it', requestable.map_url(mfhd_id)
-          concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?
+          # temporary changes issue 438
+          brief_msg = I18n.t("requests.on_shelf.brief_msg", location: requestable.location[:library][:label])
+          content_tag(:ul, class: "service-list") do
+            concat content_tag(:li, brief_msg, class: 'service-item text-muted')
+          end
+          # concat link_to 'Where to find it', requestable.map_url(mfhd_id)
+          # concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?
         end
       end
 
@@ -449,3 +475,4 @@ module Requests
       end
   end
 end
+# rubocop:enable Metrics/ModuleLength

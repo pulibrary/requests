@@ -33,7 +33,15 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           .to_return(status: 200, body: scsb_availability_response)
       end
 
-      it "has Borrow Direct, ILL, but not Recall as a request service option" do
+      # TODO: Remove when campus has re-opened
+      it "does not have Borrow Direct, ILL, or Recall as a request service option" do
+        expect(router.calculate_services.include?('bd')).to be_falsy
+        expect(router.calculate_services.include?('ill')).to be_falsy
+        expect(router.calculate_services.include?('recall')).to be_falsy
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "has Borrow Direct, ILL, but not Recall as a request service option" do
         expect(router.calculate_services.include?('bd')).to be_truthy
         expect(router.calculate_services.include?('ill')).to be_truthy
         expect(router.calculate_services.include?('recall')).to be_falsy

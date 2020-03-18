@@ -55,7 +55,7 @@
             <th>Select</th>
             <th>Enumeration</th>
             <th>Status</th>
-            <th id="delivery_options">Delivery Options</th>
+            <th colspan="2" id="delivery_options">Delivery Options</th>
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
@@ -85,6 +85,11 @@
                       <%= requestable.item[:use_statement] %>
                     <% end %>
                   </td>
+                  <%# if requestable.services.include?('scan') %>
+                    <td>
+                      <a class='button' href='<%= requestable.illiad_request_url(@request.ctx, requestable) %>'>Scan and Deliver</a>
+                    </td>
+                  <% end %>
                 <td class='request--options' aria-live="polite">
                   <% if requestable.ill_eligible? %>
                     <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>

@@ -55,7 +55,7 @@
             <th>Select</th>
             <th>Enumeration</th>
             <th>Status</th>
-            <th id="delivery_options">Delivery Options</th>
+            <th colspan="2" id="delivery_options">Delivery Options</th>
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
@@ -85,6 +85,17 @@
                       <%= requestable.item[:use_statement] %>
                     <% end %>
                   </td>
+                  <% if requestable.services.include?('scan') %>
+                    <td>
+                        <ul class='service-list'>
+                          <li class="service-item text-muted">
+                            Request a scanned copy or a scanned selection for download. Expected delivery time 2-3 days.
+                            <br/>
+                            <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx, requestable) %>'>Scan and Deliver</a>
+                          </li>
+                        </ul>
+                      </td>
+                  <% end %>
                 <td class='request--options' aria-live="polite">
                   <% if requestable.ill_eligible? %>
                     <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx, requestable) %>"></span>
@@ -110,7 +121,7 @@
                       <%= hidden_field_tag "requestable[][type]", "recap" %>
                       <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
                       <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
-                      <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
+                      <small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
                       <%= render partial: "edd_fields", locals: { requestable: requestable } %>
                   <% end %>
                 </td>

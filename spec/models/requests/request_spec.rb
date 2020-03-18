@@ -939,8 +939,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable.size).to be >= 1
       end
 
-      # TODO: Remove when campus has re-opened
-      it "should not be eligible for recap services" do
+      # TODO: Activate when campus has re-opened
+      xit "should not be eligible for recap services" do
         expect(subject.requestable.first.services.size).to eq(0)
       end
 

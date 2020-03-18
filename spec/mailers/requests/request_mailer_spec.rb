@@ -1062,7 +1062,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     let(:submission_for_on_shelf) do
       Requests::Submission.new(params)
     end
-    # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
       expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
@@ -1094,8 +1093,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "on_shelf",
-          "pickup" => "PA"
-        }.with_indifferent_access,
+          "pickup" => "PA" }.with_indifferent_access,
         {
           "selected" => "false"
         }.with_indifferent_access
@@ -1119,7 +1117,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     let(:submission_for_on_shelf) do
       Requests::Submission.new(params)
     end
-    # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
       expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))

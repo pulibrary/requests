@@ -140,7 +140,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:annexa?] = true
         end
         it "returns annexa in the services" do
-          expect(router.calculate_services).to eq(['annexa', 'scan'])
+          expect(router.calculate_services).to eq(['annexa', "scan"])
         end
       end
 
@@ -149,7 +149,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:annexb?] = true
         end
         it "returns annexb in the services" do
-          expect(router.calculate_services).to eq(['annexb', 'scan'])
+          expect(router.calculate_services).to eq(['annexb', "scan"])
         end
       end
 
@@ -158,7 +158,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:plasma?] = true
         end
         it "returns ppl in the services" do
-          expect(router.calculate_services).to eq(['ppl', 'scan'])
+          expect(router.calculate_services).to eq(['ppl', "scan"])
         end
       end
 
@@ -167,7 +167,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:lewis?] = true
         end
         it "returns lewis in the services" do
-          expect(router.calculate_services).to eq(['lewis', 'scan'])
+          expect(router.calculate_services).to eq(['lewis', "scan"])
         end
       end
 
@@ -184,7 +184,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           let(:user) { FactoryGirl.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
-            expect(router.calculate_services).to eq(['scan'])
+            expect(router.calculate_services).to eq(["scan"])
           end
         end
         context "no items" do

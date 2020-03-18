@@ -74,11 +74,23 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.first.services.include?('recall')).to be_falsey
       end
 
-      it 'should be available via borrow direct' do
+      # TODO: Remove when campus has re-opened
+      it 'should not be available via borrow direct' do
+        expect(requestable.first.services.include?('bd')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'should be available via borrow direct' do
         expect(requestable.first.services.include?('bd')).to be_truthy
       end
 
-      it 'should be available via ILL' do
+      # TODO: Remove when campus has re-opened
+      it 'should not be available via ILL' do
+        expect(requestable.first.services.include?('ill')).to be_falsey
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'should be available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_truthy
       end
     end
@@ -122,11 +134,23 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.first.missing?).to be true
       end
 
-      it 'should be eligible for borrow direct' do
+      # TODO: Remove when campus has re-opened
+      it 'should not be eligible for borrow direct' do
+        expect(requestable.first.borrow_direct?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'should be eligible for borrow direct' do
         expect(requestable.first.borrow_direct?).to be true
       end
 
-      it 'should be eligible for ill' do
+      # TODO: Remove when campus has re-opened
+      it 'should not be eligible for ill' do
+        expect(requestable.first.ill_eligible?).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit 'should be eligible for ill' do
         expect(requestable.first.ill_eligible?).to be true
       end
     end
@@ -381,15 +405,33 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_charged) { requestable_holding.first }
 
     describe '# checked-out requestable' do
-      it "should have borrow direct request service available" do
+      # TODO: Remove when campus has re-opened
+      it "should not have borrow direct request service available" do
+        expect(requestable_charged.services.include?('bd')).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should have borrow direct request service available" do
         expect(requestable_charged.services.include?('bd')).to be true
       end
 
-      it "should have ILL request service available" do
+      # TODO: Remove when campus has re-opened
+      it "should not have ILL request service available" do
+        expect(requestable_charged.services.include?('ill')).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be true
       end
 
-      it "should have recall request service available" do
+      # TODO: Remove when campus has re-opened
+      it "should not have recall request service available" do
+        expect(requestable_charged.services.include?('recall')).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should have recall request service available" do
         expect(requestable_charged.services.include?('recall')).to be true
       end
     end
@@ -398,11 +440,23 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_missing) { request_missing.requestable.first }
 
     describe '# missing requestable' do
-      it "should have borrow direct request service available" do
+      # TODO: Remove when campus has re-opened
+      it "should not have borrow direct request service available" do
+        expect(requestable_missing.services.include?('bd')).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should have borrow direct request service available" do
         expect(requestable_missing.services.include?('bd')).to be true
       end
 
-      it "should have ILL request service available" do
+      # TODO: Remove when campus has re-opened
+      it "should not have ILL request service available" do
+        expect(requestable_missing.services.include?('ill')).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should have ILL request service available" do
         expect(requestable_missing.services.include?('ill')).to be true
       end
 
@@ -469,7 +523,13 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_charged) { requestable_holding.first }
 
     describe '#checked-out requestable' do
-      it "should have recall request service available" do
+      # TODO: Remove when campus has re-opened
+      it "should not have recall request service available" do
+        expect(requestable_charged.services.include?('recall')).to be false
+      end
+
+      # TODO: Activate test when campus has re-opened
+      xit "should have recall request service available" do
         expect(requestable_charged.services.include?('recall')).to be true
       end
 

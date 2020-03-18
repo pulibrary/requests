@@ -46,29 +46,30 @@ module Requests
         else
           ## my item status is negative
           if requestable.charged? && !requestable.aeon?
-            if (!requestable.enumerated? && cas_user? && !has_loanable?)
-              services << 'bd'
-            end
-            # for mongraphs - title level check
-            if (cas_user? && !has_loanable?)
-              services << 'ill'
-            end
-            # for serials - copy level check
-            if (cas_user? && requestable.enumerated?)
-              services << 'ill'
-            end
-            # for mongraphs - title level check
-            if !has_loanable? && auth_user?
-              unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
-                services << 'recall'
-              end
-            end
-            # for serials - copy level check
-            if (auth_user? && requestable.enumerated?)
-              unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
-                services << 'recall'
-              end
-            end
+            # TODO: Uncomment this block when library returns to normal operation
+            # if (!requestable.enumerated? && cas_user? && !has_loanable?)
+            #   services << 'bd'
+            # end
+            # # for mongraphs - title level check
+            # if (cas_user? && !has_loanable?)
+            #   services << 'ill'
+            # end
+            # # for serials - copy level check
+            # if (cas_user? && requestable.enumerated?)
+            #   services << 'ill'
+            # end
+            # # for mongraphs - title level check
+            # if !has_loanable? && auth_user?
+            #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
+            #     services << 'recall'
+            #   end
+            # end
+            # # for serials - copy level check
+            # if (auth_user? && requestable.enumerated?)
+            #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
+            #     services << 'recall'
+            #   end
+            # end
           elsif requestable.in_process?
             if auth_user?
               services << 'in_process'

@@ -85,7 +85,7 @@
                       <%= requestable.item[:use_statement] %>
                     <% end %>
                   </td>
-                  <%# if requestable.services.include?('scan') %>
+                  <% if requestable.services.include?('scan') %>
                     <td>
                       <a class='button' href='<%= requestable.illiad_request_url(@request.ctx, requestable) %>'>Scan and Deliver</a>
                     </td>

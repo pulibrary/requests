@@ -10,26 +10,31 @@
       </a>
     </div>
   </div>
-  <div class="doc-<%= @request.system_id %>">
-    <div class="col-12">
-      <h1>
-        <%= request_title %>
-      </h1>
-    </div>
-    <div class="col-12">
-      <div class="bibliographic">
-        <%= format_brief_record_display @request %>
+  <%# temporary for issue 452 %>
+  <% if false %>
+    <div class="doc-<%= @request.system_id %>">
+        <h1>
+          <%= request_title %>
+        </h1>
       </div>
+      <div class="col-12">
+        <div class="bibliographic">
+          <%= format_brief_record_display @request %>
+        </div>
+      </div>
+      <%= render 'flash_messages' %>
     </div>
-    <%= render 'flash_messages' %>
-  </div>
-  <% if @request.has_requestable? %>
-    <div class="col-12">
-      <%= render "form" %>
-    </div>
-    <% else %>
-    <div class="message flash-alert">
-      <p>See Circulation Desk, there are no requestable items for this record</p>
-    </div>
+    <% if @request.has_requestable? %>
+      <div class="col-12">
+        <%= render "form" %>
+      </div>
+      <% else %>
+      <div class="message flash-alert">
+        <p>See Circulation Desk, there are no requestable items for this record</p>
+      </div>
+    <% end %>
   <% end %>
+  <div class="doc-<%= @request.system_id %>">
+    <h1>Requests are not being accepted until at least 4/6 including Borrow Direct and Interlibrary Loan services.</h1>
+  </div>
 </div>

@@ -21,7 +21,6 @@ Metrics/CyclomaticComplexity:
     - 'app/models/requests/recall.rb'
     - 'app/models/requests/request.rb'
     - 'app/models/requests/router.rb'
-    - 'app/models/requests/submission.rb'
 
 Metrics/LineLength:
   Exclude:
@@ -30,7 +29,6 @@ Metrics/LineLength:
     - 'app/helpers/requests/request_helper.rb'
     - 'app/models/concerns/requests/voyager.rb'
     - 'app/models/requests/borrow_direct_lookup.rb'
-    - 'app/models/requests/submission.rb'
     - 'spec/controllers/requests/request_controller_spec.rb'
     - 'spec/models/requests/pickup_lookup_spec.rb'
     - 'spec/models/requests/recall_spec.rb'

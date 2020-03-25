@@ -120,6 +120,9 @@ module Requests
       else # Default Service is Aeon
         services << 'aeon'
       end
+      unless requestable.aeon?
+        services << 'scan'
+      end
       services
     end
 

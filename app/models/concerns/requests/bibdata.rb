@@ -67,5 +67,14 @@ module Requests
       end
       public_locs + staff_locs
     end
+
+    # get the location contact email from thr delivery locations via the library code
+    def get_location_contact_email(location_code)
+      code = get_location(location_code)
+      library_code = code[:library]["code"]
+      return I18n.t('requests.on_shelf.email') if library_code == "firestone"
+      delivery_location = Requests::BibdataService.delivery_locations.select { |_key, value| value[:library][:code] == library_code }
+      delivery_location.values.first[:contact_email]
+    end
   end
 end

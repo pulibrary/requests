@@ -30,21 +30,78 @@ RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name:
     it 'returns a boolean to disable/enable submit' do
       expect(submit_button_disabled).to be_truthy
     end
+
+    # temporary for #348
+    context "Firestone Classics Collection (Clas)" do
+      let(:params) {
+        {
+          system_id: '9222024',
+          user: user
+        }
+      }
+      it 'returns a boolean to enable submit for logged in user' do
+        assign(:user, user)
+        expect(submit_button_disabled).to be_falsey
+      end
+
+      it 'returns a boolean to disable submit for guest' do
+        assign(:user, nil)
+        expect(submit_button_disabled).to be_truthy
+      end
+    end
+
+    describe 'lewis library' do
+      let(:params) {
+        {
+          system_id: '3848872',
+          user: user
+        }
+      }
+      it 'lewis is a submitable request' do
+        expect(submit_button_disabled).to be false
+      end
+    end
   end
 
-  describe 'lewis paging' do
+  describe 'firestone pickup_choices' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) {
       {
-        system_id: '3848872',
+        system_id: '491654',
+        mfhd: '534140',
         user: user
       }
+    }
+    let(:default_pickups) {
+      [{ label: "Firestone Library", gfa_code: "PA", staff_only: false }, { label: "Architecture Library", gfa_code: "PW", staff_only: false }, { label: "East Asian Library", gfa_code: "PL", staff_only: false }, { label: "Lewis Library", gfa_code: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_code: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_code: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_code: "PQ", staff_only: false }, { label: "Stokes Library", gfa_code: "PM", staff_only: false }]
     }
     let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
     let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
-      expect(submit_button_disabled).to be false
+      choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
+      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PN\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
+    end
+  end
+
+  describe 'multiple delivery options' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) {
+      {
+        system_id: '426420',
+        mfhd: '3538795',
+        user: user
+      }
+    }
+    let(:default_pickups) {
+      [{ label: "Firestone Library", gfa_code: "PA", staff_only: false }, { label: "Architecture Library", gfa_code: "PW", staff_only: false }, { label: "East Asian Library", gfa_code: "PL", staff_only: false }, { label: "Lewis Library", gfa_code: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_code: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_code: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_code: "PQ", staff_only: false }, { label: "Stokes Library", gfa_code: "PM", staff_only: false }]
+    }
+    let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
+    let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
+    let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
+    it 'lewis is a submitable request' do
+      choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
+      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
     end
   end
 

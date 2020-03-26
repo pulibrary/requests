@@ -3,13 +3,18 @@ require 'faraday'
 
 module Requests
   class Request
-    attr_accessor :system_id
-    attr_accessor :email
-    attr_accessor :user_barcode
-    attr_accessor :user_name
-    attr_accessor :source
-    attr_accessor :mfhd
+    attr_reader :system_id
+    attr_reader :source
+    attr_reader :mfhd
     attr_reader :user
+    attr_reader :doc
+    attr_reader :requestable
+    attr_reader :requestable_unrouted
+    attr_reader :holdings
+    attr_reader :locations
+    attr_reader :items
+    attr_reader :pickups
+    alias default_pickups pickups
 
     include Requests::Bibdata
     include Requests::BdUtils
@@ -21,30 +26,22 @@ module Requests
     # @option opts [User] :user current user object
     # @option opts [String] :source represents system that directed user to request form. i.e.
     def initialize(system_id:, mfhd: nil, user: nil, source: nil)
-      @system_id ||= system_id
-      @mfhd ||= mfhd
-      @user ||= user
-      @source ||= source
+      @system_id = system_id
+      @mfhd = mfhd
+      @user = user
+      @source = source
       ### These should be re-factored
-      @doc ||= solr_doc(system_id)
-      @requestable_unrouted ||= build_requestable
-      @requestable ||= route_requests(@requestable_unrouted)
-    end
-
-    def doc
-      @doc
+      @doc = solr_doc(system_id)
+      @holdings = JSON.parse(doc[:holdings_1display] || '{}')
+      @locations = load_locations
+      @items = load_items
+      @pickups = build_pickups
+      @requestable_unrouted = build_requestable
+      @requestable = route_requests(@requestable_unrouted)
     end
 
     def scsb?
       return true if /^SCSB-\d+/ =~ system_id.to_s
-    end
-
-    def requestable
-      @requestable
-    end
-
-    def requestable_unrouted
-      @requestable_unrouted
     end
 
     ### builds a list of possible requestable items
@@ -251,34 +248,10 @@ module Requests
       end
     end
 
-    def available?
-      items_by_bib(@system_id)
-    end
-
-    def items?
-      items
-    end
-
-    def holdings?
-      holdings
-    end
-
     def recap?
       locations.each do |code, location|
         return true if location[:library][:code] == 'recap'
       end
-    end
-
-    def holdings
-      @holdings ||= JSON.parse(doc[:holdings_1display] || '{}')
-    end
-
-    def locations
-      @locations ||= load_locations
-    end
-
-    def items
-      @items ||= load_items
     end
 
     def all_items_online?
@@ -346,10 +319,6 @@ module Requests
       doc["language_iana_s"]&.first
     end
 
-    def pickups
-      @pickups ||= build_pickups
-    end
-
     # should probably happen in the initializer
     def build_pickups
       pickup_locations = []
@@ -360,10 +329,6 @@ module Requests
       end
       # pickup_locations.sort_by! { |loc| loc[:label] }
       sort_pickups(pickup_locations)
-    end
-
-    def default_pickups
-      pickups
     end
 
     # if a Record is a serial/multivolume no Borrow Direct

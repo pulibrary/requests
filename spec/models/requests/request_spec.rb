@@ -84,12 +84,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
-    describe "#items?" do
-      it "Has items" do
-        expect(subject.items?).to be_truthy
-      end
-    end
-
     describe "#requestable" do
       it "has a list of requestable objects" do
         expect(subject.requestable).to be_truthy
@@ -132,18 +126,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe '#user' do
       it 'returns a user object' do
         expect(subject.user.is_a? User).to be true
-      end
-    end
-
-    describe '#holdings?' do
-      it 'returns holdings data' do
-        expect(subject.holdings?).to be_truthy
-      end
-    end
-
-    describe '#available?' do
-      it 'returns a list of items' do
-        expect(subject.available?).to be_truthy
       end
     end
 

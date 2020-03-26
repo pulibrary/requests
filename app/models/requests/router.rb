@@ -31,7 +31,7 @@ module Requests
     # cas - all services
 
     def routed_request
-      requestable.set_services(calculate_services)
+      requestable.services = calculate_services
       requestable
     end
 

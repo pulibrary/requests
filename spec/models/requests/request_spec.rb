@@ -370,7 +370,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(subject.requestable[0].holding.key? 'thesis').to be_truthy
         expect(subject.requestable[0].location.key? 'code').to be_truthy
         expect(subject.requestable[0].location['code']).to eq ('mudd')
-        expect(subject.requestable[0].voyager_managed?).to be_nil
+        expect(subject.requestable[0].voyager_managed?).to be_falsey
       end
     end
 

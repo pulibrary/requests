@@ -5,8 +5,10 @@ module Requests
     attr_reader :item
     attr_reader :location
     attr_accessor :services
+    attr_reader :pageable
 
-    include Requests::Pageable
+    delegate :pageable_loc?, to: :pageable
+
     include Requests::Aeon
     include Requests::Illiad
     include Requests::Mapable
@@ -17,6 +19,7 @@ module Requests
       @item = item # hash of item data
       @location = location # hash of location matrix data
       @services = []
+      @pageable = Pageable.new(call_number: holding.first[1]['call_number_browse'], location_code: location['code'])
     end
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
@@ -193,19 +196,8 @@ module Requests
     end
 
     def pageable?
-      if charged?
-        nil
-      else
-        pageable_loc?
-      end
-    end
-
-    def pageable_loc?
-      return nil if !holding.first[1].key?('call_number_browse') ||
-                    !paging_locations.include?(location['code'])
-      call_num = holding.first[1]['call_number_browse']
-      return nil unless lc_number?(call_num)
-      in_call_num_range(call_num, paging_ranges[location['code']])
+      return nill if charged?
+      pageable_loc?
     end
 
     def pickup_locations

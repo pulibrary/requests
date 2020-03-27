@@ -4,17 +4,17 @@ module Requests
     extend ActiveSupport::Concern
 
     def conn
-      conn = Faraday.new(:url => Requests.config[:gfa_base]) do |faraday|
+      conn = Faraday.new(url: Requests.config[:gfa_base]) do |faraday|
         faraday.request  :url_encoded # form-encode POST params
-        faraday.response :logger if !Rails.env.test? # log requests to STDOUT
+        faraday.response :logger unless Rails.env.test? # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter # make requests with Net::HTTP
       end
       conn
     end
 
     def response(params)
-      conn.post "#{Requests.config[:gfa_base]}", params, { 'X-Accept' => 'application/xml' }
-        # conn.get "#{Requests.config[:gfa_base]}", params
+      conn.post Requests.config[:gfa_base].to_s, params, 'X-Accept' => 'application/xml'
+      # conn.get "#{Requests.config[:gfa_base]}", params
     end
 
     # implement solr doc to GFA schema mapping
@@ -22,12 +22,8 @@ module Requests
     def param_mapping(bib, user, item)
       delivery_mode_key = "delivery_mode_#{item['item_id']}"
       delivery_mode = item[delivery_mode_key][0, 1] # get first letter
-      if delivery_mode == 'e'
-        item[:pickup] = 'PA'
-      end
-      if item[:edd_start_page].blank?
-        item[:edd_start_page] = '?'
-      end
+      item[:pickup] = 'PA' if delivery_mode == 'e'
+      item[:edd_start_page] = '?' if item[:edd_start_page].blank?
       {
         Bbid: bib[:id],
         barcode: user[:user_barcode],

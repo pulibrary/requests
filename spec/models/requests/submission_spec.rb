@@ -2,14 +2,15 @@ require 'spec_helper'
 
 describe Requests::Submission do
   context 'A valid submission' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
         "email" => "foo@princeton.edu",
-        "source" => "pulsearch" }
-    }
-    let(:requestable) {
+        "source" => "pulsearch"
+      }
+    end
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -36,26 +37,26 @@ describe Requests::Submission do
           "selected" => "false"
         }
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "491654",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission) {
-      Requests::Submission.new(params)
-    }
+    let(:submission) do
+      described_class.new(params)
+    end
 
     describe "contains" do
       it "no errors" do
@@ -101,31 +102,32 @@ describe Requests::Submission do
   end
 
   context 'An invalid Submission' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo",
         "user_barcode" => "Bar",
         "email" => "baz",
-        "source" => "pulsearch" }
-    }
+        "source" => "pulsearch"
+      }
+    end
 
-    let(:bib) {
+    let(:bib) do
       {
         "id" => ""
       }
-    }
+    end
 
-    let(:invalid_params) {
+    let(:invalid_params) do
       {
         request: user_info,
         requestable: [{ "selected" => "true" }],
         bib: bib
       }
-    }
+    end
 
-    let(:invalid_submission) {
-      Requests::Submission.new(invalid_params)
-    }
+    let(:invalid_submission) do
+      described_class.new(invalid_params)
+    end
 
     describe "invalid" do
       it 'includes error messsages' do
@@ -136,14 +138,15 @@ describe Requests::Submission do
   end
 
   context 'Recap' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
         "email" => "foo@princeton.edu",
-        "source" => "pulsearch" }
-    }
-    let(:requestable) {
+        "source" => "pulsearch"
+      }
+    end
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -188,26 +191,26 @@ describe Requests::Submission do
           "pickup" => ""
         }
       ]
-    }
+    end
 
-    let(:bib) {
+    let(:bib) do
       {
         "id" => "491654",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
-    let(:submission) {
-      Requests::Submission.new(params)
-    }
+    end
+    let(:submission) do
+      described_class.new(params)
+    end
 
     describe "Print Delivery" do
       it 'items have gfa pickup location code' do
@@ -225,14 +228,15 @@ describe Requests::Submission do
   end
 
   context 'Borrow Direct Eligible Item' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
         "email" => "foo@princeton.edu",
-        "source" => "pulsearch" }
-    }
-    let(:requestable) {
+        "source" => "pulsearch"
+      }
+    end
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -262,33 +266,33 @@ describe Requests::Submission do
           "type" => 'bd'
         }
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "491654",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
       }
-    }
-    let(:bd) {
+    end
+    let(:bd) do
       {
         "auth_id" => 'foobarfoobar',
         "query_params" => '9780544343757'
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib,
         bd: bd
       }
-    }
+    end
 
-    let(:submission) {
-      Requests::Submission.new(params)
-    }
+    let(:submission) do
+      described_class.new(params)
+    end
 
     describe 'A valid Borrow Direct Direct Request' do
       it 'has a borrow direct eligible item selected' do
@@ -314,7 +318,7 @@ describe Requests::Submission do
   end
 
   context 'Multiple Submission Types (Recap and Recall)' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
@@ -323,8 +327,8 @@ describe Requests::Submission do
         "patron_id" => "12345",
         "patron_group" => "staff"
       }
-    }
-    let(:requestable) {
+    end
+    let(:requestable) do
       [
         { "selected" => "true",
           "mfhd" => "538419",
@@ -336,50 +340,49 @@ describe Requests::Submission do
           "copy_number" => "1",
           "status" => "Charged",
           "type" => "recall",
-          "pickup" => "299|.Firestone Library Circulation Desk"
-          },
-          {
-            "selected" => "true",
-            "mfhd" => "538419",
-            "call_number" => "GN670 .P74",
-            "location_code" => "rcppa",
-            "item_id" => "3707281",
-            "barcode" => "32101091857142",
-            "enum" => "vol. 4 (1895)",
-            "copy_number" => "1",
-            "status" => "Not Charged",
-            "type" => "recap",
-            "delivery_mode_3707281" => "print",
-            "pickup" => "PA",
-            "edd_start_page" => "",
-            "edd_end_page" => "",
-            "edd_volume_number" => "",
-            "edd_issue" => "",
-            "edd_author" => "",
-            "edd_art_title" => "",
-            "edd_note" => ""
-          }
+          "pickup" => "299|.Firestone Library Circulation Desk" },
+        {
+          "selected" => "true",
+          "mfhd" => "538419",
+          "call_number" => "GN670 .P74",
+          "location_code" => "rcppa",
+          "item_id" => "3707281",
+          "barcode" => "32101091857142",
+          "enum" => "vol. 4 (1895)",
+          "copy_number" => "1",
+          "status" => "Not Charged",
+          "type" => "recap",
+          "delivery_mode_3707281" => "print",
+          "pickup" => "PA",
+          "edd_start_page" => "",
+          "edd_end_page" => "",
+          "edd_volume_number" => "",
+          "edd_issue" => "",
+          "edd_author" => "",
+          "edd_art_title" => "",
+          "edd_note" => ""
+        }
       ]
-    }
+    end
 
-    let(:bib) {
+    let(:bib) do
       {
         "id" => "495220",
         "title" => "Journal of the Polynesian Society.",
         "author" => "Polynesian Society (N.Z.)",
         "date" => "1892"
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
-    let(:submission) {
-      Requests::Submission.new(params)
-    }
+    end
+    let(:submission) do
+      described_class.new(params)
+    end
 
     describe "Mixed Service Types" do
       it 'recall items have voyager pickup location code' do
@@ -410,7 +413,7 @@ describe Requests::Submission do
   end
 
   context 'Invalid Submissions' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
@@ -419,31 +422,31 @@ describe Requests::Submission do
         "patron_id" => "12345",
         "patron_group" => "staff"
       }
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "495220",
         "title" => "Journal of the Polynesian Society.",
         "author" => "Polynesian Society (N.Z.)",
         "date" => "1892"
       }
-    }
+    end
     describe 'An empty submission' do
-      let(:requestable) {
+      let(:requestable) do
         [
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      end
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
       it 'is invalid' do
@@ -456,7 +459,7 @@ describe Requests::Submission do
     end
 
     describe 'A submission without a pickup location' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -482,19 +485,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -512,7 +515,7 @@ describe Requests::Submission do
     end
 
     describe 'A submission without a pickup location and item ID' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -538,19 +541,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -568,7 +571,7 @@ describe Requests::Submission do
     end
 
     describe 'A recall submission without a pickup location and item ID' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -594,19 +597,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -623,7 +626,7 @@ describe Requests::Submission do
       end
     end
     describe 'A recall submission without a pickup location' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -649,19 +652,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -678,7 +681,7 @@ describe Requests::Submission do
       end
     end
     describe 'A borrow direct submission without a pickup location and item ID' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -707,19 +710,19 @@ describe Requests::Submission do
             'type' => 'bd'
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -736,7 +739,7 @@ describe Requests::Submission do
       end
     end
     describe 'A bd submission without a pickup location' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -762,19 +765,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -791,7 +794,7 @@ describe Requests::Submission do
       end
     end
     describe 'A recap submission without a pickup location and item ID' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -817,19 +820,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -846,7 +849,7 @@ describe Requests::Submission do
       end
     end
     describe 'A recap submission without delivery type' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -872,19 +875,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -901,7 +904,7 @@ describe Requests::Submission do
       end
     end
     describe 'A recap print submission without a pickup location' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -928,19 +931,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -957,7 +960,7 @@ describe Requests::Submission do
       end
     end
     describe 'A recap edd submission without start page' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -984,19 +987,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -1013,7 +1016,7 @@ describe Requests::Submission do
       end
     end
     describe 'A recap edd submission without a title' do
-      let(:requestable) {
+      let(:requestable) do
         [
           {
             "selected" => "true",
@@ -1040,19 +1043,19 @@ describe Requests::Submission do
             "selected" => "false"
           }
         ]
-      }
-      let(:params) {
+      end
+      let(:params) do
         {
           request: user_info,
           requestable: requestable,
           bib: bib
         }
-      }
+      end
 
-      let(:submission) {
-        Requests::Submission.new(params)
-      }
-      before(:each) do
+      let(:submission) do
+        described_class.new(params)
+      end
+      before do
         submission.valid?
       end
 
@@ -1071,7 +1074,7 @@ describe Requests::Submission do
   end
 
   describe 'A recap_no_items submission without a pickup location' do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -1087,24 +1090,26 @@ describe Requests::Submission do
           "selected" => "false"
         }
       ]
-    }
-    let(:user_info) {
+    end
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
         "email" => "foo@princeton.edu",
-        "source" => "pulsearch" }
-    }
-    let(:params) {
+        "source" => "pulsearch"
+      }
+    end
+    let(:params) do
       {
         request: user_info,
-        requestable: requestable }
-    }
-    let(:submission) {
-      Requests::Submission.new(params)
-    }
+        requestable: requestable
+      }
+    end
+    let(:submission) do
+      described_class.new(params)
+    end
 
-    before(:each) do
+    before do
       submission.valid?
     end
 
@@ -1122,14 +1127,15 @@ describe Requests::Submission do
   end
 
   describe 'Single Submission for a Print with SCSB Managed data' do
-    let(:user_info) {
+    let(:user_info) do
       {
         "user_name" => "Foo Request",
         "user_barcode" => "22101007797777",
         "email" => "foo@princeton.edu",
-        "source" => "pulsearch" }
-    }
-    let(:requestable) {
+        "source" => "pulsearch"
+      }
+    end
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -1159,28 +1165,28 @@ describe Requests::Submission do
           "selected" => "false"
         }
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "491654",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission) {
-      Requests::Submission.new(params)
-    }
+    let(:submission) do
+      described_class.new(params)
+    end
 
-    before(:each) do
+    before do
       submission.valid?
     end
 

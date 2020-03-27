@@ -5,15 +5,15 @@ describe Requests::BorrowDirectLookup do
   let(:subject) { described_class.new }
 
   context 'An available item in borrow direct' do
-    let(:good_params) {
+    let(:good_params) do
       {
-        :isbn => '0415296633'
+        isbn: '0415296633'
       }
-    }
+    end
 
-    let(:good_bd_response) {
+    let(:good_bd_response) do
       instance_double('bd_find_item')
-    }
+    end
 
     describe '#find' do
       it 'Returns a good BorrowDirect::FindItem response' do
@@ -33,27 +33,27 @@ describe Requests::BorrowDirectLookup do
   end
 
   context 'An unavailable item in borrow direct' do
-    let(:bad_params) {
+    let(:bad_params) do
       {
-        :isbn => '121313131313'
+        isbn: '121313131313'
       }
-    }
-    let(:bad_bd_response) {
+    end
+    let(:bad_bd_response) do
       instance_double('bd_find_item')
-    }
-    let(:solr_doc) {
+    end
+    let(:solr_doc) do
       {
         "id" => '12321323',
         'author_citation_display' => ['Student, Joe'],
         'title_citation_display' => ['A Test Title']
       }
-    }
-    let(:solr_doc_no_author) {
+    end
+    let(:solr_doc_no_author) do
       {
         "id" => '12321323',
         'title_citation_display' => ['A Test Title']
       }
-    }
+    end
     describe '#find' do
       it 'Returns a bad BorrowDirect::FindItem response' do
         expect(subject).to receive(:find).with(bad_params).and_return(bad_bd_response)

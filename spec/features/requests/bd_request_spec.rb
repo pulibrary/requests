@@ -12,7 +12,7 @@ describe 'request', vcr: { cassette_name: 'bd_request_features', record: :new_ep
   let(:bd_response) { fixture('/bd_response.json') }
 
   context 'a princeton netID user' do
-    before(:each) do
+    before do
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
         .to_return(status: 200, body: valid_patron_response, headers: {})
       login_as user

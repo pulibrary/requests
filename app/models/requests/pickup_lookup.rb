@@ -17,8 +17,8 @@ module Requests
 
       @xml_response = Nokogiri::XML(r.body)
 
-      if @xml_response.xpath("//recall/@allowed").text() == 'N'
-        error_message = @xml_response.xpath("//note").text()
+      if @xml_response.xpath("//recall/@allowed").text == 'N'
+        error_message = @xml_response.xpath("//note").text
         @errors << { bibid: @params['bib']['id'], item: @params['requestable'].first['item_id'], patron: @params['request']['patron_id'], error: error_message }
       end
     end
@@ -27,8 +27,6 @@ module Requests
       hash = CobraVsMongoose.xml_to_hash(@xml_response.to_s).to_json
     end
 
-    def errors
-      @errors
-    end
+    attr_reader :errors
   end
 end

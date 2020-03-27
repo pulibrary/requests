@@ -12,10 +12,11 @@ module Requests
     include Requests::Mapable
 
     def initialize(bib:, holding: nil, item: nil, location: nil)
-      @bib ||= bib # hash of bibliographic data
-      @holding ||= holding # hash of holding data
-      @item ||= item # hash of item data
-      @location ||= location # hash of location matrix data
+      @bib = bib # hash of bibliographic data
+      @holding = holding # hash of holding data
+      @item = item # hash of item data
+      @location = location # hash of location matrix data
+      @services = []
     end
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
@@ -28,14 +29,10 @@ module Requests
       end
     end
 
-    def set_services service_list
-      @services = service_list
-    end
-
     # non voyager options
     def thesis?
       return false unless holding.key? "thesis"
-      return true if holding["thesis"][:location_code] == 'mudd'
+      holding["thesis"][:location_code] == 'mudd'
     end
 
     # Reading Room Request
@@ -48,250 +45,175 @@ module Requests
 
     # at an open location users may go to
     def open?
-      return true if location[:open] == true
+      location[:open] == true
     end
 
     def recap?
       return false unless location_valid?
-      return true if location[:library][:code] == 'recap'
+      location[:library][:code] == 'recap'
     end
 
     def recap_edd?
-      if scsb?
-        return true if scsb_edd_cullection_codes.include? item[:collection_code]
-        false
-      else
-        return true if location[:recap_electronic_delivery_location] == true
-      end
+      (scsb? && scsb_edd_cullection_codes.include?(item[:collection_code])) ||
+        ((location[:recap_electronic_delivery_location] == true) && !scsb?)
     end
 
     def missing?
-      return true if item[:status] == 'Missing'
+      item[:status] == 'Missing'
     end
 
     def lewis?
-      return true if ['sci', 'scith', 'sciref', 'sciefa', 'sciss'].include?(location[:code])
+      ['sci', 'scith', 'sciref', 'sciefa', 'sciss'].include?(location[:code])
     end
 
     def plasma?
-      return true if location[:code] == 'ppl'
+      location[:code] == 'ppl'
     end
 
     def preservation?
-      return true if location[:code] == 'pres'
+      location[:code] == 'pres'
     end
 
     # merge these two
     def annexa?
-      return false unless location_valid?
-      return true if location[:library][:code] == 'annexa'
+      location_valid? && location[:library][:code] == 'annexa'
     end
 
     # locations temporarily moved to annex should work
     def annexb?
-      return false unless location_valid?
-      return true if location[:library][:code] == 'annexb'
+      location_valid? && location[:library][:code] == 'annexb'
     end
 
     def circulates?
-      return true if location[:circulates] == true
+      location[:circulates] == true
     end
 
     def always_requestable?
-      return true if location[:always_requestable] == true
+      location[:always_requestable] == true
     end
 
     # Is the ReCAP Item from a partner location
     def scsb?
-      return true if scsb_locations.include?(location['code'])
+      scsb_locations.include?(location['code'])
     end
 
     def use_restriction?
       return false if item.nil?
-      return false unless scsb?
-      return true unless item[:use_statement].nil?
+      scsb? && item[:use_statement].present?
     end
 
     def in_process?
-      if item? && !scsb?
-        if item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
-          return true
-        end
-      end
+      return false unless item? && !scsb?
+      item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
     end
 
     def on_order?
-      if item? && !scsb?
-        if item[:status].starts_with?('On-Order') || item[:status].starts_with?('Pending Order')
-          return true
-        end
-      end
+      return false unless item? && !scsb?
+      item[:status].starts_with?('On-Order') || item[:status].starts_with?('Pending Order')
     end
 
     def item?
       item
     end
 
-    # FIXME
     def has_item_data?
-      if item.nil?
-        false
-      else
-        if item[:id].blank?
-          false
-        else
-          true
-        end
-      end
+      return false if item.nil?
+      item[:id].present?
     end
 
     def temp_loc?
-      if item?
-        if item[:temp_loc]
-          true
-        else
-          false
-        end
-      end
+      return false unless item?
+      item[:temp_loc].present?
     end
 
     def on_reserve?
-      if item?
-        if item[:on_reserve] == 'Y'
-          true
-        else
-          false
-        end
-      end
+      return false unless item?
+      item[:on_reserve] == 'Y'
     end
 
     def inaccessible?
-      if item?
-        if item[:status] == 'Inaccessible'
-          true
-        else
-          false
-        end
-      end
+      return false unless item?
+      item[:status] == 'Inaccessible'
     end
 
     def traceable?
-      services.include?('trace') ? true : false
+      services.include?('trace')
     end
 
     def pending?
       return false unless location_valid?
       return false unless on_order? || in_process? || preservation?
-      if location[:library][:code] == 'recap' && location[:holding_library].blank?
-        false
-      else
-        true
-      end
+      location[:library][:code] != 'recap' || location[:holding_library].present?
     end
 
     def ill_eligible?
-      services.include?('ill') ? true : false
+      services.include?('ill')
     end
 
     def on_shelf?
-      services.include?('on_shelf') ? true : false
+      services.include?('on_shelf')
     end
 
     def borrow_direct?
-      services.include?('bd') ? true : false
+      services.include?('bd')
     end
 
     def recallable?
-      services.include?('recall') ? true : false
+      services.include?('recall')
     end
 
     # assume numeric ids come from voyager
     def voyager_managed?
-      return true if bib[:id].to_i > 0
+      bib[:id].to_i > 0
     end
 
     def online?
       return false unless location_valid?
-      return true if location[:library][:code] == 'online'
+      location[:library][:code] == 'online'
     end
 
     def urls
-      if online? && bib['electronic_access_1display']
-        JSON.parse(bib['electronic_access_1display'])
-      else
-        {}
-      end
+      return {} unless online? && bib['electronic_access_1display']
+      JSON.parse(bib['electronic_access_1display'])
     end
 
     def charged?
-      if item?
-        if unavailable_statuses.include?(item[:status])
-          true
-        else
-          if unavailable_statuses.include?(item[:scsb_status])
-            true
-          else
-            nil
-          end
-        end
-      end
+      return false unless item?
+      unavailable_statuses.include?(item[:status]) || unavailable_statuses.include?(item[:scsb_status])
     end
 
     def hold_request?
-      if item?
-        if item[:status] == 'Hold Request'
-          true
-        else
-          false
-        end
-      else
-        false
-      end
+      return false unless item?
+      item[:status] == 'Hold Request'
     end
 
     def enumerated?
-      if item?
-        unless item[:enum].nil?
-          true
-        else
-          false
-        end
-      else
-        false
-      end
+      return false unless item?
+      item[:enum].present?
     end
 
     def pageable?
       if charged?
         nil
-      elsif !holding.first[1].key?('call_number_browse')
-        nil
-      elsif paging_locations.include? location['code']
-        call_num = holding.first[1]['call_number_browse']
-        if lc_number?(call_num)
-          in_call_num_range(call_num, paging_ranges[location['code']])
-        end
+      else
+        pageable_loc?
       end
     end
 
     def pageable_loc?
-      if !holding.first[1].key?('call_number_browse')
-        nil
-      elsif paging_locations.include? location['code']
-        call_num = holding.first[1]['call_number_browse']
-        if lc_number?(call_num)
-          in_call_num_range(call_num, paging_ranges[location['code']])
-        end
-      end
+      return nil if !holding.first[1].key?('call_number_browse') ||
+                    !paging_locations.include?(location['code'])
+      call_num = holding.first[1]['call_number_browse']
+      return nil unless lc_number?(call_num)
+      in_call_num_range(call_num, paging_ranges[location['code']])
     end
 
     def pickup_locations
-      if location[:delivery_locations].size > 0
-        if scsb?
-          scsb_pickup_override(item[:collection_code])
-        else
-          location[:delivery_locations]
-        end
+      return nil if location[:delivery_locations].size == 0
+      if scsb?
+        scsb_pickup_override(item[:collection_code])
+      else
+        location[:delivery_locations]
       end
     end
 
@@ -307,15 +229,8 @@ module Requests
     end
 
     def barcode?
-      if item?
-        if /^[0-9]+/.match(item[:barcode])
-          true
-        else
-          false
-        end
-      else
-        false
-      end
+      return false unless item?
+      /^[0-9]+/.match(barcode).present?
     end
 
     def barcode

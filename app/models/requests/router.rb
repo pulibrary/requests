@@ -40,7 +40,7 @@ module Requests
     def calculate_services
       services = []
       # here lies the switch case for all request types from the mega chart
-      if (requestable.voyager_managed? || requestable.scsb?)
+      if requestable.voyager_managed? || requestable.scsb?
         if requestable.online?
           services << 'online'
         else
@@ -71,13 +71,9 @@ module Requests
             #   end
             # end
           elsif requestable.in_process?
-            if auth_user?
-              services << 'in_process'
-            end
+            services << 'in_process' if auth_user?
           elsif requestable.on_order?
-            if auth_user?
-              services << 'on_order'
-            end
+            services << 'on_order' if auth_user?
             #### other choices
             # Borrow Direct/ILL
           else # my item status is positive or non-existent churn through statuses
@@ -98,9 +94,7 @@ module Requests
               if requestable.has_item_data?
                 # No physical recap delivery during campus closure
                 # services << 'recap'
-                if (requestable.recap_edd? && auth_user?)
-                  services << 'recap_edd'
-                end
+                services << 'recap_edd' if requestable.recap_edd? && auth_user?
               # No physical recap delivery during campus closure
               else
                 services << 'recap_no_items'

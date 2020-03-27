@@ -1,16 +1,17 @@
 require 'spec_helper'
 include Requests::ApplicationHelper
 
-describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
-  let(:user_info) {
+describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
+  let(:user_info) do
     {
       "user_name" => "Foo Request",
       "user_barcode" => "22101007797777",
       "email" => "foo@princeton.edu",
-      "source" => "pulsearch" }
-  }
+      "source" => "pulsearch"
+    }
+  end
 
-  let(:guest_user_info) {
+  let(:guest_user_info) do
     {
       "user_name" => " Guest Request",
       "user_last_name" => " Guest Request",
@@ -19,12 +20,12 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
       "patron_group" => "",
       "email" => "guest@foo.edu"
     }
-  }
+  end
 
-  before(:each) { stub_delivery_locations }
+  before { stub_delivery_locations }
 
   context "send preservation email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -42,29 +43,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9712355",
         "title" => "The atlas of water damage on inkjet-printed fine art /",
         "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_preservation) {
+    let(:submission_for_preservation) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("pres_email", submission_for_preservation).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
@@ -78,7 +79,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send preservation email patron confirmation" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -96,29 +97,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9712355",
         "title" => "The atlas of water damage on inkjet-printed fine art /",
         "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_preservation) {
+    let(:submission_for_preservation) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("pres_confirmation", submission_for_preservation).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.pres.email_subject'))
@@ -132,7 +133,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send page record with no_items email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -147,37 +148,37 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10139326",
         "title" => "Abhath fi al-tasawwuf wa al-turuq al-sufiyah: al-zawayah wa al-marja'iyah al-diniyah..",
         "author" => "Jab al-Khayr, Sa'id"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_no_items) {
+    let(:submission_for_no_items) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("paging_email", submission_for_no_items).deliver_now
-    }
+    end
 
-    let(:sub) {
+    let(:sub) do
       pickups = []
       submission_for_no_items.items.each do |item|
         pickups.push(Requests::BibdataService.delivery_locations[item["pickup"]]["label"])
       end
       I18n.t('requests.paging.email_subject') + ' for ' + pickups.join(", ")
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(sub)
@@ -192,7 +193,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send annexa email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -208,29 +209,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "2286894",
         "title" => "The atlas of water damage on inkjet-printed fine art /",
         "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_annexa) {
+    let(:submission_for_annexa) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("annexa_email", submission_for_annexa).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
@@ -245,7 +246,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send anxadoc email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -261,29 +262,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "6592589",
         "title" => "The Coast Guard's fiscal year 2007 budget request.",
         "author" => "United States"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_anxadoc) {
+    let(:submission_for_anxadoc) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("annexa_email", submission_for_anxadoc).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
@@ -298,7 +299,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send annexb email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -316,29 +317,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10042951",
         "title" => "Agaricus of North America /",
         "author" => "Kerrigan, Richard Wade"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_annexb) {
+    let(:submission_for_annexb) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("annexb_email", submission_for_annexb).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexb.email_subject'))
@@ -353,7 +354,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send on_order email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -367,29 +368,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10081566",
         "title" => "Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
         "author" => "Goto, Seimei"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_on_order) {
+    let(:submission_for_on_order) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("on_order_email", submission_for_on_order).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.on_order.email_subject'))
@@ -403,7 +404,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send on_order email patron confirmation" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -417,29 +418,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10081566",
         "title" => "Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
         "author" => "Goto, Seimei"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_on_order) {
+    let(:submission_for_on_order) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("on_order_confirmation", submission_for_on_order).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.on_order.email_subject'))
@@ -453,7 +454,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send in_process email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -470,29 +471,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9646099",
         "title" => "Cartas romanas /",
         "author" => "Serrano del Pozo, Ignacio"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_in_process) {
+    let(:submission_for_in_process) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("in_process_email", submission_for_in_process).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.in_process.email_subject'))
@@ -506,7 +507,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send in_process email patron confirmation" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -523,29 +524,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9646099",
         "title" => "Cartas romanas /",
         "author" => "Serrano del Pozo, Ignacio"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_in_process) {
+    let(:submission_for_in_process) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("in_process_confirmation", submission_for_in_process).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.in_process.email_subject'))
@@ -559,7 +560,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send trace email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -576,29 +577,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10005935",
         "title" => "The 21st century meeting and event technologies : powerful tools for better planning, marketing, and evaluation /",
         "author" => "Lee, Seungwon Boshnakova, Dessislava Goldblatt, Joe Jeff"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_trace) {
+    let(:submission_for_trace) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("trace_email", submission_for_trace).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.trace.email_subject'))
@@ -613,7 +614,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send recap email request for authenticated user" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -640,29 +641,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9944355",
         "title" => "L'écrivain, magazine litteraire trimestriel.",
         "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_recap) {
+    let(:submission_for_recap) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("recap_email", submission_for_recap).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.recap.email_subject'))
@@ -677,7 +678,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send recap email request for guest user" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -704,29 +705,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9944355",
         "title" => "L'écrivain, magazine litteraire trimestriel.",
         "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: guest_user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_recap) {
+    let(:submission_for_recap) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("recap_email", submission_for_recap).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.recap_guest.email_subject'))
@@ -741,7 +742,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send recall email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -759,33 +760,33 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "6883125",
         "title" => "Derrida : a very short introduction /",
         "author" => "Glendinning, Simon"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_recall) {
+    let(:submission_for_recall) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:scsb_recall_mail) {
+    let(:scsb_recall_mail) do
       Requests::RequestMailer.send("scsb_recall_email", submission_for_recall).deliver_now
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("recall_email", submission_for_recall).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.recall.email_subject'))
@@ -809,7 +810,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send plasma email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -827,29 +828,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10292269",
         "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
         "author" => "Kosti, Ourania"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_ppl) {
+    let(:submission_for_ppl) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("ppl_email", submission_for_ppl).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.ppl.email_subject'))
@@ -863,7 +864,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send plasma email patron confirmation" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -881,29 +882,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10292269",
         "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
         "author" => "Kosti, Ourania"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_plasma) {
+    let(:submission_for_plasma) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("ppl_confirmation", submission_for_plasma).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.ppl.email_subject'))
@@ -916,7 +917,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
     end
   end
   context "send lewis email request" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -934,29 +935,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10292269",
         "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
         "author" => "Kosti, Ourania"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_lewis) {
+    let(:submission_for_lewis) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("lewis_email", submission_for_lewis).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.lewis.email_subject'))
@@ -970,7 +971,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "send lewis email patron confirmation" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -988,29 +989,29 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "10292269",
         "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
         "author" => "Kosti, Ourania"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_lewis) {
+    let(:submission_for_lewis) do
       Requests::Submission.new(params)
-    }
+    end
 
-    let(:mail) {
+    let(:mail) do
       Requests::RequestMailer.send("lewis_confirmation", submission_for_lewis).deliver_now
-    }
+    end
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.lewis.email_subject'))
@@ -1024,7 +1025,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "Item on shelf in firestone" do
-    let(:requestable) {
+    let(:requestable) do
       [
         {
           "selected" => "true",
@@ -1042,25 +1043,25 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "9222024",
         "title" => "This angel on my chest : stories",
         "author" => "Pietrzyk, Leslie"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_on_shelf) {
+    let(:submission_for_on_shelf) do
       Requests::Submission.new(params)
-    }
+    end
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
@@ -1082,7 +1083,7 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
   end
 
   context "Item on shelf in East Asian" do
-    let(:requestable) {
+    let(:requestable) do
       [
         { "selected" => "true",
           "mfhd" => "3892744",
@@ -1093,32 +1094,30 @@ describe Requests::RequestMailer, :type => :mailer, vcr: { cassette_name: 'maile
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "on_shelf",
-          "pickup" => "PA"
-        }.with_indifferent_access,
+          "pickup" => "PA" }.with_indifferent_access,
         {
           "selected" => "false"
         }.with_indifferent_access
       ]
-    }
-    let(:bib) {
+    end
+    let(:bib) do
       {
         "id" => "3573258",
         "title" => "Hong lou fang zhen : Da guan yuan zai Gong wang fu 红楼访真　: 大观园在恭王府　",
         "author" => "Zhou, Ruchang"
       }.with_indifferent_access
-    }
-    let(:params) {
+    end
+    let(:params) do
       {
         request: user_info,
         requestable: requestable,
         bib: bib
       }
-    }
+    end
 
-    let(:submission_for_on_shelf) {
+    let(:submission_for_on_shelf) do
       Requests::Submission.new(params)
-    }
-
+    end
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now

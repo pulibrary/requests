@@ -64,18 +64,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:request_missing_item) }
     let(:requestable) { request.requestable }
     describe "#services" do
-      it "should return an item status of missing" do
+      it "returns an item status of missing" do
         expect(requestable.size).to eq(2)
         requestable.first.item["status"] = 'Missing'
         expect(requestable.first.services).to be_truthy
       end
 
-      it 'should not be recallable' do
+      it 'is not recallable' do
         expect(requestable.first.services.include?('recall')).to be_falsey
       end
 
       # TODO: Remove when campus has re-opened
-      it 'should not be available via borrow direct' do
+      it 'is not available via borrow direct' do
         expect(requestable.first.services.include?('bd')).to be_falsey
       end
 
@@ -85,7 +85,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       # TODO: Remove when campus has re-opened
-      it 'should not be available via ILL' do
+      it 'is not available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_falsey
       end
 
@@ -105,14 +105,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'with a Hold Request status it should be on hold' do
         expect(requestable_on_hold.hold_request?).to be true
       end
-      it 'should be on hold with a Not Charged status' do
+      it 'is on hold with a Not Charged status' do
         expect(requestable_not_on_hold.hold_request?).to be false
       end
     end
 
     describe '#services' do
-      it 'should not be recallable' do
-        expect(requestable_on_hold.services.include? 'recall').to be false
+      it 'is not recallable' do
+        expect(requestable_on_hold.services.include?('recall')).to be false
         expect(requestable_on_hold.recallable?).to be false
       end
     end
@@ -122,20 +122,20 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:missing_item) }
     let(:requestable) { request.requestable }
     describe '#services' do
-      it 'should not be recallable' do
+      it 'is not recallable' do
         expect(requestable.first.services.include?('recall')).to be false
       end
 
-      it 'should not be recallable' do
+      it 'is not recallable' do
         expect(requestable.first.recallable?).to be false
       end
 
-      it 'should be missing' do
+      it 'is missing' do
         expect(requestable.first.missing?).to be true
       end
 
       # TODO: Remove when campus has re-opened
-      it 'should not be eligible for borrow direct' do
+      it 'is not eligible for borrow direct' do
         expect(requestable.first.borrow_direct?).to be false
       end
 
@@ -145,7 +145,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       # TODO: Remove when campus has re-opened
-      it 'should not be eligible for ill' do
+      it 'is not eligible for ill' do
         expect(requestable.first.ill_eligible?).to be false
       end
 
@@ -162,19 +162,19 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#services' do
-      it 'should be eligible for aeon services' do
+      it 'is eligible for aeon services' do
         expect(requestable.services.include?('aeon')).to be true
       end
     end
 
     describe '#aeon_open_url' do
-      it 'should return an openurl with a Call Number param' do
+      it 'returns an openurl with a Call Number param' do
         expect(requestable.aeon_openurl(request.ctx)).to be_a(String)
       end
     end
 
     describe '#barcode' do
-      it 'should not report there is a barocode' do
+      it 'does not report there is a barocode' do
         expect(requestable.barcode?).to be false
       end
     end
@@ -186,11 +186,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_holding) { request.requestable.select { |r| r.holding['6720550'] } }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     describe '#aeon_open_url' do
-      it 'should return an openurl with volume data' do
+      it 'returns an openurl with volume data' do
         expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(requestable.item[:enum])}")
       end
 
-      it 'should return an openurl with issue data' do
+      it 'returns an openurl with issue data' do
         expect(requestable.aeon_openurl(request.ctx)).to include("rft.issue=#{CGI.escape(requestable.item[:chron])}")
       end
     end
@@ -210,11 +210,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.non_voyager?(holding_id)).to be false
       end
 
-      it 'should return an openurl with enumeration when available' do
+      it 'returns an openurl with enumeration when available' do
         expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(enumeration)}")
       end
 
-      it 'should return an openurl with item id as a value for iteminfo5' do
+      it 'returns an openurl with item id as a value for iteminfo5' do
         expect(requestable.aeon_openurl(request.ctx)).to include("iteminfo5=#{requestable.item[:id]}")
       end
     end
@@ -225,13 +225,13 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:aeon_no_item_record) }
     let(:requestable) { request.requestable.first } # assume only one requestable
     describe '#barcode?' do
-      it 'should not have a barcode' do
+      it 'does not have a barcode' do
         expect(requestable.barcode?).to be false
       end
     end
 
     describe '#site' do
-      it 'should return a RBSC site param' do
+      it 'returns a RBSC site param' do
         expect(requestable.site).to eq('RBSC')
       end
     end
@@ -243,7 +243,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#site' do
-      it 'should return a RBSC site param' do
+      it 'returns a RBSC site param' do
         expect(requestable.site).to eq('MUDD')
       end
     end
@@ -255,7 +255,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#site' do
-      it 'should return a Marquand site param' do
+      it 'returns a Marquand site param' do
         expect(requestable.site).to eq('MARQ')
       end
     end
@@ -268,7 +268,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#aeon_basic_params' do
       it 'includes a Title Param that is less than 250 characters' do
-        expect(requestable.aeon_mapped_params.key? :ItemTitle).to be true
+        expect(requestable.aeon_mapped_params.key?(:ItemTitle)).to be true
         expect(requestable.aeon_mapped_params[:ItemTitle].length).to be <= 250
       end
     end
@@ -286,7 +286,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#barcode?' do
-      it 'should have a barcode' do
+      it 'has a barcode' do
         expect(requestable.barcode?).to be true
         expect(requestable.barcode).to match(/^[0-9]+/)
       end
@@ -315,20 +315,20 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     describe '#aeon_basic_params' do
-      it 'should include a Site param' do
-        expect(requestable.aeon_basic_params.key? :Site).to be true
+      it 'includes a Site param' do
+        expect(requestable.aeon_basic_params.key?(:Site)).to be true
         expect(requestable.aeon_basic_params[:Site]).to eq('RBSC')
       end
 
-      it 'should have a Reference NUmber' do
-        expect(requestable.aeon_basic_params.key? :ReferenceNumber).to be true
+      it 'has a Reference NUmber' do
+        expect(requestable.aeon_basic_params.key?(:ReferenceNumber)).to be true
         expect(requestable.aeon_basic_params[:ReferenceNumber]).to eq(requestable.bib[:id])
       end
 
-      it 'should have Location Param' do
-       expect(requestable.aeon_basic_params.key? :Location).to be true
-       expect(requestable.aeon_basic_params[:Location]).to eq(requestable.holding.first.last['location_code'])
-     end
+      it 'has Location Param' do
+        expect(requestable.aeon_basic_params.key?(:Location)).to be true
+        expect(requestable.aeon_basic_params[:Location]).to eq(requestable.holding.first.last['location_code'])
+      end
     end
 
     describe '#aeon_request_url' do
@@ -344,7 +344,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe 'requestable with no items ' do
-      it 'should not have item data' do
+      it 'does not have item data' do
         expect(requestable.has_item_data?).to be false
       end
     end
@@ -356,7 +356,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe 'with a status of on_order ' do
-      it 'should be on_order ' do
+      it 'is on_order' do
         expect(requestable.on_order?).to be true
       end
     end
@@ -368,7 +368,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe 'with a status of pending orders' do
-      it 'should be treated like on order items ' do
+      it 'is treated like on order items' do
         expect(requestable.on_order?).to be true
       end
     end
@@ -377,25 +377,25 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   # user authentication tests
   context 'When a princeton user with NetID visits the site' do
     let(:user) { FactoryGirl.build(:user) }
-    let(:params) {
+    let(:params) do
       {
         system_id: '9999800',
         user: user
       }
-    }
+    end
     let(:request) { Requests::Request.new(params) }
     let(:requestable) { request.requestable.first }
 
     describe '# offsite requestable' do
       # TODO: Remove when campus has re-opened
-      it "should not have recap request service available during campus closure" do
+      it "does not have recap request service available during campus closure" do
         expect(requestable.services.include?('recap')).to be false
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
-      it "should have recap edd request service available" do
+      it "has recap edd request service available" do
         expect(requestable.services.include?('recap_edd')).to be true
       end
     end
@@ -406,7 +406,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '# checked-out requestable' do
       # TODO: Remove when campus has re-opened
-      it "should not have borrow direct request service available" do
+      it "does not have borrow direct request service available" do
         expect(requestable_charged.services.include?('bd')).to be false
       end
 
@@ -416,7 +416,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       # TODO: Remove when campus has re-opened
-      it "should not have ILL request service available" do
+      it "does not have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be false
       end
 
@@ -426,7 +426,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       # TODO: Remove when campus has re-opened
-      it "should not have recall request service available" do
+      it "does not have recall request service available" do
         expect(requestable_charged.services.include?('recall')).to be false
       end
 
@@ -441,7 +441,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '# missing requestable' do
       # TODO: Remove when campus has re-opened
-      it "should not have borrow direct request service available" do
+      it "does not have borrow direct request service available" do
         expect(requestable_missing.services.include?('bd')).to be false
       end
 
@@ -451,7 +451,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       # TODO: Remove when campus has re-opened
-      it "should not have ILL request service available" do
+      it "does not have ILL request service available" do
         expect(requestable_missing.services.include?('ill')).to be false
       end
 
@@ -460,7 +460,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable_missing.services.include?('ill')).to be true
       end
 
-      it "should NOT have recall request service available" do
+      it "does not have recall request service available" do
         expect(requestable_missing.services.include?('recall')).to be false
       end
     end
@@ -469,7 +469,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
 
     describe '# reading_room requestable' do
-      it "should have Aeon request service available" do
+      it "has Aeon request service available" do
         expect(requestable_aeon_mudd.services.include?('aeon')).to be true
       end
     end
@@ -486,25 +486,25 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'When a barcode only user visits the site' do
     let(:user) { FactoryGirl.build(:valid_barcode_patron) }
-    let(:params) {
+    let(:params) do
       {
         system_id: '9999800',
         user: user
       }
-    }
+    end
     let(:request) { Requests::Request.new(params) }
     let(:requestable) { request.requestable.first }
 
     describe '#requestable' do
       # TODO: Remove when campus has re-opened
-      it "should not have recap request service available during campus closure" do
+      it "does not have recap request service available during campus closure" do
         expect(requestable.services.include?('recap')).to be false
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
-      it "should have recap edd request service available" do
+      it "has recap edd request service available" do
         expect(requestable.services.include?('recap_edd')).to be true
       end
     end
@@ -524,7 +524,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#checked-out requestable' do
       # TODO: Remove when campus has re-opened
-      it "should not have recall request service available" do
+      it "does not have recall request service available" do
         expect(requestable_charged.services.include?('recall')).to be false
       end
 
@@ -535,11 +535,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       # Barcode users should NOT have the following privileges ...
 
-      it "should NOT have Borrow Direct request service available" do
+      it "does not have Borrow Direct request service available" do
         expect(requestable_charged.services.include?('bd')).to be false
       end
 
-      it "should NOT have ILL request service available" do
+      it "does not have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be false
       end
     end
@@ -548,7 +548,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
 
     describe '#reading room requestable' do
-      it "should have Aeon request service available" do
+      it "has Aeon request service available" do
         expect(requestable_aeon_mudd.services.include?('aeon')).to be true
       end
     end
@@ -556,18 +556,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'When an access only user visits the site' do
     let(:user) { FactoryGirl.build(:unauthenticated_patron) }
-    let(:params) {
+    let(:params) do
       {
         system_id: '9999800',
         user: user
       }
-    }
+    end
     let(:request) { Requests::Request.new(params) }
     let(:requestable) { request.requestable.first }
 
     describe '#recap requestable' do
       # TODO: Remove when campus has re-opened
-      it "should not have recap request service available during campus closure" do
+      it "does not have recap request service available during campus closure" do
         expect(requestable.services.include?('recap')).to be false
       end
       # TODO: Activate test when campus has re-opened
@@ -575,7 +575,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.services.include?('recap')).to be true
       end
 
-      it "should NOT have recap edd request service available" do
+      it "does not have recap edd request service available" do
         expect(requestable.services.include?('recap_edd')).to be false
       end
     end
@@ -593,7 +593,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
 
     describe '#reading room requestable' do
-      it "should have Aeon request service available" do
+      it "has Aeon request service available" do
         expect(requestable_aeon_mudd.services.include?('aeon')).to be true
       end
     end
@@ -603,15 +603,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable_charged) { request_charged.requestable.first }
 
     describe '#checked-out requestable' do
-      it "should NOT have recall request service available" do
+      it "does not have recall request service available" do
         expect(requestable_charged.services.include?('recall')).to be false
       end
 
-      it "should NOT have Borrow Direct request service available" do
+      it "does not have Borrow Direct request service available" do
         expect(requestable_charged.services.include?('bd')).to be false
       end
 
-      it "should NOT have ILL request service available" do
+      it "does not have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be false
       end
     end

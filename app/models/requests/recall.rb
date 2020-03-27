@@ -31,11 +31,11 @@ module Requests
           payload = request_payload(item)
           r = put_response(params, payload)
           xml_response = Nokogiri::XML(r.body)
-          unless xml_response.xpath("//reply-text").text() == 'ok'
-            error_message = "Failed request: " + xml_response.xpath("//note").text()
-            @errors << { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user[:user_name], patron: params[:patron], error: error_message }
-          else
+          if xml_response.xpath("//reply-text").text == 'ok'
             @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], patron: params[:patron] }
+          else
+            error_message = "Failed request: " + xml_response.xpath("//note").text
+            @errors << { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user[:user_name], patron: params[:patron], error: error_message }
           end
         end
       end
@@ -60,8 +60,6 @@ module Requests
       @sent
     end
 
-    def errors
-      @errors
-    end
+    attr_reader :errors
   end
 end

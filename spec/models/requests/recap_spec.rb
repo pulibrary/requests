@@ -2,34 +2,35 @@ require 'spec_helper'
 
 describe Requests::Recap do
   context 'ReCAP Request' do
-  let(:user_info) {
-    {
-      "user_name" => "Foo Request",
-      "user_last_name" => "Request",
-      "user_barcode" => "22101007797777",
-      "email" => "foo@princeton.edu",
-      "source" => "pulsearch" }
-  }
-  let(:requestable) {
-    [{ "selected" => "true",
-       "mfhd" => "534137",
-       "call_number" => "HA202 .U581",
-       "location_code" => "rcppa",
-       "item_id" => "6067274",
-       "barcode" => "32101082413400",
-       "enum" => "1956",
-       "copy_number" => "1",
-       "status" => "Not Charged",
-       "type" => "recap",
-       "delivery_mode_6067274" => "print",
-       "edd_start_page" => "",
-       "edd_end_page" => "",
-       "edd_volume_number" => "",
-       "edd_issue" => "",
-       "edd_author" => "",
-       "edd_art_title" => "",
-       "edd_note" => "",
-       "pickup" => "PA" },
+    let(:user_info) do
+      {
+        "user_name" => "Foo Request",
+        "user_last_name" => "Request",
+        "user_barcode" => "22101007797777",
+        "email" => "foo@princeton.edu",
+        "source" => "pulsearch"
+      }
+    end
+    let(:requestable) do
+      [{ "selected" => "true",
+         "mfhd" => "534137",
+         "call_number" => "HA202 .U581",
+         "location_code" => "rcppa",
+         "item_id" => "6067274",
+         "barcode" => "32101082413400",
+         "enum" => "1956",
+         "copy_number" => "1",
+         "status" => "Not Charged",
+         "type" => "recap",
+         "delivery_mode_6067274" => "print",
+         "edd_start_page" => "",
+         "edd_end_page" => "",
+         "edd_volume_number" => "",
+         "edd_issue" => "",
+         "edd_author" => "",
+         "edd_art_title" => "",
+         "edd_note" => "",
+         "pickup" => "PA" },
        { "selected" => "true",
          "mfhd" => "534137",
          "call_number" => "HA202 .U581",
@@ -49,74 +50,74 @@ describe Requests::Recap do
          "edd_art_title" => "Baz",
          "edd_note" => "",
          "pickup" => "PH" }]
-  }
-
-  let(:bib) {
-    {
-      "id" => "491654",
-      "title" => "County and city data book.",
-      "author" => "United States",
-      "date" => "1949"
-    }
-  }
-
-  let(:params) {
-    {
-      request: user_info,
-      requestable: requestable,
-      bib: bib
-    }
-  }
-
-  let(:submission) {
-    Requests::Submission.new(params)
-  }
-
-  let(:subject) { described_class.new(submission) }
-  let(:good_request) { fixture('/scsb_find_request.json') }
-  let(:good_response) { fixture('/scsb_request_item_response.json') }
-  let(:bad_response) { fixture('/scsb_request_item_response_errors.json') }
-
-  describe 'All ReCAP Requests' do
-    it "It should capture errors when the request is unsuccessful or malformed." do
-      stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
-        # with(headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
-        to_return(status: 401, body: "Unauthorized", headers: {})
-      expect(subject.submitted.size).to eq(0)
-      expect(subject.errors.size).to eq(2)
     end
 
-    it "It should capture errors when response is a 200 but the request is unsuccessful" do
-      stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
-        # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
-        to_return(status: 200, body: bad_response, headers: {})
-      expect(subject.submitted.size).to eq(0)
-      expect(subject.errors.size).to eq(2)
+    let(:bib) do
+      {
+        "id" => "491654",
+        "title" => "County and city data book.",
+        "author" => "United States",
+        "date" => "1949"
+      }
     end
 
-    it "It should capture successful request submissions." do
-      stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
-        # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
-        to_return(status: 200, body: good_response, headers: {})
-      expect(subject.submitted.size).to eq(2)
-      expect(subject.errors.size).to eq(0)
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
     end
 
-    context 'when the SCSB web service responds with an invalid response' do
-      subject(:recap) { described_class.new(submission) }
+    let(:submission) do
+      Requests::Submission.new(params)
+    end
 
-      before(:context) do
-        stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").to_return(status: 200, body: '{invalid', headers: {})
+    let(:subject) { described_class.new(submission) }
+    let(:good_request) { fixture('/scsb_find_request.json') }
+    let(:good_response) { fixture('/scsb_request_item_response.json') }
+    let(:bad_response) { fixture('/scsb_request_item_response_errors.json') }
+
+    describe 'All ReCAP Requests' do
+      it "captures errors when the request is unsuccessful or malformed." do
+        stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
+          # with(headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+          to_return(status: 401, body: "Unauthorized", headers: {})
+        expect(subject.submitted.size).to eq(0)
+        expect(subject.errors.size).to eq(2)
       end
 
-      it 'logs an error' do
-        allow(Rails.logger).to receive(:error)
+      it "captures errors when response is a 200 but the request is unsuccessful" do
+        stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
+          # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+          to_return(status: 200, body: bad_response, headers: {})
+        expect(subject.submitted.size).to eq(0)
+        expect(subject.errors.size).to eq(2)
+      end
 
-        expect(recap.submitted.size).to eq(0)
-        expect(recap.errors.size).to eq(2)
-        expect(Rails.logger).to have_received(:error).with(/Invalid response from the SCSB server/).twice
+      it "captures successful request submissions." do
+        stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").
+          # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+          to_return(status: 200, body: good_response, headers: {})
+        expect(subject.submitted.size).to eq(2)
+        expect(subject.errors.size).to eq(0)
+      end
+
+      context 'when the SCSB web service responds with an invalid response' do
+        subject(:recap) { described_class.new(submission) }
+
+        before(:context) do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem").to_return(status: 200, body: '{invalid', headers: {})
+        end
+
+        it 'logs an error' do
+          allow(Rails.logger).to receive(:error)
+
+          expect(recap.submitted.size).to eq(0)
+          expect(recap.errors.size).to eq(2)
+          expect(Rails.logger).to have_received(:error).with(/Invalid response from the SCSB server/).twice
+        end
       end
     end
   end
-end
 end

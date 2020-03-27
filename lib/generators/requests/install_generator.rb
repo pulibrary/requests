@@ -4,7 +4,7 @@ module Requests
   class Install < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
 
-    class_option :devise, :type => :boolean, :default => false, :aliases => "-d", :desc => "Use Devise as authentication logic (this is default)."
+    class_option :devise, type: :boolean, default: false, aliases: "-d", desc: "Use Devise as authentication logic (this is default)."
     desc ''"
     This generator does the following:
     1. Creates a requests_inializer.rb in config/initializers.

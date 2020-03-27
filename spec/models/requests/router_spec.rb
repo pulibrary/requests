@@ -6,26 +6,26 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
 
     let(:scsb_single_holding_item) { fixture('/SCSB-2635660.json') }
     let(:location_code) { 'scsbcul' }
-    let(:params) {
+    let(:params) do
       {
         system_id: 'SCSB-2635660',
         user: user,
         source: 'CUL'
       }
-    }
-    let(:scsb_availability_params) {
+    end
+    let(:scsb_availability_params) do
       {
         bibliographicId: "667075",
         institutionId: "CUL"
       }
-    }
+    end
     let(:scsb_availability_response) { '[{"itemBarcode":"CU53020880","itemAvailabilityStatus":"Not Available","errorMessage":null}]' }
     let(:request_scsb) { Requests::Request.new(params) }
     let(:requestable) { request_scsb.requestable.first }
     let(:router) { described_class.new(requestable: requestable, user: user) }
 
     describe "SCSB item that is charged" do
-      before(:each) do
+      before do
         stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
           .to_return(status: 200, body: scsb_single_holding_item, headers: {})
         stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")

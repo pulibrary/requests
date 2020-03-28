@@ -13,14 +13,10 @@ module Requests
         ItemDate: pub_date,
         ItemVolume: sub_title
       }
-      if barcode?
-        params[:ItemNumber] = item[:barcode]
-      end
-      if thesis?
-        params[:genre] = 'thesis'
-      end
+      params[:ItemNumber] = item[:barcode] if barcode?
+      params[:genre] = 'thesis' if thesis?
       params.merge! aeon_basic_params
-      params.reject { |k, v| v.nil? }
+      params.reject { |_k, v| v.nil? }
     end
 
     ## params shared by both voyager and non-voyager aeon requests
@@ -33,7 +29,7 @@ module Requests
         SubLocation: sub_location,
         ItemInfo1: I18n.t("requests.aeon.access_statement")
       }
-      params.reject { |k, v| v.nil? }
+      params.reject { |_k, v| v.nil? }
     end
 
     # accepts the base Openurl Context Object and formats it appropriately for Aeon
@@ -50,9 +46,7 @@ module Requests
       end
       if enumerated?
         ctx.referent.set_metadata('volume', item[:enum])
-        if item[:chron].present?
-          ctx.referent.set_metadata('issue', item[:chron])
-        end
+        ctx.referent.set_metadata('issue', item[:chron]) if item[:chron].present?
       elsif holding.first.last['location_has']
         ctx.referent.set_metadata('volume', holding.first.last['location_has'].first)
         ctx.referent.set_metadata('issue', nil)
@@ -61,9 +55,7 @@ module Requests
         ctx.referent.set_metadata('issue', nil)
       end
       aeon_params = aeon_basic_params
-      if barcode?
-        aeon_params[:ItemNumber] = barcode
-      end
+      aeon_params[:ItemNumber] = barcode if barcode?
       ## returned mashed together in an encoded string
       "#{ctx.kev}&#{aeon_params.to_query}"
     end
@@ -71,9 +63,9 @@ module Requests
     # this non_voyager? method has an OL dependency
     def non_voyager?(holding_id)
       if holding_id == 'thesis'
-        return true
+        true
       else
-        return false
+        false
       end
     end
 
@@ -122,9 +114,7 @@ module Requests
       end
 
       def sub_location
-        unless holding.first.last[:location_note].nil?
-          holding.first.last[:location_note].first
-        end
+        holding.first.last[:location_note]&.first
       end
       ### end special params
 
@@ -134,15 +124,11 @@ module Requests
 
       ## Don T requested this be appended when present
       def genre
-        unless bib[:form_genre_display].nil?
-          " [ #{bib[:form_genre_display].first} ]"
-        end
+        " [ #{bib[:form_genre_display].first} ]" unless bib[:form_genre_display].nil?
       end
 
       def author
-        unless bib[:author_display].nil?
-          bib[:author_display].join(" AND ")
-        end
+        bib[:author_display]&.join(" AND ")
       end
   end
 end

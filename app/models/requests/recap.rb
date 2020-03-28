@@ -38,8 +38,6 @@ module Requests
       @sent
     end
 
-    def errors
-      @errors
-    end
+    attr_reader :errors
   end
 end

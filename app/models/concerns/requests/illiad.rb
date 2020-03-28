@@ -24,7 +24,7 @@ module Requests
       qp['genre'] = metadata['genre']
       if metadata['aulast']
         qp["rft.aulast"] = metadata['aulast']
-        qp["rft.aufirst"] = [metadata['aufirst'], metadata["auinit"]].find { |a| a.present? }
+        qp["rft.aufirst"] = [metadata['aufirst'], metadata["auinit"]].find(&:present?)
       else
         qp["rft.au"] = metadata["au"]
       end
@@ -39,7 +39,7 @@ module Requests
       qp['rft.date'] = metadata['date'] unless metadata['date'].nil?
       qp['atitle'] = metadata['atitle']
       # ILLiad always wants 'title', not the various title keys that exist in OpenURL
-      qp['title'] = [metadata['jtitle'], metadata['btitle'], metadata['title']].find { |a| a.present? }
+      qp['title'] = [metadata['jtitle'], metadata['btitle'], metadata['title']].find(&:present?)
       # For some reason these go to ILLiad prefixed with rft.
       qp['rft.pub'] = metadata['pub']
       qp['rft.place'] = metadata['place']
@@ -49,7 +49,7 @@ module Requests
       # doesn't use actual OpenURL rft_val_fmt
       if request.referent.format == "dissertation"
         qp['genre'] = 'dissertation'
-      elsif qp['isbn'].present? && qp['genre'] == 'book' && qp['atitle'] && (qp['issn'].blank?)
+      elsif qp['isbn'].present? && qp['genre'] == 'book' && qp['atitle'] && qp['issn'].blank?
         # actually a book chapter, not a book, fix it.
         qp['genre'] = 'bookitem'
       elsif qp['issn'].present? && qp['atitle'].present?
@@ -61,7 +61,7 @@ module Requests
         qp['genre'] = "book"
       end
       # trim empty ones please
-      qp.delete_if { |k, v| v.blank? }
+      qp.delete_if { |_k, v| v.blank? }
       qp.to_query
     end
 
@@ -83,21 +83,21 @@ module Requests
 
     def get_identifier(type, sub_scheme, referent, options = {})
       options[:multiple] ||= false
-      raise Exception.new("type must be :urn or :info") unless type == :urn or type == :info
+      raise Exception, "type must be :urn or :info" unless (type == :urn) || (type == :info)
       prefix = case type
-                 when :info then "info:#{sub_scheme}/"
-                 when :urn  then "urn:#{sub_scheme}:"
+               when :info then "info:#{sub_scheme}/"
+               when :urn  then "urn:#{sub_scheme}:"
                end
       bare_identifier = nil
-      identifiers = referent.identifiers.collect { |id| $1 if id =~ /^#{prefix}(.*)/ }.compact
-      if (identifiers.blank? && ['lccn', 'oclcnum', 'isbn', 'issn', 'doi', 'pmid'].include?(sub_scheme))
+      identifiers = referent.identifiers.collect { |id| Regexp.last_match(1) if id =~ /^#{prefix}(.*)/ }.compact
+      if identifiers.blank? && ['lccn', 'oclcnum', 'isbn', 'issn', 'doi', 'pmid'].include?(sub_scheme)
         # try the referent metadata
         from_rft = referent.metadata[sub_scheme]
         identifiers = [from_rft] if from_rft.present?
       end
-      if (options[:multiple])
+      if options[:multiple]
         identifiers
-      elsif (identifiers[0].blank?)
+      elsif identifiers[0].blank?
         nil
       else
         identifiers[0]

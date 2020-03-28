@@ -54,9 +54,7 @@ module Requests
       @submission = submission
       destination_email = []
       @submission.items.each do |item|
-        if item["type"] == 'annexb'
-          destination_email.push(I18n.t('requests.annexb.email'))
-        end
+        destination_email.push(I18n.t('requests.annexb.email')) if item["type"] == 'annexb'
       end
       cc_email = [@submission.email]
       mail(to: destination_email,

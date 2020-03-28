@@ -6,9 +6,9 @@ module Requests
     extend ActiveSupport::Concern
 
     def conn
-      conn = Faraday.new(:url => Requests.config[:voyager_api_base]) do |faraday|
+      conn = Faraday.new(url: Requests.config[:voyager_api_base]) do |faraday|
         faraday.request  :multipart # allow XML data to be sent with request
-        faraday.response :logger if !Rails.env.test?
+        faraday.response :logger unless Rails.env.test?
         # faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter # make requests with Net::HTTP
       end
@@ -25,7 +25,7 @@ module Requests
 
     def put_response(params, payload)
       request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/recall?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}&patron_group=#{params[:patron_group]}"
-      conn.put request_url, payload, { 'X-Accept' => 'application/xml' }
+      conn.put request_url, payload, 'X-Accept' => 'application/xml'
     end
 
     def get_response(params)
@@ -48,13 +48,13 @@ module Requests
     def request_payload(item)
       pickup = item['pickup'].split("|")
       recall_request = Nokogiri::XML::Builder.new do |xml|
-        xml.send(:"recall-parameters") {
+        xml.send(:"recall-parameters") do
           xml.send(:"pickup-location", pickup[0])
           xml.send(:"last-pickup-date", "20091006")
           xml.send(:"last-interest-date", recall_expiration_date)
           xml.comment "testing recall request"
           xml.dbkey URI.escape(voyager_ub_id)
-        }
+        end
       end
       recall_request.to_xml
     end

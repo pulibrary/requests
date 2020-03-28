@@ -201,7 +201,7 @@ module Requests
     end
 
     def pickup_locations
-      return nil if location[:delivery_locations].size == 0
+      return nil if location[:delivery_locations].empty?
       if scsb?
         scsb_pickup_override(item[:collection_code])
       else
@@ -210,7 +210,7 @@ module Requests
     end
 
     # override the default delivery location for SCSB at certain collection codes
-    def scsb_pickup_override collection_code
+    def scsb_pickup_override(collection_code)
       if collection_code == 'AR'
         [Requests::BibdataService.delivery_locations[:PJ]]
       elsif collection_code == 'MR'

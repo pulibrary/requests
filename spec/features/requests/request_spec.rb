@@ -19,7 +19,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
     let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
 
-    before(:each) { stub_delivery_locations }
+    before { stub_delivery_locations }
 
     context 'all patrons' do
       describe 'When unauthenticated patron visits a request item', js: true do
@@ -36,16 +36,16 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       describe 'Holding headings', js: true do
         it 'displays the temporary holding location library label' do
           visit "/requests/#{temp_item_id}?mfhd=#{temp_id_mfhd}"
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button(I18n.t('requests.account.other_user_login_btn'))
           expect(page).to have_content('Engineering Library')
         end
 
         it 'displays the temporary holding location label' do
           visit "/requests/#{temp_item_id}?mfhd=#{temp_id_mfhd}"
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button(I18n.t('requests.account.other_user_login_btn'))
           expect(page).to have_content('Reserve')
         end
@@ -57,8 +57,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows guest patrons to identify themselves and view the form' do
           visit '/requests/9944355'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button(I18n.t('requests.account.other_user_login_btn'))
           wait_for_ajax
           expect(page).to have_content 'ReCAP Oversize DT549 .E274q'
@@ -67,8 +67,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows guest patrons to see aeon requests' do
           visit '/requests/336525'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button(I18n.t('requests.account.other_user_login_btn'))
           wait_for_ajax
           expect(page).to have_content 'Request to View in Reading Room'
@@ -77,8 +77,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # TODO: Remove when campus has re-opened
         it 'guest patrons can not request a physical recap item during the closure' do
           visit '/requests/9944355'
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_no_content 'Electronic Delivery'
           expect(page).to have_content 'Item is not requestable'
@@ -88,11 +88,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         xit 'allows guest patrons to request a physical recap item' do
           visit '/requests/9944355'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_no_content 'Electronic Delivery'
-          select('Firestone Library', :from => 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           # wait_for_ajax
           expect(page).to have_content 'Request submitted'
@@ -101,8 +101,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'prohibits guest patrons from requesting In-Process items' do
           visit "/requests/#{in_process_id}"
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_content 'Item is not requestable.'
         end
@@ -110,8 +110,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'prohibits guest patrons from requesting On-Order items' do
           visit "/requests/#{on_order_id}"
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).not_to have_selector('.btn--primary')
         end
@@ -119,8 +119,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows guest patrons to access Online items' do
           visit '/requests/9994692'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_content 'www.jstor.org'
         end
@@ -128,8 +128,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows guest patrons to request Aeon items' do
           visit '/requests/2167669'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_link('Request to View in Reading Room')
         end
@@ -137,8 +137,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'prohibits guest patrons from using Borrow Direct, ILL, and Recall on Missing items' do
           visit '/requests/1788796?mfhd=2053005'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_content 'Item is not requestable.'
         end
@@ -146,15 +146,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows guests to request from Annex, but not from Firestone in mixed holding' do
           visit '/requests/2286894'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', :with => 'name@email.com'
-          fill_in 'request_user_name', :with => 'foobar'
+          fill_in 'request_email', with: 'name@email.com'
+          fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_selected_7484608', disabled: true
           expect(page).to have_field 'requestable_user_supplied_enum_2576882'
           check('requestable__selected', exact: true)
-          fill_in 'requestable_user_supplied_enum_2576882', :with => 'test'
-          select('Firestone Library', :from => 'requestable__pickup')
+          fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
+          select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annexa_success')
         end
@@ -164,26 +164,26 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     context 'a princeton net ID user' do
       let(:user) { FactoryGirl.create(:user) }
 
-      let(:recap_params) {
+      let(:recap_params) do
         {
-          :Bbid => "9493318",
-          :barcode => "22101008199999",
-          :item => "7303228",
-          :lname => "Student",
-          :delivery => "p",
-          :pickup => "PN",
-          :startpage => "",
-          :endpage => "",
-          :email => "a@b.com",
-          :volnum => "",
-          :issue => "",
-          :aauthor => "",
-          :atitle => "",
-          :note => ""
+          Bbid: "9493318",
+          barcode: "22101008199999",
+          item: "7303228",
+          lname: "Student",
+          delivery: "p",
+          pickup: "PN",
+          startpage: "",
+          endpage: "",
+          email: "a@b.com",
+          volnum: "",
+          issue: "",
+          aauthor: "",
+          atitle: "",
+          note: ""
         }
-      }
+      end
 
-      before(:each) do
+      before do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 200, body: valid_patron_response, headers: {})
         login_as user
@@ -192,15 +192,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       describe 'When visiting a voyager ID as a CAS User' do
         # TODO: Activate test when campus has re-opened
         xit 'allow CAS patrons to request an available ReCAP item.' do
-          stub_request(:post, Requests.config[:scsb_base]).
-            with(headers: { 'Accept' => '*/*' }).
-            to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
+          stub_request(:post, Requests.config[:scsb_base])
+            .with(headers: { 'Accept' => '*/*' })
+            .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
           visit "/requests/#{voyager_id}"
           expect(page).to have_content 'Electronic Delivery'
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
           choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
-          select('Firestone Library', :from => 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pickup')
           expect(page).to have_button('Request this Item', disabled: false)
         end
 
@@ -229,8 +229,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
-          select('Firestone Library', :from => 'requestable__pickup')
-          select('Lewis Library', :from => 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pickup')
+          select('Lewis Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
         end
@@ -243,7 +243,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows CAS patrons to request a record that has no item data' do
           visit "/requests/#{no_items_id}"
           check('requestable__selected', exact: true)
-          fill_in 'requestable[][user_supplied_enum]', :with => 'Some Volume'
+          fill_in 'requestable[][user_supplied_enum]', with: 'Some Volume'
           expect(page).to have_button('Request Selected Items', disabled: false)
         end
 
@@ -261,7 +261,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     context 'A Princeton net ID user without a bibdata record' do
       let(:user) { FactoryGirl.create(:user) }
-      before(:each) do
+      before do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 404, body: invalid_patron_response, headers: {})
         login_as user

@@ -4,7 +4,7 @@ module Requests
       JSON.parse(data).with_indifferent_access
     end
 
-    def current_user_status current_user
+    def current_user_status(current_user)
       ## Expect that the host app can provide you a devise current_user object
       if current_user.provider == 'cas' || current_user.provider == 'barcode'
         content_tag(:div, class: "flash_messages-user") do
@@ -31,22 +31,16 @@ module Requests
     #   end
     # end
 
-    def pul_patron_name patron
+    def pul_patron_name(patron)
       name = ""
-      unless patron[:first_name].nil?
-        name += patron[:first_name]
-      end
-      unless patron[:last_name].nil?
-        name += " #{patron[:last_name]}"
-      end
+      name += patron[:first_name] unless patron[:first_name].nil?
+      name += " #{patron[:last_name]}" unless patron[:last_name].nil?
       name
     end
 
-    def pul_patron_last_name patron
+    def pul_patron_last_name(patron)
       last_name = ""
-      unless patron[:last_name].nil?
-        last_name += " #{patron[:last_name]}"
-      end
+      last_name += " #{patron[:last_name]}" unless patron[:last_name].nil?
       last_name
     end
 
@@ -76,20 +70,14 @@ module Requests
     # end
 
     def return_message(submission)
-      unless submission.source.nil?
-        link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-secondary icon-moveback', title: 'Return to Record'
-      end
+      link_to "Return to Record", return_url(submission.source, submission.id), class: 'btn btn-secondary icon-moveback', title: 'Return to Record' unless submission.source.nil?
     end
 
     def login_url(request)
       url = "/requests/#{request.requestable.first.bib['id']}?"
       params = []
-      if !request.mfhd.nil?
-        params.push("mfhd=#{request.mfhd}")
-      end
-      if !request.source.nil?
-        params.push("source=#{request.source}")
-      end
+      params.push("mfhd=#{request.mfhd}") unless request.mfhd.nil?
+      params.push("source=#{request.source}") unless request.source.nil?
       url += params.join("&")
     end
 

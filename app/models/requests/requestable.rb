@@ -5,15 +5,12 @@ module Requests
     attr_reader :item
     attr_reader :location
     attr_accessor :services
-    attr_reader :mappable
-    attr_reader :pageable
 
-    delegate :pageable_loc?, to: :pageable
+    delegate :pageable_loc?, to: :@pageable
+    delegate :map_url, to: :@mappable
+    delegate :illiad_request_url, :illiad_query_parameters, to: :@illiad
 
     include Requests::Aeon
-    include Requests::Illiad
-
-    delegate :map_url, to: :mappable
 
     def initialize(bib:, holding: nil, item: nil, location: nil)
       @bib = bib # hash of bibliographic data
@@ -23,6 +20,7 @@ module Requests
       @services = []
       @pageable = Pageable.new(call_number: holding.first[1]['call_number_browse'], location_code: location['code'])
       @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location[:code])
+      @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil))
     end
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key

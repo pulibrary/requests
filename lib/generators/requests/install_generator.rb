@@ -5,13 +5,13 @@ module Requests
     source_root File.expand_path('../templates', __FILE__)
 
     class_option :devise, type: :boolean, default: false, aliases: "-d", desc: "Use Devise as authentication logic (this is default)."
-    desc ''"
-    This generator does the following:
-    1. Creates a requests_inializer.rb in config/initializers.
-    2. Creates a requests.yml populated with usabale default values in config.
-    3. Creates a requests.en.yml locale file
-    4. Updates .gitignore
-    "''
+    desc <<-EOS
+      This generator does the following:
+      1. Creates a requests_inializer.rb in config/initializers.
+      2. Creates a requests.yml populated with usabale default values in config.
+      3. Creates a requests.en.yml locale file
+      4. Updates .gitignore
+    EOS
 
     def requests_initializer
       copy_file 'requests_initializer.rb', 'config/initializers/requests_initializer.rb'

@@ -54,13 +54,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
-    describe "#get_language" do
+    describe "#language" do
       it "returns a language_code" do
-        expect(subject.get_language).to be_truthy
+        expect(subject.language).to be_truthy
       end
 
       it "returns a language IANA code" do
-        expect(subject.get_language).to eq 'en'
+        expect(subject.language).to eq 'en'
       end
 
       # Doesn't do this yet

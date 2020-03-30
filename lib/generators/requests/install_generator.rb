@@ -69,9 +69,9 @@ module Requests
         %(, :controllers => { omniauth_callbacks: "users/omniauth_callbacks", sessions: 'sessions' }, skip: [:passwords, :registration])
       end
       copy_file './app/controllers/users/omniauth_callbacks_controller.rb', 'app/controllers/users/omniauth_callbacks_controller.rb'
-      copy_file './lib/omniauth/strategies/omniauth-barcode.rb', 'lib/omniauth/strategies/omniauth-barcode.rb'
+      copy_file './lib/omniauth/strategies/barcode.rb', 'lib/omniauth/strategies/barcode.rb'
       inject_into_file 'config/application.rb', before: %(  end\n) do
-        %(    require Rails.root.join('lib/omniauth/strategies/omniauth-barcode')\n)
+        %(    require Rails.root.join('lib/omniauth/strategies/barcode')\n)
       end
       inject_into_file 'app/controllers/application_controller.rb', before: %(end\n) do
         "  def after_sign_in_path_for(_resource)\n" \

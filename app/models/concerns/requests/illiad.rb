@@ -88,7 +88,6 @@ module Requests
                when :info then "info:#{sub_scheme}/"
                when :urn  then "urn:#{sub_scheme}:"
                end
-      bare_identifier = nil
       identifiers = referent.identifiers.collect { |id| Regexp.last_match(1) if id =~ /^#{prefix}(.*)/ }.compact
       if identifiers.blank? && ['lccn', 'oclcnum', 'isbn', 'issn', 'doi', 'pmid'].include?(sub_scheme)
         # try the referent metadata

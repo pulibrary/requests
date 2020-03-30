@@ -79,6 +79,8 @@ module Requests
       params.push("mfhd=#{request.mfhd}") unless request.mfhd.nil?
       params.push("source=#{request.source}") unless request.source.nil?
       url += params.join("&")
+
+      url
     end
 
     def return_url(source, id)

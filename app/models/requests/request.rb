@@ -275,7 +275,7 @@ module Requests
                                  end
                                else
                                  items_to_symbols(items_by_mfhd(holding_id))
-            end
+                               end
             mfhd_items[holding_id] = items_by_holding
           end
         end

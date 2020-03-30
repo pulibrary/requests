@@ -15,10 +15,10 @@ module Requests
     attr_reader :items
     attr_reader :pickups
     alias default_pickups pickups
+    delegate :ctx, :openurl_ctx_kev, to: :@ctx_obj
 
     include Requests::Bibdata
     include Requests::BdUtils
-    include Requests::Ctx
     include Requests::Scsb
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
@@ -38,6 +38,7 @@ module Requests
       @pickups = build_pickups
       @requestable_unrouted = build_requestable
       @requestable = route_requests(@requestable_unrouted)
+      @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
     end
 
     def scsb?
@@ -145,11 +146,8 @@ module Requests
       sorted = {}
       requestable.each do |requestable|
         mfhd = requestable.holding.keys[0]
-        if sorted.key? mfhd
-          sorted[mfhd] << requestable
-        else
-          sorted[mfhd] = [requestable]
-        end
+        sorted[mfhd] ||= []
+        sorted[mfhd] << requestable
       end
       sorted
     end

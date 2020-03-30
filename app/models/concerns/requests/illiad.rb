@@ -1,24 +1,23 @@
 module Requests
-  module Illiad
-    # ILL related helpers
-    extend ActiveSupport::Concern
+  # ILL related helpers
+  class Illiad
+    attr_reader :enum, :chron
+
+    def initialize(enum: nil, chron: nil)
+      @enum = enum
+      @chron = chron
+    end
 
     # accepts a @ctx object and formats it appropriately for ILL
-    def illiad_request_url(ctx = nil, requestable)
-      enum = nil
-      chron = nil
-      if requestable.enumerated?
-        enum = requestable.item[:enum]
-        chron = requestable.item[:chron]
-      end
-      "#{Requests.config[:ill_base]}?#{illiad_query_parameters(ctx, enum, chron)}"
+    def illiad_request_url(ctx)
+      "#{Requests.config[:ill_base]}?#{illiad_query_parameters(ctx)}"
     end
 
     ## below take from Umlaut's illiad service adaptor
     # https://github.com/team-umlaut/umlaut/blob/master/app/service_adaptors/illiad.rb
     # takes an existing openURL and illiad-izes it.
     # also attempts to handle the question of enumeration.
-    def illiad_query_parameters(request, enum = nil, chron = nil)
+    def illiad_query_parameters(request)
       metadata = request.referent.metadata
       qp = {}
       qp['genre'] = metadata['genre']

@@ -711,6 +711,15 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "is enumerated" do
         expect(subject.requestable[2].enumerated?).to be true
       end
+
+      it "provides an ILLiad URL" do
+        expect(subject.requestable[2].illiad_request_url(subject.ctx, subject.requestable[2])).to start_with(Requests.config[:ill_base])
+      end
+
+      it "provides illiad query parameters with enumeration" do
+        enum = "Volume foo"
+        expect(subject.requestable[2].illiad_query_parameters(subject.ctx, enum)).to include(CGI.escape(enum))
+      end
     end
   end
 

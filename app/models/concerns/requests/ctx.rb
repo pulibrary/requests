@@ -1,15 +1,13 @@
 require 'openurl'
 
 module Requests
-  class SolrOpenUrlContext
-    attr_reader :ctx
-    attr_reader :solr_doc
-
+  module Ctx
+    extend ActiveSupport::Concern
     include OpenURL
 
-    def initialize(solr_doc:)
-      @solr_doc = solr_doc
-      @ctx = build_ctx
+    # returns an openurl CTX object
+    def ctx
+      @ctx ||= build_ctx
     end
 
     def openurl_ctx_kev
@@ -29,17 +27,17 @@ module Requests
 
       def build_ctx
         ctx = ContextObject.new
-        id = solr_doc['id']
-        title = set_title unless solr_doc['title_citation_display'].nil?
-        date = solr_doc['pub_date_display'].first unless solr_doc['pub_date_display'].nil?
-        author = solr_doc['author_citation_display'].first unless solr_doc['author_citation_display'].nil?
-        corp_author = solr_doc['pub_citation_display'].first unless solr_doc['pub_citation_display'].nil?
-        publisher_info = solr_doc['pub_citation_display'].first unless solr_doc['pub_citation_display'].nil?
-        edition = solr_doc['edition_display'].first unless solr_doc['edition_display'].nil?
-        format = if solr_doc['format'].blank?
+        id = doc['id']
+        title = set_title unless doc['title_citation_display'].nil?
+        date = doc['pub_date_display'].first unless doc['pub_date_display'].nil?
+        author = doc['author_citation_display'].first unless doc['author_citation_display'].nil?
+        corp_author = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
+        publisher_info = doc['pub_citation_display'].first unless doc['pub_citation_display'].nil?
+        edition = doc['edition_display'].first unless doc['edition_display'].nil?
+        format = if doc['format'].blank?
                    'unknown'
                  else
-                   solr_doc['format'].is_a?(Array) ? solr_doc['format'].first.downcase.strip : solr_doc['format'].downcase.strip
+                   doc['format'].is_a?(Array) ? doc['format'].first.downcase.strip : doc['format'].downcase.strip
                  end
         if format == 'book'
           ctx.referent.set_format('book')
@@ -52,7 +50,7 @@ module Requests
           # ctx.referent.set_metadata('place', publisher_info)
           ctx.referent.set_metadata('pub', publisher_info)
           ctx.referent.set_metadata('edition', edition)
-          ctx.referent.set_metadata('isbn', solr_doc['isbn_s'].first) unless solr_doc['isbn_s'].nil?
+          ctx.referent.set_metadata('isbn', doc['isbn_s'].first) unless doc['isbn_s'].nil?
         elsif format =~ /journal/i # checking using include because institutions may use formats like Journal or Journal/Magazine
           ctx.referent.set_format('journal')
           ctx.referent.set_metadata('genre', 'journal')
@@ -60,7 +58,7 @@ module Requests
           ctx.referent.set_metadata('title', title)
           # use author display as corp author for journals
           ctx.referent.set_metadata('aucorp', author)
-          ctx.referent.set_metadata('issn', solr_doc['issn_s'].first) unless solr_doc['issn_s'].nil?
+          ctx.referent.set_metadata('issn', doc['issn_s'].first) unless doc['issn_s'].nil?
         else
           ctx.referent.set_format('unknown') # do we need to do this?
           ctx.referent.set_metadata('genre', format)
@@ -71,8 +69,8 @@ module Requests
           # ctx.referent.set_metadata('place', publisher_info)
           ctx.referent.set_metadata('pub', publisher_info)
           ctx.referent.set_metadata('format', format)
-          ctx.referent.set_metadata('issn', solr_doc['issn_s'].first) unless solr_doc['issn_s'].nil?
-          ctx.referent.set_metadata('isbn', solr_doc['isbn_s'].first) unless solr_doc['isbn_s'].nil?
+          ctx.referent.set_metadata('issn', doc['issn_s'].first) unless doc['issn_s'].nil?
+          ctx.referent.set_metadata('isbn', doc['isbn_s'].first) unless doc['isbn_s'].nil?
         end
         ## common metadata for all formats
         ctx.referent.set_metadata('date', date)
@@ -80,13 +78,13 @@ module Requests
         ctx.referent.add_identifier("https://bibdata.princeton.edu/bibliographic/#{id}")
         # add pulsearch refererrer
         ctx.referrer.add_identifier('info:sid/catalog.princeton.edu:generator')
-        ctx.referent.add_identifier("info:oclcnum/#{solr_doc['oclc_s'].first}") unless solr_doc['oclc_s'].nil?
-        ctx.referent.add_identifier("info:lccn/#{solr_doc['lccn_s'].first}") unless solr_doc['lccn_s'].nil?
+        ctx.referent.add_identifier("info:oclcnum/#{doc['oclc_s'].first}") unless doc['oclc_s'].nil?
+        ctx.referent.add_identifier("info:lccn/#{doc['lccn_s'].first}") unless doc['lccn_s'].nil?
         ctx
       end
 
       def set_title
-        solr_doc['title_citation_display'].first.truncate(247)
+        doc['title_citation_display'].first.truncate(247)
       end
   end
 end

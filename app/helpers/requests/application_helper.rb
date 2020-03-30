@@ -267,7 +267,7 @@ module Requests
         params.each do |key, value|
           unless value.nil?
             concat content_tag(:dt, display_label[key].to_s)
-            concat content_tag(:dd, value.first.to_s, lang: request.get_language.to_s, id: display_label[key].gsub(/[^0-9a-z ]/i, '').downcase.to_s)
+            concat content_tag(:dd, value.first.to_s, lang: request.language.to_s, id: display_label[key].gsub(/[^0-9a-z ]/i, '').downcase.to_s)
           end
         end
       end

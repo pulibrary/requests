@@ -297,7 +297,7 @@ module Requests
       }
     end
 
-    def get_language
+    def language
       doc["language_iana_s"]&.first
     end
 

@@ -1,25 +1,24 @@
 module Requests
-  module Illiad
-    # ILL related helpers
-    extend ActiveSupport::Concern
+  # ILL related helpers
+  class Illiad
+    attr_reader :enum, :chron
 
-    # accepts a @ctx object and formats it appropriately for ILL
-    def illiad_request_url(ctx = nil, requestable)
-      enum = nil
-      chron = nil
-      if requestable.enumerated?
-        enum = requestable.item[:enum]
-        chron = requestable.item[:chron]
-      end
-      "#{Requests.config[:ill_base]}?#{illiad_query_parameters(ctx, enum, chron)}"
+    def initialize(enum: nil, chron: nil)
+      @enum = enum
+      @chron = chron
+    end
+
+    # accepts a @solr_open_url_context object and formats it appropriately for ILL
+    def illiad_request_url(solr_open_url_context)
+      "#{Requests.config[:ill_base]}?#{illiad_query_parameters(solr_open_url_context)}"
     end
 
     ## below take from Umlaut's illiad service adaptor
     # https://github.com/team-umlaut/umlaut/blob/master/app/service_adaptors/illiad.rb
     # takes an existing openURL and illiad-izes it.
     # also attempts to handle the question of enumeration.
-    def illiad_query_parameters(request, enum = nil, chron = nil)
-      metadata = request.referent.metadata
+    def illiad_query_parameters(solr_open_url_context)
+      metadata = solr_open_url_context.referent.metadata
       qp = {}
       qp['genre'] = metadata['genre']
       if metadata['aulast']
@@ -31,11 +30,11 @@ module Requests
       ## Possible enumeration values
       qp['volume'] = enum unless enum.nil?
       qp['issue']  = chron unless chron.nil?
-      # qp['month']     = get_month(request.referent)
+      # qp['month']     = get_month(solr_open_url_context.referent)
       qp['issn'] = metadata['issn'] unless metadata['issn'].nil?
       qp['isbn'] = metadata['isbn'] unless metadata['isbn'].nil?
       qp['stitle'] = metadata['stitle'] unless metadata['stitle'].nil?
-      qp['sid'] = sid_for_illiad(request)
+      qp['sid'] = sid_for_illiad(solr_open_url_context)
       qp['rft.date'] = metadata['date'] unless metadata['date'].nil?
       qp['atitle'] = metadata['atitle']
       # ILLiad always wants 'title', not the various title keys that exist in OpenURL
@@ -44,10 +43,10 @@ module Requests
       qp['rft.pub'] = metadata['pub']
       qp['rft.place'] = metadata['place']
       qp['rft.edition'] = metadata['edition']
-      qp['rft_id'] = get_oclcnum(request.referent)
+      qp['rft_id'] = get_oclcnum(solr_open_url_context.referent)
       # Genre normalization. ILLiad pays a lot of attention to `&genre`, but
       # doesn't use actual OpenURL rft_val_fmt
-      if request.referent.format == "dissertation"
+      if solr_open_url_context.referent.format == "dissertation"
         qp['genre'] = 'dissertation'
       elsif qp['isbn'].present? && qp['genre'] == 'book' && qp['atitle'] && qp['issn'].blank?
         # actually a book chapter, not a book, fix it.
@@ -66,8 +65,8 @@ module Requests
     end
 
     # Grab a source label out of `sid` or `rfr_id`, add on our suffix.
-    def sid_for_illiad(request)
-      sid = request.referrer.identifiers.first || ""
+    def sid_for_illiad(solr_open_url_context)
+      sid = solr_open_url_context.referrer.identifiers.first || ""
       sid = sid.gsub(%r{\Ainfo\:sid/}, '')
       "#{sid}#{@sid_suffix}"
     end

@@ -432,10 +432,7 @@ describe Requests::Submission do
       }
     end
     describe 'An empty submission' do
-      let(:requestable) do
-        [
-        ]
-      end
+      let(:requestable) { [] }
       let(:params) do
         {
           request: user_info,

@@ -169,7 +169,7 @@ module Requests
                      [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
                    else
                      [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
-                          end
+                   end
                  else
                    available_pickups(requestable, default_pickups)
                  end

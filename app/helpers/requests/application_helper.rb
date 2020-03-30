@@ -136,10 +136,10 @@ module Requests
 
     def gfa_lookup(lib_code)
       if lib_code == "firestone"
-        gfa_code = "PA"
+        "PA"
       else
         lib = Requests::BibdataService.delivery_locations.select { |_key, hash| hash["library"]["code"] == lib_code }
-        gfa_code = lib.keys.first.to_s
+        lib.keys.first.to_s
       end
     end
 
@@ -215,7 +215,7 @@ module Requests
 
     def hidden_fields_item(requestable)
       hidden = hidden_field_tag "requestable[][bibid]", "", value: requestable.bib[:id].to_s, id: "requestable_bibid_#{requestable.item['id']}"
-      hidden = hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.item['id']}"
+      hidden += hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.item['id']}"
       hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.item['id']}" unless requestable.holding.first[1]["call_number"].nil?
       hidden += if requestable.item["location"].nil?
                   hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{requestable.item['id']}"

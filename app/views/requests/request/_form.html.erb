@@ -59,24 +59,24 @@
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
-              <% if requestable.has_item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
+              <% if requestable.item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
                   <td class='request--select'>
                     <%= hidden_field_tag 'requestable[][selected]', false %>
                     <%= item_checkbox @request.requestable, requestable %>
-                    <% if requestable.has_item_data? %>
+                    <% if requestable.item_data? %>
                       <%= hidden_fields_item requestable %>
                     <% end %>
                   </td>
                   <td>
-                    <% if requestable.has_item_data? || requestable.scsb? %>
+                    <% if requestable.item_data? || requestable.scsb? %>
                       <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
                         <%= enum_copy_display requestable.item %>
                       </span>
                     <% end %>
                   </td>
                   <td>
-                    <% if requestable.has_item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
+                    <% if requestable.item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
                       <%= system_status_label requestable %>
                       <%= status_label requestable %>
                     <% end %>

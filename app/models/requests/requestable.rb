@@ -168,7 +168,7 @@ module Requests
 
     # assume numeric ids come from voyager
     def voyager_managed?
-      bib[:id].to_i > 0
+      bib[:id].to_i.positive?
     end
 
     def online?

@@ -384,32 +384,21 @@ module Requests
     end
 
     def submit_button_disabled(requestable_list)
-      if requestable_list.size == 1
-        if requestable_list.first.services.empty?
-          true
-        elsif requestable_list.first.on_reserve?
-          true
-        elsif requestable_list.first.services.include? 'on_shelf'
-          # temporary changes issue 438 do not disable the button for circulating items
-          !requestable_list.first.location[:circulates] || @user.blank? || @user.guest
-          # false
-        elsif requestable_list.first.charged?
-          if requestable_list.first.annexa?
-            false
-          elsif requestable_list.first.services.include? 'bd'
-            false
-          elsif requestable_list.first.annexb?
-            false
-          elsif requestable_list.first.pageable_loc?
-            false
-          else
-            false
-          end
+      return unsubmittable? requestable_list unless requestable_list.size == 1
+      if requestable_list.first.on_shelf?
+        # temporary changes issue 438 do not disable the button for circulating items
+        !requestable_list.first.location[:circulates] || @user.blank? || @user.guest
+        # false
+      elsif requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf')
+        true
+      elsif requestable_list.first.charged?
+        if requestable_list.first.annexa? || (requestable_list.first.services.include? 'bd') || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+          false
         else
           false
         end
       else
-        unsubmittable? requestable_list
+        false
       end
     end
 
@@ -426,34 +415,22 @@ module Requests
       multi_item = "Request Selected Items"
       no_item = "No Items Available"
       trace = "Trace this item"
-      if requestable_list.size == 1
-        if requestable_list.first.services.empty?
-          no_item
-        elsif requestable_list.first.charged?
-          if requestable_list.first.annexa?
-            multi_item
-          elsif requestable_list.first.annexb?
-            multi_item
-          elsif requestable_list.first.pageable_loc?
-            multi_item
-          else
-            single_item # no_item
-          end
+      return multi_item unless requestable_list.size == 1
+      if requestable_list.first.services.empty?
+        no_item
+      elsif requestable_list.first.charged?
+        return multi_item if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+        single_item # no_item
+      # rubocop:disable Lint/ConditionPosition
+      elsif
+        if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+          multi_item
+        elsif requestable_list.first.traceable?
+          trace
         else
-          if requestable_list.first.annexa?
-            multi_item
-          elsif requestable_list.first.annexb?
-            multi_item
-          elsif requestable_list.first.pageable_loc?
-            multi_item
-          elsif requestable_list.first.traceable?
-            trace
-          else
-            single_item
-          end
+          single_item
         end
-      else
-        multi_item
+        # rubocop:enable Lint/ConditionPosition
       end
     end
 

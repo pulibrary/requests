@@ -37,16 +37,7 @@ module Requests
 
     def annexa_email(submission)
       @submission = submission
-      destination_email = []
-      @submission.items.each do |item|
-        next unless item["type"] == 'annexa'
-        if item["location_code"] == 'anxadoc'
-          destination_email.push(I18n.t('requests.anxadoc.email'))
-        else
-          destination_email.push(I18n.t('requests.annexa.email'))
-        end
-      end
-
+      destination_email = annexa_email_destinations(submission: @submission)
       # temporary changes issue 438
       # cc_email = [@submission.email]
       cc_email = [@submission.email, I18n.t('requests.on_shelf.email')]
@@ -230,6 +221,20 @@ module Requests
     end
 
     private
+
+      def annexa_email_destinations(submission:)
+        annexa_items(submission: submission).map do |item|
+          if item["location_code"] == 'anxadoc'
+            I18n.t('requests.anxadoc.email')
+          else
+            I18n.t('requests.annexa.email')
+          end
+        end
+      end
+
+      def annexa_items(submission:)
+        submission.items.select { |item| item["type"] == 'annexa' }
+      end
 
       def subject_line(request_subject, barcode)
         if barcode == 'ACCESS' || barcode == 'access'

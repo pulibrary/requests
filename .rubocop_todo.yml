@@ -64,15 +64,6 @@ RSpec/EmptyExampleGroup:
     - 'spec/models/requests/router_spec.rb'
     - 'spec/models/requests/submission_spec.rb'
 
-# Offense count: 14
-# Configuration parameters: Max.
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/controllers/requests/request_controller_spec.rb'
-    - 'spec/features/requests/request_spec.rb'
-    - 'spec/models/requests/pickup_lookup_spec.rb'
-    - 'spec/models/requests/submission_spec.rb'
-
 # Offense count: 6
 # Configuration parameters: AssignmentOnly.
 RSpec/InstanceVariable:

@@ -120,7 +120,7 @@ module Requests
       item
     end
 
-    def has_item_data?
+    def item_data?
       return false if item.nil?
       item[:id].present?
     end

@@ -50,13 +50,6 @@ Metrics/PerceivedComplexity:
   Max: 26
 
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect.
-Performance/HashEachMethods:
-  Exclude:
-    - 'app/models/requests/request.rb'
-
 # Offense count: 16
 # Configuration parameters: CustomIncludeMethods.
 RSpec/EmptyExampleGroup:

@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'borrow_direct'
 
 describe Requests::BorrowDirectLookup do
-  let(:subject) { described_class.new }
+  let(:borrow_direct_lookup) { described_class.new }
 
   context 'An available item in borrow direct' do
     let(:good_params) do
@@ -17,17 +17,17 @@ describe Requests::BorrowDirectLookup do
 
     describe '#find' do
       it 'Returns a good BorrowDirect::FindItem response' do
-        expect(subject).to receive(:find).with(good_params).and_return(good_bd_response)
-        expect(subject.find(good_params)).to eq(good_bd_response)
+        expect(borrow_direct_lookup).to receive(:find).with(good_params).and_return(good_bd_response)
+        expect(borrow_direct_lookup.find(good_params)).to eq(good_bd_response)
       end
     end
 
     describe '#available?' do
       it 'is available for request' do
-        expect(subject).to receive(:find).with(good_params).and_return(good_bd_response)
-        expect(subject.find(good_params)).to eq(good_bd_response)
-        expect(subject).to receive(:available?).and_return(true)
-        expect(subject.available?).to be true
+        expect(borrow_direct_lookup).to receive(:find).with(good_params).and_return(good_bd_response)
+        expect(borrow_direct_lookup.find(good_params)).to eq(good_bd_response)
+        expect(borrow_direct_lookup).to receive(:available?).and_return(true)
+        expect(borrow_direct_lookup.available?).to be true
       end
     end
   end
@@ -56,17 +56,17 @@ describe Requests::BorrowDirectLookup do
     end
     describe '#find' do
       it 'Returns a bad BorrowDirect::FindItem response' do
-        expect(subject).to receive(:find).with(bad_params).and_return(bad_bd_response)
-        expect(subject.find(bad_params)).to eq(bad_bd_response)
+        expect(borrow_direct_lookup).to receive(:find).with(bad_params).and_return(bad_bd_response)
+        expect(borrow_direct_lookup.find(bad_params)).to eq(bad_bd_response)
       end
     end
 
     describe '#available?' do
       it 'Is not available for request' do
-        expect(subject).to receive(:find).with(bad_params).and_return(bad_bd_response)
-        expect(subject.find(bad_params)).to eq(bad_bd_response)
-        expect(subject).to receive(:available?).and_return(false)
-        expect(subject.available?).to be false
+        expect(borrow_direct_lookup).to receive(:find).with(bad_params).and_return(bad_bd_response)
+        expect(borrow_direct_lookup.find(bad_params)).to eq(bad_bd_response)
+        expect(borrow_direct_lookup).to receive(:available?).and_return(false)
+        expect(borrow_direct_lookup.available?).to be false
       end
     end
   end

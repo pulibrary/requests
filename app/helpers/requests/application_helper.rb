@@ -126,7 +126,7 @@ module Requests
       display += " " if !item[:enum_display].nil? && !item[:copy_number].nil?
       # For scsb materials
       display += item[:enumeration] if item[:enumeration]
-      display += "Copy #{item[:copy_number]}" unless item[:copy_number].nil? || item[:copy_number] == 0 || item[:copy_number] == 1 || item[:copy_number] == '1'
+      display += "Copy #{item[:copy_number]}" unless item[:copy_number].nil? || (item[:copy_number]).zero? || item[:copy_number] == 1 || item[:copy_number] == '1'
       display
     end
 

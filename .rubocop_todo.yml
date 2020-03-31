@@ -149,18 +149,3 @@ Style/IfInsideElse:
   Exclude:
     - 'app/helpers/requests/application_helper.rb'
     - 'app/models/requests/router.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'spec/**/*'
-    - 'app/helpers/requests/application_helper.rb'
-    - 'app/models/requests/requestable.rb'
-
-# Offense count: 1
-Style/OptionalArguments:
-  Exclude:
-    - 'app/models/concerns/requests/illiad.rb'

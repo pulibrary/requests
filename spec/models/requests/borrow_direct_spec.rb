@@ -67,19 +67,19 @@ describe Requests::BorrowDirect do
   let(:good_request_response) { 'A BD Request Number' }
   let(:bad_request_response) { 'An error happened' }
 
-  let(:subject) { described_class.new(submission) }
+  let(:borrow_direct) { described_class.new(submission) }
 
   it 'Handles a Borrow Direct request successfully' do
-    allow(subject).to receive(:handle).and_return(good_request_response)
-    subject.handle
-    allow(subject).to receive(:sent).and_return(good_request_response)
-    expect(subject.sent).to eq(good_request_response)
+    allow(borrow_direct).to receive(:handle).and_return(good_request_response)
+    borrow_direct.handle
+    allow(borrow_direct).to receive(:sent).and_return(good_request_response)
+    expect(borrow_direct.sent).to eq(good_request_response)
   end
 
   it 'Logs an error when a request fails' do
-    allow(subject).to receive(:handle).and_return(bad_request_response)
-    subject.handle
-    allow(subject).to receive(:errors).and_return(bad_request_response)
-    expect(subject.errors).to eq(bad_request_response)
+    allow(borrow_direct).to receive(:handle).and_return(bad_request_response)
+    borrow_direct.handle
+    allow(borrow_direct).to receive(:errors).and_return(bad_request_response)
+    expect(borrow_direct.errors).to eq(bad_request_response)
   end
 end

@@ -66,6 +66,163 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
       end
     end
 
+    describe "calculate_services" do
+      let(:stubbed_questions) do
+        { voyager_managed?: true, online?: false, in_process?: false,
+          charged?: false, on_order?: false, aeon?: false,
+          preservation?: false, annexa?: false, annexb?: false,
+          plasma?: false, lewis?: false, recap?: false,
+          item_data?: false, recap_edd?: false, pageable?: false }
+      end
+      let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+
+      context "online holding" do
+        before do
+          stubbed_questions[:online?] = true
+        end
+        it "returns online in the services" do
+          expect(router.calculate_services).to eq(['online'])
+        end
+      end
+
+      context "in process" do
+        before do
+          stubbed_questions[:in_process?] = true
+        end
+        it "returns in_process in the services" do
+          expect(router.calculate_services).to eq(['in_process'])
+        end
+        context "unauthorized user" do
+          let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+
+          it "returns nothing in the services" do
+            expect(router.calculate_services).to eq([])
+          end
+        end
+      end
+
+      context "on order" do
+        before do
+          stubbed_questions[:on_order?] = true
+        end
+        it "returns on_order in the services" do
+          expect(router.calculate_services).to eq(['on_order'])
+        end
+        context "unauthorized user" do
+          let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+
+          it "returns nothing in the services" do
+            expect(router.calculate_services).to eq([])
+          end
+        end
+      end
+
+      context "aeon" do
+        before do
+          stubbed_questions[:aeon?] = true
+        end
+        it "returns aeon in the services" do
+          expect(router.calculate_services).to eq(['aeon'])
+        end
+      end
+
+      context "preservation" do
+        before do
+          stubbed_questions[:preservation?] = true
+        end
+        it "returns pres in the services" do
+          expect(router.calculate_services).to eq(['pres'])
+        end
+      end
+
+      context "annexa" do
+        before do
+          stubbed_questions[:annexa?] = true
+        end
+        it "returns annexa in the services" do
+          expect(router.calculate_services).to eq(['annexa'])
+        end
+      end
+
+      context "annexb" do
+        before do
+          stubbed_questions[:annexb?] = true
+        end
+        it "returns annexb in the services" do
+          expect(router.calculate_services).to eq(['annexb'])
+        end
+      end
+
+      context "plasma" do
+        before do
+          stubbed_questions[:plasma?] = true
+        end
+        it "returns ppl in the services" do
+          expect(router.calculate_services).to eq(['ppl'])
+        end
+      end
+
+      context "lewis" do
+        before do
+          stubbed_questions[:lewis?] = true
+        end
+        it "returns lewis in the services" do
+          expect(router.calculate_services).to eq(['lewis'])
+        end
+      end
+
+      context "recap" do
+        before do
+          stubbed_questions[:recap?] = true
+          stubbed_questions[:item_data?] = true
+          stubbed_questions[:recap_edd?] = true
+        end
+        it "returns recap_edd in the services" do
+          expect(router.calculate_services).to eq(['recap_edd'])
+        end
+        context "unauthorized user" do
+          let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+
+          it "returns nothing in the services" do
+            expect(router.calculate_services).to eq([])
+          end
+        end
+        context "no items" do
+          before do
+            stubbed_questions[:item_data?] = false
+          end
+          it "returns recap_no_items in the services" do
+            expect(router.calculate_services).to eq(['recap_no_items'])
+          end
+        end
+      end
+
+      context "pageable" do
+        before do
+          stubbed_questions[:pageable?] = true
+        end
+        it "returns paging in the services" do
+          expect(router.calculate_services).to eq(['paging'])
+        end
+      end
+
+      context "on_shelf" do
+        it "returns on_shelf in the services" do
+          expect(router.calculate_services).to eq(['on_shelf'])
+        end
+      end
+
+      context "not voyager managed or scsb" do
+        before do
+          stubbed_questions[:voyager_managed?] = false
+          stubbed_questions[:scsb?] = false
+        end
+        it "returns aeon in the services" do
+          expect(router.calculate_services).to eq(['aeon'])
+        end
+      end
+    end
+
     describe "Print Holding in ReCAP with item record and open pickup locations" do
     end
 

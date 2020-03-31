@@ -387,23 +387,15 @@ module Requests
           false
         end
       else
-        if has_submitable? requestable_list
-          true
-        else
-          false
-        end
+        unsubmittable? requestable_list
       end
     end
 
-    def has_submitable?(requestable_list)
-      submitable = true
-      requestable_list.each do |requestable|
-        submitable = false unless (requestable.services & self.submitable).empty?
-      end
-      submitable
+    def unsubmittable?(requestable_list)
+      !requestable_list.any? { |requestable| (requestable.services | submitable_services).present? }
     end
 
-    def submitable
+    def submitable_services
       ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
     end
 

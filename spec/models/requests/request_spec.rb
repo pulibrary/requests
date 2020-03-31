@@ -182,7 +182,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a list of request objects" do
         expect(subject.requestable).to be_truthy
         expect(subject.requestable.size).to eq(98)
-        expect(subject.has_pageable?).to be(false)
+        expect(subject.any_pageable?).to be(false)
         expect(subject.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
@@ -413,7 +413,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       it "is unavailable" do
         expect(subject.requestable[0].location['code']).to eq('nec')
-        expect(subject.has_pageable?).to be(false)
+        expect(subject.any_pageable?).to be(false)
         expect(subject.requestable[0].pageable?).to be_nil
       end
     end
@@ -437,14 +437,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #     end
   #   end
 
-  #   describe "#has_pageable?" do
+  #   describe "#any_pageable?" do
   #     it "should return true when all requestable items are pageable?" do
-  #       expect(subject.has_pageable?).to be_truthy
+  #       expect(subject.any_pageable?).to be_truthy
   #     end
 
   #     it "should return true when only some of the requestable items are pageable?" do
   #       subject.requestable.first.item["status"] = 'Charged'
-  #       expect(subject.has_pageable?).to be_truthy
+  #       expect(subject.any_pageable?).to be_truthy
   #     end
 
   #     it "should return false when all requestable items are not pageable?" do
@@ -452,7 +452,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #         requestable.item["status"] = 'Charged'
   #         requestable.services = []
   #       end
-  #       expect(subject.has_pageable?).to be_falsy
+  #       expect(subject.any_pageable?).to be_falsy
   #     end
   #   end
   # end
@@ -489,7 +489,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   #   describe "#requestable" do
   #     it "should be unavailable" do
-  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.any_pageable?).to be(true)
   #       expect(subject.requestable[0].location['code']).to eq('f')
   #       expect(subject.requestable[0].pageable?).to eq(true)
   #       expect(subject.requestable[0].pickup_locations.size).to eq(1)
@@ -513,7 +513,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "is unavailable" do
         expect(subject.requestable[0].location['code']).to eq('f')
         expect(subject.requestable[0].pageable?).to eq(nil)
-        expect(subject.has_pageable?).to be(false)
+        expect(subject.any_pageable?).to be(false)
         expect(subject.requestable[0].voyager_managed?).to eq(true)
       end
     end
@@ -534,7 +534,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #     it "should be unavailable" do
   #       expect(subject.requestable[0].location['code']).to eq('xl')
   #       expect(subject.requestable[0].pageable?).to eq(true)
-  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.any_pageable?).to be(true)
   #       expect(subject.requestable[0].voyager_managed?).to eq(true)
   #     end
   #   end
@@ -638,7 +638,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #     end
 
   #     it "should be have pageable items" do
-  #       expect(subject.has_pageable?).to be(true)
+  #       expect(subject.any_pageable?).to be(true)
   #     end
 
   #     it "should have a pageable item" do
@@ -670,7 +670,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "does not have any pageable items" do
-        expect(subject.has_pageable?).to be(false)
+        expect(subject.any_pageable?).to be(false)
       end
 
       it "has a pageable item" do
@@ -1055,9 +1055,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     end
     let(:request) { described_class.new(params) }
-    describe '#has_loanable_copy?' do
+    describe '#any_loanable_copies?' do
       it "has available copy" do
-        expect(subject.has_loanable_copy?).to be true
+        expect(subject.any_loanable_copies?).to be true
       end
     end
 
@@ -1078,9 +1078,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     end
     let(:request) { described_class.new(params) }
-    describe '#has_loanable_copy?' do
+    describe '#any_loanable_copies?' do
       it "has available copy" do
-        expect(subject.has_loanable_copy?).to be true
+        expect(subject.any_loanable_copies?).to be true
       end
     end
 
@@ -1101,15 +1101,15 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     end
     let(:request) { described_class.new(params) }
-    describe '#has_loanable_copy?' do
+    describe '#any_loanable_copies?' do
       it "has available copy" do
-        expect(subject.has_loanable_copy?).to be true
+        expect(subject.any_loanable_copies?).to be true
       end
     end
 
-    describe '#has_enumerated?' do
+    describe '#any_enumerated?' do
       it 'is enumerated' do
-        expect(subject.has_enumerated?).to be true
+        expect(subject.any_enumerated?).to be true
       end
     end
 
@@ -1130,9 +1130,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     end
     let(:request) { described_class.new(params) }
-    describe '#has_loanable_copy?' do
+    describe '#any_loanable_copies?' do
       it "has available copy" do
-        expect(subject.has_loanable_copy?).to be true
+        expect(subject.any_loanable_copies?).to be true
       end
     end
 
@@ -1153,9 +1153,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       }
     end
     let(:request) { described_class.new(params) }
-    describe '#has_loanable_copy?' do
+    describe '#any_loanable_copies?' do
       it "has available copy" do
-        expect(subject.has_loanable_copy?).to be false
+        expect(subject.any_loanable_copies?).to be false
       end
     end
 
@@ -1294,9 +1294,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request_with_single_aeon_holding) { described_class.new(params) }
 
     describe "#requestable" do
-      describe "#has_single_aeon_requestable?" do
+      describe "#single_aeon_requestable?" do
         it "identifies itself as a single aeon requestable" do
-          expect(subject.has_single_aeon_requestable?).to be_truthy
+          expect(subject.single_aeon_requestable?).to be_truthy
         end
       end
     end

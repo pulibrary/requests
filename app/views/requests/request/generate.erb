@@ -24,7 +24,7 @@
       </div>
       <%= render 'flash_messages' %>
     </div>
-    <% if @request.has_requestable? %>
+    <% if @request.requestable? %>
       <div class="col-12">
         <%= render "form" %>
       </div>

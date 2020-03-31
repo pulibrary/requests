@@ -100,7 +100,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   context 'When an access patron visits the site' do
     describe '#access_patron' do
       it 'creates an access patron with required access attributes' do
-        patron = subject.send(:access_patron, 'foo@bar.com', 'foobar')
+        patron = controller.send(:access_patron, 'foo@bar.com', 'foobar')
         expect(patron).to be_truthy
         expect(patron[:active_email]).to eq('foo@bar.com')
         expect(patron[:last_name]).to eq('foobar')
@@ -115,7 +115,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           .to_return(status: 200, body: valid_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
-        patron = subject.send(:current_patron, user.uid)
+        patron = controller.send(:current_patron, user.uid)
         expect(patron).to be_truthy
         expect(patron[:active_email]).to be_truthy
         expect(patron[:netid]).to be_truthy
@@ -130,7 +130,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
-        patron = subject.send(:current_patron, user.uid)
+        patron = controller.send(:current_patron, user.uid)
         expect(patron).to be_truthy
         expect(patron[:active_email]).to be_truthy
         expect(patron[:netid].nil?).to be true
@@ -144,7 +144,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           .to_return(status: 404, body: invalid_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
-        patron = subject.send(:current_patron, user.uid)
+        patron = controller.send(:current_patron, user.uid)
         expect(patron).to be false
       end
     end
@@ -156,7 +156,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           .to_return(status: 403, body: invalid_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
-        patron = subject.send(:current_patron, user.uid)
+        patron = controller.send(:current_patron, user.uid)
         expect(patron).to be false
       end
     end
@@ -168,7 +168,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           .to_return(status: 500, body: invalid_patron_response, headers: {})
       end
       it 'cannot return a patron record' do
-        patron = subject.send(:current_patron, user.uid)
+        patron = controller.send(:current_patron, user.uid)
         expect(patron).to be false
       end
     end

@@ -80,17 +80,6 @@ RSpec/InstanceVariable:
     - 'spec/models/requests/pickup_lookup_spec.rb'
     - 'spec/models/requests/recall_spec.rb'
 
-# Offense count: 228
-RSpec/NamedSubject:
-  Exclude:
-    - 'spec/controllers/requests/request_controller_spec.rb'
-    - 'spec/models/requests/borrow_direct_lookup_spec.rb'
-    - 'spec/models/requests/borrow_direct_spec.rb'
-    - 'spec/models/requests/pickup_lookup_spec.rb'
-    - 'spec/models/requests/recall_spec.rb'
-    - 'spec/models/requests/recap_spec.rb'
-    - 'spec/models/requests/request_spec.rb'
-
 # Offense count: 8
 RSpec/RepeatedDescription:
   Exclude:

@@ -67,7 +67,7 @@ module Requests
               barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
             end
           end
-          barcodesort.values.each do |item|
+          barcodesort.each_value do |item|
             params = build_requestable_params(
               item: item.with_indifferent_access,
               holding: { id.to_sym.to_s => holdings[id] },
@@ -119,7 +119,7 @@ module Requests
             params = build_requestable_params(holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]])
             requestable_items << Requests::Requestable.new(params)
           else
-            holdings.each do |holding_id, _holding_details|
+            holdings.each_key do |holding_id|
               params = build_requestable_params(holding: { holding_id.to_sym.to_s => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]])
               requestable_items << Requests::Requestable.new(params)
             end
@@ -200,7 +200,7 @@ module Requests
     end
 
     def recap?
-      locations.each do |_code, location|
+      locations.each_value do |location|
         return true if location[:library][:code] == 'recap'
       end
     end
@@ -273,7 +273,7 @@ module Requests
     # should probably happen in the initializer
     def build_pickups
       pickup_locations = []
-      Requests::BibdataService.delivery_locations.values.each do |pickup|
+      Requests::BibdataService.delivery_locations.each_value do |pickup|
         pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"], staff_only: pickup["staff_only"] } if pickup["pickup_location"] == true
       end
       # pickup_locations.sort_by! { |loc| loc[:label] }

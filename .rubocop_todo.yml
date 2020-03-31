@@ -98,11 +98,6 @@ RSpec/RepeatedDescription:
     - 'spec/models/requests/requestable_spec.rb'
     - 'spec/routing/requests/request_spec.rb'
 
-# Offense count: 1
-Rails/FilePath:
-  Exclude:
-    - 'lib/generators/requests/templates/requests_initializer.rb'
-
 # Offense count: 9
 Rails/OutputSafety:
   Exclude:

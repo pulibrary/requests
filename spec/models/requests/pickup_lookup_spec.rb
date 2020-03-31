@@ -47,7 +47,7 @@ describe Requests::PickupLookup do
       }
     end
 
-    let(:subject) { described_class.new(params) }
+    let(:pickup_lookup) { described_class.new(params) }
 
     let(:responses) do
       {
@@ -70,10 +70,10 @@ describe Requests::PickupLookup do
           .with(headers: { 'Accept' => '*/*' })
           .to_return(status: 405, body: responses[:error], headers: {})
 
-        parsed_body = JSON.parse(subject.returned)
+        parsed_body = JSON.parse(pickup_lookup.returned)
 
         expect(parsed_body['response']['recall']['note']['@type']).to eq("error")
-        expect(subject.errors.size).to eq(1)
+        expect(pickup_lookup.errors.size).to eq(1)
       end
 
       it "captures successful PickupLookup request submissions." do
@@ -81,10 +81,10 @@ describe Requests::PickupLookup do
           .with(headers: { 'Accept' => '*/*' })
           .to_return(status: 201, body: responses[:success], headers: {})
 
-        parsed_body = JSON.parse(subject.returned)
+        parsed_body = JSON.parse(pickup_lookup.returned)
 
         expect(parsed_body['response']['recall']['pickup-locations']['pickup-location']).to be_an(Array)
-        expect(subject.errors.size).to eq(0)
+        expect(pickup_lookup.errors.size).to eq(0)
       end
     end
   end

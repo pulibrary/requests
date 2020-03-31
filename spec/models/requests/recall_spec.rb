@@ -48,7 +48,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
     end
 
     let(:todays_date) { Time.zone.today }
-    let(:subject) { described_class.new(submission) }
+    let(:recall_request) { described_class.new(submission) }
 
     let(:responses) do
       {
@@ -70,30 +70,30 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
         stub_request(:put, @stub_url).
           # with(headers: { 'Accept' => '*/*' }).
           to_return(status: 405, body: responses[:error], headers: {})
-        expect(subject.submitted.size).to eq(0)
-        expect(subject.errors.size).to eq(1)
+        expect(recall_request.submitted.size).to eq(0)
+        expect(recall_request.errors.size).to eq(1)
       end
 
       it "captures successful request submissions." do
         stub_request(:put, @stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
-        expect(subject.submitted.size).to eq(1)
-        expect(subject.errors.size).to eq(0)
+        expect(recall_request.submitted.size).to eq(1)
+        expect(recall_request.errors.size).to eq(0)
       end
 
       it 'constructs a expiration date for the recall request' do
         stub_request(:put, @stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
-        expect(subject.request_payload(submission.items.first)).to include("<last-interest-date>#{subject.recall_expiration_date}</last-interest-date>")
+        expect(recall_request.request_payload(submission.items.first)).to include("<last-interest-date>#{recall_request.recall_expiration_date}</last-interest-date>")
       end
 
       it 'has an expiry date 60 days from today formatted as yyyy-mm-dd' do
         stub_request(:put, @stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
-        expect(subject.recall_expiration_date).to eq((todays_date + 60).strftime("%Y%m%d"))
+        expect(recall_request.recall_expiration_date).to eq((todays_date + 60).strftime("%Y%m%d"))
       end
     end
   end

@@ -129,16 +129,12 @@ module Requests
       end
     end
 
-    def has_requestable?
-      return true unless requestable.empty?
+    def requestable?
+      requestable.size.positive?
     end
 
-    def has_single_aeon_requestable?
-      if (requestable.size == 1) && requestable.first.services.include?('aeon')
-        true
-      else
-        false
-      end
+    def single_aeon_requestable?
+      (requestable.size == 1) && requestable.first.services.include?('aeon')
     end
 
     # returns an array of requestable hashes of  grouped under a common mfhd
@@ -153,26 +149,17 @@ module Requests
     end
 
     # Does this request object have any pageable items?
-    def has_pageable?
-      services = []
-      requestable.each do |request|
-        request.services.each do |service|
-          services << service
-        end
-      end
+    def any_pageable?
+      services = requestable.map(&:services).flatten
       services.uniq!
-      if services.include? 'paging'
-        true
-      else
-        false
-      end
+      services.include? 'paging'
     end
 
     def fill_in_eligible(mfhd)
       fill_in = false
       unless (sorted_requestable[mfhd].first.services & ["on_order", "on_shelf", "online"]).present?
         if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
-          if sorted_requestable[mfhd].first.has_item_data?
+          if sorted_requestable[mfhd].first.item_data?
             fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')
           else
             fill_in = true
@@ -187,38 +174,20 @@ module Requests
     end
 
     # Does this request object have any available copies?
-    def has_loanable_copy?
-      copy_available = []
-      requestable_unrouted.each do |request|
-        copy_available << if request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)
-                            false
-                          else
-                            true
-                          end
-      end
-      copy_available.uniq!
-      if copy_available.include? true
-        true
-      else
-        false
-      end
+    def any_loanable_copies?
+      requestable_unrouted.any? { |request| !(request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)) }
     end
 
-    def has_enumerated?
-      enumerated = []
-      requestable_unrouted.each do |request|
-        enum = request.enumerated? ? true : false
-        enumerated << enum
-      end
-      enumerated.include?(true) ? true : false
+    def any_enumerated?
+      requestable_unrouted.any?(&:enumerated?)
     end
 
     def route_requests(requestable_items)
       routed_requests = []
       return [] if requestable_items.blank?
-      has_loanable = has_loanable_copy?
+      any_loanable = any_loanable_copies?
       requestable_items.each do |requestable|
-        router = Requests::Router.new(requestable: requestable, user: @user, has_loanable: has_loanable)
+        router = Requests::Router.new(requestable: requestable, user: @user, any_loanable: any_loanable)
         routed_requests << router.routed_request
       end
       routed_requests
@@ -313,7 +282,7 @@ module Requests
 
     # if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-      if has_loanable_copy? && has_enumerated?
+      if any_loanable_copies? && any_enumerated?
         false
       else
         requestable.any? { |r| r.services.include? 'bd' }

@@ -97,8 +97,3 @@ Style/GuardClause:
 Style/IdenticalConditionalBranches:
   Exclude:
     - 'app/helpers/requests/application_helper.rb'
-
-# Offense count: 4
-Style/IfInsideElse:
-  Exclude:
-    - 'app/helpers/requests/application_helper.rb'

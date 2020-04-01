@@ -49,7 +49,7 @@ module Requests
 
     private
 
-      # ###### use this later once we disble the rule: rubocop:disable Metrics/MethodLength
+      # ###### use this later once we disable the rule: rubocop:disable Metrics/MethodLength
       def calculate_voyager_or_scsb_services
         if requestable.charged? && !requestable.aeon? ## my item status is negative
           calculate_unavailable_services
@@ -86,7 +86,7 @@ module Requests
           # end
         end
       end
-      # ###### use this later once we disble the rule: rubocop:enable Metrics/MethodLength
+      # ###### use this later once we disable the rule: rubocop:enable Metrics/MethodLength
 
       def calculate_recap_services
         return ['recap_no_items'] unless requestable.item_data?

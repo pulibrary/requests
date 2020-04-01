@@ -38,86 +38,99 @@ module Requests
     # top level call, returns a hash of symbols with service objects as values
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
-      services = []
-      # here lies the switch case for all request types from the mega chart
-      if requestable.voyager_managed? || requestable.scsb?
-        if requestable.online?
-          services << 'online'
-        else
-          ## my item status is negative
-          if requestable.charged? && !requestable.aeon?
-            # TODO: Uncomment this block when library returns to normal operation
-            # if (!requestable.enumerated? && cas_user? && !any_loanable)
-            #   services << 'bd'
-            # end
-            # # for mongraphs - title level check
-            # if (cas_user? && !any_loanable)
-            #   services << 'ill'
-            # end
-            # # for serials - copy level check
-            # if (cas_user? && requestable.enumerated?)
-            #   services << 'ill'
-            # end
-            # # for mongraphs - title level check
-            # if !any_loanable && auth_user?
-            #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
-            #     services << 'recall'
-            #   end
-            # end
-            # # for serials - copy level check
-            # if (auth_user? && requestable.enumerated?)
-            #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
-            #     services << 'recall'
-            #   end
-            # end
-          elsif requestable.in_process?
-            services << 'in_process' if auth_user?
-          elsif requestable.on_order?
-            services << 'on_order' if auth_user?
-            #### other choices
-            # Borrow Direct/ILL
-          else # my item status is positive or non-existent churn through statuses
-            ## any check at this level means items must fall in one bucket or another
-            if requestable.aeon?
-              services << 'aeon'
-            elsif requestable.preservation?
-              services << 'pres'
-            elsif requestable.annexa?
-              services << 'annexa'
-            elsif requestable.annexb?
-              services << 'annexb'
-            elsif requestable.plasma?
-              services << 'ppl'
-            elsif requestable.lewis?
-              services << 'lewis'
-            elsif requestable.recap?
-              if requestable.item_data?
-                # No physical recap delivery during campus closure
-                # services << 'recap'
-                services << 'recap_edd' if requestable.recap_edd? && auth_user?
-              # No physical recap delivery during campus closure
-              else
-                services << 'recap_no_items'
-              end
-            elsif requestable.pageable?
-              services << 'paging'
-            else
-              services << 'on_shelf' # goes to stack mapping
-              # suppressing Trace service for the moment, but leaving this code
-              # see https://github.com/pulibrary/requests/issues/164 for info
-              # if (requestable.open? && auth_user?)
-              #   services << 'trace' # all open stacks items are traceable
-              # end
-            end
-          end
-        end
+      if (requestable.voyager_managed? || requestable.scsb?) && requestable.online?
+        ['online']
+      elsif requestable.voyager_managed? || requestable.scsb?
+        calculate_voyager_or_scsb_services
       else # Default Service is Aeon
-        services << 'aeon'
+        ['aeon']
       end
-      services
     end
 
     private
+
+      # ###### use this later once we disble the rule: rubocop:disable Metrics/MethodLength
+      def calculate_voyager_or_scsb_services
+        if requestable.charged? && !requestable.aeon? ## my item status is negative
+          calculate_unavailable_services
+        elsif (requestable.in_process? || requestable.on_order?) && !auth_user?
+          []
+        elsif requestable.in_process?
+          ['in_process']
+        elsif requestable.on_order?
+          ['on_order']
+        # my item status is positive or non-existent churn through statuses
+        ## any check at this level means items must fall in one bucket or another
+        elsif requestable.aeon?
+          ['aeon']
+        elsif requestable.preservation?
+          ['pres']
+        elsif requestable.annexa?
+          ['annexa']
+        elsif requestable.annexb?
+          ['annexb']
+        elsif requestable.plasma?
+          ['ppl']
+        elsif requestable.lewis?
+          ['lewis']
+        elsif requestable.recap?
+          calculate_recap_services
+        elsif requestable.pageable?
+          ['paging']
+        else
+          ['on_shelf'] # goes to stack mapping
+          # suppressing Trace service for the moment, but leaving this code
+          # see https://github.com/pulibrary/requests/issues/164 for info
+          # if (requestable.open? && auth_user?)
+          #   services << 'trace' # all open stacks items are traceable
+          # end
+        end
+      end
+      # ###### use this later once we disble the rule: rubocop:enable Metrics/MethodLength
+
+      def calculate_recap_services
+        return ['recap_no_items'] unless requestable.item_data?
+
+        services = []
+        # No physical recap delivery during campus closure
+        # services = ['recap']
+        services << 'recap_edd' if requestable.recap_edd? && auth_user?
+        services
+      end
+
+      def calculate_unavailable_services
+        []
+        # TODO: Uncomment this block when library returns to normal operation
+        # services = []
+        # if (!requestable.enumerated? && cas_user? && !any_loanable?)
+        #   services << 'bd'
+        # end
+        # # for mongraphs - title level check
+        # if (cas_user? && !any_loanable?)
+        #   services << 'ill'
+        # end
+        # # for serials - copy level check
+        # if (cas_user? && requestable.enumerated?)
+        #   services << 'ill'
+        # end
+        # # for mongraphs - title level check
+        # if !any_loanable? && auth_user?
+        #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
+        #     services << 'recall'
+        #   end
+        # end
+        # # for serials - copy level check
+        # if (auth_user? && requestable.enumerated?)
+        #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
+        #     services << 'recall'
+        #   end
+        # end
+        # services
+      end
+
+      def any_loanable?
+        @any_loanable
+      end
 
       def access_user?
         if @user.guest == true

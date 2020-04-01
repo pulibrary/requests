@@ -35,7 +35,7 @@ Metrics/CyclomaticComplexity:
 Metrics/LineLength:
   Max: 2544
 
-# Offense count: 25
+# Offense count: 21
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 68
@@ -102,4 +102,3 @@ Style/IdenticalConditionalBranches:
 Style/IfInsideElse:
   Exclude:
     - 'app/helpers/requests/application_helper.rb'
-    - 'app/models/requests/router.rb'

@@ -389,16 +389,8 @@ module Requests
         # temporary changes issue 438 do not disable the button for circulating items
         !requestable_list.first.location[:circulates] || @user.blank? || @user.guest
         # false
-      elsif requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf')
-        true
-      elsif requestable_list.first.charged?
-        if requestable_list.first.annexa? || (requestable_list.first.services.include? 'bd') || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
-          false
-        else
-          false
-        end
       else
-        false
+        requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf')
       end
     end
 
@@ -414,23 +406,27 @@ module Requests
       single_item = "Request this Item"
       multi_item = "Request Selected Items"
       no_item = "No Items Available"
-      trace = "Trace this item"
       return multi_item unless requestable_list.size == 1
       if requestable_list.first.services.empty?
         no_item
       elsif requestable_list.first.charged?
         return multi_item if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
         single_item # no_item
-      # rubocop:disable Lint/ConditionPosition
-      elsif
-        if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
-          multi_item
-        elsif requestable_list.first.traceable?
-          trace
-        else
-          single_item
-        end
-        # rubocop:enable Lint/ConditionPosition
+      else
+        submit_message_for_requestable_items(requestable_list)
+      end
+    end
+
+    def submit_message_for_requestable_items(requestable_list)
+      single_item = "Request this Item"
+      multi_item = "Request Selected Items"
+      trace = "Trace this item"
+      if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+        multi_item
+      elsif requestable_list.first.traceable?
+        trace
+      else
+        single_item
       end
     end
 

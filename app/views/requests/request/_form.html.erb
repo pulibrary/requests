@@ -9,7 +9,7 @@
 <% else %>
   <%= render partial: 'service_status' %>
   <%= simple_form_for(:request, { url: '/requests/submit.js', method: :post, remote: true, data: {type: 'script'}} ) do |f| %>
-  <%= hidden_fields_request @request %>
+   <%= hidden_fields_request @request %>
     <% unless suppress_login(@request) %>
       <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
       <%= f.hidden_field :user_last_name, value: "#{pul_patron_last_name @patron}" %>
@@ -52,22 +52,22 @@
       <div class="table-responsive-sm">
         <table class="table table-striped table-bordered request--available_items <%= show_tablesorter requestable_list%>">
           <thead>
-            <th>Select</th>
-            <th>Enumeration</th>
-            <th>Status</th>
+            <!-- th>Select</th-->
+            <th class="w-25">Enumeration</th>
+            <!--th>Status</th-->
             <th id="delivery_options">Delivery Options</th>
           </thead>
           <tbody>
             <% requestable_list.each do |requestable| %>
-              <% if requestable.item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
+              <% if requestable.ask_me? || requestable.item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
               <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
-                  <td class='request--select'>
-                    <%= hidden_field_tag 'requestable[][selected]', false %>
-                    <%= item_checkbox @request.requestable, requestable %>
-                    <% if requestable.item_data? %>
-                      <%= hidden_fields_item requestable %>
-                    <% end %>
-                  </td>
+                  <!-- td class='request--select'>
+                    <%#= hidden_field_tag 'requestable[][selected]', false %>
+                    <%#= item_checkbox @request.requestable, requestable %>
+                    <%# if requestable.item_data? %>
+                      <%#= hidden_fields_item requestable %>
+                    <%# end %>
+                  </td-->
                   <td>
                     <% if requestable.item_data? || requestable.scsb? %>
                       <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
@@ -75,7 +75,7 @@
                       </span>
                     <% end %>
                   </td>
-                  <td>
+                  <!-- td>
                     <% if requestable.item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
                       <%= system_status_label requestable %>
                       <%= status_label requestable %>
@@ -84,7 +84,7 @@
                       <br/>
                       <%= requestable.item[:use_statement] %>
                     <% end %>
-                  </td>
+                  </td -->
                 <td class='request--options' aria-live="polite">
                   <% if requestable.ill_eligible? %>
                     <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx) %>"></span>
@@ -103,8 +103,11 @@
                       <%= show_service_options requestable, mfhd %>
                       <%= hidden_service_options requestable %>
                   <% end %>
-                  <% unless ( requestable.aeon? || requestable.online? || ( requestable.scsb? && requestable.recallable? ) ) %>
+                  <% unless ( requestable.aeon? || requestable.online? || requestable.ask_me? || ( requestable.scsb? && requestable.recallable? ) ) %>
                     <%= pickup_choices requestable, @request.default_pickups %>
+                  <% end %>
+                  <% if requestable.ask_me? %>
+                    <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>'><%= I18n.t('requests.ask_me.request_label') %></a>
                   <% end %>
                   <% if requestable.services.include?('recap_edd') %>
                       <%= hidden_field_tag "requestable[][type]", "recap" %>
@@ -123,11 +126,12 @@
             <% if @request.fill_in_eligible mfhd %>
               <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: @request.default_pickups } %>
             <% end %>
+            
           </tbody>
         </table>
       </div>
     <% end %>
-    <% unless @request.all_items_online? %>
+    <% if false # unless @request.all_items_online? %>
       <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
     <% end %>
   <% end %>

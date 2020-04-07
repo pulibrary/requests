@@ -30,7 +30,7 @@ module Requests
     def show_service_options(requestable, mfhd_id)
       if requestable.services.empty?
         content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
-      elsif requestable.charged? && !requestable.aeon?
+      elsif requestable.charged? && !requestable.aeon? && !requestable.ask_me?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon? && requestable.voyager_managed?
         link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
@@ -365,7 +365,7 @@ module Requests
 
     def submit_button_disabled(requestable_list)
       return unsubmittable? requestable_list unless requestable_list.size == 1
-      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf')
+      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf') || (requestable_list.first.services.include? 'ask_me')
     end
 
     def unsubmittable?(requestable_list)

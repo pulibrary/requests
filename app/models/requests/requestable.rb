@@ -230,6 +230,10 @@ module Requests
       item[:barcode]
     end
 
+    def ask_me?
+      services.include?('ask_me')
+    end
+
     private
 
       def scsb_locations

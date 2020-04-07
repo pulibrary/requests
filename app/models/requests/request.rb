@@ -3,6 +3,9 @@ require 'faraday'
 
 module Requests
   class Request
+    attr_accessor :email
+    attr_accessor :user_barcode
+    attr_accessor :user_name
     attr_reader :system_id
     attr_reader :source
     attr_reader :mfhd

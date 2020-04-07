@@ -130,6 +130,10 @@ en:
       request_label: "Interlibrary Loan (1-2 weeks)"
       brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
       access_msg: 'Access Users are not eligible for ILL services.'
+    ask_me:
+      request_label: "Help Me Get It"
+      brief_msg: "Library staff are working remotely to deliver materials digitally as long as electronic resources are available"
+      access_msg: "Princeton Faculty, Students, and Staff only."
     trace:
       form_title: "Trace Materials"
       email: "trace@princeton.edu"

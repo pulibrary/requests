@@ -1,11 +1,12 @@
 module Requests
   # ILL related helpers
   class Illiad
-    attr_reader :enum, :chron
+    attr_reader :enum, :chron, :call_number
 
-    def initialize(enum: nil, chron: nil)
+    def initialize(enum: nil, chron: nil, call_number: nil)
       @enum = enum
       @chron = chron
+      @call_number = call_number
     end
 
     # accepts a @solr_open_url_context object and formats it appropriately for ILL
@@ -44,6 +45,8 @@ module Requests
       qp['rft.place'] = metadata['place']
       qp['rft.edition'] = metadata['edition']
       qp['rft_id'] = get_oclcnum(solr_open_url_context.referent)
+      qp['rft.callnum'] = call_number
+      qp['rft.oclcnum'] = get_oclcnum(solr_open_url_context.referent)
       # Genre normalization. ILLiad pays a lot of attention to `&genre`, but
       # doesn't use actual OpenURL rft_val_fmt
       if solr_open_url_context.referent.format == "dissertation"
@@ -59,6 +62,7 @@ module Requests
         # WorldCat likes to send these, ILLiad is happier considering them 'book'
         qp['genre'] = "book"
       end
+      qp['CitedIn'] = catalog_url(solr_open_url_context.referent)
       # trim empty ones please
       qp.delete_if { |_k, v| v.blank? }
       qp.to_query
@@ -74,6 +78,12 @@ module Requests
     ## From https://github.com/team-umlaut/umlaut/blob/master/app/mixin_logic/metadata_helper.rb
     def get_oclcnum(rft)
       get_identifier(:info, "oclcnum", rft)
+    end
+
+    def catalog_url(referent)
+      bibidata_url = URI(referent.identifiers.first)
+      bibid = bibidata_url.path.split('/').last
+      "#{Requests.config[:pulsearch_base]}/catalog/#{bibid}"
     end
 
     def get_lccn(rft)

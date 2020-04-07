@@ -20,7 +20,7 @@ module Requests
       @services = []
       @pageable = Pageable.new(call_number: holding.first[1]['call_number_browse'], location_code: location['code'])
       @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location[:code])
-      @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil))
+      @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key

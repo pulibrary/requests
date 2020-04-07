@@ -1,0 +1,63 @@
+<% if requestable.ask_me? || requestable.item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
+<tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
+    <!-- td class='request--select'>
+      <%#= hidden_field_tag 'requestable[][selected]', false %>
+      <%#= item_checkbox @request.requestable, requestable %>
+      <%# if requestable.item_data? %>
+        <%#= hidden_fields_item requestable %>
+      <%# end %>
+    </td-->
+    <td>
+      <% if requestable.item_data? || requestable.scsb? %>
+        <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
+          <%= enum_copy_display requestable.item %>
+        </span>
+      <% end %>
+    </td>
+    <!-- td>
+      <% if requestable.item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
+        <%= system_status_label requestable %>
+        <%= status_label requestable %>
+      <% end %>
+      <% if requestable.use_restriction? %>
+        <br/>
+        <%= requestable.item[:use_statement] %>
+      <% end %>
+    </td -->
+  <td class='request--options' aria-live="polite">
+    <% if requestable.ill_eligible? %>
+      <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx) %>"></span>
+    <% end %>
+    <%# TODO: Uncomment this block when recap reopens %>
+    <%# if requestable.services.include?('recap_edd') %>
+
+        <%#= hidden_field_tag "requestable[][type]", "recap" %>
+        <%#= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
+        <%#= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
+        <!--
+        <br/><small id="requestable__type_recap_caption_<%#= requestable.item[:id] %>" class="form-text text-muted"><%#= I18n.t('requests.recap.brief_msg') %></small>
+        <br/>
+        -->
+    <% unless requestable.services.include?('recap_edd') %>
+        <%= show_service_options requestable, mfhd %>
+        <%= hidden_service_options requestable %>
+    <% end %>
+    <% unless ( requestable.aeon? || requestable.online? || requestable.ask_me? || ( requestable.scsb? && requestable.recallable? ) ) %>
+      <%= pickup_choices requestable, default_pickups %>
+    <% end %>
+    <% if requestable.ask_me? %>
+      <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>'><%= I18n.t('requests.ask_me.request_label') %></a>
+    <% end %>
+    <% if requestable.services.include?('recap_edd') %>
+        <%= hidden_field_tag "requestable[][type]", "recap" %>
+        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
+        <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
+        <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
+        <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+    <% end %>
+  </td>
+</tr>
+<% end %>
+<% if requestable.online? %>
+  <%= render partial: "online_items", locals: { requestable: requestable } %>
+<% end %>

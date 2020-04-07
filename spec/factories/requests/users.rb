@@ -2,8 +2,8 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :user, class: "User" do
-    sequence(:username) { |n| "username#{srand}" }
-    sequence(:email) { |n| "email-#{srand}@princeton.edu" }
+    sequence(:username) { |_n| "username#{srand}" }
+    sequence(:email) { |_n| "email-#{srand}@princeton.edu" }
     provider 'cas'
     password 'foobarfoo'
     uid do |user|

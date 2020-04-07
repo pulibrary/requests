@@ -8,15 +8,13 @@ module Requests
     end
 
     def handle
-        # something will go here eventually
+      # something will go here eventually
     end
 
     def submitted
       @sent
     end
 
-    def errors
-      @errors
-    end
+    attr_reader :errors
   end
 end

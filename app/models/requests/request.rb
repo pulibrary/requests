@@ -3,17 +3,22 @@ require 'faraday'
 
 module Requests
   class Request
-    attr_accessor :system_id
-    attr_accessor :email
-    attr_accessor :user_barcode
-    attr_accessor :user_name
-    attr_accessor :source
-    attr_accessor :mfhd
+    attr_reader :system_id
+    attr_reader :source
+    attr_reader :mfhd
     attr_reader :user
+    attr_reader :doc
+    attr_reader :requestable
+    attr_reader :requestable_unrouted
+    attr_reader :holdings
+    attr_reader :locations
+    attr_reader :items
+    attr_reader :pickups
+    alias default_pickups pickups
+    delegate :ctx, :openurl_ctx_kev, to: :@ctx_obj
 
     include Requests::Bibdata
     include Requests::BdUtils
-    include Requests::Ctx
     include Requests::Scsb
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
@@ -21,30 +26,23 @@ module Requests
     # @option opts [User] :user current user object
     # @option opts [String] :source represents system that directed user to request form. i.e.
     def initialize(system_id:, mfhd: nil, user: nil, source: nil)
-      @system_id ||= system_id
-      @mfhd ||= mfhd
-      @user ||= user
-      @source ||= source
+      @system_id = system_id
+      @mfhd = mfhd
+      @user = user
+      @source = source
       ### These should be re-factored
-      @doc ||= solr_doc(system_id)
-      @requestable_unrouted ||= build_requestable
-      @requestable ||= route_requests(@requestable_unrouted)
-    end
-
-    def doc
-      @doc
+      @doc = solr_doc(system_id)
+      @holdings = JSON.parse(doc[:holdings_1display] || '{}')
+      @locations = load_locations
+      @items = load_items
+      @pickups = build_pickups
+      @requestable_unrouted = build_requestable
+      @requestable = route_requests(@requestable_unrouted)
+      @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
     end
 
     def scsb?
       return true if /^SCSB-\d+/ =~ system_id.to_s
-    end
-
-    def requestable
-      @requestable
-    end
-
-    def requestable_unrouted
-      @requestable_unrouted
     end
 
     ### builds a list of possible requestable items
@@ -66,18 +64,14 @@ module Requests
           unless values['items'].nil?
             values['items'].each { |item| barcodesort[item['barcode']] = item }
             availability_data.each do |item|
-              unless barcodesort[item['itemBarcode']].nil?
-                barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus']
-              end
+              barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
             end
           end
-          barcodesort.values.each do |item|
+          barcodesort.each_value do |item|
             params = build_requestable_params(
-              {
-                item: item.with_indifferent_access,
-                holding: { "#{id.to_sym}" => holdings[id] },
-                location: locations[holdings[id]['location_code']]
-              }
+              item: item.with_indifferent_access,
+              holding: { id.to_sym.to_s => holdings[id] },
+              location: locations[holdings[id]['location_code']]
             )
             requestable_items << Requests::Requestable.new(params)
           end
@@ -89,9 +83,7 @@ module Requests
         if recap?
           availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
           availability_data.each do |item|
-            unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
-              barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus']
-            end
+            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus'] unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
           end
         end
         items.each do |holding_id, items|
@@ -100,27 +92,19 @@ module Requests
               item_loc = item_current_location(item)
               ## This check is needed in case the item level data denotes a temporary
               ## location
-              unless locations.key? item_loc
-                locations[item_loc] = get_location(item_loc)
-              end
-              unless barcodesort.empty?
-                item['scsb_status'] = barcodesort[item['barcode']]
-              end
+              locations[item_loc] = get_location(item_loc) unless locations.key? item_loc
+              item['scsb_status'] = barcodesort[item['barcode']] unless barcodesort.empty?
               params = build_requestable_params(
-                {
-                  item: item.with_indifferent_access,
-                  holding: { "#{holding_id.to_sym}" => holdings[holding_id] },
-                  location: @locations[item_loc]
-                }
+                item: item.with_indifferent_access,
+                holding: { holding_id.to_sym.to_s => holdings[holding_id] },
+                location: @locations[item_loc]
               )
               # sometimes availability returns items without any status
               # see https://github.com/pulibrary/marc_liberation/issues/174
-              unless item["status"].nil?
-                requestable_items << Requests::Requestable.new(params)
-              end
+              requestable_items << Requests::Requestable.new(params) unless item["status"].nil?
             end
           else
-            params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] })
+            params = build_requestable_params(holding: { holding_id.to_sym.to_s => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]])
             requestable_items << Requests::Requestable.new(params)
           end
         end
@@ -129,14 +113,14 @@ module Requests
         unless doc[:holdings_1display].nil?
           requestable_items = []
           if @mfhd
-            params = build_requestable_params({ holding: { "#{@mfhd.to_sym}" => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]] })
+            params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]])
             requestable_items << Requests::Requestable.new(params)
-          elsif (thesis?)
-            params = build_requestable_params({ holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]] })
+          elsif thesis?
+            params = build_requestable_params(holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]])
             requestable_items << Requests::Requestable.new(params)
           else
-            holdings.each do |holding_id, holding_details|
-              params = build_requestable_params({ holding: { "#{holding_id.to_sym}" => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]] })
+            holdings.each_key do |holding_id|
+              params = build_requestable_params(holding: { holding_id.to_sym.to_s => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]])
               requestable_items << Requests::Requestable.new(params)
             end
           end
@@ -145,16 +129,12 @@ module Requests
       end
     end
 
-    def has_requestable?
-      return true if requestable.size > 0
+    def requestable?
+      requestable.size.positive?
     end
 
-    def has_single_aeon_requestable?
-      if requestable.size == 1 and requestable.first.services.include? 'aeon'
-        return true
-      else
-        return false
-      end
+    def single_aeon_requestable?
+      (requestable.size == 1) && requestable.first.services.include?('aeon')
     end
 
     # returns an array of requestable hashes of  grouped under a common mfhd
@@ -162,45 +142,31 @@ module Requests
       sorted = {}
       requestable.each do |requestable|
         mfhd = requestable.holding.keys[0]
-        if sorted.key? mfhd
-          sorted[mfhd] << requestable
-        else
-          sorted[mfhd] = [requestable]
-        end
+        sorted[mfhd] ||= []
+        sorted[mfhd] << requestable
       end
       sorted
     end
 
     # Does this request object have any pageable items?
-    def has_pageable?
-      services = []
-      requestable.each do |request|
-        request.services.each do |service|
-          services << service
-        end
-      end
+    def any_pageable?
+      services = requestable.map(&:services).flatten
       services.uniq!
-      if services.include? 'paging'
-        true
-      else
-        false
-      end
+      services.include? 'paging'
     end
 
     def fill_in_eligible(mfhd)
       fill_in = false
       unless (sorted_requestable[mfhd].first.services & ["on_order", "on_shelf", "online"]).present?
         if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
-          if sorted_requestable[mfhd].first.has_item_data?
-            if sorted_requestable[mfhd].first.item.key?('enum')
-              fill_in = true
-            end
+          if sorted_requestable[mfhd].first.item_data?
+            fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')
           else
             fill_in = true
           end
         end
       end
-      return fill_in
+      fill_in
     end
 
     def fill_in_services
@@ -208,38 +174,20 @@ module Requests
     end
 
     # Does this request object have any available copies?
-    def has_loanable_copy?
-      copy_available = []
-      requestable_unrouted.each do |request|
-        if request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)
-          copy_available << false
-        else
-          copy_available << true
-        end
-      end
-      copy_available.uniq!
-      if copy_available.include? true
-        true
-      else
-        false
-      end
+    def any_loanable_copies?
+      requestable_unrouted.any? { |request| !(request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)) }
     end
 
-    def has_enumerated?
-      enumerated = []
-      requestable_unrouted.each do |request|
-        enum = request.enumerated? ? true : false
-        enumerated << enum
-      end
-      enumerated.include?(true) ? true : false
+    def any_enumerated?
+      requestable_unrouted.any?(&:enumerated?)
     end
 
     def route_requests(requestable_items)
       routed_requests = []
       return [] if requestable_items.blank?
-      has_loanable = has_loanable_copy?
+      any_loanable = any_loanable_copies?
       requestable_items.each do |requestable|
-        router = Requests::Router.new(requestable: requestable, user: @user, has_loanable: has_loanable)
+        router = Requests::Router.new(requestable: requestable, user: @user, any_loanable: any_loanable)
         routed_requests << router.routed_request
       end
       routed_requests
@@ -251,34 +199,10 @@ module Requests
       end
     end
 
-    def available?
-      items_by_bib(@system_id)
-    end
-
-    def items?
-      items
-    end
-
-    def holdings?
-      holdings
-    end
-
     def recap?
-      locations.each do |code, location|
+      locations.each_value do |location|
         return true if location[:library][:code] == 'recap'
       end
-    end
-
-    def holdings
-      @holdings ||= JSON.parse(doc[:holdings_1display] || '{}')
-    end
-
-    def locations
-      @locations ||= load_locations
-    end
-
-    def items
-      @items ||= load_items
     end
 
     def all_items_online?
@@ -286,7 +210,7 @@ module Requests
       requestable.each do |item|
         online = false unless item.online?
       end
-      return online
+      online
     end
 
     # returns nil if there are no attached items
@@ -299,7 +223,7 @@ module Requests
       else
         if @mfhd && serial?
           items_as_json = items_by_mfhd(@mfhd)
-          if items_as_json.size != 0
+          if !items_as_json.empty?
             items_with_symbols = items_to_symbols(items_as_json)
             mfhd_items[@mfhd] = items_with_symbols
           else
@@ -318,7 +242,7 @@ module Requests
                                  end
                                else
                                  items_to_symbols(items_by_mfhd(holding_id))
-            end
+                               end
             mfhd_items[holding_id] = items_by_holding
           end
         end
@@ -342,33 +266,23 @@ module Requests
       }
     end
 
-    def get_language
+    def language
       doc["language_iana_s"]&.first
-    end
-
-    def pickups
-      @pickups ||= build_pickups
     end
 
     # should probably happen in the initializer
     def build_pickups
       pickup_locations = []
-      Requests::BibdataService.delivery_locations.values.each do |pickup|
-        if pickup["pickup_location"] == true
-          pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"], staff_only: pickup["staff_only"] }
-        end
+      Requests::BibdataService.delivery_locations.each_value do |pickup|
+        pickup_locations << { label: pickup["label"], gfa_code: pickup["gfa_pickup"], staff_only: pickup["staff_only"] } if pickup["pickup_location"] == true
       end
       # pickup_locations.sort_by! { |loc| loc[:label] }
       sort_pickups(pickup_locations)
     end
 
-    def default_pickups
-      pickups
-    end
-
     # if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-      if has_loanable_copy? && has_enumerated?
+      if any_loanable_copies? && any_enumerated?
         false
       else
         requestable.any? { |r| r.services.include? 'bd' }
@@ -406,9 +320,7 @@ module Requests
           holding_locations = {}
           doc[:location_code_s].each do |loc|
             location = get_location(loc)
-            unless location[:delivery_locations].empty?
-              location[:delivery_locations] = sort_pickups(location[:delivery_locations])
-            end
+            location[:delivery_locations] = sort_pickups(location[:delivery_locations]) unless location[:delivery_locations].empty?
             holding_locations[loc] = location
           end
           holding_locations

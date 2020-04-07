@@ -4,14 +4,14 @@ module Requests
   class Install < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
 
-    class_option :devise, :type => :boolean, :default => false, :aliases => "-d", :desc => "Use Devise as authentication logic (this is default)."
-    desc ''"
-    This generator does the following:
-    1. Creates a requests_inializer.rb in config/initializers.
-    2. Creates a requests.yml populated with usabale default values in config.
-    3. Creates a requests.en.yml locale file
-    4. Updates .gitignore
-    "''
+    class_option :devise, type: :boolean, default: false, aliases: "-d", desc: "Use Devise as authentication logic (this is default)."
+    desc <<-EOS
+      This generator does the following:
+      1. Creates a requests_inializer.rb in config/initializers.
+      2. Creates a requests.yml populated with usabale default values in config.
+      3. Creates a requests.en.yml locale file
+      4. Updates .gitignore
+    EOS
 
     def requests_initializer
       copy_file 'requests_initializer.rb', 'config/initializers/requests_initializer.rb'
@@ -69,9 +69,9 @@ module Requests
         %(, :controllers => { omniauth_callbacks: "users/omniauth_callbacks", sessions: 'sessions' }, skip: [:passwords, :registration])
       end
       copy_file './app/controllers/users/omniauth_callbacks_controller.rb', 'app/controllers/users/omniauth_callbacks_controller.rb'
-      copy_file './lib/omniauth/strategies/omniauth-barcode.rb', 'lib/omniauth/strategies/omniauth-barcode.rb'
+      copy_file './lib/omniauth/strategies/barcode.rb', 'lib/omniauth/strategies/barcode.rb'
       inject_into_file 'config/application.rb', before: %(  end\n) do
-        %(    require Rails.root.join('lib/omniauth/strategies/omniauth-barcode')\n)
+        %(    require Rails.root.join('lib/omniauth/strategies/barcode')\n)
       end
       inject_into_file 'app/controllers/application_controller.rb', before: %(end\n) do
         "  def after_sign_in_path_for(_resource)\n" \

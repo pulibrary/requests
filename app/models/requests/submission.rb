@@ -9,9 +9,7 @@ module Requests
     end
 
     def validate(record)
-      unless record.items.size >= 1 && !record.items.any? { |item| defined? item.selected }
-        record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } }
-      end
+      record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } } unless record.items.size >= 1 && !record.items.any? { |item| defined? item.selected }
       record.items.each do |selected|
         record = validate_selected(record, selected)
       end
@@ -63,13 +61,9 @@ module Requests
           record.errors[:items] << { item_id => { 'text' => 'Please select a delivery type for your selected recap item', 'type' => 'options' } }
         else
           delivery_type = selected["delivery_mode_#{item_id}"]
-          if delivery_type == 'print' && selected['pickup'].empty?
-            record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } }
-          end
+          record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } } if delivery_type == 'print' && selected['pickup'].empty?
           if delivery_type == 'edd'
-            if selected['edd_art_title'].empty?
-              record.errors[:items] << { item_id => { 'text' => 'Please specify title for the selection you want digitized.', 'type' => 'options' } }
-            end
+            record.errors[:items] << { item_id => { 'text' => 'Please specify title for the selection you want digitized.', 'type' => 'options' } } if selected['edd_art_title'].empty?
           end
         end
       end
@@ -98,9 +92,7 @@ module Requests
       @bd = params[:bd]
     end
 
-    def user
-      @user
-    end
+    attr_reader :user
 
     def email
       @user["email"]
@@ -114,20 +106,16 @@ module Requests
       @user["user_name"]
     end
 
-    def items
-      @items
-    end
+    attr_reader :items
 
-    def bd
-      @bd
-    end
+    attr_reader :bd
 
     def filter_items_by_service(service)
       @items.select { |item| item["type"] == service }
     end
 
     def selected_items(requestable_list)
-      requestable_list.select { |r| r unless (r[:selected] == 'false' || !r.key?('selected')) }
+      requestable_list.select { |r| r unless r[:selected] == 'false' || !r.key?('selected') }
     end
 
     def item_validations
@@ -138,9 +126,7 @@ module Requests
       @user["user_barcode"]
     end
 
-    def bib
-      @bib
-    end
+    attr_reader :bib
 
     def id
       @bib[:id]

@@ -1,14 +1,15 @@
 require 'spec_helper'
 
 describe Requests::BorrowDirect do
-  let(:user_info) {
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch" }
+  let(:user_info) do
+    {
+      "user_name" => "Foo Request",
+      "user_barcode" => "22101007797777",
+      "email" => "foo@princeton.edu",
+      "source" => "pulsearch"
     }
-  let(:requestable) {
+  end
+  let(:requestable) do
     [
       {
         "selected" => "true",
@@ -35,50 +36,50 @@ describe Requests::BorrowDirect do
         "selected" => "false"
       }
     ]
-  }
-  let(:bib) {
+  end
+  let(:bib) do
     {
       "id" => "491654",
       "title" => "County and city data book.",
       "author" => "United States",
       "date" => "1949"
     }
-  }
-  let(:bd) {
+  end
+  let(:bd) do
     {
       "auth_id" => 'foobarfoobar',
       "query_params" => '9780544343757'
     }
-  }
-  let(:params) {
+  end
+  let(:params) do
     {
       request: user_info,
       requestable: requestable,
       bib: bib,
       bd: bd
     }
-  }
+  end
 
-  let(:submission) {
+  let(:submission) do
     Requests::Submission.new(params)
-  }
+  end
 
   let(:good_request_response) { 'A BD Request Number' }
   let(:bad_request_response) { 'An error happened' }
 
-  let(:subject) { described_class.new(submission) }
+  let(:borrow_direct) { described_class.new(submission) }
 
   it 'Handles a Borrow Direct request successfully' do
-    allow(subject).to receive(:handle).and_return(good_request_response)
-    subject.handle
-    allow(subject).to receive(:sent).and_return(good_request_response)
-    expect(subject.sent).to eq(good_request_response)
+    allow(borrow_direct).to receive(:handle).and_return(good_request_response)
+    borrow_direct.handle
+    allow(borrow_direct).to receive(:sent).and_return(good_request_response)
+    expect(borrow_direct.sent).to eq(good_request_response)
   end
 
   it 'Logs an error when a request fails' do
-    allow(subject).to receive(:handle).and_return(bad_request_response)
-    subject.handle
-    allow(subject).to receive(:errors).and_return(bad_request_response)
-    expect(subject.errors).to eq(bad_request_response)
+    allow(borrow_direct).to receive(:handle).and_return(bad_request_response)
+    borrow_direct.handle
+    allow(borrow_direct).to receive(:errors).and_return(bad_request_response)
+    expect(borrow_direct.errors).to eq(bad_request_response)
   end
 end

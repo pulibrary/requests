@@ -21,9 +21,7 @@ module Requests
     def fallback_query_params
       params = {}
       fallback_keys.each do |key, value|
-        unless doc[key].nil?
-          params[value] = doc[key].first
-        end
+        params[value] = doc[key].first unless doc[key].nil?
       end
       params[:max_title_words] = 10
       params

@@ -18,7 +18,7 @@ module Requests
       ## bd is only a valid type for non-enumerated works so there will always only be a single item with a 'bd' service type.
       bd_item = items.first
       begin
-        request_number = ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
+        request_number = ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], isbn: @submission.bd['query_params'])
         # request_number = if @submission.bd['auth_id'].nil?
         #                    ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(bd_item['pickup'], { isbn: @submission.bd['query_params'] })
         #                  else

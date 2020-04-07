@@ -29,10 +29,10 @@ module Requests
     end
 
     def bibdata_conn
-      conn = Faraday.new(:url => Requests.config[:bibdata_base]) do |faraday|
+      conn = Faraday.new(url: Requests.config[:bibdata_base]) do |faraday|
         faraday.request  :url_encoded # form-encode POST params
         # faraday.response :logger                  # log requests to STDOUT
-        faraday.response :logger if !Rails.env.test?
+        faraday.response :logger unless Rails.env.test?
         faraday.adapter  Faraday.default_adapter # make requests with Net::HTTP
       end
       conn
@@ -48,16 +48,14 @@ module Requests
     end
 
     ## Accepts an array of location hashes and sorts them according to our quirks
-    def sort_pickups locs
+    def sort_pickups(locs)
       # staff only locations go at the bottom of the list and Firestone to the top
 
       public_locs = locs.select { |loc| loc[:staff_only] == false }
       public_locs.sort_by! { |loc| loc[:label] }
 
       firestone = public_locs.find { |loc| loc[:label] == "Firestone Library" }
-      unless firestone.nil?
-        public_locs.insert(0, public_locs.delete_at(public_locs.index(firestone)))
-      end
+      public_locs.insert(0, public_locs.delete_at(public_locs.index(firestone))) unless firestone.nil?
 
       staff_locs = locs.select { |loc| loc[:staff_only] == true }
       staff_locs.sort_by! { |loc| loc[:label] }

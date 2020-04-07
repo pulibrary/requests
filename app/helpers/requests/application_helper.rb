@@ -365,7 +365,7 @@ module Requests
 
     def submit_button_disabled(requestable_list)
       return unsubmittable? requestable_list unless requestable_list.size == 1
-      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf') || (requestable_list.first.services.include? 'ask_me')
+      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf') || requestable_list.first.ask_me?
     end
 
     def unsubmittable?(requestable_list)

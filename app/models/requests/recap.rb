@@ -16,6 +16,19 @@ module Requests
     def handle
       items = @submission.filter_items_by_service(@service_type)
       items.each do |item|
+        handle_item(item)
+      end
+    end
+
+    def submitted
+      @sent
+    end
+
+    attr_reader :errors
+
+    private
+
+      def handle_item(item)
         ## Handle SCSB temporarily - eventually this will be how all items are handled
         # if scsb_locations.include? item['location_code']
         params = scsb_param_mapping(@submission.bib, @submission.user, item)
@@ -32,12 +45,5 @@ module Requests
           end
         end
       end
-    end
-
-    def submitted
-      @sent
-    end
-
-    attr_reader :errors
   end
 end

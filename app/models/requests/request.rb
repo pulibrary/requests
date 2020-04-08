@@ -53,82 +53,11 @@ module Requests
     def build_requestable
       return [] if doc.blank?
       if scsb?
-        requestable_items = []
-        ## scsb processing
-        ## If mfhd present look for only that
-        ## sort items by keys
-        ## send query for availability by barcode
-        ## overlay availability to the 'status' field
-        ## make sure other fields map to the current data model for item in requestable
-        ## adjust router to understand SCSB status
-        availability_data = items_by_id(other_id, scsb_owning_institution(scsb_location))
-        holdings.each do |id, values|
-          barcodesort = {}
-          unless values['items'].nil?
-            values['items'].each { |item| barcodesort[item['barcode']] = item }
-            availability_data.each do |item|
-              barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
-            end
-          end
-          barcodesort.each_value do |item|
-            params = build_requestable_params(
-              item: item.with_indifferent_access,
-              holding: { id.to_sym.to_s => holdings[id] },
-              location: locations[holdings[id]['location_code']]
-            )
-            requestable_items << Requests::Requestable.new(params)
-          end
-        end
-        requestable_items
+        build_scsb_requestable
       elsif !items.nil?
-        requestable_items = []
-        barcodesort = {}
-        if recap?
-          availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
-          availability_data.each do |item|
-            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus'] unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
-          end
-        end
-        items.each do |holding_id, items|
-          if !items.empty?
-            items.each do |item|
-              item_loc = item_current_location(item)
-              ## This check is needed in case the item level data denotes a temporary
-              ## location
-              locations[item_loc] = get_location(item_loc) unless locations.key? item_loc
-              item['scsb_status'] = barcodesort[item['barcode']] unless barcodesort.empty?
-              params = build_requestable_params(
-                item: item.with_indifferent_access,
-                holding: { holding_id.to_sym.to_s => holdings[holding_id] },
-                location: @locations[item_loc]
-              )
-              # sometimes availability returns items without any status
-              # see https://github.com/pulibrary/marc_liberation/issues/174
-              requestable_items << Requests::Requestable.new(params) unless item["status"].nil?
-            end
-          else
-            params = build_requestable_params(holding: { holding_id.to_sym.to_s => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]])
-            requestable_items << Requests::Requestable.new(params)
-          end
-        end
-        requestable_items
+        build_requestable_with_items
       else
-        unless doc[:holdings_1display].nil?
-          requestable_items = []
-          if @mfhd
-            params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]])
-            requestable_items << Requests::Requestable.new(params)
-          elsif thesis?
-            params = build_requestable_params(holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]])
-            requestable_items << Requests::Requestable.new(params)
-          else
-            holdings.each_key do |holding_id|
-              params = build_requestable_params(holding: { holding_id.to_sym.to_s => holdings[holding_id] }, location: locations[holdings[holding_id]["location_code"]])
-              requestable_items << Requests::Requestable.new(params)
-            end
-          end
-          requestable_items
-        end
+        build_requestable_from_data
       end
     end
 
@@ -317,6 +246,105 @@ module Requests
     end
 
     private
+
+      def build_scsb_requestable
+        requestable_items = []
+        ## scsb processing
+        ## If mfhd present look for only that
+        ## sort items by keys
+        ## send query for availability by barcode
+        ## overlay availability to the 'status' field
+        ## make sure other fields map to the current data model for item in requestable
+        ## adjust router to understand SCSB status
+        availability_data = items_by_id(other_id, scsb_owning_institution(scsb_location))
+        holdings.each do |id, values|
+          barcodesort = {}
+          unless values['items'].nil?
+            values['items'].each { |item| barcodesort[item['barcode']] = item }
+            availability_data.each do |item|
+              barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
+            end
+          end
+          barcodesort.each_value do |item|
+            params = build_requestable_params(
+              item: item.with_indifferent_access,
+              holding: { id.to_sym.to_s => holdings[id] },
+              location: locations[holdings[id]['location_code']]
+            )
+            requestable_items << Requests::Requestable.new(params)
+          end
+        end
+        requestable_items
+      end
+
+      def build_requestable_with_items
+        requestable_items = []
+        barcodesort = {}
+        if recap?
+          availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
+          availability_data.each do |item|
+            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus'] unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
+          end
+        end
+        items.each do |holding_id, mfhd_items|
+          requestable_items = build_requestable_from_mfhd_items(requestable_items: requestable_items, holding_id: holding_id, mfhd_items: mfhd_items, barcodesort: barcodesort)
+        end
+        requestable_items.compact
+      end
+
+      def build_requestable_from_data
+        return if doc[:holdings_1display].nil?
+        if @mfhd
+          params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]])
+          requestable_items [Requests::Requestable.new(params)]
+        elsif thesis?
+          params = build_requestable_params(holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]])
+          requestable_items = [Requests::Requestable.new(params)]
+        else
+          requestable_items = build_requestable_from_holding_list
+        end
+        requestable_items
+      end
+
+      def build_requestable_from_holding_list
+        requestable_items = []
+        holdings.each_key do |holding_id|
+          requestable_items << build_requestable_from_holding(holding_id, holdings[holding_id])
+        end
+        requestable_items
+      end
+
+      def build_requestable_from_mfhd_items(requestable_items:, holding_id:, mfhd_items:, barcodesort:)
+        if !mfhd_items.empty?
+          mfhd_items.each do |item|
+            requestable_items << build_requestable_mfhd_item(requestable_items, holding_id, item, barcodesort)
+          end
+        else
+          requestable_items << build_requestable_from_holding(holding_id, holdings[holding_id])
+        end
+        requestable_items
+      end
+
+      def build_requestable_mfhd_item(_requestable_items, holding_id, item, barcodesort)
+        item_loc = item_current_location(item)
+        ## This check is needed in case the item level data denotes a temporary
+        ## location
+        locations[item_loc] = get_location(item_loc) unless locations.key? item_loc
+        item['scsb_status'] = barcodesort[item['barcode']] unless barcodesort.empty?
+        params = build_requestable_params(
+          item: item.with_indifferent_access,
+          holding: { holding_id.to_sym.to_s => holdings[holding_id] },
+          location: @locations[item_loc]
+        )
+        # sometimes availability returns items without any status
+        # see https://github.com/pulibrary/marc_liberation/issues/174
+        Requests::Requestable.new(params) unless item["status"].nil?
+      end
+
+      def build_requestable_from_holding(holding_id, holding)
+        params = build_requestable_params(holding: { holding_id.to_sym.to_s => holding }, location: locations[holding["location_code"]])
+        Requests::Requestable.new(params)
+      end
 
       def load_locations
         unless doc[:location_code_s].nil?

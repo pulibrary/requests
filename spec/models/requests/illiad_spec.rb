@@ -33,6 +33,6 @@ describe Requests::Illiad, vcr: { cassette_name: 'request_models', record: :new_
 
   it "provides illiad query parameters with enumeration" do
     illiad = Requests::Illiad.new(enum: "Volume foo", chron: "Chronicle 1")
-    expect(illiad.illiad_query_parameters(ctx)).to include(CGI.escape("Volume foo"))
+    expect(illiad.illiad_request_url(ctx)).to include(CGI.escape("Volume foo"))
   end
 end

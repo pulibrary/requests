@@ -47,7 +47,7 @@ module Requests
           content_tag(:ul, class: "service-list") do
             requestable.services.each do |service|
               brief_msg = I18n.t("requests.#{service}.brief_msg")
-              concat content_tag(:li, brief_msg.html_safe, class: "service-item text-muted")
+              concat content_tag(:li, brief_msg.html_safe, class: "service-item")
             end
           end
         end

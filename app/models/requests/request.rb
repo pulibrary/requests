@@ -126,9 +126,8 @@ module Requests
     end
 
     def serial?
-      if doc[:format].present?
-        return true if doc[:format].include? 'Journal'
-      end
+      return unless doc[:format].present?
+      return true if doc[:format].include? 'Journal'
     end
 
     def recap?
@@ -159,9 +158,8 @@ module Requests
     end
 
     def thesis?
-      unless doc[:holdings_1display].nil?
-        return true if parse_json(doc[:holdings_1display]).key?('thesis')
-      end
+      return if doc[:holdings_1display].nil?
+      return true if parse_json(doc[:holdings_1display]).key?('thesis')
     end
 
     # returns basic metadata for display on the request from via solr_doc values
@@ -325,15 +323,14 @@ module Requests
       end
 
       def load_locations
-        unless doc[:location_code_s].nil?
-          holding_locations = {}
-          doc[:location_code_s].each do |loc|
-            location = get_location(loc)
-            location[:delivery_locations] = sort_pickups(location[:delivery_locations]) unless location[:delivery_locations].empty?
-            holding_locations[loc] = location
-          end
-          holding_locations
+        return if doc[:location_code_s].nil?
+        holding_locations = {}
+        doc[:location_code_s].each do |loc|
+          location = get_location(loc)
+          location[:delivery_locations] = sort_pickups(location[:delivery_locations]) unless location[:delivery_locations].empty?
+          holding_locations[loc] = location
         end
+        holding_locations
       end
 
       def build_requestable_params(params)

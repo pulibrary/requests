@@ -149,37 +149,13 @@ module Requests
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd
     def load_items
-      mfhd_items = {}
-      if thesis?
-        return nil
-      else
-        if @mfhd && serial?
-          items_as_json = items_by_mfhd(@mfhd)
-          if !items_as_json.empty?
-            items_with_symbols = items_to_symbols(items_as_json)
-            mfhd_items[@mfhd] = items_with_symbols
-          else
-            empty_mfhd = items_by_bib(@system_id)
-            mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
-          end
-        else
-          items_by_bib(@system_id).each do |holding_id, item_info|
-            items_by_holding = if item_info[:more_items] == false
-                                 if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
-                                   [item_info]
-                                 elsif item_info[:status].starts_with?('Online')
-                                   [item_info]
-                                 else
-                                   items_to_symbols(items_by_mfhd(holding_id))
-                                 end
-                               else
-                                 items_to_symbols(items_by_mfhd(holding_id))
-                               end
-            mfhd_items[holding_id] = items_by_holding
-          end
-        end
-        return mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
-      end
+      return nil if thesis?
+      mfhd_items = if @mfhd && serial?
+                     load_serial_items
+                   else
+                     load_items_by_bib_id
+                   end
+      mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
     end
 
     def thesis?
@@ -258,21 +234,23 @@ module Requests
         ## adjust router to understand SCSB status
         availability_data = items_by_id(other_id, scsb_owning_institution(scsb_location))
         holdings.each do |id, values|
-          barcodesort = {}
-          unless values['items'].nil?
-            values['items'].each { |item| barcodesort[item['barcode']] = item }
-            availability_data.each do |item|
-              barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
-            end
-          end
-          barcodesort.each_value do |item|
-            params = build_requestable_params(
-              item: item.with_indifferent_access,
-              holding: { id.to_sym.to_s => holdings[id] },
-              location: locations[holdings[id]['location_code']]
-            )
-            requestable_items << Requests::Requestable.new(params)
-          end
+          requestable_items = build_holding_scsb_items(id: id, values: values, availability_data: availability_data, requestable_items: requestable_items)
+        end
+        requestable_items
+      end
+
+      def build_holding_scsb_items(id:, values:, availability_data:, requestable_items:)
+        return requestable_items if values['items'].nil?
+
+        barcodesort = {}
+        values['items'].each { |item| barcodesort[item['barcode']] = item }
+        availability_data.each do |item|
+          barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
+        end
+        barcodesort.each_value do |item|
+          params = build_requestable_params(item: item.with_indifferent_access, holding: { id.to_sym.to_s => holdings[id] },
+                                            location: locations[holdings[id]['location_code']])
+          requestable_items << Requests::Requestable.new(params)
         end
         requestable_items
       end
@@ -365,6 +343,41 @@ module Requests
           item: params[:item],
           location: params[:location]
         }
+      end
+
+      def load_serial_items
+        mfhd_items = {}
+        items_as_json = items_by_mfhd(@mfhd)
+        if !items_as_json.empty?
+          items_with_symbols = items_to_symbols(items_as_json)
+          mfhd_items[@mfhd] = items_with_symbols
+        else
+          empty_mfhd = items_by_bib(@system_id)
+          mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
+        end
+        mfhd_items
+      end
+
+      def load_items_by_bib_id
+        mfhd_items = {}
+        items_by_bib(@system_id).each do |holding_id, item_info|
+          mfhd_items[holding_id] = load_item_for_holding(holding_id: holding_id, item_info: item_info)
+        end
+        mfhd_items
+      end
+
+      def load_item_for_holding(holding_id:, item_info:)
+        if item_info[:more_items] == false
+          if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
+            [item_info]
+          elsif item_info[:status].starts_with?('Online')
+            [item_info]
+          else
+            items_to_symbols(items_by_mfhd(holding_id))
+          end
+        else
+          items_to_symbols(items_by_mfhd(holding_id))
+        end
       end
 
       def items_to_symbols(items = [])

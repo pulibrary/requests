@@ -148,29 +148,32 @@ module Requests
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices(requestable, default_pickups)
-      unless requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
-        class_list = "card card-body bg-light collapse show request--print"
-        class_list = "card card-body bg-light collapse request--print" if requestable.services.include?('recap_edd')
-        # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
-        content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-          locs = if requestable.pending?
-                   if requestable.location[:holding_library].blank?
-                     [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
-                   else
-                     [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
-                   end
+      return if requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
+      # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
+      prefered_request_content_tag(requestable, default_pickups)
+    end
+
+    def prefered_request_content_tag(requestable, default_pickups)
+      class_list = "card card-body bg-light collapse show request--print"
+      class_list = "card card-body bg-light collapse request--print" if requestable.services.include?('recap_edd')
+      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
+        locs = if requestable.pending?
+                 if requestable.location[:holding_library].blank?
+                   [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
                  else
-                   available_pickups(requestable, default_pickups)
+                   [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
                  end
-          if locs.size > 1
-            concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-          else
-            style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-            name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
-            hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_code]).to_s, class: 'single-pickup-hidden'
-            label = label_tag name.to_s, "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
-            hidden + label
-          end
+               else
+                 available_pickups(requestable, default_pickups)
+               end
+        if locs.size > 1
+          concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+        else
+          style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
+          name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
+          hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_code]).to_s, class: 'single-pickup-hidden'
+          label = label_tag name.to_s, "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
+          hidden + label
         end
       end
     end

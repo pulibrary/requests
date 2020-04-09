@@ -68,18 +68,3 @@ Rails/OutputSafety:
 Security/YAMLLoad:
   Exclude:
     - 'lib/generators/requests/templates/requests_initializer.rb'
-
-# Offense count: 8
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'app/helpers/requests/application_helper.rb'
-    - 'app/models/requests/pickup_lookup.rb'
-    - 'app/models/requests/request.rb'
-    - 'app/models/requests/requestable.rb'
-    - 'lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
-
-# Offense count: 5
-Style/IdenticalConditionalBranches:
-  Exclude:
-    - 'app/helpers/requests/application_helper.rb'

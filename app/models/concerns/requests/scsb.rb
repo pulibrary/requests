@@ -86,28 +86,15 @@ module Requests
                      else
                        item["delivery_mode_#{item['item_id']}"]
                      end
-      {
-        author: item[:edd_author],
-        bibId: bib[:id],
-        callNumber: item[:call_number],
-        chapterTitle: item[:edd_art_title],
-        deliveryLocation: item[:pickup],
-        emailAddress: user[:email],
-        endPage: item[:edd_end_page],
-        issue: item[:edd_issue],
-        itemBarcodes: [
-          item[:barcode]
-        ],
+      { author: item[:edd_author], bibId: bib[:id],
+        callNumber: item[:call_number], chapterTitle: item[:edd_art_title],
+        deliveryLocation: item[:pickup], emailAddress: user[:email],
+        endPage: item[:edd_end_page], issue: item[:edd_issue], itemBarcodes: [item[:barcode]],
         itemOwningInstitution: scsb_owning_institution(item[:location_code]),
-        patronBarcode: user[:user_barcode],
-        requestNotes: item[:edd_note],
-        requestType: scsb_request_map(request_type),
-        requestingInstitution: requesting_institution,
-        startPage: item[:edd_start_page],
-        titleIdentifier: bib[:title],
-        username: user[:user_name],
-        volume: item[:edd_volume_number]
-      }
+        patronBarcode: user[:user_barcode], requestNotes: item[:edd_note],
+        requestType: scsb_request_map(request_type), requestingInstitution: requesting_institution,
+        startPage: item[:edd_start_page], titleIdentifier: bib[:title],
+        username: user[:user_name], volume: item[:edd_volume_number] }
     end
 
     # not being used

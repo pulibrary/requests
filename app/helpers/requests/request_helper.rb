@@ -33,14 +33,14 @@ module Requests
 
     def pul_patron_name(patron)
       name = ""
-      name += patron[:first_name] unless patron[:first_name].nil?
-      name += " #{patron[:last_name]}" unless patron[:last_name].nil?
+      name << (patron[:first_name] unless patron[:first_name].nil?)
+      name << (" #{patron[:last_name]}" unless patron[:last_name].nil?)
       name
     end
 
     def pul_patron_last_name(patron)
       last_name = ""
-      last_name += " #{patron[:last_name]}" unless patron[:last_name].nil?
+      last_name << (" #{patron[:last_name]}" unless patron[:last_name].nil?)
       last_name
     end
 

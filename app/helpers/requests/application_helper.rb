@@ -123,11 +123,11 @@ module Requests
     # rubocop:disable Style/NumericPredicate
     def enum_copy_display(item)
       display = ""
-      display += item[:enum_display] unless item[:enum_display].nil?
-      display += " " if !item[:enum_display].nil? && !item[:copy_number].nil?
+      display << (item[:enum_display] unless item[:enum_display].nil?)
+      display << (" " if !item[:enum_display].nil? && !item[:copy_number].nil?)
       # For scsb materials
-      display += item[:enumeration] if item[:enumeration]
-      display += "Copy #{item[:copy_number]}" unless item[:copy_number].nil? || (item[:copy_number]) == 0 || item[:copy_number] == 1 || item[:copy_number] == '1'
+      display << (item[:enumeration] if item[:enumeration])
+      display << ("Copy #{item[:copy_number]}" unless item[:copy_number].nil? || (item[:copy_number]) == 0 || item[:copy_number] == 1 || item[:copy_number] == '1')
       display
     end
     # rubocop:enable Style/NumericPredicate
@@ -209,41 +209,41 @@ module Requests
     def hidden_fields_mfhd(mfhd)
       hidden = ""
       return hidden if mfhd.nil?
-      hidden += hidden_field_tag "mfhd[][call_number]", "", value: (mfhd['call_number']).to_s unless mfhd["call_number"].nil?
-      hidden += hidden_field_tag "mfhd[][location]", "", value: (mfhd['location']).to_s unless mfhd["location"].nil?
-      hidden += hidden_field_tag "mfhd[][library]", "", value: (mfhd['library']).to_s
+      hidden << (hidden_field_tag "mfhd[][call_number]", "", value: (mfhd['call_number']).to_s unless mfhd["call_number"].nil?)
+      hidden << (hidden_field_tag "mfhd[][location]", "", value: (mfhd['location']).to_s unless mfhd["location"].nil?)
+      hidden << (hidden_field_tag "mfhd[][library]", "", value: (mfhd['library']).to_s)
       hidden.html_safe
     end
 
     def hidden_fields_item(requestable)
       hidden = hidden_field_tag "requestable[][bibid]", "", value: requestable.bib[:id].to_s, id: "requestable_bibid_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.item['id']}" unless requestable.holding.first[1]["call_number"].nil?
-      hidden += if requestable.item["location"].nil?
-                  hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{requestable.item['id']}"
-                else
-                  hidden_field_tag "requestable[][location_code]", "", value: requestable.item['location'].to_s, id: "requestable_location_#{requestable.item['id']}"
-                end
-      hidden += hidden_field_tag "requestable[][item_id]", "", value: requestable.item['id'].to_s, id: "requestable_item_id_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][barcode]", "", value: requestable.item['barcode'].to_s, id: "requestable_barcode_#{requestable.item['id']}" unless requestable.item["barcode"].nil?
-      hidden += hidden_field_tag "requestable[][enum]", "", value: requestable.item['enum'].to_s, id: "requestable_enum_#{requestable.item['id']}" unless requestable.item["enum"].nil?
-      hidden += hidden_field_tag "requestable[][enum]", "", value: requestable.item['enumeration'].to_s, id: "requestable_enum_#{requestable.item['id']}" unless requestable.item["enumeration"].nil?
-      hidden += hidden_field_tag "requestable[][copy_number]", "", value: requestable.item['copy_number'].to_s, id: "requestable_copy_number_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][status]", "", value: requestable.item['status'].to_s, id: "requestable_status_#{requestable.item['id']}"
+      hidden << (hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.item['id']}")
+      hidden << (hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.item['id']}" unless requestable.holding.first[1]["call_number"].nil?)
+      hidden << (if requestable.item["location"].nil?
+                   hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{requestable.item['id']}"
+                 else
+                   hidden_field_tag "requestable[][location_code]", "", value: requestable.item['location'].to_s, id: "requestable_location_#{requestable.item['id']}"
+                 end)
+      hidden << (hidden_field_tag "requestable[][item_id]", "", value: requestable.item['id'].to_s, id: "requestable_item_id_#{requestable.item['id']}")
+      hidden << (hidden_field_tag "requestable[][barcode]", "", value: requestable.item['barcode'].to_s, id: "requestable_barcode_#{requestable.item['id']}" unless requestable.item["barcode"].nil?)
+      hidden << (hidden_field_tag "requestable[][enum]", "", value: requestable.item['enum'].to_s, id: "requestable_enum_#{requestable.item['id']}" unless requestable.item["enum"].nil?)
+      hidden << (hidden_field_tag "requestable[][enum]", "", value: requestable.item['enumeration'].to_s, id: "requestable_enum_#{requestable.item['id']}" unless requestable.item["enumeration"].nil?)
+      hidden << (hidden_field_tag "requestable[][copy_number]", "", value: requestable.item['copy_number'].to_s, id: "requestable_copy_number_#{requestable.item['id']}")
+      hidden << (hidden_field_tag "requestable[][status]", "", value: requestable.item['status'].to_s, id: "requestable_status_#{requestable.item['id']}")
       if requestable.scsb?
-        hidden += hidden_field_tag "requestable[][cgc]", "", value: requestable.item['cgc'].to_s, id: "requestable_cgc_#{requestable.item['id']}"
-        hidden += hidden_field_tag "requestable[][cc]", "", value: requestable.item['collection_code'].to_s, id: "requestable_collection_code_#{requestable.item['id']}"
-        hidden += hidden_field_tag "requestable[][use_statement]", "", value: requestable.item['use_statement'].to_s, id: "requestable_use_statement_#{requestable.item['id']}"
+        hidden << (hidden_field_tag "requestable[][cgc]", "", value: requestable.item['cgc'].to_s, id: "requestable_cgc_#{requestable.item['id']}")
+        hidden << (hidden_field_tag "requestable[][cc]", "", value: requestable.item['collection_code'].to_s, id: "requestable_collection_code_#{requestable.item['id']}")
+        hidden << (hidden_field_tag "requestable[][use_statement]", "", value: requestable.item['use_statement'].to_s, id: "requestable_use_statement_#{requestable.item['id']}")
       end
-      hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{requestable.item['id']}" unless requestable.item["scsb_status"].nil?
+      hidden << (hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{requestable.item['id']}" unless requestable.item["scsb_status"].nil?)
       hidden
     end
 
     def hidden_fields_holding(requestable)
-      hidden = hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.holding.keys[0]}"
-      hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.holding.keys[0]}" unless requestable.holding.first[1]["call_number"].nil?
-      hidden += hidden_field_tag "requestable[][location_code]", "", value: (requestable.holding.first[1]['location_code']).to_s, id: "requestable_location_code_#{requestable.holding.keys[0]}"
-      hidden += hidden_field_tag "requestable[][location]", "", value: (requestable.holding.first[1]['location']).to_s, id: "requestable_location_#{requestable.holding.keys[0]}"
+      hidden = (hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.holding.keys[0]}")
+      hidden << (hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.holding.keys[0]}" unless requestable.holding.first[1]["call_number"].nil?)
+      hidden << (hidden_field_tag "requestable[][location_code]", "", value: (requestable.holding.first[1]['location_code']).to_s, id: "requestable_location_code_#{requestable.holding.keys[0]}")
+      hidden << (hidden_field_tag "requestable[][location]", "", value: (requestable.holding.first[1]['location']).to_s, id: "requestable_location_#{requestable.holding.keys[0]}")
       hidden
     end
 
@@ -261,8 +261,8 @@ module Requests
 
     def hidden_fields_borrow_direct(request)
       hidden_bd_tags = ''
-      hidden_bd_tags += hidden_field_tag 'bd[auth_id]', '', value: ''
-      hidden_bd_tags += hidden_field_tag 'bd[query_params]', '', value: request.isbn_numbers.first
+      hidden_bd_tags << (hidden_field_tag 'bd[auth_id]', '', value: '')
+      hidden_bd_tags << (hidden_field_tag 'bd[query_params]', '', value: request.isbn_numbers.first)
       hidden_bd_tags.html_safe
     end
 
@@ -272,9 +272,9 @@ module Requests
 
     def hidden_fields_request(request)
       hidden_request_tags = ''
-      hidden_request_tags += hidden_field_tag "bib[id]", "", value: request.doc[:id]
+      hidden_request_tags << (hidden_field_tag "bib[id]", "", value: request.doc[:id])
       request.display_metadata.each do |key, value|
-        hidden_request_tags += hidden_field_tag "bib[#{key}]", "", value: value
+        hidden_request_tags << (hidden_field_tag "bib[#{key}]", "", value: value)
       end
       hidden_request_tags.html_safe
     end
@@ -412,7 +412,7 @@ module Requests
     # to make it worthwhile
     def show_tablesorter(requestable_list)
       table_class = ""
-      table_class += "tablesorter" if requestable_list.size > 5
+      table_class << ("tablesorter" if requestable_list.size > 5)
       table_class
     end
 

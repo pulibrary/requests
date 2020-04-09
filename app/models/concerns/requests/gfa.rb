@@ -24,22 +24,13 @@ module Requests
       delivery_mode = item[delivery_mode_key][0, 1] # get first letter
       item[:pickup] = 'PA' if delivery_mode == 'e'
       item[:edd_start_page] = '?' if item[:edd_start_page].blank?
-      {
-        Bbid: bib[:id],
-        barcode: user[:user_barcode],
-        item: item[:item_id],
-        lname: user[:user_last_name],
-        delivery: delivery_mode,
-        pickup: item[:pickup],
-        startpage: item[:edd_start_page],
-        endpage: item[:edd_end_page],
+      { Bbid: bib[:id], barcode: user[:user_barcode],
+        item: item[:item_id], lname: user[:user_last_name],
+        delivery: delivery_mode, pickup: item[:pickup],
+        startpage: item[:edd_start_page], endpage: item[:edd_end_page],
         email: user[:email], # begin optional params
-        volnum: item[:edd_volume_number],
-        issue: item[:edd_issue],
-        aauthor: item[:edd_author],
-        atitle: item[:edd_art_title],
-        note: item[:edd_note]
-      }
+        volnum: item[:edd_volume_number], issue: item[:edd_issue],
+        aauthor: item[:edd_author], atitle: item[:edd_art_title], note: item[:edd_note] }
     end
   end
 end

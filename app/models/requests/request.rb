@@ -126,8 +126,7 @@ module Requests
     end
 
     def serial?
-      return unless doc[:format].present?
-      return true if doc[:format].include? 'Journal'
+      doc[:format].present? && doc[:format].include?('Journal')
     end
 
     def recap?
@@ -158,8 +157,7 @@ module Requests
     end
 
     def thesis?
-      return if doc[:holdings_1display].nil?
-      return true if parse_json(doc[:holdings_1display]).key?('thesis')
+      doc[:holdings_1display].present? && parse_json(doc[:holdings_1display]).key?('thesis')
     end
 
     # returns basic metadata for display on the request from via solr_doc values

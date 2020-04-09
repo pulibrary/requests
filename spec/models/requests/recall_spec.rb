@@ -58,16 +58,16 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
     end
 
     describe 'All Recall Requests' do
-      before do
-        @stub_url = Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
-                    "/items/" + submission.items[0]['item_id'] +
-                    "/recall?patron=" + submission.user['patron_id'] +
-                    "&patron_group=" + submission.user['patron_group'] +
-                    "&patron_homedb=" + URI.escape('1@DB')
+      let(:stub_url) do
+        Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
+          "/items/" + submission.items[0]['item_id'] +
+          "/recall?patron=" + submission.user['patron_id'] +
+          "&patron_group=" + submission.user['patron_group'] +
+          "&patron_homedb=" + URI.escape('1@DB')
       end
 
       it "captures errors when the request is unsuccessful or malformed." do
-        stub_request(:put, @stub_url).
+        stub_request(:put, stub_url).
           # with(headers: { 'Accept' => '*/*' }).
           to_return(status: 405, body: responses[:error], headers: {})
         expect(recall_request.submitted.size).to eq(0)
@@ -75,7 +75,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
       end
 
       it "captures successful request submissions." do
-        stub_request(:put, @stub_url)
+        stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
         expect(recall_request.submitted.size).to eq(1)
@@ -83,14 +83,14 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
       end
 
       it 'constructs a expiration date for the recall request' do
-        stub_request(:put, @stub_url)
+        stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
         expect(recall_request.request_payload(submission.items.first)).to include("<last-interest-date>#{recall_request.recall_expiration_date}</last-interest-date>")
       end
 
       it 'has an expiry date 60 days from today formatted as yyyy-mm-dd' do
-        stub_request(:put, @stub_url)
+        stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
         expect(recall_request.recall_expiration_date).to eq((todays_date + 60).strftime("%Y%m%d"))

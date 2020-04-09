@@ -124,7 +124,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:missing_item) }
     let(:requestable) { request.requestable }
     describe '#services' do
-      it 'is not recallable' do
+      it 'is does not have a recall service' do
         expect(requestable.first.services.include?('recall')).to be false
       end
 

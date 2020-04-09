@@ -542,11 +542,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
 
     describe "#requestable" do
-      it "has an requestable items" do
+      it "has requestable items" do
         expect(request_with_on_order.requestable.size).to be >= 1
       end
 
-      it "has a requestable on order item" do
+      it "has a requestable with 'on order' service" do
         pending "ask_me"
         expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
       end
@@ -585,11 +585,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request_with_on_order) { described_class.new(params) }
 
     describe "#requestable" do
-      it "has an requestable items" do
+      it "has requestable items" do
         expect(request_with_on_order.requestable.size).to be >= 1
       end
 
-      it "has a requestable on order item" do
+      it "has a requestable with 'on order' service" do
         pending "ask_me"
         expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
       end

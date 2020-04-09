@@ -64,13 +64,6 @@ RSpec/InstanceVariable:
     - 'spec/models/requests/pickup_lookup_spec.rb'
     - 'spec/models/requests/recall_spec.rb'
 
-# Offense count: 8
-RSpec/RepeatedDescription:
-  Exclude:
-    - 'spec/models/requests/request_spec.rb'
-    - 'spec/models/requests/requestable_spec.rb'
-    - 'spec/routing/requests/request_spec.rb'
-
 # Offense count: 9
 Rails/OutputSafety:
   Exclude:

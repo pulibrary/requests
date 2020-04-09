@@ -28,7 +28,7 @@ describe Requests::RequestController, type: :routing do
       expect(post: '/borrow_direct').to route_to('requests/request#borrow_direct')
     end
 
-    it 'routes to borrow direct' do
+    it 'routes to recall pickups' do
       expect(post: '/recall_pickups').to route_to('requests/request#recall_pickups')
     end
   end

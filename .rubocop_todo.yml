@@ -57,13 +57,6 @@ RSpec/EmptyExampleGroup:
     - 'spec/models/requests/router_spec.rb'
     - 'spec/models/requests/submission_spec.rb'
 
-# Offense count: 6
-# Configuration parameters: AssignmentOnly.
-RSpec/InstanceVariable:
-  Exclude:
-    - 'spec/models/requests/pickup_lookup_spec.rb'
-    - 'spec/models/requests/recall_spec.rb'
-
 # Offense count: 9
 Rails/OutputSafety:
   Exclude:

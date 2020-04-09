@@ -57,16 +57,16 @@ describe Requests::PickupLookup do
     end
 
     describe 'All PickupLookup Requests' do
-      before do
-        @stub_url = Requests.config[:voyager_api_base] + "/vxws/record/" + params['bib']['id'] +
-                    "/items/" + params['requestable'][0]['item_id'] +
-                    "/recall?patron=" + params['request']['patron_id'] +
-                    "&patron_group=" + params['request']['patron_group'] +
-                    "&patron_homedb=" + URI.escape('1@DB')
+      let(:stub_url) do
+        Requests.config[:voyager_api_base] + "/vxws/record/" + params['bib']['id'] +
+          "/items/" + params['requestable'][0]['item_id'] +
+          "/recall?patron=" + params['request']['patron_id'] +
+          "&patron_group=" + params['request']['patron_group'] +
+          "&patron_homedb=" + URI.escape('1@DB')
       end
 
       it "captures errors when the PickupLookup request is unsuccessful or malformed." do
-        stub_request(:get, @stub_url)
+        stub_request(:get, stub_url)
           .with(headers: { 'Accept' => '*/*' })
           .to_return(status: 405, body: responses[:error], headers: {})
 
@@ -77,7 +77,7 @@ describe Requests::PickupLookup do
       end
 
       it "captures successful PickupLookup request submissions." do
-        stub_request(:get, @stub_url)
+        stub_request(:get, stub_url)
           .with(headers: { 'Accept' => '*/*' })
           .to_return(status: 201, body: responses[:success], headers: {})
 

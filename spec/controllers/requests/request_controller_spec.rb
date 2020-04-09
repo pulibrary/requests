@@ -1,6 +1,7 @@
 require 'spec_helper'
+require "mail"
 
-describe Requests::RequestController, type: :controller, vcr: { cassette_name: 'request_controller', record: :new_episodes } do
+describe Requests::RequestController, type: :controller, vcr: { cassette_name: 'request_controller', record: :none } do
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
@@ -44,6 +45,132 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         system_id: 'dsp01rr1720547'
       }
       expect(response.status).to eq(302)
+    end
+  end
+
+  describe 'POST #submit' do
+    let(:user_info) do
+      {
+        "patron_id" => "12345",
+        "patron_group" => "staff",
+        "user_name" => "Foo Request",
+        "user_barcode" => "22101007797777",
+        "email" => "foo@princeton.edu",
+        "source" => "pulsearch"
+      }.with_indifferent_access
+    end
+    let(:requestable) do
+      [
+        {
+          "selected" => "true",
+          "bibid" => "9590420",
+          "mfhd" => "9432516",
+          "call_number" => "PN1995.9.A76 P7613 2015",
+          "location_code" => "rcppj",
+          "item_id" => "7391704",
+          "barcode" => "32101098797010",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "pickup" => "",
+          "type" => "recap",
+          "delivery_mode_7391704" => "edd",
+          "edd_art_title" => "test",
+          "edd_start_page" => "1",
+          "edd_end_page" => "1",
+          "edd_volume_number" => "1",
+          "edd_issue" => "1",
+          "edd_author" => "",
+          "edd_note" => ""
+        }.with_indifferent_access
+      ]
+    end
+    let(:bib) do
+      {
+        "id" => "9590420"
+      }.with_indifferent_access
+    end
+    context "recap requestable" do
+      let(:recap) { instance_double(Requests::Recap, errors: []) }
+      it 'contacts recap and sends email' do
+        expect(Requests::Recap).to receive(:new).and_return(recap)
+        expect(Requests::RequestMailer).to receive(:send).with("recap_email", anything).and_return(mail_message)
+        expect(Requests::RequestMailer).not_to receive(:send).with("recap_confirmation", anything)
+        post :submit, params: { "request" => user_info,
+                                "requestable" => requestable,
+                                "bib" => bib, "format" => "js" }
+      end
+    end
+    # rubocop:disable RSpec/VerifiedDoubles
+    let(:mail_message) { double(::Mail::Message) }
+    before do
+      without_partial_double_verification do
+        allow(mail_message).to receive(:deliver_now).and_return(nil)
+      end
+    end
+    # rubocop:enable RSpec/VerifiedDoubles
+
+    context "borrow direct requestable" do
+      let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }]) }
+      it 'contacts borrow direct and sends no emails ' do
+        requestable.first["type"] = "bd"
+        requestable.first["pickup"] = "PA"
+        requestable.first["bd"] = { query_params: "abc" }
+        expect(Requests::RequestMailer).not_to receive(:send)
+        expect(Requests::BorrowDirect).to receive(:new).and_return(borrow_direct)
+        post :submit, params: { "request" => user_info,
+                                "requestable" => requestable,
+                                "bib" => bib, "format" => "js" }
+      end
+    end
+
+    context "recall requestable and sends recall_email" do
+      let(:recal) { instance_double(Requests::Recall, errors: []) }
+      it 'contacts recall and sends email' do
+        requestable.first["type"] = "recall"
+        requestable.first["pickup"] = "PA"
+        expect(Requests::Recall).to receive(:new).and_return(recal)
+        expect(Requests::RequestMailer).to receive(:send).with("recall_email", anything).and_return(mail_message)
+        expect(Requests::RequestMailer).not_to receive(:send).with("recall_confirmation", anything)
+        post :submit, params: { "request" => user_info,
+                                "requestable" => requestable,
+                                "bib" => bib, "format" => "js" }
+      end
+    end
+
+    context "recap_no_items requestable" do
+      let(:generic) { instance_double(Requests::Generic, errors: []) }
+      it 'sends email and confirmation email' do
+        requestable.first["type"] = "recap_no_items"
+        requestable.first["pickup"] = "PA"
+        expect(Requests::Generic).to receive(:new).and_return(generic)
+        expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_email", anything).and_return(mail_message)
+        expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_confirmation", anything).and_return(mail_message)
+        post :submit, params: { "request" => user_info,
+                                "requestable" => requestable,
+                                "bib" => bib, "format" => "js" }
+      end
+    end
+
+    context "invalid submission" do
+      it 'returns an error' do
+        requestable.first.delete("edd_art_title")
+        requestable.first["edd_art_title"] = ""
+        post :submit, params: { "request" => user_info,
+                                "requestable" => requestable,
+                                "bib" => bib, "format" => "js" }
+        expect(response.status).to eq(200)
+        expect(flash[:error]).to eq('We were unable to process your request. Correct the highlighted errors.')
+      end
+    end
+
+    context "service error" do
+      it 'returns and error' do
+        post :submit, params: { "request" => user_info,
+                                "requestable" => requestable,
+                                "bib" => bib, "format" => "js" }
+        expect(response.status).to eq(200)
+        expect(flash[:error]).to eq("There was a problem with this request which Library staff need to investigate. You'll be notified once it's resolved and requested for you.")
+      end
     end
   end
 

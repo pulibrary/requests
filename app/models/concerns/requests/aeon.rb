@@ -39,19 +39,12 @@ module Requests
 
     # returns encoded OpenURL string for voyager derived records
     def aeon_openurl(ctx)
-      if item_data?
-        ctx.referent.set_metadata('iteminfo5', item[:id].to_s)
-      else
-        ctx.referent.set_metadata('iteminfo5', nil)
-      end
+      ctx.referent.set_metadata('iteminfo5', item[:id]&.to_s)
       if enumerated?
         ctx.referent.set_metadata('volume', item[:enum])
         ctx.referent.set_metadata('issue', item[:chron]) if item[:chron].present?
-      elsif holding.first.last['location_has']
-        ctx.referent.set_metadata('volume', holding.first.last['location_has'].first)
-        ctx.referent.set_metadata('issue', nil)
       else
-        ctx.referent.set_metadata('volume', nil)
+        ctx.referent.set_metadata('volume', holding.first.last['location_has']&.first)
         ctx.referent.set_metadata('issue', nil)
       end
       aeon_params = aeon_basic_params
@@ -72,19 +65,11 @@ module Requests
     def site
       if holding.key? 'thesis'
         'MUDD'
-      elsif !location[:holding_library].nil?
-        if location['holding_library']['code'] == 'eastasian' && location['aeon_location'] == true
-          'EAL'
-        elsif location['holding_library']['code'] == 'marquand' && location['aeon_location'] == true
-          'MARQ'
-        elsif location['holding_library']['code'] == 'mudd' && location['aeon_location'] == true
-          'MUDD'
-        else
-          'RBSC'
-        end
-      elsif location['library']['code'] == 'eastasian' && location['aeon_location'] == true
+      elsif location[:holding_library].present?
+        holding_location_to_site(location['holding_library']['code'])
+      elsif location['library']['code'] == 'eastasian' && aeon_location?
         'EAL'
-      elsif location['library']['code'] == 'marquand'  && location['aeon_location'] == true
+      elsif location['library']['code'] == 'marquand'  && aeon_location?
         'MARQ'
       elsif location['library']['code'] == 'mudd'
         'MUDD'
@@ -94,6 +79,22 @@ module Requests
     end
 
     private
+
+      def holding_location_to_site(location_code)
+        if  location_code == 'eastasian' && aeon_location?
+          'EAL'
+        elsif location_code == 'marquand' && aeon_location?
+          'MARQ'
+        elsif location_code == 'mudd' && aeon_location?
+          'MUDD'
+        else
+          'RBSC'
+        end
+      end
+
+      def aeon_location?
+        location['aeon_location'] == true
+      end
 
       def call_number
         holding.first.last['call_number']

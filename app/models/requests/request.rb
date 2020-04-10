@@ -268,11 +268,9 @@ module Requests
 
       def build_requestable_from_data
         return if doc[:holdings_1display].nil?
+        @mfhd ||= 'thesis' if thesis?
         if @mfhd
-          params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd] }, location: locations[holdings[@mfhd]["location_code"]])
-          requestable_items [Requests::Requestable.new(params)]
-        elsif thesis?
-          params = build_requestable_params(holding: { "thesis" => holdings['thesis'].with_indifferent_access }, location: locations[holdings['thesis']["location_code"]])
+          params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd].with_indifferent_access }, location: locations[holdings[@mfhd]["location_code"]])
           requestable_items = [Requests::Requestable.new(params)]
         else
           requestable_items = build_requestable_from_holding_list

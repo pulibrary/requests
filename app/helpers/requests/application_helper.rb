@@ -37,20 +37,9 @@ module Requests
       elsif requestable.aeon?
         link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
       elsif requestable.on_shelf?
-        content_tag(:div) do
-          concat link_to 'Where to find it', requestable.map_url(mfhd_id)
-          concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?
-        end
+        display_on_shelf(requestable, mfhd_id)
       else
-        unless requestable.services.include? 'recap_edd'
-          # unless !(requestable.services && ['recap','recap_edd']).empty?
-          content_tag(:ul, class: "service-list") do
-            requestable.services.each do |service|
-              brief_msg = I18n.t("requests.#{service}.brief_msg")
-              concat content_tag(:li, brief_msg.html_safe, class: "service-item")
-            end
-          end
-        end
+        display_requestable_list(requestable.services)
       end
     end
 
@@ -72,30 +61,19 @@ module Requests
     end
 
     def hidden_service_options(requestable)
-      if requestable.services.include? 'annexa'
-        request_input('annexa')
-      elsif requestable.services.include? 'bd'
-        request_input('bd')
-      elsif requestable.services.include? 'annexb'
-        request_input('annexb')
-      elsif requestable.services.include? 'pres'
-        request_input('pres')
-      elsif requestable.services.include? 'ppl'
-        request_input('ppl')
-      elsif requestable.services.include? 'lewis'
-        request_input('lewis')
-      elsif requestable.services.include? 'paging'
-        request_input('paging')
-      elsif requestable.services.include? 'in_process'
-        request_input('in_process')
-      elsif requestable.services.include? 'on_order'
-        request_input('on_order')
-      elsif requestable.services.include?('recap_edd') && requestable.services.include?('recap')
+      found = false
+      ['annexa', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace'].each do |type|
+        next unless requestable.services.include?(type)
+        found = true
+        request_input(type)
+        break
+      end
+      return if found
+
+      if requestable.services.include?('recap_edd') && requestable.services.include?('recap')
         recap_radio_button_group requestable
       elsif requestable.services.include? 'recap'
         recap_print_only_input requestable
-      elsif requestable.services.include? 'trace'
-        request_input('trace')
       end
     end
 
@@ -157,15 +135,7 @@ module Requests
       class_list = "card card-body bg-light collapse show request--print"
       class_list = "card card-body bg-light collapse request--print" if requestable.services.include?('recap_edd')
       content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-        locs = if requestable.pending?
-                 if requestable.location[:holding_library].blank?
-                   [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
-                 else
-                   [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
-                 end
-               else
-                 available_pickups(requestable, default_pickups)
-               end
+        locs = pickup_locations(requestable, default_pickups)
         if locs.size > 1
           concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
         else
@@ -227,17 +197,8 @@ module Requests
                 else
                   hidden_field_tag "requestable[][location_code]", "", value: requestable.item['location'].to_s, id: "requestable_location_#{requestable.item['id']}"
                 end
-      hidden += hidden_field_tag "requestable[][item_id]", "", value: requestable.item['id'].to_s, id: "requestable_item_id_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][barcode]", "", value: requestable.item['barcode'].to_s, id: "requestable_barcode_#{requestable.item['id']}" unless requestable.item["barcode"].nil?
-      hidden += hidden_field_tag "requestable[][enum]", "", value: requestable.item['enum'].to_s, id: "requestable_enum_#{requestable.item['id']}" unless requestable.item["enum"].nil?
-      hidden += hidden_field_tag "requestable[][enum]", "", value: requestable.item['enumeration'].to_s, id: "requestable_enum_#{requestable.item['id']}" unless requestable.item["enumeration"].nil?
-      hidden += hidden_field_tag "requestable[][copy_number]", "", value: requestable.item['copy_number'].to_s, id: "requestable_copy_number_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][status]", "", value: requestable.item['status'].to_s, id: "requestable_status_#{requestable.item['id']}"
-      if requestable.scsb?
-        hidden += hidden_field_tag "requestable[][cgc]", "", value: requestable.item['cgc'].to_s, id: "requestable_cgc_#{requestable.item['id']}"
-        hidden += hidden_field_tag "requestable[][cc]", "", value: requestable.item['collection_code'].to_s, id: "requestable_collection_code_#{requestable.item['id']}"
-        hidden += hidden_field_tag "requestable[][use_statement]", "", value: requestable.item['use_statement'].to_s, id: "requestable_use_statement_#{requestable.item['id']}"
-      end
+      hidden += hidden_fields_for_item(item: requestable.item)
+      hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.scsb?
       hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{requestable.item['id']}" unless requestable.item["scsb_status"].nil?
       hidden
     end
@@ -322,26 +283,16 @@ module Requests
     end
 
     def check_box_disabled(requestable)
-      if requestable.services.empty?
+      if requestable.services.empty? || requestable.on_reserve?
         true
-      elsif requestable.on_reserve?
-        true
-      elsif requestable.on_order?
-        false
-      elsif requestable.in_process?
-        false
-      elsif requestable.traceable?
-        false
-      elsif requestable.always_requestable? && requestable.recap?
+      elsif requestable.on_order? || requestable.in_process? || requestable.traceable? || (requestable.always_requestable? && requestable.recap?)
         false
       elsif requestable.aeon?
         true
       elsif requestable.charged?
         # true
         false
-      elsif requestable.open? && !requestable.pageable?
-        true
-      elsif requestable.always_requestable?
+      elsif (requestable.open? && !requestable.pageable?) || requestable.always_requestable?
         true
       else
         false
@@ -453,5 +404,48 @@ module Requests
         end
       end
     end
+
+    private
+
+      def display_requestable_list(services)
+        return if services.blank? || services.include?('recap_edd') # || services.include?(recap)
+        content_tag(:ul, class: "service-list") do
+          services.each do |service|
+            brief_msg = I18n.t("requests.#{service}.brief_msg")
+            concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+          end
+        end
+      end
+
+      def display_on_shelf(requestable, mfhd_id)
+        content_tag(:div) do
+          concat link_to 'Where to find it', requestable.map_url(mfhd_id)
+          concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?
+        end
+      end
+
+      def pickup_locations(requestable, default_pickups)
+        return available_pickups(requestable, default_pickups) unless requestable.pending?
+        if requestable.location[:holding_library].blank?
+          [{ label: requestable.location[:library][:label], gfa_code: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
+        else
+          [{ label: requestable.location[:holding_library][:label], gfa_code: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
+        end
+      end
+
+      def hidden_fields_for_item(item:)
+        hidden = hidden_field_tag("requestable[][item_id]", "", value: item['id'].to_s, id: "requestable_item_id_#{item['id']}")
+        hidden += hidden_field_tag("requestable[][barcode]", "", value: item['barcode'].to_s, id: "requestable_barcode_#{item['id']}") unless item["barcode"].nil?
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum'].to_s, id: "requestable_enum_#{item['id']}") unless item["enum"].nil?
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{item['id']}") unless item["enumeration"].nil?
+        hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{item['id']}")
+        hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{item['id']}")
+      end
+
+      def hidden_fields_for_scsb(item:)
+        hidden = hidden_field_tag("requestable[][cgc]", "", value: item['cgc'].to_s, id: "requestable_cgc_#{item['id']}")
+        hidden += hidden_field_tag("requestable[][cc]", "", value: item['collection_code'].to_s, id: "requestable_collection_code_#{item['id']}")
+        hidden + hidden_field_tag("requestable[][use_statement]", "", value: item['use_statement'].to_s, id: "requestable_use_statement_#{item['id']}")
+      end
   end
 end

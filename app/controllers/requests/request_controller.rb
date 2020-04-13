@@ -12,40 +12,18 @@ module Requests
     end
 
     def generate
-      request_params[:system_id] = sanitize(params[:system_id])
-
-      request_params[:source] = sanitize(params[:source]) if params[:source].present?
-
-      request_params[:mfhd] = sanitize(params[:mfhd]) if params[:mfhd].present?
-
-      if request.post?
-        email = format_email(sanitize(params[:request][:email])) if params[:request][:email].present?
-        user_name = sanitize(params[:request][:user_name]) if params[:request][:user_name].present?
-      end
-
-      @mode = if params[:mode].nil?
-                'standard'
-              else
-                sanitize(params[:mode])
-              end
-      @title = "Request ID: #{request_params[:system_id]}"
+      system_id = sanitize(params[:system_id])
+      source = sanitize(params[:source]) if params[:source].present?
+      mfhd = sanitize(params[:mfhd]) if params[:mfhd].present?
 
       @user = current_or_guest_user
-      if !@user.guest?
-        @patron = current_patron(@user.uid)
-      elsif email && user_name
-        @patron = access_patron(email, user_name)
-      end
-      flash.now[:error] = "A problem occurred looking up your library account." if @patron == false
+      @patron = patron(user: @user)
+      @mode = mode
+      @title = "Request ID: #{system_id}"
 
-      # FIXME: Only create the object if needed. Right now it is getting created twice.
-      # Before and after the user logs in.
-      @request = Requests::Request.new(
-        system_id: request_params[:system_id],
-        mfhd: request_params[:mfhd],
-        source: request_params[:source],
-        user: @user
-      )
+      # needed to see if we can suppress login for this item
+      @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, user: @user)
+
       ### redirect to Aeon non-voyager items or single Aeon requestable
       if @request.thesis?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
@@ -78,66 +56,15 @@ module Requests
     def submit
       @submission = Requests::Submission.new(sanitize_submission(params))
       respond_to do |format|
-        if @submission.valid?
-          @services = []
-          service_errors = []
-          success_messages = []
-          if @submission.service_types.include? 'recap'
-            @services << if @submission.user['user_barcode'] == 'ACCESS'
-                           # Access users cannot use recap service directly
-                           Requests::Generic.new(@submission)
-                         else
-                           Requests::Recap.new(@submission)
-                         end
-          end
-          @services << Requests::Recall.new(@submission) if @submission.service_types.include? 'recall'
-
-          if @submission.service_types.include? 'bd'
-            bd_success_message = I18n.t('requests.submit.bd_success')
-            bd_request = Requests::BorrowDirect.new(@submission)
-            bd_request.handle
-            @services << bd_request
-            success_messages << "#{bd_success_message} Your request number is #{bd_request.sent[0][:request_number]}" unless bd_request.errors.count >= 1
-          end
-
-          # if !recap && !recall && !bd !(a1 & a2).empty?
-          if (@submission.service_types & ['bd', 'recap', 'recall']).empty?
-            @services << Requests::Generic.new(@submission)
-            success_messages << I18n.t('requests.submit.success')
-          end
-
-          @submission.service_types.each do |type|
-            success_messages << I18n.t("requests.submit.#{type}_success") unless ['bd', 'recap_no_items'].include? type
-          end
-          @services.each do |service|
-            service.errors.each do |error|
-              service_errors << error
-            end
-          end
-        end
-        if @submission.valid? && !service_errors.any?
-          format.js do
-            flash.now[:success] = success_messages.join(' ')
-            logger.info "#Request Submission - #{@submission.as_json}"
-            logger.info "Request Sent"
-            unless @submission.service_types.include? 'bd'
-              @submission.service_types.each do |type|
-                Requests::RequestMailer.send("#{type}_email", @submission).deliver_now
-                Requests::RequestMailer.send("#{type}_confirmation", @submission).deliver_now if ['on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl'].include? type
-                Requests::RequestMailer.send("scsb_recall_email", @submission).deliver_now if type == 'recall' && @submission.scsb?
-              end
-            end
-          end
-        else
-          format.js do
-            if @submission.valid? # submission was valid, but service failed
-              flash.now[:error] = I18n.t('requests.submit.service_error')
-              logger.error "Request Service Error"
-              Requests::RequestMailer.send("service_error_email", @services).deliver_now
-            else
-              flash.now[:error] = I18n.t('requests.submit.error')
-              logger.error "Request Submission #{@submission.errors.messages.as_json}"
-            end
+        format.js do
+          @services = @submission.process_submission if @submission.valid?
+          service_errors = @submission.service_errors
+          if @submission.valid? && service_errors.blank?
+            respond_to_submit_success(@submission)
+          elsif @submission.valid? # submission was valid, but service failed
+            respond_to_service_error(@services)
+          else
+            respond_to_validation_error(@submission)
           end
         end
       end
@@ -169,6 +96,26 @@ module Requests
 
     private
 
+      def patron(user:)
+        if params[:request].present?
+          email = format_email(sanitize(params[:request][:email]))
+          user_name = sanitize(params[:request][:user_name])
+        end
+
+        if !user.guest?
+          patron = current_patron(user.uid)
+          flash.now[:error] = "A problem occurred looking up your library account." if patron == false
+          patron
+        elsif email && user_name
+          access_patron(email, user_name)
+        end
+      end
+
+      def mode
+        return 'standard' if params[:mode].nil?
+        sanitize(params[:mode])
+      end
+
       # trusted params
       def request_params
         params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
@@ -182,21 +129,21 @@ module Requests
           logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
           return false
         end
+        return false if patron_errors?(patron_record: patron_record, uid: uid)
+        JSON.parse(patron_record.body).with_indifferent_access
+      end
+
+      def patron_errors?(patron_record:, uid:)
+        return false if patron_record.status == 200
         if patron_record.status == 403
           logger.info('403 Not Authorized to Connect to Patron Data Service at '\
                       "#{Requests.config[:bibdata_base]}/patron/#{uid}")
-          return false
-        end
-        if patron_record.status == 404
+        elsif patron_record.status == 404
           logger.info("404 Patron #{uid} cannot be found in the Patron Data Service.")
-          return false
-        end
-        if patron_record.status == 500
+        elsif patron_record.status == 500
           logger.info('Error Patron Data Service.')
-          return false
         end
-        patron = JSON.parse(patron_record.body).with_indifferent_access
-        patron
+        true
       end
 
       def access_patron(email, user_name)
@@ -213,6 +160,29 @@ module Requests
           params['user_supplied_enum'] = sanitize(requestable['user_supplied_enum']) if requestable.key? 'user_supplied_enum'
         end
         params
+      end
+
+      def respond_to_submit_success(submission)
+        flash.now[:success] = submission.success_messages.join(' ')
+        logger.info "#Request Submission - #{submission.as_json}"
+        logger.info "Request Sent"
+        return if submission.service_types.include? 'bd' # emails already sent
+        submission.service_types.each do |type|
+          Requests::RequestMailer.send("#{type}_email", submission).deliver_now
+          Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl'].include? type
+          Requests::RequestMailer.send("scsb_recall_email", submission).deliver_now if type == 'recall' && submission.scsb?
+        end
+      end
+
+      def respond_to_service_error(services)
+        flash.now[:error] = I18n.t('requests.submit.service_error')
+        logger.error "Request Service Error"
+        Requests::RequestMailer.send("service_error_email", services).deliver_now
+      end
+
+      def respond_to_validation_error(submission)
+        flash.now[:error] = I18n.t('requests.submit.error')
+        logger.error "Request Submission #{submission.errors.messages.as_json}"
       end
   end
 end

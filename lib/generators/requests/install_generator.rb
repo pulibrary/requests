@@ -44,6 +44,7 @@ module Requests
       copy_file './app/assets/javascripts/requests.js', 'app/assets/javascripts/requests.js'
     end
 
+    # rubocop:disable Metrics/MethodLength
     def devise
       # puts "#{options.to_s}"
       # if options[:devise]
@@ -100,5 +101,6 @@ module Requests
         "  end\n" \
       end
     end
+    # rubocop:enable Metrics/MethodLength
   end
 end

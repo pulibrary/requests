@@ -12,12 +12,10 @@ module Users
     def barcode
       @user = User.from_barcode(request.env['omniauth.auth'])
       patron = Bibdata.get_patron(@user.uid)
-      valid_user = @user.valid?
-      if patron == false || !last_name_match?(@user.username, patron['last_name']) || !valid_user
+      if patron == false || !last_name_match?(@user.username, patron['last_name']) || !@user.valid?
         flash_validation
         redirect_to new_user_session_path
-        set_flash_message(:error, :failure,
-                          reason: 'barcode or last name did not match active patron')
+        set_flash_message(:error, :failure, reason: 'barcode or last name did not match active patron')
       elsif netid_patron?(patron)
         redirect_to new_user_session_path
         flash[:error] = I18n.t('blacklight.login.barcode_netid')

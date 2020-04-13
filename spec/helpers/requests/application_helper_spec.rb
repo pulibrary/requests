@@ -1,7 +1,8 @@
 require 'spec_helper'
 require './app/models/requests/request.rb'
 
-RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name: 'request_models', record: :new_episodes } do
+RSpec.describe Requests::ApplicationHelper, type: :helper,
+                                            vcr: { cassette_name: 'request_models', record: :new_episodes } do
   describe '#isbn_string' do
     let(:isbns) do
       [
@@ -89,6 +90,286 @@ RSpec.describe Requests::ApplicationHelper, type: :helper, vcr: { cassette_name:
     context 'when the MFHD is nil' do
       it 'generates no markup' do
         expect(helper.hidden_fields_mfhd(nil)).to be_empty
+      end
+    end
+  end
+
+  describe "#show_service_options" do
+    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+    let(:request) { instance_double(Requests::Request, ctx: solr_context) }
+    let(:solr_context) { instance_double(Requests::SolrOpenUrlContext) }
+    context "lewis library" do
+      let(:stubbed_questions) { { services: ['lewis'], charged?: false, aeon?: false, on_shelf?: false } }
+      it 'a message for lewis' do
+        expect(helper.show_service_options(requestable, 'acb')).to eq \
+          "<ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library, will be delivered to Lewis Library Service desk on first floor.</li></ul>"
+      end
+    end
+
+    context "lewis library charged" do
+      let(:stubbed_questions) { { services: ['lewis'], charged?: true, aeon?: false, on_shelf?: false, ask_me?: false } }
+      it 'a message for lewis charged' do
+        expect(helper).to receive(:render).with(partial: 'checked_out_options', locals: { requestable: requestable }).and_return('partial rendered')
+        expect(helper.show_service_options(requestable, 'acb')).to eq "partial rendered"
+      end
+    end
+
+    context "aeon voyager managed" do
+      let(:stubbed_questions) do
+        { services: ['lewis'], charged?: false, aeon?: true,
+          voyager_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
+      end
+      it 'a link for reading room' do
+        assign(:request, request)
+        expect(helper).to receive(:link_to).with('Request to View in Reading Room', 'aeon_link', anything).and_return 'link'
+        expect(helper.show_service_options(requestable, 'acb')).to eq "link"
+      end
+    end
+
+    context "aeon NOT voyager managed" do
+      let(:stubbed_questions) do
+        { services: ['lewis'], charged?: false, aeon?: true,
+          voyager_managed?: false, ask_me?: false, aeon_request_url: 'link',
+          aeon_mapped_params: { abc: 123 } }
+      end
+      it 'a link for reading room' do
+        assign(:request, request)
+        expect(helper).to receive(:link_to).with('Request to View in Reading Room', 'https://library.princeton.edu/aeon/aeon.dll?abc=123', anything).and_return 'link'
+        expect(helper.show_service_options(requestable, 'acb')).to eq "link"
+      end
+    end
+
+    context "on shelf not traceable" do
+      let(:stubbed_questions) do
+        { services: ['on_shelf'], charged?: false, aeon?: false,
+          voyager_managed?: false, ask_me?: false, on_shelf?: true,
+          map_url: 'map_abc', traceable?: false }
+      end
+      it 'a link to a map' do
+        assign(:request, request)
+        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
+      end
+    end
+
+    context "on shelf traceable" do
+      let(:stubbed_questions) do
+        { services: ['on_shelf'], charged?: false, aeon?: false,
+          voyager_managed?: false, ask_me?: false, on_shelf?: true,
+          map_url: 'map_abc', traceable?: true }
+      end
+      it 'a link to a map' do
+        assign(:request, request)
+        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
+      end
+    end
+
+    context "no services" do
+      let(:stubbed_questions) { { services: [] } }
+      it 'a message for lewis' do
+        expect(helper.show_service_options(requestable, 'acb')).to eq \
+          "<div class=\"service-item\">Item is not requestable.</div>"
+      end
+    end
+  end
+
+  describe "#prefered_request_content_tag" do
+    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+    let(:default_pickups) { [{ label: 'place', gfa_code: 'xx', staff_only: false }] }
+    let(:card_div) { '<div id="fields-print__abc123" class="card card-body bg-light collapse show request--print">' }
+
+    context "no services" do
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false } }
+      it 'shows default pickup location' do
+        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: place</label></div>'
+      end
+    end
+
+    context "no services multiple defaults" do
+      let(:default_pickups) { [{ label: 'place', gfa_code: 'xx', staff_only: false }, { label: 'place two', gfa_code: 'xz', staff_only: false }] }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false } }
+      it 'shows default pickup location' do
+        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+          card_div + '<select name="requestable[][pickup]" id="requestable__pickup"><option value="">Select a Delivery Location</option><option value="xx">place</option>' + "\n" + '<option value="xz">place two</option></select></div>'
+      end
+    end
+
+    context "no services and charged" do
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: true } }
+      it 'shows default pickup location hidden' do
+        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+          card_div + '<input type="hidden" name="updated_later" id="updated_later" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="display:none;margin-top:10px;" for="updated_later">Pickup location: place</label></div>'
+      end
+    end
+
+    context "no services pickup locations" do
+      let(:locations) { [{ label: 'another place', gfa_code: 'yy', staff_only: false }] }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: locations, charged?: false } }
+      it 'shows the pickup location' do
+        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: another place</label></div>'
+      end
+    end
+
+    context "no services pending at a location" do
+      let(:holding_location) { { holding_library: { label: 'cool library', code: 'xx' } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: true, location: holding_location, charged?: false } }
+      it 'shows the holding location' do
+        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: cool library</label></div>'
+      end
+    end
+
+    context "recap_edd" do
+      let(:stubbed_questions) { { services: ['recap_edd'], preferred_request_id: 'abc123', pending?: false, pickup_locations: locations, charged?: false } }
+      let(:locations) { [{ label: 'another place', gfa_code: 'yy', staff_only: false }] }
+      it 'a message for lewis' do
+        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+          '<div id="fields-print__abc123" class="card card-body bg-light collapse request--print"><input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: another place</label></div>'
+      end
+    end
+  end
+
+  describe "#hidden_fields_item" do
+    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+
+    context "no services" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to eq '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" /><input type="hidden" name="requestable[][mfhd]" id="requestable_mfhd_aaabbb" value="key1" /><input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="" /><input type="hidden" name="requestable[][item_id]" id="requestable_item_id_aaabbb" value="aaabbb" /><input type="hidden" name="requestable[][copy_number]" id="requestable_copy_number_aaabbb" value="" /><input type="hidden" name="requestable[][status]" id="requestable_status_aaabbb" value="" />'
+      end
+    end
+
+    context "with item location" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'location' => 'place' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="place" />'
+      end
+    end
+
+    context "with item barcode" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'barcode' => '111222333' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][barcode]" id="requestable_barcode_aaabbb" value="111222333" />'
+      end
+    end
+
+    context "with item enum" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enum' => 'vvv' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="vvv" />'
+      end
+    end
+
+    context "with item enumeration" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enumeration' => 'sss' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="sss" />'
+      end
+    end
+
+    context "with item scsb_status" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'scsb_status' => 'status' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][scsb_status]" id="requestable_scsb_status_aaabbb" value="status" />'
+      end
+    end
+
+    context "with holding call number" do
+      let(:holding) { { "1594697" => { "location" => "Firestone Library", "library" => "Firestone Library", "location_code" => "f", "copy_number" => "0", "call_number" => "6251.9765", "call_number_browse" => "6251.9765" } } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: holding, location: { code: 'location_code' }, scsb?: false } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][call_number]" id="requestable_call_number_aaabbb" value="6251.9765" />'
+      end
+    end
+
+    context "scsb item" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: true } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to eq '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" /><input type="hidden" name="requestable[][mfhd]" id="requestable_mfhd_aaabbb" value="key1" /><input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="" /><input type="hidden" name="requestable[][item_id]" id="requestable_item_id_aaabbb" value="aaabbb" /><input type="hidden" name="requestable[][copy_number]" id="requestable_copy_number_aaabbb" value="" /><input type="hidden" name="requestable[][status]" id="requestable_status_aaabbb" value="" /><input type="hidden" name="requestable[][cgc]" id="requestable_cgc_aaabbb" value="" /><input type="hidden" name="requestable[][cc]" id="requestable_collection_code_aaabbb" value="" /><input type="hidden" name="requestable[][use_statement]" id="requestable_use_statement_aaabbb" value="" />'
+      end
+    end
+  end
+
+  describe "#check_box_disabled" do
+    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+
+    context "no services" do
+      let(:stubbed_questions) { { services: [] } }
+      it 'does disable' do
+        expect(helper.check_box_disabled(requestable)).to be_truthy
+      end
+    end
+
+    context "services and on_reserve" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: true } }
+      it 'does disable' do
+        expect(helper.check_box_disabled(requestable)).to be_truthy
+      end
+    end
+
+    context "services and on_order" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: true } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_falsey
+      end
+    end
+
+    context "services and in_process?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: true } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_falsey
+      end
+    end
+
+    context "services and traceable?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: true } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_falsey
+      end
+    end
+
+    context "services and recap and always requestable?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: true } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_falsey
+      end
+    end
+
+    context "services and aeon?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: true } }
+      it 'does disable' do
+        expect(helper.check_box_disabled(requestable)).to be_truthy
+      end
+    end
+
+    context "services and charged?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: true } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_falsey
+        # TODO: for ask_me be false
+        # expect(helper.check_box_disabled(requestable)).to be_truthy
+      end
+    end
+
+    context "services and open? and not pageable?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: true, pageable?: false } }
+      it 'does disable' do
+        expect(helper.check_box_disabled(requestable)).to be_truthy
+      end
+    end
+
+    context "services and always_requestable?" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_truthy
+      end
+    end
+
+    context "services" do
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false } }
+      it 'does not disable' do
+        expect(helper.check_box_disabled(requestable)).to be_falsey
       end
     end
   end

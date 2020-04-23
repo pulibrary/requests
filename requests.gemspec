@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'devise'
-  s.add_dependency 'rails', '~> 5.1.0'
+  s.add_dependency 'rails', '~> 5.2.4'
   s.add_dependency 'bootstrap'
   s.add_dependency 'friendly_id', '~> 5.1.0'
-  s.add_dependency 'yaml_db', '~> 0.6.0'
+  s.add_dependency 'yaml_db', '~> 0.7.0'
   s.add_dependency 'simple_form'
   s.add_dependency 'faraday'
   s.add_dependency 'borrow_direct', '~> 1.2.0'
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'openurl', '~> 1.0'
   s.add_dependency 'jquery-rails'
 
-  s.add_development_dependency 'bixby', '~> 1.0'
+  s.add_development_dependency 'bixby', '~> 2.0'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.4'
   s.add_development_dependency 'engine_cart', '~> 2.1'

@@ -46,4 +46,6 @@ else
     end
   end
 end
+
+eval File.read('spec/test_app_templates/Gemfile.extra'), nil, 'spec/test_app_templates/Gemfile.extra' if File.exist?('spec/test_app_templates/Gemfile.extra')
 # END ENGINE_CART BLOCK

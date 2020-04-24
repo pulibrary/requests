@@ -27,6 +27,10 @@ RSpec/NestedGroups:
     - 'spec/models/requests/request_spec.rb'
     - 'spec/models/requests/router_spec.rb'
 
+Security/Eval:
+  Exclude:
+    - 'Gemfile'
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 

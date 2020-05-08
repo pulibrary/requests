@@ -1,4 +1,5 @@
 module Requests
+  # rubocop:disable Metrics/ModuleLength
   module ApplicationHelper
     def sanitize(str)
       str.gsub(/[^A-Za-z0-9@\-_\.]/, '') if str.is_a? String
@@ -191,7 +192,7 @@ module Requests
     def hidden_fields_item(requestable)
       hidden = hidden_field_tag "requestable[][bibid]", "", value: requestable.bib[:id].to_s, id: "requestable_bibid_#{requestable.item['id']}"
       hidden += hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.item['id']}" unless requestable.holding.first[1]["call_number"].nil?
+      hidden += hidden_field_for_call_number(requestable.holding.first[1], requestable.item['id'])
       hidden += if requestable.item["location"].nil?
                   hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{requestable.item['id']}"
                 else
@@ -199,13 +200,15 @@ module Requests
                 end
       hidden += hidden_fields_for_item(item: requestable.item)
       hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.scsb?
-      hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{requestable.item['id']}" unless requestable.item["scsb_status"].nil?
+      unless requestable.item["scsb_status"].nil?
+        hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{requestable.item['id']}"
+      end
       hidden
     end
 
     def hidden_fields_holding(requestable)
       hidden = hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.holding.keys[0]}"
-      hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.holding.keys[0]}" unless requestable.holding.first[1]["call_number"].nil?
+      hidden += hidden_field_for_call_number(requestable.holding.first[1], requestable.holding.keys[0])
       hidden += hidden_field_tag "requestable[][location_code]", "", value: (requestable.holding.first[1]['location_code']).to_s, id: "requestable_location_code_#{requestable.holding.keys[0]}"
       hidden += hidden_field_tag "requestable[][location]", "", value: (requestable.holding.first[1]['location']).to_s, id: "requestable_location_#{requestable.holding.keys[0]}"
       hidden
@@ -279,7 +282,9 @@ module Requests
     end
 
     def item_checkbox(requestable_list, requestable)
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable),
+                                                                                           aria: { labelledby: "title enum_#{requestable.preferred_request_id}" },
+                                                                                           id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
     def check_box_disabled(requestable)
@@ -447,5 +452,11 @@ module Requests
         hidden += hidden_field_tag("requestable[][cc]", "", value: item['collection_code'].to_s, id: "requestable_collection_code_#{item['id']}")
         hidden + hidden_field_tag("requestable[][use_statement]", "", value: item['use_statement'].to_s, id: "requestable_use_statement_#{item['id']}")
       end
+
+      def hidden_field_for_call_number(holding, id)
+        return "" if holding["call_number"].nil?
+        hidden_field_tag "requestable[][call_number]", "", value: (holding['call_number']).to_s, id: "requestable_call_number_#{id}"
+      end
   end
+  # rubocop:enable Metrics/ModuleLength
 end

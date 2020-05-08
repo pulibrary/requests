@@ -6,7 +6,9 @@ module Requests
     end
 
     def validate(record)
-      record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } } unless record.items.size >= 1 && !record.items.any? { |item| defined? item.selected }
+      unless record.items.size >= 1 && !record.items.any? { |item| defined? item.selected }
+        record.errors[:items] << { "empty_set" => { 'text' => 'Please Select an Item to Request!', 'type' => 'options' } }
+      end
       record.items.each do |selected|
         record = validate_selected(record, selected)
       end
@@ -58,7 +60,9 @@ module Requests
           record.errors[:items] << { item_id => { 'text' => 'Please select a delivery type for your selected recap item', 'type' => 'options' } }
         else
           delivery_type = selected["delivery_mode_#{item_id}"]
-          record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } } if delivery_type == 'print' && selected['pickup'].empty?
+          if delivery_type == 'print' && selected['pickup'].empty?
+            record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } }
+          end
           if delivery_type == 'edd'
             record.errors[:items] << { item_id => { 'text' => 'Please specify title for the selection you want digitized.', 'type' => 'options' } } if selected['edd_art_title'].empty?
           end

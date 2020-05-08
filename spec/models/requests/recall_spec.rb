@@ -52,8 +52,10 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
 
     let(:responses) do
       {
-        error: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>Failed to create request</reply-text><reply-code>25</reply-code><create-recall><note type=\"error\">No recall policy is defined for this item.</note></create-recall></response>",
-        success: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><create-recall><note type=\"\">Your request was successful.</note></create-recall></response>"
+        error: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>Failed to create request</reply-text><reply-code>25</reply-code><create-recall>" \
+               "<note type=\"error\">No recall policy is defined for this item.</note></create-recall></response>",
+        success: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><create-recall>" \
+                 "<note type=\"\">Your request was successful.</note></create-recall></response>"
       }
     end
 

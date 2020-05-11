@@ -38,7 +38,7 @@ module Requests
         metadata = build_metadata(solr_doc: solr_doc)
         ctx = if metadata[:format] == 'book'
                 copy_metadata(format: :book, metadata: metadata)
-              elsif metadata[:format] =~ /journal/i # checking using include because institutions may use formats like Journal or Journal/Magazine
+              elsif /journal/i.match?(metadata[:format]) # checking using include because institutions may use formats like Journal or Journal/Magazine
                 copy_metadata(format: :journal, metadata: metadata)
               else
                 copy_metadata(format: :unknown, metadata: metadata)

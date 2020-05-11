@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'bixby', '~> 1.0'
+  gem 'bixby', '~> 2.0.0'
   gem 'coveralls', require: false
   gem 'pry' unless ENV['CI']
   gem 'pry-byebug' unless ENV['CI']
@@ -45,14 +45,7 @@ else
       gem 'rails', ENV['RAILS_VERSION']
     end
   end
-
-  case ENV['RAILS_VERSION']
-  when /^4.2/
-    gem 'coffee-rails', '~> 4.1.0'
-    gem 'responders', '~> 2.0'
-    gem 'sass-rails', '>= 5.0'
-  when /^4.[01]/
-    gem 'sass-rails', '< 5.0'
-  end
 end
+
+eval File.read('spec/test_app_templates/Gemfile.extra'), nil, 'spec/test_app_templates/Gemfile.extra' if File.exist?('spec/test_app_templates/Gemfile.extra')
 # END ENGINE_CART BLOCK

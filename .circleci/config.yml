@@ -5,9 +5,9 @@ jobs:
 
     # Primary command image where all commands run
     docker:
-      - image: circleci/ruby:2.4.6-node-browsers
+      - image: circleci/ruby:2.6-node-browsers
         environment:
-          RAILS_VERSION: "5.1.2"
+          RAILS_VERSION: "5.2.4"
           RAILS_ENV: test
           COVERAGE: true
 

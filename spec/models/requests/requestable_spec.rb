@@ -61,6 +61,43 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context "Is a bibliographic record from the numismatics collection" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_numismatics) }
+    let(:requestable) { request.requestable.first }
+    let(:holding_id) { "numismatics" }
+    describe "#numismatics?" do
+      it "returns true when record is a senior thesis" do
+        expect(requestable.numismatics?).to be_truthy
+      end
+
+      it "reports as a non Voyager aeon resource" do
+        pending "ask_me"
+        expect(requestable.aeon?).to be_truthy
+        expect(requestable.non_voyager?(holding_id)).to be_truthy
+      end
+
+      it "returns a params list with an Aeon Site RBSC" do
+        expect(requestable.aeon_mapped_params.key?(:Site)).to be_truthy
+        expect(requestable.aeon_mapped_params[:Site]).to eq('RBSC')
+      end
+
+      it "includes a ReferenceNumber" do
+        expect(requestable.aeon_mapped_params[:ReferenceNumber]).to eq(request.system_id)
+      end
+
+      it "includes a CallNumber" do
+        expect(requestable.aeon_mapped_params[:CallNumber]).to be_truthy
+        expect(requestable.aeon_mapped_params[:CallNumber]).to eq(requestable.bib[:call_number_display].first)
+      end
+
+      it "includes an ItemTitle for a numismatics record" do
+        expect(requestable.aeon_mapped_params[:ItemTitle]).to be_truthy
+        expect(requestable.aeon_mapped_params[:ItemTitle]).to eq(requestable.bib[:title_display])
+      end
+    end
+  end
+
   context 'A requestable item with a missing status' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_missing_item) }

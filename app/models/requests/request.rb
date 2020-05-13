@@ -147,7 +147,7 @@ module Requests
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd
     def load_items
-      return nil if thesis?
+      return nil if thesis? || numismatics?
       mfhd_items = if @mfhd && serial?
                      load_serial_items
                    else
@@ -158,6 +158,10 @@ module Requests
 
     def thesis?
       doc[:holdings_1display].present? && parse_json(doc[:holdings_1display]).key?('thesis')
+    end
+
+    def numismatics?
+      doc[:holdings_1display].present? && parse_json(doc[:holdings_1display]).key?('numismatics')
     end
 
     # returns basic metadata for display on the request from via solr_doc values
@@ -269,6 +273,7 @@ module Requests
       def build_requestable_from_data
         return if doc[:holdings_1display].nil?
         @mfhd ||= 'thesis' if thesis?
+        @mfhd ||= 'numismatics' if numismatics?
         if @mfhd
           params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd].with_indifferent_access }, location: locations[holdings[@mfhd]["location_code"]])
           requestable_items = [Requests::Requestable.new(params)]

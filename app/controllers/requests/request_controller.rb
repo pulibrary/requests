@@ -25,7 +25,7 @@ module Requests
       @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, user: @user)
 
       ### redirect to Aeon non-voyager items or single Aeon requestable
-      if @request.thesis?
+      if @request.thesis? || @request.numismatics?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
       elsif @request.single_aeon_requestable?
         redirect_to @request.requestable.first.aeon_request_url(@request.ctx)

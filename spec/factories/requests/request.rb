@@ -70,6 +70,12 @@ FactoryGirl.define do
     initialize_with { new(system_id: system_id, user: user) }
   end
 
+  factory :request_numismatics, class: 'Requests::Request' do
+    system_id "coin-1167"
+    user { FactoryGirl.build(:user) }
+    initialize_with { new(system_id: system_id, user: user) }
+  end
+
   factory :request_paging_available, class: 'Requests::Request' do
     system_id 6_009_363
     user { FactoryGirl.build(:user) }

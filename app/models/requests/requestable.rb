@@ -39,6 +39,11 @@ module Requests
       holding["thesis"][:location_code] == 'mudd'
     end
 
+    def numismatics?
+      return false unless holding.key? "numismatics"
+      holding["numismatics"][:location_code] == 'num'
+    end
+
     # Reading Room Request
     def aeon?
       # temporarily disable aeon as an option in favor of ask_me

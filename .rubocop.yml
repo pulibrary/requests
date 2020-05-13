@@ -10,6 +10,15 @@ Bundler/DuplicatedGem:
   Exclude:
     - 'Gemfile'
 
+Metrics/ClassLength:
+  Exclude:
+    - 'spec/models/requests/request_spec.rb'
+    - 'app/models/requests/request.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/models/requests/request_spec.rb'
+
 RSpec/ExampleLength:
   Enabled: false
 

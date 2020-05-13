@@ -132,6 +132,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(request_with_holding_item.thesis?).to be_falsy
       end
     end
+
+    describe "#numismatics?" do
+      it "does not identify itself as a numismatics request" do
+        expect(request_with_holding_item.numismatics?).to be_falsy
+      end
+    end
   end
 
   context "with a system_id and a mfhd that only has a holding record" do
@@ -430,11 +436,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed a system_id for a theses record without a mfhd" do
+  context "When passed a system_id for a numismatics record" do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: 'dsp01rr1720547',
+        system_id: 'coin-1167/',
+        mfhd: 'numismatics',
         user: user
       }
     end
@@ -447,17 +454,17 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(request_with_only_system_id.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
-      it "has a thesis holding location" do
-        expect(request_with_only_system_id.requestable[0].holding.key?('thesis')).to be_truthy
+      it "has a numismatics holding location" do
+        expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location['code']).to eq 'mudd'
+        expect(request_with_only_system_id.requestable[0].location['code']).to eq 'num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
 
-    describe "#thesis?" do
-      it "identifies itself as a thesis request" do
-        expect(request_with_only_system_id.thesis?).to be_truthy
+    describe "#numismatics?" do
+      it "identifies itself as a numismatics request" do
+        expect(request_with_only_system_id.numismatics?).to be_truthy
       end
     end
 
@@ -478,10 +485,72 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#aeon_mapped_params" do
       it 'includes a Site param' do
         expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:Site)).to be true
-        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Site]).to eq('MUDD')
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Site]).to eq('RBSC')
       end
 
-      it 'shouuld have an Aeon Form Param' do
+      it 'has an Aeon Form Param' do
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:Form)).to be true
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Form]).to eq('21')
+      end
+
+      it 'has an Aeon Action Param' do
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:Action)).to be true
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Action]).to eq('10')
+      end
+
+      it 'has a genre param set to numismatics' do
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:genre)).to be true
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:genre]).to eq('numismatics')
+      end
+    end
+  end
+
+  context "When passed a system_id for a numismatics record without a mfhd" do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) do
+      {
+        system_id: 'coin-1167',
+        user: user
+      }
+    end
+    let(:request_with_only_system_id) { described_class.new(params) }
+
+    describe "#requestable" do
+      it "has a list of request objects" do
+        expect(request_with_only_system_id.requestable).to be_truthy
+        expect(request_with_only_system_id.requestable.size).to eq(1)
+        expect(request_with_only_system_id.requestable[0]).to be_instance_of(Requests::Requestable)
+      end
+
+      it "has a thesis holding location" do
+        expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
+        expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
+        expect(request_with_only_system_id.requestable[0].location['code']).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
+      end
+    end
+
+    describe "#sorted_requestable" do
+      it "returns a list of requestable objects grouped by mfhd" do
+        expect(request_with_only_system_id.sorted_requestable.size).to eq(1)
+      end
+
+      it "assigns items to the correct mfhd" do
+        request_with_only_system_id.sorted_requestable.each do |key, items|
+          items.each do |item|
+            expect(item.holding.keys.first).to eq(key)
+          end
+        end
+      end
+    end
+
+    describe "#aeon_mapped_params" do
+      it 'includes a Site param' do
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:Site)).to be true
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Site]).to eq('RBSC')
+      end
+
+      it 'has an Aeon Form Param' do
         expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:Form)).to be true
         expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Form]).to eq('21')
       end
@@ -491,9 +560,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:Action]).to eq('10')
       end
 
-      it 'has a genre param set to thesis' do
+      it 'has a genre param set to numismatics' do
         expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:genre)).to be true
-        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:genre]).to eq('thesis')
+        expect(request_with_only_system_id.requestable[0].aeon_mapped_params[:genre]).to eq('numismatics')
       end
     end
   end

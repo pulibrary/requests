@@ -15,6 +15,7 @@ module Requests
       }
       params[:ItemNumber] = item[:barcode] if barcode?
       params[:genre] = 'thesis' if thesis?
+      params[:genre] = 'numismatics' if numismatics?
       params.merge! aeon_basic_params
       params.reject { |_k, v| v.nil? }
     end
@@ -55,7 +56,7 @@ module Requests
 
     # this non_voyager? method has an OL dependency
     def non_voyager?(holding_id)
-      if holding_id == 'thesis'
+      if holding_id == 'thesis' || holding_id == 'numismatics'
         true
       else
         false

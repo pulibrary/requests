@@ -889,7 +889,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "shows item as aeon eligble" do
-        pending "ask_me"
         expect(request.requestable.first.services.include?('aeon')).to be_truthy
       end
     end
@@ -915,7 +914,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "is eligible for aeon services" do
-        pending "ask_me"
         expect(request.requestable.first.services.include?('aeon')).to be_truthy
       end
     end
@@ -1436,7 +1434,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       describe "#single_aeon_requestable?" do
         it "identifies itself as a single aeon requestable" do
-          pending "ask_me"
           expect(request_with_single_aeon_holding.single_aeon_requestable?).to be_truthy
         end
       end

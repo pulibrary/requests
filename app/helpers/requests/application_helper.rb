@@ -268,16 +268,14 @@ module Requests
       mfhd_requests.select { |req| !req.aeon? }
     end
 
-    def suppress_login(_request)
-      # for ask_me allow users to access the form without loggin in
-      true
-      # parse_request(request)
+    def suppress_login(request)
+      parse_request(request)
 
-      # suppress_login = false
-      # if @mfhd.present?
-      #   suppress_login = true if non_aeon_requests.empty?
-      # end
-      # suppress_login
+      suppress_login = false
+      if @mfhd.present?
+        suppress_login = true if non_aeon_requests.empty?
+      end
+      suppress_login
     end
 
     def status_label(requestable)
@@ -301,9 +299,7 @@ module Requests
       elsif requestable.aeon?
         true
       elsif requestable.charged?
-        # true
-        false
-      # temporary changes issue 438 do not disable the checkbox for circulating items
+        true
       elsif requestable.on_shelf?
         !requestable.location[:circulates] || @user.blank? || @user.guest
       elsif (requestable.open? && !requestable.pageable?) || requestable.always_requestable?

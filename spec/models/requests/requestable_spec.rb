@@ -34,7 +34,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       it "reports as a non Voyager aeon resource" do
-        pending "ask_me"
         expect(requestable.aeon?).to be_truthy
         expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
@@ -71,7 +70,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       it "reports as a non Voyager aeon resource" do
-        pending "ask_me"
         expect(requestable.aeon?).to be_truthy
         expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
@@ -201,7 +199,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#services' do
       it 'is eligible for aeon services' do
-        pending "ask_me"
         expect(requestable.services.include?('aeon')).to be true
       end
     end
@@ -245,7 +242,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#aeon_open_url' do
       it 'identifies as an aeon eligible voyager mananaged item' do
-        pending "ask_me"
         expect(requestable.aeon?).to be true
         expect(requestable.non_voyager?(holding_id)).to be false
       end
@@ -510,7 +506,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '# reading_room requestable' do
       it "has Aeon request service available" do
-        pending "ask_me"
         expect(requestable_aeon_mudd.services.include?('aeon')).to be true
       end
     end
@@ -590,7 +585,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#reading room requestable' do
       it "has Aeon request service available" do
-        pending "ask_me"
         expect(requestable_aeon_mudd.services.include?('aeon')).to be true
       end
     end
@@ -636,7 +630,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#reading room requestable' do
       it "has Aeon request service available" do
-        pending "ask_me"
         expect(requestable_aeon_mudd.services.include?('aeon')).to be true
       end
     end

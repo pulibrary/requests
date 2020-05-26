@@ -414,9 +414,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     context "services and charged?" do
       let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: true } }
       it 'does not disable' do
-        expect(helper.check_box_disabled(requestable)).to be_falsey
-        # TODO: for ask_me be false
-        # expect(helper.check_box_disabled(requestable)).to be_truthy
+        expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 

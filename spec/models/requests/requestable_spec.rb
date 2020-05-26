@@ -12,7 +12,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#services' do
       it 'has a service on on_shelf' do
-        pending "ask_me"
         expect(requestable.services.include?('on_shelf')).to be true
       end
     end
@@ -437,7 +436,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.services.include?('recap')).to be true
       end
       it "has recap edd request service available" do
-        pending "ask_me"
         expect(requestable.services.include?('recap_edd')).to be true
       end
     end
@@ -548,7 +546,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.services.include?('recap')).to be true
       end
       it "has recap edd request service available" do
-        pending "ask_me"
         expect(requestable.services.include?('recap_edd')).to be true
       end
     end

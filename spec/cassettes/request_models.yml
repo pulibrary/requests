@@ -20829,13 +20829,13 @@ http_interactions:
   recorded_at: Mon, 16 Sep 2019 14:02:44 GMT
 - request:
     method: get
-    uri: https://catalog.princeton.edu/catalog/3848872/raw
+    uri: https://catalog.princeton.edu/catalog/7617477/raw
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.15.4
+      - Faraday v1.0.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -20848,7 +20848,7 @@ http_interactions:
       Server:
       - nginx/1.17.6
       Date:
-      - Fri, 31 Jan 2020 07:23:42 GMT
+      - Tue, 17 Mar 2020 17:45:49 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -20862,15 +20862,15 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       X-Request-Id:
-      - 40a0c771-4a10-4154-9462-a0820f3d5619
+      - '059c3e1f-c102-404f-b016-26fb1a66d3a9'
       X-Ua-Compatible:
       - IE=edge,chrome=1
       Etag:
-      - W/"0a12d4f2a7a427d0c6fb9ece1e6f1f28"
+      - W/"a5244bbe569ec89121827d761a74615d"
       X-Frame-Options:
       - SAMEORIGIN
       X-Runtime:
-      - '0.014040'
+      - '0.022782'
       X-Content-Type-Options:
       - nosniff
       X-Powered-By:
@@ -20902,13 +20902,13 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 07:23:41 GMT
 - request:
     method: get
-    uri: https://bibdata.princeton.edu/availability?id=3848872
+    uri: https://bibdata.princeton.edu/availability?id=7617477
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.15.4
+      - Faraday v1.0.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -20921,7 +20921,7 @@ http_interactions:
       Server:
       - nginx/1.17.6
       Date:
-      - Fri, 31 Jan 2020 07:23:42 GMT
+      - Tue, 17 Mar 2020 17:45:49 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -20937,13 +20937,13 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"309e1f8a12f16b7be39bac4d55e59a06"
+      - W/"9711094636d20f54cd59f3c121150e82"
       X-Runtime:
-      - '0.188573'
+      - '0.060023'
       Access-Control-Request-Method:
       - GET
       X-Request-Id:
-      - 1a5dfb9b-36a5-4b6c-b0e9-ae4eed717ced
+      - 991d1fda-785f-4316-81db-f94b36725ec3
       X-Powered-By:
       - Phusion Passenger 6.0.4
     body:
@@ -20956,48 +20956,46 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
 - request:
     method: get
-    uri: https://bibdata.princeton.edu/availability?mfhd=4151880
+    uri: https://bibdata.princeton.edu/availability?mfhd=7429805
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.15.4
+      - Faraday v1.0.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Server:
       - nginx/1.17.6
       Date:
-      - Fri, 31 Jan 2020 07:23:43 GMT
+      - Tue, 17 Mar 2020 17:45:49 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - text/plain; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
       Status:
-      - 200 OK
+      - 404 Not Found
       Access-Control-Allow-Headers:
       - Origin, Content-Type, Accept, Authorization, Token
       Cache-Control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       Access-Control-Allow-Origin:
       - "*"
-      Etag:
-      - W/"c898310da74ccf8c8d9529372b61b6d6"
       X-Runtime:
-      - '0.060846'
+      - '0.060904'
       Access-Control-Request-Method:
       - GET
       X-Request-Id:
-      - 6fbf9fc6-cc6f-49f6-b00b-81b4e7d25ced
+      - f34aafe1-49bb-4f9e-bfd6-f066866450ab
       X-Powered-By:
       - Phusion Passenger 6.0.4
     body:
@@ -21008,48 +21006,46 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
 - request:
     method: get
-    uri: https://bibdata.princeton.edu/availability?mfhd=4364328
+    uri: https://bibdata.princeton.edu/availability?mfhd=7429809
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.15.4
+      - Faraday v1.0.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Server:
       - nginx/1.17.6
       Date:
-      - Fri, 31 Jan 2020 07:23:43 GMT
+      - Tue, 17 Mar 2020 17:45:50 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - text/plain; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
       Status:
-      - 200 OK
+      - 404 Not Found
       Access-Control-Allow-Headers:
       - Origin, Content-Type, Accept, Authorization, Token
       Cache-Control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       Access-Control-Allow-Origin:
       - "*"
-      Etag:
-      - W/"55e9d421ced93080f110c9ac182fb8b9"
       X-Runtime:
-      - '0.049520'
+      - '0.051772'
       Access-Control-Request-Method:
       - GET
       X-Request-Id:
-      - 8c31fd45-d11f-4f64-97a3-80347d4ca1ee
+      - 55185296-6595-4ae0-9f8a-a4a2e7e52659
       X-Powered-By:
       - Phusion Passenger 6.0.4
     body:
@@ -21060,48 +21056,46 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 07:23:42 GMT
 - request:
     method: get
-    uri: https://bibdata.princeton.edu/availability?mfhd=6153968
+    uri: https://bibdata.princeton.edu/availability?mfhd=7429811
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.15.4
+      - Faraday v1.0.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Server:
       - nginx/1.17.6
       Date:
-      - Fri, 31 Jan 2020 07:23:43 GMT
+      - Tue, 17 Mar 2020 17:45:50 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - text/plain; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
       Status:
-      - 200 OK
+      - 404 Not Found
       Access-Control-Allow-Headers:
       - Origin, Content-Type, Accept, Authorization, Token
       Cache-Control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       Access-Control-Allow-Origin:
       - "*"
-      Etag:
-      - W/"a9caeb2e1e71d1ee55e841a62daa1ae4"
       X-Runtime:
-      - '0.056473'
+      - '0.058748'
       Access-Control-Request-Method:
       - GET
       X-Request-Id:
-      - 1366e22e-a7c5-4878-b90e-7e0d651aabb5
+      - 22b7b8cb-5f7f-4ce5-ab34-4bd608508d4e
       X-Powered-By:
       - Phusion Passenger 6.0.4
     body:
@@ -21482,4 +21476,569 @@ http_interactions:
         eyJpZCI6ImNvaW4tMTE2NyIsInRpdGxlX2Rpc3BsYXkiOiJDb2luOiAxMTY3IiwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJzaGVrZWwsIFR5cmUiXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJDb2luIDExNjciXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiQ29pbiAxMTY3Il0sImxvY2F0aW9uX2NvZGVfcyI6WyJudW0iXSwibG9jYXRpb24iOlsiU3BlY2lhbCBDb2xsZWN0aW9ucyJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIlNwZWNpYWwgQ29sbGVjdGlvbnMgLSBOdW1pc21hdGljcyBDb2xsZWN0aW9uIl0sImZvcm1hdCI6WyJDb2luIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsibnVtIl0sImRpZV9heGlzX3MiOlsiMTIiXSwic2l6ZV9zIjpbIjI5Il0sIndlaWdodF9zIjpbIjEzLjg2Il0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wibnVtaXNtYXRpY3NcIjp7XCJsb2NhdGlvblwiOlwiU3BlY2lhbCBDb2xsZWN0aW9ucyAtIE51bWlzbWF0aWNzIENvbGxlY3Rpb25cIixcImxpYnJhcnlcIjpcIlNwZWNpYWwgQ29sbGVjdGlvbnNcIixcImxvY2F0aW9uX2NvZGVcIjpcIm51bVwiLFwiY2FsbF9udW1iZXJcIjpcIkNvaW4gMTE2N1wiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJDb2luIDExNjdcIn19IiwiZG9ub3JfcyI6WyJGcmVkZXJpY2sgVy4gQnJvd24iXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MCwicHViX2RhdGVfZW5kX3NvcnQiOjAsImlzc3VlX29iamVjdF90eXBlX3MiOlsiY29pbiJdLCJpc3N1ZV9kZW5vbWluYXRpb25fcyI6WyJzaGVrZWwiXSwiaXNzdWVfbnVtYmVyX3MiOlsiNjE2Il0sImlzc3VlX21ldGFsX3MiOlsic2lsdmVyIl0sImlzc3VlX2VyYV9zIjpbIlBob2VuaWNpYW4gRXJhIG9mIEFsZXhhbmRlciJdLCJpc3N1ZV9wbGFjZV9zIjpbIlR5cmUsIFBob2VuaWNpYSwgU3lyaWEiXSwiaXNzdWVfY2l0eV9zIjpbIlR5cmUiXSwiaXNzdWVfc3RhdGVfcyI6WyJQaG9lbmljaWEiXSwiaXNzdWVfcmVnaW9uX3MiOlsiU3lyaWEiXSwiaXNzdWVfb2J2ZXJzZV9maWd1cmVfcyI6WyJNZWxxYXJ0aCJdLCJpc3N1ZV9vYnZlcnNlX3BhcnRfcyI6WyJidXN0Il0sImlzc3VlX29idmVyc2Vfb3JpZW50YXRpb25fcyI6WyJyaWdodCJdLCJpc3N1ZV9vYnZlcnNlX2ZpZ3VyZV9kZXNjcmlwdGlvbl9zIjpbIndpdGggc2lkZSBidXJucywgbGF1cmVhdGUsIHdlYXJpbmcgbGlvbiBza2luIGtub3R0ZWQgYXJvdW5kIG5lY2s7IGJvcmRlciBvZiBkb3RzLiJdLCJpc3N1ZV9yZXZlcnNlX2ZpZ3VyZV9zIjpbImVhZ2xlciJdLCJpc3N1ZV9yZXZlcnNlX3BhcnRfcyI6WyJzdGFuZGluZyJdLCJpc3N1ZV9yZXZlcnNlX29yaWVudGF0aW9uX3MiOlsibGVmdCJdLCJpc3N1ZV9yZXZlcnNlX2ZpZ3VyZV9kZXNjcmlwdGlvbl9zIjpbIndpdGggci4gZm9vdCBvbiBiZWFrIG9mIHNoaXAgYW5kIHBhbG0gYnJhbmNoIG92ZXIgci4gc2hvdWxkZXI7IGwuICBkYXRlIGFuZCBjbHViLCBiZXR3ZWVuIGxlZ3MgUGhvZW5pY2lhbiBsZXR0ZXIsIHIuIG1vbm9ncmFtIG9yIGxldHRlcjsgYm9yZGVyIG9mIGRvdHMuIl0sImlzc3VlX3JldmVyc2VfbGVnZW5kX3MiOlsizqTOpc6hzp/Opc6ZzpXOoc6RzqMgzprOkc6ZzpHOo86lzpvOn86lIl0sImlzc3VlX3JldmVyc2VfYXR0cmlidXRlc19zIjpbImEzNywgUGhvZW5pY2lhbiBMZXR0ZXIiLCJhMTE2NywgQXJjaGFpYyBNb25vZ3JhbSJdLCJpc3N1ZV9yZWZlcmVuY2VzX3MiOlsiQk1DLlBob2VuIFR5cmUgMTQwIiwiU2VhciAgNTE5MXYiXSwiaXNzdWVfbW9ub2dyYW1fdGl0bGVfcyI6WyJBcmNoYWljIE1vbm9ncmFtIiwiUGhvZW5pY2lhbiBMZXR0ZXIiXSwiaXNzdWVfbW9ub2dyYW1fMWRpc3BsYXkiOiJbe1widGl0bGVcIjpcIkFyY2hhaWMgTW9ub2dyYW1cIixcImRvY3VtZW50X2lkXCI6XCIzOThlN2IzMC0xY2FjLTQ1MzEtYTNmNi05NWMyOTk3MzI0YTRcIn0se1widGl0bGVcIjpcIlBob2VuaWNpYW4gTGV0dGVyXCIsXCJkb2N1bWVudF9pZFwiOlwiYjUxOTllM2YtOTI3MS00ZTgyLTg3NzktNjRkM2VmOTExMTg5XCJ9XSIsImhhc2hlZF9pZF9zIjpbImY0OGMwMDA2Mzg1MmYzYWYiXSwiX3ZlcnNpb25fIjoxNjY2NTEwMTMyNjI2ODQ5NzkyLCJ0aW1lc3RhbXAiOiIyMDIwLTA1LTEyVDE4OjI1OjExLjUxOFoifQ==
     http_version: null
   recorded_at: Wed, 13 May 2020 15:13:55 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/9222024/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 307210bf-4a98-42bf-8dc6-3968ce73ac00
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"8fffe4d42f11b813b825bf9f7f5e333c"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.015742'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjkyMjIwMjQiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIlBpZXRyenlrLCBMZXNsaWUsIDE5NjEtIl0sImF1dGhvcl9jaXRhdGlvbl9kaXNwbGF5IjpbIlBpZXRyenlrLCBMZXNsaWUiXSwiYXV0aG9yX3JvbGVzXzFkaXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXSxcInRyYW5zbGF0b3JzXCI6W10sXCJlZGl0b3JzXCI6W10sXCJjb21waWxlcnNcIjpbXSxcInByaW1hcnlfYXV0aG9yXCI6XCJQaWV0cnp5aywgTGVzbGllXCJ9IiwiYXV0aG9yX3MiOlsiUGlldHJ6eWssIExlc2xpZSwgMTk2MS0iXSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInVuaWZvcm1fdGl0bGVfcyI6WyJTaG9ydCBzdG9yaWVzLiBTZWxlY3Rpb25zIl0sInRpdGxlX2Rpc3BsYXkiOiJUaGlzIGFuZ2VsIG9uIG15IGNoZXN0IDogc3RvcmllcyAvIExlc2xpZSBQaWV0cnp5ay4iLCJ0aXRsZV90IjpbIlRoaXMgYW5nZWwgb24gbXkgY2hlc3QgOiBzdG9yaWVzIC8gTGVzbGllIFBpZXRyenlrLiJdLCJ0aXRsZV9jaXRhdGlvbl9kaXNwbGF5IjpbIlRoaXMgYW5nZWwgb24gbXkgY2hlc3QgOiBzdG9yaWVzIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJUaGlzIGFuZ2VsIG9uIG15IGNoZXN0IDogc3RvcmllcyAvIExlc2xpZSBQaWV0cnp5ay4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJQaXR0c2J1cmdoLCBQQSA6IFVuaXZlcnNpdHkgb2YgUGl0dHNidXJnaCBQcmVzcywgWzIwMTVdIl0sInB1Yl9jcmVhdGVkX3MiOlsiUGl0dHNidXJnaCwgUEEgOiBVbml2ZXJzaXR5IG9mIFBpdHRzYnVyZ2ggUHJlc3MsIFsyMDE1XSJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJQaXR0c2J1cmdoLCBQQTogVW5pdmVyc2l0eSBvZiBQaXR0c2J1cmdoIFByZXNzIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMjAxNSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE1LCJjYXRhbG9nZWRfdGR0IjoiMjAxNS0xMS0yM1QxMzozMjoxM1oiLCJmb3JtYXQiOlsiQm9vayJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjIxNiBwYWdlcyA7IDIyIGNtIl0sImRlc2NyaXB0aW9uX3QiOlsiMjE2IHBhZ2VzIDsgMjIgY20iXSwibnVtYmVyX29mX3BhZ2VzX2NpdGF0aW9uX2Rpc3BsYXkiOlsiMjE2IHBhZ2VzIl0sInN1bW1hcnlfbm90ZV9kaXNwbGF5IjpbIlRoaXMgQW5nZWwgb24gTXkgQ2hlc3QgaXMgYSBjb2xsZWN0aW9uIG9mIHVuY29udmVudGlvbmFsbHkgbGlua2VkIHN0b3JpZXMsIGVhY2ggYWJvdXQgYSBkaWZmZXJlbnQgeW91bmcgd29tYW4gd2hvc2UgaHVzYmFuZCBkaWVzIHN1ZGRlbmx5IGFuZCB1bmV4cGVjdGVkbHkuIl0sIm5vdGVzX2Rpc3BsYXkiOlsiXCJEcnVlIEhlaW56IExpdGVyYXR1cmUgUHJpemVcIiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJlbmciXSwibGFuZ3VhZ2VfaWFuYV9zIjpbImVuIl0sImNvbnRlbnRzX2Rpc3BsYXkiOlsiVGVuIHRoaW5ncyAtLSBBY3F1aWVzY2VuY2UgLS0gQSBxdWl6IC0tIEhlYXQgLS0gSW4gYSBkcmVhbSAtLSBPbmUgYXJ0IC0tIERvIHlvdSBiZWxpZXZlIGluIGdob3N0cz8gLS0gU2x1dCAtLSBJIGFtIHRoZSB3aWRvdyAtLSBPbmUgdHJ1ZSB0aGluZyAtLSBTb21lb25lIGluIE5lYnJhc2thIC0tIFdoYXQgSSBjb3VsZCBidXkgLS0gVHJ1dGgtdGVsbGluZyBmb3IgYWR1bHRzIC0tIENoYXB0ZXIgdGVuOiBhbiBpbmRleCBvZiBmb29kIChkcmFmdCkgLS0gVGhlIGNpcmNsZSAtLSBQcmVzZW50IHRlbnNlLiJdLCJsY19zdWJqZWN0X2Rpc3BsYXkiOlsiU3VkZGVuIGRlYXRo4oCURmljdGlvbiIsIkxvc3MgKFBzeWNob2xvZ3kp4oCURmljdGlvbiIsIkdyaWVm4oCURmljdGlvbiJdLCJzdWJqZWN0X2ZhY2V0IjpbIlN1ZGRlbiBkZWF0aOKAlEZpY3Rpb24iLCJMb3NzIChQc3ljaG9sb2d5KeKAlEZpY3Rpb24iLCJHcmllZuKAlEZpY3Rpb24iXSwiaXNibl9kaXNwbGF5IjpbIjk3ODA4MjI5NDQ0MjMgKGhhcmRjb3ZlciA6IGFsay4gcGFwZXIpIiwiMDgyMjk0NDQyMSAoaGFyZGNvdmVyIDogYWxrLiBwYXBlcikiXSwibGNjbl9kaXNwbGF5IjpbIiAgMjAxNTAyNTM2NiJdLCJsY2NuX3MiOlsiMjAxNTAyNTM2NiJdLCJpc2JuX3MiOlsiOTc4MDgyMjk0NDQyMyJdLCJvY2xjX3MiOlsiOTEwMzM0NDQzIl0sIm90aGVyX3ZlcnNpb25fcyI6WyJvY245MTAzMzQ0NDMiLCI5NzgwODIyOTQ0NDIzIl0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wiOTA5MjgyN1wiOntcImxvY2F0aW9uXCI6XCJGaXJlc3RvbmUgTGlicmFyeVwiLFwibGlicmFyeVwiOlwiRmlyZXN0b25lIExpYnJhcnlcIixcImxvY2F0aW9uX2NvZGVcIjpcImZcIixcImNhbGxfbnVtYmVyXCI6XCJQUzM1NjYuSTQyOCBBNiAyMDE1XCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIlBTMzU2Ni5JNDI4IEE2IDIwMTVcIn19IiwibG9jYXRpb25fY29kZV9zIjpbImYiXSwibG9jYXRpb24iOlsiRmlyZXN0b25lIExpYnJhcnkiXSwibG9jYXRpb25fZGlzcGxheSI6WyJGaXJlc3RvbmUgTGlicmFyeSJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbImYiLCJGaXJlc3RvbmUgTGlicmFyeSJdLCJuYW1lX3VuaWZvcm1fdGl0bGVfMWRpc3BsYXkiOiJbW1wiUGlldHJ6eWssIExlc2xpZSwgMTk2MS0uXCIsXCJTaG9ydCBzdG9yaWVzLlwiLFwiU2VsZWN0aW9uc1wiXV0iLCJuYW1lX3RpdGxlX2Jyb3dzZV9zIjpbIlBpZXRyenlrLCBMZXNsaWUsIDE5NjEtLiBTaG9ydCBzdG9yaWVzIiwiUGlldHJ6eWssIExlc2xpZSwgMTk2MS0uIFNob3J0IHN0b3JpZXMuIFNlbGVjdGlvbnMiXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJQUzM1NjYuSTQyOCBBNiAyMDE1Il0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIlBTMzU2Ni5JNDI4IEE2IDIwMTUiXSwiX3ZlcnNpb25fIjoxNjYyMDExMzI1MjE2MTk0NTYwLCJ0aW1lc3RhbXAiOiIyMDIwLTAzLTI0VDAyOjM4OjM0LjAyNVoifQ==
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:12 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=9222024
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"197995b692ad75c2244bdf11e0206c10"
+      X-Runtime:
+      - '0.116347'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - c75f3afb-9e40-4194-a007-d61a265545e0
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '{"9092827":{"more_items":false,"location":"f","copy_number":1,"item_id":7267874,"on_reserve":"N","status":"Not
+        Charged","label":"Firestone Library"}}'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:13 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9092827
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"6b4b39da0e868eb7a6453ca5282ffa36"
+      X-Runtime:
+      - '0.063395'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 50ec7be5-f4b5-4a82-a843-01f47b3c08b7
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101096297443","id":7267874,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","label":"Firestone Library"}]'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:13 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/3848872/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 5fe0a265-d37f-400b-b951-8e5fce3e6066
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"e2ac0e5a1a2ffce4ed48f0bebc6d2d89"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.043726'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '{"id":"3848872","numeric_id_b":true,"author_display":["Ryden, Barbara
+        Sue"],"author_citation_display":["Ryden, Barbara Sue"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Ryden,
+        Barbara Sue\"}","author_s":["Ryden, Barbara Sue"],"marc_relator_display":["Author"],"title_display":"Introduction
+        to cosmology / Barbara Ryden.","title_t":["Introduction to cosmology / Barbara
+        Ryden."],"title_citation_display":["Introduction to cosmology"],"compiled_created_t":["Introduction
+        to cosmology / Barbara Ryden."],"pub_created_display":["San Francisco : Addison-Wesley,
+        c2003."],"pub_created_s":["San Francisco : Addison-Wesley, c2003."],"pub_citation_display":["San
+        Francisco: Addison-Wesley"],"pub_date_display":["2003"],"pub_date_start_sort":2003,"cataloged_tdt":"2003-04-07T17:52:04Z","format":["Book"],"description_display":["ix,
+        244 p. : ill. ; 24 cm."],"description_t":["ix, 244 p. : ill. ; 24 cm."],"number_of_pages_citation_display":["ix,
+        244 p."],"bib_ref_notes_display":["Includes bibliographical references (p.
+        [235]-237) and index."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"lc_subject_display":["Cosmology"],"subject_facet":["Cosmology"],"isbn_display":["0805389121
+        (hardcover)"],"lccn_display":["  2002013176"],"lccn_s":["2002013176"],"isbn_s":["9780805389128"],"oclc_s":["50478401"],"other_version_s":["9780805389128","ocm50478401"],"holdings_1display":"{\"4151880\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"call_number\":\"QB981
+        .R93 2003\",\"call_number_browse\":\"QB981 .R93 2003\"},\"4364328\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"copy_number\":\"2\",\"call_number\":\"QB981
+        .R93 2003\",\"call_number_browse\":\"QB981 .R93 2003\"},\"6153968\":{\"location\":\"Lewis
+        Library\",\"library\":\"Lewis Library\",\"location_code\":\"sci\",\"copy_number\":\"5\",\"call_number\":\"QB981
+        .R93 2003\",\"call_number_browse\":\"QB981 .R93 2003\"}}","location_code_s":["sci"],"location":["Lewis
+        Library"],"location_display":["Lewis Library"],"advanced_location_s":["sci","Lewis
+        Library"],"name_title_browse_s":["Ryden, Barbara Sue. Introduction to cosmology"],"call_number_display":["QB981
+        .R93 2003"],"call_number_browse_s":["QB981 .R93 2003"],"_version_":1661991947086069760,"timestamp":"2020-03-23T21:30:34.008Z"}'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:14 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=3848872
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"00101d6ed86acb2eab95b88053bf8ef9"
+      X-Runtime:
+      - '0.223810'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 459638b2-63ba-4eac-bc2f-0cf239b9c9f7
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '{"4151880":{"more_items":false,"location":"sci","copy_number":1,"item_id":3399747,"on_reserve":"N","due_date":"6/15/2020","status":"Renewed","label":"Lewis
+        Library"},"4364328":{"more_items":false,"location":"sci","copy_number":2,"item_id":3636476,"on_reserve":"N","status":"Not
+        Charged","label":"Lewis Library"},"6153968":{"more_items":false,"location":"sci","copy_number":3,"item_id":5747528,"on_reserve":"N","status":"Not
+        Charged","label":"Lewis Library"}}'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:14 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4151880
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"0c1d68994d93dc748f5bb3d5721400b2"
+      X-Runtime:
+      - '0.060099'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 0c1720c1-f564-407c-adba-d04a1635bb85
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101048628455","id":3399747,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Renewed","on_reserve":"N","due_date":"6/15/2020","label":"Lewis
+        Library"}]'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:15 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=4364328
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"70c867d2cc2cfad65d4783354930d99c"
+      X-Runtime:
+      - '0.061872'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 8f86d10c-3b0d-4a20-be10-3fb2456780ea
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101050539475","id":3636476,"location":"sci","copy_number":2,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","label":"Lewis Library"}]'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:15 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6153968
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"a9caeb2e1e71d1ee55e841a62daa1ae4"
+      X-Runtime:
+      - '0.055846'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - b87534fb-5cd4-4337-b71d-0e7ac8c0ba21
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101078062997","id":5747528,"location":"sci","copy_number":3,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","label":"Lewis Library"}]'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:15 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/491654/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 729b1f38-f665-4e57-8b4d-7825583c3024
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"6e9dd9a202cbe4fbacba708f1b132dd6"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.014003'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjQ5MTY1NCIsIm51bWVyaWNfaWRfYiI6dHJ1ZSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiVW5pdGVkIFN0YXRlcyJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltcIlVuaXRlZCBTdGF0ZXNcIl0sXCJ0cmFuc2xhdG9yc1wiOltdLFwiZWRpdG9yc1wiOltdLFwiY29tcGlsZXJzXCI6W119IiwiYXV0aG9yX3MiOlsiVW5pdGVkIFN0YXRlcy4gQnVyZWF1IG9mIHRoZSBDZW5zdXMiXSwidGl0bGVfZGlzcGxheSI6IkNvdW50eSBhbmQgY2l0eSBkYXRhIGJvb2suIiwidGl0bGVfdCI6WyJDb3VudHkgYW5kIGNpdHkgZGF0YSBib29rLiJdLCJ0aXRsZV9jaXRhdGlvbl9kaXNwbGF5IjpbIkNvdW50eSBhbmQgY2l0eSBkYXRhIGJvb2siXSwiY29tcGlsZWRfY3JlYXRlZF90IjpbIkNvdW50eSBhbmQgY2l0eSBkYXRhIGJvb2suIl0sInB1Yl9jcmVhdGVkX2Rpc3BsYXkiOlsiW1dhc2hpbmd0b24sIEQuQy5dIDogVS5TLiBEZXB0LiBvZiBDb21tZXJjZSwgQnVyZWF1IG9mIHRoZSBDZW5zdXMgOiBbRm9yIHNhbGUgYnkgdGhlIFN1cHQuIG9mIERvY3MuLCBVLlMuIEcuUC5PLl0sIDE5NTItMjAwNyJdLCJwdWJfY3JlYXRlZF9zIjpbIltXYXNoaW5ndG9uLCBELkMuXSA6IFUuUy4gRGVwdC4gb2YgQ29tbWVyY2UsIEJ1cmVhdSBvZiB0aGUgQ2Vuc3VzIDogW0ZvciBzYWxlIGJ5IHRoZSBTdXB0LiBvZiBEb2NzLiwgVS5TLiBHLlAuTy5dLCAxOTUyLSJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJXYXNoaW5ndG9uLCBELkMuOiBGb3Igc2FsZSBieSB0aGUgU3VwdC4gb2YgRG9jcy4sIFUuUy4gRy5QLk8uIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMTk0OSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoxOTQ5LCJwdWJfZGF0ZV9lbmRfc29ydCI6MjAwNywiY2F0YWxvZ2VkX3RkdCI6IjIwMDItMDQtMjJUMTU6MTU6MjRaIiwiZm9ybWF0IjpbIkpvdXJuYWwiXSwiZWxlY3Ryb25pY19hY2Nlc3NfMWRpc3BsYXkiOiJ7XCJodHRwOi8vcHVybC5hY2Nlc3MuZ3BvLmdvdi9HUE8vTFBTMjk5MzJcIjpbXCJwdXJsLmFjY2Vzcy5ncG8uZ292XCJdfSIsImRlc2NyaXB0aW9uX2Rpc3BsYXkiOlsidi4gOiBpbGwuIDsgMjkgY20uIiwiWzFzdCBlZC5dICgxOTQ5KS0xNHRoIGVkLiAoMjAwNykuIl0sImRlc2NyaXB0aW9uX3QiOlsidi4gOiBpbGwuIDsgMjkgY20uIiwiWzFzdCBlZC5dICgxOTQ5KS0xNHRoIGVkLiAoMjAwNykuIl0sIm51bWJlcl9vZl9wYWdlc19jaXRhdGlvbl9kaXNwbGF5IjpbInYuIl0sImdlb2NvZGVfZGlzcGxheSI6WyJVbml0ZWQgU3RhdGVzIl0sImZyZXF1ZW5jeV9kaXNwbGF5IjpbIklycmVndWxhciJdLCJsaW5raW5nX25vdGVzX2Rpc3BsYXkiOlsiQ29udGludWVzIGluIHBhcnQ6IENpdGllcyBzdXBwbGVtZW50LCBhbmQgYWxzbyBjb250aW51ZXMgaW4gcGFydDogQ291bnR5IGRhdGFib29rLiJdLCJub3Rlc19kaXNwbGF5IjpbIlwiQSBzdGF0aXN0aWNhbCBhYnN0cmFjdCBzdXBwbGVtZW50LlwiIl0sImxhbmd1YWdlX2ZhY2V0IjpbIkVuZ2xpc2giXSwibGFuZ3VhZ2VfY29kZV9zIjpbImVuZyJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiZW4iXSwib3RoZXJfZm9ybWF0X2Rpc3BsYXkiOlsiQWxzbyBpc3N1ZWQgb24gQ0QtUk9NIHdpdGggdGl0bGU6IENvdW50eSBcdTAwMjYgY2l0eSBkYXRhIGJvb2suIiwiQWxzbyBhdmFpbGFibGUgdmlhIEludGVybmV0IGZyb20gdGhlIENlbnN1cyBCdXJlYXUgd2ViIHNpdGUuIEFkZHJlc3MgYXMgb2YgNi8xMy8wMzogaHR0cDovL3d3dy5jZW5zdXMuZ292IC9zdGF0YWIvd3d3L2NjZGIuaHRtbDsgY3VycmVudCBhY2Nlc3MgaXMgYXZhaWxhYmxlIHZpYSBQVVJMLiJdLCJsY19zdWJqZWN0X2Rpc3BsYXkiOlsiQ2l0aWVzIGFuZCB0b3duc+KAlFVuaXRlZCBTdGF0ZXPigJRTdGF0aXN0aWNz4oCUUGVyaW9kaWNhbHMiLCJVbml0ZWQgU3RhdGVz4oCUU3RhdGlzdGljc+KAlFBlcmlvZGljYWxzIl0sInN1YmplY3RfZmFjZXQiOlsiQ2l0aWVzIGFuZCB0b3duc+KAlFVuaXRlZCBTdGF0ZXPigJRTdGF0aXN0aWNz4oCUUGVyaW9kaWNhbHMiLCJVbml0ZWQgU3RhdGVz4oCUU3RhdGlzdGljc+KAlFBlcmlvZGljYWxzIl0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNwbGF5Ijoie1wiUmVsYXRlZCBuYW1lXCI6W1wiVW5pdGVkIFN0YXRlcy4gQnVyZWF1IG9mIHRoZSBDZW5zdXNcIl19Iiwib3RoZXJfdGl0bGVfZGlzcGxheSI6WyJDdHkuIGNpdHkgZGF0YSBib29rIiwiQ291bnR5IGFuZCBjaXR5IGRhdGEgYm9vayIsIlN0YXRpc3RpY2FsIGFic3RyYWN0IG9mIHRoZSBVbml0ZWQgU3RhdGVzLiJdLCJpc3NuX2Rpc3BsYXkiOlsiMDA4Mi05NDU1Il0sInN1ZG9jX25vX2Rpc3BsYXkiOlsiQyA1Ni4yNDMvMjpDIDgzLyIsIkMgMy4xMzQvMjpDIDgzLzIvIl0sImxjY25fZGlzcGxheSI6WyIgICA1MjAwNDU3NiAvL3I4NCAiXSwibGNjbl9zIjpbIjUyMDA0NTc2Il0sImlzc25fcyI6WyIwMDgyOTQ1NSJdLCJvY2xjX3MiOlsiMTE4NDk0MCJdLCJvdGhlcl92ZXJzaW9uX3MiOlsiMDA4Mjk0NTUiLCJvY20wMTE4NDk0MCJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjUzNDEzN1wiOntcImxvY2F0aW9uXCI6XCJSZUNBUFwiLFwibGlicmFyeVwiOlwiUmVDQVBcIixcImxvY2F0aW9uX2NvZGVcIjpcInJjcHBhXCIsXCJjb3B5X251bWJlclwiOlwiMVwiLFwiY2FsbF9udW1iZXJcIjpcIkhBMjAyIC5VNTgxXCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIkhBMjAyIC5VNTgxXCIsXCJsb2NhdGlvbl9oYXNcIjpbXCIxOTQ3LCAxOTQ5LCAxOTUyLCAxOTU2LCAxOTYyLCAxOTY3LCAxOTcyLCAxOTc3LCAxOTgzLCAxOTg4LCAxOTk0LCAyMDAwLCAyMDA3XCIsXCJDVVJSRU5UIFZPTFVNRSBJTjogVHJ1c3RlZSBSZWFkaW5nIFJvb20gUmVmZXJlbmNlIChEUikgUmVhZHkgUmVmZXJlbmNlLiBGaXJlc3RvbmVcIl19LFwiNTM0MTQwXCI6e1wibG9jYXRpb25cIjpcIkxld2lzIExpYnJhcnlcIixcImxpYnJhcnlcIjpcIkxld2lzIExpYnJhcnlcIixcImxvY2F0aW9uX2NvZGVcIjpcInNjaVwiLFwiY29weV9udW1iZXJcIjpcIjFcIixcImNhbGxfbnVtYmVyXCI6XCJIQTIwMiAuQTM2XCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIkhBMjAyIC5BMzZcIixcImxvY2F0aW9uX2hhc1wiOltcIjE5NjdcIl19fSIsImxvY2F0aW9uX2NvZGVfcyI6WyJyY3BwYSIsInNjaSJdLCJsb2NhdGlvbiI6WyJSZUNBUCIsIkxld2lzIExpYnJhcnkiXSwibG9jYXRpb25fZGlzcGxheSI6WyJSZUNBUCIsIkxld2lzIExpYnJhcnkiXSwiYWR2YW5jZWRfbG9jYXRpb25fcyI6WyJyY3BwYSIsInNjaSIsIlJlQ0FQIiwiTGV3aXMgTGlicmFyeSJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIkhBMjAyIC5VNTgxIiwiSEEyMDIgLkEzNiJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJIQTIwMiAuVTU4MSIsIkhBMjAyIC5BMzYiXSwiX3ZlcnNpb25fIjoxNjYxOTc2MzY3NzMxODM0ODgwLCJ0aW1lc3RhbXAiOiIyMDIwLTAzLTIzVDE3OjIyOjU2LjM2NVoifQ==
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:16 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=534140
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.17.9
+      Date:
+      - Tue, 26 May 2020 12:49:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"63182e27f02bb3aabe772b5b745a1339"
+      X-Runtime:
+      - '0.060791'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - e735d642-3902-4a9d-bf04-92065efa55fd
+      X-Powered-By:
+      - Phusion Passenger 6.0.4
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101016113563","id":3826440,"location":"sci","copy_number":1,"item_sequence_number":0,"status":"Not
+        Charged","on_reserve":"N","label":"Lewis Library"}]'
+    http_version: null
+  recorded_at: Tue, 26 May 2020 12:49:16 GMT
 recorded_with: VCR 5.1.0

@@ -42,7 +42,6 @@ module Requests
         ['online']
       elsif requestable.voyager_managed? || requestable.scsb?
         calculate_voyager_or_scsb_services
-        # ['ask_me']
       else # Default Service is Aeon
         ['aeon']
       end

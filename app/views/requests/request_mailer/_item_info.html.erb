@@ -1,0 +1,23 @@
+<h2 style="margin-bottom: 18px;font-weight:normal;font-size:16px;">Items Requested</h2>
+
+<table style="width: 100%;">
+<% @submission.items.each_with_index do |item, index| %>
+  <tr>
+    <% unless item[:selected].empty? %>
+      <% recalled = (item[:type] == "recall") ? true : false %></td>
+      <td class="items-column" style="border: 1px solid #ccc; padding: 18px;">
+      Item <%= index+1 %>
+        <% item.each do |key, value| %>
+          <% unless key == "selected" || value.empty? %>
+          <dl style="width:33%;float:left;">
+            <dt style="font-weight:normal;font-size:12px;"><%= format_label(key) %></dt> 
+            <dd><% if key == "pickup" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %><%= value.html_safe %></dd>
+          </dl>
+    
+        <% end %>
+      <% end %></td>
+    <% end %>
+  </tr>
+<% end %>
+
+</table>

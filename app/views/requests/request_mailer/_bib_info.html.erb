@@ -1,0 +1,23 @@
+<% def format_label(key)
+    label = key.to_s
+    human_label = label.tr('_', ' ')
+    formatted = human_label.split.map(&:capitalize).join(' ')
+    formatted
+  end
+  def display_label
+    {
+      author: "Author/Artist",
+      title: "Title",
+      date: "Published/Created",
+      id: "Bibliographic ID",
+      mfhd: "Holding ID (mfhd)"
+    }.with_indifferent_access
+  end
+%>
+
+<dl style="padding-top: 9px;">
+<% @submission.bib.each do |key, value| %>
+  <dt style="font-weight:normal;font-size:12px;"><%= format_label(display_label[key]) %></dt> 
+  <dd style="font-size:20px;"><%= value %></dd>
+<% end %>
+</dl>

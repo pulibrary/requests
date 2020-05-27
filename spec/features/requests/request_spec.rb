@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
   # rubocop:disable RSpec/MultipleExpectations
-  pending 'temporary for issue 452' do
+  describe "request form" do
     let(:voyager_id) { '9493318' }
     let(:online_id) { '11169709' }
     let(:thesis_id) { 'dsp01rr1720547' }
@@ -144,9 +144,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Item is not requestable.'
         end
 
+        # TODO: Activate test when campus has re-opened
         it 'allows guests to request from Annex, but not from Firestone in mixed holding' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/2286894'
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -191,8 +193,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
 
       describe 'When visiting a voyager ID as a CAS User' do
-        # TODO: Activate test when campus has re-opened
-        xit 'allow CAS patrons to request an available ReCAP item.' do
+        it 'allow CAS patrons to request an available ReCAP item.' do
           stub_request(:post, Requests.config[:scsb_base])
             .with(headers: { 'Accept' => '*/*' })
             .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
@@ -261,6 +262,20 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'displays an ark link for a plum item' do
           visit "/requests/#{iiif_manifest_item}"
           expect(page).to have_link('Digital content', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
+        end
+
+        let(:good_response) { fixture('/scsb_request_item_response.json') }
+        it 'allows patrons to request a physical recap item' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/9944355'
+          expect(page).to have_content 'Electronic Delivery'
+          # temporary change issue 438
+          # select('Firestone Library', from: 'requestable__pickup')
+          choose('requestable__delivery_mode_7467161_edd') # chooses 'edd' radio button
+          fill_in "Article/Chapter Title", with: "ABC"
+          click_button 'Request this Item'
+          expect(page).to have_content 'Request submitted'
         end
       end
     end

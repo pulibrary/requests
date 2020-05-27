@@ -93,7 +93,7 @@ module Requests
 
         services = []
         # No physical recap delivery during campus closure
-        # services = ['recap']
+        services = ['recap']
         services << 'recap_edd' if requestable.recap_edd? && auth_user?
         services
       end

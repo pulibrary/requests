@@ -35,7 +35,6 @@ module Requests
 
       def validate_recall_or_bd(record, selected, pickup_phrase: 'your selected recall item', action_phrase: 'Recalled')
         return unless validate_item_id(record: record, selected: selected, action_phrase: action_phrase)
-
         item_id = selected['item_id']
         return unless selected['pickup'].blank?
 

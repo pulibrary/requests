@@ -1,12 +1,14 @@
 <% if requestable.ask_me? || requestable.item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
 <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
-    <!-- td class='request--select'>
-      <%#= hidden_field_tag 'requestable[][selected]', false %>
-      <%#= item_checkbox @request.requestable, requestable %>
-      <%# if requestable.item_data? %>
-        <%#= hidden_fields_item requestable %>
-      <%# end %>
-    </td-->
+    <td class='request--select'>
+      <%= hidden_field_tag 'requestable[][selected]', false %>
+      <%= item_checkbox @request.requestable, requestable %>
+      <% if requestable.item_data? %>
+        <%= hidden_fields_item requestable %>
+      <% else %>
+         <%= hidden_fields_for_requestable requestable: requestable %>
+      <% end %>
+    </td>
     <td>
       <% if requestable.item_data? || requestable.scsb? %>
         <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
@@ -14,7 +16,7 @@
         </span>
       <% end %>
     </td>
-    <!-- td>
+    <td>
       <% if requestable.item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
         <%= system_status_label requestable %>
         <%= status_label requestable %>
@@ -23,7 +25,7 @@
         <br/>
         <%= requestable.item[:use_statement] %>
       <% end %>
-    </td -->
+    </td>
   <td class='request--options' aria-live="polite">
     <% if requestable.ill_eligible? %>
       <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx) %>"></span>
@@ -48,10 +50,13 @@
     <% end %>
     <% if requestable.services.include?('recap_edd') %>
         <%= hidden_field_tag "requestable[][type]", "recap" %>
-        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
+        <%= radio_button_tag "requestable[][  #{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
         <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
         <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+    <% end %>
+    <% if requestable.on_shelf? %>
+      <%= hidden_field_tag "requestable[][type]", "on_shelf" %>
     <% end %>
   </td>
 </tr>

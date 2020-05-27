@@ -1,0 +1,35 @@
+<% # temporary changes issue 438 %>
+<tr>
+  <td colspan="2">
+    <h1 style="margin: 0; padding: 18px; font-size: 16px; background-color: rgb(245, 245, 245);"><%= I18n.t('requests.on_shelf.email_subject') %> <span style="float:right;text-transform: uppercase;"><%= @submission.items.first["location_code"] %> - <%= @submission.items.first["call_number"]%></span></h1>
+  </td>
+</tr>
+
+<tr>
+  <td style="padding: 18px;">
+    <span style="font-size: 25px; font-weight:bold;"><span style="font-size:12px;display:block;font-weight:normal;">Request For</span><%= @submission.user["user_last_name"] %></span>
+  </td>
+  <td style="padding: 18px;text-align:right;">
+    <span style="font-size: 25px; font-weight:bold;"><span style="font-size:12px;display:block;font-weight:normal;">Hold Expiration Date</span><%= (DateTime.now + 7).strftime("%m/%d/%Y") %></span>
+  </td>
+</tr>
+
+<tr style="border-bottom: 2px dashed #ccc;">
+  <td colspan="2" style="padding: 18px;">
+    <%= render 'patron_info' %>
+  </td>
+</tr>
+
+<tr>
+  <td colspan="2" style="padding: 18px;">
+    <%= render 'bib_info' %>
+  </td>
+</tr>
+
+<tr>
+  <td colspan="2" style="padding: 0 18px;">
+    <%= render 'item_info' %>
+  </td>
+</tr>
+
+<tr><td colspan="2" style="padding:18px;font-size:12px;"><p><%= I18n.t('requests.on_shelf.email_conf_msg') %></p></td></tr>

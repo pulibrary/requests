@@ -399,7 +399,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.on_order.email_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.on_order.email_conf_msg')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.on_order.email_conf_msg')
     end
   end
 
@@ -449,7 +450,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.on_order.patron_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.on_order.patron_conf_msg')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.on_order.patron_conf_msg')
     end
   end
 
@@ -673,7 +675,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.recap.email_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
     end
   end
 
@@ -737,7 +740,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.recap_guest.email_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
     end
   end
 
@@ -1126,7 +1130,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(mail.to).to eq(["gestcirc@princeton.edu"])
       expect(mail.cc).to eq([I18n.t('requests.on_shelf.email')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')
     end
 
     it "sends the confirmation email and renders the headers and body" do
@@ -1134,7 +1139,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
       expect(mail.to).to eq([submission_for_on_shelf.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')
     end
     # rubocop:enable RSpec/ExampleLength
   end

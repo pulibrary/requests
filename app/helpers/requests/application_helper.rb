@@ -396,11 +396,11 @@ module Requests
 
     def display_label
       {
-        author: "Author/Artist:",
-        title: "Title:",
-        date: "Published/Created:",
-        id: "Bibliographic ID:",
-        mfhd: "Holding ID (mfhd):"
+        author: "Author/Artist",
+        title: "Title",
+        date: "Published/Created",
+        id: "Bibliographic ID",
+        mfhd: "Holding ID (mfhd)"
       }.with_indifferent_access
     end
 

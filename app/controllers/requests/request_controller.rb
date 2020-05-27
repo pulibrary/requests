@@ -57,11 +57,11 @@ module Requests
       @submission = Requests::Submission.new(sanitize_submission(params))
       respond_to do |format|
         format.js do
-          @services = @submission.process_submission if @submission.valid?
-          service_errors = @submission.service_errors
-          if @submission.valid? && service_errors.blank?
+          valid = @submission.valid?
+          @services = @submission.process_submission if valid
+          if valid && @submission.service_errors.blank?
             respond_to_submit_success(@submission)
-          elsif @submission.valid? # submission was valid, but service failed
+          elsif valid # submission was valid, but service failed
             respond_to_service_error(@services)
           else
             respond_to_validation_error(@submission)
@@ -164,7 +164,8 @@ module Requests
 
       def respond_to_submit_success(submission)
         flash.now[:success] = submission.success_messages.join(' ')
-        logger.info "#Request Submission - #{submission.as_json}"
+        # TODO: Why does this go into an infinite loop
+        # logger.info "#Request Submission - #{submission.as_json}"
         logger.info "Request Sent"
         return if submission.service_types.include? 'bd' # emails already sent
         submission.service_types.each do |type|

@@ -26,8 +26,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it "displays three authentication options" do
           visit '/requests/9944355'
           expect(page).to have_content(I18n.t('requests.account.netid_login_msg'))
-          expect(page).to have_content(I18n.t('requests.account.barcode_login_msg'))
-          expect(page).to have_content(I18n.t('requests.account.other_user_login_msg'))
+          expect(page).not_to have_content(I18n.t('requests.account.barcode_login_msg'))
+          expect(page).not_to have_content(I18n.t('requests.account.other_user_login_msg'))
         end
       end
     end

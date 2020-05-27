@@ -71,6 +71,8 @@ module Requests
       # temporary #348
       elsif requestable.services.include? 'on_shelf'
         request_input('on_shelf')
+      else
+        request_input(requestable.services.first)
       end
     end
 
@@ -82,6 +84,7 @@ module Requests
         request_input(type)
         break
       end
+      found
     end
 
     # only requestable services that support "user-supplied volume info"

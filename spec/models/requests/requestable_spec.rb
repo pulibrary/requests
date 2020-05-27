@@ -425,7 +425,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '# offsite requestable' do
       # TODO: Remove when campus has re-opened
       it "does not have recap request service available during campus closure" do
-        expect(requestable.services.include?('recap')).to be false
+        expect(requestable.services.include?('recap')).to be true
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
@@ -534,7 +534,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#requestable' do
       # TODO: Remove when campus has re-opened
       it "does not have recap request service available during campus closure" do
-        expect(requestable.services.include?('recap')).to be false
+        expect(requestable.services.include?('recap')).to be true
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
@@ -604,7 +604,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#recap requestable' do
       # TODO: Remove when campus has re-opened
       it "does not have recap request service available during campus closure" do
-        expect(requestable.services.include?('recap')).to be false
+        expect(requestable.services.include?('recap')).to be true
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
@@ -686,6 +686,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'has a single pickup location' do
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PJ')
+        expect(requestable.item["use_statement"]).to eq('In Library Use')
       end
     end
   end

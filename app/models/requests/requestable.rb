@@ -225,6 +225,11 @@ module Requests
       end
     end
 
+    def scsb_in_library_use?
+      return false unless item?
+      scsb? && item[:use_statement] == "In Library Use"
+    end
+
     def barcode?
       return false unless item?
       /^[0-9]+/.match(barcode).present?

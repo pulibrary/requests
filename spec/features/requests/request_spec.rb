@@ -84,7 +84,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_no_content 'Electronic Delivery'
-          expect(page).to have_content 'Item is not requestable'
+          # expect(page).to have_content 'Item is not requestable'
         end
 
         # TODO: Activate test when campus has re-opened

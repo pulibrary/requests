@@ -62,7 +62,7 @@ module Requests
     end
 
     def hidden_service_options(requestable)
-      return if output_request_input(requestable)
+      #return if output_request_input(requestable)
 
       if requestable.services.include?('recap_edd') && requestable.services.include?('recap')
         recap_radio_button_group requestable

@@ -6,6 +6,8 @@
     <%= render partial: 'auth_user_lookup_fail' %>
 <% elsif !@user.guest && @patron['barcode'].blank? %>
     <%= render partial: 'cas_user_no_barcode' %>
+<% elsif @user.can_pickup? %>
+    <%= render partial: 'request_form' %>
 <% else %>
-    <%= render partial: 'request_form'%>
+  <a class='btn btn-primary btn-lg' href='<%= @request.requestable.first.illiad_request_url(@request.ctx) %>'>Help Me Get It</a>
 <% end %>

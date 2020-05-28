@@ -309,6 +309,17 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Help Me Get It'
           expect(page).not_to have_css '.submit--request'
         end
+
+        it 'allows patrons to request a PPL Item' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/578830'
+          expect(page).to have_content 'Pickup location: Firestone Library'
+          # temporary change issue 438
+          # select('Firestone Library', from: 'requestable__pickup')
+          click_button 'Request this Item'
+          expect(page).to have_content 'Request submitted'
+        end
       end
     end
 

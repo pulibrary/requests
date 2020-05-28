@@ -28,8 +28,18 @@ module Requests
       conn.put request_url, payload, 'X-Accept' => 'application/xml'
     end
 
+    def put_hold_request(params, payload)
+      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/hold?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}"
+      conn.put request_url, payload, 'X-Accept' => 'application/xml'
+    end
+
     def get_response(params)
       request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}&patron_group=#{params['request']['patron_group']}"
+      conn.get request_url
+    end
+
+    def get_hold_status(params)
+      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/hold?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}"
       conn.get request_url
     end
 
@@ -45,10 +55,10 @@ module Requests
       }
     end
 
-    def request_payload(item)
+    def request_payload(item, parameter_name: "recall-parameters")
       pickup = item['pickup'].split("|")
       recall_request = Nokogiri::XML::Builder.new do |xml|
-        xml.send(:"recall-parameters") do
+        xml.send(parameter_name.to_sym) do
           xml.send(:"pickup-location", pickup[0])
           xml.send(:"last-pickup-date", "20091006")
           xml.send(:"last-interest-date", recall_expiration_date)

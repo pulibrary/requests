@@ -1,22 +1,19 @@
 <% # temporary changes issue 438 %>
-<tr>
-  <td colspan="2">
-    <h1 style="margin: 0; padding: 18px; font-size: 16px; background-color: rgb(245, 245, 245);"><%= I18n.t('requests.on_shelf.email_subject') %> <span style="float:right;text-transform: uppercase;"><%= @submission.items.first["location_code"] %> - <%= @submission.items.first["call_number"]%></span></h1>
-  </td>
-</tr>
-
-<tr>
+<tr style="background-color: rgb(245, 245, 245);">
   <td style="padding: 18px;">
-    <span style="font-size: 25px; font-weight:bold;"><span style="font-size:12px;display:block;font-weight:normal;">Request For</span><%= @submission.user["user_last_name"] %></span>
+    <h1 style="margin: 0; font-size: 25px; display:block;"><%= @submission.user["user_last_name"] %>, Jane</h1>
+    <span style="font-size: 12px;"><%= @submission.user_barcode %></span>
   </td>
-  <td style="padding: 18px;text-align:right;">
-    <span style="font-size: 25px; font-weight:bold;"><span style="font-size:12px;display:block;font-weight:normal;">Hold Expiration Date</span><%= (DateTime.now + 7).strftime("%m/%d/%Y") %></span>
+  <td style="padding: 18px;">
+    <span style="float:right;font-size: 25px;font-weight:bold;"><%= (DateTime.now + 7).strftime("%m/%d/%Y") %></span>
+    <span style="float:right;font-size: 12px; display:block;">Holding Expiration Date</span>
   </td>
 </tr>
 
-<tr style="border-bottom: 2px dashed #ccc;">
-  <td colspan="2" style="padding: 18px;">
-    <%= render 'patron_info' %>
+<tr>
+  <td colspan="2" style="padding: 18px 18px 0;">
+    <span style="font-size: 12px; display:block;">Location</span>
+    <span style="font-size: 20px; font-weight:bold;text-transform: uppercase;display:block;">(<%= @submission.items.first["location_code"] %>) <%= @submission.items.first["call_number"]%></span>
   </td>
 </tr>
 

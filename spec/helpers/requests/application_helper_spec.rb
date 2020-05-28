@@ -377,63 +377,63 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "services and on_order" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: true } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: true, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_falsey
       end
     end
 
     context "services and in_process?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: true } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: true, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_falsey
       end
     end
 
     context "services and traceable?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: true } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: true, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_falsey
       end
     end
 
     context "services and recap and always requestable?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: true } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: true, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_falsey
       end
     end
 
     context "services and aeon?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: true } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: true, circulates?: true } }
       it 'does disable' do
         expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 
     context "services and charged?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: true } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: true, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 
     context "services and open? and not pageable?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: true, pageable?: false, on_shelf?: false } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: true, pageable?: false, on_shelf?: false, circulates?: true } }
       it 'does disable' do
         expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 
     context "services and always_requestable?" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false, on_shelf?: false } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: true, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false, on_shelf?: false, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_truthy
       end
     end
 
     context "services" do
-      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false, on_shelf?: false } }
+      let(:stubbed_questions) { { services: [:abc], on_reserve?: false, on_order?: false, in_process?: false, traceable?: false, always_requestable?: false, recap?: false, aeon?: false, charged?: false, open?: false, pageable?: false, on_shelf?: false, circulates?: true } }
       it 'does not disable' do
         expect(helper.check_box_disabled(requestable)).to be_falsey
       end

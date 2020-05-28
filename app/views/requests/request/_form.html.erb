@@ -9,5 +9,5 @@
 <% elsif @user.can_pickup? %>
     <%= render partial: 'request_form' %>
 <% else %>
-  <a class='btn btn-primary btn-lg' href='<%= @request.requestable.first.illiad_request_url(@request.ctx) %>'>Help Me Get It</a>
+    <%= render partial: 'help_me_get_it' %>  
 <% end %>

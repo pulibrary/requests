@@ -294,8 +294,10 @@ module Requests
     end
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def check_box_disabled(requestable)
-      if requestable.services.empty? || requestable.on_reserve?
+      if requestable.services.empty? || requestable.on_reserve? || !requestable.circulates?
         true
       elsif requestable.on_order? || requestable.in_process? || requestable.traceable? || (requestable.always_requestable? && requestable.recap?)
         false
@@ -312,6 +314,8 @@ module Requests
       end
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/PerceivedComplexity
 
     ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)

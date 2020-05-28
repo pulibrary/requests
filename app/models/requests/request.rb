@@ -143,6 +143,12 @@ module Requests
       online
     end
 
+    def any_circulating?
+      circulates = false
+      requestable.each { |item| circulates ||= item.circulates? }
+      circulates
+    end
+
     # returns nil if there are no attached items
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd

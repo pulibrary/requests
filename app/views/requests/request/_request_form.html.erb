@@ -23,7 +23,7 @@
     </div>
     <%= render partial: 'umlaut_services' %>
     <%= render partial: "requestable_list_form", collection: @request.sorted_requestable.keys, as: :mfhd, locals: { sorted_requestable: @request.sorted_requestable, holdings: @request.holdings, default_pickups: @request.default_pickups } %>
-    <% unless @request.all_items_online? %>
+    <% if !@request.all_items_online? && @request.any_circulating? %>
       <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
     <% end %>
   <% end %>

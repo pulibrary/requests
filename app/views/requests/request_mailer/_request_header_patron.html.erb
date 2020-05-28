@@ -1,0 +1,6 @@
+<h1 style="margin: 0; font-size: 25px; display:block;"><%= @submission.items.first["call_number"]%></h1>
+    <span style="font-size: 12px;">Call Number</span>
+  </td>
+  <td style="padding: 18px;">
+    <span style="float:right;font-size: 25px;font-weight:bold;"><%= (DateTime.now + 7).strftime("%m/%d/%Y") %></span>
+    <span style="float:right;font-size: 12px; display:block;">Holding Expiration Date</span>

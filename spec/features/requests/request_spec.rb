@@ -66,6 +66,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows guest patrons to see aeon requests' do
           visit '/requests/336525'
+          pending "must circulate to be requestable"
           # click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
@@ -128,6 +129,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows guest patrons to request Aeon items' do
           visit '/requests/2167669'
+          pending "must circulate to be requestable"
           # click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
@@ -241,6 +243,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to request On-Order items' do
           visit "/requests/#{on_order_id}"
+          pending "must circulate to be requestable"
           expect(page).to have_button('Request this Item', disabled: false)
         end
 
@@ -299,6 +302,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'
           expect(page).to have_content 'Request submitted'
+        end
+
+        it 'allows patrons to ask for help on non circulating items' do
+          visit '/requests/9594840'
+          expect(page).to have_content 'Help Me Get It'
+          expect(page).not_to have_css '.submit--request'
         end
       end
     end

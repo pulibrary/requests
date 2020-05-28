@@ -80,8 +80,16 @@ en:
       email: "fstcirc@princeton.edu"
       email_subject: "On the Shelf Paging Request"
       brief_msg: "Pageable item at %{location}. Request for delivery in 1-2 business days."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup in Firestone Lobby between the hours of 12-2."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup."
       access_msg: 'Access Users must obtain a pass to enter the Library.'
+      email_covid_msg: "When picking up and/or dropping off your books: 
+        <ul>
+          <li>please do so promptly</li>
+          <li>remain only in the designated pick-up area</li>
+          <li>wear a mask or face covering</li>
+          <li>and follow social distancing guidelines</li> 
+        </ul>
+        Please plan to limit your number of trips to the Library. We appreciate your help in our efforts to slow the spread of Covid-19."
     on_order:
       email: "fstcirc@princeton.edu"
       email_subject: "On Order Request"

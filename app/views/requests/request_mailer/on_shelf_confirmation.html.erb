@@ -1,9 +1,41 @@
 <% # temporary changes issue 438 %>
-==============================================
-<%= I18n.t('requests.on_shelf.email_subject') %>
 
-<%= I18n.t('requests.on_shelf.email_conf_msg') %>
+<tr style="background-color: rgb(245, 245, 245);">
+  <td style="padding: 18px;">
+    <%= render 'request_header_patron' %>
+  </td>
+</tr>
 
-<%= render 'patron_info' %>
-<%= render 'bib_info' %>
-<%= render 'item_info' %>
+<tr>
+  <td colspan="2" style="padding: 18px;">
+    <%= render 'bib_info_patron' %>
+  </td>
+</tr>
+
+<tr>
+  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
+    <p style="font-size: 12px;"><%= I18n.t('requests.on_shelf.email_conf_msg') %></p>
+    <dl style="text-align:center;">
+      <dt style="font-size:12px;font-weight:normal;">Pickup Location</dt>
+      <dd style="font-size:20px;font-weight:bold;"><%= Requests::BibdataService.delivery_locations[@submission.items.first["pickup"]]['label'].html_safe %>, 12pm - 2pm</dd>
+    </dl>
+
+    <p style="font-size: 16px"><%#= I18n.t('requests.on_shelf.email_covid_msg').html_safe %>
+      <center style="font-weight:bold;font-size:20px;">When picking up and/or dropping off your books</center>
+        <ul style="list-style:none;margin:18px 0;padding:0;display:flex;flex-wrap:wrap;justify-content:space-between;text-align:center;align-items:stretch;align-content:stretch;">
+          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px">Please do so promptly</div></li>
+          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px">Remain only in the designated pick-up area</div></li>
+          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px">Wear a mask or face covering</div></li>
+          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px">Follow social distancing guidelines</div></li> 
+        </ul>
+        <p>Please plan to limit your number of trips to the Library. We appreciate your help in our efforts to slow the spread of Covid-19.</p>
+        <p>Sincere thanks.</p>
+    </p>
+  </td>
+</tr>
+
+<tr>
+  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
+    <%= render 'item_info' %>
+  </td>
+</tr>

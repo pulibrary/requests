@@ -1124,6 +1124,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable RSpec/MultipleExpectations
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
       expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject'))
@@ -1143,5 +1144,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(mail.text_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')
     end
     # rubocop:enable RSpec/ExampleLength
+    # rubocop:enable RSpec/MultipleExpectations
   end
 end

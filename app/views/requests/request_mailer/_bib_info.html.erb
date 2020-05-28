@@ -1,23 +1,9 @@
-<% def format_label(key)
-    label = key.to_s
-    human_label = label.tr('_', ' ')
-    formatted = human_label.split.map(&:capitalize).join(' ')
-    formatted
-  end
-  def display_label
-    {
-      author: "Author/Artist",
-      title: "Title",
-      date: "Published/Created",
-      id: "Bibliographic ID",
-      mfhd: "Holding ID (mfhd)"
-    }.with_indifferent_access
-  end
-%>
-
 <dl style="padding-top: 9px;">
-<% @submission.bib.each do |key, value| %>
-  <dt style="font-weight:normal;font-size:12px;"><%= format_label(display_label[key]) %></dt> 
-  <dd style="font-size:20px;"><%= value %></dd>
-<% end %>
+  <dt style="font-weight:normal;font-size:12px;">Title</dt> 
+  <dd style="font-size:20px;"><%= @submission.bib["title"] %></dd>
+
+  <dt style="font-weight:normal;font-size:12px;">Author/Artist</dt> 
+  <dd style="font-size:20px;"><%= @submission.bib["author"] %></dd>
 </dl>
+
+<!-- <a href="https://catalog.princeton.edu/catalog/<%= @submission.bib["id"] %>" target="_blank">View Full Record in Catalog</a>-->

@@ -6,16 +6,16 @@ module Requests
 
     def current_user_status(current_user)
       ## Expect that the host app can provide you a devise current_user object
-      if current_user.provider == 'cas' || current_user.provider == 'barcode'
+      if current_user.provider == 'cas' # || current_user.provider == 'barcode'
         content_tag(:div, class: "flash_messages-user") do
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
       elsif current_user.guest == true
         content_tag(:div) do
           concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', role: 'menuitem', class: 'btn btn-primary', id: 'cas-login' # , current_user_name: current_user.uid)
-          concat content_tag(:hr)
-          concat content_tag(:p, "or", class: "or-divider")
-          concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/auth/barcode', role: 'menuitem', class: 'btn btn-outline-secondary', id: 'barcode-login'
+          # concat content_tag(:hr)
+          # concat content_tag(:p, "or", class: "or-divider")
+          # concat link_to I18n.t('requests.account.barcode_login_msg'), '/users/auth/barcode', role: 'menuitem', class: 'btn btn-outline-secondary', id: 'barcode-login'
         end
       else
         I18n.t('requests.account.unauthenticated')

@@ -101,10 +101,11 @@ module Requests
       location_email = get_location_contact_email(submission.items.first[:location_code])
       @submission = submission
       destination_email = I18n.t('requests.on_shelf.email')
+      subject = "#{subject_line(I18n.t('requests.on_shelf.email_subject'), @submission.user_barcode)} #{submission.items.first[:location_code]} - #{submission.items.first[:call_number]}"
       mail(to: location_email,
            cc: destination_email,
            from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.on_shelf.email_subject'), @submission.user_barcode))
+           subject: subject)
     end
 
     # temporary changes issue 438

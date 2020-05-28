@@ -1,11 +1,13 @@
 <div class="row">
   <div id="punetid-form" role="menu" aria-hidden="false" style="display: block; text-align:center; width: 50%; margin: 0 auto; ">
       <%= current_user_status @user %>
+      <% if false %>
       <hr>
       <p class="or-divider">
         or
       </p>
       <a id="no_netid" role="menuitem" class="btn btn-md btn-outline-secondary" href="#other_user_account_info" aria-expanded="false" aria-controls="other_user_account_info"><%= I18n.t('requests.account.other_user_login_msg') %></a>
+      <% end %>
       <div style="text-align:left" class='collapse card' aria-live='polite' id='other_user_account_info'>
         <div class="card-body">
           <fieldset class="form-group required">

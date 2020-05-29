@@ -46,16 +46,11 @@ module Requests
       def handle_item(item:)
         status = {}
         params = build_params(item: item)
-        if can_place_hold(params: params)
-          payload = request_payload(item, parameter_name: "hold-request-parameters")
-          response = put_hold_request(params, payload)
-          reponse_json = Hash.from_xml(response.body)
-          if reponse_json["response"]["reply_code"] == "0"
-            status = params
-          else
-            errors << reponse_json["response"]
-          end
-
+        response_json = hold_status_data(params: params)
+        if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
+          status = place_hold(item, params)
+        elsif response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item."
+          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].permit(params["request"].keys))
         end
         status
       end
@@ -68,10 +63,26 @@ module Requests
         params
       end
 
-      def can_place_hold(params:)
+      def hold_status_data(params:)
         response = get_hold_status(params)
+        Hash.from_xml(response.body)["response"]
+      end
+
+      def place_hold(item, params)
+        status = {}
+        payload = request_payload(item, parameter_name: "hold-request-parameters")
+        response = put_hold_request(params, payload)
         reponse_json = Hash.from_xml(response.body)
-        reponse_json["response"]["hold"].present? && reponse_json["response"]["hold"]["allowed"] == "Y"
+        if reponse_json["response"]["reply_code"] == "0"
+          status = params
+        else
+          bib = params["bib"]
+          bib = bib.permit(params["bib"].keys) if bib.respond_to?(:permit)
+          request = params["request"]
+          request = request.permit(params["request"].keys) if request.respond_to?(:permit)
+          errors << reponse_json["response"].merge(bib).merge(request)
+        end
+        status
       end
   end
 end

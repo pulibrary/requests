@@ -69,6 +69,14 @@ module Requests
       (requestable.size == 1) && requestable.first.services.include?('aeon')
     end
 
+    def filtered_sorted_requestable
+      if mfhd.present?
+        { mfhd => sorted_requestable[mfhd] }
+      else
+        sorted_requestable
+      end
+    end
+
     # returns an array of requestable hashes of  grouped under a common mfhd
     def sorted_requestable
       sorted = {}

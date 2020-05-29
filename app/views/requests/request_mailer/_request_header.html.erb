@@ -1,0 +1,6 @@
+<h1 style="margin: 0; font-size: 25px; display:block;"><%= @submission.user["user_last_name"] %>, <%= @submission.user["user_name"].remove(@submission.user["user_last_name"]) %></h1>
+    <span style="font-size: 12px;"><%= @submission.user_barcode %></span>
+  </td>
+  <td style="padding: 18px;">
+    <span style="float:right;font-size: 25px;font-weight:bold;"><%= (DateTime.now + 7).strftime("%m/%d/%Y") %></span>
+    <span style="float:right;font-size: 12px; display:block;">Holding Expiration Date</span>

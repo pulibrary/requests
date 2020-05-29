@@ -237,7 +237,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.annexa.email')])
-      expect(mail.cc).to eq([submission_for_annexa.email, "fstcirc@princeton.edu"])
+      expect(mail.cc).to eq([submission_for_annexa.email, "trace@princeton.edu"])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -290,7 +290,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.anxadoc.email')])
-      expect(mail.cc).to eq([submission_for_anxadoc.email, "fstcirc@princeton.edu"])
+      expect(mail.cc).to eq([submission_for_anxadoc.email, "trace@princeton.edu"])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 

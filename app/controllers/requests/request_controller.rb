@@ -170,7 +170,7 @@ module Requests
         return if submission.service_types.include? 'bd' # emails already sent
         submission.service_types.each do |type|
           Requests::RequestMailer.send("#{type}_email", submission).deliver_now
-          Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl'].include? type
+          Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_shelf', 'on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl'].include? type
           Requests::RequestMailer.send("scsb_recall_email", submission).deliver_now if type == 'recall' && submission.scsb?
         end
       end

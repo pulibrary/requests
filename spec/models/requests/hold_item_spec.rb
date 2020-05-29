@@ -58,7 +58,7 @@ describe Requests::HoldItem, type: :controller do
       }
     end
 
-    describe 'All Recall Requests' do
+    describe 'All Hold Requests' do
       let(:stub_url) do
         Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/items/" + submission.items[0]['item_id'] +
@@ -86,7 +86,7 @@ describe Requests::HoldItem, type: :controller do
         expect(hold_request.errors.size).to eq(0)
       end
 
-      it 'constructs a expiration date for the recall request' do
+      it 'constructs a expiration date for the hold request' do
         stub_request(:get, stub_url)
           .to_return(status: 200, body: responses[:get], headers: {})
         stub_request(:put, stub_url)

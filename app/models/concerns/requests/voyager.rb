@@ -29,8 +29,7 @@ module Requests
     end
 
     def put_hold_request(params, payload)
-      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/hold?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}"
-      conn.put request_url, payload, 'X-Accept' => 'application/xml'
+      conn.put request_url(params), payload, 'X-Accept' => 'application/xml'
     end
 
     def get_response(params)
@@ -39,8 +38,13 @@ module Requests
     end
 
     def get_hold_status(params)
-      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/hold?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}"
-      conn.get request_url
+      conn.get request_url(params)
+    end
+
+    def request_url(params)
+      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/"
+      request_url += "items/#{params['requestable'].first['item_id']}/"
+      request_url + "hold?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}"
     end
 
     # implement solr doc to Voyager schema mapping
@@ -56,10 +60,10 @@ module Requests
     end
 
     def request_payload(item, parameter_name: "recall-parameters")
-      pickup = item['pickup'].split("|")
+      pickup = lookup_pickup_code(item['pickup'].split("|").first)
       recall_request = Nokogiri::XML::Builder.new do |xml|
         xml.send(parameter_name.to_sym) do
-          xml.send(:"pickup-location", pickup[0])
+          xml.send(:"pickup-location", pickup)
           xml.send(:"last-pickup-date", "20091006")
           xml.send(:"last-interest-date", recall_expiration_date)
           xml.comment "testing recall request"
@@ -72,6 +76,20 @@ module Requests
     def recall_expiration_date
       expiry_date = Time.zone.today + 60
       expiry_date.strftime("%Y%m%d")
+    end
+
+    def lookup_pickup_code(code)
+      {
+        "PA" => "299",
+        "PN" => "489",
+        "PT" => "345",
+        "PW" => "356",
+        "PJ" => "321",
+        "PQ" => "312",
+        "PK" => "309",
+        "PL" => "303",
+        "PM" => "333"
+      }[code] || "299"
     end
   end
 end

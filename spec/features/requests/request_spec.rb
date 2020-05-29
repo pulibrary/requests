@@ -14,6 +14,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:temp_item_id) { '4815239' }
     let(:temp_id_mfhd) { '5018096' }
     let(:iiif_manifest_item) { '4888494' }
+    let(:mutiple_items) { '7917192' }
 
     let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
@@ -319,6 +320,24 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           expect(page).to have_content 'Request submitted'
+        end
+
+        it 'allows filtering items by mfhd' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7917192?mfhd=7699134'
+          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).not_to have_content 'Copy 2'
+          expect(page).not_to have_content 'Copy 3'
+        end
+
+        it 'show all copies if MFHD is not present' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7917192'
+          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Copy 2'
+          expect(page).to have_content 'Copy 3'
         end
       end
     end

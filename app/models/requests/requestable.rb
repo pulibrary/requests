@@ -93,7 +93,7 @@ module Requests
     end
 
     def circulates?
-      location[:circulates] == true
+      location[:circulates] == true && location[:library][:code] == "firestone"
     end
 
     def always_requestable?

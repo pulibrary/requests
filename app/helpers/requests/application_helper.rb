@@ -475,7 +475,6 @@ module Requests
         hidden = hidden_field_tag("requestable[][item_id]", "", value: requestable.preferred_request_id, id: "requestable_item_id_#{requestable.preferred_request_id}")
         hidden += hidden_field_tag("requestable[][barcode]", "", value: requestable.barcode, id: "requestable_barcode_#{requestable.preferred_request_id}") if requestable.barcode?
         hidden += hidden_field_tag("requestable[][status]", "", value: status_label(requestable), id: "requestable_status_#{requestable.preferred_request_id}")
-        hidden += hidden_field_tag("requestable[][status]", "", value: status_label(requestable), id: "requestable_status_#{requestable.preferred_request_id}")
         hidden + hidden_field_tag("requestable[][location_code]", "", value: requestable.holding[requestable.holding.keys.first]['location_code'], id: "requestable_status_#{requestable.preferred_request_id}")
       end
 

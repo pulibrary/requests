@@ -17,7 +17,7 @@
     <p style="font-size: 12px;"><%= I18n.t('requests.on_shelf.email_conf_msg') %></p>
     <dl style="text-align:center;">
       <dt style="font-size:12px;font-weight:normal;">Pickup Location</dt>
-      <dd style="font-size:20px;font-weight:bold;"><%= Requests::BibdataService.delivery_locations[@submission.items.first["pickup"]]['label'].html_safe %>, 12pm - 2pm</dd>
+      <dd style="font-size:20px;font-weight:bold;"><%= Requests::BibdataService.delivery_locations[@submission.items.first["pickup"]]['label'].html_safe %>, 11am - 3pm</dd>
     </dl>
 
     <p style="font-size: 16px"><%#= I18n.t('requests.on_shelf.email_covid_msg').html_safe %>

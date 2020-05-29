@@ -77,7 +77,7 @@ en:
     on_shelf:
       # temporary changes issue 438
       # brief_msg: "Item on Shelf. Consult shelf location map."
-      email: "fstcirc@princeton.edu"
+      email: "trace@princeton.edu"
       email_subject: "On the Shelf Paging Request"
       brief_msg: "Pageable item at %{location}. Request for delivery in 1-2 business days."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pickup."

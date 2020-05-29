@@ -76,12 +76,13 @@ module Requests
       @services = []
       @success_messages = []
 
+      process_hold
       process_recall
       process_recap
       process_borrow_direct
 
       # if !recap && !recall && !bd !(a1 & a2).empty?
-      if (service_types & ['bd', 'recap', 'recall']).empty?
+      if (service_types & ['bd', 'recap', 'recall', 'on_shelf']).empty?
         @services << Requests::Generic.new(self)
         success_messages << I18n.t('requests.submit.success')
       end
@@ -98,6 +99,11 @@ module Requests
     end
 
     private
+
+      def process_hold
+        return unless service_types.include? 'on_shelf'
+        @services << Requests::HoldItem.new(self)
+      end
 
       def process_recall
         return unless service_types.include? 'recall'

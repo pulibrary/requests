@@ -1,3 +1,7 @@
 <div class="alert flash-notice alert-info">
-    Physical Delivery requests are not being accepted until at least 4/30 including Borrow Direct and Interlibrary Loan services.
+  <% if @user.can_pickup? %>
+    Only circulating materials from Firestone Library are eligible for pick-up. Physical Delivery requests for other Library locations are not being accepted until at least 6/8 including Borrow Direct and Interlibrary Loan services.
+  <% else %>
+    Physical Delivery requests are not being accepted until at least 6/8 including Borrow Direct and Interlibrary Loan services.
+  <% end %>
 </div>

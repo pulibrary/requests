@@ -43,7 +43,10 @@ module Requests
 
     def request_url(params)
       request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/"
-      request_url += "items/#{params['requestable'].first['item_id']}/"
+      # if multiple items are selected by the user this will alaways submit the first on the requestable hash
+      # each requestable object will have a unique item id
+      # request_url += "items/#{params['requestable'].first['item_id']}/"
+      request_url += "items/#{params[:itemID]}/"
       request_url + "hold?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}"
     end
 

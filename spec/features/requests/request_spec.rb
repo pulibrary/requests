@@ -266,7 +266,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           visit "/requests/#{on_shelf_no_items_id}"
           # temporary changes 438
           expect(page).to have_content 'Pickup location: Firestone Library'
-          expect(page).to have_content 'Pageable item at Firestone Library. Request for delivery in 1-2 business days.'
+          expect(page).to have_content 'Pageable item at Firestone Library. Request for pick-up.'
           # expect(page).to have_link('Where to find it')
         end
 

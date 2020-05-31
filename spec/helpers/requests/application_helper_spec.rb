@@ -211,7 +211,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         assign(:request, request)
         # temporary change no maps everything is pageable
         # expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
-        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item text-muted\">Pageable item at abc. Request for delivery in 1-2 business days.</li></ul></div>"
+        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item text-muted\">Pageable item at abc. Request for pick-up.</li></ul></div>"
       end
     end
 
@@ -225,7 +225,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         assign(:request, request)
         # temporary change no maps everything is pageable
         # expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
-        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item text-muted\">Pageable item at abc. Request for delivery in 1-2 business days.</li></ul></div>"
+        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item text-muted\">Pageable item at abc. Request for pick-up.</li></ul></div>"
       end
     end
 

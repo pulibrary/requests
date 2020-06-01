@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Requests::PickupLookup do
-  context 'Pickup Lookup' do
+  context 'Pick-up Lookup' do
     let(:user_info) do
       {
         "user_name" => "Foo Request",

@@ -16,7 +16,7 @@
   <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
     <p style="font-size: 12px;"><%= I18n.t('requests.on_shelf.email_conf_msg') %></p>
     <dl style="text-align:center;">
-      <dt style="font-size:12px;font-weight:normal;">Pickup Location</dt>
+      <dt style="font-size:12px;font-weight:normal;">Pick-up Location</dt>
       <dd style="font-size:20px;font-weight:bold;"><%= Requests::BibdataService.delivery_locations[@submission.items.first["pickup"]]['label'].html_safe %>, 11am - 3pm</dd>
     </dl>
 

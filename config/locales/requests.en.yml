@@ -42,8 +42,8 @@ en:
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
       # temporary changes issue 438
-      #email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup in Firestone Lobby between the hours of 12-2."
+      #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."
     anxadoc:
       email: "docstor@princeton.edu"
     annexb:
@@ -51,36 +51,36 @@ en:
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Fine Annex. Request for delivery in 1-2 business days."
       # temporary changes issue 438
-      #email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup in Firestone Lobby between the hours of 12-2."
+      #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."
     ppl:
       email: "ppllib@princeton.edu"
       email_subject: "Harold P. Furth Plasma Physics Library Request"
       brief_msg: "Pageable item at Plasma Physics Library. Request for delivery in 1-2 business days."
       # temporary changes issue 438
-      #email_conf_msg: "You will be notified via email when your item is ready for pickup. Most items are ready in 1 to 2 business days."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup in Firestone Lobby between the hours of 12-2."
+      #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."
     lewis:
       email: "lewispaging@princeton.edu"
       email_subject: "Lewis Library Paging Request"
       # temporary changes issue 438
       #brief_msg: "Pageable item at Lewis Library, will be delivered to Lewis Library Service desk on first floor."
       brief_msg: "Pageable item at Lewis Library. Request for delivery in 1-2 business days."
-      #email_conf_msg: "Items requested before 3:00 pm (weekdays and weekends) will be available for pickup, on the same day, at the Lewis Library Service desk on the first floor of the library. Items requested after 3:00 pm will be available the next day."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup in Firestone Lobby between the hours of 12-2."
+      #email_conf_msg: "Items requested before 3:00 pm (weekdays and weekends) will be available for pick-up, on the same day, at the Lewis Library Service desk on the first floor of the library. Items requested after 3:00 pm will be available the next day."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."
     pres:
       email: "fstcirc@princeton.edu"
       email_subject: "Preservation Office Request"
       brief_msg: "Item in Preservation Office."
       email_conf_msg: "The following Preservation item has been requested:"
-      patron_conf_msg: "You will be notified via email when your item is ready for pickup from the Preservation Office."
+      patron_conf_msg: "You will be notified via email when your item is ready for pick-up from the Preservation Office."
     on_shelf:
       # temporary changes issue 438
       # brief_msg: "Item on Shelf. Consult shelf location map."
       email: "trace@princeton.edu"
       email_subject: "On the Shelf Paging Request"
       brief_msg: "Pageable item at %{location}. Request for pick-up."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pickup."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pick-up."
       access_msg: 'Access Users must obtain a pass to enter the Library.'
       email_covid_msg: "When picking up and/or dropping off your books: 
         <ul>
@@ -93,7 +93,7 @@ en:
     on_order:
       email: "fstcirc@princeton.edu"
       email_subject: "On Order Request"
-      brief_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pickup."
+      brief_msg: "On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pick-up."
       email_conf_msg: "The following On Order item has been requested:"
       patron_conf_msg: "On Order books have not yet been received by the library. You have placed a request to be notified when this item has arrived."
       access_msg: 'Access Users are not eligible for On Order requests.'
@@ -105,7 +105,7 @@ en:
       success: "Request submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
       # temporary changes issue 438
       #email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pickup in Firestone Lobby between the hours of 12-2."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."
     recap_guest:
       email_subject: "Patron Initiated Catalog Request - ReCAP Access Only Request"
       brief_msg: "Item off-site at ReCAP facility."
@@ -139,7 +139,7 @@ en:
       access_msg: 'Access Users are not eligible for Recall requests.'
     bd:
       request_label: "Borrow Direct (4 business days or less)"
-      brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pickup in 2-4 business days."
+      brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pick-up in 2-4 business days."
       email_config_msg: "You will be notified via email when your item has arrived and can be picked up"
     in_process:
       email: "fstcirc@princeton.edu"

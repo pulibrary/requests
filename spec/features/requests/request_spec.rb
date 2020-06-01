@@ -231,7 +231,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           pending "firestone only"
           visit "/requests/#{in_process_id}"
           expect(page).to have_content 'In Process'
-          expect(page).to have_content 'Pickup location: Marquand Library'
+          expect(page).to have_content 'Pick-up location: Marquand Library'
           expect(page).to have_button('Request this Item', disabled: false)
           click_button 'Request this Item'
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
@@ -265,7 +265,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
           # temporary changes 438
-          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'Pageable item at Firestone Library. Request for pick-up.'
           # expect(page).to have_link('Where to find it')
         end
@@ -295,7 +295,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550'
-          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'
@@ -307,7 +307,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/426420'
-          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           check 'requestable_selected_7993830'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pickup')
@@ -326,7 +326,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/578830'
-          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request this Item'
@@ -338,7 +338,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
-          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).not_to have_content 'Copy 2'
           expect(page).not_to have_content 'Copy 3'
         end
@@ -348,7 +348,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192'
-          expect(page).to have_content 'Pickup location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'Copy 2'
           expect(page).to have_content 'Copy 3'
         end

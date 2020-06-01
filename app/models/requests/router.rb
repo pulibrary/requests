@@ -73,7 +73,7 @@ module Requests
           ['ppl']
         elsif requestable.lewis?
           ['lewis']
-        elsif requestable.recap? || !requestable.scsb_in_library_use?
+        elsif requestable.recap?
           calculate_recap_services
         elsif requestable.pageable?
           ['paging']
@@ -93,7 +93,7 @@ module Requests
         services = []
         return services << 'ask_me' if requestable.scsb_in_library_use?
         # Add physical recap delivery during campus closure
-        services = ['recap']
+        # services = ['recap']
         services << 'recap_edd' if requestable.recap_edd? && auth_user?
         services
       end

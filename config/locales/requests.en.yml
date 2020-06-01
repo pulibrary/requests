@@ -79,6 +79,7 @@ en:
       # brief_msg: "Item on Shelf. Consult shelf location map."
       email: "trace@princeton.edu"
       email_subject: "On the Shelf Paging Request"
+      email_subject_patron: "Library Pick-up Request"
       brief_msg: "Pageable item at %{location}. Request for pick-up."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pick-up."
       access_msg: 'Access Users must obtain a pass to enter the Library.'

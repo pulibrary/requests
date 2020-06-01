@@ -1,23 +1,19 @@
 <% # temporary changes issue 438 %>
 
-<tr style="background-color: rgb(245, 245, 245);">
-  <td style="padding: 18px;">
+<tr class="email-header">
+  <td colspan="2" style="padding: 18px;">
     <%= render 'request_header' %>
   </td>
 </tr>
 
-<tr>
+<tr class="bib-info">
   <td colspan="2" style="padding: 18px;">
     <%= render 'bib_info' %>
   </td>
 </tr>
 
 <tr>
-  <td colspan="2" style="padding: 0 18px;">
+  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
     <%= render 'item_info' %>
   </td>
-</tr>
-
-<tr height="18px">
-  <td>&nbsp;</td>
 </tr>

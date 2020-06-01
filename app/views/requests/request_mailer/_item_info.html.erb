@@ -1,24 +1,27 @@
-<h2 style="margin-bottom: 18px;font-weight:normal;font-size:16px;">Items Requested</h2>
-<%# TODO: Display only index, barcode, pickup %>
-<table style="width: 100%;">
-<% @submission.items.each_with_index do |item, index| %>
-  <!--<tr><td>Item <%= index+1 %></td></tr>-->
+<div style="margin-bottom:18px;font-weight:normal;font-size:16px;">Items Requested</div>
+<table style="width:100%;">
+  <% @submission.items.each_with_index do |item, index| %>
   <tr>
     <% unless item[:selected].empty? %>
-      <% recalled = (item[:type] == "recall") ? true : false %></td>
-      <td class="items-column" style="border: 1px solid #ccc; padding: 18px;">
-        <% item.each do |key, value| %>
+    <% recalled = (item[:type] == "recall") ? true : false %></td>
+    <td style="border:1px solid #ccc;padding: 18px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" class="responsive-table">
+        <tr>
+          <% item.each do |key, value| %>
           <% if (key == "barcode" || key == "pickup" || key == "enum") && value.present? %>
-          <dl style="width:33%;float:left;margin-bottom:0">
-            <dt style="font-weight:normal;font-size:12px;"><%= format_label(key) %></dt> 
-            <dd style="margin-bottom:0;"><% if key == "pickup" && !recalled %><b><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %></b>,<% end %> <%= value.html_safe %></dd>
-          </dl>
-    
-        <% end %>
-      <% end %>
-      </td>
+          <td valign="top" width="33%" class="responsive-column-container">
+            <div style="font-weight:normal;font-size:12px;">
+              <% if key == "pickup" %>Pick-up<% else %><%= format_label(key) %><% end %></div>
+            <span style="margin-bottom:0;"
+              class="large-print"><% if key == "pickup" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %>
+              <%= value.html_safe %></span>
+          </td>
+          <% end %>
+          <% end %>
+        </tr>
+      </table>
+    </td>
     <% end %>
   </tr>
-<% end %>
-
+  <% end %>
 </table>

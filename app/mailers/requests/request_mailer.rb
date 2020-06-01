@@ -114,7 +114,7 @@ module Requests
       destination_email = @submission.email
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.on_shelf.email_subject'), @submission.user_barcode))
+           subject: subject_line(I18n.t('requests.on_shelf.email_subject_patron'), @submission.user_barcode))
     end
 
     def on_order_email(submission)

@@ -935,13 +935,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       # TODO: Remove when campus has re-opened
-      it "is not eligible for recap services during campus closure" do
-        expect(request.requestable.last.services.include?('recap')).to be_falsey
-      end
+      # it "is not eligible for recap services during campus closure" do
+      #   expect(request.requestable.last.services.include?('recap')).to be_true
+      # end
 
       # TODO: Activate test when campus has re-opened
-      xit "should be eligible for recap services" do
+      it "should be eligible for recap services with circulating items" do
         expect(request.requestable.first.services.include?('recap')).to be_truthy
+        expect(request.requestable.first.scsb_in_library_use?).to be_falsey
       end
 
       it "is eligible for recap_edd services" do

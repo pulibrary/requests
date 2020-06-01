@@ -14,24 +14,11 @@ module Requests
 
     def handle
       items = @submission.filter_items_by_service(@service_type)
-      status = {}
       items.each do |item|
-        status = handle_item(item: item)
+        item_status = handle_item(item: item)
+        @sent << item_status unless item_status.blank?
       end
-      return false if status.empty?
-      params = status
-      # response = scsb_request(scsb_params)
-      # if response.status != 200
-      #   error_message = "Request failed because #{response.body}"
-      #   @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
-      # else
-      #   response = parse_scsb_response(response)
-      #   if response[:success] == false
-      #     @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
-      #   else
-      @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
-      #   end
-      # end
+      return false if @errors.present?
     end
 
     def submitted
@@ -69,11 +56,11 @@ module Requests
 
       def place_hold(item, params)
         status = {}
-        payload = request_payload(item, parameter_name: "hold-request-parameters")
+        payload = request_payload(item, parameter_name: "hold-request-parameters", expiration_period: 7)
         response = put_hold_request(params, payload)
         reponse_json = Hash.from_xml(response.body)
         if reponse_json["response"]["reply_code"] == "0"
-          status = params
+          status = item.merge(payload: payload)
         else
           bib = params["bib"]
           bib = bib.permit(params["bib"].keys) if bib.respond_to?(:permit)

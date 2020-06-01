@@ -425,7 +425,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '# offsite requestable' do
       # TODO: Remove when campus has re-opened
       it "does not have recap request service available during campus closure" do
-        expect(requestable.services.include?('recap')).to be true
+        expect(requestable.services.include?('recap')).to be false
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
@@ -534,7 +534,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#requestable' do
       # TODO: Remove when campus has re-opened
       it "does not have recap request service available during campus closure" do
-        expect(requestable.services.include?('recap')).to be true
+        expect(requestable.services.include?('recap')).to be false
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do
@@ -604,7 +604,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#recap requestable' do
       # TODO: Remove when campus has re-opened
       it "does not have recap request service available during campus closure" do
-        expect(requestable.services.include?('recap')).to be true
+        expect(requestable.services.include?('recap')).to be false
       end
       # TODO: Activate test when campus has re-opened
       xit "should have recap request service available" do

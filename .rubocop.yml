@@ -19,6 +19,14 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/models/requests/request_spec.rb'
 
+Metrics/PerceivedComplexity:
+  Exclude:
+    - 'app/models/requests/router.rb'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/models/requests/router.rb'
+
 RSpec/ExampleLength:
   Enabled: false
 

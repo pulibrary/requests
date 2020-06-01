@@ -35,7 +35,7 @@ module Requests
         response_json = hold_status_data(params: params)
         if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
           status = place_hold(item, params)
-        elsif response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item."
+        elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
           errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].permit(params["request"].keys))
         end
         status

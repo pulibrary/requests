@@ -18,7 +18,6 @@ module Requests
       items.each do |item|
         status = handle_item(item: item)
       end
-
       return false if status.empty?
       params = status
       # response = scsb_request(scsb_params)

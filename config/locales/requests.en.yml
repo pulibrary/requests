@@ -24,10 +24,10 @@ en:
       annexa_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       annexb_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       ppl_success: ""
-      lewis_success: "Item has been paged."
-      paging_success: "Item has been paged."
+      lewis_success: "Item has been requested for pick-up"
+      paging_success: "Item has been requested for pick-up"
       # temporary changes issue 438
-      on_shelf_success: "Item has been paged."
+      on_shelf_success: "Item has been requested for pick-up"
       trace_success: "Item is now being traced."
       error: "We were unable to process your request. Correct the highlighted errors."
       service_error: "There was a problem with this request which Library staff need to investigate. You'll be notified once it's resolved and requested for you."
@@ -79,7 +79,7 @@ en:
       # brief_msg: "Item on Shelf. Consult shelf location map."
       email: "trace@princeton.edu"
       email_subject: "On the Shelf Paging Request"
-      brief_msg: "Pageable item at %{location}. Request for delivery in 1-2 business days."
+      brief_msg: "Pageable item at %{location}. Request for pick-up."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pickup."
       access_msg: 'Access Users must obtain a pass to enter the Library.'
       email_covid_msg: "When picking up and/or dropping off your books: 

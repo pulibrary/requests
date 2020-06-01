@@ -620,6 +620,7 @@ describe Requests::Submission do
 
       it 'has an error message with the mfhd ID as the message key' do
         expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+        expect(submission.errors.messages[:items].first['534137']).to eq('text' => "Item Cannot be Recalled, see circulation desk.", 'type' => 'options')
       end
     end
     describe 'A recall submission without a pickup location' do

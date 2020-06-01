@@ -25,6 +25,6 @@
         <%= render partial: "edd_fields", locals: { requestable: requestable } %>
     <% end %>
     <% if requestable.annexa? || requestable.annexb? || requestable.lewis? ||
-          requestable.plasma? %>
+          requestable.plasma? || requestable.on_order? %>
       <%= hidden_field_tag "requestable[][type]", requestable.services.first %>
     <% end %>

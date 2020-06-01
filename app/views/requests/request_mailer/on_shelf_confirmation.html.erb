@@ -1,42 +1,26 @@
 <% # temporary changes issue 438 %>
 
-<tr style="background-color: rgb(245, 245, 245);">
-  <td style="padding: 18px;">
+<tr class="email-header">
+  <td colspan="2" style="padding: 18px;border-top: 6px solid #e77500;">
     <%= render 'request_header_patron' %>
   </td>
 </tr>
 
-<tr>
+<tr class="bib-info">
   <td colspan="2" style="padding: 18px;">
     <%= render 'bib_info_patron' %>
   </td>
 </tr>
 
 <tr>
-  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
-    <p style="font-size: 12px;"><%= I18n.t('requests.on_shelf.email_conf_msg') %></p>
-    <dl style="text-align:center;">
-      <dt style="font-size:12px;font-weight:normal;">Pick-up Location</dt>
-      <dd style="font-size:20px;font-weight:bold;"><%= Requests::BibdataService.delivery_locations[@submission.items.first["pickup"]]['label'].html_safe %>, 11am - 3pm</dd>
-    </dl>
-
-    <p style="font-size: 16px"><%#= I18n.t('requests.on_shelf.email_covid_msg').html_safe %>
-      <center style="font-weight:bold;font-size:20px;">When picking up and/or dropping off your books</center>
-        <ul style="list-style:none;margin:18px 0;padding:0;display:flex;flex-wrap:wrap;justify-content:space-between;text-align:center;align-items:stretch;align-content:stretch;">
-          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px;border-radius:4px;">Please do so promptly</div></li>
-          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px;border-radius:4px;">Remain only in the designated pick-up area</div></li>
-          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px;border-radius:4px;">Wear a mask or face covering</div></li>
-          <li style="width:23%;"><div style="background-color:#eee;padding:18px;min-height:74px;border-radius:4px;">Follow social distancing guidelines</div></li> 
-        </ul>
-        <p>Please plan to limit your number of trips to the Library. We appreciate your help in our efforts to slow the spread of Covid-19.</p>
-        <center><a href="https://library.princeton.edu/news/general/2020-05-27/pul-social-protocols" target="_blank" style="background-color:#eee;padding:9px;display:inline-block;color:black;border-radius:4px;font-weight:bold;">Please follow social protocols</a></center>
-        <p>Sincere thanks.</p>
-    </p>
+  <td colspan="2" style="padding: 18px 18px 0;border-top:1px solid #ccc;">
+    <%= render 'item_info' %>
   </td>
 </tr>
 
-<tr>
-  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
-    <%= render 'item_info' %>
+<tr class="pikcup-info">
+  <td colspan="2" style="padding: 18px;">
+    <%= render 'pickup_info' %>
+    <%= render 'covid_pickup_guidelines' %>
   </td>
 </tr>

@@ -1,9 +1,7 @@
-<dl style="padding-top: 9px;">
-  <dt style="font-weight:normal;font-size:12px;">Title</dt> 
-  <dd style="font-size:20px;"><%= @submission.bib["title"] %></dd>
+<div style="padding-top: 9px;">
+  <div style="font-weight:normal;font-size:12px;">Title</div> 
+  <div style="font-size:20px;line-height:1.4;"><%= @submission.bib["title"] %></div>
 
-  <dt style="font-weight:normal;font-size:12px;">Author/Artist</dt> 
-  <dd style="font-size:20px;"><%= @submission.bib["author"] %></dd>
-</dl>
-
-<!-- <a href="https://catalog.princeton.edu/catalog/<%= @submission.bib["id"] %>" target="_blank">View Full Record in Catalog</a>-->
+  <div style="font-weight:normal;font-size:12px;margin-top:18px;">Author/Artist</div> 
+  <div style="font-size:20px;line-height:1.4;"><%= @submission.bib["author"] %></div>
+</div>

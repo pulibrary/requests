@@ -86,14 +86,14 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
         stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
-        expect(recall_request.request_payload(submission.items.first)).to include("<last-interest-date>#{recall_request.recall_expiration_date}</last-interest-date>")
+        expect(recall_request.request_payload(submission.items.first)).to include("<last-interest-date>#{recall_request.expiration_date(60)}</last-interest-date>")
       end
 
       it 'has an expiry date 60 days from today formatted as yyyy-mm-dd' do
         stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
-        expect(recall_request.recall_expiration_date).to eq((todays_date + 60).strftime("%Y%m%d"))
+        expect(recall_request.expiration_date(60)).to eq((todays_date + 60).strftime("%Y%m%d"))
       end
     end
   end

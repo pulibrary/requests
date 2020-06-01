@@ -84,24 +84,16 @@ describe Requests::HoldItem, type: :controller do
           .to_return(status: 201, body: responses[:success], headers: {})
         expect(hold_request.submitted.size).to eq(1)
         expect(hold_request.errors.size).to eq(0)
+        expect(hold_request.submitted.first[:payload]).to include("<last-interest-date>#{(todays_date + 7).strftime('%Y%m%d')}</last-interest-date>")
       end
 
-      it 'constructs a expiration date for the hold request' do
+      it 'has an expiry date 60 days from today formatted as yyyy-mm-dd by default' do
         stub_request(:get, stub_url)
           .to_return(status: 200, body: responses[:get], headers: {})
         stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
-        expect(hold_request.request_payload(submission.items.first)).to include("<last-interest-date>#{hold_request.recall_expiration_date}</last-interest-date>")
-      end
-
-      it 'has an expiry date 60 days from today formatted as yyyy-mm-dd' do
-        stub_request(:get, stub_url)
-          .to_return(status: 200, body: responses[:get], headers: {})
-        stub_request(:put, stub_url)
-          .with(headers: { 'X-Accept' => 'application/xml' })
-          .to_return(status: 201, body: responses[:success], headers: {})
-        expect(hold_request.recall_expiration_date).to eq((todays_date + 60).strftime("%Y%m%d"))
+        expect(hold_request.request_payload(submission.items.first)).to include("<last-interest-date>#{(todays_date + 60).strftime('%Y%m%d')}</last-interest-date>")
       end
     end
   end

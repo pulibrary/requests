@@ -98,7 +98,7 @@ Hold PUT that already exists for the submitting user: HTTP 200 xml doc
     </create-hold>
 </response>
 
-HOLD PUT without a valid Pickup ID: HTTP 200 Returns:
+HOLD PUT without a valid pick-up ID: HTTP 200 Returns:
 <?xml version="1.0" encoding="UTF-8"?>
 <response>
     <reply-text>Failed to create request</reply-text>

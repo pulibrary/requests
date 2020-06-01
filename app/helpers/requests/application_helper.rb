@@ -155,7 +155,7 @@ module Requests
         style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
         name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
         hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_code]).to_s, class: 'single-pickup-hidden'
-        label = label_tag name.to_s, "Pickup location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
+        label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
         hidden + label
         # end
       end

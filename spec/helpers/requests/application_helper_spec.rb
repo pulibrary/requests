@@ -83,8 +83,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     it 'lewis is a submitable request' do
       choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
       # temporary all pickup locations are Firestone
-      # expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PN\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
-      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
+      # expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PN\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Firestone Library</label></div>")
+      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Firestone Library</label></div>")
     end
   end
 
@@ -105,7 +105,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
-      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pickup location: Firestone Library</label></div>")
+      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"card card-body bg-light collapse show request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Firestone Library</label></div>")
     end
   end
 
@@ -247,7 +247,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false } }
       it 'shows default pickup location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: place</label></div>'
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: place</label></div>'
       end
     end
 
@@ -256,7 +256,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false } }
       it 'shows default pickup location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: place</label></div>'
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: place</label></div>'
         # temporary change on pageable to one location
         # card_div + '<select name="requestable[][pickup]" id="requestable__pickup"><option value="">Select a Delivery Location</option><option value="xx">place</option>' + "\n" + '<option value="xz">place two</option></select></div>'
       end
@@ -266,7 +266,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: true } }
       it 'shows default pickup location hidden' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          card_div + '<input type="hidden" name="updated_later" id="updated_later" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="display:none;margin-top:10px;" for="updated_later">Pickup location: place</label></div>'
+          card_div + '<input type="hidden" name="updated_later" id="updated_later" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="display:none;margin-top:10px;" for="updated_later">Pick-up location: place</label></div>'
       end
     end
 
@@ -275,7 +275,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: locations, charged?: false } }
       it 'shows the pickup location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: another place</label></div>'
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: another place</label></div>'
       end
     end
 
@@ -284,7 +284,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: true, location: holding_location, charged?: false } }
       it 'shows the holding location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: cool library</label></div>'
+          card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: cool library</label></div>'
       end
     end
 
@@ -293,7 +293,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:locations) { [{ label: 'another place', gfa_code: 'yy', staff_only: false }] }
       it 'a message for lewis' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
-          '<div id="fields-print__abc123" class="card card-body bg-light collapse request--print"><input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pickup location: another place</label></div>'
+          '<div id="fields-print__abc123" class="card card-body bg-light collapse request--print"><input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: another place</label></div>'
       end
     end
   end

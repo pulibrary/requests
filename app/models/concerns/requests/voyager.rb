@@ -46,7 +46,7 @@ module Requests
       # if multiple items are selected by the user this will alaways submit the first on the requestable hash
       # each requestable object will have a unique item id
       # request_url += "items/#{params['requestable'].first['item_id']}/"
-      request_url += "items/#{params[:itemID]}/"
+      request_url += "items/#{params[:itemID]}/" if params[:itemID].present?
       request_url + "hold?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}"
     end
 

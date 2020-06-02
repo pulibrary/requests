@@ -33,6 +33,10 @@ module Requests
         status = {}
         params = build_params(item: item)
         response_json = hold_status_data(params: params)
+        if response_json["hold"].present? && response_json["hold"]["note"] == "Could not retrieve items for request."
+          params.delete(:itemID)
+          response_json = hold_status_data(params: params)
+        end
         if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
           status = place_hold(item, params)
         elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
@@ -56,7 +60,7 @@ module Requests
 
       def place_hold(item, params)
         status = {}
-        payload = request_payload(item, parameter_name: "hold-request-parameters", expiration_period: 7)
+        payload = payload(item, params)
         response = put_hold_request(params, payload)
         reponse_json = Hash.from_xml(response.body)
         if reponse_json["response"]["reply_code"] == "0"
@@ -69,6 +73,15 @@ module Requests
           errors << reponse_json["response"].merge(bib).merge(request)
         end
         status
+      end
+
+      def payload(item, params)
+        parameter_name = if params.keys.include?(:itemID)
+                           "hold-request-parameters"
+                         else
+                           "hold-title-parameters"
+                         end
+        request_payload(item, parameter_name: parameter_name, expiration_period: 7)
       end
   end
 end

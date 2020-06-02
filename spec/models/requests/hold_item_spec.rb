@@ -54,7 +54,8 @@ describe Requests::HoldItem, type: :controller do
       {
         error: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>Failed to create request</reply-text><reply-code>25</reply-code><create-recall><note type=\"error\">No recall policy is defined for this item.</note></create-recall></response>",
         success: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><create-hold><note type=\"\">Your request was successful.</note></create-hold></response>",
-        get: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><hold allowed=\"Y\"></hold></response>"
+        get: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><hold allowed=\"Y\"></hold></response>",
+        get_error: "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><hold allowed=\"N\" note=\"Could not retrieve items for request.\"></hold></response>"
       }
     end
 
@@ -62,6 +63,12 @@ describe Requests::HoldItem, type: :controller do
       let(:stub_url) do
         Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/items/" + submission.items[0]['item_id'] +
+          "/hold?patron=" + submission.user['patron_id'] +
+          "&patron_homedb=" + URI.escape('1@DB')
+      end
+
+      let(:stub_url_no_item) do
+        Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/hold?patron=" + submission.user['patron_id'] +
           "&patron_homedb=" + URI.escape('1@DB')
       end
@@ -81,6 +88,19 @@ describe Requests::HoldItem, type: :controller do
         stub_request(:get, stub_url)
           .to_return(status: 200, body: responses[:get], headers: {})
         stub_request(:put, stub_url)
+          .to_return(status: 201, body: responses[:success], headers: {})
+        expect(hold_request.submitted.size).to eq(1)
+        expect(hold_request.errors.size).to eq(0)
+        expect(hold_request.submitted.first[:payload]).to include("<last-interest-date>#{(todays_date + 7).strftime('%Y%m%d')}</last-interest-date>")
+      end
+
+      it "captures an item error and tries a title hold request submissions." do
+        bib["id"] = '10574699'
+        stub_request(:get, stub_url)
+          .to_return(status: 200, body: responses[:get_error], headers: {})
+        stub_request(:get, stub_url_no_item)
+          .to_return(status: 200, body: responses[:get], headers: {})
+        stub_request(:put, stub_url_no_item)
           .to_return(status: 201, body: responses[:success], headers: {})
         expect(hold_request.submitted.size).to eq(1)
         expect(hold_request.errors.size).to eq(0)

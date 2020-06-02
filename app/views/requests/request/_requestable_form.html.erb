@@ -21,7 +21,7 @@
         <%= system_status_label requestable %>
         <%= status_label requestable %>
       <% end %>
-      <% if requestable.use_restriction? && !requestable.scsb_in_library_use? %>
+      <% if requestable.use_restriction? %>
         <br/>
         <%= requestable.item[:use_statement] %>
       <% end %>

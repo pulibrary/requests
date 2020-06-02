@@ -57,6 +57,10 @@ Rails/OutputSafety:
     - 'app/helpers/requests/application_helper.rb'
     - 'app/helpers/requests/request_helper.rb'
 
+RSpec/RepeatedExample:
+  Exclude:
+    - 'spec/models/requests/requestable_spec.rb'
+
 # Offense count: 1
 # Cop supports --auto-correct.
 Security/YAMLLoad:

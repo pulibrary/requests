@@ -1,10 +1,19 @@
-==============================================
-Request Service Errors
-==============================================
 <% @services.each do |s| %>
+<h2><%= s.class.name.titleize.gsub("/"," ") %> Errors</h2>
+<table>
   <% s.errors.each do |error| %>
-      <% error.each do |k,v| %>
-        <%= "#{k}=#{v}" %>
+      <% error.each do |key,value| %>
+        <tr>
+        <td><%= key.to_s.humanize.titleize %></td>
+        <td>
+          <% if value.is_a? Hash %>
+            <%= value.to_a.map{|k,v| "#{k}: #{v}"}.join(", ") %>
+          <% else %>
+            <%= value %>
+          <% end %>
+        </td>
+        </tr>
       <% end %>
   <% end %>
+</table>
 <% end %>

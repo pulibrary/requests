@@ -29,6 +29,7 @@ module Requests
 
     private
 
+      # rubocop:disable Metrics/MethodLength
       def handle_item(item:)
         status = {}
         params = build_params(item: item)
@@ -39,11 +40,14 @@ module Requests
         end
         if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
           status = place_hold(item, params)
-        elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
-          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].permit(params["request"].keys))
+        elsif response_json["hold"].blank?
+          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(safe_permit(params["bib"])).merge(safe_permit(params["request"]))
+        elsif response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item."
+          errors << response_json["hold"].merge(safe_permit(params["bib"])).merge(safe_permit(params["request"]))
         end
         status
       end
+      # rubocop:enable Metrics/MethodLength
 
       def build_params(item:)
         params = param_mapping(@submission.bib, @submission.user, item)
@@ -66,13 +70,17 @@ module Requests
         if reponse_json["response"]["reply_code"] == "0"
           status = item.merge(payload: payload)
         else
-          bib = params["bib"]
-          bib = bib.permit(params["bib"].keys) if bib.respond_to?(:permit)
-          request = params["request"]
-          request = request.permit(params["request"].keys) if request.respond_to?(:permit)
-          errors << reponse_json["response"].merge(bib).merge(request)
+          errors << reponse_json["response"].merge(safe_permit(params["bib"])).merge(safe_permit(params["request"]))
         end
         status
+      end
+
+      def safe_permit(hash)
+        if hash.respond_to?(:permit)
+          hash.permit(hash.keys)
+        else
+          hash
+        end
       end
 
       def payload(item, params)

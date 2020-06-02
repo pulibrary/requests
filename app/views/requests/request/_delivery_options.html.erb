@@ -15,7 +15,7 @@
     <% unless ( requestable.aeon? || requestable.online? || requestable.ask_me? || ( requestable.scsb? && requestable.recallable? ) ) %>
       <%= pickup_choices requestable, default_pickups %>
     <% end %>
-    <% if requestable.ask_me?  || !requestable.scsb_in_library_use? %>
+    <% if requestable.ask_me? %>
       <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>'><%= I18n.t('requests.ask_me.request_label') %></a>
     <% end %>
     <% if requestable.services.include?('recap_edd') %>

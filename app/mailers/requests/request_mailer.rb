@@ -197,6 +197,25 @@ module Requests
            subject: subject)
     end
 
+    def recap_edd_email(submission)
+      @submission = submission
+      destination_email = @submission.email # confirm
+      cc_email = [@submission.email] # confirm
+      subject = I18n.t('requests.recap_edd.email_subject')
+      mail(to: destination_email,
+           cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject)
+    end
+
+    def recap_edd_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.recap_edd.email_subject'), @submission.user_barcode))
+    end
+
     def recall_email(submission)
       @submission = submission
       destination_email = @submission.email

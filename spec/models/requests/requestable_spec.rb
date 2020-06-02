@@ -686,6 +686,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'has a single pickup location' do
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PJ')
+        expect(requestable.item["use_statement"]).to eq('In Library Use')
       end
     end
   end

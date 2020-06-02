@@ -1,4 +1,3 @@
-  <%= render partial: 'service_status' %>
   <%= simple_form_for(:request, { url: '/requests/submit.js', method: :post, remote: true, data: {type: 'script'}} ) do |f| %>
    <%= hidden_fields_request @request %>
     <% unless suppress_login(@request) %>

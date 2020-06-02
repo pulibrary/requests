@@ -72,7 +72,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           charged?: false, on_order?: false, aeon?: false,
           preservation?: false, annexa?: false, annexb?: false,
           plasma?: false, lewis?: false, recap?: false,
-          item_data?: false, recap_edd?: false, pageable?: false }
+          item_data?: false, recap_edd?: false, pageable?: false, scsb_in_library_use?: false }
       end
       let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
 
@@ -176,6 +176,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:recap?] = true
           stubbed_questions[:item_data?] = true
           stubbed_questions[:recap_edd?] = true
+          stubbed_questions[:ask_me?] = true
         end
         it "returns recap_edd in the services" do
           expect(router.calculate_services).to eq(['recap_edd'])

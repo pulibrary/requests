@@ -251,6 +251,7 @@ FactoryGirl.define do
     initialize_with { new(system_id: system_id, user: user, source: source) }
   end
 
+  # use_statement: "In Library Use"
   factory :request_scsb_ar, class: 'Requests::Request' do
     system_id 'SCSB-2650865'
     source 'pulsearch'

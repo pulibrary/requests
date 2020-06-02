@@ -27,7 +27,7 @@
       <% end %>
     </td>
   <td class='request--options' aria-live="polite">
-    <% if requestable.circulates? %>
+    <% if requestable.circulates? && !requestable.scsb_in_library_use? %>
       <%= render partial: 'delivery_options', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups } %>  
     <% else %>
       <%= render partial: 'help_me_get_it' %>  

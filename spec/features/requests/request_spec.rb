@@ -373,9 +373,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           within(".user-supplied-input") do
             check('requestable__selected')
           end
+          fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("Paging Request for Firestone Library")
+          expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
         end
       end
     end

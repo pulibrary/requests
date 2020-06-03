@@ -106,7 +106,7 @@ module Requests
           if sorted_requestable[mfhd].first.item_data?
             fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')
           else
-            fill_in = true
+            fill_in = sorted_requestable[mfhd].first.circulates?
           end
         end
       end

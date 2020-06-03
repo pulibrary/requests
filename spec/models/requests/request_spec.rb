@@ -1458,6 +1458,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#requestable" do
       describe "#fill_in_eligible" do
         it "identifies any mfhds that require fill in option" do
+          pending "annex is not open"
           expect(request_with_fill_in_eligible_holding.fill_in_eligible("2576882")).to be_truthy
         end
       end

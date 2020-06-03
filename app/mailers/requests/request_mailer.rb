@@ -112,9 +112,10 @@ module Requests
     def on_shelf_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
+      subject = "#{Requests::BibdataService.delivery_locations[@submission.items.first['pickup']]['label']} #{I18n.t('requests.on_shelf.email_subject_patron')}"
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.on_shelf.email_subject_patron'), @submission.user_barcode))
+           subject: subject_line(subject, @submission.user_barcode))
     end
 
     def on_order_email(submission)
@@ -193,6 +194,15 @@ module Requests
       end
       mail(to: destination_email,
            cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject)
+    end
+
+    def recap_edd_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      subject = I18n.t('requests.recap_edd.email_subject')
+      mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject)
     end

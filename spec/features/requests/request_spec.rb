@@ -363,6 +363,39 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Copy 2'
           expect(page).to have_content 'Copy 3'
         end
+
+        it 'show a fill in form if the item is an enumeration (Journal ect.)' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit 'requests/10574699'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'If the specific volume does not appear in the list above, please enter it here:'
+          all('.request--select').each { |checkbox| checkbox.set(false) }
+          within(".user-supplied-input") do
+            check('requestable__selected')
+          end
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Paging Request for Firestone Library")
+        end
+
+        it 'sends an error email for submission with no item information in voyager' do
+          stub_url = Requests.config[:voyager_api_base] + "/vxws/record/10574699" \
+                      "/items/10320354/hold?patron=77777&patron_homedb=" + URI.escape('1@DB')
+
+          get_error = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response><reply-text>ok</reply-text><reply-code>0</reply-code></response>"
+
+          stub_request(:get, stub_url).to_return(status: 200, body: get_error, headers: {})
+
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit 'requests/10574699'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'If the specific volume does not appear in the list above, please enter it here:'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Request Service Error")
+        end
       end
     end
 

@@ -7,11 +7,7 @@
 <tr>
   <td colspan="2" style="padding: 18px;">
     <p class="body-content" style="margin-bottom:0;">
-      <% if @submission.user['user_barcode'] == 'ACCESS' %>
-      <%= I18n.t('requests.recap_guest.email_conf_msg') %>
-      <% else %>
-      <%= I18n.t('requests.recap.email_conf_msg') %>
-      <% end %>
+      <%= I18n.t('requests.recap_edd.email_conf_msg') %>
     </p>
   </td>
 </tr>
@@ -24,6 +20,6 @@
 
 <tr>
   <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
-    <%= render 'item_info' %>
+    <%= render 'item_info_all' %>
   </td>
 </tr>

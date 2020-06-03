@@ -101,7 +101,7 @@ module Requests
 
     def fill_in_eligible(mfhd)
       fill_in = false
-      unless (sorted_requestable[mfhd].first.services & ["on_order", "on_shelf", "online"]).present?
+      unless (sorted_requestable[mfhd].first.services & ["on_order", "online"]).present?
         if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
           if sorted_requestable[mfhd].first.item_data?
             fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')
@@ -114,7 +114,7 @@ module Requests
     end
 
     def fill_in_services
-      ["annexa", "annexb", "recap_no_items"]
+      ["annexa", "annexb", "recap_no_items", "on_shelf"]
     end
 
     # Does this request object have any available copies?

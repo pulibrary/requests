@@ -183,7 +183,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
 
     it "renders the headers" do
       expect(mail.subject).to eq(sub)
-      expect(mail.to).to eq(["fstpage@princeton.edu"])
+      expect(mail.to).to eq(["trace@princeton.edu"])
       expect(mail.cc).to eq(["wange@princeton.edu", submission_for_no_items.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end

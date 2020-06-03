@@ -1,4 +1,4 @@
-<% if requestable.ask_me? || requestable.item_data? || (requestable.services & ["on_shelf", "aeon", "on_order"]).present? %>
+<% if requestable.ask_me? || requestable.item_data? || (requestable.services & ["aeon", "on_order", "recap_no_items"]).present? || (requestable.services.include?("on_shelf")  && !fill_in_eligible) %>
 <tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
     <td class='request--select'>
       <%= hidden_field_tag 'requestable[][selected]', false %>

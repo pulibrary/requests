@@ -78,7 +78,7 @@ module Requests
         elsif requestable.pageable?
           ['paging']
         else
-          ['on_shelf'] # goes to stack mapping
+          ['on_shelf', 'on_shelf_edd'] # goes to stack mapping
           # suppressing Trace service for the moment, but leaving this code
           # see https://github.com/pulibrary/requests/issues/164 for info
           # if (requestable.open? && auth_user?)

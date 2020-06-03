@@ -12,7 +12,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#services' do
       it 'has a service on on_shelf' do
-        expect(requestable.services.include?('on_shelf')).to be true
+        expect(requestable.services).to contain_exactly('on_shelf', 'on_shelf_edd')
       end
     end
 

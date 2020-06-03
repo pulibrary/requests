@@ -57,7 +57,7 @@ module Requests
                     else
                       I18n.t("requests.paging.brief_msg")
                     end
-        concat content_tag(:li, brief_msg.html_safe, class: "service-item text-muted")
+        concat content_tag(:li, brief_msg.html_safe, class: "service-item")
       end
     end
 
@@ -446,7 +446,7 @@ module Requests
           # temporary changes issue 438
           brief_msg = I18n.t("requests.on_shelf.brief_msg", location: requestable.location[:library][:label])
           content_tag(:ul, class: "service-list") do
-            concat content_tag(:li, brief_msg, class: 'service-item text-muted')
+            concat content_tag(:li, brief_msg, class: 'service-item')
           end
           # concat link_to 'Where to find it', requestable.map_url(mfhd_id)
           # concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?

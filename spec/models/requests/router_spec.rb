@@ -209,7 +209,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
 
       context "on_shelf" do
         it "returns on_shelf in the services" do
-          expect(router.calculate_services).to eq(['on_shelf'])
+          expect(router.calculate_services).to eq(['on_shelf', 'on_shelf_edd'])
         end
       end
 

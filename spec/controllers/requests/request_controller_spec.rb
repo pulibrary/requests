@@ -46,6 +46,22 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       }
       expect(response.status).to eq(302)
     end
+    it 'redirects you when a single aeon record is requested' do
+      get :generate, params: {
+        source: 'pulsearch',
+        system_id: '9576880',
+        mfhd: '10043356'
+      }
+      expect(response.status).to eq(302)
+    end
+
+    it 'does not redirects you when multiple aeon records are requested' do
+      get :generate, params: {
+        source: 'pulsearch',
+        system_id: '9576880'
+      }
+      expect(response.status).to eq(200)
+    end
   end
 
   describe 'POST #submit' do

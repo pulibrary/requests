@@ -78,7 +78,7 @@ module Requests
         elsif requestable.pageable?
           ['paging']
         else
-          ['on_shelf'] # goes to stack mapping
+          calculate_on_shelf_services
           # suppressing Trace service for the moment, but leaving this code
           # see https://github.com/pulibrary/requests/issues/164 for info
           # if (requestable.open? && auth_user?)
@@ -87,13 +87,18 @@ module Requests
         end
       end
       # rubocop:enable Metrics/MethodLength
+      def calculate_on_shelf_services
+        services = ['on_shelf'] 
+        services << 'on_shelf_edd' if requestable.circulates?
+        services
+      end
 
       def calculate_recap_services
         return ['recap_no_items'] unless requestable.item_data?
         services = []
         return services << 'ask_me' if requestable.scsb_in_library_use?
         # Add physical recap delivery during campus closure
-        # services = ['recap']
+        services = ['recap']
         services << 'recap_edd' if requestable.recap_edd? && auth_user?
         services
       end

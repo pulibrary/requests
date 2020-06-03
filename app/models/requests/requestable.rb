@@ -66,6 +66,10 @@ module Requests
         ((location[:recap_electronic_delivery_location] == true) && !scsb?)
     end
 
+    def edd?
+      recap_edd? || services.include?('on_shelf_edd')
+    end
+
     def missing?
       item[:status] == 'Missing'
     end
@@ -93,7 +97,7 @@ module Requests
     end
 
     def circulates?
-      location[:circulates] == true && location[:library][:code] == "firestone"
+      location[:circulates] == true && ["firestone", "recap"].include?(location[:library][:code]) # == "firestone"
     end
 
     def always_requestable?

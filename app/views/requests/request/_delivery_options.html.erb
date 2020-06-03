@@ -1,14 +1,19 @@
     <% if requestable.ill_eligible? %>
       <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(@request.ctx) %>"></span>
     <% end %>
-    <% if requestable.services.include?('recap_edd') %>
-        <%= hidden_field_tag "requestable[][type]", "recap" %>
+    <% if requestable.edd? %>
+        
+        <% if requestable.services.include?('on_shelf_edd') %>
+          <%= hidden_field_tag "requestable[][type]", "on_shelf" %>
+        <% else %>
+          <%= hidden_field_tag "requestable[][type]", "recap" %>
+        <% end %>
         <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
         <br/><small id="requestable__type_recap_caption_<%#= requestable.item[:id] %>" class="form-text text-muted"><%#= I18n.t('requests.recap.brief_msg') %></small>
         <br/>
     <% end %>
-    <% unless requestable.services.include?('recap_edd') %>
+    <% unless requestable.edd? %>
         <%= show_service_options requestable, mfhd %>
         <%= hidden_service_options requestable %>
     <% end %>
@@ -18,7 +23,7 @@
     <% if requestable.ask_me? %>
       <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>'><%= I18n.t('requests.ask_me.request_label') %></a>
     <% end %>
-    <% if requestable.services.include?('recap_edd') %>
+    <% if requestable.edd? %>
         <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
         <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text text-muted"><%= I18n.t('requests.recap_edd.brief_msg') %></small>

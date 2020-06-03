@@ -1079,7 +1079,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
 
     it "sends the confirmation email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_confirmation", submission_for_on_shelf).deliver_now
-      expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject_patron'))
+      expect(mail.subject).to eq("Firestone Library #{I18n.t('requests.on_shelf.email_subject_patron')}")
       expect(mail.to).to eq([submission_for_on_shelf.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
@@ -1099,7 +1099,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "on_shelf",
-          "pickup" => "PA" }.with_indifferent_access,
+          "pickup" => "PL" }.with_indifferent_access,
         {
           "selected" => "false"
         }.with_indifferent_access
@@ -1136,7 +1136,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
 
     it "sends the confirmation email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_confirmation", submission_for_on_shelf).deliver_now
-      expect(mail.subject).to eq(I18n.t('requests.on_shelf.email_subject_patron'))
+      expect(mail.subject).to eq("East Asian Library #{I18n.t('requests.on_shelf.email_subject_patron')}")
       expect(mail.to).to eq([submission_for_on_shelf.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(mail.html_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')

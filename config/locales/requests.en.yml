@@ -40,7 +40,7 @@ en:
     annexa:
       email: "forranx@princeton.edu"
       email_subject: "Annex Request"
-      brief_msg: "Item offsite at Forrestal Annex. Request for delivery in 1-2 business days"
+      brief_msg: "Item offsite at Forrestal Annex. Request for pick-up."
       # temporary changes issue 438
       #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."

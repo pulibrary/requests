@@ -255,7 +255,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows CAS patrons to request a record that has no item data' do
-          pending "firestone only"
           visit "/requests/#{no_items_id}"
           check('requestable__selected', exact: true)
           fill_in 'requestable[][user_supplied_enum]', with: 'Some Volume'
@@ -298,11 +297,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows patrons to request a Forrestal annex' do
-          pending "firestone only"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550'
           expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Scan This'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'

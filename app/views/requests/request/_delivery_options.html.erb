@@ -7,6 +7,9 @@
         <%= pickup_choices requestable, default_pickups %>
         <div class="delivery-option" >Electronic Delivery</div>
         <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>'><%= I18n.t('requests.on_shelf_edd.request_label') %></a>
+        <% if requestable.annexa? || requestable.annexb? || requestable.lewis? || requestable.plasma? || requestable.on_order? %>
+          <%= hidden_field_tag "requestable[][type]", requestable.services.first %>
+        <% end %>
     <% elsif requestable.services.include?('recap_edd') %>
         <%= hidden_field_tag "requestable[][type]", "recap" %>
         <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>

@@ -93,7 +93,7 @@ module Requests
     end
 
     def circulates?
-      location[:circulates] == true && ["firestone", "annexa"].include?(location[:library][:code])
+      location[:circulates] == true && ["firestone", "annexa", "recap"].include?(location[:library][:code])
     end
 
     def always_requestable?

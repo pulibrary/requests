@@ -180,14 +180,16 @@ module Requests
     end
 
     def pickup_choices_fill_in(requestable, default_pickups)
-      locs = []
-      if requestable.pickup_locations.nil? || requestable.location['delivery_locations'].empty?
-        locs = available_pickups(requestable, default_pickups)
-      else
-        requestable.pickup_locations.each do |location|
-          locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
-        end
-      end
+      locs = available_pickups(requestable, default_pickups)
+      # temporary only deliver to holding library or firestone
+      # locs = []
+      # if requestable.pickup_locations.nil? || requestable.location['delivery_locations'].empty?
+      #   locs = available_pickups(requestable, default_pickups)
+      # else
+      #   requestable.pickup_locations.each do |location|
+      #     locs << { label: location[:label], gfa_code: location[:gfa_pickup] }
+      #   end
+      # end
       if locs.size > 1
         select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_code]] }), prompt: I18n.t("requests.default.pickup_placeholder")
       else
@@ -393,9 +395,12 @@ module Requests
     # only show the table sort if there are enough items
     # to make it worthwhile
     def show_tablesorter(requestable_list)
-      table_class = ""
-      table_class += "tablesorter" if requestable_list.size > 5
-      table_class
+      return "tablesorter" if table_sorter_present?(requestable_list)
+      ""
+    end
+
+    def table_sorter_present?(requestable_list)
+      requestable_list.size > 5
     end
 
     def display_label

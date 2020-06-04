@@ -3,6 +3,7 @@ require 'faraday'
 module Requests
   class HoldItem
     include Requests::Voyager
+    include Requests::IlliadApi
 
     def initialize(submission)
       @service_type = 'on_shelf'
@@ -32,11 +33,20 @@ module Requests
       def handle_item(item:)
         status = {}
         params = build_params(item: item)
-        response_json = hold_status_data(params: params)
-        if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
-          status = place_hold(item, params)
-        elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
-          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].permit(params["request"].keys))
+        request_type = if item["delivery_mode_#{item['item_id']}"].nil?
+          item['type']
+        else
+          item["delivery_mode_#{item['item_id']}"]
+        end
+        if request_type == 'edd'
+          status = {}
+        else
+          response_json = hold_status_data(params: params)
+          if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
+            status = place_hold(item, params)
+          elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
+            errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].permit(params["request"].keys))
+          end
         end
         status
       end
@@ -72,6 +82,3 @@ module Requests
       end
   end
 end
-
-# https://webvoyage.princeton.edu:7014/vxws/record/4815239/items/7448875/hold?patron=12345&patron_homedb=1@PRINCETONDB20050302104001
-# https://webvoyage.princeton.edu:7014/vxws/record/11451836/items/8183358/hold?patron=95215&patron_homedb=1@PRINCETONDB20050302104001

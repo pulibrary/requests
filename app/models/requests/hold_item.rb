@@ -72,6 +72,3 @@ module Requests
       end
   end
 end
-
-# https://webvoyage.princeton.edu:7014/vxws/record/4815239/items/7448875/hold?patron=12345&patron_homedb=***REMOVED***
-# https://webvoyage.princeton.edu:7014/vxws/record/11451836/items/8183358/hold?patron=***REMOVED***&patron_homedb=***REMOVED***

@@ -4,7 +4,7 @@
     <%= check_box_tag "requestable[][selected]", true, false, class: 'request--select' %>
     <%= hidden_fields_holding requestable %>
   </td>
-  <td colspan="2" class='request--options'>
+  <td class='request--options'>
     <fieldset class="form-group">
      <label class="control-label col-sm-6" for="user_supplied_enum">
           If the specific volume does not appear in the list above, please enter it here:
@@ -14,6 +14,7 @@
       </div>
     </fieldset>
   </td>
+  <td></td>
   <td>
     <%= show_service_options_fill_in requestable %>
     <%= hidden_service_options_fill_in requestable %>

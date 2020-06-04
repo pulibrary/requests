@@ -181,5 +181,15 @@ $(document).ready(function() {
       }
     });
 
+    jQuery(function() {
+      return $(".tablesorter").DataTable({
+        language: {
+          search: "Search by Enumeration"
+        },
+        responsive: true,
+        ordering: false
+      });
+    });
+  
 
 });

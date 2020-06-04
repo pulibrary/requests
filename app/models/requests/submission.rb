@@ -75,7 +75,6 @@ module Requests
     def process_submission
       @services = []
       @success_messages = []
-
       process_hold
       process_recall
       process_recap

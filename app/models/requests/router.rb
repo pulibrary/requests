@@ -88,8 +88,8 @@ module Requests
       end
       # rubocop:enable Metrics/MethodLength
       def calculate_on_shelf_services
-        services = ['on_shelf'] 
-        services << 'on_shelf_edd' if requestable.circulates?
+        services = ['on_shelf_edd'] 
+        services << 'on_shelf' if requestable.circulates?
         services
       end
 

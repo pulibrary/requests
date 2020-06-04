@@ -140,7 +140,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:annexa?] = true
         end
         it "returns annexa in the services" do
-          expect(router.calculate_services).to eq(['annexa'])
+          expect(router.calculate_services).to eq(['annexa', 'on_shelf_edd'])
         end
       end
 

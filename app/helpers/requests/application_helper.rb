@@ -162,17 +162,21 @@ module Requests
     end
 
     def available_pickups(requestable, default_pickups)
-      locs = []
-      if requestable.services.include? 'trace'
-        locs = default_pickups
-      elsif requestable.pickup_locations.nil?
-        locs = default_pickups
-      else
-        requestable.pickup_locations.each do |location|
-          locs << { label: location[:label], gfa_code: location[:gfa_pickup], staff_only: location[:staff_only] }
-        end
-      end
-      locs
+      idx = (default_pickups.map { |loc| loc[:label] }).index(requestable.location["library"]["label"]) || 0
+      [default_pickups[idx]]
+
+      # temporary only deliver to holding library or firestone
+      # locs = []
+      # if requestable.services.include? 'trace'
+      #   locs = default_pickups
+      # elsif requestable.pickup_locations.nil?
+      #   locs = default_pickups
+      # else
+      #   requestable.pickup_locations.each do |location|
+      #     locs << { label: location[:label], gfa_code: location[:gfa_pickup], staff_only: location[:staff_only] }
+      #   end
+      # end
+      # locs
     end
 
     def pickup_choices_fill_in(requestable, default_pickups)
@@ -435,6 +439,7 @@ module Requests
         return if services.blank? || services.include?('recap_edd') # || services.include?(recap)
         content_tag(:ul, class: "service-list") do
           services.each do |service|
+            next if service == "on_shelf_edd"
             brief_msg = I18n.t("requests.#{service}.brief_msg")
             concat content_tag(:li, brief_msg.html_safe, class: "service-item")
           end

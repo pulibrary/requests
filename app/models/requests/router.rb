@@ -66,7 +66,7 @@ module Requests
         elsif requestable.preservation?
           ['pres']
         elsif requestable.annexa?
-          ['annexa']
+          ['annexa', 'on_shelf_edd']
         elsif requestable.annexb?
           ['annexb']
         elsif requestable.plasma?

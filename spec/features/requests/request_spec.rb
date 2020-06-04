@@ -270,6 +270,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           # expect(page).to have_link('Where to find it')
         end
 
+        it 'allows CAS patrons to locate an on_shelf record' do
+          visit "/requests/9770811"
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Pageable item at Firestone Library. Request for pick-up.'
+          expect(page).to have_content I18n.t("requests.on_shelf_edd.request_label")
+        end
+
         it 'displays an ark link for a plum item' do
           visit "/requests/#{iiif_manifest_item}"
           expect(page).to have_link('Digital content', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")

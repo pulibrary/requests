@@ -162,6 +162,10 @@ module Requests
       services.include?('on_shelf')
     end
 
+    def on_shelf_edd?
+      services.include?('on_shelf_edd')
+    end
+
     def borrow_direct?
       services.include?('bd')
     end

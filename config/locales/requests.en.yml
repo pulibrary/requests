@@ -76,6 +76,7 @@ en:
       patron_conf_msg: "You will be notified via email when your item is ready for pick-up from the Preservation Office."
     on_shelf_edd:
       request_label: "Digitization Request"
+      brief_msg: Request an article, book chapter, or the entire volume be digitized and delivered as a PDF file in 1-2 business days. Please use the notes field to indicate if you'd the entire work to be imaged. The Library complies with all applicable copyright laws.
     on_shelf:
       # temporary changes issue 438
       # brief_msg: "Item on Shelf. Consult shelf location map."
@@ -123,7 +124,8 @@ en:
       scsb_recall_destination: 'recapproblems@princeton.edu'
     recap_edd:
       email_subject: "Electronic Document Delivery Request Confirmation"
-      brief_msg: "Item off-site at ReCAP facility. Request an article or book chapter be scanned for you and delivered as a PDF file in 1-2 business days. If you need more than an article or chapter, please request the physical item. The Library complies with all applicable copyright laws."
+      # brief_msg: "Item off-site at ReCAP facility. Request an article or book chapter be scanned for you and delivered as a PDF file in 1-2 business days. If you need more than an article or chapter, please request the physical item. The Library complies with all applicable copyright laws."
+      brief_msg: Request an article, book chapter, or the entire volume be digitized and delivered as a PDF file in 1-2 business days. Please use the notes field to indicate if you'd the entire work to be imaged. The Library complies with all applicable copyright laws.
       email_conf_msg: "Electronic document delivery requests typically take 1-2 days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you."
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     recap_no_items:

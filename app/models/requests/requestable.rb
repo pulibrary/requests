@@ -263,7 +263,7 @@ module Requests
     private
 
       def open_libraries
-        ['firestone', 'annexa', 'recap', 'marquand', 'architecture', 'mendel', 'stokes', 'eastasian']
+        ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian']
       end
 
       def scsb_locations

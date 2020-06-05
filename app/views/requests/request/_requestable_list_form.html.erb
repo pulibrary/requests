@@ -28,7 +28,7 @@
       <% fill_in_eligible = @request.fill_in_eligible(mfhd) %>
       <%= render partial: "requestable_form", collection: requestable_list, as: :requestable, locals: { mfhd: mfhd, holdings: @request.holdings, default_pickups: @request.default_pickups, fill_in_eligible: fill_in_eligible } %>
       <% if fill_in_eligible %>
-        <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: default_pickups } %>
+        <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: default_pickups, requestable_list: requestable_list } %>
       <% end %>
       
     </tbody>

@@ -104,10 +104,11 @@ en:
       email_subject: "Paging Request"
       status: "Items requested (online, via email, or in person) anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
       message: "If you have not picked up a requested book by the end of the same day, you will receive an email reminder that your book is available for you at Circulation."
-      brief_msg: "Paging Request, will be delivered to Firestone Circulation."
+      # brief_msg: "Paging Request, will be delivered to Firestone Circulation."
+      brief_msg: "Paging Request, will be delivered to:"
       success: "Request submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
       # temporary changes issue 438
-      #email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
+      # email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email the day prior telling you the item will be available for pick-up in Firestone Lobby between the hours of 12-2."
     recap_guest:
       email_subject: "Patron Initiated Catalog Request - ReCAP Access Only Request"
@@ -128,7 +129,8 @@ en:
     recap_no_items:
       email: "recapproblems@princeton.edu"
       email_subject: "ReCAP Non-Barcoded Request."
-      brief_msg: "Please select the delivery location for this off-site ReCAP request."
+      # brief_msg: "Please select the delivery location for this off-site ReCAP request."
+      brief_msg: "ReCAP Paging Request, will be delivered to:"
       email_msg: "A request was made on a record that has no barcoded item data. This is likely a data issue that should be corrected."
       email_conf_msg: "The following record has been requested:"
     recall:

@@ -78,7 +78,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         # TODO: Remove when campus has re-opened
         it 'guest patrons can not request a physical recap item during the closure' do
-          pending "firestone only"
           visit '/requests/9944355'
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
@@ -87,8 +86,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Item is not requestable'
         end
 
-        # TODO: Activate test when campus has re-opened
-        xit 'allows guest patrons to request a physical recap item' do
+        it 'allows guest patrons to request a physical recap item' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/9944355'
           # click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
@@ -103,7 +102,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'prohibits guest patrons from requesting In-Process items' do
-          pending "firestone only"
           visit "/requests/#{in_process_id}"
           # click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
@@ -199,7 +197,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
       describe 'When visiting a voyager ID as a CAS User' do
         it 'allow CAS patrons to request an available ReCAP item.' do
-          pending "firestone only"
           stub_request(:post, Requests.config[:scsb_base])
             .with(headers: { 'Accept' => '*/*' })
             .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
@@ -219,7 +216,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows CAS patrons to request In-Process items', js: true do
-          pending "firestone only"
           visit "/requests/#{in_process_id}"
           expect(page).to have_content 'In Process'
           expect(page).to have_button('Request this Item', disabled: false)
@@ -228,7 +224,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'makes sure In-Process items can only be delivered to their holding library', js: true do
-          pending "firestone only"
           visit "/requests/#{in_process_id}"
           expect(page).to have_content 'In Process'
           expect(page).to have_content 'Pick-up location: Marquand Library'
@@ -238,7 +233,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true do
-          pending "firestone only"
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
           # temporary changes issue 438
@@ -263,9 +257,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
+          expect(page).to have_content "ReCAP Paging Request, will be delivered to:\nFirestone Library"
+          expect(page).to have_content "Paging Request, will be delivered to:\nFirestone Library"
           # temporary changes 438
-          expect(page).to have_content 'Help Me Get It' # while recap is closed
-          expect(page).to have_content 'Paging Request, will be delivered to Firestone Circulation.'
           # expect(page).to have_link('Where to find it')
         end
 
@@ -283,7 +277,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
         it 'allows patrons to request a physical recap item' do
-          pending "firestone only"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9944355'
@@ -408,7 +401,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       let(:user) { FactoryGirl.create(:valid_barcode_patron) }
 
       it 'display a request form for a ReCAP item.' do
-        pending "firestone only"
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
         login_as user

@@ -101,7 +101,7 @@ module Requests
     end
 
     def can_be_delivered?
-      circulates? && !scsb_in_library_use?
+      circulates? && !scsb_in_library_use? && !in_library_use_only?
     end
 
     def always_requestable?
@@ -240,6 +240,11 @@ module Requests
     def scsb_in_library_use?
       return false unless item?
       scsb? && item[:use_statement] == "In Library Use"
+    end
+
+    def in_library_use_only?
+      return false unless location["holding_library"]
+      ["marquand"].include? location["holding_library"]["code"]
     end
 
     def barcode?

@@ -223,15 +223,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Online'
         end
 
-        it 'allows CAS patrons to request In-Process items', js: true do
-          visit "/requests/#{in_process_id}"
-          expect(page).to have_content 'In Process'
-          expect(page).to have_button('Request this Item', disabled: false)
-          click_button 'Request this Item'
-          expect(page).to have_content I18n.t("requests.submit.in_process_success")
-        end
-
-        it 'makes sure In-Process items can only be delivered to their holding library', js: true do
+        it 'allows CAS patrons to request In-Process items and can only be delivered to their holding library', js: true do
           visit "/requests/#{in_process_id}"
           expect(page).to have_content 'In Process'
           expect(page).to have_content 'Pick-up location: Marquand Library'
@@ -387,6 +379,22 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(email.subject).to eq("Paging Request for Firestone Library")
           expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
         end
+
+        # TODO: once Marquad in library use is available again it should show pickup at marquand also
+        it 'Shows marqaud as an EDD option only' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/11780965?mfhd=11443781'
+          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          expect(page).to have_content 'Electronic Delivery '
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Article/Chapter Title *'
+          fill_in "Title", with: "my stuff"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(email.html_part.body.to_s).to have_content("You will be notified via email when your item is available.")
+        end
       end
     end
 
@@ -419,5 +427,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
     end
   end
+
   # rubocop:enable RSpec/MultipleExpectations
 end

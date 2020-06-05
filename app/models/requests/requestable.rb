@@ -96,8 +96,12 @@ module Requests
       location[:circulates] == true && open_libraries.include?(location[:library][:code])
     end
 
-    def open_libraries
-      ['firestone', 'annexa', 'recap', 'marquand', 'architecture', 'mendel', 'stokes', 'eastasian']
+    def available_for_digitizing?
+      open_libraries.include?(location[:library][:code])
+    end
+
+    def can_be_delivered?
+      circulates? && !scsb_in_library_use?
     end
 
     def always_requestable?
@@ -252,6 +256,10 @@ module Requests
     end
 
     private
+
+      def open_libraries
+        ['firestone', 'annexa', 'recap', 'marquand', 'architecture', 'mendel', 'stokes', 'eastasian']
+      end
 
       def scsb_locations
         ['scsbnypl', 'scsbcul']

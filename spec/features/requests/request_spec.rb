@@ -57,7 +57,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       describe 'When visiting a request item without logging in', js: true do
         it 'allows guest patrons to identify themselves and view the form' do
           visit '/requests/9944355'
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          pending "Guest have no access during COVID-19 pandemic"
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button(I18n.t('requests.account.other_user_login_btn'))
@@ -67,8 +68,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows guest patrons to see aeon requests' do
           visit '/requests/336525'
-          pending "must circulate to be requestable"
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          pending "Guest have no access during COVID-19 pandemic"
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button(I18n.t('requests.account.other_user_login_btn'))
@@ -78,7 +79,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         # TODO: Remove when campus has re-opened
         it 'guest patrons can not request a physical recap item during the closure' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/9944355'
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -86,10 +89,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Item is not requestable'
         end
 
+        # TODO: Activate test when campus has re-opened
         it 'allows guest patrons to request a physical recap item' do
           pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/9944355'
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -102,8 +106,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'prohibits guest patrons from requesting In-Process items' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit "/requests/#{in_process_id}"
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -111,8 +116,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'prohibits guest patrons from requesting On-Order items' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit "/requests/#{on_order_id}"
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -120,8 +126,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows guest patrons to access Online items' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/9994692'
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -129,9 +136,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows guest patrons to request Aeon items' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/2167669'
-          pending "must circulate to be requestable"
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -139,8 +146,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'prohibits guest patrons from using Borrow Direct, ILL, and Recall on Missing items' do
+          pending "Guest have no access during COVID-19 pandemic"
           visit '/requests/1788796?mfhd=2053005'
-          # click_link(I18n.t('requests.account.other_user_login_msg'))
+          click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
           click_button I18n.t('requests.account.other_user_login_btn')
@@ -260,6 +268,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content "ReCAP Paging Request, will be delivered to:\nFirestone Library"
           expect(page).to have_content "Paging Request, will be delivered to:\nFirestone Library"
           # temporary changes 438
+          # expect(page).to have_content 'Help Me Get It' # while recap is closed
           # expect(page).to have_link('Where to find it')
         end
 
@@ -294,7 +303,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550'
           expect(page).to have_content 'Pick-up location: Firestone Library'
-          expect(page).to have_content 'Scan This'
+          expect(page).to have_content 'Digitization Request'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'
@@ -302,7 +311,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows patrons to request a Lewis' do
-          pending "firestone only"
+          pending "Lewis library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/426420'
@@ -332,7 +341,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows patrons to request a PPL Item' do
-          pending "firestone only"
+          pending "PPL library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/578830'
@@ -344,7 +353,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows filtering items by mfhd' do
-          pending "firestone only"
+          pending "Lewis library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
@@ -354,7 +363,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'show all copies if MFHD is not present' do
-          pending "firestone only"
+          pending "Lewis library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192'

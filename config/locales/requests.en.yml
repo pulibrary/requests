@@ -75,7 +75,7 @@ en:
       email_conf_msg: "The following Preservation item has been requested:"
       patron_conf_msg: "You will be notified via email when your item is ready for pick-up from the Preservation Office."
     on_shelf_edd:
-      request_label: "Scan This"
+      request_label: "Digitization Request"
     on_shelf:
       # temporary changes issue 438
       # brief_msg: "Item on Shelf. Consult shelf location map."

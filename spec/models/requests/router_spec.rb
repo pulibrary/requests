@@ -208,8 +208,11 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
       end
 
       context "on_shelf" do
+        before do
+          stubbed_questions[:circulates?] = true
+        end
         it "returns on_shelf in the services" do
-          expect(router.calculate_services).to eq(['on_shelf', 'on_shelf_edd'])
+          expect(router.calculate_services).to eq(['on_shelf_edd', 'on_shelf'])
         end
       end
 

@@ -99,12 +99,6 @@ module Requests
         "      user.provider = access_token.provider\n" \
         "    end\n" \
         "  end\n" \
-        "  def can_pickup?\n" \
-        "    pickup_users = [ self.uid ]\n" \
-        "    if pickup_users.include? self.uid\n" \
-        "      true\n" \
-        "    end\n" \
-        "  end\n" \
       end
     end
     # rubocop:enable Metrics/MethodLength

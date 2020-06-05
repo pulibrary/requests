@@ -6,8 +6,6 @@
     <%= render partial: 'auth_user_lookup_fail' %>
 <% elsif !@user.guest && @patron['barcode'].blank? %>
     <%= render partial: 'cas_user_no_barcode' %>
-<% elsif @user.can_pickup? %>
-    <%= render partial: 'request_form' %>
 <% else %>
-    <%= render partial: 'help_me_get_it' %>  
+    <%= render partial: 'request_form' %>
 <% end %>

@@ -1,0 +1,5 @@
+        <div class="delivery-option" >Electronic Delivery</div>
+        <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(request_context, note: 'Digitization Request') %>'><%= I18n.t('requests.on_shelf_edd.request_label') %></a>
+        <% if requestable.annexa? || requestable.annexb? || requestable.lewis? || requestable.plasma? || requestable.on_order? %>
+          <%= hidden_field_tag "requestable[][type]", requestable.services.first %>
+        <% end %>

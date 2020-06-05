@@ -16,8 +16,9 @@ module Requests
     end
 
     # accepts a @solr_open_url_context object and formats it appropriately for ILL
-    def illiad_request_url(solr_open_url_context)
-      query_params = illiad_query_parameters(referrer: solr_open_url_context.referrer, referent: solr_open_url_context.referent, metadata: solr_open_url_context.referent.metadata)
+    def illiad_request_url(solr_open_url_context, note: nil)
+      query_params = illiad_query_parameters(referrer: solr_open_url_context.referrer, referent: solr_open_url_context.referent,
+                                             metadata: solr_open_url_context.referent.metadata, note: note)
       "#{Requests.config[:ill_base]}?#{query_params}"
     end
 
@@ -27,7 +28,8 @@ module Requests
       # https://github.com/team-umlaut/umlaut/blob/master/app/service_adaptors/illiad.rb
       # takes an existing openURL and illiad-izes it.
       # also attempts to handle the question of enumeration.
-      def illiad_query_parameters(referrer:, referent:, metadata:)
+      # rubocop:disable Metrics/MethodLength
+      def illiad_query_parameters(referrer:, referent:, metadata:, note:)
         qp = {}
         METADATA_MAPPING.each { |metadata_key, illiad_key| qp[illiad_key] = metadata[metadata_key.to_s] }
 
@@ -45,11 +47,13 @@ module Requests
         qp['rft.oclcnum'] = get_oclcnum(referent)
         qp['genre'] = genere(format: referent.format, qp: qp)
         qp['CitedIn'] = catalog_url(referent)
+        qp['notes'] = note
 
         # trim empty ones please
         qp.delete_if { |_k, v| v.blank? }
         qp.to_query
       end
+      # rubocop:enable Metrics/MethodLength
 
       # Grab a source label out of `sid` or `rfr_id`, add on our suffix.
       def sid_for_illiad(referrer)

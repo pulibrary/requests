@@ -27,10 +27,12 @@
       <% end %>
     </td>
   <td class='request--options' aria-live="polite">
-    <% if requestable.circulates? && !requestable.scsb_in_library_use? %>
-      <%= render partial: 'delivery_options', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups } %>  
+    <% if requestable.can_be_delivered? %>
+      <%= render partial: 'delivery_options', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>  
+    <% elsif requestable.available_for_digitizing? %>
+      <%= render partial: 'digitization', locals: { requestable: requestable, request_context: @request.ctx } %>
     <% else %>
-      <%= render partial: 'help_me_get_it' %>  
+      <%= render partial: 'help_me_get_it', locals: { requestable: requestable, request_context: @request.ctx } %>  
     <% end %>
   </td>
 </tr>

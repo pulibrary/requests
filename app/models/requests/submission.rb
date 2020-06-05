@@ -98,6 +98,10 @@ module Requests
       @services.map(&:errors).flatten
     end
 
+    def pickup_location
+      Requests::BibdataService.delivery_locations[items.first["pickup"]]["library"]
+    end
+
     private
 
       def process_hold

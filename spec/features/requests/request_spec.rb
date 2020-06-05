@@ -260,6 +260,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content "ReCAP Paging Request, will be delivered to:\nFirestone Library"
           expect(page).to have_content "Paging Request, will be delivered to:\nFirestone Library"
           # temporary changes 438
+          # expect(page).to have_content 'Help Me Get It' # while recap is closed
+          expect(page).to have_content 'Paging Request, will be delivered to Firestone Circulation.'
           # expect(page).to have_link('Where to find it')
         end
 

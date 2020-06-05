@@ -79,7 +79,7 @@ module Requests
           ['paging']
         else
           calculate_on_shelf_services
-           # goes to stack mapping
+          # goes to stack mapping
           # suppressing Trace service for the moment, but leaving this code
           # see https://github.com/pulibrary/requests/issues/164 for info
           # if (requestable.open? && auth_user?)
@@ -90,7 +90,7 @@ module Requests
       # rubocop:enable Metrics/MethodLength
 
       def calculate_on_shelf_services
-        services = ['on_shelf_edd'] 
+        services = ['on_shelf_edd']
         services << 'on_shelf' if requestable.circulates?
         services
       end

@@ -93,7 +93,11 @@ module Requests
     end
 
     def circulates?
-      location[:circulates] == true && ["firestone", "annexa", "recap"].include?(location[:library][:code])
+      location[:circulates] == true && open_libraries.include?(location[:library][:code])
+    end
+
+    def open_libraries
+      ['firestone', 'annexa', 'recap', 'marquand', 'architecture', 'mendel', 'stokes', 'eastasian']
     end
 
     def always_requestable?

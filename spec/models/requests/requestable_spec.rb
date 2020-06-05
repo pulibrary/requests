@@ -299,6 +299,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context 'A Recap Marquand holding' do
+    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" } }) }
+
+    describe '#site' do
+      it 'returns a Marquand site param' do
+        expect(requestable.in_library_use_only?).to be_truthy
+      end
+    end
+  end
+
   context 'A requestable item from a RBSC holding that has a long title' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_w_long_title) }

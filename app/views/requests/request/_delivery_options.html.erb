@@ -16,7 +16,7 @@
         <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", false, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
         <br/><small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
-        <%= render partial: "edd_fields", locals: { requestable: requestable } %>
+        <%= render partial: "edd_fields", locals: { requestable: requestable, collapse_field: "" } %>
     <% else %>
         <% if requestable.ill_eligible? %>
           <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(request_context) %>"></span>

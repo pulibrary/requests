@@ -19,7 +19,6 @@ module Requests
       # rubocop:disable Metrics/MethodLength
       def validate_selected(record, selected)
         return unless selected['selected'] == 'true'
-
         case selected["type"]
         when 'bd'
           validate_recall_or_bd(record, selected, pickup_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')

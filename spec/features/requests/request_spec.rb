@@ -296,7 +296,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550'
           expect(page).to have_content 'Pick-up location: Firestone Library'
-          expect(page).to have_content 'Scan This'
+          expect(page).to have_content 'Digitization Request'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'

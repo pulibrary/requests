@@ -80,7 +80,7 @@ en:
     on_shelf:
       # temporary changes issue 438
       # brief_msg: "Item on Shelf. Consult shelf location map."
-      email: "fstpage@princeton.edu.edu"
+      email: "fstpage@princeton.edu"
       email_subject: "On the Shelf Paging Request"
       email_subject_patron: "Pick-up Request"
       brief_msg: "Pageable item at %{location}. Request for pick-up."
@@ -169,7 +169,7 @@ en:
       access_msg: "Princeton Faculty, Students, and Staff only."
     trace:
       form_title: "Trace Materials"
-      email: "fstpage@princeton.edu.edu"
+      email: "fstpage@princeton.edu"
       email_subject: "Trace Request"
       brief_msg: "Trace a Missing Item. Library staff will search for this item and contact you with an outcome."
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."

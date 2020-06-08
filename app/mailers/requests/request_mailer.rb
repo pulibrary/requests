@@ -11,7 +11,7 @@ module Requests
       end
       subject = I18n.t('requests.paging.email_subject') + ' for '
       subject += pickups.join(", ")
-      destination_email = "fstpage@princeton.edu.edu"
+      destination_email = "fstpage@princeton.edu"
       cc_email = ["wange@princeton.edu", @submission.email]
       mail(to: destination_email,
            cc: cc_email,

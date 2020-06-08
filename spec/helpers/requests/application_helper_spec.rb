@@ -75,7 +75,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       }
     end
     let(:default_pickups) do
-      [{ label: "Firestone Library", gfa_code: "PA", staff_only: false }, { label: "Architecture Library", gfa_code: "PW", staff_only: false }, { label: "East Asian Library", gfa_code: "PL", staff_only: false }, { label: "Lewis Library", gfa_code: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_code: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_code: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_code: "PQ", staff_only: false }, { label: "Stokes Library", gfa_code: "PM", staff_only: false }]
+      [{ label: "Firestone Library", gfa_pickup: "PA", staff_only: false }, { label: "Architecture Library", gfa_pickup: "PW", staff_only: false }, { label: "East Asian Library", gfa_pickup: "PL", staff_only: false }, { label: "Lewis Library", gfa_pickup: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_pickup: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_pickup: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_pickup: "PQ", staff_only: false }, { label: "Stokes Library", gfa_pickup: "PM", staff_only: false }]
     end
     let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
     let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
@@ -96,7 +96,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       }
     end
     let(:default_pickups) do
-      [{ label: "Firestone Library", gfa_code: "PA", staff_only: false }, { label: "Architecture Library", gfa_code: "PW", staff_only: false }, { label: "East Asian Library", gfa_code: "PL", staff_only: false }, { label: "Lewis Library", gfa_code: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_code: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_code: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_code: "PQ", staff_only: false }, { label: "Stokes Library", gfa_code: "PM", staff_only: false }]
+      [{ label: "Firestone Library", gfa_pickup: "PA", staff_only: false }, { label: "Architecture Library", gfa_pickup: "PW", staff_only: false }, { label: "East Asian Library", gfa_pickup: "PL", staff_only: false }, { label: "Lewis Library", gfa_pickup: "PN", staff_only: false }, { label: "Marquand Library of Art and Archaeology", gfa_pickup: "PJ", staff_only: false }, { label: "Mendel Music Library", gfa_pickup: "PK", staff_only: false }, { label: "Plasma Physics Library", gfa_pickup: "PQ", staff_only: false }, { label: "Stokes Library", gfa_pickup: "PM", staff_only: false }]
     end
     let(:lewis_request_with_multiple_requestable) { Requests::Request.new(params) }
     let(:requestable_list) { lewis_request_with_multiple_requestable.requestable }
@@ -238,11 +238,11 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
   describe "#prefered_request_content_tag" do
     let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
-    let(:default_pickups) { [{ label: 'place', gfa_code: 'xx', staff_only: false }] }
+    let(:default_pickups) { [{ label: 'place', gfa_pickup: 'xx', staff_only: false }] }
     let(:card_div) { '<div id="fields-print__abc123" class="card card-body bg-light collapse show request--print">' }
 
     context "no services" do
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false, location: { "library" => default_pickups[0] } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: false, location: { "library" => default_pickups[0] } } }
       it 'shows default pickup location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: place</label></div>'
@@ -250,8 +250,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services multiple defaults" do
-      let(:default_pickups) { [{ label: 'place', gfa_code: 'xx', staff_only: false }, { label: 'place two', gfa_code: 'xz', staff_only: false }] }
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: false, location: { "library" => default_pickups[0] } } }
+      let(:default_pickups) { [{ label: 'place', gfa_pickup: 'xx', staff_only: false }, { label: 'place two', gfa_pickup: 'xz', staff_only: false }] }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: false, location: { "library" => default_pickups[0] } } }
       it 'shows default pickup location' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: place</label></div>'
@@ -261,7 +261,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services and charged" do
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: nil, charged?: true, location: { "library" => default_pickups[0] } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: true, location: { "library" => default_pickups[0] } } }
       it 'shows default pickup location hidden' do
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="updated_later" id="updated_later" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="display:none;margin-top:10px;" for="updated_later">Pick-up location: place</label></div>'
@@ -269,7 +269,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services pickup locations" do
-      let(:locations) { [{ label: 'another place', gfa_code: 'yy', staff_only: false }] }
+      let(:locations) { [{ label: 'another place', gfa_pickup: 'yy', staff_only: false }] }
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: locations, charged?: false, location: { "library" => default_pickups[0] } } }
       it 'shows the pickup location' do
         pending "Always uses holding location"
@@ -289,7 +289,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "recap_edd" do
       let(:stubbed_questions) { { services: ['recap_edd'], preferred_request_id: 'abc123', pending?: false, pickup_locations: locations, charged?: false, location: { "library" => default_pickups[0] } } }
-      let(:locations) { [{ label: 'another place', gfa_code: 'yy', staff_only: false }] }
+      let(:locations) { [{ label: 'another place', gfa_pickup: 'yy', staff_only: false }] }
       it 'a message for lewis' do
         pending "Always uses holding location"
         expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \

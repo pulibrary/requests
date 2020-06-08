@@ -260,11 +260,11 @@ module Requests
       services.include?('ask_me')
     end
 
-    private
+    def open_libraries
+      ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian']
+    end
 
-      def open_libraries
-        ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian']
-      end
+    private
 
       def scsb_locations
         ['scsbnypl', 'scsbcul']

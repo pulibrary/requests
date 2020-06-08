@@ -713,10 +713,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_with_on_order) { described_class.new(params) }
     let(:firestone_circ) do
-      { label: "Firestone Library", gfa_code: "PA", staff_only: false }
+      { label: "Firestone Library", gfa_pickup: "PA", staff_only: false }
     end
     let(:architecture) do
-      { label: "Architecture Library", gfa_code: "PW", staff_only: false }
+      { label: "Architecture Library", gfa_pickup: "PW", staff_only: false }
     end
 
     describe "#requestable" do

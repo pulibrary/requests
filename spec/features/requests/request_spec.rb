@@ -236,7 +236,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
           # temporary changes issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pickup')
           # select('Lewis Library', from: 'requestable__pickup')
           click_button 'Request this Item'
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
@@ -257,7 +257,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
-          expect(page).to have_content "ReCAP Paging Request, will be delivered to:\nFirestone Library"
+          select('Firestone Library', from: 'requestable__pickup')
+          expect(page).to have_content "ReCAP Paging Request"
           expect(page).to have_content "Paging Request, will be delivered to:\nFirestone Library"
           # temporary changes 438
           # expect(page).to have_content 'Help Me Get It' # while recap is closed
@@ -308,10 +309,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550'
-          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Item offsite at Forrestal Annex. Request for pick-up'
           expect(page).to have_content 'Digitization Request'
           # temporary change issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'
           expect(page).to have_content 'Request submitted'
         end

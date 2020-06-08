@@ -102,7 +102,7 @@ en:
       patron_conf_msg: "On Order books have not yet been received by the library. You have placed a request to be notified when this item has arrived."
       access_msg: 'Access Users are not eligible for On Order requests.'
     paging:
-      email_subject: "Paging Request"
+      email_subject: "Paging Request for %{pickup_location}"
       status: "Items requested (online, via email, or in person) anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
       message: "If you have not picked up a requested book by the end of the same day, you will receive an email reminder that your book is available for you at Circulation."
       # brief_msg: "Paging Request, will be delivered to Firestone Circulation."
@@ -110,7 +110,7 @@ en:
       success: "Request submitted. Please visit Firsestone Circulation at the next scheduled paging delivery time."
       # temporary changes issue 438
       #email_conf_msg: "Items requested anytime before 3:00pm (weekdays) will be available for you to pick up at Circulation no later than 5:00pm the same day (and often much sooner)."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you the item will be available for pick-up in Firestone Lobby between the hours of 11am - 3pm, Monday - Friday."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you when the item will be available for pick-up."
     recap_guest:
       email_subject: "Patron Initiated Catalog Request - ReCAP Access Only Request"
       brief_msg: "Item off-site at ReCAP facility."

@@ -265,10 +265,24 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows CAS patrons to locate an on_shelf record' do
+          stub_voyager_hold_success('9770811', '7502706', '77777')
+
           visit "/requests/9770811"
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'Pageable item at Firestone Library. Request for pick-up.'
           expect(page).to have_content I18n.t("requests.on_shelf_edd.request_label")
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("On the Shelf Paging Request (F) PG3455 .A2 2015")
+          expect(email.to).to eq(["fstpage@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
+          expect(confirm_email.subject).to eq("Firestone Library Pick-up Request")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
 
         it 'displays an ark link for a plum item' do
@@ -377,11 +391,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("Paging Request for Firestone Library")
+          expect(email.to).to eq(["fstpage@princeton.edu"])
+          expect(email.cc).to eq(["wange@princeton.edu", "a@b.com"])
           expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
         end
 
         # TODO: once Marquad in library use is available again it should show pickup at marquand also
-        it 'Shows marqaud as an EDD option only' do
+        it 'Shows marqaund as an EDD option only' do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'

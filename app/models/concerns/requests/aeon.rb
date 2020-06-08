@@ -40,14 +40,15 @@ module Requests
 
     # returns encoded OpenURL string for voyager derived records
     def aeon_openurl(ctx)
-      return "" if item.blank?
-      ctx.referent.set_metadata('iteminfo5', item[:id]&.to_s)
-      if enumerated?
-        ctx.referent.set_metadata('volume', item[:enum])
-        ctx.referent.set_metadata('issue', item[:chron]) if item[:chron].present?
-      else
-        ctx.referent.set_metadata('volume', holding.first.last['location_has']&.first)
-        ctx.referent.set_metadata('issue', nil)
+      if item.present?
+        ctx.referent.set_metadata('iteminfo5', item[:id]&.to_s)
+        if enumerated?
+          ctx.referent.set_metadata('volume', item[:enum])
+          ctx.referent.set_metadata('issue', item[:chron]) if item[:chron].present?
+        else
+          ctx.referent.set_metadata('volume', holding.first.last['location_has']&.first)
+          ctx.referent.set_metadata('issue', nil)
+        end
       end
       aeon_params = aeon_basic_params
       aeon_params[:ItemNumber] = barcode if barcode?

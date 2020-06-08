@@ -1,6 +1,5 @@
 module Requests
   class RequestMailer < ApplicationMailer
-    # temporary changes issue 438
     include Requests::Bibdata
 
     def paging_email(submission)
@@ -38,9 +37,7 @@ module Requests
     def annexa_email(submission)
       @submission = submission
       destination_email = annexa_email_destinations(submission: @submission)
-      # temporary changes issue 438
-      # cc_email = [@submission.email]
-      cc_email = [@submission.email, I18n.t('requests.on_shelf.email')]
+      cc_email = [@submission.email]
       mail(to: destination_email,
            cc: cc_email,
            from: I18n.t('requests.default.email_from'),
@@ -64,8 +61,6 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.ppl.email')
       mail(to: destination_email,
-           # temporary changes issue 438
-           cc: [I18n.t('requests.on_shelf.email')],
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.ppl.email_subject'), @submission.user_barcode))
     end
@@ -82,8 +77,6 @@ module Requests
       @submission = submission
       destination_email = I18n.t('requests.lewis.email')
       mail(to: destination_email,
-           # temporary changes issue 438
-           cc: [I18n.t('requests.on_shelf.email')],
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.lewis.email_subject'), @submission.user_barcode))
     end
@@ -100,10 +93,11 @@ module Requests
     def on_shelf_email(submission)
       location_email = get_location_contact_email(submission.items.first[:location_code])
       @submission = submission
-      destination_email = I18n.t('requests.on_shelf.email')
+      # Location and destination are the same forthe moment
+      # destination_email = I18n.t('requests.on_shelf.email')
       subject = "#{subject_line(I18n.t('requests.on_shelf.email_subject'), @submission.user_barcode)} (#{submission.items.first[:location_code].upcase}) #{submission.items.first[:call_number]}"
       mail(to: location_email,
-           cc: destination_email,
+           # cc: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject)
     end

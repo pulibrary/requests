@@ -237,7 +237,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.annexa.email')])
-      expect(mail.cc).to eq([submission_for_annexa.email, "fstpage@princeton.edu"])
+      expect(mail.cc).to eq([submission_for_annexa.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -290,7 +290,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.anxadoc.email')])
-      expect(mail.cc).to eq([submission_for_anxadoc.email, "fstpage@princeton.edu"])
+      expect(mail.cc).to eq([submission_for_anxadoc.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -1071,7 +1071,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
       expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (F) PS3566.I428 A6 2015")
-      expect(mail.cc).to eq([I18n.t('requests.on_shelf.email')])
       expect(mail.to).to eq([I18n.t('requests.on_shelf.email')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
@@ -1130,7 +1129,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
       expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (C) PL2727.S2 C574 1998")
       expect(mail.to).to eq(["gestcirc@princeton.edu"])
-      expect(mail.cc).to eq([I18n.t('requests.on_shelf.email')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 

@@ -173,23 +173,23 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       Requests::RequestMailer.send("paging_email", submission_for_no_items).deliver_now
     end
 
-    let(:sub) do
-      pickups = []
-      submission_for_no_items.items.each do |item|
-        pickups.push(Requests::BibdataService.delivery_locations[item["pickup"]]["label"])
-      end
-      I18n.t('requests.paging.email_subject') + ' for ' + pickups.join(", ")
+    let(:confirmation) do
+      Requests::RequestMailer.send("paging_confirmation", submission_for_no_items).deliver_now
     end
 
     it "renders the headers" do
-      expect(mail.subject).to eq(sub)
+      expect(mail.subject).to eq("Paging Request for Lewis Library")
       expect(mail.to).to eq(["fstpage@princeton.edu"])
-      expect(mail.cc).to eq(["wange@princeton.edu", submission_for_no_items.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(mail.body.encoded).to have_content I18n.t('requests.paging.email_conf_msg')
     end
 
-    it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.paging.email_conf_msg')
+    it "renders the confirmation" do
+      expect(confirmation.subject).to eq("Paging Request for Lewis Library")
+      expect(confirmation.to).to eq([submission_for_no_items.email])
+      expect(confirmation.from).to eq([I18n.t('requests.default.email_from')])
+      expect(confirmation.body.encoded).to have_content(I18n.t('requests.paging.email_conf_msg'))
+      expect(confirmation.body.encoded).to have_content('Wear a mask or face covering')
     end
   end
 

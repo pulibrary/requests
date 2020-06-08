@@ -389,12 +389,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             check('requestable__selected')
           end
           fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          email = ActionMailer::Base.deliveries.last
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("Paging Request for Firestone Library")
           expect(email.to).to eq(["fstpage@princeton.edu"])
-          expect(email.cc).to eq(["wange@princeton.edu", "a@b.com"])
+          expect(email.cc).to be_nil
           expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.subject).to eq("Paging Request for Firestone Library")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask")
         end
 
         # TODO: once Marquad in library use is available again it should show pickup at marquand also

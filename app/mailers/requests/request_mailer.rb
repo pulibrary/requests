@@ -4,16 +4,20 @@ module Requests
 
     def paging_email(submission)
       @submission = submission
-      pickups = []
-      @submission.items.each do |item|
-        pickups.push(Requests::BibdataService.delivery_locations[item["pickup"]]["label"])
-      end
-      subject = I18n.t('requests.paging.email_subject') + ' for '
-      subject += pickups.join(", ")
+      pickups = @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pickup"]]["label"] }
+      subject = I18n.t('requests.paging.email_subject', pickup_location: pickups.join(", "))
       destination_email = "fstpage@princeton.edu"
-      cc_email = ["wange@princeton.edu", @submission.email]
       mail(to: destination_email,
-           cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(subject, @submission.user_barcode))
+    end
+
+    def paging_confirmation(submission)
+      @submission = submission
+      pickups = @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pickup"]]["label"] }
+      subject = I18n.t('requests.paging.email_subject', pickup_location: pickups.join(", "))
+      destination_email = @submission.email
+      mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(subject, @submission.user_barcode))
     end

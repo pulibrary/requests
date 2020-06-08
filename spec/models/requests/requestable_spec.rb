@@ -271,6 +271,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.site).to eq('RBSC')
       end
     end
+
+    describe '#aeon_openurl' do
+      let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
+
+      it 'includes basic metadata' do
+        expect(aeon_ctx).to include('&rft.genre=unknown&rft.title=Beethoven%27s+andante+cantabile+aus+dem+Trio+op.+97%2C+fu%CC%88r+orchester&rft.creator=Beethoven%2C+Ludwig+van&rft.aucorp=Leipzig%3A+Kahnt&rft.pub=Leipzig%3A+Kahnt&rft.format=musical+score&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Aunknown&rft_id=https%3A%2F%2Fbibdata.princeton.edu%2Fbibliographic%2F2535845&rft_id=info%3Aoclcnum%2F25615303&rfr_id=info%3Asid%2Fcatalog.princeton.edu%3Agenerator&CallNumber=M1004.L6+B3&ItemInfo1=Reading+Room+Access+Only&Location=ex&ReferenceNumber=2535845&Site=RBSC')
+      end
+    end
   end
 
   context 'A MUDD holding' do

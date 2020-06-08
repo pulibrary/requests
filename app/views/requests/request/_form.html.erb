@@ -3,9 +3,11 @@
     <%= render partial: 'user_login_options', locals: { l: l } %>
   <% end %>
 <% elsif !@user.guest && @patron == false %>
-    <%= render partial: 'auth_user_lookup_fail' %>
+  <%= render partial: 'auth_user_lookup_fail' %>
 <% elsif !@user.guest && @patron['barcode'].blank? %>
-    <%= render partial: 'cas_user_no_barcode' %>
+  <%= render partial: 'cas_user_no_barcode' %>
+<% elsif @user.provider == 'barcode' %>
+  <%= render partial: 'no_access' %>
 <% else %>
-    <%= render partial: 'request_form' %>
+  <%= render partial: 'request_form' %>
 <% end %>

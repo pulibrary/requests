@@ -171,7 +171,9 @@ module Requests
         [default_pickups[idx]]
       elsif requestable.recap? || requestable.annexa?
         # open libraries
-        default_pickups.select { |loc| ['PA', 'PL', 'PK', 'PM', 'QX'].include?(loc[:gfa_pickup]) }
+        pickups = default_pickups.select { |loc| ['PA', 'PL', 'PK', 'PM', 'QX'].include?(loc[:gfa_pickup]) }
+        pickups << default_pickups[0] if pickups.empty?
+        pickups
       else
         [default_pickups[0]]
       end

@@ -384,7 +384,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: good_response, headers: {})
           visit 'requests/10574699'
           expect(page).not_to have_content 'Pick-up location: Firestone Library'
-          expect(page).to have_content 'If the specific volume does not appear in the list above, please enter it here:'
+          expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
           within(".user-supplied-input") do
             check('requestable__selected')
           end

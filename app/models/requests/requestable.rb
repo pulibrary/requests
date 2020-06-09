@@ -244,7 +244,7 @@ module Requests
 
     def in_library_use_only?
       return false unless location["holding_library"]
-      ["marquand"].include? location["holding_library"]["code"]
+      ["marquand", "lewis"].include? location["holding_library"]["code"]
     end
 
     def barcode?

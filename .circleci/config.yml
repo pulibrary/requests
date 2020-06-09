@@ -30,22 +30,21 @@ jobs:
       # Install the Gem dependencies
       - restore_cache:
           keys:
-          - requests-{{ checksum "Gemfile.lock" }}
-          - requests-
+          - requests-{{ checksum "requests.gemspec" }}
 
       - run:
           name: Install the Gem dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
       - save_cache:
-          key: requests-{{ checksum "Gemfile.lock" }}
+          key: requests-{{ checksum "requests.gemspec" }}
           paths:
             - ./vendor/bundle
 
       # Generate the Rails Engine
       - restore_cache:
           name: Restore test app from cache
-          keys: v1-internal-test-app-{{ checksum "requests.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}
+          key: v1-internal-test-app-{{ checksum "requests.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}
 
       - run:
           name: Generate the Rails engine
@@ -60,7 +59,7 @@ jobs:
       # Install additional Gem dependencies (required by the test app.)
       - restore_cache:
           keys:
-          - requests-{{ checksum "Gemfile.lock" }}
+          - requests-{{ checksum "requests.gemspec" }}
           - requests-
 
       - run:
@@ -68,7 +67,7 @@ jobs:
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
       - save_cache:
-          key: requests-{{ checksum "Gemfile.lock" }}
+          key: requests-{{ checksum "requests.gemspec" }}
           paths:
             - ./vendor/bundle
 

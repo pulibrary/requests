@@ -311,10 +311,20 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           visit '/requests/945550'
           expect(page).to have_content 'Item offsite at Forrestal Annex. Request for pick-up'
           expect(page).to have_content 'Digitization Request'
-          # temporary change issue 438
           select('Firestone Library', from: 'requestable__pickup')
-          click_button 'Request Selected Items'
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Request submitted'
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Annex Request")
+          expect(email.to).to eq(["forranx@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
+          expect(confirm_email.subject).to eq("Annex Request")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
 
         it 'allows patrons to request a Lewis recap item digitally' do

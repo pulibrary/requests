@@ -317,14 +317,28 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Request submitted'
         end
 
+        it 'allows patrons to request a Lewis recap item digitally' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7053307?mfhd=6962326'
+          # TODO: once Lewis opens, need to choose edd
+          # choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
+          expect(page).not_to have_content 'Pick-up'
+          check 'requestable_selected_6357449'
+          fill_in "Title", with: "my stuff"
+          click_button 'Request Selected Items'
+          expect(page).to have_content 'Request submitted'
+        end
+
         it 'allows patrons to request a Lewis' do
           pending "Lewis library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/426420'
+          visit '/requests/7053307'
           expect(page).to have_content 'Pick-up location: Firestone Library'
-          check 'requestable_selected_7993830'
+          check 'requestable_selected_6322174'
           # temporary change issue 438
+          # choose('requestable__delivery_mode_6322174_print') # chooses 'edd' radio button
           # select('Firestone Library', from: 'requestable__pickup')
           click_button 'Request Selected Items'
           expect(page).to have_content 'Request submitted'

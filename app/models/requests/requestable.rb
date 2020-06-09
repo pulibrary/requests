@@ -261,7 +261,7 @@ module Requests
     end
 
     def open_libraries
-      ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian']
+      ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture']
     end
 
     private

@@ -432,6 +432,26 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(email.subject).to eq("Electronic Document Delivery Request Confirmation")
           expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")
         end
+
+        it "shows items in the Architecture Library as available" do
+          stub_voyager_hold_success('11787671', '8307797', '77777')
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/11787671'
+          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          expect(page).to have_content 'Electronic Delivery '
+          expect(page).to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Pick-up location: Architecture Library'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("On the Shelf Paging Request (UESNB) NA1585.A23 S7 2020")
+          expect(email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
+          expect(confirm_email.subject).to eq("Architecture Library Pick-up Request")
+          expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received")
+          expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+        end
       end
     end
 

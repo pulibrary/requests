@@ -439,14 +439,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     context 'A barcode holding user' do
       let(:user) { FactoryGirl.create(:valid_barcode_patron) }
-
+      # change this back #438
       it 'display a request form for a ReCAP item.' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
         login_as user
         visit "/requests/#{voyager_id}"
-        expect(page).to have_content 'Electronic Delivery'
-        expect(page).to have_selector '#request_user_barcode', visible: false
+        expect(page).not_to have_content 'Electronic Delivery'
+        expect(page).not_to have_selector '#request_user_barcode', visible: false
       end
     end
   end

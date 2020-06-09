@@ -41,9 +41,15 @@ module Requests
     def annexa_email(submission)
       @submission = submission
       destination_email = annexa_email_destinations(submission: @submission)
-      cc_email = [@submission.email]
       mail(to: destination_email,
-           cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.annexa.email_subject'), @submission.user_barcode))
+    end
+
+    def annexa_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.annexa.email_subject'), @submission.user_barcode))
     end

@@ -415,8 +415,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           email = ActionMailer::Base.deliveries.last
-          expect(email.subject).to eq("Patron Initiated Catalog Request Confirmation")
-          expect(email.html_part.body.to_s).to have_content("You will be notified via email when your item is available.")
+          expect(email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")
         end
       end
     end

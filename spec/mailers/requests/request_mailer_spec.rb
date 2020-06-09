@@ -1,6 +1,7 @@
 require 'spec_helper'
 include Requests::ApplicationHelper
 
+# rubocop:disable RSpec/MultipleExpectations
 describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
   let(:user_info) do
     {
@@ -668,16 +669,88 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       Requests::RequestMailer.send("recap_email", submission_for_recap).deliver_now
     end
 
+    let(:confirmation_mail) do
+      Requests::RequestMailer.send("recap_confirmation", submission_for_recap).deliver_now
+    end
+
+    it "sens no email for a registered user" do
+      expect(mail).to be_nil
+    end
+
+    it "renders the confirmation" do
+      expect(confirmation_mail.subject).to eq(I18n.t('requests.recap.email_subject'))
+      expect(confirmation_mail.to).to eq([submission_for_recap.email])
+      expect(confirmation_mail.cc).to be_nil
+      expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
+      expect(confirmation_mail.html_part.body.to_s).to have_content('Wear a mask or face covering')
+      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
+    end
+  end
+
+  context "send recap edd confirmation request for authenticated user" do
+    let(:requestable) do
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9757511",
+          "call_number" => "Oversize DT549 .E274q",
+          "location_code" => "rcppa",
+          "item_id" => "7467161",
+          "barcode" => "32101098722844",
+          "enum" => "2016",
+          "copy_number" => "1",
+          "status" => "Not Charged",
+          "type" => "recap",
+          "delivery_mode_7467161" => "print",
+          "pickup" => "PA",
+          "edd_start_page" => "1",
+          "edd_end_page" => "20",
+          "edd_volume_number" => "4",
+          "edd_issue" => "1",
+          "edd_author" => "author",
+          "edd_art_title" => "title",
+          "edd_note" => "note"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    end
+    let(:bib) do
+      {
+        "id" => "9944355",
+        "title" => "L'écrivain, magazine litteraire trimestriel.",
+        "author" => "Association des écrivains du Sénégal"
+      }.with_indifferent_access
+    end
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+
+    let(:submission_for_recap) do
+      Requests::Submission.new(params)
+    end
+
+    let(:mail) do
+      Requests::RequestMailer.send("recap_edd_confirmation", submission_for_recap).deliver_now
+    end
+
     it "renders the headers" do
-      expect(mail.subject).to eq(I18n.t('requests.recap.email_subject'))
-      expect(mail.to).to eq(["foo@princeton.edu"])
-      expect(mail.cc).to eq([submission_for_recap.email])
+      expect(mail.subject).to eq(I18n.t('requests.recap_edd.email_subject'))
+      expect(mail.to).to eq([submission_for_recap.email])
+      expect(mail.cc).to be_nil
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
     it "renders the body" do
-      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
-      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
+      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap_edd.email_conf_msg')
+      expect(mail.html_part.body.to_s).not_to have_content('Wear a mask or face covering')
+      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap_edd.email_conf_msg')
     end
   end
 
@@ -733,16 +806,27 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       Requests::RequestMailer.send("recap_email", submission_for_recap).deliver_now
     end
 
-    it "renders the headers" do
-      expect(mail.subject).to eq(I18n.t('requests.recap_guest.email_subject'))
-      expect(mail.to).to eq([submission_for_recap.email])
-      expect(mail.cc).to eq([I18n.t('requests.recap.guest_email_destination')])
-      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    let(:confirmation_mail) do
+      Requests::RequestMailer.send("recap_confirmation", submission_for_recap).deliver_now
     end
 
-    it "renders the body" do
+    it "renders the email to the library" do
+      expect(mail.subject).to eq(I18n.t('requests.recap_guest.email_subject'))
+      expect(mail.cc).to be_nil
+      expect(mail.to).to eq([I18n.t('requests.recap.guest_email_destination')])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
       expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
+    end
+
+    it "renders the confirmation email" do
+      expect(confirmation_mail.subject).to eq(I18n.t('requests.recap_guest.email_subject'))
+      expect(confirmation_mail.cc).to be_nil
+      expect(confirmation_mail.to).to eq([submission_for_recap.email])
+      expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
+      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
+      expect(confirmation_mail.html_part.body.to_s).to have_content('Wear a mask or face covering')
+      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
     end
   end
 
@@ -1124,7 +1208,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     # rubocop:disable RSpec/ExampleLength
-    # rubocop:disable RSpec/MultipleExpectations
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
       expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (C) PL2727.S2 C574 1998")
@@ -1141,6 +1224,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(mail.text_part.body.to_s).to have_content I18n.t('requests.on_shelf.email_conf_msg')
     end
     # rubocop:enable RSpec/ExampleLength
-    # rubocop:enable RSpec/MultipleExpectations
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

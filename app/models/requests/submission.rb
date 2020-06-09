@@ -72,6 +72,20 @@ module Requests
       types
     end
 
+    def service_email_types
+      types = []
+      @items.each do |item|
+        type = item['type']
+        if type == 'recap'
+          delivery_mode = item["delivery_mode_#{item['item_id']}"]
+          type = 'recap_edd' if delivery_mode.present? && delivery_mode == "edd"
+        end
+        types << type
+      end
+      types.uniq!
+      types
+    end
+
     def process_submission
       @services = []
       @success_messages = []
@@ -102,6 +116,10 @@ module Requests
       Requests::BibdataService.delivery_locations[items.first["pickup"]]["library"]
     end
 
+    def access_only?
+      user['user_barcode'] == 'ACCESS'
+    end
+
     private
 
       def process_hold
@@ -116,7 +134,7 @@ module Requests
 
       def process_recap
         return unless service_types.include? 'recap'
-        @services << if user['user_barcode'] == 'ACCESS'
+        @services << if access_only?
                        # Access users cannot use recap service directly
                        Requests::Generic.new(self)
                      else

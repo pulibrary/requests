@@ -1,4 +1,4 @@
-<% if @submission.user['user_barcode'] == 'ACCESS' %>
+<% if @submission.access_only?%>
 <%= I18n.t('requests.recap_guest.email_subject') %>
 
 <%= I18n.t('requests.recap_guest.email_conf_msg') %>

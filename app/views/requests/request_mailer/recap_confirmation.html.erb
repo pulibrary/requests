@@ -6,13 +6,19 @@
 
 <tr>
   <td colspan="2" style="padding: 18px;">
-    <p class="body-content" style="margin-bottom: 0;">
+    <p class="body-content" style="margin-bottom:0;">
       <% if @submission.access_only? %>
       <%= I18n.t('requests.recap_guest.email_conf_msg') %>
       <% else %>
       <%= I18n.t('requests.recap.email_conf_msg') %>
       <% end %>
     </p>
+  </td>
+</tr>
+
+<tr class="pikcup-info">
+  <td colspan="2" style="padding: 18px;">
+    <%= render 'covid_pickup_guidelines' %>
   </td>
 </tr>
 

@@ -109,8 +109,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:recap) { instance_double(Requests::Recap, errors: []) }
       it 'contacts recap and sends email' do
         expect(Requests::Recap).to receive(:new).and_return(recap)
-        expect(Requests::RequestMailer).to receive(:send).with("recap_email", anything).and_return(mail_message)
-        expect(Requests::RequestMailer).not_to receive(:send).with("recap_confirmation", anything)
+        expect(Requests::RequestMailer).to receive(:send).with("recap_edd_confirmation", anything).and_return(mail_message)
+        expect(Requests::RequestMailer).not_to receive(:send).with("recap_email", anything)
         post :submit, params: { "request" => user_info,
                                 "requestable" => requestable,
                                 "bib" => bib, "format" => "js" }

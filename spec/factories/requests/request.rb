@@ -13,13 +13,13 @@ FactoryGirl.define do
   end
 
   factory :request_on_order, class: 'Requests::Request' do
-    system_id 10_744_175
+    system_id 11_416_426
     user { FactoryGirl.build(:user) }
     initialize_with { new(system_id: system_id, user: user) }
   end
 
   factory :request_pending, class: 'Requests::Request' do
-    system_id 10_094_671
+    system_id 11_889_085
     user { FactoryGirl.build(:user) }
     initialize_with { new(system_id: system_id, user: user) }
   end
@@ -264,5 +264,13 @@ FactoryGirl.define do
     source 'pulsearch'
     user { FactoryGirl.build(:user) }
     initialize_with { new(system_id: system_id, user: user, source: source) }
+  end
+
+  factory :mfhd_with_no_circ_item, class: 'Requests::Request' do
+    system_id 257_717
+    mfhd_id '282033'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    initialize_with { new(system_id: system_id, user: user, mfhd: mfhd_id, source: source) }
   end
 end

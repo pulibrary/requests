@@ -23,6 +23,26 @@ module Requests
       @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
 
+    # pickup location id on the item level
+    def pickup_location_id
+      item? && item['pickup_location_id'].present? ? item['pickup_location_id'] : []
+    end
+
+    # pickup_location_code on the item level
+    def pickup_location_code
+      item? && item['pickup_location_code'].present? ? item['pickup_location_code'] : []
+    end
+
+    def item_type
+      item? && item['item_type'].present? ? item['item_type'] : []
+    end
+
+    # item type on the item level
+    def item_type_non_circulate?
+      return true if ['NoCirc', 'Closed', 'Res-No'].include? item_type
+      false
+    end
+
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
     ## when one is needed. Primarily for non-barcoded Annex items.
     def preferred_request_id

@@ -192,6 +192,25 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
   end
 
+  context 'A non circulating item' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_item) }
+    let(:requestable) { request.requestable[12] }
+    # let(:item) { barcode :"32101024595744", id: 282_632, location: "f", copy_number: 1, item_sequence_number: 14, status: "Not Charged", on_reserve: "N", item_type: "NoCirc", pickup_location_id: 299, pickup_location_code: "fcirc", enum: "vol.22", "chron": "1996", enum_display: "vol.22 (1996)", label: "Firestone Library" }
+    let(:no_circ_item_id) { requestable.item['id'] }
+    let(:no_circ_item_type) { requestable.item['item_type'] }
+    let(:no_circ_pickup_location_id) { requestable.item['pickup_location_id'] }
+    let(:no_circ_pickup_location_code) { requestable.item['pickup_location_code'] }
+
+    describe '#item_type_non_circulate' do
+      it 'returns the item type from voyager' do
+        expect(requestable.item_type_non_circulate?).to be true
+        expect(requestable.pickup_location_id).to eq 299
+        expect(requestable.pickup_location_code).to eq 'fcirc'
+      end
+    end
+  end
+
   context 'A requestable item from an Aeon EAL Holding with a null barcode' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_eal_voyager_item) }

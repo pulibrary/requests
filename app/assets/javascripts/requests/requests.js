@@ -186,9 +186,12 @@ $(document).ready(function() {
         language: {
           search: "Search by Enumeration"
         },
-        responsive: true,
         ordering: false
       });
+    });
+
+    $('.table input[type=checkbox]').on('change', function() {
+      $(this).closest('tr').toggleClass('selected', $(this).is(':checked'));
     });
   
 

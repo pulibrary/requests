@@ -9,14 +9,14 @@
          <%= hidden_fields_for_requestable requestable: requestable %>
       <% end %>
     </td>
-    <td>
+    <td class="request--options">
       <% if requestable.item_data? || requestable.scsb? %>
         <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
           <%= enum_copy_display requestable.item %>
         </span>
       <% end %>
     </td>
-    <td>
+    <td class="request--availability">
       <% if requestable.item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
         <%= system_status_label requestable %>
         <%= status_label requestable %>
@@ -26,7 +26,7 @@
         <%= requestable.item[:use_statement] %>
       <% end %>
     </td>
-  <td class='request--options' aria-live="polite">
+  <td class='delivery--options' aria-live="polite">
     <% if requestable.can_be_delivered? || requestable.in_process? %>
       <%= render partial: 'delivery_options', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>  
     <% elsif requestable.available_for_digitizing? %>

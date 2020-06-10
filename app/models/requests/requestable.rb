@@ -25,16 +25,16 @@ module Requests
 
     # pickup location id on the item level
     def pickup_location_id
-      item? && item['pickup_location_id'].present? ? item['pickup_location_id'] : []
+      item? && item['pickup_location_id'].present? ? item['pickup_location_id'] : ""
     end
 
     # pickup_location_code on the item level
     def pickup_location_code
-      item? && item['pickup_location_code'].present? ? item['pickup_location_code'] : []
+      item? && item['pickup_location_code'].present? ? item['pickup_location_code'] : ""
     end
 
     def item_type
-      item? && item['item_type'].present? ? item['item_type'] : []
+      item? && item['item_type'].present? ? item['item_type'] : ""
     end
 
     # item type on the item level
@@ -113,7 +113,7 @@ module Requests
     end
 
     def circulates?
-      location[:circulates] == true && open_libraries.include?(location[:library][:code])
+      item_type_non_circulate? == false && location[:circulates] == true && open_libraries.include?(location[:library][:code])
     end
 
     def available_for_digitizing?

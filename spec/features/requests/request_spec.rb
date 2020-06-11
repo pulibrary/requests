@@ -462,6 +462,16 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
+
+        it "allows requests of recap pickup only items" do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/11578319?mfhd=11259604'
+          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          expect(page).not_to have_content 'Item is not requestable.'
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
+        end
       end
     end
 

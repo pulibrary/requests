@@ -176,10 +176,11 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:recap?] = true
           stubbed_questions[:item_data?] = true
           stubbed_questions[:recap_edd?] = true
+          stubbed_questions[:in_library_use_only?] = false
           stubbed_questions[:ask_me?] = true
         end
         it "returns recap_edd in the services" do
-          expect(router.calculate_services).to eq(['recap_edd'])
+          expect(router.calculate_services).to include('recap_edd')
         end
         context "unauthorized user" do
           let(:user) { FactoryGirl.build(:unauthenticated_patron) }

@@ -25,7 +25,9 @@ describe Requests::PickupLookup do
           "barcode" => "32101089306938",
           "enum" => "Bd.1, T.1",
           "copy_number" => "1",
-          "status" => "Charged"
+          "status" => "Charged",
+          "item_type" => "Gen",
+          "pickup_location_code" => "fcirc"
         }.with_indifferent_access
       ]
     end
@@ -82,7 +84,6 @@ describe Requests::PickupLookup do
           .to_return(status: 201, body: responses[:success], headers: {})
 
         parsed_body = JSON.parse(pickup_lookup.returned)
-
         expect(parsed_body['response']['recall']['pickup-locations']['pickup-location']).to be_an(Array)
         expect(pickup_lookup.errors.size).to eq(0)
       end

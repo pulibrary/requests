@@ -27,7 +27,6 @@ describe Requests::PickupLookup do
           "copy_number" => "1",
           "status" => "Charged",
           "item_type" => "Gen",
-          "pickup_location_id" => "299",
           "pickup_location_code" => "fcirc"
         }.with_indifferent_access
       ]

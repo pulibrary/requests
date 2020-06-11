@@ -66,7 +66,7 @@ module Requests
     end
 
     def single_aeon_requestable?
-      (filtered_sorted_requestable.size == 1) && first_filtered_requestable.services.include?('aeon')
+      (filtered_sorted_requestable.size == 1) && first_filtered_requestable&.services&.include?('aeon')
     end
 
     def filtered_sorted_requestable
@@ -78,7 +78,7 @@ module Requests
     end
 
     def first_filtered_requestable
-      filtered_sorted_requestable[filtered_sorted_requestable.keys.first].first
+      filtered_sorted_requestable[filtered_sorted_requestable.keys&.first]&.first
     end
 
     # returns an array of requestable hashes of  grouped under a common mfhd

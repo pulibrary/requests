@@ -23,6 +23,22 @@ module Requests
       @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
 
+    def digitize?
+      item_data? && (on_shelf_edd? || recap_edd? || aeon?) && !online? && !request?
+    end
+
+    def pick_up?
+      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !request?
+    end
+
+    def request?
+      on_order? || in_process? || aeon? || services.empty?
+    end
+
+    def help_me?
+      ask_me? || (!available_for_digitizing? && !aeon?)
+    end
+
     # pickup location id on the item level
     def pickup_location_id
       item? && item['pickup_location_id'].present? ? item['pickup_location_id'] : ""

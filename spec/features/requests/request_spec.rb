@@ -77,18 +77,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Request to View in Reading Room'
         end
 
-        # TODO: Remove when campus has re-opened
-        it 'guest patrons can not request a physical recap item during the closure' do
-          pending "Guest have no access during COVID-19 pandemic"
-          visit '/requests/9944355'
-          click_link(I18n.t('requests.account.other_user_login_msg'))
-          fill_in 'request_email', with: 'name@email.com'
-          fill_in 'request_user_name', with: 'foobar'
-          click_button I18n.t('requests.account.other_user_login_btn')
-          expect(page).to have_no_content 'Electronic Delivery'
-          expect(page).to have_content 'Item is not requestable'
-        end
-
         # TODO: Activate test when campus has re-opened
         it 'allows guest patrons to request a physical recap item' do
           pending "Guest have no access during COVID-19 pandemic"
@@ -449,7 +437,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11787671'
           # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
-          expect(page).to have_content 'Electronic Delivery '
+          expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Pick-up location: Architecture Library'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -471,6 +459,38 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).not_to have_content 'Item is not requestable.'
           expect(page).not_to have_content 'Electronic Delivery'
           expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
+        end
+
+        it 'allows cas patrons to see aeon requests' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/336525'
+          expect(page).to have_content 'Request to View in Reading Room'
+        end
+
+        it 'allows guest patrons to access Online items' do
+          visit '/requests/9994692'
+          expect(page).to have_content 'www.jstor.org'
+        end
+
+        it 'prohibits guest patrons from using Borrow Direct, ILL, and Recall on Missing items' do
+          visit '/requests/1788796?mfhd=2053005'
+          expect(page).to have_content 'Item is not requestable.'
+        end
+
+        # TODO: Activate test when campus has re-opened
+        it 'allows cas user to request from Annex or Firestone in mixed holding' do
+          visit '/requests/2286894'
+          expect(page).to have_field 'requestable__selected', disabled: false
+          expect(page).to have_field 'requestable_selected_7484608', disabled: false
+          expect(page).to have_field 'requestable_user_supplied_enum_2576882'
+          within('#request_user_supplied_2576882') do
+            check('requestable__selected', exact: true)
+            fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
+          end
+          select('Firestone Library', from: 'requestable__pickup')
+          click_button 'Request Selected Items'
+          expect(page).to have_content I18n.t('requests.submit.annexa_success')
         end
       end
     end

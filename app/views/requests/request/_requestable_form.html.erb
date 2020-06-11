@@ -1,42 +1,14 @@
-<% if requestable.ask_me? || requestable.item_data? || (requestable.services & ["aeon", "on_order"]).present? || ((requestable.services & ["recap_no_items", "on_shelf"]).present?  && !fill_in_eligible) %>
-<tr id='<%= "request_#{requestable.preferred_request_id}" %>'>
-    <td class='request--select'>
-      <%= hidden_field_tag 'requestable[][selected]', false %>
-      <%= item_checkbox @request.requestable, requestable %>
-      <% if requestable.item_data? %>
-        <%= hidden_fields_item requestable %>
-      <% else %>
-         <%= hidden_fields_for_requestable requestable: requestable %>
-      <% end %>
-    </td>
-    <td class="request--options">
-      <% if requestable.item_data? || requestable.scsb? %>
-        <span id="<%= "enum_#{requestable.preferred_request_id}" %>">
-          <%= enum_copy_display requestable.item %>
-        </span>
-      <% end %>
-    </td>
-    <td class="request--availability">
-      <% if requestable.item_data? || (requestable.services & ["on_order", "in_process"]).present? %>
-        <%= system_status_label requestable %>
-        <%= status_label requestable %>
-      <% end %>
-      <% if requestable.use_restriction? %>
-        <br/>
-        <%= requestable.item[:use_statement] %>
-      <% end %>
-    </td>
-  <td class='delivery--options' aria-live="polite">
-    <% if requestable.can_be_delivered? || requestable.in_process? %>
-      <%= render partial: 'delivery_options', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>  
-    <% elsif requestable.available_for_digitizing? %>
-      <%= render partial: 'digitization', locals: { requestable: requestable, request_context: @request.ctx } %>
-    <% else %>
-      <%= render partial: 'help_me_get_it', locals: { requestable: requestable, request_context: @request.ctx } %>  
-    <% end %>
-  </td>
-</tr>
+<% if requestable.help_me? %>
+  <%= render partial: 'requestable_form_help_me', locals: { requestable: requestable } %>
+<% elsif requestable.digitize? && requestable.pick_up? %>
+  <%= render partial: 'requestable_form_digitize_and_pickup', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>
+<% elsif requestable.pick_up? %>
+  <%= render partial: 'requestable_form_pickup', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>
+<% elsif requestable.digitize? %>
+  <%= render partial: 'requestable_form_digitize', locals: { requestable: requestable } %>
+<% elsif requestable.request? %>
+  <%= render partial: 'requestable_form_request', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>
 <% end %>
 <% if requestable.online? %>
-  <%= render partial: "online_items", locals: { requestable: requestable } %>
+  <%= render partial: "requestable_online_items", locals: { requestable: requestable } %>
 <% end %>

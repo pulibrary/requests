@@ -437,7 +437,7 @@ module Requests
     end
 
     def system_status_label(requestable)
-      content_tag(:div, requestable.item[:status]) unless requestable.item.key? :scsb_status
+      content_tag(:div, requestable.item[:status], class: 'system-status') unless requestable.item.key? :scsb_status
     end
 
     def display_urls(requestable)

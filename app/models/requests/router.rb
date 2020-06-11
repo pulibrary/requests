@@ -99,9 +99,11 @@ module Requests
         return ['recap_no_items'] unless requestable.item_data?
         services = []
         return services << 'ask_me' if requestable.scsb_in_library_use?
-        # Add physical recap delivery during campus closure
-        # services = ['recap']
-        services << 'recap_edd' if requestable.recap_edd? && auth_user?
+        # When campus services reopen to guests remove auth_user? check
+        if auth_user?
+          services << 'recap' unless requestable.in_library_use_only?
+          services << 'recap_edd' if requestable.recap_edd?
+        end
         services
       end
 

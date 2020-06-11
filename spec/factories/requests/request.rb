@@ -266,7 +266,7 @@ FactoryGirl.define do
     initialize_with { new(system_id: system_id, user: user, source: source) }
   end
 
-  factory :mfhd_with_no_circ_item, class: 'Requests::Request' do
+  factory :mfhd_with_no_circ_and_circ_item, class: 'Requests::Request' do
     system_id 257_717
     mfhd_id '282033'
     source 'pulsearch'

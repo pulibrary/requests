@@ -63,7 +63,7 @@ module Requests
     end
 
     def request_payload(item, parameter_name: "recall-parameters", expiration_period: 60)
-      pickup = item['pickup_location_id'] ||= "299"
+      pickup = item['pickup_location_id'] || "299"
       recall_request = Nokogiri::XML::Builder.new do |xml|
         xml.send(parameter_name.to_sym) do
           xml.send(:"pickup-location", pickup)

@@ -24,8 +24,8 @@ describe Requests::HoldItem, type: :controller do
          "status" => "Not Charged",
          "item_type" => "Gen",
          "pickup_location_code" => "fcirc",
-         "type" => "on_shelf"
-       }]
+         "pickup_location_id" => "489",
+         "type" => "on_shelf" }]
     end
 
     let(:bib) do
@@ -87,8 +87,7 @@ describe Requests::HoldItem, type: :controller do
         expect(hold_request.submitted.size).to eq(1)
         expect(hold_request.errors.size).to eq(0)
         expect(hold_request.submitted.first[:payload]).to include("<last-interest-date>#{(todays_date + 7).strftime('%Y%m%d')}</last-interest-date>")
-        expect(hold_request.submitted.first[:payload]).not_to include("<pickup-location>489</pickup-location>")
-        expect(hold_request.submitted.first[:payload]).to include("<pickup-location>299</pickup-location>")
+        expect(hold_request.submitted.first[:payload]).to include("<pickup-location>489</pickup-location>")
       end
 
       it 'has an expiry date 60 days from today formatted as yyyy-mm-dd by default' do

@@ -842,8 +842,8 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(mail.cc).to be_nil
       expect(mail.to).to eq([I18n.t('requests.recap.guest_email_destination')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
-      expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
+      expect(mail.html_part.body.to_s).not_to have_content I18n.t('requests.recap_guest.email_conf_msg')
+      expect(mail.text_part.body.to_s).not_to have_content I18n.t('requests.recap_guest.email_conf_msg')
     end
 
     it "renders the confirmation email" do

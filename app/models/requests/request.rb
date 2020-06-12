@@ -161,9 +161,16 @@ module Requests
       circulates
     end
 
+    def any_digitization_options?
+      digitizable = false
+      requestable.each { |item| digitizable ||= item.available_for_digitizing? }
+      digitizable
+    end
+
     # returns nil if there are no attached items
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd
+
     def load_items
       return nil if thesis? || numismatics?
       mfhd_items = if @mfhd && serial?

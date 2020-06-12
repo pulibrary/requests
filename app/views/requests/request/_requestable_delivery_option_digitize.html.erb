@@ -1,3 +1,4 @@
+    <div>
     <% if requestable.services.include?('recap_edd') %>
         <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", "edd", selected, data: { target: "#fields-eed__#{requestable.item[:id]}" }, 'aria-controls' => "fields-eed__#{requestable.item[:id]}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
@@ -6,6 +7,7 @@
     <% else %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
         <div>
-          <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(request_context, note: 'Digitization Request') %>'><%= I18n.t('requests.on_shelf_edd.request_label') %></a>
+          <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(request_context, note: 'Digitization Request') %>' aria-labelledby='title <%= "enum_#{requestable.preferred_request_id}"%>'><%= I18n.t('requests.on_shelf_edd.request_label') %></a>
         </div>
     <% end %>
+    </div>

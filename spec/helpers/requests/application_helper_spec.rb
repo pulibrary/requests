@@ -176,7 +176,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "aeon voyager managed" do
       let(:stubbed_questions) do
-        { services: ['lewis'], charged?: false, aeon?: true,
+        { services: ['lewis'], charged?: false, aeon?: true, preferred_request_id: '123',
           voyager_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
       end
       it 'a link for reading room' do
@@ -188,7 +188,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "aeon NOT voyager managed" do
       let(:stubbed_questions) do
-        { services: ['lewis'], charged?: false, aeon?: true,
+        { services: ['lewis'], charged?: false, aeon?: true, preferred_request_id: '123',
           voyager_managed?: false, ask_me?: false, aeon_request_url: 'link',
           aeon_mapped_params: { abc: 123 } }
       end
@@ -228,10 +228,20 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services" do
-      let(:stubbed_questions) { { services: [] } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: '123', title: 'My Title', item: nil } }
       it 'a message for lewis' do
         expect(helper.show_service_options(requestable, 'acb')).to eq \
-          "<div class=\"service-item\">Item is not requestable.</div>"
+          "<div class=\"sr-only\">My Title  Item is not requestable.</div>" \
+          "<div class=\"service-item\" aria-hidden=\"true\">Item is not requestable.</div>"
+      end
+    end
+
+    context "no services enum" do
+      let(:stubbed_questions) { { services: [], preferred_request_id: '123', title: 'My Title', item: { enum_display: "abc123" } } }
+      it 'a message for lewis' do
+        expect(helper.show_service_options(requestable, 'acb')).to eq \
+          "<div class=\"sr-only\">My Title abc123 Item is not requestable.</div>" \
+          "<div class=\"service-item\" aria-hidden=\"true\">Item is not requestable.</div>"
       end
     end
   end

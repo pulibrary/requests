@@ -4,6 +4,8 @@ module Requests
     attr_reader :holding
     attr_reader :item
     attr_reader :location
+    attr_reader :call_number
+    attr_reader :title
     attr_accessor :services
 
     delegate :pageable_loc?, to: :@pageable
@@ -18,13 +20,15 @@ module Requests
       @item = item # hash of item data
       @location = location # hash of location matrix data
       @services = []
-      @pageable = Pageable.new(call_number: holding.first[1]['call_number_browse'], location_code: location['code'])
+      @call_number = holding.first[1]['call_number_browse']
+      @title = bib[:title_citation_display]&.first
+      @pageable = Pageable.new(call_number: call_number, location_code: location['code'])
       @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location[:code])
       @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
 
     def digitize?
-      item_data? && (on_shelf_edd? || recap_edd? || aeon?) && !online? && !request?
+      item_data? && (on_shelf_edd? || recap_edd?) && !online? && !request?
     end
 
     def pick_up?

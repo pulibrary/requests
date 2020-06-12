@@ -38,13 +38,14 @@ module Requests
 
     def show_service_options(requestable, _mfhd_id)
       if requestable.services.empty?
-        content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
+        content_tag(:div, "#{requestable.title} #{enum_copy_display(requestable.item)} #{I18n.t('requests.no_services.brief_msg').html_safe}", class: 'sr-only') +
+          content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item', aria: { hidden: true })
       elsif requestable.charged? && !requestable.aeon? && !requestable.ask_me?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon? && requestable.voyager_managed?
-        link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
+        link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary', aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }
       elsif requestable.aeon?
-        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
+        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary', aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }
       else
         display_requestable_list(requestable.services)
       end
@@ -312,7 +313,8 @@ module Requests
     end
 
     def item_checkbox(requestable_list, requestable)
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
+      disabled = check_box_disabled(requestable)
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list, disabled), class: 'request--select', disabled: disabled, aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
     # rubocop:disable Metrics/MethodLength
@@ -342,19 +344,20 @@ module Requests
     ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)
       location_label = requestable_list.first.location['label'].blank? ? "" : "- #{requestable_list.first.location['label']}"
-      if requestable_list.first.temp_loc?
-        "#{requestable_list.first.location['library']['label']}#{location_label}"
-      else
-        mfhd_label
-      end
+      label = if requestable_list.first.temp_loc?
+                "#{requestable_list.first.location['library']['label']}#{location_label}"
+              else
+                mfhd_label
+              end
+      "#{label} #{requestable_list.first.call_number}"
     end
 
-    def check_box_selected(requestable_list)
+    def check_box_selected(requestable_list, disabled)
       if requestable_list.size == 1
         if requestable_list.first.charged? || requestable_list.first.services.empty?
           false
         else
-          true
+          !disabled
         end
       else
         false

@@ -3,6 +3,6 @@
   <%= render partial: 'requestable_enum', locals: { requestable: requestable } %>
   <%= render partial: 'requestable_status', locals: { requestable: requestable } %>
   <td class='delivery--options' aria-live="polite">
-    <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>'>Help Me Get It</a>
+    <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(@request.ctx) %>' aria-labelledby='title <%= "enum_#{requestable.preferred_request_id}"%>'>Help Me Get It</a>
   </td>
 </tr>

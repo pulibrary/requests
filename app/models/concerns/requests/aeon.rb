@@ -8,7 +8,7 @@ module Requests
       params = {
         Action: '10',
         Form: '21',
-        ItemTitle: title.truncate(247),
+        ItemTitle: aeon_title.truncate(247),
         ItemAuthor: author,
         ItemDate: pub_date,
         ItemVolume: sub_title
@@ -122,7 +122,7 @@ module Requests
       end
       ### end special params
 
-      def title
+      def aeon_title
         "#{bib[:title_display]}#{genre}"
       end
 

@@ -28,17 +28,24 @@ module Requests
       error_keys.any? { |item| user_errors.include? item }
     end
 
-    def show_service_options(requestable, mfhd_id)
+    def show_pickup_service_options(requestable, mfhd_id)
+      if requestable.on_shelf?
+        display_on_shelf(requestable, mfhd_id)
+      else
+        display_requestable_list(requestable.services)
+      end
+    end
+
+    def show_service_options(requestable, _mfhd_id)
       if requestable.services.empty?
-        content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item')
+        content_tag(:div, "#{requestable.title} #{enum_copy_display(requestable.item)} #{I18n.t('requests.no_services.brief_msg').html_safe}", class: 'sr-only') +
+          content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item', aria: { hidden: true })
       elsif requestable.charged? && !requestable.aeon? && !requestable.ask_me?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       elsif requestable.aeon? && requestable.voyager_managed?
-        link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary'
+        link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary', aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }
       elsif requestable.aeon?
-        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary'
-      elsif requestable.on_shelf?
-        display_on_shelf(requestable, mfhd_id)
+        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary', aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }
       else
         display_requestable_list(requestable.services)
       end
@@ -62,29 +69,24 @@ module Requests
     end
 
     def hidden_service_options(requestable)
-      return if output_request_input(requestable)
+      hidden = output_request_input(requestable)
+      return hidden if hidden.present?
 
-      if requestable.services.include?('recap_edd') && requestable.services.include?('recap')
-        recap_radio_button_group requestable
-      elsif requestable.services.include? 'recap'
+      if requestable.services.include? 'recap'
         recap_print_only_input requestable
-      # temporary #348
-      elsif requestable.services.include? 'on_shelf'
-        request_input('on_shelf')
       else
         request_input(requestable.services.first)
       end
     end
 
     def output_request_input(requestable)
-      found = false
-      ['annexa', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace'].each do |type|
+      output = ""
+      ['annexa', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace', 'on_shelf'].each do |type|
         next unless requestable.services.include?(type)
-        found = true
-        request_input(type)
+        output = request_input(type)
         break
       end
-      found
+      output
     end
 
     # only requestable services that support "user-supplied volume info"
@@ -110,6 +112,7 @@ module Requests
 
     # rubocop:disable Style/NumericPredicate
     def enum_copy_display(item)
+      return "" if item.blank?
       display = ""
       display += item[:enum_display] unless item[:enum_display].nil?
       display += " " if !item[:enum_display].nil? && !item[:copy_number].nil?
@@ -221,17 +224,18 @@ module Requests
     end
 
     def hidden_fields_item(requestable)
-      hidden = hidden_field_tag "requestable[][bibid]", "", value: requestable.bib[:id].to_s, id: "requestable_bibid_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{requestable.item['id']}"
-      hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{requestable.item['id']}" unless requestable.holding.first[1]["call_number"].nil?
-      hidden += if requestable.item["location"].nil?
-                  hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{requestable.item['id']}"
+      request_id = requestable.preferred_request_id
+      hidden = hidden_field_tag "requestable[][bibid]", "", value: requestable.bib[:id].to_s, id: "requestable_bibid_#{request_id}"
+      hidden += hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{request_id}"
+      hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{request_id}" unless requestable.holding.first[1]["call_number"].nil?
+      hidden += if requestable.item? && requestable.item["location"].present?
+                  hidden_field_tag "requestable[][location_code]", "", value: requestable.item['location'].to_s, id: "requestable_location_#{request_id}"
                 else
-                  hidden_field_tag "requestable[][location_code]", "", value: requestable.item['location'].to_s, id: "requestable_location_#{requestable.item['id']}"
+                  hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{request_id}"
                 end
-      hidden += hidden_fields_for_item(item: requestable.item)
+      hidden += hidden_fields_for_item(item: requestable.item) if requestable.item?
       hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.scsb?
-      hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{requestable.item['id']}" unless requestable.item["scsb_status"].nil?
+      hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{request_id}" if requestable.item? && requestable.item["scsb_status"].present?
       hidden
     end
 
@@ -309,7 +313,8 @@ module Requests
     end
 
     def item_checkbox(requestable_list, requestable)
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list), class: 'request--select', disabled: check_box_disabled(requestable), aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
+      disabled = check_box_disabled(requestable)
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list, disabled), class: 'request--select', disabled: disabled, aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
     # rubocop:disable Metrics/MethodLength
@@ -339,19 +344,20 @@ module Requests
     ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)
       location_label = requestable_list.first.location['label'].blank? ? "" : "- #{requestable_list.first.location['label']}"
-      if requestable_list.first.temp_loc?
-        "#{requestable_list.first.location['library']['label']}#{location_label}"
-      else
-        mfhd_label
-      end
+      label = if requestable_list.first.temp_loc?
+                "#{requestable_list.first.location['library']['label']}#{location_label}"
+              else
+                mfhd_label
+              end
+      "#{label} #{requestable_list.first.call_number}"
     end
 
-    def check_box_selected(requestable_list)
+    def check_box_selected(requestable_list, disabled)
       if requestable_list.size == 1
         if requestable_list.first.charged? || requestable_list.first.services.empty?
           false
         else
-          true
+          !disabled
         end
       else
         false
@@ -437,6 +443,7 @@ module Requests
     end
 
     def system_status_label(requestable)
+      return "" if requestable.item.blank?
       content_tag(:div, requestable.item[:status], class: 'system-status') unless requestable.item.key? :scsb_status
     end
 
@@ -492,13 +499,6 @@ module Requests
         hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{item['id']}") unless item["enumeration"].nil?
         hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{item['id']}")
         hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{item['id']}")
-      end
-
-      def hidden_fields_for_requestable(requestable:)
-        hidden = hidden_field_tag("requestable[][item_id]", "", value: requestable.preferred_request_id, id: "requestable_item_id_#{requestable.preferred_request_id}")
-        hidden += hidden_field_tag("requestable[][barcode]", "", value: requestable.barcode, id: "requestable_barcode_#{requestable.preferred_request_id}") if requestable.barcode?
-        hidden += hidden_field_tag("requestable[][status]", "", value: status_label(requestable), id: "requestable_status_#{requestable.preferred_request_id}")
-        hidden + hidden_field_tag("requestable[][location_code]", "", value: requestable.holding[requestable.holding.keys.first]['location_code'], id: "requestable_status_#{requestable.preferred_request_id}")
       end
 
       def hidden_fields_for_scsb(item:)

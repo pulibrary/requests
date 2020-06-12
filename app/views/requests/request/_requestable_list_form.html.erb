@@ -2,7 +2,7 @@
 <%= hidden_fields_mfhd holdings[mfhd] %>
 <div class="table-responsive">
   <div id="holding<%= mfhd %>" class="table items table">
-    <h2><%= current_location_label(holdings[mfhd]["location"], requestable_list) %> <%= holdings[mfhd]["call_number"] %></h2>
+    <h2><%= current_location_label(holdings[mfhd]["location"], requestable_list) %> </h2>
 
       <% unless holdings[mfhd]["location_has"].nil? %>
           <div>
@@ -17,7 +17,7 @@
   </div>
 </div>
 <div class="table-responsive-sm">
-  <table class="table table-striped table-bordered request--available_items <%= show_tablesorter(requestable_list) %>">
+  <table class="table table-striped table-bordered request--available_items <%= show_tablesorter(requestable_list) %>" summary='<%= current_location_label(holdings[mfhd]["location"], requestable_list) %>'>
     <thead class="visually-hidden-sm">
       <th>Select</th>
       <th class="w-25">Enumeration</th>
@@ -27,9 +27,9 @@
     <tbody>
       <% fill_in_eligible = @request.fill_in_eligible(mfhd) %>
       <% if fill_in_eligible %>
-        <%= render partial: "fill_in_field", locals: { requestable: requestable_list.last, default_pickups: default_pickups, requestable_list: requestable_list } %>
+        <%= render partial: "requestable_fill_in_field", locals: { requestable: requestable_list.last, default_pickups: default_pickups, requestable_list: requestable_list } %>
       <% end %>
-      <%= render partial: "requestable_form", collection: requestable_list, as: :requestable, locals: { mfhd: mfhd, holdings: @request.holdings, default_pickups: @request.default_pickups, fill_in_eligible: fill_in_eligible } %>
+      <%= render partial: "requestable_form", collection: requestable_list, as: :requestable, locals: { mfhd: mfhd, holdings: @request.holdings, default_pickups: @request.default_pickups, fill_in_eligible: fill_in_eligible, requestable_list: requestable_list } %>
     </tbody>
   </table>
 </div>

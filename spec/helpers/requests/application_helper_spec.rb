@@ -176,7 +176,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "aeon voyager managed" do
       let(:stubbed_questions) do
-        { services: ['lewis'], charged?: false, aeon?: true,
+        { services: ['lewis'], charged?: false, aeon?: true, preferred_request_id: '123',
           voyager_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
       end
       it 'a link for reading room' do
@@ -188,7 +188,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "aeon NOT voyager managed" do
       let(:stubbed_questions) do
-        { services: ['lewis'], charged?: false, aeon?: true,
+        { services: ['lewis'], charged?: false, aeon?: true, preferred_request_id: '123',
           voyager_managed?: false, ask_me?: false, aeon_request_url: 'link',
           aeon_mapped_params: { abc: 123 } }
       end
@@ -208,8 +208,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       it 'a link to a map' do
         assign(:request, request)
         # temporary change no maps everything is pageable
-        # expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
-        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at abc. Request for pick-up.</li></ul></div>"
+        # expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
+        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at abc. Request for pick-up.</li></ul></div>"
       end
     end
 
@@ -222,16 +222,26 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       it 'a link to a map' do
         assign(:request, request)
         # temporary change no maps everything is pageable
-        # expect(helper.show_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
-        expect(helper.show_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at abc. Request for pick-up.</li></ul></div>"
+        # expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
+        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at abc. Request for pick-up.</li></ul></div>"
       end
     end
 
     context "no services" do
-      let(:stubbed_questions) { { services: [] } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: '123', title: 'My Title', item: nil } }
       it 'a message for lewis' do
         expect(helper.show_service_options(requestable, 'acb')).to eq \
-          "<div class=\"service-item\">Item is not requestable.</div>"
+          "<div class=\"sr-only\">My Title  Item is not requestable.</div>" \
+          "<div class=\"service-item\" aria-hidden=\"true\">Item is not requestable.</div>"
+      end
+    end
+
+    context "no services enum" do
+      let(:stubbed_questions) { { services: [], preferred_request_id: '123', title: 'My Title', item: { enum_display: "abc123" } } }
+      it 'a message for lewis' do
+        expect(helper.show_service_options(requestable, 'acb')).to eq \
+          "<div class=\"sr-only\">My Title abc123 Item is not requestable.</div>" \
+          "<div class=\"service-item\" aria-hidden=\"true\">Item is not requestable.</div>"
       end
     end
   end
@@ -302,42 +312,42 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
 
     context "no services" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to eq '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" /><input type="hidden" name="requestable[][mfhd]" id="requestable_mfhd_aaabbb" value="key1" /><input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="" /><input type="hidden" name="requestable[][item_id]" id="requestable_item_id_aaabbb" value="aaabbb" /><input type="hidden" name="requestable[][copy_number]" id="requestable_copy_number_aaabbb" value="" /><input type="hidden" name="requestable[][status]" id="requestable_status_aaabbb" value="" />'
       end
     end
 
     context "with item location" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'location' => 'place' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'location' => 'place' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="place" />'
       end
     end
 
     context "with item barcode" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'barcode' => '111222333' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'barcode' => '111222333' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][barcode]" id="requestable_barcode_aaabbb" value="111222333" />'
       end
     end
 
     context "with item enum" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enum' => 'vvv' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enum' => 'vvv' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="vvv" />'
       end
     end
 
     context "with item enumeration" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enumeration' => 'sss' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enumeration' => 'sss' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="sss" />'
       end
     end
 
     context "with item scsb_status" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'scsb_status' => 'status' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'scsb_status' => 'status' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][scsb_status]" id="requestable_scsb_status_aaabbb" value="status" />'
       end
@@ -345,14 +355,14 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "with holding call number" do
       let(:holding) { { "1594697" => { "location" => "Firestone Library", "library" => "Firestone Library", "location_code" => "f", "copy_number" => "0", "call_number" => "6251.9765", "call_number_browse" => "6251.9765" } } }
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: holding, location: { code: 'location_code' }, scsb?: false } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: holding, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][call_number]" id="requestable_call_number_aaabbb" value="6251.9765" />'
       end
     end
 
     context "scsb item" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: true } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: true, preferred_request_id: 'aaabbb', item?: true } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to eq '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" /><input type="hidden" name="requestable[][mfhd]" id="requestable_mfhd_aaabbb" value="key1" /><input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="" /><input type="hidden" name="requestable[][item_id]" id="requestable_item_id_aaabbb" value="aaabbb" /><input type="hidden" name="requestable[][copy_number]" id="requestable_copy_number_aaabbb" value="" /><input type="hidden" name="requestable[][status]" id="requestable_status_aaabbb" value="" /><input type="hidden" name="requestable[][cgc]" id="requestable_cgc_aaabbb" value="" /><input type="hidden" name="requestable[][cc]" id="requestable_collection_code_aaabbb" value="" /><input type="hidden" name="requestable[][use_statement]" id="requestable_use_statement_aaabbb" value="" />'
       end

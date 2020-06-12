@@ -1,0 +1,7 @@
+<td class="request--availability">
+  <%= status_label requestable %>
+  <% if requestable.use_restriction? %>
+    <br/>
+    <%= requestable.item[:use_statement] %>
+  <% end %>
+</td>

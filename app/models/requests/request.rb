@@ -155,22 +155,17 @@ module Requests
       online
     end
 
-    def any_circulating?
-      circulates = false
-      requestable.each { |item| circulates ||= item.circulates? }
-      circulates
+    def any_will_submit_via_form?
+      requestable.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
     end
 
-    def any_digitization_options?
-      digitizable = false
-      requestable.each { |item| digitizable ||= item.available_for_digitizing? }
-      digitizable
+    def any_fill_in_eligible?
+      filtered_sorted_requestable.keys.map { |mfhd| fill_in_eligible(mfhd) }.any?
     end
 
     # returns nil if there are no attached items
     # if mfhd set returns only items associated with that mfhd
     # if no mfhd returns items sorted by mfhd
-
     def load_items
       return nil if thesis? || numismatics?
       mfhd_items = if @mfhd && serial?

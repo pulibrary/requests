@@ -232,8 +232,20 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to request On-Order items' do
           visit "/requests/#{on_order_id}"
-          # pending "must circulate to be requestable"
           expect(page).to have_button('Request this Item', disabled: false)
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          expect(page).to have_content I18n.t("requests.submit.on_order_success")
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("On Order Request")
+          expect(email.to).to eq(["fstcirc@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
+          expect(confirm_email.subject).to eq("On Order Request")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
 
         it 'allows CAS patrons to request a record that has no item data' do

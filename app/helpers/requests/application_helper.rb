@@ -313,33 +313,9 @@ module Requests
     end
 
     def item_checkbox(requestable_list, requestable)
-      disabled = check_box_disabled(requestable)
+      disabled = !requestable.will_submit_via_form?
       check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list, disabled), class: 'request--select', disabled: disabled, aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
-
-    # rubocop:disable Metrics/MethodLength
-    # rubocop:disable Metrics/CyclomaticComplexity
-    # rubocop:disable Metrics/PerceivedComplexity
-    def check_box_disabled(requestable)
-      if requestable.services.empty? || requestable.on_reserve? || !requestable.circulates?
-        true
-      elsif requestable.on_order? || requestable.in_process? || requestable.traceable? || (requestable.always_requestable? && requestable.recap?)
-        false
-      elsif requestable.aeon?
-        true
-      elsif requestable.charged?
-        true
-      elsif requestable.on_shelf?
-        !requestable.location[:circulates] || @user.blank? || @user.guest
-      elsif (requestable.open? && !requestable.pageable?) || requestable.always_requestable?
-        true
-      else
-        false
-      end
-    end
-    # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/CyclomaticComplexity
-    # rubocop:enable Metrics/PerceivedComplexity
 
     ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)

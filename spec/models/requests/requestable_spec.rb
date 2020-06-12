@@ -751,4 +751,119 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
   end
+
+  describe "#will_submit_via_form?" do
+    let(:location) { {} }
+    let(:item_data) {}
+    let(:requestable) { described_class.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'abc' } }], item: item_data, location: location) }
+    let(:services) { [] }
+    let(:on_reserve) { false }
+    let(:traceable) { false }
+    let(:on_order) { false }
+    let(:in_process) { false }
+    let(:aeon) { false }
+    let(:charged) { false }
+
+    before do
+      allow(requestable).to receive(:services).and_return(services)
+      allow(requestable).to receive(:on_reserve?).and_return(on_reserve)
+      allow(requestable).to receive(:on_order?).and_return(on_order)
+      allow(requestable).to receive(:in_process?).and_return(in_process)
+      allow(requestable).to receive(:aeon?).and_return(aeon)
+      allow(requestable).to receive(:traceable?).and_return(traceable)
+      allow(requestable).to receive(:charged?).and_return(charged)
+    end
+
+    context "no services" do
+      it 'does not submit via form' do
+        expect(requestable.will_submit_via_form?).to be_falsey
+      end
+    end
+
+    context "on_reserve" do
+      let(:on_reserve) { true }
+      it 'does not submit via form' do
+        expect(requestable.will_submit_via_form?).to be_falsey
+      end
+    end
+
+    context "charged" do
+      let(:charged) { true }
+      it 'does not submit via form' do
+        expect(requestable.will_submit_via_form?).to be_falsey
+      end
+    end
+
+    context "traceable?" do
+      let(:traceable) { true }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "on_order" do
+      let(:on_order) { true }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "in_process" do
+      let(:in_process) { true }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "aeon" do
+      let(:aeon) { true }
+      it 'does not submit via form' do
+        expect(requestable.will_submit_via_form?).to be_falsey
+      end
+    end
+
+    context "item_data and on_shelf" do
+      let(:item_data) { { id: '123' } }
+      let(:services) { ['on_shelf'] }
+      let(:location) { { circulates: true, library: { code: 'firestone' } } }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "item_data and annexa" do
+      let(:item_data) { { id: '123' } }
+      let(:services) { ['annexa'] }
+      let(:location) { { circulates: true, library: { code: 'annexa' } } }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "item_data and recap" do
+      let(:item_data) { { id: '123' } }
+      let(:services) { ['recap'] }
+      let(:location) { { circulates: true, library: { code: 'recap' } } }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "item_data and on_shelf_edd" do
+      let(:item_data) { { abc: '123' } }
+      let(:services) { ['on_shelf_edd'] }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_falsey
+      end
+    end
+
+    context "item_data and recap_edd" do
+      let(:item_data) { { id: '123' } }
+      let(:services) { ['recap_edd'] }
+      let(:location) { { circulates: true, library: { code: 'recap' } } }
+      it 'does submit via form' do
+        expect(requestable.will_submit_via_form?).to be_truthy
+      end
+    end
+  end
 end

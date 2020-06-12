@@ -28,7 +28,7 @@ module Requests
     end
 
     def digitize?
-      item_data? && (on_shelf_edd? || recap_edd?) && !online? && !request?
+      item_data? && (on_shelf_edd? || recap_edd?) && !request?
     end
 
     def pick_up?
@@ -36,11 +36,16 @@ module Requests
     end
 
     def request?
-      on_order? || in_process? || aeon? || services.empty?
+      on_order? || in_process? || traceable? || aeon? || services.empty?
     end
 
     def help_me?
       ask_me? || (!available_for_digitizing? && !aeon?)
+    end
+
+    def will_submit_via_form?
+      (digitize? && !on_shelf_edd?) || # on_shelf_edd is not part of the form yet
+        pick_up? || on_order? || in_process? || traceable?
     end
 
     # pickup location id on the item level

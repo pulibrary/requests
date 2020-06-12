@@ -232,7 +232,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to request On-Order items' do
           visit "/requests/#{on_order_id}"
-          pending "must circulate to be requestable"
+          # pending "must circulate to be requestable"
           expect(page).to have_button('Request this Item', disabled: false)
         end
 

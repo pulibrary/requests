@@ -28,7 +28,7 @@ module Requests
     end
 
     def digitize?
-      item_data? && (on_shelf_edd? || recap_edd?) && !request?
+      (item_data? || !circulates?) && (on_shelf_edd? || recap_edd?) && !request?
     end
 
     def pick_up?

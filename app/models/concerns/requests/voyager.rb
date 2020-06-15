@@ -63,7 +63,7 @@ module Requests
     end
 
     def request_payload(item, parameter_name: "recall-parameters", expiration_period: 60)
-      pickup = item['pickup_location_id'] || "299"
+      pickup = item['pickup_location_id'] || lookup_pickup_code(item['pickup'].split("|").first)
       recall_request = Nokogiri::XML::Builder.new do |xml|
         xml.send(parameter_name.to_sym) do
           xml.send(:"pickup-location", pickup)
@@ -78,6 +78,20 @@ module Requests
     def expiration_date(expiration_period)
       expiry_date = Time.zone.today + expiration_period
       expiry_date.strftime("%Y%m%d")
+    end
+
+    def lookup_pickup_code(code)
+      {
+        "PA" => "299",
+        "PN" => "489",
+        "PT" => "345",
+        "PW" => "356",
+        "PJ" => "321",
+        "PQ" => "312",
+        "PK" => "309",
+        "PL" => "303",
+        "PM" => "333"
+      }[code] || "299"
     end
   end
 end

@@ -98,6 +98,32 @@ describe Requests::HoldItem, type: :controller do
           .to_return(status: 201, body: responses[:success], headers: {})
         expect(hold_request.request_payload(submission.items.first)).to include("<last-interest-date>#{(todays_date + 60).strftime('%Y%m%d')}</last-interest-date>")
       end
+
+      context "no pickup id is present" do
+        let(:requestable) do
+          [{ "selected" => "true",
+             "mfhd" => "9723988",
+             "call_number" => "HQ1532 .P44 2019",
+             "location_code" => "f",
+             "item_id" => "8183358",
+             "barcode" => "32101107924928",
+             "copy_number" => "0",
+             "status" => "Not Charged",
+             "item_type" => "Gen",
+             "pickup_location_code" => "fcirc",
+             "pickup" => "PM",
+             "type" => "on_shelf" }]
+        end
+
+        it 'has the correct pickup location id' do
+          stub_request(:get, stub_url)
+            .to_return(status: 200, body: responses[:get], headers: {})
+          stub_request(:put, stub_url)
+            .with(headers: { 'X-Accept' => 'application/xml' })
+            .to_return(status: 201, body: responses[:success], headers: {})
+          expect(hold_request.request_payload(submission.items.first)).to include("<pickup-location>333</pickup-location>")
+        end
+      end
     end
   end
 end

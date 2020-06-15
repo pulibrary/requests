@@ -16,6 +16,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Firestone Library')
+      end
+    end
+
     describe '#map_url' do
       it 'returns a stackmap url' do
         expect(stackmap_url).to include("#{requestable.bib[:id]}/stackmap?cn=#{call_number}&loc=#{location_code}")
@@ -57,6 +63,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.aeon_mapped_params[:ItemTitle]).to eq(requestable.bib[:title_display])
       end
     end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Mudd Manuscript Library')
+      end
+    end
   end
 
   context "Is a bibliographic record from the numismatics collection" do
@@ -91,6 +103,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it "includes an ItemTitle for a numismatics record" do
         expect(requestable.aeon_mapped_params[:ItemTitle]).to be_truthy
         expect(requestable.aeon_mapped_params[:ItemTitle]).to eq(requestable.bib[:title_display])
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Special Collections - Numismatics Collection')
       end
     end
   end
@@ -129,6 +147,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       xit 'should be available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_truthy
       end
+
+      describe '#location_label' do
+        it 'has a location label' do
+          expect(requestable.first.location_label).to eq('Firestone Library')
+        end
+      end
     end
   end
 
@@ -150,6 +174,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'is not recallable' do
         expect(requestable_on_hold.services.include?('recall')).to be false
         expect(requestable_on_hold.recallable?).to be false
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable_on_hold.location_label).to eq('ReCAP')
       end
     end
   end
@@ -189,6 +219,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       xit 'should be eligible for ill' do
         expect(requestable.first.ill_eligible?).to be true
       end
+
+      describe '#location_label' do
+        it 'has a location label' do
+          expect(requestable.first.location_label).to eq('Firestone Library')
+        end
+      end
     end
   end
 
@@ -209,6 +245,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.pickup_location_code).to eq 'fcirc'
       end
     end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Firestone Library')
+      end
+    end
   end
 
   context 'A circulating item' do
@@ -226,6 +268,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.item_type_non_circulate?).to be false
         expect(requestable.pickup_location_id).to eq 299
         expect(requestable.pickup_location_code).to eq 'fcirc'
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Firestone Library')
       end
     end
   end
@@ -252,6 +300,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.barcode?).to be false
       end
     end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('East Asian Library - Rare Books')
+      end
+    end
   end
 
   context 'A requestable serial item that has volume and item data in its openurl' do
@@ -266,6 +320,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it 'returns an openurl with issue data' do
         expect(requestable.aeon_openurl(request.ctx)).to include("rft.issue=#{CGI.escape(requestable.item[:chron])}")
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
       end
     end
   end
@@ -290,6 +350,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       it 'returns an openurl with item id as a value for iteminfo5' do
         expect(requestable.aeon_openurl(request.ctx)).to include("iteminfo5=#{requestable.item[:id]}")
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Special Collections - Rare Books')
       end
     end
   end
@@ -317,6 +383,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(aeon_ctx).to include('&rft.genre=unknown&rft.title=Beethoven%27s+andante+cantabile+aus+dem+Trio+op.+97%2C+fu%CC%88r+orchester&rft.creator=Beethoven%2C+Ludwig+van&rft.aucorp=Leipzig%3A+Kahnt&rft.pub=Leipzig%3A+Kahnt&rft.format=musical+score&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Aunknown&rft_id=https%3A%2F%2Fbibdata.princeton.edu%2Fbibliographic%2F2535845&rft_id=info%3Aoclcnum%2F25615303&rfr_id=info%3Asid%2Fcatalog.princeton.edu%3Agenerator&CallNumber=M1004.L6+B3&ItemInfo1=Reading+Room+Access+Only&Location=ex&ReferenceNumber=2535845&Site=RBSC')
       end
     end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Special Collections - Rare Books')
+      end
+    end
   end
 
   context 'A MUDD holding' do
@@ -341,6 +413,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.site).to eq('MARQ')
         expect(requestable.available_for_digitizing?).to be_truthy
         expect(requestable.can_be_delivered?).to be_falsey
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('ReCAP - Marquand Library (Rare) use only')
       end
     end
   end
@@ -370,6 +448,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'truncates the open url ctx title' do
         expect(request.ctx.referent.metadata['btitle'].length).to be <= 250
         expect(request.ctx.referent.metadata['title'].length).to be <= 250
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Special Collections - John Witherspoon Library')
       end
     end
   end
@@ -430,6 +514,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.aeon_request_url(request.ctx)).to match(/^#{Requests.config[:aeon_base]}/)
       end
     end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
+      end
+    end
   end
 
   context 'A requestable item from Forrestal Annex with no item data' do
@@ -440,6 +530,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe 'requestable with no items ' do
       it 'does not have item data' do
         expect(requestable.item_data?).to be false
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Forrestal Annex - Princeton Collection')
       end
     end
   end
@@ -454,6 +550,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable.on_order?).to be true
       end
     end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('Firestone Library')
+      end
+    end
   end
 
   context 'Pending Order materials' do
@@ -464,6 +566,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe 'with a status of pending orders' do
       it 'is treated like on order items' do
         expect(requestable.on_order?).to be true
+      end
+    end
+
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.location_label).to eq('ReCAP - Marquand Library use only')
       end
     end
   end
@@ -853,7 +961,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       let(:item_data) { { abc: '123' } }
       let(:services) { ['on_shelf_edd'] }
       it 'does submit via form' do
-        expect(requestable.will_submit_via_form?).to be_falsey
+        expect(requestable.will_submit_via_form?).to be_truthy
       end
     end
 

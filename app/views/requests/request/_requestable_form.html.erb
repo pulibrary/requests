@@ -1,14 +1,14 @@
 <% if requestable.help_me? %>
   <%= render partial: 'requestable_form_help_me', locals: { requestable: requestable } %>
 <% elsif requestable.digitize? && requestable.pick_up? %>
-  <%= render partial: 'requestable_form_digitize_and_pickup', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>
+  <%= render partial: 'requestable_form_digitize_and_pickup', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx, single_item_request: @request.single_item_request? } %>
 <% elsif requestable.pick_up? %>
-  <%= render partial: 'requestable_form_pickup', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>
+  <%= render partial: 'requestable_form_pickup', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx, single_item_request: @request.single_item_request? } %>
 <% elsif requestable.digitize? %>
-  <%= render partial: 'requestable_form_digitize', locals: { requestable: requestable } %>
+  <%= render partial: 'requestable_form_digitize', locals: { requestable: requestable, single_item_request: @request.single_item_request? } %>
 <% elsif requestable.request? %>
-  <%= render partial: 'requestable_form_request', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx } %>
+  <%= render partial: 'requestable_form_request', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx, single_item_request: @request.single_item_request? } %>
 <% end %>
 <% if requestable.online? %>
-  <%= render partial: "requestable_online_items", locals: { requestable: requestable } %>
+  <%= render partial: "requestable_online_items", locals: { requestable: requestable, single_item_request: @request.single_item_request? } %>
 <% end %>

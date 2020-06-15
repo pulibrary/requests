@@ -10,7 +10,7 @@ module Requests
 
     delegate :pageable_loc?, to: :@pageable
     delegate :map_url, to: :@mappable
-    delegate :illiad_request_url, to: :@illiad
+    delegate :illiad_request_url, :illiad_request_parameters, to: :@illiad
 
     include Requests::Aeon
 
@@ -22,8 +22,8 @@ module Requests
       @services = []
       @call_number = holding.first[1]['call_number_browse']
       @title = bib[:title_citation_display]&.first
-      @pageable = Pageable.new(call_number: call_number, location_code: location['code'])
-      @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location[:code])
+      @pageable = Pageable.new(call_number: call_number, location_code: location_code)
+      @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location_code)
       @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
 
@@ -44,8 +44,7 @@ module Requests
     end
 
     def will_submit_via_form?
-      (digitize? && !on_shelf_edd?) || # on_shelf_edd is not part of the form yet
-        pick_up? || on_order? || in_process? || traceable?
+      digitize? || pick_up? || on_order? || in_process? || traceable?
     end
 
     # pickup location id on the item level
@@ -76,6 +75,16 @@ module Requests
       else
         holding.first[0]
       end
+    end
+
+    def enum_value
+      return "" unless item?
+      item['enum']
+    end
+
+    def cron_value
+      return "" unless item?
+      item['chron']
     end
 
     # non voyager options
@@ -116,15 +125,15 @@ module Requests
     end
 
     def lewis?
-      ['sci', 'scith', 'sciref', 'sciefa', 'sciss'].include?(location[:code])
+      ['sci', 'scith', 'sciref', 'sciefa', 'sciss'].include?(location_code)
     end
 
     def plasma?
-      location[:code] == 'ppl'
+      location_code == 'ppl'
     end
 
     def preservation?
-      location[:code] == 'pres'
+      location_code == 'pres'
     end
 
     # merge these two
@@ -155,7 +164,7 @@ module Requests
 
     # Is the ReCAP Item from a partner location
     def scsb?
-      scsb_locations.include?(location['code'])
+      scsb_locations.include?(location_code)
     end
 
     def use_restriction?
@@ -307,6 +316,31 @@ module Requests
 
     def open_libraries
       ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
+    end
+
+    def location_code
+      return nil if location.blank?
+      location['code']
+    end
+
+    def location_label
+      return nil if location.blank? || location["library"].blank?
+      label = location["library"]["label"]
+      label += " - #{location['label']}" if location["label"].present?
+      label
+    end
+
+    def item_location_code
+      if item? && item["location"].present?
+        item['location'].to_s
+      else
+        location_code
+      end
+    end
+
+    def library_code
+      return nil if location['library'].blank?
+      location['library']['code']
     end
 
     private

@@ -20,11 +20,13 @@ module Requests
       def validate_selected(record, selected)
         return unless selected['selected'] == 'true'
         case selected["type"]
+        when 'digitize'
+          validate_delivery_mode(record: record, selected: selected)
         when 'bd'
           validate_recall_or_bd(record, selected, pickup_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
         when 'recap_no_items'
           validate_recap_no_items(record, selected)
-        when 'recap'
+        when 'recap', 'recap_edd'
           validate_recap(record, selected)
         when 'on_shelf', 'recall'
           validate_recall_or_bd(record, selected)

@@ -22,14 +22,30 @@ module Requests
       "#{Requests.config[:ill_base]}?#{query_params}"
     end
 
+    def illiad_request_parameters(solr_open_url_context, note: nil)
+      mapping = map_metdata(referrer: solr_open_url_context.referrer, referent: solr_open_url_context.referent,
+                            metadata: solr_open_url_context.referent.metadata)
+      mapping[:note] = note
+      mapping
+    end
+
     private
 
       ## below take from Umlaut's illiad service adaptor
       # https://github.com/team-umlaut/umlaut/blob/master/app/service_adaptors/illiad.rb
       # takes an existing openURL and illiad-izes it.
       # also attempts to handle the question of enumeration.
-      # rubocop:disable Metrics/MethodLength
       def illiad_query_parameters(referrer:, referent:, metadata:, note:)
+        qp = map_metdata(referrer: referrer, referent: referent, metadata: metadata)
+        qp['notes'] = note
+
+        # trim empty ones please
+        qp.delete_if { |_k, v| v.blank? }
+        qp.to_query
+      end
+
+      # rubocop:disable Metrics/MethodLength
+      def map_metdata(referrer:, referent:, metadata:)
         qp = {}
         METADATA_MAPPING.each { |metadata_key, illiad_key| qp[illiad_key] = metadata[metadata_key.to_s] }
 
@@ -47,11 +63,7 @@ module Requests
         qp['rft.oclcnum'] = get_oclcnum(referent)
         qp['genre'] = genere(format: referent.format, qp: qp)
         qp['CitedIn'] = catalog_url(referent)
-        qp['notes'] = note
-
-        # trim empty ones please
-        qp.delete_if { |_k, v| v.blank? }
-        qp.to_query
+        qp
       end
       # rubocop:enable Metrics/MethodLength
 

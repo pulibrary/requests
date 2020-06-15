@@ -156,7 +156,7 @@ module Requests
     end
 
     def any_will_submit_via_form?
-      requestable.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
+      filtered_sorted_requestable.values.flatten.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
     end
 
     def any_fill_in_eligible?
@@ -239,6 +239,10 @@ module Requests
 
     def scsb_location
       doc['location_code_s'].first
+    end
+
+    def single_item_request?
+      filtered_sorted_requestable.values.flatten.size == 1 && !any_fill_in_eligible?
     end
 
     private

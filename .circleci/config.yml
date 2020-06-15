@@ -30,46 +30,27 @@ jobs:
       # Install the Gem dependencies
       - restore_cache:
           keys:
-          - requests-{{ checksum "requests.gemspec" }}
+          - requests-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "requests.gemspec" }}
 
       - run:
           name: Install the Gem dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
-      - save_cache:
-          key: requests-{{ checksum "requests.gemspec" }}
-          paths:
-            - ./vendor/bundle
-
       # Generate the Rails Engine
-      - restore_cache:
-          name: Restore test app from cache
-          key: v1-internal-test-app-{{ checksum "requests.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}
-
       - run:
           name: Generate the Rails engine
           command: |
             bundle exec rake engine_cart:generate
-
-      - save_cache:
-          name: Save test app cache
-          key: v1-internal-test-app-{{ checksum "requests.gemspec" }}-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}
-          paths: ./.internal_test_app
-
-      # Install additional Gem dependencies (required by the test app.)
-      - restore_cache:
-          keys:
-          - requests-{{ checksum "requests.gemspec" }}
-          - requests-
 
       - run:
           name: Install additional Gem dependencies (required by the test app.)
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
       - save_cache:
-          key: requests-{{ checksum "requests.gemspec" }}
+          key: requests-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "requests.gemspec" }}
           paths:
             - ./vendor/bundle
+            - ./.internal_test_app
 
       - run:
           name: Run Rubocop and the RSpec test suites

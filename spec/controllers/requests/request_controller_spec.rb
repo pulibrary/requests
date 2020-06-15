@@ -89,7 +89,6 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           "status" => "Not Charged",
           "pickup" => "",
           "type" => "recap",
-          "delivery_mode_7391704" => "edd",
           "edd_art_title" => "test",
           "edd_start_page" => "1",
           "edd_end_page" => "1",
@@ -108,6 +107,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     context "recap requestable" do
       let(:recap) { instance_double(Requests::Recap, errors: []) }
       it 'contacts recap and sends email' do
+        requestable.first["library_code"] = "recap"
+        requestable.first["delivery_mode_7391704"] = "edd"
         expect(Requests::Recap).to receive(:new).and_return(recap)
         expect(Requests::RequestMailer).to receive(:send).with("recap_edd_confirmation", anything).and_return(mail_message)
         expect(Requests::RequestMailer).not_to receive(:send).with("recap_email", anything)
@@ -181,6 +182,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
 
     context "service error" do
       it 'returns and error' do
+        requestable.first["library_code"] = "recap"
+        requestable.first["delivery_mode_7391704"] = "edd"
         post :submit, params: { "request" => user_info,
                                 "requestable" => requestable,
                                 "bib" => bib, "format" => "js" }

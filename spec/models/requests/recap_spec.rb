@@ -30,6 +30,7 @@ describe Requests::Recap do
          "edd_author" => "",
          "edd_art_title" => "",
          "edd_note" => "",
+         "library_code" => "recap",
          "pickup" => "PA" },
        { "selected" => "true",
          "mfhd" => "534137",
@@ -49,6 +50,7 @@ describe Requests::Recap do
          "edd_author" => "",
          "edd_art_title" => "Baz",
          "edd_note" => "",
+         "library_code" => "recap",
          "pickup" => "PH" }]
     end
 

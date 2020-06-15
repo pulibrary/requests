@@ -6,7 +6,7 @@ module Requests
     include Requests::Scsb
 
     def initialize(submission)
-      @service_type = 'recap'
+      @service_types = ['recap', 'recap_edd']
       @submission = submission
       @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
       @errors = [] # array of hashes with bibid and item_id and error message
@@ -14,9 +14,11 @@ module Requests
     end
 
     def handle
-      items = @submission.filter_items_by_service(@service_type)
-      items.each do |item|
-        handle_item(item)
+      service_types.each do |service_type|
+        items = @submission.filter_items_by_service(service_type)
+        items.each do |item|
+          handle_item(item)
+        end
       end
     end
 
@@ -24,7 +26,7 @@ module Requests
       @sent
     end
 
-    attr_reader :errors
+    attr_reader :errors, :service_types
 
     private
 

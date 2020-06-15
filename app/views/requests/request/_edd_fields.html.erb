@@ -1,5 +1,5 @@
-<div aria-live='polite' class='<%= collapse_field %>' id='fields-eed__<%= "#{requestable.item['id']}" %>'>
-  <small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text brief-msg"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
+<div aria-live='polite' class='<%= collapse_field %>' id='fields-eed__<%= "#{requestable.preferred_request_id}" %>'>
+  <small id="requestable__type_recap_edd_caption_<%= requestable.preferred_request_id %>" class="form-text brief-msg"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
   <div class="card card-body bg-light">
     <fieldset class="form-group required">
       <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title *', class: 'control-label col-sm-12' %>
@@ -22,13 +22,13 @@
     <fieldset class="form-group">
       <%= label_tag "requestable__edd_volume_number", 'Volume Number', class: 'control-label col-sm-12' %>
       <div class="col-sm-6">
-        <%= text_field_tag 'requestable[][edd_volume_number]', "", value: requestable.item['enum'], placeholder: "Vol. 50", maxlength: 20, size: 20 %>
+        <%= text_field_tag 'requestable[][edd_volume_number]', "", value: requestable.enum_value, placeholder: "Vol. 50", maxlength: 20, size: 20 %>
       </div>
     </fieldset>
     <fieldset class="form-group">
       <%= label_tag "requestable__edd_issue", 'Issue', class: 'control-label col-sm-12' %>
       <div class="col-sm-6">
-        <%= text_field_tag 'requestable[][edd_issue]', "", value: requestable.item['chron'], placeholder: "3", maxlength: 20, size: 20 %>
+        <%= text_field_tag 'requestable[][edd_issue]', "", value: requestable.cron_value, placeholder: "3", maxlength: 20, size: 20 %>
       </div>
     </fieldset>
     <fieldset class="form-group">

@@ -14,6 +14,7 @@ en:
     submit:
       success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       recap_success: "Request submitted to ReCAP, our offsite storage facility. See confirmation email with details about when your item(s) will be available."
+      digitize_success: "Request submitted to Illiad. You can view the status of your request on your account page.  See confirmation email with details about when your item(s) will be available."
       recap_no_items_success: "Request submitted to ReCAP, our offsite storage facility. See confirmation email with details about when your item(s) will be available."
       recall_success: "You have successfully placed a recall. You will be notified when the item is available."
       bd_success: "Request submitted to BorrowDirect. You can expect delivery within four business days or less. See confirmation email with details about when your item(s) will be available."
@@ -52,6 +53,12 @@ en:
       # temporary changes issue 438
       #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you the item will be available for pick-up in Firestone Lobby between the hours of 11am - 3pm, Monday - Friday."
+    digitize:
+      email_from: "ilsborr@princeton.edu"
+      email_subject: "Electronic Document Delivery Request Confirmation"
+      brief_msg: Request an article or book chapter. They will be delivered as a PDF file in 1-2 business days. Please use the title field to indicate the article or chapter you wish to obtain. Use the notes field for additional comments or instructions. The Library complies with all applicable copyright laws.
+      email_conf_msg: 'Electronic document delivery requests typically take 1-2 days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you. For more detailed information please login to your <a href="https://lib-illiad.princeton.edu/illiad/illiad.dll">Illiad Account</a>. (Note: Your username and password is the same as the CAS)'
+      access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     ppl:
       email: "ppllib@princeton.edu"
       email_subject: "Harold P. Furth Plasma Physics Library Request"

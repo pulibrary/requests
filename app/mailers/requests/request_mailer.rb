@@ -182,6 +182,19 @@ module Requests
            subject: subject)
     end
 
+    def digitize_email(submission)
+      # TODO: what should we do here
+    end
+
+    def digitize_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      subject = I18n.t('requests.digitize.email_subject')
+      mail(to: destination_email,
+           from: I18n.t('requests.digitize.email_from'),
+           subject: subject)
+    end
+
     def recap_email(submission)
       # only send an email to the libraries if this is a barcode user request
       return unless submission.access_only?

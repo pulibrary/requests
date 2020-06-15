@@ -5,8 +5,8 @@
         <%= render partial: "edd_fields", locals: { requestable: requestable, collapse_field: collapse } %>
         <%= hidden_field_tag "requestable[][type]", "recap" %>
     <% else %>
-        <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.item[:id]}" %>
-        <small id="requestable__type_edd_caption_<%= requestable.item[:id] %>" class="form-text brief-msg"><%= I18n.t('requests.on_shelf_edd.brief_msg') %></small>
+        <%= label_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.preferred_request_id}" %>
+        <small id="requestable__type_edd_caption_<%= requestable.preferred_request_id %>" class="form-text brief-msg"><%= I18n.t('requests.on_shelf_edd.brief_msg') %></small>
         <div>
           <a class='btn btn-primary btn-lg' href='<%= requestable.illiad_request_url(request_context, note: 'Digitization Request') %>' aria-labelledby='title <%= "enum_#{requestable.preferred_request_id}"%>'><%= I18n.t('requests.on_shelf_edd.request_label') %></a>
         </div>

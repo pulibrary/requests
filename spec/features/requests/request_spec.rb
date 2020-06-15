@@ -504,6 +504,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annexa_success')
         end
+
+        it 'allows a non circulating item with not item data to be digitized' do
+          visit '/requests/4127409?mfhd=4403772'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Digitization Request'
+          expect(page).not_to have_content 'Request Selected Items'
+          expect(page).not_to have_content 'Request this Item'
+        end
       end
     end
 

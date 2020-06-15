@@ -60,9 +60,15 @@ module Requests
       @submission.items.each do |item|
         destination_email.push(I18n.t('requests.annexb.email')) if item["type"] == 'annexb'
       end
-      cc_email = [@submission.email]
       mail(to: destination_email,
-           cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.annexb.email_subject'), @submission.user_barcode))
+    end
+
+    def annexb_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.annexb.email_subject'), @submission.user_barcode))
     end
@@ -157,9 +163,15 @@ module Requests
     def trace_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.default.email_destination')
-      cc_email = [@submission.email]
       mail(to: destination_email,
-           cc: cc_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.trace.email_subject'), @submission.user_barcode))
+    end
+
+    def trace_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(I18n.t('requests.trace.email_subject'), @submission.user_barcode))
     end
@@ -175,7 +187,6 @@ module Requests
     def recap_no_items_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
-      cc_email = [@submission.email]
       subject = I18n.t('requests.recap.email_subject')
       if @submission.access_only?
         cc_email = I18n.t('requests.recap.guest_email_destination')
@@ -217,7 +228,8 @@ module Requests
            subject: subject)
     end
 
-    def recall_email(submission)
+    # goes directly to voyager
+    def recall_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
       mail(to: destination_email,
@@ -225,6 +237,7 @@ module Requests
            subject: I18n.t('requests.recall.email_subject'))
     end
 
+    # depracated - TODO: clean up
     def scsb_recall_email(submission)
       @submission = submission
       destination_email = I18n.t('requests.recap.scsb_recall_destination')

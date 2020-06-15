@@ -2,6 +2,7 @@ require 'spec_helper'
 include Requests::ApplicationHelper
 
 # rubocop:disable RSpec/MultipleExpectations
+# rubocop:disable Metrics/BlockLength
 describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
   let(:user_info) do
     {
@@ -371,7 +372,60 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.annexb.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.annexb.email')])
-      expect(mail.cc).to eq([submission_for_annexb.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.annexb.email_conf_msg')
+    end
+  end
+
+  context "send annexb email patron confirmation" do
+    let(:requestable) do
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9840542",
+          "call_number" => "QK629.A4 K45 2016",
+          "location_code" => "anxb",
+          "item_id" => "7528249",
+          "barcode" => "32101095859144",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "annexb",
+          "pickup" => "PN"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    end
+    let(:bib) do
+      {
+        "id" => "10042951",
+        "title" => "Agaricus of North America /",
+        "author" => "Kerrigan, Richard Wade"
+      }.with_indifferent_access
+    end
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+
+    let(:submission_for_annexb) do
+      Requests::Submission.new(params)
+    end
+
+    let(:mail) do
+      Requests::RequestMailer.send("annexb_confirmation", submission_for_annexb).deliver_now
+    end
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.annexb.email_subject'))
+      expect(mail.to).to eq([submission_for_annexb.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -633,7 +687,59 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.trace.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.default.email_destination')])
-      expect(mail.cc).to eq([submission_for_trace.email])
+      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to have_content I18n.t('requests.trace.email_conf_msg')
+    end
+  end
+
+  context "send trace email patron confirmation" do
+    let(:requestable) do
+      [
+        {
+          "selected" => "true",
+          "mfhd" => "9810292",
+          "call_number" => "GT3405 .L44 2017",
+          "location_code" => "f",
+          "item_id" => "7499956",
+          "barcode" => "32101095686430",
+          "copy_number" => "0",
+          "status" => "Not Charged",
+          "type" => "trace"
+        }.with_indifferent_access,
+        {
+          "selected" => "false"
+        }.with_indifferent_access
+      ]
+    end
+    let(:bib) do
+      {
+        "id" => "10005935",
+        "title" => "The 21st century meeting and event technologies : powerful tools for better planning, marketing, and evaluation /",
+        "author" => "Lee, Seungwon Boshnakova, Dessislava Goldblatt, Joe Jeff"
+      }.with_indifferent_access
+    end
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+
+    let(:submission_for_trace) do
+      Requests::Submission.new(params)
+    end
+
+    let(:mail) do
+      Requests::RequestMailer.send("trace_confirmation", submission_for_trace).deliver_now
+    end
+
+    it "renders the headers" do
+      expect(mail.subject).to eq(I18n.t('requests.trace.email_subject'))
+      expect(mail.to).to eq([submission_for_trace.email])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 
@@ -902,7 +1008,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:mail) do
-      Requests::RequestMailer.send("recall_email", submission_for_recall).deliver_now
+      Requests::RequestMailer.send("recall_confirmation", submission_for_recall).deliver_now
     end
 
     it "renders the headers" do

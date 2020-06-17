@@ -157,12 +157,14 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:request) { instance_double(Requests::Request, ctx: solr_context) }
     let(:solr_context) { instance_double(Requests::SolrOpenUrlContext) }
     context "lewis library" do
-      let(:stubbed_questions) { { services: ['lewis'], charged?: false, aeon?: false, on_shelf?: false } }
+      let(:stubbed_questions) do
+        { services: ['on_shelf'], charged?: false, aeon?: false,
+          on_shelf?: true, lewis?: true,
+          location: { library: { label: "Lewis Library" } } }
+      end
       it 'a message for lewis' do
-        expect(helper.show_service_options(requestable, 'acb')).to eq \
-          "<ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library. Request for delivery in 1-2 business days.</li></ul>"
-        # temporary all items are delivered to Firestone
-        # "<ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library, will be delivered to Lewis Library Service desk on first floor.</li></ul>"
+        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq \
+          "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library. Request for pick-up.</li></ul></div>"
       end
     end
 

@@ -71,8 +71,6 @@ module Requests
           ['annexb']
         elsif requestable.plasma?
           ['ppl']
-        elsif requestable.lewis?
-          ['lewis']
         elsif requestable.recap?
           calculate_recap_services
         elsif requestable.pageable?

@@ -1206,7 +1206,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
       it "has available copy" do
-        pending "Lewis library closed"
         expect(request.any_loanable_copies?).to be true
       end
     end

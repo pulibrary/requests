@@ -166,8 +166,14 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
         before do
           stubbed_questions[:lewis?] = true
         end
-        it "returns lewis in the services" do
-          expect(router.calculate_services).to eq(['lewis'])
+        it "retune on shelf & edd because lewis is a regular library" do
+          stubbed_questions[:circulates?] = true
+          expect(router.calculate_services).to eq(["on_shelf_edd", "on_shelf"])
+        end
+
+        it "retune on shelf edd because lewis is a regular library" do
+          stubbed_questions[:circulates?] = false
+          expect(router.calculate_services).to eq(["on_shelf_edd"])
         end
       end
 

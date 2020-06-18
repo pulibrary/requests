@@ -341,17 +341,28 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows patrons to request a Lewis' do
-          pending "Lewis library closed"
+          stub_voyager_hold_success('7053307', '6322174', '77777')
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307'
-          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Lewis Library'
           check 'requestable_selected_6322174'
           # temporary change issue 438
           # choose('requestable__delivery_mode_6322174_print') # chooses 'edd' radio button
           # select('Firestone Library', from: 'requestable__pickup')
-          click_button 'Request Selected Items'
-          expect(page).to have_content 'Request submitted'
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          expect(page).to have_content 'Item has been requested for pick-up'
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("On the Shelf Paging Request (SCI) QA646 .A44 2012")
+          expect(email.to).to eq(["lewislib@princeton.edu"])
+          expect(email.cc).to be_nil
+          expect(email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+          expect(confirm_email.subject).to eq("Lewis Library Pick-up Request")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask")
         end
 
         it 'allows patrons to request a on-order' do
@@ -367,7 +378,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows patrons to ask for help on non circulating items' do
           visit '/requests/9594840'
-          expect(page).to have_content 'Help Me Get It'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Pick-up location: Lewis Library'
           expect(page).not_to have_css '.submit--request'
         end
 
@@ -384,21 +396,19 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows filtering items by mfhd' do
-          pending "Lewis library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
-          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).not_to have_content 'Copy 2'
           expect(page).not_to have_content 'Copy 3'
         end
 
         it 'show all copies if MFHD is not present' do
-          pending "Lewis library closed"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192'
-          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_content 'Copy 2'
           expect(page).to have_content 'Copy 3'
         end

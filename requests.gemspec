@@ -46,4 +46,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "vcr"
   s.add_development_dependency 'rubocop-rspec', '~> 1.22'
   s.add_development_dependency 'rails-controller-testing'
+  s.add_development_dependency 'puma'
 end

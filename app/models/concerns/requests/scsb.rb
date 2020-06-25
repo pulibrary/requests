@@ -86,9 +86,10 @@ module Requests
                      else
                        item["delivery_mode_#{item['item_id']}"]
                      end
+      
       { author: item[:edd_author], bibId: bib[:id],
         callNumber: item[:call_number], chapterTitle: item[:edd_art_title],
-        deliveryLocation: item[:pickup], emailAddress: user[:email],
+        deliveryLocation: delivery_location(item[:pickup]), emailAddress: user[:email],
         endPage: item[:edd_end_page], issue: item[:edd_issue], itemBarcodes: [item[:barcode]],
         itemOwningInstitution: scsb_owning_institution(item[:location_code]),
         patronBarcode: user[:user_barcode], requestNotes: item[:edd_note],
@@ -137,6 +138,13 @@ module Requests
     end
 
     private
+      def delivery_location(pickup)
+        if pickup.nil?
+          ""
+        else
+          pickup
+        end
+      end
 
       def scsb_auth_key
         if !Rails.env.test?

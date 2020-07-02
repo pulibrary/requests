@@ -2,9 +2,9 @@
   <small id="requestable__type_recap_edd_caption_<%= requestable.item[:id] %>" class="form-text brief-msg"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
   <div class="card card-body bg-light">
     <fieldset class="form-group required">
-      <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title *', class: 'control-label col-sm-12' %>
+      <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title(s) *', class: 'control-label col-sm-12' %>
       <div class="col-sm-6">
-        <%= text_field_tag 'requestable[][edd_art_title]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
+        <%= text_field_tag 'requestable[][edd_art_title]', "", value: "", placeholder: "Chpater 1, Chapter 2, Chapter 3", maxlength: 200, size: 30 %>
       </div>
     </fieldset>
     <fieldset class="form-group">

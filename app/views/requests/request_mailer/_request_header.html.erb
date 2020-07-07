@@ -3,7 +3,7 @@
     <td valign="top" width="50%" class="responsive-column-container">
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr><td>
-          <div style="font-size:25px;font-weight:bold;display:block;line-height:1.2;"><%= @submission.user["user_last_name"] %>, <%= @submission.user["user_name"].remove(@submission.user["user_last_name"]) %></a></div>
+          <div style="font-size:25px;font-weight:bold;display:block;line-height:1.2;"><%= @submission.user["last_name"] %>, <%= @submission.user["first_name"] %></a></div>
           <span style="font-size:12px;display:block;"><%= @submission.user_barcode %></span>
         </td></tr>
       </table>

@@ -24,7 +24,7 @@ module Requests
 
     # array of error_keys
     def guest_user_error?(error_keys)
-      user_errors = [:email, :user_name, :user_barcode]
+      user_errors = [:email, :user_name, :barcode]
       error_keys.any? { |item| user_errors.include? item }
     end
 

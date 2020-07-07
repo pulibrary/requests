@@ -6,22 +6,23 @@ include Requests::ApplicationHelper
 describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
   let(:user_info) do
     {
-      "user_name" => "Foo Request",
-      "user_last_name" => "Request",
-      "user_barcode" => "22101007797777",
-      "email" => "foo@princeton.edu",
-      "source" => "pulsearch"
+      "netid" => "foo",
+      "first_name" => "Foo",
+      "last_name" => "Request",
+      "barcode" => "22101007797777",
+      "university_id" => "9999999",
+      "patron_group" => "staff",
+      "patron_id" => "99999",
+      "active_email" => "foo@princeton.edu"
     }
   end
 
   let(:guest_user_info) do
     {
-      "user_name" => " Guest Request",
-      "user_last_name" => " Guest Request",
-      "user_barcode" => "ACCESS",
-      "patron_id" => "",
-      "patron_group" => "",
-      "email" => "guest@foo.edu"
+      last_name: 'Guest Request',
+      active_email: 'guest@foo.edu',
+      barcode: 'ACCESS',
+      barcode_status: 0
     }
   end
 
@@ -63,7 +64,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_preservation) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -117,7 +118,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_preservation) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -168,7 +169,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_no_items) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -229,7 +230,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_annexa) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -294,7 +295,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_anxadoc) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -362,7 +363,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_annexb) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -416,7 +417,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_annexb) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -466,7 +467,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_on_order) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -517,7 +518,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_on_order) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -571,7 +572,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_in_process) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -624,7 +625,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_in_process) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -677,7 +678,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_trace) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -730,7 +731,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_trace) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -793,7 +794,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_recap) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -865,7 +866,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_recap) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -932,7 +933,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_recap) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, guest_user_info)
     end
 
     let(:mail) do
@@ -1000,7 +1001,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_recall) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:scsb_recall_mail) do
@@ -1068,7 +1069,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_ppl) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -1122,7 +1123,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_plasma) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
@@ -1176,7 +1177,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_on_shelf) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
@@ -1231,7 +1232,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:submission_for_on_shelf) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     # rubocop:disable RSpec/ExampleLength

@@ -4,13 +4,14 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
   context 'Recall Request' do
     let(:user_info) do
       {
-        "user_name" => "Foo Request",
-        "user_last_name" => "Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch",
-        "patron_id" => "12345",
-        "patron_group" => "staff"
+        "netid" => "foo",
+        "first_name" => "Foo",
+        "last_name" => "Request",
+        "barcode" => "22101007797777",
+        "university_id" => "9999999",
+        "patron_group" => "staff",
+        "patron_id" => "99999",
+        "active_email" => "foo@princeton.edu"
       }
     end
     let(:requestable) do
@@ -44,7 +45,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
     end
 
     let(:submission) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:todays_date) { Time.zone.today }

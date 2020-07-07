@@ -33,14 +33,14 @@ module Requests
         addresses = ldap_patron[:address]&.split('$')
         {
           "Username" => patron['netid'], "ExternalUserId" => patron['netid'],
-          "FirstName" => patron['user_first_name'] || ldap_patron[:givenname],
-          "LastName" => patron['user_last_name'] || ldap_patron[:surname],
+          "FirstName" => patron['first_name'] || ldap_patron[:givenname],
+          "LastName" => patron['last_name'] || ldap_patron[:surname],
           "EmailAddress" => patron['active_email'] || ldap_patron[:email], "DeliveryMethod" => "Hold for Pickup",
           "LoanDeliveryMethod" => "Hold for Pickup", "NotificationMethod" => "Electronic",
           "Phone" => ldap_patron[:telephone], "Status" => patron['patron_group'], "Number" => ldap_patron[:universityid],
           "AuthType" => "Default", "NVTGC" => "ILL", "Department" => ldap_patron[:department], "Web" => true,
           "Address" => addresses&.shift, "Address2" => addresses&.join(', '), "City" => "Princeton", "State" => "NJ",
-          "Zip" => "08544", "SSN" => patron['user_barcode'], "Cleared" => "Yes", "Site" => "Firestone"
+          "Zip" => "08544", "SSN" => patron["barcode"], "Cleared" => "Yes", "Site" => "Firestone"
         }
       end
   end

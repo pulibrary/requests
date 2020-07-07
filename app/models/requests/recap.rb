@@ -37,13 +37,13 @@ module Requests
         response = scsb_request(params)
         if response.status != 200
           error_message = "Request failed because #{response.body}"
-          @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
+          @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user_name, barcode: @submission.user_barcode, error: error_message }
         else
           response = parse_scsb_response(response)
           if response[:success] == false
-            @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
+            @errors << { type: 'recap', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user_name, barcode: @submission.user_barcode, error: response[:screenMessage] }
           else
-            @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
+            @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user_name, barcode: @submission.user_barcode }
           end
         end
       end

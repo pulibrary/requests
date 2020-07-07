@@ -20,6 +20,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
 
   describe 'GET #generate' do
     before do
+      sign_in(user)
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
         .to_return(status: 200, body: valid_patron_response, headers: {})
     end
@@ -104,6 +105,21 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         "id" => "9590420"
       }.with_indifferent_access
     end
+
+    # rubocop:disable RSpec/VerifiedDoubles
+    let(:mail_message) { double(::Mail::Message) }
+    # rubocop:enable RSpec/VerifiedDoubles
+
+    before do
+      sign_in(user)
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+        .to_return(status: 200, body: valid_patron_response, headers: {})
+
+      without_partial_double_verification do
+        allow(mail_message).to receive(:deliver_now).and_return(nil)
+      end
+    end
+
     context "recap requestable" do
       let(:recap) { instance_double(Requests::Recap, errors: []) }
       it 'contacts recap and sends email' do
@@ -117,14 +133,6 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
                                 "bib" => bib, "format" => "js" }
       end
     end
-    # rubocop:disable RSpec/VerifiedDoubles
-    let(:mail_message) { double(::Mail::Message) }
-    before do
-      without_partial_double_verification do
-        allow(mail_message).to receive(:deliver_now).and_return(nil)
-      end
-    end
-    # rubocop:enable RSpec/VerifiedDoubles
 
     context "borrow direct requestable" do
       let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }]) }

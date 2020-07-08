@@ -1,15 +1,20 @@
 require 'spec_helper'
 
 describe Requests::Submission do
+  let(:user_info) do
+    {
+      "netid" => "foo",
+      "first_name" => "Foo",
+      "last_name" => "Request",
+      "barcode" => "22101007797777",
+      "university_id" => "9999999",
+      "patron_group" => "staff",
+      "patron_id" => "99999",
+      "active_email" => "foo@princeton.edu"
+    }
+  end
+
   context 'A valid submission' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch"
-      }
-    end
     let(:requestable) do
       [
         {
@@ -55,7 +60,7 @@ describe Requests::Submission do
     end
 
     let(:submission) do
-      described_class.new(params)
+      described_class.new(params, user_info)
     end
 
     describe "contains" do
@@ -102,15 +107,6 @@ describe Requests::Submission do
   end
 
   context 'An invalid Submission' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo",
-        "user_barcode" => "Bar",
-        "email" => "baz",
-        "source" => "pulsearch"
-      }
-    end
-
     let(:bib) do
       {
         "id" => ""
@@ -126,7 +122,7 @@ describe Requests::Submission do
     end
 
     let(:invalid_submission) do
-      described_class.new(invalid_params)
+      described_class.new(invalid_params, user_info)
     end
 
     describe "invalid" do
@@ -138,14 +134,6 @@ describe Requests::Submission do
   end
 
   context 'Recap' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch"
-      }
-    end
     let(:requestable) do
       [
         {
@@ -209,7 +197,7 @@ describe Requests::Submission do
       }
     end
     let(:submission) do
-      described_class.new(params)
+      described_class.new(params, user_info)
     end
 
     describe "Print Delivery" do
@@ -228,14 +216,6 @@ describe Requests::Submission do
   end
 
   context 'Borrow Direct Eligible Item' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch"
-      }
-    end
     let(:requestable) do
       [
         {
@@ -291,7 +271,7 @@ describe Requests::Submission do
     end
 
     let(:submission) do
-      described_class.new(params)
+      described_class.new(params, user_info)
     end
 
     describe 'A valid Borrow Direct Direct Request' do
@@ -318,16 +298,6 @@ describe Requests::Submission do
   end
 
   context 'Multiple Submission Types (Recap and Recall)' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch",
-        "patron_id" => "12345",
-        "patron_group" => "staff"
-      }
-    end
     let(:requestable) do
       [
         { "selected" => "true",
@@ -381,7 +351,7 @@ describe Requests::Submission do
       }
     end
     let(:submission) do
-      described_class.new(params)
+      described_class.new(params, user_info)
     end
 
     describe "Mixed Service Types" do
@@ -413,16 +383,6 @@ describe Requests::Submission do
   end
 
   context 'Invalid Submissions' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch",
-        "patron_id" => "12345",
-        "patron_group" => "staff"
-      }
-    end
     let(:bib) do
       {
         "id" => "495220",
@@ -441,7 +401,7 @@ describe Requests::Submission do
         }
       end
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -492,7 +452,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -548,7 +508,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -604,7 +564,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -660,7 +620,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -718,7 +678,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -773,7 +733,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -828,7 +788,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -883,7 +843,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -939,7 +899,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -995,7 +955,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -1051,7 +1011,7 @@ describe Requests::Submission do
       end
 
       let(:submission) do
-        described_class.new(params)
+        described_class.new(params, user_info)
       end
       before do
         submission.valid?
@@ -1089,14 +1049,6 @@ describe Requests::Submission do
         }
       ]
     end
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch"
-      }
-    end
     let(:params) do
       {
         request: user_info,
@@ -1104,7 +1056,7 @@ describe Requests::Submission do
       }
     end
     let(:submission) do
-      described_class.new(params)
+      described_class.new(params, user_info)
     end
 
     before do
@@ -1125,14 +1077,6 @@ describe Requests::Submission do
   end
 
   describe 'Single Submission for a Print with SCSB Managed data' do
-    let(:user_info) do
-      {
-        "user_name" => "Foo Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch"
-      }
-    end
     let(:requestable) do
       [
         {
@@ -1181,7 +1125,7 @@ describe Requests::Submission do
     end
 
     let(:submission) do
-      described_class.new(params)
+      described_class.new(params, user_info)
     end
 
     before do

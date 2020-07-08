@@ -4,14 +4,15 @@ describe Requests::PickupLookup do
   context 'Pick-up Lookup' do
     let(:user_info) do
       {
-        "user_name" => "Foo Request",
-        "user_last_name" => "Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch",
-        "patron_id" => "12345",
-        "patron_group" => "staff"
-      }.with_indifferent_access
+        "netid" => "foo",
+        "first_name" => "Foo",
+        "last_name" => "Request",
+        "barcode" => "22101007797777",
+        "university_id" => "9999999",
+        "patron_group" => "staff",
+        "patron_id" => "99999",
+        "active_email" => "foo@princeton.edu"
+      }
     end
 
     let(:requestable) do

@@ -32,7 +32,7 @@ module Requests
       #   if response[:success] == false
       #     @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
       #   else
-      @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode] }
+      @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user_name, barcode: @submission.barcode }
       #   end
       # end
     end
@@ -66,10 +66,10 @@ module Requests
         r = put_response(params, payload)
         xml_response = Nokogiri::XML(r.body)
         if xml_response.xpath("//reply-text").text == 'ok'
-          @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user[:user_name], patron: params[:patron] }
+          @sent << { bibid: params[:Bbid], item: params[:item], user_name: @submission.user_name, patron: params[:patron] }
         else
           error_message = "Failed request: " + xml_response.xpath("//note").text
-          @errors << { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user[:user_name], patron: params[:patron], error: error_message }
+          @errors << { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user_name, patron: params[:patron], error: error_message }
         end
       end
   end

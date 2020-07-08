@@ -1,6 +1,6 @@
       <div>
-      <% if requestable.services.include?('recap_edd') %>
-        <%= hidden_field_tag "requestable[][type]", "recap" %>
+      <% if (['recap_edd', 'on_shelf_edd'] & requestable.services).present? %>
+        <%= hidden_service_options requestable %>
         <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
         <%= pickup_choices requestable, default_pickups %>

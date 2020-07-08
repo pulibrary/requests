@@ -301,11 +301,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has location data that reflects an item's temporary location" do
-        expect(request_with_items_at_temp_locations.requestable.first.location["code"]).to eq('sciresp')
+        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('sciresp')
       end
 
       it "locations data that uses a permenant location when no temporary code is specified" do
-        expect(request_with_items_at_temp_locations.requestable.last.location["code"]).to eq('sci')
+        expect(request_with_items_at_temp_locations.requestable.last.location_code).to eq('sci')
       end
     end
   end
@@ -388,7 +388,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a thesis holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('thesis')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location['code']).to eq 'mudd'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -457,7 +457,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a numismatics holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location['code']).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -525,7 +525,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a thesis holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location['code']).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -579,7 +579,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "is unavailable" do
-        expect(request_at_paging_outside.requestable[0].location['code']).to eq('nec')
+        expect(request_at_paging_outside.requestable[0].location_code).to eq('nec')
         expect(request_at_paging_outside.any_pageable?).to be(false)
         expect(request_at_paging_outside.requestable[0].pageable?).to be_nil
       end
@@ -599,7 +599,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
   #   describe "#requestable" do
   #     it "should be unavailable" do
-  #       expect(request_at_paging_nec_multiple.requestable[0].location['code']).to eq('nec')
+  #       expect(request_at_paging_nec_multiple.requestable[0].location_code).to eq('nec')
   #       expect(request_at_paging_nec_multiple.requestable[0].pageable?).to eq(true)
   #     end
   #   end
@@ -636,7 +636,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#pageable?" do
       it "is be false" do
-        expect(request_at_paging_f.requestable[0].location['code']).to eq('f')
+        expect(request_at_paging_f.requestable[0].location_code).to eq('f')
         expect(request_at_paging_f.requestable[0].pageable?).to be_nil
       end
     end
@@ -655,7 +655,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #   describe "#requestable" do
   #     it "should be unavailable" do
   #       expect(request_at_paging_f.any_pageable?).to be(true)
-  #       expect(request_at_paging_f.requestable[0].location['code']).to eq('f')
+  #       expect(request_at_paging_f.requestable[0].location_code).to eq('f')
   #       expect(request_at_paging_f.requestable[0].pageable?).to eq(true)
   #       expect(request_at_paging_f.requestable[0].pickup_locations.size).to eq(1)
   #     end
@@ -675,7 +675,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "is unavailable" do
-        expect(request_at_paging_f.requestable[0].location['code']).to eq('f')
+        expect(request_at_paging_f.requestable[0].location_code).to eq('f')
         expect(request_at_paging_f.requestable[0].pageable?).to eq(nil)
         expect(request_at_paging_f.any_pageable?).to be(false)
         expect(request_at_paging_f.requestable[0].voyager_managed?).to eq(true)
@@ -695,7 +695,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #
   #   describe "#requestable" do
   #     it "should be unavailable" do
-  #       expect(request_at_paging_f.requestable[0].location['code']).to eq('xl')
+  #       expect(request_at_paging_f.requestable[0].location_code).to eq('xl')
   #       expect(request_at_paging_f.requestable[0].pageable?).to eq(true)
   #       expect(request_at_paging_f.any_pageable?).to be(true)
   #       expect(request_at_paging_f.requestable[0].voyager_managed?).to eq(true)
@@ -794,7 +794,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #     end
 
   #     it "should be in a location that contains some pageable items" do
-  #       expect(request_oversize.requestable[0].location['code']).to eq('f')
+  #       expect(request_oversize.requestable[0].location_code).to eq('f')
   #       expect(request_oversize.requestable[0].voyager_managed?).to eq(true)
   #     end
 
@@ -825,7 +825,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "is in a pageable location" do
-        expect(request_no_callnum.requestable[0].location['code']).to eq('f')
+        expect(request_no_callnum.requestable[0].location_code).to eq('f')
         expect(request_no_callnum.requestable[0].voyager_managed?).to eq(true)
       end
 
@@ -1391,7 +1391,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request_for_preservation) { described_class.new(params) }
     describe "#requestable" do
       it "has a preservation location code" do
-        expect(request_for_preservation.requestable[0].location['code']).to eq('pres')
+        expect(request_for_preservation.requestable[0].location_code).to eq('pres')
       end
     end
   end

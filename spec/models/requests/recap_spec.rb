@@ -4,11 +4,14 @@ describe Requests::Recap do
   context 'ReCAP Request' do
     let(:user_info) do
       {
-        "user_name" => "Foo Request",
-        "user_last_name" => "Request",
-        "user_barcode" => "22101007797777",
-        "email" => "foo@princeton.edu",
-        "source" => "pulsearch"
+        "netid" => "foo",
+        "first_name" => "Foo",
+        "last_name" => "Request",
+        "barcode" => "22101007797777",
+        "university_id" => "9999999",
+        "patron_group" => "staff",
+        "patron_id" => "99999",
+        "active_email" => "foo@princeton.edu"
       }
     end
     let(:requestable) do
@@ -30,6 +33,7 @@ describe Requests::Recap do
          "edd_author" => "",
          "edd_art_title" => "",
          "edd_note" => "",
+         "library_code" => "recap",
          "pickup" => "PA" },
        { "selected" => "true",
          "mfhd" => "534137",
@@ -49,6 +53,7 @@ describe Requests::Recap do
          "edd_author" => "",
          "edd_art_title" => "Baz",
          "edd_note" => "",
+         "library_code" => "recap",
          "pickup" => "PH" }]
     end
 
@@ -70,7 +75,7 @@ describe Requests::Recap do
     end
 
     let(:submission) do
-      Requests::Submission.new(params)
+      Requests::Submission.new(params, user_info)
     end
 
     let(:recap_request) { described_class.new(submission) }

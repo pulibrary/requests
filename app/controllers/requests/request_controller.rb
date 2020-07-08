@@ -17,6 +17,7 @@ module Requests
       mfhd = sanitize(params[:mfhd]) if params[:mfhd].present?
 
       @user = current_or_guest_user
+
       @patron = patron(user: @user)
       @mode = mode
       @title = "Request ID: #{system_id}"
@@ -53,7 +54,7 @@ module Requests
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
-      @submission = Requests::Submission.new(sanitize_submission(params))
+      @submission = Requests::Submission.new(sanitize_submission(params), patron(user: current_or_guest_user))
       respond_to do |format|
         format.js do
           valid = @submission.valid?
@@ -96,17 +97,12 @@ module Requests
     private
 
       def patron(user:)
-        if params[:request].present?
-          email = format_email(sanitize(params[:request][:email]))
-          user_name = sanitize(params[:request][:user_name])
-        end
-
         if !user.guest?
           patron = current_patron(user.uid)
           flash.now[:error] = "A problem occurred looking up your library account." if patron == false
           patron
-        elsif email && user_name
-          access_patron(email, user_name)
+        elsif session["email"].present? && session["user_name"].present?
+          access_patron(session["email"], session["user_name"])
         end
       end
 
@@ -117,7 +113,7 @@ module Requests
 
       # trusted params
       def request_params
-        params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :user_barcode, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
+        params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
       end
 
       def current_patron(uid)
@@ -167,9 +163,9 @@ module Requests
         # logger.info "#Request Submission - #{submission.as_json}"
         logger.info "Request Sent"
         return if submission.service_types.include? 'bd' # emails already sent
-        submission.service_email_types.each do |type|
+        submission.service_types.each do |type|
           Requests::RequestMailer.send("#{type}_email", submission).deliver_now unless type == 'recap_edd'
-          Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_shelf', 'on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl', 'paging', 'recap', 'recap_edd', 'annexa'].include? type
+          Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_shelf', 'on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl', 'paging', 'recap', 'recap_edd', 'annexa', 'digitize'].include? type
           Requests::RequestMailer.send("scsb_recall_email", submission).deliver_now if type == 'recall' && submission.scsb?
         end
       end
@@ -183,6 +179,17 @@ module Requests
       def respond_to_validation_error(submission)
         flash.now[:error] = I18n.t('requests.submit.error')
         logger.error "Request Submission #{submission.errors.messages.as_json}"
+      end
+
+      def current_or_guest_user
+        user = super
+
+        # store guest user information in the session for later
+        if user.guest? && params[:request].present? && params[:request][:user_name].present?
+          session["user_name"] = params[:request][:user_name]
+          session["email"] = params[:request][:email]
+        end
+        user
       end
   end
 end

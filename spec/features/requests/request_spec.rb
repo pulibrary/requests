@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
+describe 'request', vcr: { cassette_name: 'request_features', record: :none }, type: :feature do
   # rubocop:disable RSpec/MultipleExpectations
   describe "request form" do
     let(:voyager_id) { '9493318' }
@@ -211,7 +211,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Online'
         end
 
-        it 'allows CAS patrons to request In-Process items and can only be delivered to their holding library', js: true do
+        it 'allows CAS patrons to request In-Process items and can only be delivered to their holding library' do
           visit "/requests/#{in_process_id}"
           expect(page).to have_content 'In Process'
           expect(page).to have_content 'Pick-up location: Marquand Library'
@@ -220,7 +220,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
         end
 
-        it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere', js: true do
+        it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
           # temporary changes issue 438
@@ -270,8 +270,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
           visit "/requests/9770811"
           expect(page).to have_content 'Pick-up location: Firestone Library'
-          expect(page).to have_content 'Pageable item at Firestone Library. Request for pick-up.'
-          expect(page).to have_content I18n.t("requests.on_shelf_edd.request_label")
+          choose('requestable__delivery_mode_7502706_print') # chooses 'print' radio button
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Electronic Delivery'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
@@ -297,8 +298,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9944355'
           expect(page).to have_content 'Electronic Delivery'
-          # temporary change issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pickup')
           choose('requestable__delivery_mode_7467161_edd') # chooses 'edd' radio button
           fill_in "Article/Chapter Title", with: "ABC"
           click_button 'Request this Item'
@@ -309,8 +309,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550'
-          expect(page).to have_content 'Item offsite at Forrestal Annex. Request for pick-up'
-          expect(page).to have_content 'Digitization Request'
+          choose('requestable__delivery_mode_1184074_print') # chooses 'print' radio button
+          # todo: should we still have the text?
+          # expect(page).to have_content 'Item offsite at Forrestal Annex. Request for pick-up'
+          expect(page).to have_content 'Electronic Delivery'
           select('Firestone Library', from: 'requestable__pickup')
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Request submitted'
@@ -334,10 +336,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           # TODO: once Lewis opens, need to choose edd
           # choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
           expect(page).not_to have_content 'Pick-up'
-          check 'requestable_selected_6357449'
           fill_in "Title", with: "my stuff"
-          click_button 'Request Selected Items'
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(page).to have_content 'Request submitted'
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
         end
 
         it 'allows patrons to request a Lewis' do
@@ -376,11 +383,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Request submitted'
         end
 
-        it 'allows patrons to ask for help on non circulating items' do
+        it 'allows patrons to ask for digitizing on non circulating items' do
           visit '/requests/9594840'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
-          expect(page).not_to have_css '.submit--request'
+          expect(page).to have_css '.submit--request'
         end
 
         it 'allows patrons to request a PPL Item' do
@@ -500,7 +507,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Item is not requestable.'
         end
 
-        # TODO: Activate test when campus has re-opened
         it 'allows cas user to request from Annex or Firestone in mixed holding' do
           visit '/requests/2286894'
           expect(page).to have_field 'requestable__selected', disabled: false
@@ -516,11 +522,32 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows a non circulating item with not item data to be digitized' do
+          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
+          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
+          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
+          responses = {
+            found: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"Yes","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
+            transaction_created: '{"TransactionNumber":1093806,"Username":"abc123","RequestType":"Article","LoanAuthor":null,"LoanTitle":null,"LoanPublisher":null,"LoanPlace":null,"LoanDate":null,"LoanEdition":null,"PhotoJournalTitle":"Test Title","PhotoJournalVolume":"21","PhotoJournalIssue":"4","PhotoJournalMonth":null,"PhotoJournalYear":"2011","PhotoJournalInclusivePages":"165-183","PhotoArticleAuthor":"Williams, Joseph; Woolwine, David","PhotoArticleTitle":"Test Article","CitedIn":null,"CitedTitle":null,"CitedDate":null,"CitedVolume":null,"CitedPages":null,"NotWantedAfter":null,"AcceptNonEnglish":false,"AcceptAlternateEdition":true,"ArticleExchangeUrl":null,"ArticleExchangePassword":null,"TransactionStatus":"Awaiting Request Processing","TransactionDate":"2020-06-15T18:34:44.98","ISSN":"XXXXX","ILLNumber":null,"ESPNumber":null,"LendingString":null,"BaseFee":null,"PerPage":null,"Pages":null,"DueDate":null,"RenewalsAllowed":false,"SpecIns":null,"Pieces":null,"LibraryUseOnly":null,"AllowPhotocopies":false,' \
+                                  '"LendingLibrary":null,"ReasonForCancellation":null,"CallNumber":null,"Location":null,"Maxcost":null,"ProcessType":"Borrowing","ItemNumber":null,"LenderAddressNumber":null,"Ariel":false,"Patron":null,"PhotoItemAuthor":null,"PhotoItemPlace":null,"PhotoItemPublisher":null,"PhotoItemEdition":null,"DocumentType":null,"InternalAcctNo":null,"PriorityShipping":null,"Rush":"Regular","CopyrightAlreadyPaid":"Yes","WantedBy":null,"SystemID":"OCLC","ReplacementPages":null,"IFMCost":null,"CopyrightPaymentMethod":null,"ShippingOptions":null,"CCCNumber":null,"IntlShippingOptions":null,"ShippingAcctNo":null,"ReferenceNumber":null,"CopyrightComp":null,"TAddress":null,"TAddress2":null,"TCity":null,"TState":null,"TZip":null,"TCountry":null,"TFax":null,"TEMailAddress":null,"TNumber":null,"HandleWithCare":false,"CopyWithCare":false,"RestrictedUse":false,"ReceivedVia":null,"CancellationCode":null,"BillingCategory":null,"CCSelected":null,"OriginalTN":null,"OriginalNVTGC":null,"InProcessDate":null,' \
+                                  '"InvoiceNumber":null,"BorrowerTN":null,"WebRequestForm":null,"TName":null,"TAddress3":null,"IFMPaid":null,"BillingAmount":null,"ConnectorErrorStatus":null,"BorrowerNVTGC":null,"CCCOrder":null,"ShippingDetail":null,"ISOStatus":null,"OdysseyErrorStatus":null,"WorldCatLCNumber":null,"Locations":null,"FlagType":null,"FlagNote":null,"CreationDate":"2020-06-15T18:34:44.957","ItemInfo1":null,"ItemInfo2":null,"ItemInfo3":null,"ItemInfo4":null,"SpecIns":null,"SpecialService":"Digitization Request: ","DeliveryMethod":null,"Web":null,"PMID":null,"DOI":null,"LastOverdueNoticeSent":null,"ExternalRequest":null}',
+            note_created: '{"Message":"An error occurred adding note to transaction 1093946"}'
+          }
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "LoanTitle" => "La mirada : looking at photography in Latin America today", "LoanPublisher" => "Zürich: Edition Oehrli", "LoanDate" => "",
+                                       "Location" => "Marquand Library", "ISSN" => nil, "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "SpecIns" => "Digitization Request: ", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/4127409?mfhd=4403772'
           expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_content 'Digitization Request'
-          expect(page).not_to have_content 'Request Selected Items'
-          expect(page).not_to have_content 'Request this Item'
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 days to process")
+          expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
         end
       end
     end

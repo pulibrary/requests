@@ -10,8 +10,8 @@ module Requests
                              format: { with: /(^ACCESS$|^access$|^\d{14}$)/i, message: "Please supply a valid library barcode or type the value 'ACCESS'" }
     validate :item_validations # , presence: true, length: { minimum: 1 }, on: :submit
 
-    def initialize(params)
-      @user = params[:request]
+    def initialize(params, patron)
+      @user = patron.with_indifferent_access if patron
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
       @bd = params[:bd]
@@ -20,7 +20,7 @@ module Requests
     attr_reader :user, :success_messages
 
     def email
-      @user["email"]
+      @user["active_email"]
     end
 
     def source
@@ -28,7 +28,7 @@ module Requests
     end
 
     def user_name
-      @user["user_name"]
+      @user["netid"]
     end
 
     attr_reader :items
@@ -40,7 +40,8 @@ module Requests
     end
 
     def selected_items(requestable_list)
-      requestable_list.select { |r| r unless r[:selected] == 'false' || !r.key?('selected') }
+      items = requestable_list.select { |r| r unless r[:selected] == 'false' || !r.key?('selected') }
+      items.map { |item| categorize_by_delivery_and_location(item) }
     end
 
     def item_validations
@@ -48,7 +49,7 @@ module Requests
     end
 
     def user_barcode
-      @user["user_barcode"]
+      @user["barcode"]
     end
 
     attr_reader :bib
@@ -64,26 +65,13 @@ module Requests
     end
 
     def service_types
-      types = []
-      @items.each do |item|
-        types << item['type']
-      end
-      types.uniq!
-      types
+      @types ||= @items.map { |item| item['type'] }.uniq
+      @types
     end
 
-    def service_email_types
-      types = []
-      @items.each do |item|
-        type = item['type']
-        if type == 'recap'
-          delivery_mode = item["delivery_mode_#{item['item_id']}"]
-          type = 'recap_edd' if delivery_mode.present? && delivery_mode == "edd"
-        end
-        types << type
-      end
-      types.uniq!
-      types
+    def service_locations
+      @locations ||= @items.map { |item| item['location'] }.uniq
+      @locations
     end
 
     def process_submission
@@ -94,16 +82,16 @@ module Requests
       process_recall
       process_recap
       process_borrow_direct
+      process_digitize
 
       # if !recap && !recall && !bd !(a1 & a2).empty?
-      if (service_types & ['bd', 'recap', 'recall', 'on_shelf']).empty?
+      if generic_service_only?
         @services << Requests::Generic.new(self)
         success_messages << I18n.t('requests.submit.success')
       end
 
-      service_types.each do |type|
-        success_messages << I18n.t("requests.submit.#{type}_success") unless ['bd', 'recap_no_items'].include? type
-      end
+      @success_messages = generate_success_messages(@success_messages)
+
       @services
     end
 
@@ -117,10 +105,39 @@ module Requests
     end
 
     def access_only?
-      user['user_barcode'] == 'ACCESS'
+      user_barcode == 'ACCESS'
     end
 
     private
+
+      def categorize_by_delivery_and_location(item)
+        if item["library_code"] == 'recap' && edd?(item)
+          item["type"] = "recap_edd"
+        elsif item["library_code"] == 'recap'
+          item["type"] = "recap"
+        elsif print?(item) && item["library_code"] == 'annexa'
+          item["type"] = "annexa"
+        elsif edd?(item) && item["library_code"].present?
+          item["type"] = "digitize"
+        elsif print?(item) && item["library_code"].present?
+          item["type"] = "on_shelf"
+        end
+        item
+      end
+
+      def edd?(item)
+        delivery_mode = delivery_mode(item)
+        delivery_mode.present? && delivery_mode == "edd"
+      end
+
+      def print?(item)
+        delivery_mode = delivery_mode(item)
+        delivery_mode.present? && delivery_mode == "print"
+      end
+
+      def delivery_mode(item)
+        item["delivery_mode_#{item['item_id']}"]
+      end
 
       def process_hold
         return unless service_types.include? 'on_shelf'
@@ -132,8 +149,18 @@ module Requests
         @services << Requests::Recall.new(self)
       end
 
+      def process_digitize
+        return unless service_types.include?('digitize')
+        @services << if access_only?
+                       # Access users cannot use recap service directly
+                       Requests::Generic.new(self)
+                     else
+                       Requests::DigitizeItem.new(self)
+                     end
+      end
+
       def process_recap
-        return unless service_types.include? 'recap'
+        return if (['recap', 'recap_edd'] & service_types).blank?
         @services << if access_only?
                        # Access users cannot use recap service directly
                        Requests::Generic.new(self)
@@ -149,6 +176,25 @@ module Requests
         bd_request.handle
         @services << bd_request
         success_messages << "#{bd_success_message} Your request number is #{bd_request.sent[0][:request_number]}" unless bd_request.errors.count >= 1
+      end
+
+      def generic_service?(type)
+        !non_generic_services.include?(type)
+      end
+
+      def generic_service_only?
+        (service_types & non_generic_services).empty?
+      end
+
+      def non_generic_services
+        ['bd', 'recap', 'recall', 'on_shelf', 'digitize']
+      end
+
+      def generate_success_messages(success_messages)
+        service_types.each do |type|
+          success_messages << I18n.t("requests.submit.#{type}_success") unless generic_service?(type)
+        end
+        success_messages
       end
   end
 end

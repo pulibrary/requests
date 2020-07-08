@@ -24,7 +24,7 @@ module Requests
 
     # array of error_keys
     def guest_user_error?(error_keys)
-      user_errors = [:email, :user_name, :user_barcode]
+      user_errors = [:email, :user_name, :barcode]
       error_keys.any? { |item| user_errors.include? item }
     end
 
@@ -151,8 +151,8 @@ module Requests
     end
 
     def prefered_request_content_tag(requestable, default_pickups)
-      class_list = "card card-body bg-light collapse show request--print"
-      class_list = "card card-body bg-light collapse request--print" if requestable.services.include?('recap_edd')
+      class_list = "card card-body bg-light collapse request--print"
+      class_list += " show" if (['recap_edd', 'on_shelf_edd'] & requestable.services).blank?
       content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
         locs = pickup_locations(requestable, default_pickups)
         # temporary changes issue 438
@@ -228,12 +228,12 @@ module Requests
       hidden = hidden_field_tag "requestable[][bibid]", "", value: requestable.bib[:id].to_s, id: "requestable_bibid_#{request_id}"
       hidden += hidden_field_tag "requestable[][mfhd]", "", value: requestable.holding.keys[0].to_s, id: "requestable_mfhd_#{request_id}"
       hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{request_id}" unless requestable.holding.first[1]["call_number"].nil?
-      hidden += if requestable.item? && requestable.item["location"].present?
-                  hidden_field_tag "requestable[][location_code]", "", value: requestable.item['location'].to_s, id: "requestable_location_#{request_id}"
+      hidden += hidden_field_tag "requestable[][location_code]", "", value: requestable.item_location_code.to_s, id: "requestable_location_#{request_id}"
+      hidden += if requestable.item?
+                  hidden_fields_for_item(item: requestable.item)
                 else
-                  hidden_field_tag "requestable[][location_code]", "", value: requestable.location['code'].to_s, id: "requestable_location_#{request_id}"
+                  hidden_field_tag("requestable[][item_id]", "", value: requestable.preferred_request_id, id: "requestable_item_id_#{requestable.preferred_request_id}")
                 end
-      hidden += hidden_fields_for_item(item: requestable.item) if requestable.item?
       hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.scsb?
       hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{request_id}" if requestable.item? && requestable.item["scsb_status"].present?
       hidden
@@ -312,12 +312,12 @@ module Requests
       end
     end
 
-    def item_checkbox(requestable_list, requestable)
+    def item_checkbox(requestable, single_item_form)
       disabled = !requestable.will_submit_via_form?
-      check_box_tag "requestable[][selected]", true, check_box_selected(requestable_list, disabled), class: 'request--select', disabled: disabled, aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
+      check_box_tag "requestable[][selected]", true, check_box_selected(requestable, disabled, single_item_form), class: 'request--select', disabled: disabled, aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"
     end
 
-    ## If any requetable items have a temp location assume everything at the holding is in a temp loc?
+    ## If any requestable items have a temp location assume everything at the holding is in a temp loc?
     def current_location_label(mfhd_label, requestable_list)
       location_label = requestable_list.first.location['label'].blank? ? "" : "- #{requestable_list.first.location['label']}"
       label = if requestable_list.first.temp_loc?
@@ -328,9 +328,9 @@ module Requests
       "#{label} #{requestable_list.first.call_number}"
     end
 
-    def check_box_selected(requestable_list, disabled)
-      if requestable_list.size == 1
-        if requestable_list.first.charged? || requestable_list.first.services.empty?
+    def check_box_selected(requestable, disabled, single_item_form)
+      if single_item_form
+        if requestable.charged? || requestable.services.empty?
           false
         else
           !disabled

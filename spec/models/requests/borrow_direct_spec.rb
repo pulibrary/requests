@@ -61,7 +61,7 @@ describe Requests::BorrowDirect do
   end
 
   let(:submission) do
-    Requests::Submission.new(params)
+    Requests::Submission.new(params, user_info)
   end
 
   let(:good_request_response) { 'A BD Request Number' }

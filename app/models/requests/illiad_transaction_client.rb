@@ -18,7 +18,9 @@ module Requests
 
     def create_request
       patron_client = Requests::IlliadPatron.new(user)
-      patron_client.create_illiad_patron if patron_client.illiad_patron.blank?
+      patron = patron_client.illiad_patron
+      patron = patron_client.create_illiad_patron if patron.blank?
+      return nil if patron.blank?
       transaction = post_json_response(url: 'ILLiadWebPlatform/transaction', body: map_metdata)
       # TODO: I can not create a note for the moment...
       # transaction_note = post_json_response(url: "ILLiadWebPlatform/transaction/#{transaction['TransactionNumber']}/notes", body: "{ \"Note\" : \"#{note}\", \"NoteType\" : \"Staff\" }") if transaction.present?
@@ -31,9 +33,9 @@ module Requests
       def map_metdata
         {
           "Username" => user["netid"], "TransactionStatus" => illiad_transaction_status,
-          "RequestType" => "Loan", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"),
+          "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"),
           "WantedBy" => "Yes, until the semester's", # note creation fails if we use any other text value
-          "LoanAuthor" => bib["author"]&.truncate(100), "LoanTitle" => bib["title"]&.truncate(255), "LoanPublisher" => item["edd_publisher"]&.truncate(50), "LoanDate" => item["edd_issue"]&.truncate(30),
+          "PhotoArticleAuthor" => bib["author"]&.truncate(100), "PhotoJournalTitle" => bib["title"]&.truncate(255), "PhotoItemPublisher" => item["edd_publisher"]&.truncate(50),
           "ISSN" => bib["isbn"], "CallNumber" => item["edd_call_number"]&.truncate(255), "PhotoJournalInclusivePages" => pages&.truncate(30),
           "CitedIn" => "#{Requests.config[:pulsearch_base]}/catalog/#{bib['id']}",
           "PhotoJournalVolume" => item["edd_volume_number"]&.truncate(30), "PhotoJournalIssue" => item["edd_issue"]&.truncate(30),

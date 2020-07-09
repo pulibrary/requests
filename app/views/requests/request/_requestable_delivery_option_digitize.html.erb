@@ -1,3 +1,4 @@
+  <% unless @patron["university_id"].blank? %>
     <div>
     <%= radio_button_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", "edd", selected, data: { target: "#fields-eed__#{requestable.preferred_request_id}" }, 'aria-controls' => "fields-eed__#{requestable.preferred_request_id}", class: 'control-label' %>
     <%= label_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}_edd]", "Electronic Delivery", class: 'control-label', id: "requestable__type_recap_edd_#{requestable.preferred_request_id}" %>
@@ -14,3 +15,4 @@
     <%= hidden_field_tag "requestable[][library_code]", requestable.library_code %>
     <%= hidden_field_tag "requestable[][type]", "digitize" %>
     </div>
+  <% end %>

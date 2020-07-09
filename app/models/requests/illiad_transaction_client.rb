@@ -12,7 +12,7 @@ module Requests
       @user = user
       @bib = bib
       @item = item
-      @note = "Digitization Request"
+      @note = ["Digitization Request", item["edd_note"]].join(": ")&.truncate(4000)
       @illiad_transaction_status = "Awaiting Article Express Processing"
     end
 
@@ -37,7 +37,7 @@ module Requests
           "ISSN" => bib["isbn"], "CallNumber" => item["edd_call_number"]&.truncate(255), "PhotoJournalInclusivePages" => pages&.truncate(30),
           "CitedIn" => "#{Requests.config[:pulsearch_base]}/catalog/#{bib['id']}",
           "PhotoJournalVolume" => item["edd_volume_number"]&.truncate(30), "PhotoJournalIssue" => item["edd_issue"]&.truncate(30),
-          "ItemInfo3" => item["edd_volume_number"]&.truncate(255), "ItemInfo4" => item["edd_issue"]&.truncate(255), "SpecIns" => [@note, item["edd_note"]].join(": ")&.truncate(40),
+          "ItemInfo3" => item["edd_volume_number"]&.truncate(255), "ItemInfo4" => item["edd_issue"]&.truncate(255),
           "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => item["edd_oclc_number"]&.truncate(32),
           "DocumentType" => genre, "Location" => item["edd_location"],
           "PhotoArticleTitle" => item["edd_art_title"]&.truncate(250)

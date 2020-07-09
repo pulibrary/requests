@@ -10,7 +10,7 @@ describe Requests::IlliadTransactionClient, type: :controller do
        "location_code" => "f", "item_id" => "7892830", "barcode" => "32101102865654", "enum" => "2019",
        "copy_number" => "0", "status" => "Not Charged", "type" => "on_shelf", "pickup" => "PA",
        "edd_genre" => "journal", "edd_isbn" => "", "edd_date" => "", "edd_publisher" => "Santa Barbara, Calif: ABC-CLIO",
-       "edd_call_number" => "HF1131 .B485", "edd_oclc_number" => "1033410889", "edd_title" => "Best business schools" }]
+       "edd_call_number" => "HF1131 .B485", "edd_oclc_number" => "1033410889", "edd_title" => "Best business schools", "edd_note" => "Customer note" }]
     # {"selected"=>"true", "bibid"=>"3510207", "mfhd"=>"3832636", "call_number"=>"D25 .D385 1999",
     # "location_code"=>"f", "item_id"=>"3052428", "barcode"=>"32101044636858", "copy_number"=>"1",
     # "status"=>"Not Charged", "type"=>"on_shelf", "pickup"=>"PA"}
@@ -57,9 +57,10 @@ describe Requests::IlliadTransactionClient, type: :controller do
         .to_return(status: 200, body: responses[:found], headers: {})
       stub_request(:post, transaction_url)
         .with(body: hash_including("Username" => "abc234", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Davis, Paul K.", "LoanTitle" => "100 decisive battles : from ancient times to the present", "LoanPublisher" => "Santa Barbara, Calif: ABC-CLIO", "LoanDate" => nil, "ISSN" => "9781576070758", "CallNumber" => "HF1131 .B485", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/3510207", "PhotoJournalVolume" => nil,
-                                   "PhotoJournalIssue" => nil, "ItemInfo3" => nil, "ItemInfo4" => nil, "SpecIns" => "Digitization Request: ", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1033410889", "DocumentType" => "Book", "PhotoArticleTitle" => nil))
+                                   "PhotoJournalIssue" => nil, "ItemInfo3" => nil, "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1033410889", "DocumentType" => "Book", "PhotoArticleTitle" => nil))
         .to_return(status: 200, body: responses[:transaction_created], headers: {})
       stub_request(:post, transaction_note_url)
+        .with(body: hash_including("Note" => "Digitization Request: Customer note"))
         .to_return(status: 200, body: responses[:note_created], headers: {})
       transaction = illiad_transaction.create_request
       expect(transaction).not_to be_blank

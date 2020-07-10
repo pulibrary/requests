@@ -72,7 +72,7 @@ module Requests
           record.errors[:items] << { item_id => { 'text' => 'Please select a delivery type for your selected recap item', 'type' => 'options' } }
         else
           delivery_type = selected["delivery_mode_#{item_id}"]
-          record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } } if delivery_type == 'print' && selected['pickup'].empty?
+          record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } } if delivery_type == 'print' && selected['pickup'].blank?
           if delivery_type == 'edd'
             record.errors[:items] << { item_id => { 'text' => 'Please specify title for the selection you want digitized.', 'type' => 'options' } } if selected['edd_art_title'].empty?
           end

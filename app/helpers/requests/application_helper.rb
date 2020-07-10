@@ -106,7 +106,6 @@ module Requests
       # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
       content_tag(:fieldset, class: 'recap--print', id: "recap_group_#{requestable.preferred_request_id}") do
         concat hidden_field_tag "requestable[][type]", "", value: 'recap'
-        concat hidden_field_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", "print"
       end
     end
 

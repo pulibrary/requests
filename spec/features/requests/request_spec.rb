@@ -193,6 +193,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
       describe 'When visiting a voyager ID as a CAS User' do
         it 'allow CAS patrons to request an available ReCAP item.' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
           stub_request(:post, Requests.config[:scsb_base])
             .with(headers: { 'Accept' => '*/*' })
             .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
@@ -201,9 +203,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
           choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
-          # temporary changes issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
-          expect(page).to have_button('Request this Item', disabled: false)
+          select('Firestone Library', from: 'requestable__pickup')
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content I18n.t("requests.submit.recap_success")
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("ʻAwāṭif madfūnah")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
 
         it 'does display the online access message' do

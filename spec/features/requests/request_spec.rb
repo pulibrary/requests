@@ -508,12 +508,19 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it "allows requests of recap pickup only items" do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: nil, bibId: "11578319", callNumber: "DVD", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["32101108035435"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "Chernobyl : a 5-part miniseries", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11578319?mfhd=11259604'
-          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).not_to have_content 'Item is not requestable.'
           expect(page).not_to have_content 'Electronic Delivery'
           expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
+          select('Firestone Library', from: 'requestable__pickup')
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received")
+          expect(confirm_email.html_part.body.to_s).to have_content("Chernobyl : a 5-part miniseries")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
 
         it 'allows cas patrons to see aeon requests' do

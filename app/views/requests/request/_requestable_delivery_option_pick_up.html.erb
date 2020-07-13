@@ -1,13 +1,9 @@
       <div>
-      <% if (['recap_edd', 'on_shelf_edd'] & requestable.services).present? %>
         <%= hidden_service_options requestable %>
-        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', false, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
+        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', selected, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
         <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
-        <%= pickup_choices requestable, default_pickups %>
-      <% else %>
-        <div class="delivery-option">Physical Item Delivery</div>
+      <% unless (['recap_edd', 'on_shelf_edd'] & requestable.services).present? %>
         <%= show_pickup_service_options requestable, mfhd %>
-        <%= hidden_service_options requestable %>
-        <%= pickup_choices requestable, default_pickups %>
       <% end %>
+        <%= pickup_choices requestable, default_pickups %>
       </div>

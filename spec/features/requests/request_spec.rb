@@ -231,11 +231,22 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
-          # temporary changes issue 438
-          select('Firestone Library', from: 'requestable__pickup')
-          # select('Lewis Library', from: 'requestable__pickup')
-          click_button 'Request this Item'
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pickup')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pickup')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pickup')
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("In Process Request")
+          expect(email.to).to eq(["fstcirc@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("Karşılaştırmalı mitoloji : Tolkien ne yaptı?")
+          expect(confirm_email.subject).to eq("In Process Request")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Karşılaştırmalı mitoloji : Tolkien ne yaptı?")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
         end
 
         it 'allows CAS patrons to request On-Order items' do
@@ -321,6 +332,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # todo: should we still have the text?
           # expect(page).to have_content 'Item offsite at Forrestal Annex. Request for pick-up'
           expect(page).to have_content 'Electronic Delivery'
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pickup')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pickup')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pickup')
           select('Firestone Library', from: 'requestable__pickup')
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Request submitted'

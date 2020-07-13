@@ -28,7 +28,7 @@ module Requests
         item: item[:item_id], lname: user[:last_name],
         delivery: delivery_mode, pickup: item[:pickup],
         startpage: item[:edd_start_page], endpage: item[:edd_end_page],
-        email: user[:email], # begin optional params
+        email: user[:active_email], # begin optional params
         volnum: item[:edd_volume_number], issue: item[:edd_issue],
         aauthor: item[:edd_author], atitle: item[:edd_art_title], note: item[:edd_note] }
     end

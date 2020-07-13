@@ -88,7 +88,7 @@ module Requests
                      end
       { author: item[:edd_author], bibId: bib[:id],
         callNumber: item[:call_number], chapterTitle: item[:edd_art_title],
-        deliveryLocation: item[:pickup] || "", emailAddress: user[:email],
+        deliveryLocation: item[:pickup] || "", emailAddress: user[:active_email],
         endPage: item[:edd_end_page], issue: item[:edd_issue], itemBarcodes: [item[:barcode]],
         itemOwningInstitution: scsb_owning_institution(item[:location_code]),
         patronBarcode: user[:barcode], requestNotes: item[:edd_note],

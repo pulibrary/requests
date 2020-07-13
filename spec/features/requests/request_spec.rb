@@ -194,6 +194,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
       describe 'When visiting a voyager ID as a CAS User' do
         it 'allow CAS patrons to request an available ReCAP item.' do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "9493318", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
+                                       requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           stub_request(:post, Requests.config[:scsb_base])
             .with(headers: { 'Accept' => '*/*' })
@@ -314,6 +316,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         let(:good_response) { fixture('/scsb_request_item_response.json') }
         it 'allows patrons to request a physical recap item' do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "9944355", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
+                                       itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9944355'
           expect(page).to have_content 'Electronic Delivery'

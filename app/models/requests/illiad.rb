@@ -4,8 +4,8 @@ module Requests
     attr_reader :enum, :chron, :call_number
 
     METADATA_MAPPING = {
-      genre: "genre", issn: "issn", isbn: "isbn", stitle: "stitle", date: "rft.date", atitle: "atitle",
-      pub: "rft.pub", place: "rft.place", edition: "rft.edition"
+      "genre" => "genre", "issn" => "issn", "isbn" => "isbn", "stitle" => "stitle", "date" => "rft.date", "atitle" => "atitle",
+      "pub" => "rft.pub", "place" => "rft.place", "edition" => "rft.edition"
     }.freeze
     private_constant :METADATA_MAPPING
 

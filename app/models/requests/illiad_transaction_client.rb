@@ -37,7 +37,7 @@ module Requests
           "WantedBy" => "Yes, until the semester's", # note creation fails if we use any other text value
           "PhotoArticleAuthor" => bib["author"]&.truncate(100), "PhotoJournalTitle" => bib["title"]&.truncate(255), "PhotoItemPublisher" => item["edd_publisher"]&.truncate(40),
           "ISSN" => bib["isbn"], "CallNumber" => item["edd_call_number"]&.truncate(255), "PhotoJournalInclusivePages" => pages&.truncate(30),
-          "CitedIn" => "#{Requests.config[:pulsearch_base]}/catalog/#{bib['id']}",
+          "CitedIn" => "#{Requests.config[:pulsearch_base]}/catalog/#{bib['id']}", "PhotoJournalYear" => item["edd_date"],
           "PhotoJournalVolume" => item["edd_volume_number"]&.truncate(30), "PhotoJournalIssue" => item["edd_issue"]&.truncate(30),
           "ItemInfo3" => item["edd_volume_number"]&.truncate(255), "ItemInfo4" => item["edd_issue"]&.truncate(255),
           "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => item["edd_oclc_number"]&.truncate(32),

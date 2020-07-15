@@ -142,29 +142,32 @@ module Requests
       # return if requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
       return if requestable.charged? || requestable.services.empty? # requestable.pickup_locations.nil?
       # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
-      if requestable.pickup_locations.present?
-        prefered_request_content_tag(requestable, requestable.pickup_locations)
-      else
-        prefered_request_content_tag(requestable, default_pickups)
+      class_list = "collapse request--print"
+      class_list += " show" if (['recap_edd', 'on_shelf_edd'] & requestable.services).blank?
+      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
+        if requestable.pickup_locations.present?
+          preferred_request_content_tag(requestable, requestable.pickup_locations)
+        else
+          preferred_request_content_tag(requestable, default_pickups)
+        end
       end
     end
 
-    def prefered_request_content_tag(requestable, default_pickups)
-      class_list = "card card-body bg-light collapse request--print"
-      class_list += " show" if (['recap_edd', 'on_shelf_edd'] & requestable.services).blank?
-      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-        locs = pickup_locations(requestable, default_pickups)
-        # temporary changes issue 438
-        if locs.size > 1
-          concat select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-        else
-          style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-          name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
-          hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pickup-hidden'
-          label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
-          hidden + label
+    def preferred_request_content_tag(requestable, default_pickups)
+      (show_pickup_service_options(requestable, nil) || "") +
+        content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}_card", class: "card card-body bg-light") do
+          locs = pickup_locations(requestable, default_pickups)
+          # temporary changes issue 438
+          if locs.size > 1
+            select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+          else
+            style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
+            name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
+            hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pickup-hidden'
+            label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
+            hidden + label
+          end
         end
-      end
     end
 
     def available_pickups(requestable, default_pickups)
@@ -436,20 +439,20 @@ module Requests
     private
 
       def display_requestable_list(services)
-        return if services.blank? || services.include?('recap_edd') # || services.include?(recap)
+        return if services.blank? # || services.include?('recap_edd') # || services.include?(recap)
         content_tag(:ul, class: "service-list") do
           services.each do |service|
-            next if service == "on_shelf_edd"
+            next if service == "on_shelf_edd" || service == "recap_edd"
             brief_msg = I18n.t("requests.#{service}.brief_msg")
             concat content_tag(:li, brief_msg.html_safe, class: "service-item")
           end
         end
       end
 
-      def display_on_shelf(requestable, _mfhd_id)
+      def display_on_shelf(_requestable, _mfhd_id)
         content_tag(:div) do
           # temporary changes issue 438
-          brief_msg = I18n.t("requests.on_shelf.brief_msg", location: requestable.location[:library][:label])
+          brief_msg = I18n.t("requests.on_shelf.brief_msg")
           content_tag(:ul, class: "service-list") do
             concat content_tag(:li, brief_msg, class: 'service-item')
           end

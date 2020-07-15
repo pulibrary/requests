@@ -40,7 +40,7 @@ en:
     annexa:
       email: "forranx@princeton.edu"
       email_subject: "Annex Request"
-      brief_msg: "Item offsite at Forrestal Annex. Request for pick-up."
+      brief_msg: "Item offsite at Forrestal Annex. Requests for pick-up typically take 1-2 business days to process."
       # temporary changes issue 438
       #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you the item will be available for pick-up in Firestone Lobby between the hours of 11am - 3pm, Monday - Friday."
@@ -57,12 +57,12 @@ en:
       email_from: "ilsborr@princeton.edu"
       email_subject: "Electronic Document Delivery Request Confirmation"
       brief_msg: Request an article or book chapter. They will be delivered as a PDF file in 1-2 business days. Please use the title field to indicate the article or chapter you wish to obtain. Use the notes field for additional comments or instructions. The Library complies with all applicable copyright laws.
-      email_conf_msg: 'Electronic document delivery requests typically take 1-2 days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you. For more detailed information please login to your <a href="https://lib-illiad.princeton.edu/illiad/illiad.dll">Illiad Account</a>. (Note: Your username and password is the same as the CAS)'
+      email_conf_msg: 'Electronic document delivery requests typically take 1-2 business days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you. For more detailed information please login to your <a href="https://lib-illiad.princeton.edu/illiad/illiad.dll">Illiad Account</a>. (Note: Your username and password is the same as the CAS)'
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     ppl:
       email: "ppllib@princeton.edu"
       email_subject: "Harold P. Furth Plasma Physics Library Request"
-      brief_msg: "Pageable item at Plasma Physics Library. Request for delivery in 1-2 business days."
+      brief_msg: "Request for delivery in 1-2 business days."
       # temporary changes issue 438
       #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you the item will be available for pick-up in PPL Library between the hours of 11am - 3pm, Monday - Friday."
@@ -81,7 +81,7 @@ en:
       email: "fstpage@princeton.edu"
       email_subject: "On the Shelf Paging Request"
       email_subject_patron: "Pick-up Request"
-      brief_msg: "Pageable item at %{location}. Request for pick-up."
+      brief_msg: "Requests for pick-up typically take 2 business days to process."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pick-up."
       access_msg: 'Access Users must obtain a pass to enter the Library.'
       email_covid_msg: "When picking up and/or dropping off your books: 
@@ -124,7 +124,7 @@ en:
       email_subject: "Electronic Document Delivery Request Confirmation"
       # brief_msg: "Item off-site at ReCAP facility. Request an article or book chapter be scanned for you and delivered as a PDF file in 1-2 business days. If you need more than an article or chapter, please request the physical item. The Library complies with all applicable copyright laws."
       brief_msg: Request articles or book chapters. They will be delivered as a PDF file in 1-2 business days. Please use the title field to indicate the article or chapter you wish to obtain. Use the notes field for additional comments or instructions. The Library complies with all applicable copyright laws.
-      email_conf_msg: "Electronic document delivery requests typically take 1-2 days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you."
+      email_conf_msg: "Electronic document delivery requests typically take 1-2 business days to process. You will receive an email including a link where you can download your scanned section in the that timeframe. If there is a problem fulfilling your request a member of our Library Staff will contact you."
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
     recap_no_items:
       email: "recapproblems@princeton.edu"

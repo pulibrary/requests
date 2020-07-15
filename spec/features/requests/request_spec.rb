@@ -334,7 +334,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/945550'
           choose('requestable__delivery_mode_1184074_print') # chooses 'print' radio button
           # todo: should we still have the text?
-          # expect(page).to have_content 'Item offsite at Forrestal Annex. Request for pick-up'
+          # expect(page).to have_content 'Item offsite at Forrestal Annex. Requests for pick-up'
           expect(page).to have_content 'Electronic Delivery'
           select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pickup')
           select('Technical Services 693 (Staff Only)', from: 'requestable__pickup')
@@ -580,7 +580,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 days to process")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
           expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
         end
       end

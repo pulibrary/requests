@@ -162,6 +162,10 @@ input[type="radio"] + label {
   padding: 1rem;
 }
 
+.form-note {
+  padding-bottom: 1em;
+}
+
 @media screen and (max-width: 650px) {
   .visually-hidden-sm { 
     position: absolute !important;

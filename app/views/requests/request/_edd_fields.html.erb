@@ -38,11 +38,12 @@
       </div>
     </fieldset>
     <fieldset class="form-group">
-      <%= label_tag "requestable__edd_note", 'Note', class: 'control-label col-sm-12' %>
+      <%= label_tag "requestable__edd_note", 'Note **', class: 'control-label col-sm-12' %>
       <div class="col-sm-6">
         <%= text_field_tag 'requestable[][edd_note]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
       </div>
     </fieldset>
     <small class="col-sm-12">* indicates a required field for Electronic Delivery requests.</small>
+    <small class="col-sm-12"> ** <%= I18n.t("requests.recap_edd.note_msg")%></small>
   </div>
 </div>

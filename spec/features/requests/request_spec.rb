@@ -482,9 +482,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
           # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
-          expect(page).to have_content 'Electronic Delivery '
+          expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
-          expect(page).to have_content 'Article/Chapter Title *'
+          expect(page).to have_content 'Article/Chapter Title (Required)'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           email = ActionMailer::Base.deliveries.last

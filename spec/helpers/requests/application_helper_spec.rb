@@ -82,7 +82,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
-      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"card card-body bg-light collapse request--print\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PN\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Lewis Library</label></div>")
+      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"collapse request--print\"><div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div><div id=\"fields-print__3826440_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PN\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Lewis Library</label></div></div>")
     end
   end
 
@@ -103,7 +103,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pickup_choices(lewis_request_with_multiple_requestable.requestable.last, default_pickups)
-      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"card card-body bg-light collapse request--print show\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Firestone Library</label></div>")
+      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"collapse request--print show\"><ul class=\"service-list\"><li class=\"service-item\">Item offsite at Fine Annex. Request for delivery in 1-2 business days.</li></ul><div id=\"fields-print__2578961_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pickup]\" id=\"requestable__pickup\" value=\"PA\" class=\"single-pickup-hidden\" /><label class=\"single-pickup\" style=\"\" for=\"requestable__pickup\">Pick-up location: Firestone Library</label></div></div>")
     end
   end
 
@@ -164,7 +164,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       end
       it 'a message for lewis' do
         expect(helper.show_pickup_service_options(requestable, 'acb')).to eq \
-          "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at Lewis Library. Request for pick-up.</li></ul></div>"
+          "<div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div>"
       end
     end
 
@@ -211,7 +211,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         assign(:request, request)
         # temporary change no maps everything is pageable
         # expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a></div>"
-        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at abc. Request for pick-up.</li></ul></div>"
+        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div>"
       end
     end
 
@@ -225,7 +225,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         assign(:request, request)
         # temporary change no maps everything is pageable
         # expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><a href=\"map_abc\">Where to find it</a><div class=\"service-item\">Trace a Missing Item. Library staff will search for this item and contact you with an outcome.</div></div>"
-        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Pageable item at abc. Request for pick-up.</li></ul></div>"
+        expect(helper.show_pickup_service_options(requestable, 'acb')).to eq "<div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div>"
       end
     end
 
@@ -248,24 +248,24 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
   end
 
-  describe "#prefered_request_content_tag" do
+  describe "#preferred_request_content_tag" do
     let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
     let(:default_pickups) { [{ label: 'place', gfa_pickup: 'xx', staff_only: false }] }
-    let(:card_div) { '<div id="fields-print__abc123" class="card card-body bg-light collapse request--print show">' }
+    let(:card_div) { '<div id="fields-print__abc123_card" class="card card-body bg-light">' }
 
     context "no services" do
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: false, location: { "library" => default_pickups[0] } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: false, on_shelf?: false, location: { "library" => default_pickups[0] } } }
       it 'shows default pickup location' do
-        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+        expect(helper.preferred_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: place</label></div>'
       end
     end
 
     context "no services multiple defaults" do
       let(:default_pickups) { [{ label: 'place', gfa_pickup: 'xx', staff_only: false }, { label: 'place two', gfa_pickup: 'xz', staff_only: false }] }
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: false, location: { "library" => default_pickups[0] } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: false, on_shelf?: false, location: { "library" => default_pickups[0] } } }
       it 'shows default pickup location' do
-        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+        expect(helper.preferred_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: place</label></div>'
         # temporary change on pageable to one location
         # card_div + '<select name="requestable[][pickup]" id="requestable__pickup"><option value="">Select a Delivery Location</option><option value="xx">place</option>' + "\n" + '<option value="xz">place two</option></select></div>'
@@ -273,9 +273,9 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services and charged" do
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: true, location: { "library" => default_pickups[0] } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, recap?: false, annexa?: false, pickup_locations: nil, charged?: true, on_shelf?: false, location: { "library" => default_pickups[0] } } }
       it 'shows default pickup location hidden' do
-        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+        expect(helper.preferred_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="updated_later" id="updated_later" value="xx" class="single-pickup-hidden" /><label class="single-pickup" style="display:none;margin-top:10px;" for="updated_later">Pick-up location: place</label></div>'
       end
     end
@@ -285,16 +285,16 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: false, pickup_locations: locations, charged?: false, location: { "library" => default_pickups[0] } } }
       it 'shows the pickup location' do
         pending "Always uses holding location"
-        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+        expect(helper.preferred_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: another place</label></div>'
       end
     end
 
     context "no services pending at a location" do
       let(:holding_location) { { holding_library: { label: 'cool library', code: 'xx' } } }
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: true, location: holding_location, charged?: false } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: true, on_shelf?: false, location: holding_location, charged?: false } }
       it 'shows the holding location' do
-        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+        expect(helper.preferred_request_content_tag(requestable, default_pickups)).to eq \
           card_div + '<input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: cool library</label></div>'
       end
     end
@@ -304,7 +304,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:locations) { [{ label: 'another place', gfa_pickup: 'yy', staff_only: false }] }
       it 'a message for lewis' do
         pending "Always uses holding location"
-        expect(helper.prefered_request_content_tag(requestable, default_pickups)).to eq \
+        expect(helper.preferred_request_content_tag(requestable, default_pickups)).to eq \
           '<div id="fields-print__abc123" class="card card-body bg-light collapse request--print"><input type="hidden" name="requestable[][pickup]" id="requestable__pickup" value="" class="single-pickup-hidden" /><label class="single-pickup" style="" for="requestable__pickup">Pick-up location: another place</label></div>'
       end
     end

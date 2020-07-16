@@ -1,9 +1,8 @@
 <div aria-live='polite' class='<%= collapse_field %>' id='fields-eed__<%= "#{requestable.preferred_request_id}" %>'>
   <small id="requestable__type_recap_edd_caption_<%= requestable.preferred_request_id %>" class="form-text brief-msg"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
   <div class="card card-body bg-light">
-    <small class="col-sm-12 form-note">* Indicates a required field for Electronic Delivery requests.</small>
     <fieldset class="form-group required">
-      <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title *', class: 'control-label col-sm-12' %>
+      <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title (Required)', class: 'control-label col-sm-12' %>
       <div class="col-sm-6">
         <%= text_field_tag 'requestable[][edd_art_title]', "", value: "", placeholder: "", maxlength: 60, size: 30 %>
       </div>

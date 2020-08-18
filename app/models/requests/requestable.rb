@@ -6,6 +6,7 @@ module Requests
     attr_reader :location
     attr_reader :call_number
     attr_reader :title
+    attr_reader :user_barcode
     attr_accessor :services
 
     delegate :pageable_loc?, to: :@pageable
@@ -14,12 +15,13 @@ module Requests
 
     include Requests::Aeon
 
-    def initialize(bib:, holding: nil, item: nil, location: nil)
+    def initialize(bib:, holding: nil, item: nil, location: nil, user_barcode:)
       @bib = bib # hash of bibliographic data
       @holding = holding # hash of holding data
       @item = item # hash of item data
       @location = location # hash of location matrix data
       @services = []
+      @user_barcode = user_barcode
       @call_number = holding.first[1]['call_number_browse']
       @title = bib[:title_citation_display]&.first
       @pageable = Pageable.new(call_number: call_number, location_code: location_code)
@@ -28,14 +30,20 @@ module Requests
     end
 
     def digitize?
-      (item_data? || !circulates?) && (on_shelf_edd? || recap_edd?) && !request?
+      (item_data? || !circulates?) && (on_shelf_edd? || recap_edd?) && !request_status?
     end
 
     def pick_up?
+      return false if user_barcode.blank?
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !request?
     end
 
     def request?
+      return false if user_barcode.blank? # TODO: remove once we have added option for digitizing requestable items
+      request_status?
+    end
+
+    def request_status?
       on_order? || in_process? || traceable? || aeon? || services.empty?
     end
 
@@ -44,7 +52,7 @@ module Requests
     end
 
     def will_submit_via_form?
-      digitize? || pick_up? || on_order? || in_process? || traceable?
+      digitize? || pick_up? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
     # pickup location id on the item level
@@ -116,7 +124,7 @@ module Requests
     end
 
     def recap_edd?
-      (scsb? && scsb_edd_cullection_codes.include?(item[:collection_code])) ||
+      (scsb? && scsb_edd_collection_codes.include?(item[:collection_code])) ||
         ((location[:recap_electronic_delivery_location] == true) && !scsb?)
     end
 
@@ -357,7 +365,7 @@ module Requests
          'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
 
-      def scsb_edd_cullection_codes
+      def scsb_edd_collection_codes
         %w[AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP]
       end
 

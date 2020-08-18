@@ -28,10 +28,11 @@ module Requests
     # @option opts [Fixnum] :mfhd voyager id
     # @option opts [User] :user current user object
     # @option opts [String] :source represents system that directed user to request form. i.e.
-    def initialize(system_id:, mfhd: nil, user: nil, source: nil)
+    def initialize(system_id:, mfhd: nil, user: nil, source: nil, user_barcode:)
       @system_id = system_id
       @mfhd = mfhd
       @user = user
+      @user_barcode = user_barcode
       @source = source
       ### These should be re-factored
       @doc = solr_doc(system_id)
@@ -100,6 +101,7 @@ module Requests
     end
 
     def fill_in_eligible(mfhd)
+      return false if user_barcode.blank?
       fill_in = false
       unless (sorted_requestable[mfhd].first.services & ["on_order", "online"]).present?
         if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
@@ -148,11 +150,7 @@ module Requests
     end
 
     def all_items_online?
-      online = true
-      requestable.each do |item|
-        online = false unless item.online?
-      end
-      online
+      requestable.map(&:online?).reduce(:&)
     end
 
     def any_will_submit_via_form?
@@ -363,7 +361,8 @@ module Requests
           bib: doc.with_indifferent_access,
           holding: params[:holding],
           item: params[:item],
-          location: params[:location]
+          location: params[:location],
+          user_barcode: user_barcode
         }
       end
 

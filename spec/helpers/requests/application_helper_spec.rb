@@ -21,7 +21,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '8179402',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_items_on_reserve) { Requests::Request.new(params) }
@@ -37,7 +38,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '9222024',
-          user: user
+          user: user,
+          user_barcode: '111122223333'
         }
       end
       it 'returns a boolean to enable submit for logged in user' do
@@ -55,7 +57,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '3848872',
-          user: user
+          user: user,
+          user_barcode: '111122223333'
         }
       end
       it 'lewis is a submitable request' do
@@ -71,7 +74,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       {
         system_id: '491654',
         mfhd: '534140',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:default_pickups) do
@@ -92,7 +96,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       {
         system_id: '426420',
         mfhd: '3538795',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:default_pickups) do
@@ -113,7 +118,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       {
         system_id: '7352936',
         mfhd: '7179463',
-        user: unauthenticated_patron
+        user: unauthenticated_patron,
+        user_barcode: '111122223333'
       }
     end
     let(:aeon_only_request) { Requests::Request.new(params) }

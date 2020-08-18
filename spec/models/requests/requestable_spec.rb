@@ -424,7 +424,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   end
 
   context 'A Recap Marquand holding' do
-    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" } }) }
+    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" } }, user_barcode: '111222333') }
 
     describe '#site' do
       it 'returns a Marquand site param' do
@@ -582,7 +582,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) do
       {
         system_id: '9999800',
-        user: user
+        user: user,
+        user_barcode: '111222333'
       }
     end
     let(:request) { Requests::Request.new(params) }
@@ -687,7 +688,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) do
       {
         system_id: '9999800',
-        user: user
+        user: user,
+        user_barcode: '111222333'
       }
     end
     let(:request) { Requests::Request.new(params) }
@@ -753,7 +755,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) do
       {
         system_id: '9999800',
-        user: user
+        user: user,
+        user_barcode: '111222333'
       }
     end
     let(:request) { Requests::Request.new(params) }
@@ -863,7 +866,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   describe "#will_submit_via_form?" do
     let(:location) { {} }
     let(:item_data) {}
-    let(:requestable) { described_class.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'abc' } }], item: item_data, location: location) }
+    let(:requestable) { described_class.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'abc' } }], item: item_data, location: location, user_barcode: '111222333') }
     let(:services) { [] }
     let(:on_reserve) { false }
     let(:traceable) { false }

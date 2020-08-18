@@ -7,7 +7,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: bad_system_id,
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:bad_request) { described_class.new(params) }
@@ -25,7 +26,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '8880549',
         mfhd: '8805567',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_holding_item) { described_class.new(params) }
@@ -146,7 +148,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '1791763',
         mfhd: '2056183',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_only_holding) { described_class.new(params) }
@@ -174,7 +177,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '490930',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
 
@@ -217,7 +221,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '4758976',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_system_id_only_with_holdings) { described_class.new(params) }
@@ -244,7 +249,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '2478499',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_system_id_only_with_holdings_with_some_items) { described_class.new(params) }
@@ -271,7 +277,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '8179402',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_items_on_reserve) { described_class.new(params) }
@@ -288,7 +295,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '6195942',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_items_at_temp_locations) { described_class.new(params) }
@@ -315,7 +323,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '2385868',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -333,7 +342,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '4759591',
         mfhd: '4978217',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -373,7 +383,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: 'dsp01rr1720547',
         mfhd: 'thesis',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -442,7 +453,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: 'coin-1167/',
         mfhd: 'numismatics',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -510,7 +522,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: 'coin-1167',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -572,7 +585,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '2937003',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_at_paging_outside) { described_class.new(params) }
@@ -629,7 +643,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '4340413',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_at_paging_f) { described_class.new(params) }
@@ -668,7 +683,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9545726',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_at_paging_f) { described_class.new(params) }
@@ -708,7 +724,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9602549',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_on_order) { described_class.new(params) }
@@ -756,7 +773,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '9602551',
         mfhd: '9442918',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_on_order) { described_class.new(params) }
@@ -814,7 +832,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9602545',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_no_callnum) { described_class.new(params) }
@@ -847,7 +866,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '2002206',
         mfhd: '2281830',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_missing) { described_class.new(params) }
@@ -878,7 +898,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9627261',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -899,7 +920,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '616086',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -924,7 +946,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9676483',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -957,7 +980,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '426420',
         mfhd: '464640',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -995,7 +1019,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '9168829',
         mfhd: '9048082',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1019,7 +1044,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '9738136',
         mfhd: '9558038',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1116,7 +1142,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '9907433',
         mfhd: '9723988',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1149,7 +1176,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '495501',
         mfhd: '538750',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1166,7 +1194,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9994692',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1183,7 +1212,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9746776',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1200,7 +1230,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '4815239',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1222,7 +1253,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '495220',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1244,7 +1276,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '7494358',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1272,7 +1305,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '5596067',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1294,7 +1328,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9696811',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1317,7 +1352,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '2631265',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1346,7 +1382,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '495501',
         mfhd: '538750',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request) { described_class.new(params) }
@@ -1364,7 +1401,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         system_id: '1969881',
         mfhd: '2246633',
         source: 'pulsearch',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_optional_params) { described_class.new(params) }
@@ -1385,7 +1423,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9712355',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_for_preservation) { described_class.new(params) }
@@ -1401,7 +1440,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9907486',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_title_author) { described_class.new(params) }
@@ -1427,7 +1467,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '4693146',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_single_aeon_holding) { described_class.new(params) }
@@ -1446,7 +1487,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '2286894',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
@@ -1486,7 +1528,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '3845517',
-        user: user
+        user: user,
+        user_barcode: '111122223333'
       }
     end
     let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
@@ -1508,7 +1551,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: 'SCSB-5290772',
         user: user,
-        source: 'pulsearch'
+        source: 'pulsearch',
+        user_barcode: '111122223333'
       }
     end
     let(:scsb_availability_params) do
@@ -1556,7 +1600,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: 'SCSB-5640725',
         user: user,
-        source: 'pulsearch'
+        source: 'pulsearch',
+        user_barcode: '111122223333'
       }
     end
     let(:scsb_availability_params) do
@@ -1594,7 +1639,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: 'SCSB-7935196',
         user: user,
-        source: 'pulsearch'
+        source: 'pulsearch',
+        user_barcode: '111122223333'
       }
     end
     let(:scsb_availability_params) do

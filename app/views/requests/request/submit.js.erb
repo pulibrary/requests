@@ -27,7 +27,7 @@
     $(".error-<%= key %>").show();
     <% if key == :items %>
       <% value.each do |error| %>
-        $("#request_<%= error.keys[0]&.html_safe %> .request--<%= error.values[0]['type'] %>").addClass('alert alert-danger');
+        $("#request_<%= error.keys[0]&.html_safe %> .delivery--<%= error.values[0]['type'] %>").addClass('alert alert-danger');
       <% end %>
     <% end %>
   <% end %>

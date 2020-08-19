@@ -19,11 +19,12 @@ module Requests
       @user = current_or_guest_user
 
       @patron = patron(user: @user)
+      user_barcode = @patron[:barcode] if @patron.present?
       @mode = mode
       @title = "Request ID: #{system_id}"
 
       # needed to see if we can suppress login for this item
-      @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, user: @user)
+      @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, user: @user, user_barcode: user_barcode)
       ### redirect to Aeon non-voyager items or single Aeon requestable
       if @request.thesis? || @request.numismatics?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
@@ -100,6 +101,8 @@ module Requests
         if !user.guest?
           patron = current_patron(user.uid)
           flash.now[:error] = "A problem occurred looking up your library account." if patron == false
+          # Uncomment to fake being a non barcoded user
+          # patron[:barcode] = nil
           patron
         elsif session["email"].present? && session["user_name"].present?
           access_patron(session["email"], session["user_name"])

@@ -6,7 +6,7 @@ module Requests
 
     validates :email, presence: true, email: true, length: { minimum: 5, maximum: 50 } # , format: { message: "Supply a Valid Email Address" } #, on: :submit
     validates :user_name, presence: true, length: { minimum: 1, maximum: 50 } # ,  format: { message: "Name Can't be Blank" } #, on: :submit
-    validates :user_barcode, presence: true, length: { minimum: 5, maximum: 14 },
+    validates :user_barcode, allow_blank: true, presence: true, length: { minimum: 5, maximum: 14 },
                              format: { with: /(^ACCESS$|^access$|^\d{14}$)/i, message: "Please supply a valid library barcode or type the value 'ACCESS'" }
     validate :item_validations # , presence: true, length: { minimum: 1 }, on: :submit
 

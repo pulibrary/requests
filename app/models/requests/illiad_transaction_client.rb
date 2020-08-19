@@ -31,7 +31,7 @@ module Requests
     private
 
       def map_metdata
-        {
+        resp = {
           "Username" => user["netid"], "TransactionStatus" => illiad_transaction_status,
           "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"),
           "WantedBy" => "Yes, until the semester's", # note creation fails if we use any other text value
@@ -43,7 +43,8 @@ module Requests
           "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => item["edd_oclc_number"]&.truncate(32),
           "DocumentType" => genre, "Location" => item["edd_location"],
           "PhotoArticleTitle" => item["edd_art_title"]&.truncate(250)
-        }.to_json
+        }
+        resp.to_json
       end
 
       def pages

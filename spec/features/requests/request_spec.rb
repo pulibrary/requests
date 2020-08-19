@@ -17,8 +17,19 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     let(:mutiple_items) { '7917192' }
 
     let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
+    let(:valid_patron_no_barcode_response) { fixture('/bibdata_patron_no_barcode_response.json') }
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
     let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
+
+    let(:responses) do
+      {
+        found: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"Yes","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
+        transaction_created: '{"TransactionNumber":1093806,"Username":"abc123","RequestType":"Article","PhotoArticleAuthor":null,"PhotoJournalTitle":null,"PhotoItemPublisher":null,"LoanPlace":null,"LoanEdition":null,"PhotoJournalTitle":"Test Title","PhotoJournalVolume":"21","PhotoJournalIssue":"4","PhotoJournalMonth":null,"PhotoJournalYear":"2011","PhotoJournalInclusivePages":"165-183","PhotoArticleAuthor":"Williams, Joseph; Woolwine, David","PhotoArticleTitle":"Test Article","CitedIn":null,"CitedTitle":null,"CitedDate":null,"CitedVolume":null,"CitedPages":null,"NotWantedAfter":null,"AcceptNonEnglish":false,"AcceptAlternateEdition":true,"ArticleExchangeUrl":null,"ArticleExchangePassword":null,"TransactionStatus":"Awaiting Request Processing","TransactionDate":"2020-06-15T18:34:44.98","ISSN":"XXXXX","ILLNumber":null,"ESPNumber":null,"LendingString":null,"BaseFee":null,"PerPage":null,"Pages":null,"DueDate":null,"RenewalsAllowed":false,"SpecIns":null,"Pieces":null,"LibraryUseOnly":null,"AllowPhotocopies":false,' \
+                            '"LendingLibrary":null,"ReasonForCancellation":null,"CallNumber":null,"Location":null,"Maxcost":null,"ProcessType":"Borrowing","ItemNumber":null,"LenderAddressNumber":null,"Ariel":false,"Patron":null,"PhotoItemAuthor":null,"PhotoItemPlace":null,"PhotoItemPublisher":null,"PhotoItemEdition":null,"DocumentType":null,"InternalAcctNo":null,"PriorityShipping":null,"Rush":"Regular","CopyrightAlreadyPaid":"Yes","WantedBy":null,"SystemID":"OCLC","ReplacementPages":null,"IFMCost":null,"CopyrightPaymentMethod":null,"ShippingOptions":null,"CCCNumber":null,"IntlShippingOptions":null,"ShippingAcctNo":null,"ReferenceNumber":null,"CopyrightComp":null,"TAddress":null,"TAddress2":null,"TCity":null,"TState":null,"TZip":null,"TCountry":null,"TFax":null,"TEMailAddress":null,"TNumber":null,"HandleWithCare":false,"CopyWithCare":false,"RestrictedUse":false,"ReceivedVia":null,"CancellationCode":null,"BillingCategory":null,"CCSelected":null,"OriginalTN":null,"OriginalNVTGC":null,"InProcessDate":null,' \
+                            '"InvoiceNumber":null,"BorrowerTN":null,"WebRequestForm":null,"TName":null,"TAddress3":null,"IFMPaid":null,"BillingAmount":null,"ConnectorErrorStatus":null,"BorrowerNVTGC":null,"CCCOrder":null,"ShippingDetail":null,"ISOStatus":null,"OdysseyErrorStatus":null,"WorldCatLCNumber":null,"Locations":null,"FlagType":null,"FlagNote":null,"CreationDate":"2020-06-15T18:34:44.957","ItemInfo1":null,"ItemInfo2":null,"ItemInfo3":null,"ItemInfo4":null,"SpecIns":null,"SpecialService":"Digitization Request: ","DeliveryMethod":null,"Web":null,"PMID":null,"DOI":null,"LastOverdueNoticeSent":null,"ExternalRequest":null}',
+        note_created: '{"Message":"An error occurred adding note to transaction 1093946"}'
+      }
+    end
 
     before { stub_delivery_locations }
 
@@ -564,13 +575,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
           transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
           transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
-          responses = {
-            found: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"Yes","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
-            transaction_created: '{"TransactionNumber":1093806,"Username":"abc123","RequestType":"Article","PhotoArticleAuthor":null,"PhotoJournalTitle":null,"PhotoItemPublisher":null,"LoanPlace":null,"LoanEdition":null,"PhotoJournalTitle":"Test Title","PhotoJournalVolume":"21","PhotoJournalIssue":"4","PhotoJournalMonth":null,"PhotoJournalYear":"2011","PhotoJournalInclusivePages":"165-183","PhotoArticleAuthor":"Williams, Joseph; Woolwine, David","PhotoArticleTitle":"Test Article","CitedIn":null,"CitedTitle":null,"CitedDate":null,"CitedVolume":null,"CitedPages":null,"NotWantedAfter":null,"AcceptNonEnglish":false,"AcceptAlternateEdition":true,"ArticleExchangeUrl":null,"ArticleExchangePassword":null,"TransactionStatus":"Awaiting Request Processing","TransactionDate":"2020-06-15T18:34:44.98","ISSN":"XXXXX","ILLNumber":null,"ESPNumber":null,"LendingString":null,"BaseFee":null,"PerPage":null,"Pages":null,"DueDate":null,"RenewalsAllowed":false,"SpecIns":null,"Pieces":null,"LibraryUseOnly":null,"AllowPhotocopies":false,' \
-                                  '"LendingLibrary":null,"ReasonForCancellation":null,"CallNumber":null,"Location":null,"Maxcost":null,"ProcessType":"Borrowing","ItemNumber":null,"LenderAddressNumber":null,"Ariel":false,"Patron":null,"PhotoItemAuthor":null,"PhotoItemPlace":null,"PhotoItemPublisher":null,"PhotoItemEdition":null,"DocumentType":null,"InternalAcctNo":null,"PriorityShipping":null,"Rush":"Regular","CopyrightAlreadyPaid":"Yes","WantedBy":null,"SystemID":"OCLC","ReplacementPages":null,"IFMCost":null,"CopyrightPaymentMethod":null,"ShippingOptions":null,"CCCNumber":null,"IntlShippingOptions":null,"ShippingAcctNo":null,"ReferenceNumber":null,"CopyrightComp":null,"TAddress":null,"TAddress2":null,"TCity":null,"TState":null,"TZip":null,"TCountry":null,"TFax":null,"TEMailAddress":null,"TNumber":null,"HandleWithCare":false,"CopyWithCare":false,"RestrictedUse":false,"ReceivedVia":null,"CancellationCode":null,"BillingCategory":null,"CCSelected":null,"OriginalTN":null,"OriginalNVTGC":null,"InProcessDate":null,' \
-                                  '"InvoiceNumber":null,"BorrowerTN":null,"WebRequestForm":null,"TName":null,"TAddress3":null,"IFMPaid":null,"BillingAmount":null,"ConnectorErrorStatus":null,"BorrowerNVTGC":null,"CCCOrder":null,"ShippingDetail":null,"ISOStatus":null,"OdysseyErrorStatus":null,"WorldCatLCNumber":null,"Locations":null,"FlagType":null,"FlagNote":null,"CreationDate":"2020-06-15T18:34:44.957","ItemInfo1":null,"ItemInfo2":null,"ItemInfo3":null,"ItemInfo4":null,"SpecIns":null,"SpecialService":"Digitization Request: ","DeliveryMethod":null,"Web":null,"PMID":null,"DOI":null,"LastOverdueNoticeSent":null,"ExternalRequest":null}',
-            note_created: '{"Message":"An error occurred adding note to transaction 1093946"}'
-          }
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -620,7 +624,316 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         expect(page).not_to have_selector '#request_user_barcode', visible: false
       end
     end
-  end
 
+    context 'a princeton net ID user without a barcode' do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:in_process_id) { '11543235' }
+      let(:recap_in_process_id) { '11521583' }
+
+      let(:recap_params) do
+        {
+          Bbid: "9493318",
+          item: "7303228",
+          lname: "Student",
+          delivery: "p",
+          pickup: "PN",
+          startpage: "",
+          endpage: "",
+          email: "a@b.com",
+          volnum: "",
+          issue: "",
+          aauthor: "",
+          atitle: "",
+          note: ""
+        }
+      end
+
+      before do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+          .to_return(status: 200, body: valid_patron_no_barcode_response, headers: {})
+        login_as user
+      end
+
+      describe 'When visiting a voyager ID as a CAS User' do
+        it 'allow CAS patrons to request an available ReCAP item.' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "9493318", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
+                                       requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          stub_request(:post, Requests.config[:scsb_base])
+            .with(headers: { 'Accept' => '*/*' })
+            .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
+          visit "/requests/#{voyager_id}"
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+        end
+
+        it 'does display the online access message' do
+          visit "/requests/#{online_id}"
+          expect(page).to have_content 'Online'
+        end
+
+        it 'disallows access to in process items' do
+          visit "/requests/#{in_process_id}"
+          expect(page).not_to have_content 'Pick-up location: Marquand Library'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'disallows access to in process recap items' do
+          visit "/requests/#{recap_in_process_id}"
+
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'disallows access to  On-Order items' do
+          visit "/requests/#{on_order_id}"
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'disallows access to a record that has no item data' do
+          visit "/requests/#{no_items_id}"
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'disallows access an on_shelf record that has no item data' do
+          visit "/requests/#{on_shelf_no_items_id}"
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'allows digitizing, but not pick up of on on_shelf record' do
+          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
+          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Chekhov, Anton Pavlovich", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Pʹesy Пьесы", "PhotoItemPublisher" => "Moskva: Letniĭ sad", "ISSN" => nil, "CallNumber" => "PG3455 .A2 2015", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9770811", "PhotoJournalYear" => "2015", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "964907363", "DocumentType" => "Book", "Location" => "Firestone Library", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+
+          stub_voyager_hold_success('9770811', '7502706', '77777')
+
+          visit "/requests/9770811"
+          expect(page).not_to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Electronic Delivery'
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
+        end
+
+        it 'displays an ark link for a plum item' do
+          visit "/requests/#{iiif_manifest_item}"
+          expect(page).to have_link('Digital content', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
+        end
+
+        let(:good_response) { fixture('/scsb_request_item_response.json') }
+        it 'allows patrons to request a physical recap item' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "9944355", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: '198572131', requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/9944355'
+          expect(page).not_to have_content 'Pick-up location: '
+          expect(page).to have_content 'Electronic Delivery'
+          choose('requestable__delivery_mode_7467161_edd') # chooses 'edd' radio button
+          expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content 'Request submitted'
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("L'écrivain, magazine litteraire trimestriel")
+        end
+
+        it 'allows patrons to request a Forrestal annex' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/945550'
+          expect(page).not_to have_content 'Pick-up location: '
+          expect(page).to have_content 'Electronic Delivery'
+        end
+
+        it 'allows patrons to request a Lewis recap item digitally' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7053307?mfhd=6962326'
+          expect(page).not_to have_content 'Pick-up'
+          fill_in "Title", with: "my stuff"
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content 'Request submitted'
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+        end
+
+        it 'allows patrons to request a digital copy from Lewis' do
+          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
+          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Alexakis, Spyros", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "The decomposition of global conformal invariants", "PhotoItemPublisher" => "Princeton: Princeton University Press", "ISSN" => nil, "CallNumber" => "QA646 .A44 2012", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/7053307", "PhotoJournalYear" => "2012", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "757838203", "DocumentType" => "Book", "Location" => "Lewis Library", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          visit '/requests/7053307'
+          expect(page).not_to have_content 'Pick-up location: Lewis Library'
+          within('#request_6322174') do
+            fill_in "Article/Chapter Title", with: "ABC"
+          end
+          check 'requestable_selected_6322174'
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content 'Request submitted to Illiad'
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+        end
+
+        it 'allows patrons to ask for digitizing on non circulating items' do
+          visit '/requests/9594840'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Pick-up location: Lewis Library'
+          expect(page).to have_css '.submit--request'
+        end
+
+        it 'allows filtering items by mfhd' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7917192?mfhd=7699134'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Copy 2'
+          expect(page).not_to have_content 'Copy 3'
+        end
+
+        it 'show all copies if MFHD is not present' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7917192'
+          expect(page).not_to have_content 'Pick-up location: Lewis Library'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Copy 2'
+          expect(page).to have_content 'Copy 3'
+        end
+
+        it 'disallow filin forms' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit 'requests/10574699'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        # TODO: once Marquad in library use is available again it should show pickup at marquand also
+        it 'Shows marqaund as an EDD option only' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/11780965?mfhd=11443781'
+          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Article/Chapter Title (Required)'
+          fill_in "Title", with: "my stuff"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")
+        end
+
+        it "shows items in the Architecture Library as available" do
+          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
+          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => "02/19/2021", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Steele, James", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory", "PhotoItemPublisher" => "New York, NY: The American University...", "ISSN" => nil, "CallNumber" => "NA1585.A23 S7 2020", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/11787671", "PhotoJournalYear" => "2020", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1137152638", "DocumentType" => "Book", "Location" => "Architecture Library - New Book Shelf", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          visit '/requests/11787671'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).not_to have_content 'Pick-up location: Architecture Library'
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business")
+          expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
+        end
+
+        it "disallows requests of recap pickup only items" do
+          visit '/requests/11578319?mfhd=11259604'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'disallows aeon requests' do
+          visit '/requests/336525'
+          expect(page).not_to have_content 'Request to View in Reading Room'
+        end
+
+        it 'allows guest patrons to access Online items' do
+          visit '/requests/9994692'
+          expect(page).to have_content 'www.jstor.org'
+        end
+
+        it 'prohibits using Borrow Direct, ILL, and Recall on Missing items' do
+          visit '/requests/1788796?mfhd=2053005'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+        end
+
+        it 'disallows generic fill in requests enums from Annex or Firestone in mixed holding' do
+          visit '/requests/2286894'
+          expect(page).not_to have_field 'requestable__selected', disabled: false
+          expect(page).to have_field 'requestable_selected_7484608', disabled: false
+          expect(page).not_to have_field 'requestable_user_supplied_enum_2576882'
+          expect(page).to have_content 'Electronic Delivery'
+        end
+
+        it 'allows a non circulating item with not item data to be digitized' do
+          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
+          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
+          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
+                                       "Location" => "Marquand Library", "ISSN" => nil, "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          visit '/requests/4127409?mfhd=4403772'
+          expect(page).to have_content 'Electronic Delivery'
+          fill_in "Article/Chapter Title", with: "ABC"
+          fill_in "Author", with: "I Aman Author"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+          expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
+        end
+      end
+    end
+  end
   # rubocop:enable RSpec/MultipleExpectations
 end

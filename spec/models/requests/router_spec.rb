@@ -10,7 +10,8 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
       {
         system_id: 'SCSB-2635660',
         user: user,
-        source: 'CUL'
+        source: 'CUL',
+        user_barcode: '111222333'
       }
     end
     let(:scsb_availability_params) do

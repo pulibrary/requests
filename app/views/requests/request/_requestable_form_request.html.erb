@@ -6,10 +6,11 @@
     <% if requestable.ill_eligible? %>
       <span class="ill-data" data-ill-url="<%= requestable.illiad_request_url(request_context) %>"></span>
     <% end %>
-    <%= show_service_options requestable, mfhd %>
     <%= request_input(requestable.services.first) %>
     <% if requestable.on_order? || requestable.in_process? %>
       <%= pickup_choices requestable, default_pickups %>
+    <% else %>
+      <%= show_service_options requestable, mfhd %>
     <% end %>
   </td>
 </tr>

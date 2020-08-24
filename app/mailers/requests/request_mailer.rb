@@ -2,9 +2,19 @@ module Requests
   class RequestMailer < ApplicationMailer
     include Requests::Bibdata
 
+    def digitize_fill_in_confirmation(submission)
+      @submission = submission
+      @delivery_mode = "edd"
+      subject = I18n.t('requests.paging.email_subject', pickup_location: "Digitization")
+      destination_email = @submission.email
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(subject, @submission.user_barcode))
+    end
+
     def paging_email(submission)
       @submission = submission
-      pickups = @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pickup"]]["label"] }
+      pickups = paging_pickups(submission: submission)
       subject = I18n.t('requests.paging.email_subject', pickup_location: pickups.join(", "))
       destination_email = "fstpage@princeton.edu"
       mail(to: destination_email,
@@ -14,7 +24,7 @@ module Requests
 
     def paging_confirmation(submission)
       @submission = submission
-      pickups = @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pickup"]]["label"] }
+      pickups = paging_pickups(submission: submission)
       subject = I18n.t('requests.paging.email_subject', pickup_location: pickups.join(", "))
       destination_email = @submission.email
       mail(to: destination_email,
@@ -261,6 +271,15 @@ module Requests
     end
 
     private
+
+      def paging_pickups(submission:)
+        @delivery_mode = submission.items[0]["delivery_mode_#{submission.items[0]['mfhd']}"]
+        if @delivery_mode == "edd"
+          ["Digitization"]
+        else
+          @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pickup"]]["label"] }
+        end
+      end
 
       def annexa_email_destinations(submission:)
         annexa_items(submission: submission).map do |item|

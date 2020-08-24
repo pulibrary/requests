@@ -16,6 +16,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     let(:iiif_manifest_item) { '4888494' }
     let(:mutiple_items) { '7917192' }
 
+    let(:patron_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent" }
+    let(:transaction_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction" }
+    let(:transaction_note_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes" }
+
     let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
     let(:valid_patron_no_barcode_response) { fixture('/bibdata_patron_no_barcode_response.json') }
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
@@ -292,9 +296,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
+          choose('requestable__delivery_mode_342_print') # chooses 'print' radio button
           select('Firestone Library', from: 'requestable__pickup')
           expect(page).to have_content "ReCAP Paging Request"
-          expect(page).to have_content "Paging Request, will be delivered to:\nFirestone Library"
+          expect(page).to have_content "Pick-up location: Firestone Library"
           # temporary changes 438
           # expect(page).to have_content 'Help Me Get It' # while recap is closed
           # expect(page).to have_link('Where to find it')
@@ -470,16 +475,17 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Copy 3'
         end
 
-        it 'show a fill in form if the item is an enumeration (Journal ect.)' do
+        it 'show a fill in form if the item is an enumeration (Journal ect.) and choose a print copy' do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit 'requests/10574699'
-          expect(page).not_to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
           within(".user-supplied-input") do
             check('requestable__selected')
           end
           fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
+          choose('requestable__delivery_mode_10320354_print') # choose the print radio button
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
@@ -493,6 +499,33 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask")
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+        end
+
+        it 'show a fill in form if the item is an enumeration (Journal ect.) and choose a electronic copy' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Mefisto : rivista di medicina, filosofia, storia", "PhotoItemPublisher" => "", "ISSN" => nil, "CallNumber" => "R131.A1 M38", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/10574699", "PhotoJournalYear" => "2017", "PhotoJournalVolume" => "ABC ZZZ",
+                                       "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1028553183", "DocumentType" => "Article", "Location" => "Firestone Library", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          visit 'requests/10574699'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
+          within(".user-supplied-input") do
+            check('requestable__selected')
+          end
+          fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
+          choose('requestable__delivery_mode_10320354_edd') # choose the print radio button
+          fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
         # TODO: once Marquad in library use is available again it should show pickup at marquand also
@@ -582,9 +615,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows a non circulating item with not item data to be digitized' do
-          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
-          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
-          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -605,9 +635,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows an etas item to be digitized' do
-          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
-          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
-          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -740,24 +767,56 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
-        it 'disallows access to a record that has no item data' do
+        it 'allows access to a record that has no item data' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Maryland", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "An act to secure fair elections in Maryland", "PhotoItemPublisher" => "n.p.", "ISSN" => nil, "CallNumber" => "P94.849.036.15", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/3018567", "PhotoJournalYear" => "", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "27412908", "DocumentType" => "Book", "Location" => "Forrestal Annex - Princeton Collection", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
           visit "/requests/#{no_items_id}"
-          expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          # stub illiad
+          expect(page).to have_button('Request Selected Items')
+          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          fill_in "requestable_user_supplied_enum_3334792", with: "ABC ZZZ"
+          fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
+          check "requestable__selected"
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
-        it 'disallows access an on_shelf record that has no item data' do
+        it 'allows access an recap record that has no item data to be digitized' do
           visit "/requests/#{on_shelf_no_items_id}"
-          expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).to have_button('Request Selected Items')
+          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          fill_in "requestable_user_supplied_enum_341", with: "ABC ZZZ"
+          within("#request_user_supplied_341") do
+            fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
+            check "requestable__selected"
+          end
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("ReCAP Non-Barcoded Request.")
+          expect(email.to).to eq(["recapproblems@princeton.edu"])
+          expect(email.cc).to be_nil
+          expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to eq([])
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
         it 'allows digitizing, but not pick up of on on_shelf record' do
-          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
-          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
-          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Chekhov, Anton Pavlovich", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Pʹesy Пьесы", "PhotoItemPublisher" => "Moskva: Letniĭ sad", "ISSN" => nil, "CallNumber" => "PG3455 .A2 2015", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9770811", "PhotoJournalYear" => "2015", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "964907363", "DocumentType" => "Book", "Location" => "Firestone Library", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
@@ -829,11 +888,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to request a digital copy from Lewis' do
-          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
-          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
-          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Alexakis, Spyros", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "The decomposition of global conformal invariants", "PhotoItemPublisher" => "Princeton: Princeton University Press", "ISSN" => nil, "CallNumber" => "QA646 .A44 2012", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/7053307", "PhotoJournalYear" => "2012", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "757838203", "DocumentType" => "Book", "Location" => "Lewis Library", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
@@ -881,12 +937,30 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Copy 3'
         end
 
-        it 'disallow filin forms' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
+        it 'allow fillin forms in digital only' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Mefisto : rivista di medicina, filosofia, storia", "PhotoItemPublisher" => "", "ISSN" => nil, "CallNumber" => "R131.A1 M38", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/10574699", "PhotoJournalYear" => "2017", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1028553183", "DocumentType" => "Article", "Location" => "Firestone Library", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+
           visit 'requests/10574699'
-          expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).to have_button('Request this Item')
+          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
+          within("#request_user_supplied_10320354") do
+            fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
+            check "requestable__selected"
+          end
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
         # TODO: once Marquad in library use is available again it should show pickup at marquand also
@@ -906,11 +980,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "shows items in the Architecture Library as available" do
-          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
-          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
-          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Steele, James", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory", "PhotoItemPublisher" => "New York, NY: The American University...", "ISSN" => nil, "CallNumber" => "NA1585.A23 S7 2020", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/11787671", "PhotoJournalYear" => "2020", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1137152638", "DocumentType" => "Book", "Location" => "Architecture Library - New Book Shelf", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
@@ -950,18 +1021,37 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
-        it 'disallows generic fill in requests enums from Annex or Firestone in mixed holding' do
+        it 'allows generic fill in requests enums from Annex or Firestone in mixed holding' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Birth control news", "PhotoItemPublisher" => "", "ISSN" => nil, "CallNumber" => "HQ766 .B53f", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/2286894", "PhotoJournalYear" => "1000", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "53175640", "DocumentType" => "Book", "Location" => "Forrestal Annex - Locked Books", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/2286894'
-          expect(page).not_to have_field 'requestable__selected', disabled: false
+          expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_selected_7484608', disabled: false
-          expect(page).not_to have_field 'requestable_user_supplied_enum_2576882'
+          expect(page).to have_field 'requestable_user_supplied_enum_2576882'
           expect(page).to have_content 'Electronic Delivery'
+
+          expect(page).to have_button('Request Selected Items')
+          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          fill_in "requestable_user_supplied_enum_2576882", with: "ABC ZZZ"
+          within("#request_user_supplied_2576882") do
+            fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
+            check "requestable__selected"
+          end
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
         it 'allows a non circulating item with not item data to be digitized' do
-          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
-          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
-          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)

@@ -20,7 +20,7 @@ module Requests
       def validate_selected(record, selected)
         return unless selected['selected'] == 'true'
         case selected["type"]
-        when 'digitize'
+        when 'digitize', "digitize_fill_in"
           validate_delivery_mode(record: record, selected: selected)
         when 'bd'
           validate_recall_or_bd(record, selected, pickup_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
@@ -55,7 +55,7 @@ module Requests
       end
 
       def validate_recap_no_items(record, selected)
-        return if selected['pickup'].present?
+        return if selected['pickup'].present? || selected['edd_art_title'].present?
 
         record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location for your selected ReCAP item', 'type' => 'pickup' } }
       end
@@ -67,7 +67,6 @@ module Requests
 
       def validate_delivery_mode(record:, selected:)
         item_id = selected['item_id']
-
         if selected["delivery_mode_#{item_id}"].nil?
           record.errors[:items] << { item_id => { 'text' => 'Please select a delivery type for your selected recap item', 'type' => 'options' } }
         else

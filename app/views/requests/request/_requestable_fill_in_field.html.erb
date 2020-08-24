@@ -2,7 +2,7 @@
   <td class='request--select'>
     <%= hidden_field_tag 'requestable[][selected]', false %>
     <%= check_box_tag "requestable[][selected]", true, false, class: 'request--select', aria: { label: "Volume not listed"} %>
-    <%= hidden_fields_holding requestable %>
+    <%= hidden_fields_item requestable %>
   </td>
   <td class='request--options' <%= 'colspan="2"'.html_safe unless table_sorter_present?(requestable_list) %>>
     <fieldset class="form-group">
@@ -18,8 +18,13 @@
      <td></td>
   <% end %>
   <td>
-    <%= show_service_options_fill_in requestable %>
-    <%= hidden_service_options_fill_in requestable %>
-    <%= pickup_choices_fill_in requestable, default_pickups %>
+    <% selected = !(requestable.fill_in_pickup? && requestable.fill_in_digitize?) %>
+    <% collapse = selected ? "" : "collapse"%>
+    <% if requestable.fill_in_pickup? %>
+      <%= render partial: 'requestable_delivery_option_pick_up', locals: { requestable: requestable, mfhd: @mfhd, default_pickups: default_pickups, request_context: @request.ctx, selected: selected, fill_in: true } %>
+    <% end %>
+    <% if requestable.fill_in_digitize? %>
+      <%= render partial: 'requestable_delivery_option_digitize', locals: { requestable: requestable, request_context: @request.ctx, collapse: collapse, selected: selected, type: 'digitize_fill_in', fill_in: true } %>
+    <% end %>
   </td>
 </tr>

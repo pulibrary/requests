@@ -38,7 +38,7 @@ module Requests
           "PhotoItemAuthor" => bib["author"]&.truncate(100), "PhotoArticleAuthor" => item["edd_author"]&.truncate(100), "PhotoJournalTitle" => bib["title"]&.truncate(255),
           "PhotoItemPublisher" => item["edd_publisher"]&.truncate(40), "ISSN" => bib["isbn"], "CallNumber" => item["edd_call_number"]&.truncate(255),
           "PhotoJournalInclusivePages" => pages&.truncate(30), "CitedIn" => "#{Requests.config[:pulsearch_base]}/catalog/#{bib['id']}", "PhotoJournalYear" => item["edd_date"],
-          "PhotoJournalVolume" => item["edd_volume_number"]&.truncate(30), "PhotoJournalIssue" => item["edd_issue"]&.truncate(30),
+          "PhotoJournalVolume" => volume_number(item), "PhotoJournalIssue" => item["edd_issue"]&.truncate(30),
           "ItemInfo3" => item["edd_volume_number"]&.truncate(255), "ItemInfo4" => item["edd_issue"]&.truncate(255),
           "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => item["edd_oclc_number"]&.truncate(32),
           "DocumentType" => genre, "Location" => item["edd_location"],
@@ -66,6 +66,13 @@ module Requests
       def validate_illiad_patron(patron)
         cleared = patron["Cleared"]
         cleared == "Yes"
+      end
+
+      def volume_number(item)
+        vol = []
+        vol << item["user_supplied_enum"] if item["user_supplied_enum"].present?
+        vol << item["edd_volume_number"] if item["edd_volume_number"].present?
+        vol.join(', ')&.truncate(30)
       end
   end
 end

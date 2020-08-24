@@ -27,3 +27,11 @@
     <%= render 'item_info' %>
   </td>
 </tr>
+
+<% if (@submission.items.first["pickup"].blank?) %>
+<tr>
+  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
+    <%= render 'item_info_digitize' %>
+  </td>
+</tr>
+<% end %>

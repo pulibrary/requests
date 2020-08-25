@@ -225,6 +225,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("ʻAwāṭif madfūnah")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'does display the online access message' do
@@ -260,6 +261,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Karşılaştırmalı mitoloji : Tolkien ne yaptı?")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows CAS patrons to request On-Order items' do
@@ -278,6 +280,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows CAS patrons to request a record that has no item data' do
@@ -317,6 +320,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'displays an ark link for a plum item' do
@@ -370,6 +374,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows patrons to request a Lewis recap item digitally' do
@@ -388,6 +393,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows patrons to request a Lewis' do
@@ -413,6 +419,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows patrons to request a on-order' do
@@ -485,6 +492,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         # TODO: once Marquad in library use is available again it should show pickup at marquand also
@@ -521,6 +529,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received")
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it "allows requests of recap pickup only items" do
@@ -538,6 +547,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received")
           expect(confirm_email.html_part.body.to_s).to have_content("Chernobyl : a 5-part miniseries")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows cas patrons to see aeon requests' do
@@ -778,6 +788,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it 'allows patrons to request a digital copy from Lewis' do

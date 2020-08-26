@@ -5,13 +5,14 @@
 
 module Requests
   class IlliadPatron < IlliadClient
-    attr_reader :netid, :patron_id, :patron
+    attr_reader :netid, :patron_id, :patron, :attributes
 
     def initialize(patron)
       super()
       @patron = patron
       @patron_id = patron['patron_id']
       @netid = patron['netid']
+      @attributes = illiad_patron_attributes
     end
 
     def illiad_patron
@@ -20,7 +21,7 @@ module Requests
 
     def create_illiad_patron
       return nil if patron.blank?
-      patron = post_json_response(url: 'ILLiadWebPlatform/Users', body: illiad_patron_attributes.to_json)
+      patron = post_json_response(url: 'ILLiadWebPlatform/Users', body: attributes.to_json)
       if patron.blank? && error.present? && error["ModelState"].present?
         patron = illiad_patron if error["ModelState"]["UserName"] == ["Username #{netid} already exists."]
       end

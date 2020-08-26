@@ -16,8 +16,10 @@ module Requests
       items = @submission.filter_items_by_service(@service_type)
       items.each do |item|
         item_status = handle_item(item: item)
-        item["transaction_number"] = item_status["TransactionNumber"].to_s
-        @sent << item_status unless item_status.blank?
+        if item_status.present?
+          item["transaction_number"] = item_status["TransactionNumber"].to_s
+          @sent << item_status unless item_status.blank?
+        end
       end
       return false if @errors.present?
     end
@@ -33,7 +35,7 @@ module Requests
       def handle_item(item:)
         client = IlliadTransactionClient.new(user: @submission.user, bib: @submission.bib, item: item)
         transaction = client.create_request
-        errors << ["Invalid Digitization requests"] if transaction.blank?
+        errors << { type: 'digitize', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "Invalid Illiad Patron" } if transaction.blank?
         transaction
       end
   end

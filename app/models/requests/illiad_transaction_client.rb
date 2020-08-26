@@ -5,7 +5,7 @@
 
 module Requests
   class IlliadTransactionClient < IlliadClient
-    attr_reader :user, :bib, :item, :note, :illiad_transaction_status
+    attr_reader :user, :bib, :item, :note, :illiad_transaction_status, :attributes
 
     def initialize(user:, bib:, item:)
       super()
@@ -14,6 +14,7 @@ module Requests
       @item = item
       @note = ["Digitization Request", item["edd_note"]].join(": ")&.truncate(4000)
       @illiad_transaction_status = "Awaiting Article Express Processing"
+      @attributes = map_metdata
     end
 
     def create_request
@@ -21,9 +22,8 @@ module Requests
       patron = patron_client.illiad_patron
       patron = patron_client.create_illiad_patron if patron.blank?
       return nil if patron.blank?
-      transaction = post_json_response(url: 'ILLiadWebPlatform/transaction', body: map_metdata)
-      # TODO: I can not create a note for the moment...
-      # transaction_note = post_json_response(url: "ILLiadWebPlatform/transaction/#{transaction['TransactionNumber']}/notes", body: "{ \"Note\" : \"#{note}\", \"NoteType\" : \"Staff\" }") if transaction.present?
+      Requests::RequestMailer.send("invalid_illiad_patron_email", patron_client.attributes, attributes).deliver_now unless validate_illiad_patron(patron)
+      transaction = post_json_response(url: 'ILLiadWebPlatform/transaction', body: attributes.to_json)
       post_json_response(url: "ILLiadWebPlatform/transaction/#{transaction['TransactionNumber']}/notes", body: "{ \"Note\" : \"#{note}\", \"NoteType\" : \"Staff\" }") if transaction.present?
       transaction
     end
@@ -31,7 +31,7 @@ module Requests
     private
 
       def map_metdata
-        resp = {
+        {
           "Username" => user["netid"], "TransactionStatus" => illiad_transaction_status,
           "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"),
           "WantedBy" => "Yes, until the semester's", # note creation fails if we use any other text value
@@ -44,7 +44,6 @@ module Requests
           "DocumentType" => genre, "Location" => item["edd_location"],
           "PhotoArticleTitle" => item["edd_art_title"]&.truncate(250)
         }
-        resp.to_json
       end
 
       def pages
@@ -62,6 +61,11 @@ module Requests
         else
           "Book"
         end
+      end
+
+      def validate_illiad_patron(patron)
+        cleared = patron["Cleared"]
+        cleared == "Yes"
       end
   end
 end

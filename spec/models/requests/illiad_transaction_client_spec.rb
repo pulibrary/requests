@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'net/ldap'
 
 describe Requests::IlliadTransactionClient, type: :controller do
   let(:user_info) do
@@ -38,6 +39,7 @@ describe Requests::IlliadTransactionClient, type: :controller do
   let(:responses) do
     {
       found: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"Yes","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
+      not_cleared: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"New","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
       not_found: '{"Message":"User abc123 was not found."}',
       note: '{ "Note" : "Digitization Request", "NoteType" : "Staff" }',
       note_created: '{"Message":"An error occurred adding note to transaction 1093946"}',
@@ -78,5 +80,39 @@ describe Requests::IlliadTransactionClient, type: :controller do
       transaction = illiad_transaction.create_request
       expect(transaction).to be_blank
     end
+
+    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable RSpec/AnyInstance
+    it "posts a transaction and also sends an email when the patron is not cleared" do
+      stub_request(:post, transaction_url)
+        .with(body: hash_including("Username" => "abc234", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "That One", "PhotoItemAuthor" => "Davis, Paul K.", "PhotoJournalTitle" => "100 decisive battles : from ancient times to the present", "PhotoItemPublisher" => "Santa Barbara, Calif: ABC-CLIO", "ISSN" => "9781576070758", "CallNumber" => "HF1131 .B485", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/3510207", "PhotoJournalVolume" => nil,
+                                   "PhotoJournalIssue" => nil, "ItemInfo3" => nil, "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1033410889", "DocumentType" => "Book", "PhotoArticleTitle" => nil))
+        .to_return(status: 200, body: responses[:transaction_created], headers: {})
+      stub_request(:post, transaction_note_url)
+        .with(body: hash_including("Note" => "Digitization Request: Customer note"))
+        .to_return(status: 200, body: responses[:note_created], headers: {})
+      ldap_data = [{ uid: ['abc234'], ou: ['Library - Information Technology'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], telephonenumber: ['123-456-7890'], sn: ['Doe'], givenname: ['Joe'], mail: ['joe@abc.com'], edupersonprimaryaffiliation: ['faculty'], pustatus: ['undergraduate'] }]
+      expect_any_instance_of(Net::LDAP).to receive(:search).with(filter: Net::LDAP::Filter.eq("uid", 'abc234')).and_return(ldap_data)
+      stub_request(:get, patron_url)
+        .to_return(status: 200, body: responses[:not_cleared], headers: {})
+      transaction = nil
+      expect { transaction = illiad_transaction.create_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.subject).to eq("Uncleared User Requesting Transaction")
+      ldap_data.each do |_key, value|
+        expect(email.html_part.body.to_s).to have_content(value)
+      end
+      requestable.each do |_key, value|
+        expect(email.html_part.body.to_s).to have_content(value)
+      end
+      expect(transaction).not_to be_blank
+      expect(transaction["Username"]).to eq('abc123')
+      expect(transaction["TransactionNumber"]).to eq(1_093_806)
+    end
+    # rubocop:enable RSpec/MultipleExpectations
+    # rubocop:enable RSpec/AnyInstance
   end
+end
+def format_label(label)
+  label
 end

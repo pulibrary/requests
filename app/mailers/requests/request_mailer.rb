@@ -251,6 +251,15 @@ module Requests
            subject: I18n.t('requests.error.service_error_subject'))
     end
 
+    def invalid_illiad_patron_email(user_attributes, transaction_attributes)
+      @user_attributes = user_attributes
+      @transaction_attributes = transaction_attributes
+      destination_email = I18n.t('requests.digitize.invalid_patron.email')
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: I18n.t('requests.digitize.invalid_patron.subject'))
+    end
+
     private
 
       def annexa_email_destinations(submission:)

@@ -9,6 +9,6 @@
 <% elsif requestable.request? %>
   <%= render partial: 'requestable_form_request', locals: { requestable: requestable, mfhd: mfhd, default_pickups: default_pickups, request_context: @request.ctx, single_item_request: @request.single_item_request? } %>
 <% end %>
-<% if requestable.online? %>
+<% if requestable.online? && requestable.urls.present? %>
   <%= render partial: "requestable_online_items", locals: { requestable: requestable, single_item_request: @request.single_item_request? } %>
 <% end %>

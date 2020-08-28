@@ -603,6 +603,43 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
           expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
         end
+
+        it 'allows an etas item to be digitized' do
+          patron_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent"
+          transaction_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction"
+          transaction_note_url = "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes"
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Edwards, Ruth Dudley", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "James Connolly", "PhotoItemPublisher" => "Dublin: Gill and Macmillan", "ISSN" => nil, "CallNumber" => "DA965.C7 E36 1981", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/162632", "PhotoJournalYear" => "1981", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "8391816", "DocumentType" => "Book", "Location" => "Online - HathiTrust Emergency Temporary Access", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          visit '/requests/162632'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access DA965.C7 E36 1981'
+          expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content 'Request submitted'
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("James Connolly")
+        end
+
+        it "Shows help me get it for recap etas" do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "7599", callNumber: "PJ3002 .S4", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101073604215"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Semitistik", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/7599'
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access PJ3002 .S4'
+          expect(page).not_to have_content I18n.t("requests.recap_edd.note_msg")
+          expect(page).to have_content 'Help Me Get It'
+          expect(page).not_to have_content 'On-Site'
+        end
       end
     end
 

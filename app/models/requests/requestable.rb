@@ -251,7 +251,7 @@ module Requests
 
     def online?
       return false unless location_valid?
-      location[:library][:code] == 'online'
+      location[:library][:code] == 'online' && (location["code"] != 'etas' || bib["location"].first.casecmp("recap").zero?)
     end
 
     def urls
@@ -323,7 +323,9 @@ module Requests
     end
 
     def open_libraries
-      ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
+      open = ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
+      open << "online" if location["code"] == "etas" && !bib["location"].first.casecmp('recap').zero?
+      open
     end
 
     def location_code
@@ -347,6 +349,7 @@ module Requests
     end
 
     def library_code
+      return bib["location"].first.downcase if location["code"] == "etas"
       return nil if location['library'].blank?
       location['library']['code']
     end

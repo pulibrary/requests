@@ -96,7 +96,7 @@ module Requests
       def calculate_recap_services
         return ['recap_no_items'] unless requestable.item_data?
         services = []
-        return services << 'ask_me' if requestable.scsb_in_library_use?
+        return services << 'ask_me' if requestable.scsb_in_library_use? || !requestable.circulates?
         # When campus services reopen to guests remove auth_user? check
         if auth_user?
           services << 'recap' unless requestable.in_library_use_only?

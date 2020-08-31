@@ -185,6 +185,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new
           stubbed_questions[:recap_edd?] = true
           stubbed_questions[:in_library_use_only?] = false
           stubbed_questions[:ask_me?] = true
+          stubbed_questions[:circulates?] = true
         end
         it "returns recap_edd in the services" do
           expect(router.calculate_services).to include('recap_edd')

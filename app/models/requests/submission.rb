@@ -110,11 +110,15 @@ module Requests
 
     private
 
+      # rubocop:disable Metrics/MethodLength
       def categorize_by_delivery_and_location(item)
-        if item["library_code"] == 'recap' && edd?(item)
-          item["type"] = "recap_edd"
+        if item["library_code"] == 'recap' && (item["type"] == "digitize_fill_in" || item["type"] == "recap_no_items")
+          item["type"] = "recap_no_items"
         elsif item["library_code"] == 'recap'
           item["type"] = "recap"
+          item["type"] += "_edd" if edd?(item)
+        elsif item["type"] == "paging"
+          item["type"] = "digitize" if edd?(item)
         elsif print?(item) && item["library_code"] == 'annexa'
           item["type"] = "annexa"
         elsif edd?(item) && item["library_code"].present?
@@ -124,8 +128,10 @@ module Requests
         end
         item
       end
+      # rubocop:enable Metrics/MethodLength
 
       def edd?(item)
+        # return false if item["type"] == "digitize_fill_in"
         delivery_mode = delivery_mode(item)
         delivery_mode.present? && delivery_mode == "edd"
       end

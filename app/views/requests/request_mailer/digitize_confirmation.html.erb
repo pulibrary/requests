@@ -15,11 +15,15 @@
 <tr class="bib-info">
   <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
     <%= render 'bib_info_patron' %>
+    <% if @submission.items.first["user_supplied_enum"].present? %>
+      <div style="font-weight:normal;font-size:12px;margin-top:18px;">User Supplied Enumeration</div>
+      <div class="large-print" style="font-size:20px;line-height:1.4;"><%= @submission.items.first["user_supplied_enum"] %></div>
+    <% end %>
   </td>
 </tr>
 
 <tr>
   <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
-    <%= render 'item_info_all' %>
+    <%= render 'item_info_digitize' %>
   </td>
 </tr>

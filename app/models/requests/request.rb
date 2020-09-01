@@ -101,7 +101,6 @@ module Requests
     end
 
     def fill_in_eligible(mfhd)
-      return false if user_barcode.blank?
       fill_in = false
       unless (sorted_requestable[mfhd].first.services & ["on_order", "online"]).present?
         if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }

@@ -33,9 +33,18 @@ module Requests
       (item_data? || !circulates?) && (on_shelf_edd? || recap_edd?) && !request_status?
     end
 
+    def fill_in_digitize?
+      !item_data? || digitize?
+    end
+
     def pick_up?
       return false if user_barcode.blank?
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !request?
+    end
+
+    def fill_in_pickup?
+      return false if user_barcode.blank?
+      !item_data? || pick_up?
     end
 
     def request?
@@ -352,6 +361,12 @@ module Requests
       return bib["location"].first.downcase if location["code"] == "etas"
       return nil if location['library'].blank?
       location['library']['code']
+    end
+
+    def create_fill_in_requestable
+      fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, user_barcode: user_barcode)
+      fill_in_req.services = services
+      fill_in_req
     end
 
     private

@@ -1,6 +1,7 @@
       <div>
-        <%= hidden_service_options requestable %>
-        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.item[:id]}]", 'print', selected, data: { target: "#fields-print__#{requestable.item['id']}" }, 'aria-controls' => "fields-print__#{requestable.item['id']}", class: 'control-label' %>
-        <%= label_tag "requestable[][delivery_mode_#{requestable.item[:id]}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.item[:id]}" %>
-        <%= pickup_choices requestable, default_pickups %>
+        <%= hidden_service_options requestable, fill_in: fill_in %>
+        <%= hidden_field_tag "requestable[][fill_in]", requestable.fill_in_pickup? %>
+        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", 'print', selected, data: { target: "#fields-print__#{requestable.preferred_request_id}" }, 'aria-controls' => "fields-print__#{requestable.preferred_request_id}", class: 'control-label' %>
+        <%= label_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}_print]", I18n.t("requests.recap.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.preferred_request_id}" %>
+        <%= pickup_choices requestable, default_pickups, !selected %>
       </div>

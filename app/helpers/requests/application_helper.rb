@@ -68,7 +68,8 @@ module Requests
       end
     end
 
-    def hidden_service_options(requestable)
+    def hidden_service_options(requestable, fill_in: false)
+      return hidden_service_options_fill_in(requestable) if fill_in
       hidden = output_request_input(requestable)
       return hidden if hidden.present?
 
@@ -137,13 +138,13 @@ module Requests
 
     # move this to requestable object
     # Default pickups should be available
-    def pickup_choices(requestable, default_pickups)
+    def pickup_choices(requestable, default_pickups, collapse = false)
       # temporary changes issue 438
       # return if requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
       return if requestable.charged? || requestable.services.empty? # requestable.pickup_locations.nil?
       # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
       class_list = "collapse request--print"
-      class_list += " show" if (['recap_edd', 'on_shelf_edd'] & requestable.services).blank?
+      class_list += " show" if (['recap_edd', 'on_shelf_edd'] & requestable.services).blank? & !collapse
       content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
         if requestable.pickup_locations.present?
           preferred_request_content_tag(requestable, requestable.pickup_locations)
@@ -232,7 +233,7 @@ module Requests
       hidden += hidden_field_tag "requestable[][call_number]", "", value: (requestable.holding.first[1]['call_number']).to_s, id: "requestable_call_number_#{request_id}" unless requestable.holding.first[1]["call_number"].nil?
       hidden += hidden_field_tag "requestable[][location_code]", "", value: requestable.item_location_code.to_s, id: "requestable_location_#{request_id}"
       hidden += if requestable.item?
-                  hidden_fields_for_item(item: requestable.item)
+                  hidden_fields_for_item(item: requestable.item, preferred_request_id: requestable.preferred_request_id)
                 else
                   hidden_field_tag("requestable[][item_id]", "", value: requestable.preferred_request_id, id: "requestable_item_id_#{requestable.preferred_request_id}")
                 end
@@ -470,13 +471,13 @@ module Requests
         end
       end
 
-      def hidden_fields_for_item(item:)
-        hidden = hidden_field_tag("requestable[][item_id]", "", value: item['id'].to_s, id: "requestable_item_id_#{item['id']}")
-        hidden += hidden_field_tag("requestable[][barcode]", "", value: item['barcode'].to_s, id: "requestable_barcode_#{item['id']}") unless item["barcode"].nil?
-        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum'].to_s, id: "requestable_enum_#{item['id']}") unless item["enum"].nil?
-        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{item['id']}") unless item["enumeration"].nil?
-        hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{item['id']}")
-        hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{item['id']}")
+      def hidden_fields_for_item(item:, preferred_request_id:)
+        hidden = hidden_field_tag("requestable[][item_id]", "", value: preferred_request_id.to_s, id: "requestable_item_id_#{preferred_request_id}")
+        hidden += hidden_field_tag("requestable[][barcode]", "", value: item['barcode'].to_s, id: "requestable_barcode_#{preferred_request_id}") unless item["barcode"].nil?
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enum"].nil?
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enumeration"].nil?
+        hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{preferred_request_id}")
+        hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{preferred_request_id}")
       end
 
       def hidden_fields_for_scsb(item:)

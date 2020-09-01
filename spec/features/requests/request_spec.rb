@@ -657,16 +657,23 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("James Connolly")
         end
 
-        it "Shows help me get it for recap etas" do
+        it "allows an Recap etas item to be digitized" do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: "", bibId: "7599", callNumber: "PJ3002 .S4", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101073604215"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Semitistik", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7599'
-          expect(page).not_to have_content 'Electronic Delivery'
-          expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access PJ3002 .S4'
-          expect(page).not_to have_content I18n.t("requests.recap_edd.note_msg")
-          expect(page).to have_content 'Help Me Get It'
-          expect(page).not_to have_content 'On-Site'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'ReCAP- HathiTrust Emergency Temporary Access ReCAP PJ3002 .S4'
+          expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
+          expect(page).not_to have_content 'If the specific volume does not appear in the list below, please enter it here:'
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+          expect(confirm_email.html_part.body.to_s).to have_content("Semitistik")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
         it "allows a columbia item that is not in hathi etas to be picked up or digitized" do

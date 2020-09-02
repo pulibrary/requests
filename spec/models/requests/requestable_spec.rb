@@ -863,7 +863,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#pickup_locations' do
       it 'has a single pickup location' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1029088")
-          .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
+          .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PK')
         expect(requestable.pick_up?).to be_falsey

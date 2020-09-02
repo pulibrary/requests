@@ -419,8 +419,7 @@ module Requests
             holding["etas_limited_access"] = false
           else
             access = hathi_etas_status(doc["other_id_s"].first)
-            columbia_access = access.select { |item| item["origin"] == "CUL" }.first
-            holding["etas_limited_access"] = columbia_access.present? && columbia_access["status"] == "DENY"
+            holding["etas_limited_access"] = access.select { |r| r["origin"] == "CUL" && r["status"] == "DENY" }.present?
           end
         end
       end

@@ -7,6 +7,7 @@ module Requests
     attr_reader :call_number
     attr_reader :title
     attr_reader :user_barcode
+    attr_reader :etas_limited_access
     attr_accessor :services
 
     delegate :pageable_loc?, to: :@pageable
@@ -23,6 +24,7 @@ module Requests
       @services = []
       @user_barcode = user_barcode
       @call_number = holding.first[1]['call_number_browse']
+      @etas_limited_access = holding.first[1]["etas_limited_access"]
       @title = bib[:title_citation_display]&.first
       @pageable = Pageable.new(call_number: call_number, location_code: location_code)
       @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location_code)
@@ -38,7 +40,7 @@ module Requests
     end
 
     def pick_up?
-      return false if user_barcode.blank?
+      return false if user_barcode.blank? || etas_limited_access
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !request?
     end
 

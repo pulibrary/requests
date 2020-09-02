@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
+describe Requests::Request, vcr: { cassette_name: 'request_models', record: :none } do
   context "with a bad system_id" do
     let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
@@ -1569,6 +1569,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
         .to_return(status: 200, body: scsb_availability_response)
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=5992543")
+        .to_return(status: 200, body: '[]')
     end
     describe '#requestable' do
       it 'has one requestable item' do
@@ -1618,6 +1620,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
         .to_return(status: 200, body: scsb_availability_response)
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=9488888")
+        .to_return(status: 200, body: '[]')
     end
     describe '#requestable' do
       it 'has one requestable item' do

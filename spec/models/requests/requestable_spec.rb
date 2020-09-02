@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :new_episodes } do
+describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :none } do
   context "Is a bibliographic record on the shelf" do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_on_shelf) }
@@ -834,6 +834,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
     describe '#pickup_locations' do
       it 'has a single pickup location' do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=5586863")
+          .to_return(status: 200, body: '[]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('QX')
       end
@@ -845,9 +847,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
     describe '#pickup_locations' do
       it 'has a single pickup location' do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=686331")
+          .to_return(status: 200, body: '[]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PJ')
         expect(requestable.item["use_statement"]).to eq('In Library Use')
+        expect(requestable.pick_up?).to be_truthy
       end
     end
   end
@@ -857,8 +862,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
     describe '#pickup_locations' do
       it 'has a single pickup location' do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1029088")
+          .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PK')
+        expect(requestable.pick_up?).to be_falsey
       end
     end
   end

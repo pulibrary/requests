@@ -667,6 +667,73 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Help Me Get It'
           expect(page).not_to have_content 'On-Site'
         end
+
+        it "allows a columbia item that is not in hathi etas to be picked up or digitized" do
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1000060")
+            .to_return(status: 200, body: '[]')
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "SCSB-2879197", callNumber: "PG3479.3.I84 Z778 1987g", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU01805363"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/SCSB-2879197'
+          expect(page).to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          choose('requestable__delivery_mode_4497908_print') # chooses 'print' radio button
+          expect(page).to have_content('Pick-up location: Firestone Circulation Desk')
+          expect(page).to have_content 'ReCAP PG3479.3.I84 Z778 1987g'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received. We will process the requests as soon as possible")
+          expect(confirm_email.html_part.body.to_s).to have_content("Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+        end
+
+        it "allows a columbia item that is open access to be picked up or digitized" do
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=3863391")
+            .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"3863391","status":"ALLOW","origin":"CUL"}]')
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "SCSB-4634001", callNumber: "4596 2907.88 1901", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU51481294"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Chong wen men shang shui ya men xian xing shui ze. 崇文門 商稅 衙門 現行 稅則.", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/SCSB-4634001'
+          expect(page).to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          choose('requestable__delivery_mode_6826565_print') # chooses 'print' radio button
+          expect(page).to have_content('Pick-up location: Firestone Circulation Desk')
+          expect(page).to have_content 'ReCAP 4596 2907.88 1901'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content(" Your request to pick this item up has been received. We will process the requests as soon as possible")
+          expect(confirm_email.html_part.body.to_s).to have_content("Chong wen men shang shui ya men xian xing shui ze")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+        end
+
+        it "allows a columbia item that is ETAS to only be digitized" do
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1000066")
+            .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"1000066","status":"DENY","origin":"CUL"}]')
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "SCSB-2879206", callNumber: "ML3477 .G74 1989g", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU61436348"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Let's face the music : the golden age of popular song", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests//SCSB-2879206'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          choose('requestable__delivery_mode_4497920_edd') # chooses 'edd' radio button
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect(page).to have_content 'ReCAP ML3477 .G74 1989g'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+          expect(confirm_email.html_part.body.to_s).to have_content("Let's face the music : the golden age of popular song")
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
+        end
       end
     end
 

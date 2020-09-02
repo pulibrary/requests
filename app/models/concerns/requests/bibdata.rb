@@ -28,6 +28,11 @@ module Requests
       parse_response(response)
     end
 
+    def hathi_etas_status(columbia_bib_id)
+      response = bibdata_conn.get "/hathi/access?bib_id=#{columbia_bib_id}"
+      parse_response(response)
+    end
+
     def bibdata_conn
       conn = Faraday.new(url: Requests.config[:bibdata_base]) do |faraday|
         faraday.request  :url_encoded # form-encode POST params

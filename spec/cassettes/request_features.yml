@@ -19719,4 +19719,57 @@ http_interactions:
         - HathiTrust Emergency Temporary Access"}]'
     http_version: null
   recorded_at: Thu, 27 Aug 2020 14:47:40 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/scsbcul.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Wed, 02 Sep 2020 13:57:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"8e4b40d47fc0a25ff7b4e02a5ee21c02"
+      X-Runtime:
+      - '0.016292'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - bc615e3b-63cb-4b9d-a683-972fa3903694
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"scsbcul","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
+        258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+    http_version: null
+  recorded_at: Wed, 02 Sep 2020 13:57:46 GMT
 recorded_with: VCR 5.1.0

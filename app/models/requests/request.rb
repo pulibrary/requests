@@ -37,6 +37,7 @@ module Requests
       ### These should be re-factored
       @doc = solr_doc(system_id)
       @holdings = JSON.parse(doc[:holdings_1display] || '{}')
+      include_etas_in_holdings(@holdings)
       @locations = load_locations
       @items = load_items
       @pickups = build_pickups
@@ -410,6 +411,18 @@ module Requests
 
       def item_current_location(item)
         item['temp_loc'] || item['location']
+      end
+
+      def include_etas_in_holdings(holdings)
+        holdings.each do |_key, holding|
+          if holding["location_code"] != "scsbcul"
+            holding["etas_limited_access"] = false
+          else
+            access = hathi_etas_status(doc["other_id_s"].first)
+            columbia_access = access.select { |item| item["origin"] == "CUL" }.first
+            holding["etas_limited_access"] = columbia_access.present? && columbia_access["status"] == "DENY"
+          end
+        end
       end
   end
 end

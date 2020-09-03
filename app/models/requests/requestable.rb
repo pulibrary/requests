@@ -62,6 +62,10 @@ module Requests
       ask_me? || (!available_for_digitizing? && !aeon?)
     end
 
+    def available_for_appointment?
+      !circulates? && !recap? && !charged? && !aeon?
+    end
+
     def will_submit_via_form?
       digitize? || pick_up? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
@@ -119,9 +123,7 @@ module Requests
 
     # Reading Room Request
     def aeon?
-      return true if location[:aeon_location] == true
-      return false if item.nil?
-      return true if item[:use_statement] == 'Supervised Use'
+      location[:aeon_location] == true || (item.present? && item[:use_statement] == 'Supervised Use')
     end
 
     # at an open location users may go to
@@ -187,8 +189,7 @@ module Requests
     end
 
     def use_restriction?
-      return false if item.nil?
-      scsb? && item[:use_statement].present?
+      scsb? && item.present? && item[:use_statement].present?
     end
 
     def in_process?
@@ -202,27 +203,23 @@ module Requests
     end
 
     def item?
-      item
+      item.present?
     end
 
     def item_data?
-      return false if item.nil?
-      item[:id].present?
+      item? && item[:id].present?
     end
 
     def temp_loc?
-      return false unless item?
-      item[:temp_loc].present?
+      item? && item[:temp_loc].present?
     end
 
     def on_reserve?
-      return false unless item?
-      item[:on_reserve] == 'Y'
+      item? && item[:on_reserve] == 'Y'
     end
 
     def inaccessible?
-      return false unless item?
-      item[:status] == 'Inaccessible'
+      item? && item[:status] == 'Inaccessible'
     end
 
     def traceable?
@@ -261,8 +258,7 @@ module Requests
     end
 
     def online?
-      return false unless location_valid?
-      location[:library][:code] == 'online' && (location["code"] != 'etas' || bib["location"].first.casecmp("recap").zero?)
+      location_valid? && location[:library][:code] == 'online' && (location["code"] != 'etas' || bib["location"].first.casecmp("recap").zero?)
     end
 
     def urls
@@ -271,23 +267,19 @@ module Requests
     end
 
     def charged?
-      return false unless item?
-      unavailable_statuses.include?(item[:status]) || unavailable_statuses.include?(item[:scsb_status])
+      item? && (unavailable_statuses.include?(item[:status]) || unavailable_statuses.include?(item[:scsb_status]))
     end
 
     def hold_request?
-      return false unless item?
-      item[:status] == 'Hold Request'
+      item? && item[:status] == 'Hold Request'
     end
 
     def enumerated?
-      return false unless item?
-      item[:enum].present?
+      item? && item[:enum].present?
     end
 
     def pageable?
-      return nill if charged?
-      pageable_loc?
+      !charged? && pageable_loc?
     end
 
     def pickup_locations
@@ -371,6 +363,11 @@ module Requests
       fill_in_req
     end
 
+    def libcal_url
+      return unless available_for_appointment?
+      "https://libcal.princeton.edu/seats?lid=#{code_to_libcal[location['library']['code']]}"
+    end
+
     private
 
       def scsb_locations
@@ -391,6 +388,13 @@ module Requests
 
       def location_valid?
         location.key?(:library) && location[:library].key?(:code)
+      end
+
+      def code_to_libcal
+        {
+          "firestone" => "1919", "engineering" => "7832", "lewis" => "3508", "stokes" => "2353", "eastasian" => "10604",
+          "mendel" => "10653", "architecture" => "10655", "marquand" => "10656"
+        }
       end
   end
 end

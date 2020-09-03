@@ -179,6 +179,8 @@ en:
       brief_msg: "Trace a Missing Item. Library staff will search for this item and contact you with an outcome."
       email_conf_msg: "Our Circulation Department will search for the material you cannot find. You will receive an email notification if the item is found or if the search is unsucessful. If possible please request the material in question via Borrow Direct or Interlibrary Loan."
       access_msg: 'Access Users are not eligible for trace requests.'
+    appointment:
+      request_label: "make an appointment"
     account:
       netid_login_msg: "Princeton faculty, staff, and students log in with NetID"
       barcode_login_msg: "Log in with a barcode (affiliates, family members, guest borrowers, etc)"

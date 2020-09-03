@@ -27,6 +27,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(stackmap_url).to include("#{requestable.bib[:id]}/stackmap?cn=#{call_number}&loc=#{location_code}")
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
   context "Is a bibliographic record from the thesis collection" do
@@ -67,6 +73,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Mudd Manuscript Library')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
       end
     end
   end
@@ -111,6 +123,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Special Collections - Numismatics Collection')
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
   context 'A requestable item with a missing status' do
@@ -153,6 +171,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
           expect(requestable.first.location_label).to eq('Firestone Library')
         end
       end
+
+      describe '#libcal_url' do
+        it "is available for appointment" do
+          expect(requestable.first.libcal_url).to be_nil
+        end
+      end
     end
   end
 
@@ -180,6 +204,13 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable_on_hold.location_label).to eq('ReCAP')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable_on_hold.libcal_url).to be_nil
+        expect(requestable_not_on_hold.libcal_url).to be_nil
       end
     end
   end
@@ -225,6 +256,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
           expect(requestable.first.location_label).to eq('Firestone Library')
         end
       end
+
+      describe '#libcal_url' do
+        it "is available for appointment" do
+          expect(requestable.first.libcal_url).to be_nil
+        end
+      end
     end
   end
 
@@ -251,6 +288,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Firestone Library')
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to eq("https://libcal.princeton.edu/seats?lid=1919")
+      end
+    end
   end
 
   context 'A circulating item' do
@@ -274,6 +317,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Firestone Library')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
       end
     end
   end
@@ -306,6 +355,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('East Asian Library - Rare Books')
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
   context 'A requestable serial item that has volume and item data in its openurl' do
@@ -326,6 +381,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
       end
     end
   end
@@ -356,6 +417,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Special Collections - Rare Books')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
       end
     end
   end
@@ -389,6 +456,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Special Collections - Rare Books')
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
   context 'A MUDD holding' do
@@ -403,7 +476,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
 
-  context 'A Marquand holding' do
+  context 'A Recap Marquand holding' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:aeon_marquand) }
     let(:requestable) { request.requestable.first } # assume only one requestable
@@ -421,14 +494,43 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('ReCAP - Marquand Library (Rare) use only')
       end
     end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
-  context 'A Recap Marquand holding' do
-    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" } }, user_barcode: '111222333') }
+  context 'A Non-Recap Marquand holding' do
+    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } }, user_barcode: '111222333') }
 
     describe '#site' do
       it 'returns a Marquand site param' do
         expect(requestable.in_library_use_only?).to be_truthy
+      end
+    end
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.available_for_appointment?).to be_truthy
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to eq('https://libcal.princeton.edu/seats?lid=10656')
       end
     end
   end
@@ -520,6 +622,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
   context 'A requestable item from Forrestal Annex with no item data' do
@@ -536,6 +644,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Forrestal Annex - Princeton Collection')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
       end
     end
   end
@@ -556,6 +670,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Firestone Library')
       end
     end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
+      end
+    end
   end
 
   context 'Pending Order materials' do
@@ -572,6 +692,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('ReCAP - Marquand Library use only')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.libcal_url).to be_nil
       end
     end
   end

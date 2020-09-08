@@ -310,6 +310,8 @@ module Requests
     def status_label(requestable)
       if requestable.charged?
         content_tag(:span, 'Not Available', class: "availability--label badge-alert badge badge-danger")
+      elsif !requestable.circulates?
+        content_tag(:span, 'On-site access', class: "availability--label badge badge-success")
       else
         content_tag(:span, 'Available', class: "availability--label badge badge-success")
       end

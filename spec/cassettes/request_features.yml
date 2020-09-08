@@ -19772,4 +19772,168 @@ http_interactions:
         258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
     http_version: null
   recorded_at: Wed, 02 Sep 2020 13:57:46 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/5636487/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Thu, 03 Sep 2020 16:50:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - b6051b4e-5d6e-45c9-a715-b412ce6fe791
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"46472385197cc1a5983c5d3515990e2d"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.013072'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.6
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjU2MzY0ODciLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIkpvaG5zLCBDYXRoZXJpbmUiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiSm9obnMsIENhdGhlcmluZSJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIkpvaG5zLCBDYXRoZXJpbmVcIn0iLCJhdXRob3JfcyI6WyJKb2hucywgQ2F0aGVyaW5lIl0sIm1hcmNfcmVsYXRvcl9kaXNwbGF5IjpbIkF1dGhvciJdLCJ0aXRsZV9kaXNwbGF5IjoiRG9ncyA6IGhpc3RvcnksIG15dGgsIGFydCAvIENhdGhlcmluZSBKb2hucy4iLCJ0aXRsZV90IjpbIkRvZ3MgOiBoaXN0b3J5LCBteXRoLCBhcnQgLyBDYXRoZXJpbmUgSm9obnMuIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiRG9ncyA6IGhpc3RvcnksIG15dGgsIGFydCJdLCJjb21waWxlZF9jcmVhdGVkX3QiOlsiRG9ncyA6IGhpc3RvcnksIG15dGgsIGFydCAvIENhdGhlcmluZSBKb2hucy4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJDYW1icmlkZ2UsIE1hc3MuIDogSGFydmFyZCBVbml2ZXJzaXR5IFByZXNzLCAyMDA4LiJdLCJwdWJfY3JlYXRlZF9zIjpbIkNhbWJyaWRnZSwgTWFzcy4gOiBIYXJ2YXJkIFVuaXZlcnNpdHkgUHJlc3MsIDIwMDguIl0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5IjpbIkNhbWJyaWRnZSwgTWFzczogSGFydmFyZCBVbml2ZXJzaXR5IFByZXNzIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMjAwOCJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDA4LCJjYXRhbG9nZWRfdGR0IjoiMjAwOS0wMS0yM1QxMjozNzo1MFoiLCJmb3JtYXQiOlsiQm9vayJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjIwOCBwLiA6IGlsbC4gKGNoaWVmbHkgY29sLikgOyAyMyBjbS4iXSwiZGVzY3JpcHRpb25fdCI6WyIyMDggcC4gOiBpbGwuIChjaGllZmx5IGNvbC4pIDsgMjMgY20uIl0sIm51bWJlcl9vZl9wYWdlc19jaXRhdGlvbl9kaXNwbGF5IjpbIjIwOCBwLiJdLCJiaWJfcmVmX25vdGVzX2Rpc3BsYXkiOlsiSW5jbHVkZXMgYmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMgKHAuIDIwMSkgYW5kIGluZGV4LiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJlbmciXSwibGFuZ3VhZ2VfaWFuYV9zIjpbImVuIl0sImxjX3N1YmplY3RfZGlzcGxheSI6WyJEb2dzIGluIGFydCIsIkRvZ3PigJRIaXN0b3J5IiwiRG9nc+KAlE15dGhvbG9neSJdLCJzdWJqZWN0X2ZhY2V0IjpbIkRvZ3MgaW4gYXJ0IiwiRG9nc+KAlEhpc3RvcnkiLCJEb2dz4oCUTXl0aG9sb2d5Il0sImlzYm5fZGlzcGxheSI6WyI5NzgwNjc0MDMwOTMwIChhbGsuIHBhcGVyKSIsIjA2NzQwMzA5MzEgKGFsay4gcGFwZXIpIl0sImxjY25fZGlzcGxheSI6WyIgIDIwMDgwMTIwMzMiXSwibGNjbl9zIjpbIjIwMDgwMTIwMzMiXSwiaXNibl9zIjpbIjk3ODA2NzQwMzA5MzAiXSwib2NsY19zIjpbIjIxMzQ5NTMxOSJdLCJvdGhlcl92ZXJzaW9uX3MiOlsib2NuMjEzNDk1MzE5IiwiOTc4MDY3NDAzMDkzMCIsIm9jbjI2MDUxODA3NyJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjU3NDQyNDhcIjp7XCJsb2NhdGlvblwiOlwiTWFycXVhbmQgTGlicmFyeVwiLFwibGlicmFyeVwiOlwiTWFycXVhbmQgTGlicmFyeVwiLFwibG9jYXRpb25fY29kZVwiOlwic2FcIixcImNhbGxfbnVtYmVyXCI6XCJONzY2OC5ENiBKNjQgMjAwOFwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJONzY2OC5ENiBKNjQgMjAwOFwifX0iLCJsb2NhdGlvbl9jb2RlX3MiOlsic2EiXSwibG9jYXRpb24iOlsiTWFycXVhbmQgTGlicmFyeSJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIk1hcnF1YW5kIExpYnJhcnkiXSwiYWR2YW5jZWRfbG9jYXRpb25fcyI6WyJzYSIsIk1hcnF1YW5kIExpYnJhcnkiXSwibmFtZV90aXRsZV9icm93c2VfcyI6WyJKb2hucywgQ2F0aGVyaW5lLiBEb2dzIl0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiTjc2NjguRDYgSjY0IDIwMDgiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiTjc2NjguRDYgSjY0IDIwMDgiXSwiX3ZlcnNpb25fIjoxNjYxOTk4NzEzMzY4NzM5ODQwLCJ0aW1lc3RhbXAiOiIyMDIwLTAzLTIzVDIzOjE4OjA2Ljc3OFoifQ==
+    http_version: null
+  recorded_at: Thu, 03 Sep 2020 16:50:17 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=5636487
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Thu, 03 Sep 2020 16:50:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"4eb6e5c02b7cafb3e0fd7a07597f9a2d"
+      X-Runtime:
+      - '0.118035'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - ff04972f-b3de-409c-ad2d-7e607bba406b
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '{"5744248":{"more_items":false,"location":"sa","copy_number":1,"item_id":5214248,"on_reserve":"N","patron_group_charged":null,"status":"On-Site","label":"Marquand
+        Library"}}'
+    http_version: null
+  recorded_at: Thu, 03 Sep 2020 16:50:17 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5744248
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Thu, 03 Sep 2020 16:50:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"5065cc40e1312b43b9ae0859624a3da0"
+      X-Runtime:
+      - '0.063785'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 294e6b4d-ac12-4552-b783-4e526f398f19
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101072349515","id":5214248,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site","on_reserve":"N","item_type":"Closed","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Marquand
+        Library"}]'
+    http_version: null
+  recorded_at: Thu, 03 Sep 2020 16:50:18 GMT
 recorded_with: VCR 5.1.0

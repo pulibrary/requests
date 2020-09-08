@@ -718,7 +718,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: "", bibId: "SCSB-2879206", callNumber: "ML3477 .G74 1989g", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU61436348"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Let's face the music : the golden age of popular song", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests//SCSB-2879206'
+          visit '/requests/SCSB-2879206'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
           choose('requestable__delivery_mode_4497920_edd') # chooses 'edd' radio button
@@ -733,6 +733,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("ABC")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
+        end
+
+        it "Shows a Appointment link for a marquand in library use item" do
+          visit '/requests/5636487'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_link('make an appointment', href: "https://libcal.princeton.edu/seats?lid=10656")
         end
       end
     end

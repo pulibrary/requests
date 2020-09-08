@@ -1,3 +1,6 @@
+<% if requestable.available_for_appointment? %>
+  <%= render partial: "requestable_make_appointment", locals: { requestable: requestable, single_item_request: @request.single_item_request? } %>
+<% end %>
 <% if requestable.help_me? %>
   <%= render partial: 'requestable_form_help_me', locals: { requestable: requestable } %>
 <% elsif requestable.digitize? && requestable.pick_up? %>

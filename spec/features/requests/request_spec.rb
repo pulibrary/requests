@@ -669,7 +669,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "allows a columbia item that is not in hathi etas to be picked up or digitized" do
-          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1000060")
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=21154437")
             .to_return(status: 200, body: '[]')
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: "", bibId: "SCSB-2879197", callNumber: "PG3479.3.I84 Z778 1987g", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU01805363"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva", username: "jstudent", volume: ""))
@@ -691,7 +691,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "allows a columbia item that is open access to be picked up or digitized" do
-          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=3863391")
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=502557695")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"3863391","status":"ALLOW","origin":"CUL"}]')
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: "", bibId: "SCSB-4634001", callNumber: "4596 2907.88 1901", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU51481294"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Chong wen men shang shui ya men xian xing shui ze. 崇文門 商稅 衙門 現行 稅則.", username: "jstudent", volume: ""))
@@ -713,7 +713,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "allows a columbia item that is ETAS to only be digitized" do
-          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1000066")
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=19774500")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"1000066","status":"DENY","origin":"CUL"}]')
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: "", bibId: "SCSB-2879206", callNumber: "ML3477 .G74 1989g", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU61436348"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Let's face the music : the golden age of popular song", username: "jstudent", volume: ""))

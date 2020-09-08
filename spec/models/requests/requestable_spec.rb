@@ -834,7 +834,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
     describe '#pickup_locations' do
       it 'has a single pickup location' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=5586863")
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
           .to_return(status: 200, body: '[]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('QX')
@@ -847,7 +847,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
     describe '#pickup_locations' do
       it 'has a single pickup location' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=686331")
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=29065769")
           .to_return(status: 200, body: '[]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PJ')
@@ -862,7 +862,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
     describe '#pickup_locations' do
       it 'has a single pickup location' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=1029088")
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=17322905")
           .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PK')

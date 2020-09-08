@@ -28,8 +28,8 @@ module Requests
       parse_response(response)
     end
 
-    def hathi_etas_status(columbia_bib_id)
-      response = bibdata_conn.get "/hathi/access?bib_id=#{columbia_bib_id}"
+    def hathi_etas_status(oclc_id)
+      response = bibdata_conn.get "/hathi/access?oclc=#{oclc_id}"
       parse_response(response)
     end
 

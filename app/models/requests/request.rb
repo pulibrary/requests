@@ -418,8 +418,8 @@ module Requests
           if holding["location_code"] != "scsbcul"
             holding["etas_limited_access"] = false
           else
-            access = hathi_etas_status(doc["other_id_s"].first)
-            holding["etas_limited_access"] = access.select { |r| r["origin"] == "CUL" && r["status"] == "DENY" }.present?
+            access = hathi_etas_status(doc["oclc_s"].first)
+            holding["etas_limited_access"] = access.select { |r| r["status"] == "DENY" }.present?
           end
         end
       end

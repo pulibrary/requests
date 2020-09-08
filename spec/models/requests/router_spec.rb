@@ -32,7 +32,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
           .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
           .to_return(status: 200, body: scsb_availability_response)
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=667075")
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=18321158")
           .to_return(status: 200, body: '[{"id":null,"oclc_number":"18321158","bibid":"667075","status":"DENY","origin":"CUL"}]')
       end
 

@@ -1569,7 +1569,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
         .to_return(status: 200, body: scsb_availability_response)
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=5992543")
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=65339789")
         .to_return(status: 200, body: '[]')
     end
     describe '#requestable' do
@@ -1620,7 +1620,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
         .to_return(status: 200, body: scsb_availability_response)
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?bib_id=9488888")
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=748826840")
         .to_return(status: 200, body: '[]')
     end
     describe '#requestable' do

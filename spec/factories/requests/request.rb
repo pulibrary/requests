@@ -298,6 +298,14 @@ FactoryGirl.define do
     initialize_with { new(system_id: system_id, user: user, source: source, user_barcode: user_barcode) }
   end
 
+  factory :request_scsb_no_oclc, class: 'Requests::Request' do
+    system_id 'SCSB-5396104'
+    source 'pulsearch'
+    user { FactoryGirl.build(:user) }
+    user_barcode '111222333'
+    initialize_with { new(system_id: system_id, user: user, source: source, user_barcode: user_barcode) }
+  end
+
   factory :mfhd_with_no_circ_and_circ_item, class: 'Requests::Request' do
     system_id 257_717
     mfhd_id '282033'

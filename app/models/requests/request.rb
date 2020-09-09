@@ -415,7 +415,7 @@ module Requests
 
       def include_etas_in_holdings(holdings)
         holdings.each do |_key, holding|
-          if holding["location_code"] != "scsbcul"
+          if holding["location_code"] != "scsbcul" || !doc.key?("oclc_s")
             holding["etas_limited_access"] = false
           else
             access = hathi_etas_status(doc["oclc_s"].first)

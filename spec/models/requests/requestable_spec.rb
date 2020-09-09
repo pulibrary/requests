@@ -966,7 +966,28 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('QX')
       end
     end
+
+    describe '#etas_limited_access' do
+      it 'is not restricted' do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
+          .to_return(status: 200, body: '[]')
+        expect(requestable.etas_limited_access). to be_falsey
+      end
+    end
   end
+
+  context 'A SCSB Item with no oclc number' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_scsb_no_oclc) }
+    let(:requestable) { request.requestable.first }
+
+    describe '#etas_limited_access' do
+      it 'is not restricted' do
+        expect(requestable.etas_limited_access). to be_falsey
+      end
+    end
+  end
+
   context 'A SCSB Item from a location with a pickup restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_ar) }

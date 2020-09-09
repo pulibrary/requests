@@ -646,6 +646,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access DA965.C7 E36 1981'
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
+          expect(page).not_to have_content('make an appointment')
           fill_in "Article/Chapter Title", with: "ABC"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(page).to have_content 'Request submitted'

@@ -40,7 +40,7 @@ module Requests
     end
 
     def pick_up?
-      return false if user_barcode.blank? || etas_limited_access
+      return false if user_barcode.blank? || etas?
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !request?
     end
 
@@ -63,7 +63,7 @@ module Requests
     end
 
     def available_for_appointment?
-      !circulates? && !recap? && !charged? && !aeon?
+      !circulates? && !recap? && !charged? && !aeon? && !etas?
     end
 
     def will_submit_via_form?
@@ -112,13 +112,11 @@ module Requests
 
     # non voyager options
     def thesis?
-      return false unless holding.key? "thesis"
-      holding["thesis"][:location_code] == 'mudd'
+      holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd'
     end
 
     def numismatics?
-      return false unless holding.key? "numismatics"
-      holding["numismatics"][:location_code] == 'num'
+      holding.key?("numismatics") && holding["numismatics"][:location_code] == 'num'
     end
 
     # Reading Room Request
@@ -133,7 +131,7 @@ module Requests
 
     def recap?
       return false unless location_valid?
-      location[:library][:code] == 'recap'
+      library_code == 'recap'
     end
 
     def recap_edd?
@@ -258,7 +256,7 @@ module Requests
     end
 
     def online?
-      location_valid? && location[:library][:code] == 'online' && (location["code"] != 'etas' || bib["location"].first.casecmp("recap").zero?)
+      location_valid? && location[:library][:code] == 'online' && (!etas? || bib["location"].first.casecmp("recap").zero?)
     end
 
     def urls
@@ -327,7 +325,7 @@ module Requests
 
     def open_libraries
       open = ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
-      open << "online" if location["code"] == "etas" && !bib["location"].first.casecmp('recap').zero?
+      open << "online" if etas? && !bib["location"].first.casecmp('recap').zero?
       open
     end
 
@@ -366,6 +364,10 @@ module Requests
     def libcal_url
       return unless available_for_appointment?
       "https://libcal.princeton.edu/seats?lid=#{code_to_libcal[location['library']['code']]}"
+    end
+
+    def etas?
+      etas_limited_access || location[:code] == 'etas' || location[:code] == 'etasrcp'
     end
 
     private

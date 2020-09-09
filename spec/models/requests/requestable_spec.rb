@@ -1088,7 +1088,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     context "item_data and recap" do
       let(:item_data) { { id: '123' } }
       let(:services) { ['recap'] }
-      let(:location) { { circulates: true, library: { code: 'recap' } } }
+      let(:location) { { circulates: true, library: { code: 'recap' } }.with_indifferent_access }
       it 'does submit via form' do
         expect(requestable.will_submit_via_form?).to be_truthy
       end
@@ -1105,7 +1105,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     context "item_data and recap_edd" do
       let(:item_data) { { id: '123' } }
       let(:services) { ['recap_edd'] }
-      let(:location) { { circulates: true, library: { code: 'recap' } } }
+      let(:location) { { circulates: true, library: { code: 'recap' } }.with_indifferent_access }
       it 'does submit via form' do
         expect(requestable.will_submit_via_form?).to be_truthy
       end

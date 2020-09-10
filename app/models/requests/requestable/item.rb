@@ -9,6 +9,10 @@ class Requests::Requestable
       __getobj__['pickup_location_code'] || ""
     end
 
+    def item_type
+      __getobj__['item_type'] || ""
+    end
+
     class NullItem
       def present?
         false
@@ -23,6 +27,10 @@ class Requests::Requestable
       end
 
       def pickup_location_code
+        ""
+      end
+
+      def item_type
         ""
       end
     end

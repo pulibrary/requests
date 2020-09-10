@@ -640,6 +640,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.item_data?).to be false
         expect(requestable.pickup_location_id).to eq ""
         expect(requestable.pickup_location_code).to eq ""
+        expect(requestable.item_type).to eq ""
       end
     end
 

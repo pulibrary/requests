@@ -77,11 +77,7 @@ module Requests
       digitize? || pick_up? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
-    delegate :pickup_location_id, :pickup_location_code, to: :item
-
-    # def item_type
-    #   item? && item['item_type'].present? ? item['item_type'] : ""
-    # end
+    delegate :pickup_location_id, :pickup_location_code, :item_type, to: :item
 
     # item type on the item level
     def item_type_non_circulate?

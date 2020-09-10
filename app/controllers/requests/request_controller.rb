@@ -119,8 +119,8 @@ module Requests
         # TODO: Why does this go into an infinite loop
         # logger.info "#Request Submission - #{submission.as_json}"
         logger.info "Request Sent"
-        return if submission.service_types.include? 'bd' # emails already sent
-        submission.service_types.each do |type|
+        service_types = submission.service_types.reject { |type| ['bd', 'ill'].include? type } # emails already sent for ill and bd
+        service_types.each do |type|
           Requests::RequestMailer.send("#{type}_email", submission).deliver_now unless type == 'recap_edd'
           Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_shelf', 'on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl', 'paging', 'recap', 'recap_edd', 'recap_in_library', 'annexa', 'digitize', 'digitize_fill_in'].include? type
           Requests::RequestMailer.send("scsb_recall_email", submission).deliver_now if type == 'recall' && submission.scsb?

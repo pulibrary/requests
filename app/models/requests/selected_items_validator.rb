@@ -22,7 +22,7 @@ module Requests
         case selected["type"]
         when 'digitize', "digitize_fill_in"
           validate_delivery_mode(record: record, selected: selected)
-        when 'bd'
+        when 'bd', 'ill'
           validate_recall_or_bd(record, selected, pick_up_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
         when 'recap_no_items'
           validate_recap_no_items(record, selected)

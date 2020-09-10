@@ -999,7 +999,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.pickup_locations.size).to eq(1)
         expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PJ')
         expect(requestable.item["use_statement"]).to eq('In Library Use')
-        expect(requestable.pick_up?).to be_truthy
+        expect(requestable.pick_up?).to be_falsey
       end
     end
   end

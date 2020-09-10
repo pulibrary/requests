@@ -94,15 +94,20 @@ module Requests
       end
 
       def calculate_recap_services
-        return ['recap_no_items'] unless requestable.item_data?
-        services = []
-        return services << 'ask_me' if requestable.scsb_in_library_use? || (!requestable.circulates? && !requestable.recap_edd?)
-        # When campus services reopen to guests remove auth_user? check
-        if auth_user?
+        if !requestable.item_data?
+          ['recap_no_items']
+        elsif requestable.scsb_in_library_use?
+          ['recap_in_library']
+        elsif !requestable.circulates? && !requestable.recap_edd?
+          ['ask_me']
+        elsif auth_user?
+          services = []
           services << 'recap' if !requestable.in_library_use_only? && requestable.circulates?
           services << 'recap_edd' if requestable.recap_edd?
+          services
+        else
+          []
         end
-        services
       end
 
       def calculate_unavailable_services

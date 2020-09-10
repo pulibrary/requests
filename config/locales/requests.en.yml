@@ -181,6 +181,10 @@ en:
       access_msg: 'Access Users are not eligible for trace requests.'
     appointment:
       request_label: "make an appointment"
+    recap_in_library:
+      delivery_label: "Available for In Library Use"
+      brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
+      email_subject: "Patron Initiated Catalog Request In Library Confirmation"
     account:
       netid_login_msg: "Princeton faculty, staff, and students log in with NetID"
       barcode_login_msg: "Log in with a barcode (affiliates, family members, guest borrowers, etc)"

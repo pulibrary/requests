@@ -226,6 +226,27 @@ module Requests
            subject: subject)
     end
 
+    def recap_in_library_email(submission)
+      # only send an email to the libraries if this is a barcode user request
+      return unless submission.access_only?
+      @submission = submission
+      destination_email = I18n.t('requests.recap.guest_email_destination')
+      subject = I18n.t('requests.recap_guest.email_subject')
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject)
+    end
+
+    def recap_in_library_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      subject = I18n.t('requests.recap_in_library.email_subject')
+      subject = I18n.t('requests.recap_guest.email_subject') if @submission.access_only?
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject)
+    end
+
     def recap_edd_confirmation(submission)
       @submission = submission
       destination_email = @submission.email

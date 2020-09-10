@@ -32,7 +32,7 @@ module Requests
     end
 
     def digitize?
-      (item_data? || !circulates?) && (on_shelf_edd? || recap_edd?) && !request_status?
+      (item_data? || !circulates?) && (on_shelf_edd? || (recap_edd? && !scsb_in_library_use?)) && !request_status?
     end
 
     def fill_in_digitize?
@@ -41,7 +41,7 @@ module Requests
 
     def pick_up?
       return false if user_barcode.blank? || etas?
-      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !request?
+      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request?
     end
 
     def fill_in_pickup?
@@ -67,7 +67,7 @@ module Requests
     end
 
     def will_submit_via_form?
-      digitize? || pick_up? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
+      digitize? || pick_up? || scsb_in_library_use? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
     # pickup location id on the item level
@@ -363,7 +363,7 @@ module Requests
 
     def libcal_url
       return unless available_for_appointment?
-      "https://libcal.princeton.edu/seats?lid=#{code_to_libcal[location['library']['code']]}"
+      Libcal.url(location['library']['code'])
     end
 
     def etas?
@@ -390,13 +390,6 @@ module Requests
 
       def location_valid?
         location.key?(:library) && location[:library].key?(:code)
-      end
-
-      def code_to_libcal
-        {
-          "firestone" => "1919", "engineering" => "7832", "lewis" => "3508", "stokes" => "2353", "eastasian" => "10604",
-          "mendel" => "10653", "architecture" => "10655", "marquand" => "10656"
-        }
       end
   end
 end

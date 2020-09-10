@@ -749,6 +749,24 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_link('make an appointment', href: "https://libcal.princeton.edu/seats?lid=10656")
         end
+
+        it "shows in library use option for SCSB ReCAP items in Firestone" do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit 'requests/SCSB-8953469'
+          expect(page).not_to have_content 'Help Me Get It'
+          expect(page).to have_content 'Available for In Library'
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Book your appointment")
+          expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+        end
       end
     end
 

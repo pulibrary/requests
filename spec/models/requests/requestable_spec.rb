@@ -638,6 +638,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe 'requestable with no items ' do
       it 'does not have item data' do
         expect(requestable.item_data?).to be false
+        expect(requestable.pickup_location_id).to eq ""
+        expect(requestable.pickup_location_code).to eq ""
       end
     end
 

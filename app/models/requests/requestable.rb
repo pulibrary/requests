@@ -22,10 +22,10 @@ module Requests
     # @param location [Hash] The has for a bib data holding (https://bibdata.princeton.edu/locations/holding_locations)
     # @param user_barcode [String] the barcode of the current user
     def initialize(bib:, holding: nil, item: nil, location: nil, user_barcode:)
-      @bib = bib # hash of bibliographic data
-      @holding = holding # hash of holding data
-      @item = item # hash of item data
-      @location = location # hash of location matrix data
+      @bib = bib
+      @holding = holding
+      @item = item.present? ? Item.new(item) : Item::NullItem.new
+      @location = location
       @services = []
       @user_barcode = user_barcode
       @call_number = holding.first[1]['call_number_browse']
@@ -77,19 +77,11 @@ module Requests
       digitize? || pick_up? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
-    # pickup location id on the item level
-    def pickup_location_id
-      item? && item['pickup_location_id'].present? ? item['pickup_location_id'] : ""
-    end
+    delegate :pickup_location_id, :pickup_location_code, to: :item
 
-    # pickup_location_code on the item level
-    def pickup_location_code
-      item? && item['pickup_location_code'].present? ? item['pickup_location_code'] : ""
-    end
-
-    def item_type
-      item? && item['item_type'].present? ? item['item_type'] : ""
-    end
+    # def item_type
+    #   item? && item['item_type'].present? ? item['item_type'] : ""
+    # end
 
     # item type on the item level
     def item_type_non_circulate?

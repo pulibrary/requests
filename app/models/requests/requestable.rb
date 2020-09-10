@@ -77,7 +77,27 @@ module Requests
       digitize? || pick_up? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
-    delegate :pickup_location_id, :pickup_location_code, :item_type, to: :item
+    delegate :pickup_location_id, :pickup_location_code, :item_type, :enum_value, :cron_value, :item_data?, to: :item
+
+    def temp_loc?
+      item? && item[:temp_loc].present?
+    end
+
+    def on_reserve?
+      item? && item[:on_reserve] == 'Y'
+    end
+
+    def inaccessible?
+      item? && item[:status] == 'Inaccessible'
+    end
+
+    def hold_request?
+      item? && item[:status] == 'Hold Request'
+    end
+
+    def enumerated?
+      item? && item[:enum].present?
+    end
 
     # item type on the item level
     def item_type_non_circulate?
@@ -93,16 +113,6 @@ module Requests
       else
         holding.first[0]
       end
-    end
-
-    def enum_value
-      return "" unless item?
-      item['enum']
-    end
-
-    def cron_value
-      return "" unless item?
-      item['chron']
     end
 
     # non voyager options
@@ -199,22 +209,6 @@ module Requests
       item.present?
     end
 
-    def item_data?
-      item? && item[:id].present?
-    end
-
-    def temp_loc?
-      item? && item[:temp_loc].present?
-    end
-
-    def on_reserve?
-      item? && item[:on_reserve] == 'Y'
-    end
-
-    def inaccessible?
-      item? && item[:status] == 'Inaccessible'
-    end
-
     def traceable?
       services.include?('trace')
     end
@@ -261,14 +255,6 @@ module Requests
 
     def charged?
       item? && (unavailable_statuses.include?(item[:status]) || unavailable_statuses.include?(item[:scsb_status]))
-    end
-
-    def hold_request?
-      item? && item[:status] == 'Hold Request'
-    end
-
-    def enumerated?
-      item? && item[:enum].present?
     end
 
     def pageable?

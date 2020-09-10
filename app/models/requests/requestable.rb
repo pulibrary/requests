@@ -16,6 +16,11 @@ module Requests
 
     include Requests::Aeon
 
+    # @param bib [Hash] Solr Document of the Top level Request
+    # @param holding [Hash] Bib Data information on where the item is held (Marc liberation) parsed solr_document[holdings_1display] json
+    # @param item [Hash] Item level data from bib data (https://bibdata.princeton.edu/availability?id= or mfhd=)
+    # @param location [Hash] The has for a bib data holding (https://bibdata.princeton.edu/locations/holding_locations)
+    # @param user_barcode [String] the barcode of the current user
     def initialize(bib:, holding: nil, item: nil, location: nil, user_barcode:)
       @bib = bib # hash of bibliographic data
       @holding = holding # hash of holding data
@@ -30,6 +35,8 @@ module Requests
       @mappable = Requests::Mapable.new(bib_id: bib[:id], holdings: holding, location_code: location_code)
       @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
+
+    ############# Drives what happens on the form #######################
 
     def digitize?
       (item_data? || !circulates?) && (on_shelf_edd? || recap_edd?) && !request_status?

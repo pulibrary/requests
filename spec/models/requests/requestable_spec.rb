@@ -275,26 +275,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:no_circ_pickup_location_id) { requestable.item['pickup_location_id'] }
     let(:no_circ_pickup_location_code) { requestable.item['pickup_location_code'] }
 
-    describe '#item_type_non_circulate' do
-      it 'returns the item type from voyager' do
+    # rubocop:disable RSpec/MultipleExpectations
+    describe 'getters' do
+      it 'gets values' do
+        expect(requestable.item_data?).to be true
         expect(requestable.item_type_non_circulate?).to be true
         expect(requestable.pickup_location_id).to eq 299
         expect(requestable.pickup_location_code).to eq 'fcirc'
-      end
-    end
-
-    describe '#location_label' do
-      it 'has a location label' do
+        expect(requestable.enum_value).to eq 'vol.22'
+        expect(requestable.cron_value).to eq '1996'
         expect(requestable.location_label).to eq('Firestone Library')
-      end
-    end
-
-    describe '#libcal_url' do
-      it "is available for appointment" do
         expect(requestable.libcal_url).to eq("https://libcal.princeton.edu/seats?lid=1919")
       end
     end
   end
+  # rubocop:enable RSpec/MultipleExpectations
 
   context 'A circulating item' do
     let(:user) { FactoryGirl.build(:user) }
@@ -635,11 +630,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:request) { FactoryGirl.build(:request_no_items) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
+    # rubocop:disable RSpec/MultipleExpectations
     describe 'requestable with no items ' do
       it 'does not have item data' do
         expect(requestable.item_data?).to be false
+        expect(requestable.pickup_location_id).to eq ""
+        expect(requestable.pickup_location_code).to eq ""
+        expect(requestable.item_type).to eq ""
+        expect(requestable.enum_value).to eq ""
+        expect(requestable.cron_value).to eq ""
       end
     end
+    # rubocop:enable RSpec/MultipleExpectations
 
     describe '#location_label' do
       it 'has a location label' do

@@ -20020,4 +20020,57 @@ http_interactions:
         Princeton, NJ 08544","phone_number":" 609-258-3200","contact_email":" englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":false,"digital_location":true}]}'
     http_version: null
   recorded_at: Wed, 09 Sep 2020 19:27:46 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/scsbnypl.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Thu, 10 Sep 2020 18:40:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"71ea0ce588b79c44fd40885cf6f53647"
+      X-Runtime:
+      - '0.010294'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 9e3e5ff8-1196-4f94-9edd-e609f36c8c5a
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"scsbnypl","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
+        258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+    http_version: null
+  recorded_at: Thu, 10 Sep 2020 18:40:15 GMT
 recorded_with: VCR 5.1.0

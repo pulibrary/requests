@@ -1,0 +1,14 @@
+<% if @submission.access_only? %>
+<%= I18n.t('requests.recap_guest.email_subject') %>
+
+<%= I18n.t('requests.recap_guest.email_conf_msg') %>
+<% else %>
+<%= I18n.t('requests.recap.email_subject') %>
+
+<%= I18n.t('requests.recap.email_conf_msg') %>
+<% end %>
+
+<%= render 'patron_info' %>
+   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pickup_location["code"]) } %>
+<%= render 'bib_info' %>
+<%= render 'item_info' %>

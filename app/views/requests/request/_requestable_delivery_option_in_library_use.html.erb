@@ -1,0 +1,17 @@
+      <div>
+        <%= hidden_service_options requestable, fill_in: requestable.fill_in_pickup? %>
+        <%= hidden_field_tag "requestable[][fill_in]", requestable.fill_in_pickup? %>
+        <%= radio_button_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}]", 'print', selected, data: { target: "#fields-print__#{requestable.preferred_request_id}" }, 'aria-controls' => "fields-print__#{requestable.preferred_request_id}", class: 'control-label' %>
+        <%= label_tag "requestable[][delivery_mode_#{requestable.preferred_request_id}_print]", I18n.t("requests.recap_in_library.delivery_label"), class: 'control-label', id: "requestable__type_recap_label_#{requestable.preferred_request_id}" %>
+        <div id="fields-print__<%=requestable.preferred_request_id%>" class="<%= pickup_classlist(requestable, !selected) %>" >
+          <ul class="service-list">
+            <li><%= I18n.t("requests.recap_in_library.brief_msg") %> </li>
+          </ul>
+          <div id="fields-print__<%=requestable.preferred_request_id%>_card" class="card card-body bg-light">
+            <% loc = pickup_locations(requestable, default_pickups)[0] %>
+            <%= hidden_field_tag "requestable[][pickup]", "", value: (loc[:gfa_pickup]).to_s, class: 'single-pickup-hidden' %>
+            <%= label_tag "requestable[][pickup]", "Pick-up location: #{loc[:label]}", class: 'single-pickup' %>
+            <p>After notification of your item's arrival at <%= pickup_locations(requestable, default_pickups)[0][:label] %>, you will need to <a href="<%=requestable.libcal_url %>">make a study-browse appointment</a> to come into the Library to view it
+          </div>
+        </div>
+      </div>

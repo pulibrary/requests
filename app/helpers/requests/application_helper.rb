@@ -136,21 +136,17 @@ module Requests
       end
     end
 
+    def pickup_classlist(requestable, collapse)
+      class_list = "collapse request--print"
+      class_list += " show" if !requestable.digitize? && !collapse
+      class_list
+    end
+
     # move this to requestable object
     # Default pickups should be available
     def pickup_choices(requestable, default_pickups, collapse = false)
-      # temporary changes issue 438
-      # return if requestable.charged? || (requestable.services.include? 'on_shelf') || requestable.services.empty? # requestable.pickup_locations.nil?
-      return if requestable.charged? || requestable.services.empty? # requestable.pickup_locations.nil?
-      # id = requestable.item? ? requestable.item['id'] : requestable.holding['id']
-      class_list = "collapse request--print"
-      class_list += " show" if (['recap_edd', 'on_shelf_edd'] & requestable.services).blank? & !collapse
-      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: class_list) do
-        if requestable.pickup_locations.present?
-          preferred_request_content_tag(requestable, requestable.pickup_locations)
-        else
-          preferred_request_content_tag(requestable, default_pickups)
-        end
+      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: pickup_classlist(requestable, collapse)) do
+        preferred_request_content_tag(requestable, requestable.pickup_locations || default_pickups)
       end
     end
 
@@ -196,25 +192,6 @@ module Requests
       #   end
       # end
       # locs
-    end
-
-    def pickup_choices_fill_in(requestable, default_pickups)
-      locs = available_pickups(requestable, default_pickups)
-      # temporary only deliver to holding library or firestone
-      # locs = []
-      # if requestable.pickup_locations.nil? || requestable.location['delivery_locations'].empty?
-      #   locs = available_pickups(requestable, default_pickups)
-      # else
-      #   requestable.pickup_locations.each do |location|
-      #     locs << { label: location[:label], gfa_pickup: location[:gfa_pickup] }
-      #   end
-      # end
-      if locs.size > 1
-        select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pickup_placeholder")
-      else
-        hidden = hidden_field_tag "requestable[][pickup]", "", value: (locs[0][:gfa_pickup]).to_s
-        hidden + locs[0][:label]
-      end
     end
 
     def hidden_fields_mfhd(mfhd)
@@ -444,21 +421,18 @@ module Requests
       def display_requestable_list(services)
         return if services.blank? # || services.include?('recap_edd') # || services.include?(recap)
         content_tag(:ul, class: "service-list") do
-          services.each do |service|
-            next if service == "on_shelf_edd" || service == "recap_edd"
+          filtered_services = services.reject { |val| val == "on_shelf_edd" || val == "recap_edd" }
+          filtered_services.each do |service|
             brief_msg = I18n.t("requests.#{service}.brief_msg")
             concat content_tag(:li, brief_msg.html_safe, class: "service-item")
           end
         end
       end
 
-      def display_on_shelf(_requestable, _mfhd_id)
+      def display_on_shelf(requestable, _mfhd_id)
         content_tag(:div) do
+          display_requestable_list(requestable.services)
           # temporary changes issue 438
-          brief_msg = I18n.t("requests.on_shelf.brief_msg")
-          content_tag(:ul, class: "service-list") do
-            concat content_tag(:li, brief_msg, class: 'service-item')
-          end
           # concat link_to 'Where to find it', requestable.map_url(mfhd_id)
           # concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?
         end

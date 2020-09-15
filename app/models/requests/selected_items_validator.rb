@@ -26,7 +26,7 @@ module Requests
           validate_recall_or_bd(record, selected, pickup_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
         when 'recap_no_items'
           validate_recap_no_items(record, selected)
-        when 'recap', 'recap_edd'
+        when 'recap', 'recap_edd', 'recap_in_library'
           validate_recap(record, selected)
         when 'on_shelf', 'recall'
           validate_recall_or_bd(record, selected)

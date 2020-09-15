@@ -386,9 +386,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307?mfhd=6962326'
-          # TODO: once Lewis opens, need to choose edd
-          # choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
-          expect(page).not_to have_content 'Pick-up'
+          choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
+          expect(page).to have_content 'Pick-up location: Lewis Library'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(page).to have_content 'Request submitted'
@@ -533,7 +532,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
-          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Article/Chapter Title (Required)'
@@ -752,7 +751,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it "shows in library use option for SCSB ReCAP items in Firestone" do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
+            .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
           visit 'requests/SCSB-8953469'
           expect(page).not_to have_content 'Help Me Get It'
@@ -764,6 +763,25 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
           expect(confirm_email.html_part.body.to_s).to have_content("Book your appointment")
           expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+        end
+
+        it 'Shows marqaund recap item as an EDD or In Library Use' do
+          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+            .with(body: hash_including(author: "", bibId: "11780965", callNumber: "N6923.B257 H84 2020", chapterTitle: "", deliveryLocation: "PJ", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101106347378"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/11780965?mfhd=11443781'
+          choose('requestable__delivery_mode_8298341_in_library') # chooses 'in_library' radio button
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Available for In Library'
+          expect(page).to have_content('Pick-up location: Marquand Library')
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).to have_content("Book your appointment")
+          expect(confirm_email.html_part.body.to_s).to have_content("Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
@@ -974,7 +992,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307?mfhd=6962326'
-          expect(page).not_to have_content 'Pick-up'
+          expect(page).to have_content 'Available for In Library Use'
+          choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(page).to have_content 'Request submitted'
@@ -996,7 +1015,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/7053307'
-          expect(page).not_to have_content 'Pick-up location: Lewis Library'
+          expect(page).to have_content 'Pick-up location: Lewis Library'
+          choose('requestable__delivery_mode_6322174_edd') # chooses 'edd'
           within('#request_6322174') do
             fill_in "Article/Chapter Title", with: "ABC"
           end
@@ -1068,7 +1088,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
-          # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Article/Chapter Title (Required)'

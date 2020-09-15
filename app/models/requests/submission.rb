@@ -117,6 +117,7 @@ module Requests
         elsif item["library_code"] == 'recap'
           item["type"] = "recap"
           item["type"] += "_edd" if edd?(item)
+          item["type"] += "_in_library" if in_library?(item)
         elsif item["type"] == "paging"
           item["type"] = "digitize" if edd?(item)
         elsif print?(item) && item["library_code"] == 'annexa'
@@ -134,6 +135,12 @@ module Requests
         # return false if item["type"] == "digitize_fill_in"
         delivery_mode = delivery_mode(item)
         delivery_mode.present? && delivery_mode == "edd"
+      end
+
+      def in_library?(item)
+        # return false if item["type"] == "digitize_fill_in"
+        delivery_mode = delivery_mode(item)
+        delivery_mode.present? && delivery_mode == "in_library"
       end
 
       def print?(item)

@@ -70,12 +70,13 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
     end
 
     describe "calculate_services" do
+      let(:item) { {} }
       let(:stubbed_questions) do
         { voyager_managed?: true, online?: false, in_process?: false,
           charged?: false, on_order?: false, aeon?: false,
           preservation?: false, annexa?: false, annexb?: false,
           plasma?: false, lewis?: false, recap?: false,
-          item_data?: false, recap_edd?: false, pageable?: false, scsb_in_library_use?: false }
+          item_data?: false, recap_edd?: false, pageable?: false, scsb_in_library_use?: false, item: item }
       end
       let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
 
@@ -205,6 +206,37 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
           it "returns recap_no_items in the services" do
             expect(router.calculate_services).to eq(['recap_no_items'])
+          end
+        end
+
+        context "scsb_in_library_use" do
+          before do
+            stubbed_questions[:scsb_in_library_use?] = true
+          end
+          it "returns recap_in_library in the services" do
+            expect(router.calculate_services).to eq(['recap_in_library'])
+          end
+        end
+
+        context "scsb_in_library_use AR collection" do
+          let(:item) { { collection_code: 'AR' } }
+          before do
+            stubbed_questions[:scsb_in_library_use?] = true
+            stubbed_questions[:recap_edd?] = false
+          end
+          it "returns recap_in_library in the services" do
+            expect(router.calculate_services).to eq(["recap_in_library"])
+          end
+        end
+
+        context "scsb_in_library_use MR collection" do
+          let(:item) { { collection_code: 'MR' } }
+          before do
+            stubbed_questions[:scsb_in_library_use?] = true
+            stubbed_questions[:recap_edd?] = false
+          end
+          it "returns recap_in_library in the services" do
+            expect(router.calculate_services).to eq(["ask_me"])
           end
         end
       end

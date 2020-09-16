@@ -96,9 +96,9 @@ module Requests
       def calculate_recap_services
         if !requestable.item_data?
           ['recap_no_items']
-        elsif requestable.scsb_in_library_use?
+        elsif requestable.scsb_in_library_use? && requestable.item[:collection_code] != "MR"
           ['recap_in_library']
-        elsif !requestable.circulates? && !requestable.recap_edd?
+        elsif (!requestable.circulates? || requestable.scsb_in_library_use?) && !requestable.recap_edd?
           ['ask_me']
         elsif auth_user?
           services = []

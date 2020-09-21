@@ -4,29 +4,10 @@
   </td>
 </tr>
 
-<tr>
-  <td colspan="2" style="padding: 18px;">
-    <p class="body-content" style="margin-bottom:0;">
-      <% if @submission.access_only? %>
-      <%= I18n.t('requests.recap_guest.email_conf_msg') %>
-      <% else %>
-      <%= I18n.t('requests.recap.email_conf_msg') %>
-      <% end %>
-    </p>
-  </td>
-</tr>
-<tr>
-  <td colspan="2" style="padding: 18px;">
-    <p class="body-content" style="margin-bottom:0;">
-      Once you receive confirmation via email that your book is available, please utilize our study-browse service to make an appointment.  During your appointment you will retrieve the item from the Library's circulation desk and view it in the Library.
-    </p>
-  </td>
-</tr>
-
 <tr class="pikcup-info">
   <td colspan="2" style="padding: 18px;">
   <div style="text-align:center;margin:18px 0;">
-    <p class="body-content">If you are requesting to view books at a Library, please be sure that you have access to the building. If you are unsure if your card will be active for a building you plan to visit, access can be requested through your academic department.</p>
+    <p class="body-content">You will be notified via email when your item is available.  At that point, please utilize our study-browse service to make a reservation to come into the Library.  Please proceed to the circulation desk to retrieve the item and view it in your assigned seat.</p>
   </div>
    <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pickup_location["code"]) } %>
   </td>

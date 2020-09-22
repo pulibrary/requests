@@ -2,9 +2,10 @@ require 'spec_helper'
 require 'net/ldap'
 
 describe Requests::IlliadTransactionClient, type: :controller do
+  let(:valid_patron) { { "netid" => "abc234" }.with_indifferent_access }
   let(:user_info) do
-    # TODO: net id will not come from the form we need to add it to the form
-    { "user_name" => "Jane Smith", "user_last_name" => " Smith", "user_barcode" => "999999", "patron_id" => "99999", "patron_group" => "staff", "email" => "smith.jane@princeton.edu", "source" => "pulsearch", "netid" => "abc234" }
+    user = instance_double(User, guest?: false, uid: 'foo')
+    Requests::Patron.new(user: user, session: {}, patron: valid_patron)
   end
   let(:requestable) do
     [{ "selected" => "true", "bibid" => "10921934", "mfhd" => "10637717", "call_number" => "HF1131 .B485",
@@ -52,7 +53,7 @@ describe Requests::IlliadTransactionClient, type: :controller do
 
   describe '#create_request' do
     let(:user_url) { "#{illiad_transaction.illiad_api_base}/ILLiadWebPlatform/Users" }
-    let(:patron_url) { "#{user_url}/#{user_info['netid']}" }
+    let(:patron_url) { "#{user_url}/#{user_info.netid}" }
     let(:transaction_url) { "#{illiad_transaction.illiad_api_base}/ILLiadWebPlatform/transaction" }
     let(:transaction_note_url) { "#{illiad_transaction.illiad_api_base}/ILLiadWebPlatform/transaction/1093806/notes" }
 

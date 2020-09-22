@@ -66,7 +66,7 @@ module Requests
           bib = bib.permit(params["bib"].keys) if bib.respond_to?(:permit)
           request = params["request"]
           request = request.permit(params["request"].keys) if request.respond_to?(:permit)
-          errors << reponse_json["response"].merge(bib).merge(request)
+          errors << reponse_json["response"].merge(bib).merge(request.to_h)
         end
         status
       end

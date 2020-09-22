@@ -18,13 +18,14 @@ module Requests
 
       @user = current_or_guest_user
 
-      @patron = patron(user: @user)
-      user_barcode = @patron[:barcode] if @patron.present?
+      @patron = Patron.new(user: @user, session: session)
+      flash.now[:error] = @patron.errors.join(", ") if @patron.errors.present?
+
       @mode = mode
       @title = "Request ID: #{system_id}"
 
       # needed to see if we can suppress login for this item
-      @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, user: @user, user_barcode: user_barcode)
+      @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, patron: @patron)
       ### redirect to Aeon non-voyager items or single Aeon requestable
       if @request.thesis? || @request.numismatics?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
@@ -55,7 +56,7 @@ module Requests
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit
-      @submission = Requests::Submission.new(sanitize_submission(params), patron(user: current_or_guest_user))
+      @submission = Requests::Submission.new(sanitize_submission(params), Patron.new(user: current_or_guest_user, session: session))
       respond_to do |format|
         format.js do
           valid = @submission.valid?
@@ -97,18 +98,6 @@ module Requests
 
     private
 
-      def patron(user:)
-        if !user.guest?
-          patron = current_patron(user.uid)
-          flash.now[:error] = "A problem occurred looking up your library account." if patron == false
-          # Uncomment to fake being a non barcoded user
-          # patron[:barcode] = nil
-          patron
-        elsif session["email"].present? && session["user_name"].present?
-          access_patron(session["email"], session["user_name"])
-        end
-      end
-
       def mode
         return 'standard' if params[:mode].nil?
         sanitize(params[:mode])
@@ -117,40 +106,6 @@ module Requests
       # trusted params
       def request_params
         params.permit(:id, :system_id, :source, :mfhd, :user_name, :email, :loc_code, :user, :requestable, :request, :barcode, :isbns).permit!
-      end
-
-      def current_patron(uid)
-        return false unless uid
-        begin
-          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{uid}"
-        rescue Faraday::Error::ConnectionFailed
-          logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
-          return false
-        end
-        return false if patron_errors?(patron_record: patron_record, uid: uid)
-        JSON.parse(patron_record.body).with_indifferent_access
-      end
-
-      def patron_errors?(patron_record:, uid:)
-        return false if patron_record.status == 200
-        if patron_record.status == 403
-          logger.info('403 Not Authorized to Connect to Patron Data Service at '\
-                      "#{Requests.config[:bibdata_base]}/patron/#{uid}")
-        elsif patron_record.status == 404
-          logger.info("404 Patron #{uid} cannot be found in the Patron Data Service.")
-        elsif patron_record.status == 500
-          logger.info('Error Patron Data Service.')
-        end
-        true
-      end
-
-      def access_patron(email, user_name)
-        {
-          last_name: user_name,
-          active_email: email,
-          barcode: 'ACCESS',
-          barcode_status: 0
-        }.with_indifferent_access
       end
 
       def sanitize_submission(params)

@@ -20,14 +20,15 @@ module Requests
     # @param holding [Hash] Bib Data information on where the item is held (Marc liberation) parsed solr_document[holdings_1display] json
     # @param item [Hash] Item level data from bib data (https://bibdata.princeton.edu/availability?id= or mfhd=)
     # @param location [Hash] The has for a bib data holding (https://bibdata.princeton.edu/locations/holding_locations)
-    # @param user_barcode [String] the barcode of the current user
-    def initialize(bib:, holding: nil, item: nil, location: nil, user_barcode:)
+    # @param patron [Patron] the patron information about the current user
+    def initialize(bib:, holding: nil, item: nil, location: nil, patron:)
       @bib = bib
       @holding = holding
       @item = item.present? ? Item.new(item) : Item::NullItem.new
       @location = location
       @services = []
-      @user_barcode = user_barcode
+      @patron = patron
+      @user_barcode = patron.barcode
       @call_number = holding.first[1]['call_number_browse']
       @etas_limited_access = holding.first[1]["etas_limited_access"]
       @title = bib[:title_citation_display]&.first
@@ -77,9 +78,9 @@ module Requests
       digitize? || pick_up? || scsb_in_library_use? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
-    delegate :pickup_location_id, :pickup_location_code, :item_type, :enum_value, :cron_value, :item_data?, 
-              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?, 
-              :id, :use_statement, :collection_code, :missing?, :charged?, to: :item
+    delegate :pickup_location_id, :pickup_location_code, :item_type, :enum_value, :cron_value, :item_data?,
+             :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
+             :id, :use_statement, :collection_code, :missing?, :charged?, to: :item
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
     ## when one is needed. Primarily for non-barcoded Annex items.
@@ -305,7 +306,7 @@ module Requests
     end
 
     def create_fill_in_requestable
-      fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, user_barcode: user_barcode)
+      fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, patron: @patron)
       fill_in_req.services = services
       fill_in_req
     end

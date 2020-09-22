@@ -4,12 +4,11 @@ require 'faraday'
 module Requests
   class Request
     attr_accessor :email
-    attr_accessor :user_barcode
     attr_accessor :user_name
     attr_reader :system_id
     attr_reader :source
     attr_reader :mfhd
-    attr_reader :user
+    attr_reader :patron
     attr_reader :doc
     attr_reader :requestable
     attr_reader :requestable_unrouted
@@ -26,13 +25,12 @@ module Requests
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
     # @option opts [Fixnum] :mfhd voyager id
-    # @option opts [User] :user current user object
+    # @option opts [Patron] :patron current Patron object
     # @option opts [String] :source represents system that directed user to request form. i.e.
-    def initialize(system_id:, mfhd: nil, user: nil, source: nil, user_barcode:)
+    def initialize(system_id:, mfhd: nil, patron: nil, source: nil)
       @system_id = system_id
       @mfhd = mfhd
-      @user = user
-      @user_barcode = user_barcode
+      @patron = patron
       @source = source
       ### These should be re-factored
       @doc = solr_doc(system_id)
@@ -45,6 +43,8 @@ module Requests
       @requestable = route_requests(@requestable_unrouted)
       @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
     end
+
+    delegate :user, to: :patron
 
     def scsb?
       return true if /^SCSB-\d+/ =~ system_id.to_s
@@ -133,7 +133,7 @@ module Requests
       return [] if requestable_items.blank?
       any_loanable = any_loanable_copies?
       requestable_items.each do |requestable|
-        router = Requests::Router.new(requestable: requestable, user: @user, any_loanable: any_loanable)
+        router = Requests::Router.new(requestable: requestable, user: patron.user, any_loanable: any_loanable)
         routed_requests << router.routed_request
       end
       routed_requests
@@ -362,7 +362,7 @@ module Requests
           holding: params[:holding],
           item: params[:item],
           location: params[:location],
-          user_barcode: user_barcode
+          patron: patron
         }
       end
 

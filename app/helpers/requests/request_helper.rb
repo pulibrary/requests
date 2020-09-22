@@ -10,7 +10,7 @@ module Requests
         content_tag(:div, class: "flash_messages-user") do
           content_tag(:div, I18n.t('requests.account.pul_auth', current_user_name: current_user.uid), class: "flash-alert")
         end
-      elsif current_user.guest == true
+      elsif current_user.guest?
         content_tag(:div) do
           concat link_to I18n.t('requests.account.netid_login_msg'), '/users/auth/cas', role: 'menuitem', class: 'btn btn-primary', id: 'cas-login' # , current_user_name: current_user.uid)
           # concat content_tag(:hr)
@@ -32,16 +32,8 @@ module Requests
     # end
 
     def pul_patron_name(patron)
-      name = ""
-      name += patron[:first_name] unless patron[:first_name].nil?
-      name += " #{patron[:last_name]}" unless patron[:last_name].nil?
-      name
-    end
-
-    def pul_patron_last_name(patron)
-      last_name = ""
-      last_name += " #{patron[:last_name]}" unless patron[:last_name].nil?
-      last_name
+      return "" if patron.last_name.blank? && patron.first_name.blank?
+      "#{patron.first_name} #{patron.last_name}"
     end
 
     def request_title

@@ -88,13 +88,13 @@ module Requests
                      end
       { author: item[:edd_author], bibId: bib[:id],
         callNumber: item[:call_number], chapterTitle: item[:edd_art_title],
-        deliveryLocation: item[:pickup] || "", emailAddress: user[:active_email],
+        deliveryLocation: item[:pickup] || "", emailAddress: user.active_email,
         endPage: item[:edd_end_page], issue: item[:edd_issue], itemBarcodes: [item[:barcode]],
         itemOwningInstitution: scsb_owning_institution(item[:location_code]),
-        patronBarcode: user[:barcode] || '198572131', requestNotes: item[:edd_note],
+        patronBarcode: user.barcode || '198572131', requestNotes: item[:edd_note],
         requestType: scsb_request_map(request_type), requestingInstitution: requesting_institution,
         startPage: item[:edd_start_page], titleIdentifier: bib[:title],
-        username: user[:netid], volume: item[:edd_volume_number] }
+        username: user.netid, volume: item[:edd_volume_number] }
     end
 
     # not being used

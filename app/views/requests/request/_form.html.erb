@@ -2,7 +2,7 @@
   <%= simple_form_for(:request, { url: login_url(@request), method: :post, html: { id: 'logins'}} ) do |l| %>
     <%= render partial: 'user_login_options', locals: { l: l } %>
   <% end %>
-<% elsif !@user.guest && @patron == false %>
+<% elsif !@user.guest && @patron.blank? %>
   <%= render partial: 'auth_user_lookup_fail' %>
 <!-- Temporary change to allow students not on campus digitization,  but not pickup options -->
 <%# elsif !@user.guest && @patron['barcode'].blank? %>

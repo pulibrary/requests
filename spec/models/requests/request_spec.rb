@@ -1,14 +1,22 @@
 require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :none } do
+  let(:user) { FactoryGirl.build(:user) }
+  let(:valid_patron) do
+    { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+      "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu" }.with_indifferent_access
+  end
+  let(:patron) do
+    Requests::Patron.new(user: user, session: {}, patron: valid_patron)
+  end
+
   context "with a bad system_id" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
     let(:params) do
       {
         system_id: bad_system_id,
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:bad_request) { described_class.new(params) }
@@ -20,14 +28,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "with a system_id and a mfhd that has a holding record with an attached item record" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:bad_system_id) { 'foo' }
     let(:params) do
       {
         system_id: '8880549',
         mfhd: '8805567',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_holding_item) { described_class.new(params) }
@@ -143,13 +149,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "with a system_id and a mfhd that only has a holding record" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '1791763',
         mfhd: '2056183',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_only_holding) { described_class.new(params) }
@@ -173,12 +177,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "with a system_id only that has holdings and item records" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '490930',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
 
@@ -217,12 +219,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "with a system_id that only has holdings records" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '4758976',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_system_id_only_with_holdings) { described_class.new(params) }
@@ -245,12 +245,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "with a system_id that has holdings records that do and don't have item records attached" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '2478499',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_system_id_only_with_holdings_with_some_items) { described_class.new(params) }
@@ -273,12 +271,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "A system id that has a holding with item on reserve" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '8179402',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_items_on_reserve) { described_class.new(params) }
@@ -291,12 +287,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "A system id that has a holding with items in a temporary location" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '6195942',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_items_at_temp_locations) { described_class.new(params) }
@@ -319,12 +313,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "a system_id with no holdings or items" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '2385868',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -337,13 +329,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "when a recap with no items" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '4759591',
         mfhd: '4978217',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -378,13 +368,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed a system_id for a theses record" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: 'dsp01rr1720547',
         mfhd: 'thesis',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -448,13 +436,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed a system_id for a numismatics record" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: 'coin-1167/',
         mfhd: 'numismatics',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -518,12 +504,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed a system_id for a numismatics record without a mfhd" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: 'coin-1167',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
@@ -581,12 +565,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed an ID for a paging location in nec outside of call number range" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '2937003',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_at_paging_outside) { described_class.new(params) }
@@ -601,11 +583,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   # context "When passed an ID for a paging location in nec  within a paging call number range" do
-  #   let(:user) { FactoryGirl.build(:user) }
   #   let(:params) {
   #     {
   #       system_id: '2942771',
-  #       user: user
+  #       patron: patron,
   #     }
   #   }
   #   let(:request_at_paging_nec_multiple) { described_class.new(params) }
@@ -639,12 +620,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   # end
 
   context "When passed an ID for a paging location in f outside of call number range" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '4340413',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_at_paging_f) { described_class.new(params) }
@@ -679,12 +658,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # from the A range in "f"
   context "When passed an ID for a paging location f outside of call number range" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9545726',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_at_paging_f) { described_class.new(params) }
@@ -700,11 +677,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   # context "When passed an ID for an xl paging location" do
-  #   let(:user) { FactoryGirl.build(:user) }
   #   let(:params) {
   #     {
   #       system_id: '9596359',
-  #       user: user
+  #       patron: patron,
   #     }
   #   }
   #   let(:request_at_paging_f) { described_class.new(params) }
@@ -720,12 +696,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   # end
 
   context "When passed an ID for an On Order Title" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9602549',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_on_order) { described_class.new(params) }
@@ -768,13 +742,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed an ID for an On Order Title" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9602551',
         mfhd: '9442918',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_on_order) { described_class.new(params) }
@@ -796,11 +768,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # Oversize ID pageable
   # context "When passed an ID for an Item with that is Oversize" do
-  #   let(:user) { FactoryGirl.build(:user) }
   #   let(:params) {
   #     {
   #       system_id: '3785401',
-  #       user: user
+  #       patron: patron,
   #     }
   #   }
   #   let(:request_oversize) { described_class.new(params) }
@@ -828,12 +799,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # Item with no call number 9602545
   context "When passed an ID for an Item in a pageable location that has no call number" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9602545',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_no_callnum) { described_class.new(params) }
@@ -861,13 +830,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   ## Add context for EAD when available
   # http://localhost:4000/requests/2002206?mfhd=2281830
   context "When passed a mfhd with missing items" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '2002206',
         mfhd: '2281830',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_missing) { described_class.new(params) }
@@ -894,12 +861,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed an Aeon ID" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9627261',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -916,12 +881,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "Aeon item with holdings without items" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '616086',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -942,12 +905,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When Passed a ReCAP ID" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9676483',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -975,13 +936,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When Passed a ReCAP ID and mfhd for a serial at a non EDD location" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '426420',
         mfhd: '464640',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1014,13 +973,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed an unavailable item where other local copies are on reserve." do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9168829',
         mfhd: '9048082',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1039,13 +996,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed a Recallable Item that is eligible for Borrow Direct" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9738136',
         mfhd: '9558038',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1137,13 +1092,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'When passed an item that is traceable and mappable' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9907433',
         mfhd: '9723988',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1171,13 +1124,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
   # 495501
   context 'When passed a holding with a null item record' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '495501',
         mfhd: '538750',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1190,12 +1141,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # 9994692
   context 'When passed a holding with all online items' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9994692',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1208,12 +1157,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # 9746776
   context 'When passed a holdings with mixed physical and online items' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9746776',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1226,12 +1173,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # 4815239
   context 'When passed a non-enumerated holdings with at least one loanable item' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '4815239',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1249,12 +1194,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'Enumerated record with charged items' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '495220',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1272,12 +1215,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'Enumerated record without charged items' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '7494358',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1305,8 +1246,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '5596067',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1328,8 +1268,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9696811',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1352,8 +1291,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '2631265',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1377,13 +1315,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'When a barcode only user visits the site' do
-    let(:user) { FactoryGirl.build(:valid_barcode_patron) }
     let(:params) do
       {
         system_id: '495501',
         mfhd: '538750',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request) { described_class.new(params) }
@@ -1395,14 +1331,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed mfhd and source params" do
-    let(:user) { FactoryGirl.build(:unauthenticated_patron) }
     let(:params) do
       {
         system_id: '1969881',
         mfhd: '2246633',
         source: 'pulsearch',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_optional_params) { described_class.new(params) }
@@ -1419,12 +1353,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed an ID for a preservation office location" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9712355',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_for_preservation) { described_class.new(params) }
@@ -1436,12 +1368,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'A borrow Direct item that is not available' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '9907486',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_title_author) { described_class.new(params) }
@@ -1463,12 +1393,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed a system_id for a record with a single aeon holding" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '4693146',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_single_aeon_holding) { described_class.new(params) }
@@ -1483,12 +1411,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "When passed a system_id for a record with a mixed holding, one of which has no item data and is at an annex." do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '2286894',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
@@ -1504,11 +1430,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   # This is an error condition
   # context "When passed a system_id for a record that has no item data and is not at an annex." do
-  #   let(:user) { FactoryGirl.build(:user) }
   #   let(:params) {
   #     {
   #       system_id: '10139326',
-  #       user: user
+  #       patron: patron,
   #     }
   #   }
   #   let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
@@ -1524,12 +1449,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   # end
 
   context "When passed a system_id for a record with enumerable items at annex" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '3845517',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
@@ -1544,15 +1467,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "A SCSB id with a single holding" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:scsb_single_holding_item) { fixture('/SCSB-5290772.json') }
     let(:location_code) { 'scsbcul' }
     let(:params) do
       {
         system_id: 'SCSB-5290772',
-        user: user,
         source: 'pulsearch',
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:scsb_availability_params) do
@@ -1595,15 +1516,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "A SCSB id that does not allow edd" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:scsb_edd_item) { fixture('/SCSB-5640725.json') }
     let(:location_code) { 'scsbcul' }
     let(:params) do
       {
         system_id: 'SCSB-5640725',
-        user: user,
         source: 'pulsearch',
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:scsb_availability_params) do
@@ -1636,15 +1555,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context "A SCSB with an unknown format" do
-    let(:user) { FactoryGirl.build(:user) }
     let(:scsb_no_format) { fixture('/SCSB-7935196.json') }
     let(:location_code) { 'scsbnypl' }
     let(:params) do
       {
         system_id: 'SCSB-7935196',
-        user: user,
         source: 'pulsearch',
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:scsb_availability_params) do

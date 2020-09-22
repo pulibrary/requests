@@ -32,7 +32,7 @@ module Requests
 
       def map_metdata
         {
-          "Username" => user["netid"], "TransactionStatus" => illiad_transaction_status,
+          "Username" => user.netid, "TransactionStatus" => illiad_transaction_status,
           "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"),
           "WantedBy" => "Yes, until the semester's", # note creation fails if we use any other text value
           "PhotoItemAuthor" => bib["author"]&.truncate(100), "PhotoArticleAuthor" => item["edd_author"]&.truncate(100), "PhotoJournalTitle" => bib["title"]&.truncate(255),

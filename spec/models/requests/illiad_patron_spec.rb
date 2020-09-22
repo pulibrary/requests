@@ -2,17 +2,14 @@ require 'spec_helper'
 require 'net/ldap'
 
 describe Requests::IlliadPatron, type: :controller do
+  let(:valid_patron) do
+    { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+      "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu" }.with_indifferent_access
+  end
   let(:user_info) do
-    {
-      "netid" => "foo",
-      "first_name" => "Foo",
-      "last_name" => "Request",
-      "barcode" => "22101007797777",
-      "university_id" => "9999999",
-      "patron_group" => "staff",
-      "patron_id" => "99999",
-      "active_email" => "foo@princeton.edu"
-    }
+    user = instance_double(User, guest?: false, uid: 'foo')
+    Requests::Patron.new(user: user, session: {}, patron: valid_patron)
   end
 
   let(:illiad_patron) { described_class.new(user_info) }
@@ -33,7 +30,7 @@ describe Requests::IlliadPatron, type: :controller do
     end
 
     let(:stub_url) do
-      "#{stub_url_base}/#{user_info['netid']}"
+      "#{stub_url_base}/#{user_info.netid}"
     end
 
     it "captures when user is not present" do

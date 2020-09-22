@@ -3,15 +3,18 @@ require 'spec_helper'
 describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :none } do
   context "A Princeton Community User has signed in" do
     let(:user) { FactoryGirl.create(:user) }
+    let(:valid_patron) { { "netid" => "foo" }.with_indifferent_access }
+    let(:patron) do
+      Requests::Patron.new(user: user, session: {}, patron: valid_patron)
+    end
 
     let(:scsb_single_holding_item) { fixture('/SCSB-2635660.json') }
     let(:location_code) { 'scsbcul' }
     let(:params) do
       {
         system_id: 'SCSB-2635660',
-        user: user,
         source: 'CUL',
-        user_barcode: '111222333'
+        patron: patron
       }
     end
     let(:scsb_availability_params) do
@@ -61,7 +64,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
     end
 
     describe "Print Holding in RBSC without items" do
-      let(:params) { { system_id: 4, holding_id: 5, item_id: 6 } }
+      let(:params) { { system_id: 4, holding_id: 5, item_id: 6, patron: patron } }
       let(:requestable) { Requests::Requestable.new(params) }
       let(:router) { described_class.new(requestable, user) }
       xit "Returns an Aeon Reading Room Link" do

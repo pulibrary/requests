@@ -2,18 +2,12 @@ require 'spec_helper'
 
 describe Requests::HoldItem, type: :controller do
   context 'Hold Item Request' do
+    let(:valid_patron) { { "netid" => "foo" }.with_indifferent_access }
     let(:user_info) do
-      {
-        "netid" => "foo",
-        "first_name" => "Foo",
-        "last_name" => "Request",
-        "barcode" => "22101007797777",
-        "university_id" => "9999999",
-        "patron_group" => "staff",
-        "patron_id" => "99999",
-        "active_email" => "foo@princeton.edu"
-      }
+      user = instance_double(User, guest?: false, uid: 'foo')
+      Requests::Patron.new(user: user, session: {}, patron: valid_patron)
     end
+
     let(:requestable) do
       [{ "selected" => "true",
          "mfhd" => "9723988",
@@ -65,7 +59,7 @@ describe Requests::HoldItem, type: :controller do
       let(:stub_url) do
         Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/items/" + submission.items[0]['item_id'] +
-          "/hold?patron=" + submission.user['patron_id'] +
+          "/hold?patron=" + submission.user.patron_id.to_s +
           "&patron_homedb=" + URI.escape('1@DB')
       end
 

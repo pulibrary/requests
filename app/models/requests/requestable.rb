@@ -20,14 +20,15 @@ module Requests
     # @param holding [Hash] Bib Data information on where the item is held (Marc liberation) parsed solr_document[holdings_1display] json
     # @param item [Hash] Item level data from bib data (https://bibdata.princeton.edu/availability?id= or mfhd=)
     # @param location [Hash] The has for a bib data holding (https://bibdata.princeton.edu/locations/holding_locations)
-    # @param user_barcode [String] the barcode of the current user
-    def initialize(bib:, holding: nil, item: nil, location: nil, user_barcode:)
+    # @param patron [Patron] the patron information about the current user
+    def initialize(bib:, holding: nil, item: nil, location: nil, patron:)
       @bib = bib
       @holding = holding
       @item = item.present? ? Item.new(item) : Item::NullItem.new
       @location = location
       @services = []
-      @user_barcode = user_barcode
+      @patron = patron
+      @user_barcode = patron.barcode
       @call_number = holding.first[1]['call_number_browse']
       @etas_limited_access = holding.first[1]["etas_limited_access"]
       @title = bib[:title_citation_display]&.first
@@ -77,39 +78,15 @@ module Requests
       digitize? || pick_up? || scsb_in_library_use? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
-    delegate :pickup_location_id, :pickup_location_code, :item_type, :enum_value, :cron_value, :item_data?, to: :item
-
-    def temp_loc?
-      item? && item[:temp_loc].present?
-    end
-
-    def on_reserve?
-      item? && item[:on_reserve] == 'Y'
-    end
-
-    def inaccessible?
-      item? && item[:status] == 'Inaccessible'
-    end
-
-    def hold_request?
-      item? && item[:status] == 'Hold Request'
-    end
-
-    def enumerated?
-      item? && item[:enum].present?
-    end
-
-    # item type on the item level
-    def item_type_non_circulate?
-      return true if ['NoCirc', 'Closed', 'Res-No'].include? item_type
-      false
-    end
+    delegate :pickup_location_id, :pickup_location_code, :item_type, :enum_value, :cron_value, :item_data?,
+             :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
+             :id, :use_statement, :collection_code, :missing?, :charged?, to: :item
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
     ## when one is needed. Primarily for non-barcoded Annex items.
     def preferred_request_id
-      if item? && item['id'].present?
-        item['id']
+      if id.present?
+        id
       else
         holding.first[0]
       end
@@ -126,7 +103,7 @@ module Requests
 
     # Reading Room Request
     def aeon?
-      location[:aeon_location] == true || (item.present? && item[:use_statement] == 'Supervised Use')
+      location[:aeon_location] == true || (use_statement == 'Supervised Use')
     end
 
     # at an open location users may go to
@@ -140,12 +117,8 @@ module Requests
     end
 
     def recap_edd?
-      (scsb? && scsb_edd_collection_codes.include?(item[:collection_code])) ||
+      (scsb? && scsb_edd_collection_codes.include?(collection_code)) ||
         ((location[:recap_electronic_delivery_location] == true) && !scsb?)
-    end
-
-    def missing?
-      item[:status] == 'Missing'
     end
 
     def lewis?
@@ -192,7 +165,7 @@ module Requests
     end
 
     def use_restriction?
-      scsb? && item.present? && item[:use_statement].present?
+      scsb? && use_statement.present?
     end
 
     def in_process?
@@ -251,10 +224,6 @@ module Requests
     def urls
       return {} unless online? && bib['electronic_access_1display']
       JSON.parse(bib['electronic_access_1display'])
-    end
-
-    def charged?
-      item? && (unavailable_statuses.include?(item[:status]) || unavailable_statuses.include?(item[:scsb_status]))
     end
 
     def pageable?
@@ -337,7 +306,7 @@ module Requests
     end
 
     def create_fill_in_requestable
-      fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, user_barcode: user_barcode)
+      fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, patron: @patron)
       fill_in_req.services = services
       fill_in_req
     end
@@ -355,14 +324,6 @@ module Requests
 
       def scsb_locations
         ['scsbnypl', 'scsbcul']
-      end
-
-      def unavailable_statuses
-        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
-         'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
-         'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-         'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
       end
 
       def scsb_edd_collection_codes

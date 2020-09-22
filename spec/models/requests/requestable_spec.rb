@@ -510,7 +510,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A Non-Recap Marquand holding' do
-    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } }, user_barcode: '111222333') }
+    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
+    let(:user) { FactoryGirl.build(:user) }
+    let(:patron) do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      Requests::Patron.new(user: user, session: {})
+    end
+
+    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } }, patron: patron) }
 
     describe '#site' do
       it 'returns a Marquand site param' do
@@ -707,11 +714,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   # user authentication tests
   context 'When a princeton user with NetID visits the site' do
     let(:user) { FactoryGirl.build(:user) }
+    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
+    let(:patron) do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      Requests::Patron.new(user: user, session: {})
+    end
     let(:params) do
       {
         system_id: '9999800',
-        user: user,
-        user_barcode: '111222333'
+        patron: patron
       }
     end
     let(:request) { Requests::Request.new(params) }
@@ -813,11 +824,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
   context 'When a barcode only user visits the site' do
     let(:user) { FactoryGirl.build(:valid_barcode_patron) }
+    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
+    let(:patron) do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      Requests::Patron.new(user: user, session: {})
+    end
     let(:params) do
       {
         system_id: '9999800',
-        user: user,
-        user_barcode: '111222333'
+        patron: patron
       }
     end
     let(:request) { Requests::Request.new(params) }
@@ -880,11 +895,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
   context 'When an access only user visits the site' do
     let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
+    let(:patron) do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      Requests::Patron.new(user: user, session: {})
+    end
     let(:params) do
       {
         system_id: '9999800',
-        user: user,
-        user_barcode: '111222333'
+        patron: patron
       }
     end
     let(:request) { Requests::Request.new(params) }
@@ -1021,9 +1040,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   describe "#will_submit_via_form?" do
+    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
+    let(:patron) do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      user = instance_double(User, guest?: false, uid: 'foo')
+      Requests::Patron.new(user: user, session: {})
+    end
     let(:location) { {} }
     let(:item_data) {}
-    let(:requestable) { described_class.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'abc' } }], item: item_data, location: location, user_barcode: '111222333') }
+    let(:requestable) { described_class.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'abc' } }], item: item_data, location: location, patron: patron) }
     let(:services) { [] }
     let(:on_reserve) { false }
     let(:traceable) { false }

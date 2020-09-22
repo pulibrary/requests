@@ -43,22 +43,22 @@ module Requests
 
     def request_url(params)
       request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/"
-      # if multiple items are selected by the user this will alaways submit the first on the requestable hash
+      # if multiple items are selected by the patron this will alaways submit the first on the requestable hash
       # each requestable object will have a unique item id
       # request_url += "items/#{params['requestable'].first['item_id']}/"
       request_url += "items/#{params[:itemID]}/"
-      request_url + "hold?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}"
+      request_url + "hold?patron=#{params['request'].patron_id}&patron_homedb=#{voyager_ub_id}"
     end
 
     # implement solr doc to Voyager schema mapping
     # each param should have an indifferent hash
-    def param_mapping(bib, user, item)
+    def param_mapping(bib, patron, item)
       {
         recordID: bib['id'],
         itemID: item['item_id'],
-        patron: user['patron_id'],
+        patron: patron.patron_id,
         patron_homedb: URI.escape(voyager_ub_id),
-        patron_group: user['patron_group']
+        patron_group: patron.patron_group
       }
     end
 

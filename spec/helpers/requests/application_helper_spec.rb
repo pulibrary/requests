@@ -3,6 +3,16 @@ require './app/models/requests/request.rb'
 
 RSpec.describe Requests::ApplicationHelper, type: :helper,
                                             vcr: { cassette_name: 'request_models', record: :new_episodes } do
+
+  let(:user) { FactoryGirl.build(:user) }
+  let(:valid_patron) do
+    { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request", "barcode" => "22101007797777",
+      "university_id" => "9999999", "patron_group" => "staff", "patron_id" => "99999", "active_email" => "foo@princeton.edu" }.with_indifferent_access
+  end
+  let(:patron) do
+    Requests::Patron.new(user: user, session: {}, patron: valid_patron)
+  end
+
   describe '#isbn_string' do
     let(:isbns) do
       [
@@ -21,8 +31,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '8179402',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:request_with_items_on_reserve) { Requests::Request.new(params) }
@@ -38,8 +47,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '9222024',
-          user: user,
-          user_barcode: '111122223333'
+          patron: patron
         }
       end
       it 'returns a boolean to enable submit for logged in user' do
@@ -57,8 +65,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '3848872',
-          user: user,
-          user_barcode: '111122223333'
+          patron: patron
         }
       end
       it 'lewis is a submitable request' do
@@ -69,13 +76,11 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe 'firestone pickup_choices' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '491654',
         mfhd: '534140',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:default_pickups) do
@@ -91,13 +96,11 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe 'multiple delivery options' do
-    let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
         system_id: '426420',
         mfhd: '3538795',
-        user: user,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:default_pickups) do
@@ -114,12 +117,12 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
   describe '#suppress_login' do
     let(:unauthenticated_patron) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:patron) { Requests::Patron.new(user: unauthenticated_patron, session: {}) }
     let(:params) do
       {
         system_id: '7352936',
         mfhd: '7179463',
-        user: unauthenticated_patron,
-        user_barcode: '111122223333'
+        patron: patron
       }
     end
     let(:aeon_only_request) { Requests::Request.new(params) }

@@ -4,26 +4,17 @@ include Requests::ApplicationHelper
 # rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable Metrics/BlockLength
 describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
+  let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
+
   let(:user_info) do
-    {
-      "netid" => "foo",
-      "first_name" => "Foo",
-      "last_name" => "Request",
-      "barcode" => "22101007797777",
-      "university_id" => "9999999",
-      "patron_group" => "staff",
-      "patron_id" => "99999",
-      "active_email" => "foo@princeton.edu"
-    }
+    stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+    user = instance_double(User, guest?: false, uid: 'foo')
+    Requests::Patron.new(user: user, session: {})
   end
 
   let(:guest_user_info) do
-    {
-      last_name: 'Guest Request',
-      active_email: 'guest@foo.edu',
-      barcode: 'ACCESS',
-      barcode_status: 0
-    }
+    user = instance_double(User, guest?: true, uid: 'foo')
+    Requests::Patron.new(user: user, session: { "email" => "guest@foo.edu", 'user_name' => 'Guest Request' })
   end
 
   before { stub_delivery_locations }
@@ -1014,7 +1005,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
 
     it "renders the headers" do
       expect(mail.subject).to eq(I18n.t('requests.recall.email_subject'))
-      expect(mail.to).to eq(['foo@princeton.edu'])
+      expect(mail.to).to eq(['a@b.com'])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end
 

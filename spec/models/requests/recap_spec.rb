@@ -2,17 +2,10 @@ require 'spec_helper'
 
 describe Requests::Recap do
   context 'ReCAP Request' do
+    let(:valid_patron) { { "netid" => "foo" }.with_indifferent_access }
     let(:user_info) do
-      {
-        "netid" => "foo",
-        "first_name" => "Foo",
-        "last_name" => "Request",
-        "barcode" => "22101007797777",
-        "university_id" => "9999999",
-        "patron_group" => "staff",
-        "patron_id" => "99999",
-        "active_email" => "foo@princeton.edu"
-      }
+      user = instance_double(User, guest?: false, uid: 'foo')
+      Requests::Patron.new(user: user, session: {}, patron: valid_patron)
     end
     let(:requestable) do
       [{ "selected" => "true",

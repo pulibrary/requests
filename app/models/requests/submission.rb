@@ -11,7 +11,7 @@ module Requests
     validate :item_validations # , presence: true, length: { minimum: 1 }, on: :submit
 
     def initialize(params, patron)
-      @user = patron.with_indifferent_access if patron
+      @user = patron
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
       @bd = params[:bd]
@@ -20,15 +20,15 @@ module Requests
     attr_reader :user, :success_messages
 
     def email
-      @user["active_email"]
+      @user.active_email
     end
 
     def source
-      @user["source"]
+      @user.source
     end
 
     def user_name
-      @user["netid"]
+      @user.netid
     end
 
     attr_reader :items
@@ -49,7 +49,7 @@ module Requests
     end
 
     def user_barcode
-      @user["barcode"]
+      @user.barcode
     end
 
     attr_reader :bib

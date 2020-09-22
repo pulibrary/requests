@@ -1,17 +1,14 @@
 require 'spec_helper'
 
 describe Requests::Submission do
+  let(:valid_patron) do
+    { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+      "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu" }.with_indifferent_access
+  end
   let(:user_info) do
-    {
-      "netid" => "foo",
-      "first_name" => "Foo",
-      "last_name" => "Request",
-      "barcode" => "22101007797777",
-      "university_id" => "9999999",
-      "patron_group" => "staff",
-      "patron_id" => "99999",
-      "active_email" => "foo@princeton.edu"
-    }
+    user = instance_double(User, guest?: false, uid: 'foo')
+    Requests::Patron.new(user: user, session: {}, patron: valid_patron)
   end
 
   context 'A valid submission' do
@@ -361,8 +358,8 @@ describe Requests::Submission do
         expect(submission.items[0]['pickup']).to be_truthy
         expect(pickup[0].to_i.to_s).to eq(pickup[0])
         expect(submission.items[0]['type']).to eq("recall")
-        expect(submission.user['patron_id']).to be_truthy
-        expect(submission.user['patron_group']).to be_truthy
+        expect(submission.user.patron_id).to be_truthy
+        expect(submission.user.patron_group).to be_truthy
       end
 
       it 'recap items have gfa pickup location code' do

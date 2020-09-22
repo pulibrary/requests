@@ -10,8 +10,8 @@ module Requests
     def initialize(patron)
       super()
       @patron = patron
-      @patron_id = patron['patron_id']
-      @netid = patron['netid']
+      @patron_id = patron.patron_id
+      @netid = patron.netid
       @attributes = illiad_patron_attributes
     end
 
@@ -37,13 +37,13 @@ module Requests
         return nil if illiad_status.blank?
         addresses = ldap_patron[:address]&.split('$')
         {
-          "Username" => patron['netid'], "ExternalUserId" => patron['netid'], "FirstName" => patron['first_name'] || ldap_patron[:givenname],
-          "LastName" => patron['last_name'] || ldap_patron[:surname], "LoanDeliveryMethod" => "Hold for Pickup", "NotificationMethod" => "Electronic",
-          "EmailAddress" => patron['active_email'] || ldap_patron[:email], "DeliveryMethod" => "Hold for Pickup",
+          "Username" => patron.netid, "ExternalUserId" => patron.netid, "FirstName" => patron.first_name || ldap_patron[:givenname],
+          "LastName" => patron.last_name || ldap_patron[:surname], "LoanDeliveryMethod" => "Hold for Pickup", "NotificationMethod" => "Electronic",
+          "EmailAddress" => patron.active_email || ldap_patron[:email], "DeliveryMethod" => "Hold for Pickup",
           "Phone" => ldap_patron[:telephone], "Status" => illiad_status, "Number" => ldap_patron[:universityid],
           "AuthType" => "Default", "NVTGC" => "ILL", "Department" => ldap_patron[:department], "Web" => true,
           "Address" => addresses&.shift, "Address2" => addresses&.join(', '), "City" => "Princeton", "State" => "NJ",
-          "Zip" => "08544", "SSN" => patron["barcode"], "Cleared" => "Yes", "Site" => "Firestone"
+          "Zip" => "08544", "SSN" => patron.barcode, "Cleared" => "Yes", "Site" => "Firestone"
         }
       end
 

@@ -18,8 +18,7 @@ module Requests
 
       @user = current_or_guest_user
 
-      @patron = Patron.new(user: @user, session: session)
-      flash.now[:error] = @patron.errors.join(", ") if @patron.errors.present?
+      @patron = authorize_patron(@user)
 
       @mode = mode
       @title = "Request ID: #{system_id}"
@@ -137,6 +136,16 @@ module Requests
       def respond_to_validation_error(submission)
         flash.now[:error] = I18n.t('requests.submit.error')
         logger.error "Request Submission #{submission.errors.messages.as_json}"
+      end
+
+      def authorize_patron(user)
+        patron = Patron.new(user: user, session: session)
+        if patron.errors.present?
+          flash.now[:error] = patron.errors.join(", ")
+        elsif !patron.guest? && !patron.campus_authorized
+          flash.now[:notice] = "You are not currently eligible for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services."
+        end
+        patron
       end
 
       def current_or_guest_user

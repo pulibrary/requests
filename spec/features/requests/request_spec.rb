@@ -992,8 +992,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307?mfhd=6962326'
-          expect(page).to have_content 'Available for In Library Use'
-          choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
+          expect(page).not_to have_content 'Available for In Library Use'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(page).to have_content 'Request submitted'
@@ -1015,8 +1014,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/7053307'
-          expect(page).to have_content 'Pick-up location: Lewis Library'
-          choose('requestable__delivery_mode_6322174_edd') # chooses 'edd'
+          expect(page).not_to have_content 'Pick-up location: Lewis Library'
           within('#request_6322174') do
             fill_in "Article/Chapter Title", with: "ABC"
           end

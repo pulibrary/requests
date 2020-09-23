@@ -4,6 +4,8 @@ module Requests
   class Patron
     attr_reader :user, :session, :patron, :errors
 
+    delegate :guest?, to: :user
+
     def initialize(user:, session: {}, patron: nil)
       @user = user
       @session = session

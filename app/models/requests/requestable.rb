@@ -8,6 +8,7 @@ module Requests
     attr_reader :title
     attr_reader :user_barcode
     attr_reader :etas_limited_access
+    attr_reader :patron
     attr_accessor :services
 
     delegate :pageable_loc?, to: :@pageable
@@ -48,7 +49,7 @@ module Requests
     end
 
     def pick_up?
-      return false if user_barcode.blank? || etas?
+      return false if user_barcode.blank? || etas? || !patron.campus_authorized
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request?
     end
 
@@ -71,7 +72,7 @@ module Requests
     end
 
     def available_for_appointment?
-      !circulates? && !recap? && !charged? && !aeon? && !etas?
+      !circulates? && !recap? && !charged? && !aeon? && !etas? && patron.campus_authorized
     end
 
     def will_submit_via_form?

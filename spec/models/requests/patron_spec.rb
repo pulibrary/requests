@@ -14,6 +14,7 @@ describe Requests::Patron do
         expect(patron.active_email).to eq('foo@bar.com')
         expect(patron.last_name).to eq('foobar')
         expect(patron.barcode).to eq('ACCESS')
+        expect(patron.campus_authorized).to be_falsey
       end
     end
   end
@@ -29,6 +30,7 @@ describe Requests::Patron do
         expect(patron).to be_truthy
         expect(patron.active_email).to eq('a@b.com')
         expect(patron.netid).to eq('jstudent')
+        expect(patron.campus_authorized).to be_truthy
       end
     end
   end
@@ -44,6 +46,7 @@ describe Requests::Patron do
         expect(patron).to be_truthy
         expect(patron.active_email).to eq('a@b.com')
         expect(patron.netid).to be_nil
+        expect(patron.campus_authorized).to be_falsey
       end
     end
   end

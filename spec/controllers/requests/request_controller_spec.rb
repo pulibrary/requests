@@ -66,22 +66,6 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         expect(response.status).to eq(200)
       end
     end
-
-    context "An campus unauthorized user" do
-      before do
-        sign_in(user)
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
-          .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
-      end
-
-      it 'displays a flash message' do
-        get :generate, params: {
-          source: 'pulsearch',
-          system_id: '9676483'
-        }
-        expect(flash.now[:notice]).to eq('You are not currently eligible for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.')
-      end
-    end
   end
 
   describe 'POST #submit' do

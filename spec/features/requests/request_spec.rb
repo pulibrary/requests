@@ -814,6 +814,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         visit "/requests/#{voyager_id}"
         expect(page).not_to have_content 'Electronic Delivery'
         expect(page).not_to have_selector '#request_user_barcode', visible: false
+        expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.')
       end
     end
 

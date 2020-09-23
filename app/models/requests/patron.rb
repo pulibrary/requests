@@ -48,6 +48,10 @@ module Requests
       patron[:source]
     end
 
+    def campus_authorized
+      patron[:campus_authorized]
+    end
+
     def blank?
       patron.empty?
     end

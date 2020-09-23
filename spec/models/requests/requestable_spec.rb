@@ -1,9 +1,16 @@
 require 'spec_helper'
 
 describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :none } do
+  let(:user) { FactoryGirl.build(:user) }
+  let(:valid_patron) do
+    { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+      "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true }.with_indifferent_access
+  end
+  let(:patron) { Requests::Patron.new(user: user, patron: valid_patron) }
+
   context "Is a bibliographic record on the shelf" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_on_shelf) }
+    let(:request) { FactoryGirl.build(:request_on_shelf, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:mfhd_id) { requestable.holding.first[0] }
     let(:call_number) { CGI.escape(requestable.holding[mfhd_id]['call_number']) }
@@ -33,11 +40,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can be picked up' do
+        expect(requestable.pick_up?).to be_truthy
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context "Is a bibliographic record from the thesis collection" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_thesis) }
+    let(:request) { FactoryGirl.build(:request_thesis, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:holding_id) { "thesis" }
     describe "#thesis?" do
@@ -81,11 +113,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context "Is a bibliographic record from the numismatics collection" do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_numismatics) }
+    let(:request) { FactoryGirl.build(:request_numismatics, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:holding_id) { "numismatics" }
     describe "#numismatics?" do
@@ -129,11 +186,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable item with a missing status' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_missing_item) }
+    let(:request) { FactoryGirl.build(:request_missing_item, patron: patron) }
     let(:requestable) { request.requestable }
     describe "#services" do
       it "returns an item status of missing" do
@@ -165,24 +247,49 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       xit 'should be available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_truthy
       end
+    end
 
-      describe '#location_label' do
-        it 'has a location label' do
-          expect(requestable.first.location_label).to eq('Firestone Library')
-        end
+    describe '#location_label' do
+      it 'has a location label' do
+        expect(requestable.first.location_label).to eq('Firestone Library')
+      end
+    end
+
+    describe '#libcal_url' do
+      it "is available for appointment" do
+        expect(requestable.first.libcal_url).to be_nil
+      end
+    end
+
+    describe '#pick_up?' do
+      it 'can be picked up' do
+        expect(requestable.first.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.first.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
       end
 
-      describe '#libcal_url' do
-        it "is available for appointment" do
-          expect(requestable.first.libcal_url).to be_nil
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.first.pick_up?).to be_falsey
         end
       end
     end
   end
 
   context 'A requestable item with hold_request status' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_serial_with_item_on_hold) }
+    let(:request) { FactoryGirl.build(:request_serial_with_item_on_hold, patron: patron) }
     let(:requestable_on_hold) { request.requestable[8] }
     let(:requestable_not_on_hold) { request.requestable.first }
     describe '#hold_request?' do
@@ -213,10 +320,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable_not_on_hold.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can be picked up' do
+        expect(requestable_on_hold.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable_on_hold.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable_on_hold.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable item eligible for borrow direct' do
-    let(:request) { FactoryGirl.build(:missing_item) }
+    let(:request) { FactoryGirl.build(:missing_item, patron: patron) }
     let(:requestable) { request.requestable }
     describe '#services' do
       it 'is does not have a recall service' do
@@ -262,12 +395,37 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
           expect(requestable.first.libcal_url).to be_nil
         end
       end
+
+      describe '#pick_up?' do
+        it 'can be picked up' do
+          expect(requestable.first.pick_up?).to be_falsey
+        end
+      end
+
+      describe '#available_for_appointment?' do
+        it "is available for appointment" do
+          expect(requestable.first.available_for_appointment?).to be_falsey
+        end
+      end
+
+      context "An user without campus access" do
+        let(:valid_patron) do
+          { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+            "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+        end
+
+        describe '#pick_up?' do
+          it 'can not be picked up' do
+            expect(requestable.first.pick_up?).to be_falsey
+          end
+        end
+      end
     end
   end
 
   context 'A non circulating item' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item) }
+    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
     let(:requestable) { request.requestable[12] }
     # let(:item) { barcode :"32101024595744", id: 282_632, location: "f", copy_number: 1, item_sequence_number: 14, status: "Not Charged", on_reserve: "N", item_type: "NoCirc", pickup_location_id: 299, pickup_location_code: "fcirc", enum: "vol.22", "chron": "1996", enum_display: "vol.22 (1996)", label: "Firestone Library" }
     let(:no_circ_item_id) { requestable.item['id'] }
@@ -286,14 +444,29 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.cron_value).to eq '1996'
         expect(requestable.location_label).to eq('Firestone Library')
         expect(requestable.libcal_url).to eq("https://libcal.princeton.edu/seats?lid=1919")
+        expect(requestable.pick_up?).to be_falsey
+        expect(requestable.available_for_appointment?).to be_truthy
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#available_for_appointment?' do
+        it 'is not available for an appointment' do
+          expect(requestable.available_for_appointment?).to be_falsey
+        end
       end
     end
   end
   # rubocop:enable RSpec/MultipleExpectations
 
   context 'A circulating item' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item) }
+    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
     let(:requestable) { request.requestable[0] }
     # let(:item) {"barcode":"32101022548893","id":282628,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","enum":"vol.18","chron":"1992","enum_display":"vol.18 (1992)","label":"Firestone Library"}
     let(:no_circ_item_id) { requestable.item['id'] }
@@ -320,11 +493,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can be picked up' do
+        expect(requestable.pick_up?).to be_truthy
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable item from an Aeon EAL Holding with a null barcode' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_eal_voyager_item) }
+    let(:request) { FactoryGirl.build(:aeon_eal_voyager_item, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#services' do
@@ -356,11 +554,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable serial item that has volume and item data in its openurl' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_rbsc_enumerated) }
+    let(:request) { FactoryGirl.build(:aeon_rbsc_enumerated, patron: patron) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['6720550'] } }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     describe '#aeon_open_url' do
@@ -384,11 +607,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable item from an Aeon EAL Holding with a null barcode' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated) }
+    let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['675722'] } }
     let(:holding_id) { '675722' }
     let(:requestable) { requestable_holding.first } # assume only one requestable
@@ -420,11 +668,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable item from a RBSC holding without an item record' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_no_item_record) }
+    let(:request) { FactoryGirl.build(:aeon_no_item_record, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
     describe '#barcode?' do
       it 'does not have a barcode' do
@@ -457,6 +730,32 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A MUDD holding' do
@@ -472,8 +771,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A Recap Marquand holding' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_marquand) }
+    let(:request) { FactoryGirl.build(:aeon_marquand, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#site' do
@@ -507,16 +805,31 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A Non-Recap Marquand holding' do
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:user) { FactoryGirl.build(:user) }
-    let(:patron) do
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
-      Requests::Patron.new(user: user, session: {})
-    end
-
     let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } }, patron: patron) }
 
     describe '#site' do
@@ -524,15 +837,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.in_library_use_only?).to be_truthy
       end
     end
+
     describe '#available_for_appointment?' do
       it "is available for appointment" do
         expect(requestable.available_for_appointment?).to be_truthy
       end
     end
 
+    describe '#pick_up?' do
+      it "is available for pick-up" do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
     describe '#libcal_url' do
       it "is available for appointment" do
         expect(requestable.libcal_url).to eq('https://libcal.princeton.edu/seats?lid=10656')
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#available_for_appointment?' do
+        it "is available for appointment" do
+          expect(requestable.available_for_appointment?).to be_falsey
+        end
       end
     end
   end
@@ -563,8 +897,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from a RBSC holding with an item record including a barcode' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_w_barcode) }
+    let(:request) { FactoryGirl.build(:aeon_w_barcode, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#barcode?' do
@@ -630,11 +963,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'A requestable item from Forrestal Annex with no item data' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_no_items) }
+    let(:request) { FactoryGirl.build(:request_no_items, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     # rubocop:disable RSpec/MultipleExpectations
@@ -661,11 +1019,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'On Order materials' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_on_order) }
+    let(:request) { FactoryGirl.build(:request_on_order, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe 'with a status of on_order ' do
@@ -685,11 +1068,36 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.libcal_url).to be_nil
       end
     end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
   end
 
   context 'Pending Order materials' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_pending) }
+    let(:request) { FactoryGirl.build(:request_pending, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe 'with a status of pending orders' do
@@ -707,6 +1115,32 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#libcal_url' do
       it "is available for appointment" do
         expect(requestable.libcal_url).to be_nil
+      end
+    end
+
+    describe '#pick_up?' do
+      it 'can not be picked up' do
+        expect(requestable.pick_up?).to be_falsey
+      end
+    end
+
+    describe '#available_for_appointment?' do
+      it "is not available for appointment" do
+        expect(requestable.available_for_appointment?).to be_falsey
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
       end
     end
   end
@@ -1040,7 +1474,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   describe "#will_submit_via_form?" do
-    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
+    let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu","campus_authorized":true}' }
     let(:patron) do
       stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
       user = instance_double(User, guest?: false, uid: 'foo')

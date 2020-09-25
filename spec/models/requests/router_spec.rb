@@ -192,9 +192,16 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           stubbed_questions[:in_library_use_only?] = false
           stubbed_questions[:ask_me?] = true
           stubbed_questions[:circulates?] = true
+          stubbed_questions[:campus_authorized] = true
         end
         it "returns recap_edd in the services" do
-          expect(router.calculate_services).to include('recap_edd')
+          expect(router.calculate_services).to contain_exactly('recap_edd', 'recap')
+        end
+        context "user not authorized for campus" do
+          it "returns nothing in the services" do
+            stubbed_questions[:campus_authorized] = false
+            expect(router.calculate_services).to contain_exactly('recap_edd')
+          end
         end
         context "unauthorized user" do
           let(:user) { FactoryGirl.build(:unauthenticated_patron) }

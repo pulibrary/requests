@@ -14,6 +14,7 @@ module Requests
     delegate :pageable_loc?, to: :@pageable
     delegate :map_url, to: :@mappable
     delegate :illiad_request_url, :illiad_request_parameters, to: :@illiad
+    delegate :campus_authorized, to: :@patron
 
     include Requests::Aeon
 
@@ -49,7 +50,7 @@ module Requests
     end
 
     def pick_up?
-      return false if user_barcode.blank? || etas? || !patron.campus_authorized
+      return false if user_barcode.blank? || etas? || !campus_authorized
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request?
     end
 
@@ -72,7 +73,7 @@ module Requests
     end
 
     def available_for_appointment?
-      !circulates? && !recap? && !charged? && !aeon? && !etas? && patron.campus_authorized
+      !circulates? && !recap? && !charged? && !aeon? && !etas? && campus_authorized
     end
 
     def will_submit_via_form?

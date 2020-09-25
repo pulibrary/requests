@@ -28,6 +28,9 @@
     </div>
     <% if @request.requestable? %>
       <div class="col-12">
+        <% if !@patron.guest? && !@patron.campus_authorized %>
+          <div class="alert alert-warning">You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.</div>
+        <% end %>
         <%= render "form" %>
       </div>
     <% else %>

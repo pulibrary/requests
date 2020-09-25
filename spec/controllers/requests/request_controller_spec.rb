@@ -19,49 +19,52 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
   end
 
   describe 'GET #generate' do
-    before do
-      sign_in(user)
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
-        .to_return(status: 200, body: valid_patron_response, headers: {})
-    end
+    context "An campus authorized user" do
+      before do
+        sign_in(user)
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+          .to_return(status: 200, body: valid_patron_response, headers: {})
+      end
 
-    it 'sets the current request mode to trace when supplied' do
-      get :generate, params: {
-        source: 'pulsearch',
-        system_id: '9676483',
-        mode: "trace"
-      }
-      expect(assigns(:mode)).to eq('trace')
-    end
-    it 'uses the default request mode' do
-      get :generate, params: {
-        source: 'pulsearch',
-        system_id: '9676483'
-      }
-      expect(assigns(:mode)).to eq('standard')
-    end
-    it 'redirects you when a thesis record is requested' do
-      get :generate, params: {
-        source: 'pulsearch',
-        system_id: 'dsp01rr1720547'
-      }
-      expect(response.status).to eq(302)
-    end
-    it 'redirects you when a single aeon record is requested' do
-      get :generate, params: {
-        source: 'pulsearch',
-        system_id: '9576880',
-        mfhd: '10043356'
-      }
-      expect(response.status).to eq(302)
-    end
+      it 'sets the current request mode to trace when supplied' do
+        get :generate, params: {
+          source: 'pulsearch',
+          system_id: '9676483',
+          mode: "trace"
+        }
+        expect(assigns(:mode)).to eq('trace')
+      end
+      it 'uses the default request mode and does not set a flash' do
+        get :generate, params: {
+          source: 'pulsearch',
+          system_id: '9676483'
+        }
+        expect(flash.now[:notice]).to be_blank
+        expect(assigns(:mode)).to eq('standard')
+      end
+      it 'redirects you when a thesis record is requested' do
+        get :generate, params: {
+          source: 'pulsearch',
+          system_id: 'dsp01rr1720547'
+        }
+        expect(response.status).to eq(302)
+      end
+      it 'redirects you when a single aeon record is requested' do
+        get :generate, params: {
+          source: 'pulsearch',
+          system_id: '9576880',
+          mfhd: '10043356'
+        }
+        expect(response.status).to eq(302)
+      end
 
-    it 'does not redirects you when multiple aeon records are requested' do
-      get :generate, params: {
-        source: 'pulsearch',
-        system_id: '9576880'
-      }
-      expect(response.status).to eq(200)
+      it 'does not redirects you when multiple aeon records are requested' do
+        get :generate, params: {
+          source: 'pulsearch',
+          system_id: '9576880'
+        }
+        expect(response.status).to eq(200)
+      end
     end
   end
 

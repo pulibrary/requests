@@ -55,7 +55,7 @@ module Requests
     end
 
     def fill_in_pickup?
-      return false if user_barcode.blank?
+      return false if user_barcode.blank? || !campus_authorized
       !item_data? || pick_up?
     end
 

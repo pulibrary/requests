@@ -1004,6 +1004,25 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.item_type).to eq ""
         expect(requestable.enum_value).to eq ""
         expect(requestable.cron_value).to eq ""
+        expect(requestable.fill_in_pickup?).to be_truthy
+      end
+
+      context "patron is not campus authorized" do
+        let(:valid_patron) do
+          { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+            "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+        end
+
+        it 'does not have item data' do
+          expect(requestable.item_data?).to be false
+          expect(requestable.pickup_location_id).to eq ""
+          expect(requestable.pickup_location_code).to eq ""
+          expect(requestable.item_type).to eq ""
+          expect(requestable.enum_value).to eq ""
+          expect(requestable.cron_value).to eq ""
+          expect(requestable.fill_in_pickup?).to be_falsey
+        end
       end
     end
     # rubocop:enable RSpec/MultipleExpectations

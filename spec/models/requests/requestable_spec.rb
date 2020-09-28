@@ -1071,8 +1071,23 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe 'with a status of on_order ' do
-      it 'is on_order' do
-        expect(requestable.on_order?).to be true
+      it 'is on_order and requestable' do
+        expect(requestable.on_order?).to be_truthy
+        expect(requestable.request?).to be_truthy
+        expect(requestable.request_status?).to be_truthy
+      end
+      context "patron is not campus authorized" do
+        let(:valid_patron) do
+          { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+            "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+        end
+
+        it 'is on_order and not requestable' do
+          expect(requestable.on_order?).to be_truthy
+          expect(requestable.request?).to be_falsey
+          expect(requestable.request_status?).to be_truthy
+        end
       end
     end
 

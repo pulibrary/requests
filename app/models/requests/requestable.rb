@@ -60,7 +60,7 @@ module Requests
     end
 
     def request?
-      return false if user_barcode.blank? # TODO: remove once we have added option for digitizing requestable items
+      return false if user_barcode.blank? || !campus_authorized # TODO: remove once we have added option for digitizing requestable items
       request_status?
     end
 
@@ -69,7 +69,7 @@ module Requests
     end
 
     def help_me?
-      ask_me? || (!available_for_digitizing? && !aeon?)
+      ask_me? || (!available_for_digitizing? && !aeon?) || (request_status? && !request?)
     end
 
     def available_for_appointment?

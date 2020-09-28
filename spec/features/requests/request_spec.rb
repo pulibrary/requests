@@ -401,6 +401,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to request a Lewis' do
+          pending "lewis library flood cleanup"
           stub_voyager_hold_success('7053307', '6322174', '77777')
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
@@ -438,6 +439,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to ask for digitizing on non circulating items' do
+          pending "lewis library flood cleanup"
           visit '/requests/9594840'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
@@ -457,6 +459,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows filtering items by mfhd' do
+          pending "lewis library flood cleanup"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
@@ -466,6 +469,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'show all copies if MFHD is not present' do
+          pending "lewis library flood cleanup"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192'
@@ -1007,6 +1011,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to request a digital copy from Lewis' do
+          pending "lewis library flood cleanup"
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1030,6 +1035,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to ask for digitizing on non circulating items' do
+          pending "lewis library flood cleanup"
           visit '/requests/9594840'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
@@ -1037,6 +1043,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows filtering items by mfhd' do
+          pending "lewis library flood cleanup"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
@@ -1047,6 +1054,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'show all copies if MFHD is not present' do
+          pending "lewis library flood cleanup"
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192'

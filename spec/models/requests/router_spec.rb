@@ -244,9 +244,22 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           before do
             stubbed_questions[:scsb_in_library_use?] = true
             stubbed_questions[:recap_edd?] = false
+            stubbed_questions[:campus_authorized] = false
           end
           it "returns recap_in_library in the services" do
             expect(router.calculate_services).to eq(["ask_me"])
+          end
+        end
+
+        context "scsb_in_library_use MR collection" do
+          let(:item) { { collection_code: 'MR' } }
+          before do
+            stubbed_questions[:scsb_in_library_use?] = true
+            stubbed_questions[:recap_edd?] = false
+            stubbed_questions[:campus_authorized] = true
+          end
+          it "returns recap_in_library in the services" do
+            expect(router.calculate_services).to eq(["recap"])
           end
         end
       end

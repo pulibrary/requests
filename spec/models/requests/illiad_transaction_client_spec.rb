@@ -35,7 +35,7 @@ describe Requests::IlliadTransactionClient, type: :controller do
     Requests::Submission.new(params, user_info)
   end
 
-  let(:illiad_transaction) { described_class.new(user: submission.user, bib: submission.bib, item: submission.items.first) }
+  let(:illiad_transaction) { described_class.new(user: submission.patron, bib: submission.bib, item: submission.items.first) }
 
   let(:responses) do
     {

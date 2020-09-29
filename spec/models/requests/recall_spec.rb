@@ -59,8 +59,8 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
       let(:stub_url) do
         Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/items/" + submission.items[0]['item_id'] +
-          "/recall?patron=" + submission.user.patron_id +
-          "&patron_group=" + submission.user.patron_group +
+          "/recall?patron=" + submission.patron.patron_id +
+          "&patron_group=" + submission.patron.patron_group +
           "&patron_homedb=" + URI.escape('1@DB')
       end
 

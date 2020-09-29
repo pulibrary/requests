@@ -358,8 +358,8 @@ describe Requests::Submission do
         expect(submission.items[0]['pickup']).to be_truthy
         expect(pickup[0].to_i.to_s).to eq(pickup[0])
         expect(submission.items[0]['type']).to eq("recall")
-        expect(submission.user.patron_id).to be_truthy
-        expect(submission.user.patron_group).to be_truthy
+        expect(submission.patron.patron_id).to be_truthy
+        expect(submission.patron.patron_group).to be_truthy
       end
 
       it 'recap items have gfa pickup location code' do

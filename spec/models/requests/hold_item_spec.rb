@@ -59,7 +59,7 @@ describe Requests::HoldItem, type: :controller do
       let(:stub_url) do
         Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/items/" + submission.items[0]['item_id'] +
-          "/hold?patron=" + submission.user.patron_id.to_s +
+          "/hold?patron=" + submission.patron.patron_id.to_s +
           "&patron_homedb=" + URI.escape('1@DB')
       end
 

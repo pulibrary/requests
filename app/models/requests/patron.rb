@@ -19,15 +19,15 @@ module Requests
     end
 
     def active_email
-      patron[:active_email]
+      patron[:active_email] || ldap[:email]
     end
 
     def first_name
-      patron[:first_name]
+      patron[:first_name] || ldap[:givenname]
     end
 
     def last_name
-      patron[:last_name]
+      patron[:last_name] || ldap[:surname]
     end
 
     def netid
@@ -52,6 +52,34 @@ module Requests
 
     def campus_authorized
       patron[:campus_authorized]
+    end
+
+    def telephone
+      ldap[:telephone]
+    end
+
+    def status
+      ldap[:status]
+    end
+
+    def pustatus
+      ldap[:pustatus]
+    end
+
+    def department
+      ldap[:department]
+    end
+
+    def title
+      ldap[:title]
+    end
+
+    def address
+      ldap[:address]
+    end
+
+    def ldap
+      patron[:ldap] || {}
     end
 
     def blank?
@@ -81,7 +109,7 @@ module Requests
       def current_patron(uid)
         return false unless uid
         begin
-          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{uid}"
+          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{uid}?ldap=true"
         rescue Faraday::Error::ConnectionFailed
           Rails.logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
           return false

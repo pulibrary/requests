@@ -21,27 +21,26 @@ module Requests
 
     def create_illiad_patron
       return nil if patron.blank?
-      patron = post_json_response(url: 'ILLiadWebPlatform/Users', body: attributes.to_json)
-      if patron.blank? && error.present? && error["ModelState"].present?
-        patron = illiad_patron if error["ModelState"]["UserName"] == ["Username #{netid} already exists."]
+      patron_response = post_json_response(url: 'ILLiadWebPlatform/Users', body: attributes.to_json)
+      if patron_response.blank? && error.present? && error["ModelState"].present?
+        patron_response = illiad_patron if error["ModelState"]["UserName"] == ["Username #{netid} already exists."]
       end
-      patron
+      patron_response
     end
 
     private
 
       def illiad_patron_attributes
-        ldap_patron = Requests::Ldap.find_by_netid(netid)
-        return nil if ldap_patron.blank?
-        illiad_status = illiad_status(ldap_status: ldap_patron[:status], ldap_pustatus: ldap_patron[:pustatus], ldap_department: ldap_patron[:department], ldap_title: ldap_patron[:title])
+        return nil if patron.status.blank?
+        illiad_status = illiad_status(ldap_status: patron.status, ldap_pustatus: patron.pustatus, ldap_department: patron.department, ldap_title: patron.title)
         return nil if illiad_status.blank?
-        addresses = ldap_patron[:address]&.split('$')
+        addresses = patron.address&.split('$')
         {
-          "Username" => patron.netid, "ExternalUserId" => patron.netid, "FirstName" => patron.first_name || ldap_patron[:givenname],
-          "LastName" => patron.last_name || ldap_patron[:surname], "LoanDeliveryMethod" => "Hold for Pickup", "NotificationMethod" => "Electronic",
-          "EmailAddress" => patron.active_email || ldap_patron[:email], "DeliveryMethod" => "Hold for Pickup",
-          "Phone" => ldap_patron[:telephone], "Status" => illiad_status, "Number" => ldap_patron[:universityid],
-          "AuthType" => "Default", "NVTGC" => "ILL", "Department" => ldap_patron[:department], "Web" => true,
+          "Username" => patron.netid, "ExternalUserId" => patron.netid, "FirstName" => patron.first_name,
+          "LastName" => patron.last_name, "LoanDeliveryMethod" => "Hold for Pickup", "NotificationMethod" => "Electronic",
+          "EmailAddress" => patron.active_email, "DeliveryMethod" => "Hold for Pickup",
+          "Phone" => patron.telephone, "Status" => illiad_status, "Number" => patron.university_id,
+          "AuthType" => "Default", "NVTGC" => "ILL", "Department" => patron.department, "Web" => true,
           "Address" => addresses&.shift, "Address2" => addresses&.join(', '), "City" => "Princeton", "State" => "NJ",
           "Zip" => "08544", "SSN" => patron.barcode, "Cleared" => "Yes", "Site" => "Firestone"
         }

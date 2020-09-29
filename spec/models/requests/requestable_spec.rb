@@ -1367,7 +1367,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:user) { FactoryGirl.build(:unauthenticated_patron) }
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:patron) do
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true").to_return(status: 200, body: valid_patron_response, headers: {})
       Requests::Patron.new(user: user, session: {})
     end
     let(:params) do
@@ -1512,7 +1512,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   describe "#will_submit_via_form?" do
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu","campus_authorized":true}' }
     let(:patron) do
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo").to_return(status: 200, body: valid_patron_response, headers: {})
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true").to_return(status: 200, body: valid_patron_response, headers: {})
       user = instance_double(User, guest?: false, uid: 'foo')
       Requests::Patron.new(user: user, session: {})
     end

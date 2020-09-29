@@ -26,11 +26,11 @@ module Requests
       # response = scsb_request(scsb_params)
       # if response.status != 200
       #   error_message = "Request failed because #{response.body}"
-      #   @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: error_message }
+      #   @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.patron[:user_name], barcode: params[:patronBarcode], error: error_message }
       # else
       #   response = parse_scsb_response(response)
       #   if response[:success] == false
-      #     @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
+      #     @errors << { type: 'recall', bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.patron[:user_name], barcode: params[:patronBarcode], error: response[:screenMessage] }
       #   else
       @sent << { bibid: params[:bibId], item: params[:itemBarcodes], user_name: @submission.user_name, barcode: @submission.barcode }
       #   end
@@ -48,7 +48,7 @@ module Requests
       def handle_item(item:, scsb_params:)
         # location = get_location(item['location_code'])
         if scsb_locations.include? item['location_code'] # || (location[:library][:code] == 'recap')
-          params = scsb_param_mapping(@submission.bib, @submission.user, item)
+          params = scsb_param_mapping(@submission.bib, @submission.patron, item)
           if scsb_params.empty?
             scsb_params = params
           else
@@ -61,7 +61,7 @@ module Requests
       end
 
       def handle_non_scsb_recap_item(item:)
-        params = param_mapping(@submission.bib, @submission.user, item)
+        params = param_mapping(@submission.bib, @submission.patron, item)
         payload = request_payload(item)
         r = put_response(params, payload)
         xml_response = Nokogiri::XML(r.body)

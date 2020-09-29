@@ -11,24 +11,24 @@ module Requests
     validate :item_validations # , presence: true, length: { minimum: 1 }, on: :submit
 
     def initialize(params, patron)
-      @user = patron
+      @patron = patron
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
       @bd = params[:bd]
     end
 
-    attr_reader :user, :success_messages
+    attr_reader :patron, :success_messages
 
     def email
-      @user.active_email
+      @patron.active_email
     end
 
     def source
-      @user.source
+      @patron.source
     end
 
     def user_name
-      @user.netid
+      @patron.netid
     end
 
     attr_reader :items
@@ -49,7 +49,7 @@ module Requests
     end
 
     def user_barcode
-      @user.barcode
+      @patron.barcode
     end
 
     attr_reader :bib

@@ -42,10 +42,10 @@ module Requests
       end
 
       def build_params(item:)
-        params = param_mapping(@submission.bib, @submission.user, item)
+        params = param_mapping(@submission.bib, @submission.patron, item)
         params["bib"] = @submission.bib
         params['requestable'] = @submission.items
-        params['request'] = @submission.user
+        params['request'] = @submission.patron
         params
       end
 

@@ -31,7 +31,7 @@ module Requests
     private
 
       def handle_item(item)
-        params = scsb_param_mapping(@submission.bib, @submission.user, item)
+        params = scsb_param_mapping(@submission.bib, @submission.patron, item)
         response = scsb_request(params)
         if response.status != 200
           error_message = "Request failed because #{response.body}"

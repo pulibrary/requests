@@ -5,8 +5,9 @@ describe Requests::IlliadPatron, type: :controller do
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
       "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-      "patron_id" => "99999", "active_email" => "foo@princeton.edu" }.with_indifferent_access
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu", "ldap" => ldap_data }.with_indifferent_access
   end
+  let(:ldap_data) { { uid: 'foo', department: 'Library - Information Technology', address: 'Firestone Library$Library Information Technology', telephone: '123-456-7890', surname: 'Doe', givenname: 'Joe', email: 'joe@abc.com', pustatus: 'fac', status: 'faculty' }.with_indifferent_access }
   let(:user_info) do
     user = instance_double(User, guest?: false, uid: 'foo')
     Requests::Patron.new(user: user, session: {}, patron: valid_patron)
@@ -54,10 +55,7 @@ describe Requests::IlliadPatron, type: :controller do
       expect(patron[:Cleared]).to eq('Yes')
     end
 
-    # rubocop:disable RSpec/AnyInstance
     it "can create a patron" do
-      ldap_data = [{ uid: ['foo'], ou: ['Library - Information Technology'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], telephonenumber: ['123-456-7890'], sn: ['Doe'], givenname: ['Joe'], mail: ['joe@abc.com'], edupersonprimaryaffiliation: ['faculty'], pustatus: ['undergraduate'] }]
-      expect_any_instance_of(Net::LDAP).to receive(:search).with(filter: Net::LDAP::Filter.eq("uid", 'foo')).and_return(ldap_data)
       stub_request(:post, stub_url_base)
         .with(body: hash_including("Username" => 'foo', "ExternalUserId" => "foo", "FirstName" => "Foo", "LastName" => "Request", "EmailAddress" => "foo@princeton.edu", "DeliveryMethod" => "Hold for Pickup", "LoanDeliveryMethod" => "Hold for Pickup",
                                    "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "F - Faculty", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "Library - Information Technology", "Web" => true,
@@ -70,50 +68,50 @@ describe Requests::IlliadPatron, type: :controller do
       expect(patron["Cleared"]).to eq('Yes')
     end
 
-    it "can create a student" do
-      ldap_data = [{ uid: ['foo'], ou: ['Library - Information Technology'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], telephonenumber: ['123-456-7890'], sn: ['Doe'], givenname: ['Joe'], mail: ['joe@abc.com'], purescollege: ['College'], edupersonprimaryaffiliation: ['student'], pustatus: ['undergraduate'] }]
-      expect_any_instance_of(Net::LDAP).to receive(:search).with(filter: Net::LDAP::Filter.eq("uid", 'foo')).and_return(ldap_data)
-      stub_request(:post, stub_url_base)
-        .with(body: hash_including("Username" => 'foo', "ExternalUserId" => "foo", "FirstName" => "Foo", "LastName" => "Request", "EmailAddress" => "foo@princeton.edu", "DeliveryMethod" => "Hold for Pickup", "LoanDeliveryMethod" => "Hold for Pickup",
-                                   "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "U - Undergraduate", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "College", "Web" => true,
-                                   "Address" => "Firestone Library", "Address2" => "Library Information Technology", "City" => "Princeton", "State" => "NJ", "Zip" => "08544", "SSN" => "22101007797777", "Cleared" => "Yes", "Site" => "Firestone"))
-        .to_return(status: 200, body: responses[:client_created], headers: {})
-      patron = illiad_patron.create_illiad_patron
-      expect(patron).not_to be_blank
-      expect(patron["UserName"]).to eq('foo')
-      expect(patron["ExternalUserId"]).to eq('foo')
-      expect(patron["Cleared"]).to eq('Yes')
+    context "student" do
+      let(:ldap_data) { { uid: 'foo', department: 'College', address: 'Firestone Library$Library Information Technology', telephone: '123-456-7890', surname: 'Doe', givenname: 'Joe', email: 'joe@abc.com', pustatus: 'undergraduate', status: 'student' }.with_indifferent_access }
+
+      it "can create a student" do
+        stub_request(:post, stub_url_base)
+          .with(body: hash_including("Username" => 'foo', "ExternalUserId" => "foo", "FirstName" => "Foo", "LastName" => "Request", "EmailAddress" => "foo@princeton.edu", "DeliveryMethod" => "Hold for Pickup", "LoanDeliveryMethod" => "Hold for Pickup",
+                                     "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "U - Undergraduate", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "College", "Web" => true,
+                                     "Address" => "Firestone Library", "Address2" => "Library Information Technology", "City" => "Princeton", "State" => "NJ", "Zip" => "08544", "SSN" => "22101007797777", "Cleared" => "Yes", "Site" => "Firestone"))
+          .to_return(status: 200, body: responses[:client_created], headers: {})
+        patron = illiad_patron.create_illiad_patron
+        expect(patron).not_to be_blank
+        expect(patron["UserName"]).to eq('foo')
+        expect(patron["ExternalUserId"]).to eq('foo')
+        expect(patron["Cleared"]).to eq('Yes')
+      end
     end
 
-    it "ignores client already exists when creating a patron" do
-      ldap_data = [{ uid: ['foo'], ou: ['Information Technology'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], telephonenumber: ['123-456-7890'], sn: ['Doe'], givenname: ['Joe'], mail: ['joe@abc.com'], edupersonprimaryaffiliation: ['staff'], pustatus: ['stf'] }]
-      expect_any_instance_of(Net::LDAP).to receive(:search).with(filter: Net::LDAP::Filter.eq("uid", 'foo')).and_return(ldap_data)
-      stub_request(:post, stub_url_base)
-        .with(body: hash_including("Username" => 'foo', "ExternalUserId" => "foo", "FirstName" => "Foo", "LastName" => "Request", "EmailAddress" => "foo@princeton.edu", "DeliveryMethod" => "Hold for Pickup", "LoanDeliveryMethod" => "Hold for Pickup",
-                                   "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "GS - University Staff", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "Information Technology", "Web" => true,
-                                   "Address" => "Firestone Library", "Address2" => "Library Information Technology", "City" => "Princeton", "State" => "NJ", "Zip" => "08544", "SSN" => "22101007797777", "Cleared" => "Yes", "Site" => "Firestone"))
-        .to_return(status: 400, body: responses[:user_already_exits], headers: {})
-      stub_request(:get, stub_url)
-        .to_return(status: 200, body: responses[:found], headers: {})
-      patron = illiad_patron.create_illiad_patron
-      expect(patron).not_to be_blank
-      expect(patron[:UserName]).to eq('abc234')
-      expect(patron[:ExternalUserId]).to eq('foo')
-      expect(patron[:Cleared]).to eq('Yes')
+    context "staff" do
+      let(:ldap_data) { { uid: 'foo', department: 'Information Technology', address: 'Firestone Library$Library Information Technology', telephone: '123-456-7890', surname: 'Doe', givenname: 'Joe', email: 'joe@abc.com', pustatus: 'stf', status: 'staff' }.with_indifferent_access }
+
+      it "ignores client already exists when creating a patron" do
+        stub_request(:post, stub_url_base)
+          .with(body: hash_including("Username" => 'foo', "ExternalUserId" => "foo", "FirstName" => "Foo", "LastName" => "Request", "EmailAddress" => "foo@princeton.edu", "DeliveryMethod" => "Hold for Pickup", "LoanDeliveryMethod" => "Hold for Pickup",
+                                     "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "GS - University Staff", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "Information Technology", "Web" => true,
+                                     "Address" => "Firestone Library", "Address2" => "Library Information Technology", "City" => "Princeton", "State" => "NJ", "Zip" => "08544", "SSN" => "22101007797777", "Cleared" => "Yes", "Site" => "Firestone"))
+          .to_return(status: 400, body: responses[:user_already_exits], headers: {})
+        stub_request(:get, stub_url)
+          .to_return(status: 200, body: responses[:found], headers: {})
+        patron = illiad_patron.create_illiad_patron
+        expect(patron).not_to be_blank
+        expect(patron[:UserName]).to eq('abc234')
+        expect(patron[:ExternalUserId]).to eq('foo')
+        expect(patron[:Cleared]).to eq('Yes')
+      end
     end
 
     it "responds with a blank patron if there is an error creating it" do
-      ldap_data = [{ uid: ['foo'], ou: ['Library - Information Technology'], puinterofficeaddress: ['Firestone Library$Library Information Technology'], telephonenumber: ['123-456-7890'], sn: ['Doe'], givenname: ['Joe'], mail: ['joe@abc.com'], edupersonprimaryaffiliation: ['staff'], pustatus: ['stf'] }]
-      expect_any_instance_of(Net::LDAP).to receive(:search).with(filter: Net::LDAP::Filter.eq("uid", 'foo')).and_return(ldap_data)
       stub_request(:post, stub_url_base)
         .with(body: hash_including("Username" => 'foo', "ExternalUserId" => "foo", "FirstName" => "Foo", "LastName" => "Request", "EmailAddress" => "foo@princeton.edu", "DeliveryMethod" => "Hold for Pickup", "LoanDeliveryMethod" => "Hold for Pickup",
-                                   "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "GS - Library Staff", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "Library - Information Technology", "Web" => true,
+                                   "NotificationMethod" => "Electronic", "Phone" => "123-456-7890", "Status" => "F - Faculty", "AuthType" => "Default", "NVTGC" => "ILL", "Department" => "Library - Information Technology", "Web" => true,
                                    "Address" => "Firestone Library", "Address2" => "Library Information Technology", "City" => "Princeton", "State" => "NJ", "Zip" => "08544", "SSN" => "22101007797777", "Cleared" => "Yes", "Site" => "Firestone"))
         .to_return(status: 400, body: responses[:invalid], headers: {})
       patron = illiad_patron.create_illiad_patron
       expect(patron).to be_blank
     end
-
-    # rubocop:enable RSpec/AnyInstance
   end
 end

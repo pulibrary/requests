@@ -5,11 +5,11 @@
 
 module Requests
   class IlliadTransactionClient < IlliadClient
-    attr_reader :user, :bib, :item, :note, :illiad_transaction_status, :attributes
+    attr_reader :patron, :bib, :item, :note, :illiad_transaction_status, :attributes
 
-    def initialize(user:, bib:, item:)
+    def initialize(patron:, bib:, item:)
       super()
-      @user = user
+      @patron = patron
       @bib = bib
       @item = item
       @note = ["Digitization Request", item["edd_note"]].join(": ")&.truncate(4000)
@@ -18,11 +18,11 @@ module Requests
     end
 
     def create_request
-      patron_client = Requests::IlliadPatron.new(user)
-      patron = patron_client.illiad_patron
-      patron = patron_client.create_illiad_patron if patron.blank?
-      return nil if patron.blank?
-      Requests::RequestMailer.send("invalid_illiad_patron_email", patron_client.attributes, attributes).deliver_now unless validate_illiad_patron(patron)
+      patron_client = Requests::IlliadPatron.new(patron)
+      illiad_patron = patron_client.illiad_patron
+      illiad_patron = patron_client.create_illiad_patron if illiad_patron.blank?
+      return nil if illiad_patron.blank?
+      Requests::RequestMailer.send("invalid_illiad_patron_email", patron_client.attributes, attributes).deliver_now unless validate_illiad_patron(illiad_patron)
       transaction = post_json_response(url: 'ILLiadWebPlatform/transaction', body: attributes.to_json)
       post_json_response(url: "ILLiadWebPlatform/transaction/#{transaction['TransactionNumber']}/notes", body: "{ \"Note\" : \"#{note}\", \"NoteType\" : \"Staff\" }") if transaction.present?
       transaction
@@ -32,7 +32,7 @@ module Requests
 
       def map_metdata
         {
-          "Username" => user.netid, "TransactionStatus" => illiad_transaction_status,
+          "Username" => patron.netid, "TransactionStatus" => illiad_transaction_status,
           "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"),
           "WantedBy" => "Yes, until the semester's", # note creation fails if we use any other text value
           "PhotoItemAuthor" => bib["author"]&.truncate(100), "PhotoArticleAuthor" => item["edd_author"]&.truncate(100), "PhotoJournalTitle" => bib["title"]&.truncate(255),

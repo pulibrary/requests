@@ -22,7 +22,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     context "An campus authorized user" do
       before do
         sign_in(user)
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_patron_response, headers: {})
       end
 
@@ -115,7 +115,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
 
     before do
       sign_in(user)
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}")
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
         .to_return(status: 200, body: valid_patron_response, headers: {})
 
       without_partial_double_verification do

@@ -12,6 +12,7 @@
     "patron_id": 77777,
     "active_email": "a@b.com",
     "campus_authorized": true,
+    "campus_authorized_category": "full",
     "ldap": {
         "netid": "jstudent",
         "department": "First ",

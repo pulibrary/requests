@@ -14,7 +14,7 @@ module Requests
     delegate :pageable_loc?, to: :@pageable
     delegate :map_url, to: :@mappable
     delegate :illiad_request_url, :illiad_request_parameters, to: :@illiad
-    delegate :campus_authorized, to: :@patron
+    delegate :campus_authorized, :covid_trained?, to: :@patron
 
     include Requests::Aeon
 
@@ -50,12 +50,12 @@ module Requests
     end
 
     def pick_up?
-      return false if user_barcode.blank? || etas? || !campus_authorized
-      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request?
+      return false if user_barcode.blank? || etas? || !covid_trained?
+      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request_status?
     end
 
     def fill_in_pickup?
-      return false if user_barcode.blank? || !campus_authorized
+      return false if user_barcode.blank? || !covid_trained?
       !item_data? || pick_up?
     end
 

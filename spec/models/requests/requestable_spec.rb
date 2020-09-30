@@ -5,7 +5,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
       "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-      "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true }.with_indifferent_access
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true, "campus_authorized_category" => "full" }.with_indifferent_access
   end
   let(:patron) { Requests::Patron.new(user: user, patron: valid_patron) }
 
@@ -57,12 +57,26 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
         it 'can not be picked up' do
           expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_truthy
         end
       end
     end
@@ -130,7 +144,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -203,7 +231,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -277,7 +319,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.first.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -337,7 +393,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable_on_hold.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -412,7 +482,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         let(:valid_patron) do
           { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
             "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+        end
+
+        describe '#pick_up?' do
+          it 'can not be picked up' do
+            expect(requestable.first.pick_up?).to be_falsey
+          end
+        end
+      end
+
+      context "An user without campus access but is COVID trained" do
+        let(:valid_patron) do
+          { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+            "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
         end
 
         describe '#pick_up?' do
@@ -453,12 +537,28 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
       end
 
       describe '#available_for_appointment?' do
         it 'is not available for an appointment' do
           expect(requestable.available_for_appointment?).to be_falsey
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
+      end
+
+      describe '#available_for_appointment?' do
+        it 'is not available for an appointment' do
+          expect(requestable.available_for_appointment?).to be_falsey
+          expect(requestable.pick_up?).to be_falsey
         end
       end
     end
@@ -510,12 +610,26 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
         it 'can not be picked up' do
           expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_truthy
         end
       end
     end
@@ -571,7 +685,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -624,7 +752,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -685,7 +827,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -747,7 +903,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -816,7 +986,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -860,7 +1044,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#available_for_appointment?' do
+        it "is available for appointment" do
+          expect(requestable.available_for_appointment?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#available_for_appointment?' do
@@ -980,7 +1178,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -1011,7 +1209,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         let(:valid_patron) do
           { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
             "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
         end
 
         it 'does not have item data' do
@@ -1022,6 +1220,24 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
           expect(requestable.enum_value).to eq ""
           expect(requestable.cron_value).to eq ""
           expect(requestable.fill_in_pickup?).to be_falsey
+        end
+      end
+
+      context "patron is not campus authorized but is COVID trained" do
+        let(:valid_patron) do
+          { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+            "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
+        end
+
+        it 'does not have item data' do
+          expect(requestable.item_data?).to be false
+          expect(requestable.pickup_location_id).to eq ""
+          expect(requestable.pickup_location_code).to eq ""
+          expect(requestable.item_type).to eq ""
+          expect(requestable.enum_value).to eq ""
+          expect(requestable.cron_value).to eq ""
+          expect(requestable.fill_in_pickup?).to be_truthy
         end
       end
     end
@@ -1055,12 +1271,28 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
         it 'can not be picked up' do
           expect(requestable.pick_up?).to be_falsey
+          expect(requestable.fill_in_pickup?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+          expect(requestable.fill_in_pickup?).to be_truthy
         end
       end
     end
@@ -1080,7 +1312,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         let(:valid_patron) do
           { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
             "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+        end
+
+        it 'is on_order and not requestable' do
+          expect(requestable.on_order?).to be_truthy
+          expect(requestable.request?).to be_falsey
+          expect(requestable.request_status?).to be_truthy
+        end
+      end
+
+      context "patron is not campus authorized but is trained" do
+        let(:valid_patron) do
+          { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+            "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+            "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
         end
 
         it 'is on_order and not requestable' do
@@ -1112,20 +1358,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#available_for_appointment?' do
       it "is not available for appointment" do
         expect(requestable.available_for_appointment?).to be_falsey
-      end
-    end
-
-    context "An user without campus access" do
-      let(:valid_patron) do
-        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
-          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
-      end
-
-      describe '#pick_up?' do
-        it 'can not be picked up' do
-          expect(requestable.pick_up?).to be_falsey
-        end
       end
     end
   end
@@ -1168,7 +1400,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorize" => false }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
+        end
+      end
+    end
+
+    context "An user without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -1183,7 +1429,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   context 'When a princeton user with NetID visits the site' do
     let(:valid_patron) do
       { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request", "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-        "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true }.with_indifferent_access
+        "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true, "campus_authorized_category" => "full" }.with_indifferent_access
     end
     let(:patron) do
       Requests::Patron.new(user: user, session: {}, patron: valid_patron)
@@ -1198,7 +1444,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
 
     describe '# offsite requestable' do
-      # TODO: Activate test when campus has re-opened
       it "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end

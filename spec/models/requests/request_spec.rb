@@ -878,6 +878,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request.requestable.first.services.include?('aeon')).to be_truthy
       end
     end
+
+    describe "#single_aeon_requestable?" do
+      it "identifies itself as a single aeon requestable" do
+        expect(request.single_aeon_requestable?).to be_falsey
+      end
+    end
   end
 
   context "Aeon item with holdings without items" do
@@ -900,6 +906,43 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
       it "is eligible for aeon services" do
         expect(request.requestable.first.services.include?('aeon')).to be_truthy
+      end
+    end
+
+    describe "#single_aeon_requestable?" do
+      it "identifies itself as a single aeon requestable" do
+        expect(request.single_aeon_requestable?).to be_falsey
+      end
+    end
+  end
+
+  context "Aeon item with holdings without items with mfhd" do
+    let(:params) do
+      {
+        system_id: '616086',
+        patron: patron,
+        mfhd: '675722'
+      }
+    end
+    let(:request) { described_class.new(params) }
+
+    describe "#requestable" do
+      it "has a requestable items" do
+        expect(request.requestable.length).to eq(10)
+      end
+
+      it "does not have any item data" do
+        expect(request.requestable.first.item).to be_nil
+      end
+
+      it "is eligible for aeon services" do
+        expect(request.requestable.first.services.include?('aeon')).to be_truthy
+      end
+    end
+
+    describe "#single_aeon_requestable?" do
+      it "identifies itself as a single aeon requestable" do
+        expect(request.single_aeon_requestable?).to be_falsey
       end
     end
   end

@@ -11,5 +11,19 @@
     "expire_date": "2022-10-31T23:00:03.000-05:00",
     "patron_id": 77777,
     "active_email": "a@b.com",
-    "campus_authorized": false
+    "campus_authorized": false,
+    "campus_authorized_category": "none",
+    "ldap": {
+        "netid": "jstudent",
+        "department": "First ",
+        "address": "Box 0000",
+        "telephone": "111-222-3333",
+        "givenname": "Joe",
+        "surname": "Student",
+        "email": "a@b.com",
+        "status": "student",        
+        "pustatus": "undergraduate",
+        "universityid": "960594184",
+        "title": null
+        }
 }

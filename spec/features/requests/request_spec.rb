@@ -24,6 +24,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     let(:valid_patron_no_barcode_response) { fixture('/bibdata_patron_no_barcode_response.json') }
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
     let(:valid_barcode_patron_pickup_only_response) { fixture('/bibdata_patron_barcode_pickup_only_response.json') }
+    let(:valid_patron_no_campus_response) { fixture('/bibdata_patron_response_no_campus.json') }
     let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
 
     let(:responses) do
@@ -833,6 +834,21 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         expect(page).not_to have_content 'Electronic Delivery'
         expect(page).not_to have_selector '#request_user_barcode', visible: false
         expect(page).to have_content('You are only currently authorized to utilize our book')
+        expect(page).not_to have_content('If you would like to have access to pick-up books')
+      end
+    end
+
+    context 'A student who has not taken the training' do
+      let(:user) { FactoryGirl.create(:user) }
+      it 'displays a request form for a ReCAP item.' do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+          .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
+        login_as user
+        visit "/requests/#{voyager_id}"
+        expect(page).to have_content 'Electronic Delivery'
+        expect(page).to have_selector '#request_user_barcode', visible: false
+        expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.')
+        expect(page).to have_content('If you would like to have access to pick-up books')
       end
     end
 

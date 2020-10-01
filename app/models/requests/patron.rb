@@ -62,6 +62,10 @@ module Requests
       campus_authorized || patron[:campus_authorized_category] == "trained"
     end
 
+    def training_eligable?
+      ["staff", "faculty", "student"].include? status
+    end
+
     def telephone
       ldap[:telephone]
     end

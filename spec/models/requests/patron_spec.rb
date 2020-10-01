@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# rubocop:disable RSpec/MultipleExpectations
 describe Requests::Patron do
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
@@ -15,6 +16,7 @@ describe Requests::Patron do
         expect(patron.last_name).to eq('foobar')
         expect(patron.barcode).to eq('ACCESS')
         expect(patron.campus_authorized).to be_falsey
+        expect(patron.training_eligable?).to be_falsey
       end
     end
   end
@@ -24,7 +26,6 @@ describe Requests::Patron do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 200, body: valid_patron_response, headers: {})
       end
-      # rubocop:disable RSpec/MultipleExpectations
       it 'Handles an authorized princeton net ID holder' do
         patron = described_class.new(user: instance_double(User, guest?: false, uid: 'foo'),
                                      session: { email: 'foo@bar.com', user_name: 'foobar' }.with_indifferent_access)
@@ -35,8 +36,8 @@ describe Requests::Patron do
         expect(patron.telephone).to eq('111-222-3333')
         expect(patron.status).to eq('student')
         expect(patron.pustatus).to eq('undergraduate')
+        expect(patron.training_eligable?).to be_truthy
       end
-      # rubocop:enable RSpec/MultipleExpectations
     end
   end
   context 'A user with a valid barcode patron record' do
@@ -99,3 +100,4 @@ describe Requests::Patron do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

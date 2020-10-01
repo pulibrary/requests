@@ -68,7 +68,7 @@ module Requests
     end
 
     def single_aeon_requestable?
-      (filtered_sorted_requestable.size == 1) && first_filtered_requestable&.services&.include?('aeon')
+      (filtered_sorted_requestable.size == 1 && filtered_sorted_requestable[filtered_sorted_requestable.keys&.first].size == 1) && first_filtered_requestable&.services&.include?('aeon')
     end
 
     def filtered_sorted_requestable

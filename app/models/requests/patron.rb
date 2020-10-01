@@ -54,6 +54,10 @@ module Requests
       patron[:campus_authorized]
     end
 
+    def pickup_only?
+      !campus_authorized && patron[:campus_authorized_category] == "trained"
+    end
+
     def covid_trained?
       campus_authorized || patron[:campus_authorized_category] == "trained"
     end

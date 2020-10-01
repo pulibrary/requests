@@ -23,6 +23,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
     let(:valid_patron_no_barcode_response) { fixture('/bibdata_patron_no_barcode_response.json') }
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
+    let(:valid_barcode_patron_pickup_only_response) { fixture('/bibdata_patron_barcode_pickup_only_response.json') }
     let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
 
     let(:responses) do
@@ -811,7 +812,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     context 'A barcode holding user' do
       let(:user) { FactoryGirl.create(:valid_barcode_patron) }
       # change this back #438
-      it 'display a request form for a ReCAP item.' do
+      it 'displays a request form for a ReCAP item.' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
         login_as user
@@ -819,6 +820,19 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         expect(page).not_to have_content 'Electronic Delivery'
         expect(page).not_to have_selector '#request_user_barcode', visible: false
         expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.')
+      end
+    end
+
+    context 'A covid-trained pick-up only user' do
+      let(:user) { FactoryGirl.create(:valid_barcode_patron) }
+      it 'displays a request form for a ReCAP item.' do
+        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+          .to_return(status: 200, body: valid_barcode_patron_pickup_only_response, headers: {})
+        login_as user
+        visit "/requests/#{voyager_id}"
+        expect(page).not_to have_content 'Electronic Delivery'
+        expect(page).not_to have_selector '#request_user_barcode', visible: false
+        expect(page).to have_content('You are only currently authorized to utilize our book')
       end
     end
 

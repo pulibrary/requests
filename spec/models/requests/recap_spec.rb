@@ -27,7 +27,7 @@ describe Requests::Recap do
          "edd_art_title" => "",
          "edd_note" => "",
          "library_code" => "recap",
-         "pickup" => "PA" },
+         "pick_up" => "PA" },
        { "selected" => "true",
          "mfhd" => "534137",
          "call_number" => "HA202 .U581",
@@ -47,7 +47,7 @@ describe Requests::Recap do
          "edd_art_title" => "Baz",
          "edd_note" => "",
          "library_code" => "recap",
-         "pickup" => "PH" }]
+         "pick_up" => "PH" }]
     end
 
     let(:bib) do

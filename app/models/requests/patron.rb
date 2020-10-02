@@ -54,7 +54,7 @@ module Requests
       patron[:campus_authorized]
     end
 
-    def pickup_only?
+    def pick_up_only?
       !campus_authorized && patron[:campus_authorized_category] == "trained"
     end
 

@@ -78,12 +78,12 @@
                 $('#bd_error').show();
               } else {
                 $.each(rows, function( key, val ) {
-                    var pickup_select = $(this).find('.bd-pickup');
+                    var pick_up_select = $(this).find('.bd-pick-up');
                     var request_options = $(this).find('select.request-options');
 
                     if (response.response_hash.Available) {
                       $.each(response.response_hash.PickupLocation, function( k, v ) {
-                        pickup_select.append($("<option></option>")
+                        pick_up_select.append($("<option></option>")
                             .attr("value",v.PickupLocationCode)
                             .text(v.PickupLocationDescription));
                       });
@@ -93,7 +93,7 @@
 
                       $('#bd_available').delay(500).fadeIn(500);
                       request_options.find('option:eq(1)').prop("selected", true)
-                      pickup_select.show();
+                      pick_up_select.show();
                     } else {
                       $('#bd_not_available').delay(500).fadeIn(500);
                     }

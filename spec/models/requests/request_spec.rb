@@ -651,7 +651,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   #       expect(request_at_paging_f.any_pageable?).to be(true)
   #       expect(request_at_paging_f.requestable[0].location_code).to eq('f')
   #       expect(request_at_paging_f.requestable[0].pageable?).to eq(true)
-  #       expect(request_at_paging_f.requestable[0].pickup_locations.size).to eq(1)
+  #       expect(request_at_paging_f.requestable[0].pick_up_locations.size).to eq(1)
   #     end
   #   end
   # end
@@ -723,20 +723,20 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_on_order.requestable[0].voyager_managed?).to eq(true)
       end
 
-      it "provides a list of the default pickup locations" do
-        expect(request_with_on_order.default_pickups).to be_truthy
-        expect(request_with_on_order.default_pickups).to be_an(Array)
+      it "provides a list of the default pick-up locations" do
+        expect(request_with_on_order.default_pick_ups).to be_truthy
+        expect(request_with_on_order.default_pick_ups).to be_an(Array)
         # test that it is an array of hashes
-        expect(request_with_on_order.default_pickups.size).to be > 1
-        expect(request_with_on_order.default_pickups.include?(firestone_circ)).to be_truthy
+        expect(request_with_on_order.default_pick_ups.size).to be > 1
+        expect(request_with_on_order.default_pick_ups.include?(firestone_circ)).to be_truthy
       end
 
       it "lists Firestone as the first choice" do
-        expect(request_with_on_order.default_pickups.first).to eq(firestone_circ)
+        expect(request_with_on_order.default_pick_ups.first).to eq(firestone_circ)
       end
 
       it "alphas sort the pickups between Firestone and staff locations" do
-        expect(request_with_on_order.default_pickups[1]).to eq(architecture)
+        expect(request_with_on_order.default_pick_ups[1]).to eq(architecture)
       end
     end
   end

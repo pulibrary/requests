@@ -32,7 +32,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "pres",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -86,7 +86,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "pres",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -137,7 +137,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "item_id" => "10139326",
           "status" => "Not Charged",
           "type" => "paging",
-          "pickup" => "PN"
+          "pick_up" => "PN"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -198,7 +198,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "item_id" => "2286894",
           "status" => "Not Charged",
           "type" => "annexa",
-          "pickup" => "PQ"
+          "pick_up" => "PQ"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -263,7 +263,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "item_id" => "6068846",
           "status" => "Not Charged",
           "type" => "annexa",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -331,7 +331,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "annexb",
-          "pickup" => "PN"
+          "pick_up" => "PN"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -385,7 +385,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "annexb",
-          "pickup" => "PN"
+          "pick_up" => "PN"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -435,7 +435,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "location_code" => "j",
           "item_id" => "10081566",
           "status" => "On-Order",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -486,7 +486,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "location_code" => "j",
           "item_id" => "10081566",
           "status" => "On-Order",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -755,7 +755,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "status" => "Not Charged",
           "type" => "recap",
           "delivery_mode_7467161" => "print",
-          "pickup" => "PA",
+          "pick_up" => "PA",
           "edd_start_page" => "",
           "edd_end_page" => "",
           "edd_volume_number" => "",
@@ -827,7 +827,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "status" => "Not Charged",
           "type" => "recap",
           "delivery_mode_7467161" => "print",
-          "pickup" => "PA",
+          "pick_up" => "PA",
           "edd_start_page" => "1",
           "edd_end_page" => "20",
           "edd_volume_number" => "4",
@@ -894,7 +894,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "status" => "Not Charged",
           "type" => "recap",
           "delivery_mode_7467161" => "print",
-          "pickup" => "PA",
+          "pick_up" => "PA",
           "edd_start_page" => "",
           "edd_end_page" => "",
           "edd_volume_number" => "",
@@ -969,7 +969,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "1",
           "status" => "Renewed",
           "type" => "recall",
-          "pickup" => "299|.Firestone Library Circulation Desk"
+          "pick_up" => "299|.Firestone Library Circulation Desk"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -1037,7 +1037,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "ppl",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -1091,7 +1091,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "0",
           "status" => "Not Charged",
           "type" => "ppl",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -1145,7 +1145,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "on_shelf",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         }.with_indifferent_access,
         {
           "selected" => "false"
@@ -1201,7 +1201,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "on_shelf",
-          "pickup" => "PL" }.with_indifferent_access,
+          "pick_up" => "PL" }.with_indifferent_access,
         {
           "selected" => "false"
         }.with_indifferent_access

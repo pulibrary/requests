@@ -4,7 +4,7 @@
   <% end %>
 <% elsif !@user.guest && @patron.blank? %>
   <%= render partial: 'auth_user_lookup_fail' %>
-<!-- Temporary change to allow students not on campus digitization,  but not pickup options -->
+<!-- Temporary change to allow students not on campus digitization,  but not pick-up options -->
 <%# elsif !@user.guest && @patron['barcode'].blank? %>
   <%# = render partial: 'cas_user_no_barcode' %>
 <% elsif @user.provider == 'barcode' %>

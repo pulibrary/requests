@@ -9,6 +9,6 @@
 <% end %>
 
 <%= render 'patron_info' %>
-   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pickup_location["code"]) } %>
+   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pick_up_location["code"]) } %>
 <%= render 'bib_info' %>
 <%= render 'item_info' %>

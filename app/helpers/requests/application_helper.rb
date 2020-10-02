@@ -28,7 +28,7 @@ module Requests
       error_keys.any? { |item| user_errors.include? item }
     end
 
-    def show_pickup_service_options(requestable, mfhd_id)
+    def show_pick_up_service_options(requestable, mfhd_id)
       if requestable.on_shelf?
         display_on_shelf(requestable, mfhd_id)
       else
@@ -136,59 +136,59 @@ module Requests
       end
     end
 
-    def pickup_classlist(requestable, collapse)
+    def pick_up_classlist(requestable, collapse)
       class_list = "collapse request--print"
       class_list += " show" if !requestable.digitize? && !collapse
       class_list
     end
 
     # move this to requestable object
-    # Default pickups should be available
-    def pickup_choices(requestable, default_pickups, collapse = false)
-      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: pickup_classlist(requestable, collapse)) do
-        preferred_request_content_tag(requestable, requestable.pickup_locations || default_pickups)
+    # Default pick-ups should be available
+    def pick_up_choices(requestable, default_pick_ups, collapse = false)
+      content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}", class: pick_up_classlist(requestable, collapse)) do
+        preferred_request_content_tag(requestable, requestable.pick_up_locations || default_pick_ups)
       end
     end
 
-    def preferred_request_content_tag(requestable, default_pickups)
-      (show_pickup_service_options(requestable, nil) || "") +
+    def preferred_request_content_tag(requestable, default_pick_ups)
+      (show_pick_up_service_options(requestable, nil) || "") +
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}_card", class: "card card-body bg-light") do
-          locs = pickup_locations(requestable, default_pickups)
+          locs = pick_up_locations(requestable, default_pick_ups)
           # temporary changes issue 438
           if locs.size > 1
-            select_tag "requestable[][pickup]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pickup_placeholder")
+            select_tag "requestable[][pick_up]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pick_up_placeholder")
           else
             style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-            name = requestable.charged? ? 'updated_later' : 'requestable[][pickup]'
-            hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pickup-hidden'
-            label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pickup', style: style.to_s
+            name = requestable.charged? ? 'updated_later' : 'requestable[][pick_up]'
+            hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pick-up-hidden'
+            label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pick-up', style: style.to_s
             hidden + label
           end
         end
     end
 
-    def available_pickups(requestable, default_pickups)
-      idx = (default_pickups.map { |loc| loc[:label] }).index(requestable.location["library"]["label"]) # || 0
+    def available_pick_ups(requestable, default_pick_ups)
+      idx = (default_pick_ups.map { |loc| loc[:label] }).index(requestable.location["library"]["label"]) # || 0
       if idx.present?
-        [default_pickups[idx]]
+        [default_pick_ups[idx]]
       elsif requestable.recap? || requestable.annexa?
-        locations = requestable.pickup_locations || default_pickups
+        locations = requestable.pick_up_locations || default_pick_ups
         # open libraries
-        pickups = locations.select { |loc| ['PJ', 'PA', 'PL', 'PK', 'PM', 'QX', 'PW', 'PN', 'QA', 'QT', 'QC'].include?(loc[:gfa_pickup]) }
-        pickups << default_pickups[0] if pickups.empty?
-        pickups
+        pick_ups = locations.select { |loc| ['PJ', 'PA', 'PL', 'PK', 'PM', 'QX', 'PW', 'PN', 'QA', 'QT', 'QC'].include?(loc[:gfa_pickup]) }
+        pick_ups << default_pick_ups[0] if pick_ups.empty?
+        pick_ups
       else
-        [default_pickups[0]]
+        [default_pick_ups[0]]
       end
       # return
       # temporary only deliver to holding library or firestone
       # locs = []
       # if requestable.services.include? 'trace'
-      #   locs = default_pickups
-      # elsif requestable.pickup_locations.nil?
-      #   locs = default_pickups
+      #   locs = default_pick_ups
+      # elsif requestable.pick_up_locations.nil?
+      #   locs = default_pick_ups
       # else
-      #   requestable.pickup_locations.each do |location|
+      #   requestable.pick_up_locations.each do |location|
       #     locs << { label: location[:label], gfa_pickup: location[:gfa_pickup], staff_only: location[:staff_only] }
       #   end
       # end
@@ -439,8 +439,8 @@ module Requests
         end
       end
 
-      def pickup_locations(requestable, default_pickups)
-        return available_pickups(requestable, default_pickups) unless requestable.pending?
+      def pick_up_locations(requestable, default_pick_ups)
+        return available_pick_ups(requestable, default_pick_ups) unless requestable.pending?
         if requestable.location[:holding_library].blank?
           [{ label: requestable.location[:library][:label], gfa_pickup: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
         else

@@ -21,7 +21,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
          "copy_number" => "1",
          "status" => "Renewed",
          "type" => "recall",
-         "pickup" => "299|Firestone Circulation" }]
+         "pick_up" => "299|Firestone Circulation" }]
     end
 
     let(:bib) do

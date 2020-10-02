@@ -10,9 +10,9 @@
           <% unless key == "selected" || value.empty? %>
           <td valign="top" class="responsive-column-container-all">
             <div style="font-weight:normal;font-size:12px;">
-              <% if key == "pickup" %>Pick-up<% else %><%= format_label(key) %><% end %></div>
+              <% if key == "pick_up" %>Pick-up<% else %><%= format_label(key) %><% end %></div>
             <span style="margin-bottom:0;"
-              class="large-print"><% if key == "pickup" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %>
+              class="large-print"><% if key == "pick_up" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %>
               <%= value.html_safe %></span>
           </td>
           <% end %>

@@ -2,8 +2,8 @@
 <div style="text-align:center;margin:18px 0;">
   <div style="font-size:12px;font-weight:normal;padding-top:18px;line-height:125%;">Pick-up Location</div>
   <span
-    style="font-size:20px;font-weight:bold;"><%= @submission.pickup_location['label'].html_safe %>,
-    <%= I18n.t("requests.library_hours.#{@submission.pickup_location['code']}", I18n.t("requests.library_hours.firestone")) %>.</span>
+    style="font-size:20px;font-weight:bold;"><%= @submission.pick_up_location['label'].html_safe %>,
+    <%= I18n.t("requests.library_hours.#{@submission.pick_up_location['code']}", I18n.t("requests.library_hours.firestone")) %>.</span>
   <p/>
   <p class="body-content">If you are an undergraduate requesting to pick up books from a Library location other than Firestone, please be sure that you have access to the building. Access can be requested through your academic department.</p>
 </div>

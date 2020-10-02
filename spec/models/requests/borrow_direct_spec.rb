@@ -30,7 +30,7 @@ describe Requests::BorrowDirect do
         "edd_author" => "",
         "edd_art_title" => "",
         "edd_note" => "",
-        "pickup" => "Firestone Library"
+        "pick_up" => "Firestone Library"
       },
       {
         "selected" => "false"

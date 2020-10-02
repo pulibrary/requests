@@ -63,16 +63,16 @@ $(document).ready(function() {
 
     });
 
-    var data = {}; //generic data object to package ajax pickup locations request
+    var data = {}; //generic data object to package ajax pick-up locations request
 
     $( ".table-responsive-sm" ).on( "change", ".request-options", function(event) {
       event.stopPropagation();
       var this_select = event.target;
       var this_td = $( this_select ).closest( "td" );
-      var recall_pickup_select = this_td.find( ".recall-pickup" );
-      var recall_pickup_single = this_td.find( ".single-pickup" );
-      var recall_pickup_single_hidden = this_td.find( ".single-pickup-hidden" );
-      var bd_pickup_select = this_td.find( ".bd-pickup" );
+      var recall_pick_up_select = this_td.find( ".recall-pick-up" );
+      var recall_pick_up_single = this_td.find( ".single-pick-up" );
+      var recall_pick_up_single_hidden = this_td.find( ".single-pick-up-hidden" );
+      var bd_pick_up_select = this_td.find( ".bd-pick-up" );
       var chbx =  $( this_select ).closest( "tr" ).find( "input:checkbox" );
 
       if($(this_select)[0].options[this_select.selectedIndex].value === 'recall'){
@@ -80,19 +80,19 @@ $(document).ready(function() {
         chbx.prop("disabled", false);
         $('.submit--request').prop("disabled", false);
         $('.alert').hide();
-        bd_pickup_select.attr( "name", "not_used" );
-        bd_pickup_select.attr( "id", "" );
-        bd_pickup_select.hide();
-        recall_pickup_select.attr( "name", "requestable[][pickup]" );
-        recall_pickup_select.attr( "id", "requestable__pickup" );
-        recall_pickup_single_hidden.attr( "name", "requestable[][pickup]" );
-        recall_pickup_single_hidden.attr( "id", "requestable__pickup" );
+        bd_pick_up_select.attr( "name", "not_used" );
+        bd_pick_up_select.attr( "id", "" );
+        bd_pick_up_select.hide();
+        recall_pick_up_select.attr( "name", "requestable[][pick_up]" );
+        recall_pick_up_select.attr( "id", "requestable__pick_up" );
+        recall_pick_up_single_hidden.attr( "name", "requestable[][pick_up]" );
+        recall_pick_up_single_hidden.attr( "id", "requestable__pick_up" );
 
-        // don't keep hitting the service if the pickup locs are populated
-        if(recall_pickup_select.find('option').length == 0){
-          recall_pickup_single.show();
-          recall_pickup_single.attr( "id", "requestable__pickup" );
-        } else if(recall_pickup_select.find('option').length == 1) {
+        // don't keep hitting the service if the pick-up locs are populated
+        if(recall_pick_up_select.find('option').length == 0){
+          recall_pick_up_single.show();
+          recall_pick_up_single.attr( "id", "requestable__pick_up" );
+        } else if(recall_pick_up_select.find('option').length == 1) {
           var item_inputs = $( this_select ).closest( "tr" ).find( "input" );
           var bib_inputs =  $('input[name^="bib["]');
           var user_inputs = $('input[name^="request["]');
@@ -111,29 +111,29 @@ $(document).ready(function() {
           .done(function( msg ) {
             console.log(msg);
             if(msg.response.recall['@allowed'] == 'Y'){
-              var opts = msg.response.recall['pickup-locations']['pickup-location'];
+              var opts = msg.response.recall['pick-up-locations']['pick-up-location'];
               var length = opts.length;
 
               for ( i=0; i < length; i++) {
-               recall_pickup_select.append($("<option></option>").attr("value",opts[i]['@code'] + '|' + opts[i]['$']).text(opts[i]['$']));
+               recall_pick_up_select.append($("<option></option>").attr("value",opts[i]['@code'] + '|' + opts[i]['$']).text(opts[i]['$']));
               }
-              recall_pickup_select.show();
-              recall_pickup_select.attr( "id", "requestable__pickup" );
-              recall_pickup_single.show();
-              recall_pickup_single.attr( "id", "requestable__pickup" );
+              recall_pick_up_select.show();
+              recall_pick_up_select.attr( "id", "requestable__pick_up" );
+              recall_pick_up_single.show();
+              recall_pick_up_single.attr( "id", "requestable__pick_up" );
             } else {
-              recall_pickup_select.hide();
-              recall_pickup_select.attr( "id", "" );
-              recall_pickup_single.hide();
-              recall_pickup_single.attr( "id", "" );
+              recall_pick_up_select.hide();
+              recall_pick_up_select.attr( "id", "" );
+              recall_pick_up_single.hide();
+              recall_pick_up_single.attr( "id", "" );
               this_td.append($("<div class='alert alert-danger'></div>").text("Cannot be recalled because: " + msg.response.recall.note['$']));
             }
           });
         } else {
-          recall_pickup_select.show();
-          recall_pickup_select.attr( "id", "requestable__pickup" );
-          recall_pickup_single.show();
-          recall_pickup_single.attr( "id", "requestable__pickup" );
+          recall_pick_up_select.show();
+          recall_pick_up_select.attr( "id", "requestable__pick_up" );
+          recall_pick_up_single.show();
+          recall_pick_up_single.attr( "id", "requestable__pick_up" );
         }
       } else {
         $('.alert').hide();
@@ -141,25 +141,25 @@ $(document).ready(function() {
         chbx.prop("checked", false);
         $('.submit--request').prop("disabled", true);
 
-        if(recall_pickup_select.is(':visible') || recall_pickup_single.is(':visible')){
-          recall_pickup_select.hide();
-          recall_pickup_select.attr( "id", "" );
-          recall_pickup_select.attr( "name", "not_used" );
-          recall_pickup_single.hide();
-          recall_pickup_single.attr( "id", "" );
-          recall_pickup_single_hidden.attr( "name", "not_used" );
-          recall_pickup_single_hidden.attr( "id", "" );
+        if(recall_pick_up_select.is(':visible') || recall_pick_up_single.is(':visible')){
+          recall_pick_up_select.hide();
+          recall_pick_up_select.attr( "id", "" );
+          recall_pick_up_select.attr( "name", "not_used" );
+          recall_pick_up_single.hide();
+          recall_pick_up_single.attr( "id", "" );
+          recall_pick_up_single_hidden.attr( "name", "not_used" );
+          recall_pick_up_single_hidden.attr( "id", "" );
         }
-        if(bd_pickup_select.is(':visible')){
-          bd_pickup_select.hide();
-          bd_pickup_select.attr( "id", "" );
-          bd_pickup_select.attr( "name", "not_used" );
+        if(bd_pick_up_select.is(':visible')){
+          bd_pick_up_select.hide();
+          bd_pick_up_select.attr( "id", "" );
+          bd_pick_up_select.attr( "name", "not_used" );
         }
         if($(this_select)[0].options[this_select.selectedIndex].value === 'bd'){
-          if(bd_pickup_select.find('option').length > 1){
-            bd_pickup_select.show();
-            bd_pickup_select.attr( "id", "requestable__pickup" );
-            bd_pickup_select.attr( "name", "requestable[][pickup]" );
+          if(bd_pick_up_select.find('option').length > 1){
+            bd_pick_up_select.show();
+            bd_pick_up_select.attr( "id", "requestable__pick-up" );
+            bd_pick_up_select.attr( "name", "requestable[][pick_up]" );
             chbx.prop("disabled", false);
             chbx.prop("checked", true);
             $('.submit--request').prop("disabled", false);

@@ -54,7 +54,7 @@ module Requests
       item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request_status?
     end
 
-    def fill_in_pickup?
+    def fill_in_pick_up?
       return false if user_barcode.blank? || !covid_trained?
       !item_data? || pick_up?
     end
@@ -80,7 +80,7 @@ module Requests
       digitize? || pick_up? || scsb_in_library_use? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 
-    delegate :pickup_location_id, :pickup_location_code, :item_type, :enum_value, :cron_value, :item_data?,
+    delegate :pick_up_location_id, :pick_up_location_code, :item_type, :enum_value, :cron_value, :item_data?,
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
              :id, :use_statement, :collection_code, :missing?, :charged?, to: :item
 
@@ -232,17 +232,17 @@ module Requests
       !charged? && pageable_loc?
     end
 
-    def pickup_locations
+    def pick_up_locations
       return nil if location[:delivery_locations].empty?
       if scsb?
-        scsb_pickup_override(item[:collection_code])
+        scsb_pick_up_override(item[:collection_code])
       else
         location[:delivery_locations]
       end
     end
 
     # override the default delivery location for SCSB at certain collection codes
-    def scsb_pickup_override(collection_code)
+    def scsb_pick_up_override(collection_code)
       if collection_code == 'AR'
         [Requests::BibdataService.delivery_locations[:PJ]]
       elsif collection_code == 'MR'

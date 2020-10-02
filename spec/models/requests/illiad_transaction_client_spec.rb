@@ -10,12 +10,12 @@ describe Requests::IlliadTransactionClient, type: :controller do
   let(:requestable) do
     [{ "selected" => "true", "bibid" => "10921934", "mfhd" => "10637717", "call_number" => "HF1131 .B485",
        "location_code" => "f", "item_id" => "7892830", "barcode" => "32101102865654", "enum" => "2019",
-       "copy_number" => "0", "status" => "Not Charged", "type" => "on_shelf", "pickup" => "PA", "edd_author" => "That One",
+       "copy_number" => "0", "status" => "Not Charged", "type" => "on_shelf", "pick_up" => "PA", "edd_author" => "That One",
        "edd_genre" => "journal", "edd_isbn" => "", "edd_date" => "", "edd_publisher" => "Santa Barbara, Calif: ABC-CLIO",
        "edd_call_number" => "HF1131 .B485", "edd_oclc_number" => "1033410889", "edd_title" => "Best business schools", "edd_note" => "Customer note" }]
     # {"selected"=>"true", "bibid"=>"3510207", "mfhd"=>"3832636", "call_number"=>"D25 .D385 1999",
     # "location_code"=>"f", "item_id"=>"3052428", "barcode"=>"32101044636858", "copy_number"=>"1",
-    # "status"=>"Not Charged", "type"=>"on_shelf", "pickup"=>"PA"}
+    # "status"=>"Not Charged", "type"=>"on_shelf", "pick_up"=>"PA"}
   end
 
   let(:bib) do

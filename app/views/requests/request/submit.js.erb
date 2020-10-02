@@ -18,7 +18,7 @@
     $('#other_user_account_info').collapse('show');
   <% end %>
   <% @submission.errors.messages.each do |key, value| %>
-    <% if key == :items %>
+    <%  if key == :items %>
       $(".error-<%= key %>").text("<%= value.first.values[0]['text'].html_safe %>");
     <% else %>
       $(".error-<%= key %>").text("<%= value.first.html_safe %>");

@@ -15,8 +15,8 @@ module Requests
     attr_reader :holdings
     attr_reader :locations
     attr_reader :items
-    attr_reader :pickups
-    alias default_pickups pickups
+    attr_reader :pick_ups
+    alias default_pick_ups pick_ups
     delegate :ctx, :openurl_ctx_kev, to: :@ctx_obj
 
     include Requests::Bibdata
@@ -38,7 +38,7 @@ module Requests
       include_etas_in_holdings(@holdings)
       @locations = load_locations
       @items = load_items
-      @pickups = build_pickups
+      @pick_ups = build_pick_ups
       @requestable_unrouted = build_requestable
       @requestable = route_requests(@requestable_unrouted)
       @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
@@ -197,13 +197,13 @@ module Requests
     end
 
     # should probably happen in the initializer
-    def build_pickups
-      pickup_locations = []
-      Requests::BibdataService.delivery_locations.each_value do |pickup|
-        pickup_locations << { label: pickup["label"], gfa_pickup: pickup["gfa_pickup"], staff_only: pickup["staff_only"] } if pickup["pickup_location"] == true
+    def build_pick_ups
+      pick_up_locations = []
+      Requests::BibdataService.delivery_locations.each_value do |pick_up|
+        pick_up_locations << { label: pick_up["label"], gfa_pickup: pick_up["gfa_pickup"], staff_only: pick_up["staff_only"] } if pick_up["pickup_location"] == true
       end
-      # pickup_locations.sort_by! { |loc| loc[:label] }
-      sort_pickups(pickup_locations)
+      # pick_up_locations.sort_by! { |loc| loc[:label] }
+      sort_pick_ups(pick_up_locations)
     end
 
     # if a Record is a serial/multivolume no Borrow Direct
@@ -350,7 +350,7 @@ module Requests
         holding_locations = {}
         doc[:location_code_s].each do |loc|
           location = get_location(loc)
-          location[:delivery_locations] = sort_pickups(location[:delivery_locations]) unless location[:delivery_locations].empty?
+          location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) unless location[:delivery_locations].empty?
           holding_locations[loc] = location
         end
         holding_locations

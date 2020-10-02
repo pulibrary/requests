@@ -9,7 +9,7 @@
   <div style="text-align:center;margin:18px 0;">
     <p class="body-content">You will be notified via email when your item is available.  At that point, please utilize our study-browse service to make a reservation to come into the Library.  Please proceed to the circulation desk to retrieve the item and view it in your assigned seat.</p>
   </div>
-   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pickup_location["code"]) } %>
+   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pick_up_location["code"]) } %>
   </td>
 </tr>
 

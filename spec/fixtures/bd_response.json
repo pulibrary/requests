@@ -4,7 +4,7 @@
   "RequestLink":{
     "ButtonLink":"AddRequest",
     "ButtonLabel":"Request",
-    "RequestMessage":"Select a pickup location and click the Request button to order this item through Borrow Direct."},
+    "RequestMessage":"Select a pick-up location and click the Request button to order this item through Borrow Direct."},
     "OrigNumberOfRecords":3,
     "PickupLocation":[
       {"PickupLocationCode":"I","PickupLocationDescription":"Architecture Library"},

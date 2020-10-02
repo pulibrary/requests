@@ -33,7 +33,7 @@ describe Requests::Submission do
           "edd_author" => "",
           "edd_art_title" => "",
           "edd_note" => "",
-          "pickup" => "Firestone Library"
+          "pick_up" => "Firestone Library"
         },
         {
           "selected" => "false"
@@ -152,7 +152,7 @@ describe Requests::Submission do
           "edd_author" => "",
           "edd_art_title" => "",
           "edd_note" => "",
-          "pickup" => "PA"
+          "pick_up" => "PA"
         },
         {
           "selected" => "true",
@@ -173,7 +173,7 @@ describe Requests::Submission do
           "edd_author" => "",
           "edd_art_title" => "",
           "edd_note" => "",
-          "pickup" => ""
+          "pick_up" => ""
         }
       ]
     end
@@ -198,10 +198,10 @@ describe Requests::Submission do
     end
 
     describe "Print Delivery" do
-      it 'items have gfa pickup location code' do
-        expect(submission.items[0]['pickup']).to be_truthy
-        expect(submission.items[0]['pickup']).to be_a(String)
-        expect(submission.items[0]['pickup'].size).to eq(2)
+      it 'items have gfa pick-up location code' do
+        expect(submission.items[0]['pick_up']).to be_truthy
+        expect(submission.items[0]['pick_up']).to be_a(String)
+        expect(submission.items[0]['pick_up'].size).to eq(2)
       end
     end
 
@@ -234,7 +234,7 @@ describe Requests::Submission do
           "edd_author" => "",
           "edd_art_title" => "",
           "edd_note" => "",
-          "pickup" => "Firestone Library"
+          "pick_up" => "Firestone Library"
         },
         {
           "selected" => "false"
@@ -281,8 +281,8 @@ describe Requests::Submission do
         expect(submission.bd['auth_id']).to eq(bd['auth_id'])
       end
 
-      it 'has a pickup location' do
-        expect(submission.items.first['pickup']).to eq(requestable.first['pickup'])
+      it 'has a pick-up location' do
+        expect(submission.items.first['pick_up']).to eq(requestable.first['pick_up'])
       end
 
       it 'has query parameters' do
@@ -307,7 +307,7 @@ describe Requests::Submission do
           "copy_number" => "1",
           "status" => "Charged",
           "type" => "recall",
-          "pickup" => "299|.Firestone Library Circulation Desk" },
+          "pick_up" => "299|.Firestone Library Circulation Desk" },
         {
           "selected" => "true",
           "mfhd" => "538419",
@@ -320,7 +320,7 @@ describe Requests::Submission do
           "status" => "Not Charged",
           "type" => "recap",
           "delivery_mode_3707281" => "print",
-          "pickup" => "PA",
+          "pick_up" => "PA",
           "edd_start_page" => "",
           "edd_end_page" => "",
           "edd_volume_number" => "",
@@ -352,20 +352,20 @@ describe Requests::Submission do
     end
 
     describe "Mixed Service Types" do
-      it 'recall items have voyager pickup location code' do
-        pickup = submission.items[0]['pickup'].split("|")
+      it 'recall items have voyager pick-up location code' do
+        pick_up = submission.items[0]['pick_up'].split("|")
 
-        expect(submission.items[0]['pickup']).to be_truthy
-        expect(pickup[0].to_i.to_s).to eq(pickup[0])
+        expect(submission.items[0]['pick_up']).to be_truthy
+        expect(pick_up[0].to_i.to_s).to eq(pick_up[0])
         expect(submission.items[0]['type']).to eq("recall")
         expect(submission.patron.patron_id).to be_truthy
         expect(submission.patron.patron_group).to be_truthy
       end
 
-      it 'recap items have gfa pickup location code' do
-        expect(submission.items[1]['pickup']).to be_truthy
-        expect(submission.items[1]['pickup']).to be_a(String)
-        expect(submission.items[1]['pickup'].size).to eq(2)
+      it 'recap items have gfa pick-up location code' do
+        expect(submission.items[1]['pick_up']).to be_truthy
+        expect(submission.items[1]['pick_up']).to be_a(String)
+        expect(submission.items[1]['pick_up'].size).to eq(2)
         expect(submission.items[1]['type']).to eq("recap")
       end
     end
@@ -412,7 +412,7 @@ describe Requests::Submission do
       end
     end
 
-    describe 'A submission without a pickup location' do
+    describe 'A submission without a pick-up location' do
       let(:requestable) do
         [
           {
@@ -433,7 +433,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -468,7 +468,7 @@ describe Requests::Submission do
       end
     end
 
-    describe 'A submission without a pickup location and item ID' do
+    describe 'A submission without a pick-up location and item ID' do
       let(:requestable) do
         [
           {
@@ -489,7 +489,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -524,7 +524,7 @@ describe Requests::Submission do
       end
     end
 
-    describe 'A recall submission without a pickup location and item ID' do
+    describe 'A recall submission without a pick-up location and item ID' do
       let(:requestable) do
         [
           {
@@ -545,7 +545,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -580,7 +580,7 @@ describe Requests::Submission do
         expect(submission.errors.messages[:items].first['534137']).to eq('text' => "Item Cannot be Recalled, see circulation desk.", 'type' => 'options')
       end
     end
-    describe 'A recall submission without a pickup location' do
+    describe 'A recall submission without a pick-up location' do
       let(:requestable) do
         [
           {
@@ -601,7 +601,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -635,7 +635,7 @@ describe Requests::Submission do
         expect(submission.errors.messages[:items].first.keys.include?('12131313')).to be true
       end
     end
-    describe 'A borrow direct submission without a pickup location and item ID' do
+    describe 'A borrow direct submission without a pick-up location and item ID' do
       let(:requestable) do
         [
           {
@@ -656,7 +656,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -693,7 +693,7 @@ describe Requests::Submission do
         expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
       end
     end
-    describe 'A bd submission without a pickup location' do
+    describe 'A bd submission without a pick-up location' do
       let(:requestable) do
         [
           {
@@ -714,7 +714,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -748,7 +748,7 @@ describe Requests::Submission do
         expect(submission.errors.messages[:items].first.keys.include?('12131313')).to be true
       end
     end
-    describe 'A recap submission without a pickup location and item ID' do
+    describe 'A recap submission without a pick-up location and item ID' do
       let(:requestable) do
         [
           {
@@ -769,7 +769,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -824,7 +824,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -858,7 +858,7 @@ describe Requests::Submission do
         expect(submission.errors.messages[:items].first.keys.include?('121333')).to be true
       end
     end
-    describe 'A recap print submission without a pickup location' do
+    describe 'A recap print submission without a pick-up location' do
       let(:requestable) do
         [
           {
@@ -880,7 +880,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -936,7 +936,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -992,7 +992,7 @@ describe Requests::Submission do
             "edd_author" => "",
             "edd_art_title" => "",
             "edd_note" => "",
-            "pickup" => ""
+            "pick_up" => ""
           },
           {
             "selected" => "false"
@@ -1028,7 +1028,7 @@ describe Requests::Submission do
     end
   end
 
-  describe 'A recap_no_items submission without a pickup location' do
+  describe 'A recap_no_items submission without a pick-up location' do
     let(:requestable) do
       [
         {
@@ -1039,7 +1039,7 @@ describe Requests::Submission do
           "location" => "ReCAP - East Asian Library use only",
           "user_supplied_enum" => "test",
           "type" => "recap_no_items",
-          "pickup" => ""
+          "pick_up" => ""
         },
         {
           "selected" => "false"
@@ -1091,7 +1091,7 @@ describe Requests::Submission do
           "use_statement" => "",
           "type" => "recap",
           "delivery_mode_6348205" => "Physical Item Delivery",
-          "pickup" => "QV",
+          "pick_up" => "QV",
           "edd_start_page" => "",
           "edd_end_page" => "",
           "edd_volume_number" => "",

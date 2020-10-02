@@ -48,7 +48,7 @@ module Requests
     end
 
     ## Accepts an array of location hashes and sorts them according to our quirks
-    def sort_pickups(locs)
+    def sort_pick_ups(locs)
       # staff only locations go at the bottom of the list and Firestone to the top
 
       public_locs = locs.select { |loc| loc[:staff_only] == false }

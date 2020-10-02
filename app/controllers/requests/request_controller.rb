@@ -33,11 +33,11 @@ module Requests
       end
     end
 
-    # will request recall pickup location options from voyager
+    # will request recall pick-up location options from voyager
     # will convert from xml to json
     def recall_pickups
-      @pickups = Requests::PickupLookup.new(params)
-      render json: @pickups.returned
+      @pick_ups = Requests::PickupLookup.new(params)
+      render json: @pick_ups.returned
     end
 
     def borrow_direct

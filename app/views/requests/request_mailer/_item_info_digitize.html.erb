@@ -11,7 +11,7 @@
           <% unless key == "selected" || value.empty? %>
           <td valign="top" class="responsive-column-container-all">
             <div style="font-weight:normal;font-size:12px;">
-              <% if key == "pickup" %>Pick-up<% else %><%= format_label(key.gsub("edd_", "")) %><% end %></div>
+              <% if key == "pick_up" %>Pick-up<% else %><%= format_label(key.gsub("edd_", "")) %><% end %></div>
             <span style="margin-bottom:0;"
               class="large-print"> <%= value.html_safe %></span>
           </td>

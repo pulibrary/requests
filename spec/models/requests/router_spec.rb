@@ -294,10 +294,10 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
       end
     end
 
-    describe "Print Holding in ReCAP with item record and open pickup locations" do
+    describe "Print Holding in ReCAP with item record and open pick-up locations" do
     end
 
-    describe "Print Holding in ReCAP with item record and restricted pickup locations" do
+    describe "Print Holding in ReCAP with item record and restricted pick-up locations" do
     end
 
     describe "Print Holding at ReCAP with charged item" do
@@ -310,7 +310,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
     end
 
     describe "Annex Holding with item" do
-      it "has pickup locations" do
+      it "has pick-up locations" do
       end
     end
 

@@ -8,7 +8,7 @@
     <% end %>
     <%= request_input(requestable.services.first) %>
     <% if requestable.on_order? || requestable.in_process? %>
-      <%= pickup_choices requestable, default_pickups %>
+      <%= pick_up_choices requestable, default_pick_ups %>
     <% else %>
       <%= show_service_options requestable, mfhd %>
     <% end %>

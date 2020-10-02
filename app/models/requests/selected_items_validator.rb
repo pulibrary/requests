@@ -23,7 +23,7 @@ module Requests
         when 'digitize', "digitize_fill_in"
           validate_delivery_mode(record: record, selected: selected)
         when 'bd'
-          validate_recall_or_bd(record, selected, pickup_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
+          validate_recall_or_bd(record, selected, pick_up_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
         when 'recap_no_items'
           validate_recap_no_items(record, selected)
         when 'recap', 'recap_edd', 'recap_in_library'
@@ -31,33 +31,33 @@ module Requests
         when 'on_shelf', 'recall'
           validate_recall_or_bd(record, selected)
         when *mail_services
-          validate_pickup_location(record, selected, selected["type"])
+          validate_pick_up_location(record, selected, selected["type"])
         else
-          record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please choose a Request Method for your selected item.', 'type' => 'pickup' } }
+          record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please choose a Request Method for your selected item.', 'type' => 'pick_up' } }
         end
       end
       # rubocop:enable Metrics/MethodLength
 
-      def validate_recall_or_bd(record, selected, pickup_phrase: 'your selected recall item', action_phrase: 'Recalled')
+      def validate_recall_or_bd(record, selected, pick_up_phrase: 'your selected recall item', action_phrase: 'Recalled')
         return unless validate_item_id(record: record, selected: selected, action_phrase: action_phrase)
         item_id = selected['item_id']
-        return unless selected['pickup'].blank?
+        return unless selected['pick_up'].blank?
 
-        record.errors[:items] << { item_id => { 'text' => "Please select a pickup location for #{pickup_phrase}", 'type' => 'pickup' } }
+        record.errors[:items] << { item_id => { 'text' => "Please select a pick-up location for #{pick_up_phrase}", 'type' => 'pick_up' } }
       end
 
-      def validate_pickup_location(record, selected, type)
-        return unless selected['pickup'].blank?
+      def validate_pick_up_location(record, selected, type)
+        return unless selected['pick_up'].blank?
         id = selected['item_id']
         id = selected['mfhd'] if id.blank?
 
-        record.errors[:items] << { id => { 'text' => "Please select a pickup location for your selected #{type} item", 'type' => 'pickup' } }
+        record.errors[:items] << { id => { 'text' => "Please select a pick-up location for your selected #{type} item", 'type' => 'pick_up' } }
       end
 
       def validate_recap_no_items(record, selected)
-        return if selected['pickup'].present? || selected['edd_art_title'].present?
+        return if selected['pick_up'].present? || selected['edd_art_title'].present?
 
-        record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pickup location for your selected ReCAP item', 'type' => 'pickup' } }
+        record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pick-up location for your selected ReCAP item', 'type' => 'pick_up' } }
       end
 
       def validate_recap(record, selected)
@@ -71,7 +71,7 @@ module Requests
           record.errors[:items] << { item_id => { 'text' => 'Please select a delivery type for your selected recap item', 'type' => 'options' } }
         else
           delivery_type = selected["delivery_mode_#{item_id}"]
-          record.errors[:items] << { item_id => { 'text' => 'Please select a pickup location for your selected recap item', 'type' => 'pickup' } } if delivery_type == 'print' && selected['pickup'].blank?
+          record.errors[:items] << { item_id => { 'text' => 'Please select a pick-up location for your selected recap item', 'type' => 'pick_up' } } if delivery_type == 'print' && selected['pick_up'].blank?
           if delivery_type == 'edd'
             record.errors[:items] << { item_id => { 'text' => 'Please specify title for the selection you want digitized.', 'type' => 'options' } } if selected['edd_art_title'].empty?
           end

@@ -514,16 +514,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     # let(:item) { barcode :"32101024595744", id: 282_632, location: "f", copy_number: 1, item_sequence_number: 14, status: "Not Charged", on_reserve: "N", item_type: "NoCirc", pickup_location_id: 299, pickup_location_code: "fcirc", enum: "vol.22", "chron": "1996", enum_display: "vol.22 (1996)", label: "Firestone Library" }
     let(:no_circ_item_id) { requestable.item['id'] }
     let(:no_circ_item_type) { requestable.item['item_type'] }
-    let(:no_circ_pickup_location_id) { requestable.item['pickup_location_id'] }
-    let(:no_circ_pickup_location_code) { requestable.item['pickup_location_code'] }
+    let(:no_circ_pick_up_location_id) { requestable.item['pickup_location_id'] }
+    let(:no_circ_pick_up_location_code) { requestable.item['pickup_location_code'] }
 
     # rubocop:disable RSpec/MultipleExpectations
     describe 'getters' do
       it 'gets values' do
         expect(requestable.item_data?).to be true
         expect(requestable.item_type_non_circulate?).to be true
-        expect(requestable.pickup_location_id).to eq 299
-        expect(requestable.pickup_location_code).to eq 'fcirc'
+        expect(requestable.pick_up_location_id).to eq 299
+        expect(requestable.pick_up_location_code).to eq 'fcirc'
         expect(requestable.enum_value).to eq 'vol.22'
         expect(requestable.cron_value).to eq '1996'
         expect(requestable.location_label).to eq('Firestone Library')
@@ -571,14 +571,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     # let(:item) {"barcode":"32101022548893","id":282628,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","enum":"vol.18","chron":"1992","enum_display":"vol.18 (1992)","label":"Firestone Library"}
     let(:no_circ_item_id) { requestable.item['id'] }
     let(:no_circ_item_type) { requestable.item['item_type'] }
-    let(:no_circ_pickup_location_id) { requestable.item['pickup_location_id'] }
-    let(:no_circ_pickup_location_code) { requestable.item['pickup_location_code'] }
+    let(:no_circ_pick_up_location_id) { requestable.item['pickup_location_id'] }
+    let(:no_circ_pick_up_location_code) { requestable.item['pickup_location_code'] }
 
     describe '#item_type_circulate' do
       it 'returns the item type from voyager' do
         expect(requestable.item_type_non_circulate?).to be false
-        expect(requestable.pickup_location_id).to eq 299
-        expect(requestable.pickup_location_code).to eq 'fcirc'
+        expect(requestable.pick_up_location_id).to eq 299
+        expect(requestable.pick_up_location_code).to eq 'fcirc'
       end
     end
 
@@ -1197,12 +1197,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe 'requestable with no items ' do
       it 'does not have item data' do
         expect(requestable.item_data?).to be false
-        expect(requestable.pickup_location_id).to eq ""
-        expect(requestable.pickup_location_code).to eq ""
+        expect(requestable.pick_up_location_id).to eq ""
+        expect(requestable.pick_up_location_code).to eq ""
         expect(requestable.item_type).to eq ""
         expect(requestable.enum_value).to eq ""
         expect(requestable.cron_value).to eq ""
-        expect(requestable.fill_in_pickup?).to be_truthy
+        expect(requestable.fill_in_pick_up?).to be_truthy
       end
 
       context "patron is not campus authorized" do
@@ -1214,12 +1214,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
         it 'does not have item data' do
           expect(requestable.item_data?).to be false
-          expect(requestable.pickup_location_id).to eq ""
-          expect(requestable.pickup_location_code).to eq ""
+          expect(requestable.pick_up_location_id).to eq ""
+          expect(requestable.pick_up_location_code).to eq ""
           expect(requestable.item_type).to eq ""
           expect(requestable.enum_value).to eq ""
           expect(requestable.cron_value).to eq ""
-          expect(requestable.fill_in_pickup?).to be_falsey
+          expect(requestable.fill_in_pick_up?).to be_falsey
         end
       end
 
@@ -1232,12 +1232,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
         it 'does not have item data' do
           expect(requestable.item_data?).to be false
-          expect(requestable.pickup_location_id).to eq ""
-          expect(requestable.pickup_location_code).to eq ""
+          expect(requestable.pick_up_location_id).to eq ""
+          expect(requestable.pick_up_location_code).to eq ""
           expect(requestable.item_type).to eq ""
           expect(requestable.enum_value).to eq ""
           expect(requestable.cron_value).to eq ""
-          expect(requestable.fill_in_pickup?).to be_truthy
+          expect(requestable.fill_in_pick_up?).to be_truthy
         end
       end
     end
@@ -1277,7 +1277,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       describe '#pick_up?' do
         it 'can not be picked up' do
           expect(requestable.pick_up?).to be_falsey
-          expect(requestable.fill_in_pickup?).to be_falsey
+          expect(requestable.fill_in_pick_up?).to be_falsey
         end
       end
     end
@@ -1292,7 +1292,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       describe '#pick_up?' do
         it 'can not be picked up' do
           expect(requestable.pick_up?).to be_falsey
-          expect(requestable.fill_in_pickup?).to be_truthy
+          expect(requestable.fill_in_pick_up?).to be_truthy
         end
       end
     end
@@ -1690,16 +1690,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
   end
-  context 'A SCSB Item from a location with no pickup restrictions' do
+  context 'A SCSB Item from a location with no pick-up restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_cu) }
     let(:requestable) { request.requestable.first }
-    describe '#pickup_locations' do
-      it 'has a single pickup location' do
+    describe '#pick_up_locations' do
+      it 'has a single pick-up location' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
           .to_return(status: 200, body: '[]')
-        expect(requestable.pickup_locations.size).to eq(1)
-        expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('QX')
+        expect(requestable.pick_up_locations.size).to eq(1)
+        expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('QX')
       end
     end
 
@@ -1724,31 +1724,31 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
 
-  context 'A SCSB Item from a location with a pickup restrictions' do
+  context 'A SCSB Item from a location with a pick-up restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_ar) }
     let(:requestable) { request.requestable.first }
-    describe '#pickup_locations' do
-      it 'has a single pickup location' do
+    describe '#pick_up_locations' do
+      it 'has a single pick-up location' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=29065769")
           .to_return(status: 200, body: '[]')
-        expect(requestable.pickup_locations.size).to eq(1)
-        expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PJ')
+        expect(requestable.pick_up_locations.size).to eq(1)
+        expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('PJ')
         expect(requestable.item["use_statement"]).to eq('In Library Use')
         expect(requestable.pick_up?).to be_falsey
       end
     end
   end
-  context 'A SCSB Item from a location with no pickup restrictions' do
+  context 'A SCSB Item from a location with no pick-up restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_mr) }
     let(:requestable) { request.requestable.first }
-    describe '#pickup_locations' do
-      it 'has a single pickup location' do
+    describe '#pick_up_locations' do
+      it 'has a single pick-up location' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=17322905")
           .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
-        expect(requestable.pickup_locations.size).to eq(1)
-        expect(requestable.pickup_locations.first[:gfa_pickup]).to eq('PK')
+        expect(requestable.pick_up_locations.size).to eq(1)
+        expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('PK')
         expect(requestable.pick_up?).to be_falsey
       end
     end

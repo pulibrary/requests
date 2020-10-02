@@ -5,7 +5,7 @@ module Requests
     def digitize_fill_in_confirmation(submission)
       @submission = submission
       @delivery_mode = "edd"
-      subject = I18n.t('requests.paging.email_subject', pickup_location: "Digitization")
+      subject = I18n.t('requests.paging.email_subject', pick_up_location: "Digitization")
       destination_email = @submission.email
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
@@ -14,8 +14,8 @@ module Requests
 
     def paging_email(submission)
       @submission = submission
-      pickups = paging_pickups(submission: submission)
-      subject = I18n.t('requests.paging.email_subject', pickup_location: pickups.join(", "))
+      pick_ups = paging_pick_ups(submission: submission)
+      subject = I18n.t('requests.paging.email_subject', pick_up_location: pick_ups.join(", "))
       destination_email = "fstpage@princeton.edu"
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
@@ -24,8 +24,8 @@ module Requests
 
     def paging_confirmation(submission)
       @submission = submission
-      pickups = paging_pickups(submission: submission)
-      subject = I18n.t('requests.paging.email_subject', pickup_location: pickups.join(", "))
+      pick_ups = paging_pick_ups(submission: submission)
+      subject = I18n.t('requests.paging.email_subject', pick_up_location: pick_ups.join(", "))
       destination_email = @submission.email
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
@@ -116,7 +116,7 @@ module Requests
     def on_shelf_confirmation(submission)
       @submission = submission
       destination_email = @submission.email
-      subject = "#{Requests::BibdataService.delivery_locations[@submission.items.first['pickup']]['label']} #{I18n.t('requests.on_shelf.email_subject_patron')}"
+      subject = "#{Requests::BibdataService.delivery_locations[@submission.items.first['pick_up']]['label']} #{I18n.t('requests.on_shelf.email_subject_patron')}"
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: subject_line(subject, @submission.user_barcode))
@@ -293,12 +293,12 @@ module Requests
 
     private
 
-      def paging_pickups(submission:)
+      def paging_pick_ups(submission:)
         @delivery_mode = submission.items[0]["delivery_mode_#{submission.items[0]['mfhd']}"]
         if @delivery_mode == "edd"
           ["Digitization"]
         else
-          @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pickup"]]["label"] }
+          @submission.items.map { |item| Requests::BibdataService.delivery_locations[item["pick_up"]]["label"] }
         end
       end
 

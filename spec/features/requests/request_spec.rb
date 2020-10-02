@@ -23,7 +23,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
     let(:valid_patron_no_barcode_response) { fixture('/bibdata_patron_no_barcode_response.json') }
     let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
-    let(:valid_barcode_patron_pickup_only_response) { fixture('/bibdata_patron_barcode_pickup_only_response.json') }
+    let(:valid_barcode_patron_pick_up_only_response) { fixture('/bibdata_patron_barcode_pick_up_only_response.json') }
     let(:valid_patron_no_campus_response) { fixture('/bibdata_patron_response_no_campus.json') }
     let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
 
@@ -104,7 +104,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           click_button I18n.t('requests.account.other_user_login_btn')
           expect(page).to have_no_content 'Electronic Delivery'
           # temporary change issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request this Item'
           # wait_for_ajax
           expect(page).to have_content 'Request submitted'
@@ -173,7 +173,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_field 'requestable_user_supplied_enum_2576882'
           check('requestable__selected', exact: true)
           fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annexa_success')
         end
@@ -222,7 +222,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
           choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(page).to have_content I18n.t("requests.submit.recap_success")
           confirm_email = ActionMailer::Base.deliveries.last
@@ -251,9 +251,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
-          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pickup')
-          select('Technical Services 693 (Staff Only)', from: 'requestable__pickup')
-          select('Technical Services HMT (Staff Only)', from: 'requestable__pickup')
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
@@ -299,7 +299,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
           choose('requestable__delivery_mode_342_print') # chooses 'print' radio button
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pick_up')
           expect(page).to have_content "ReCAP Paging Request"
           expect(page).to have_content "Pick-up location: Firestone Library"
           # temporary changes 438
@@ -343,7 +343,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9944355'
           expect(page).to have_content 'Electronic Delivery'
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pick_up')
           choose('requestable__delivery_mode_7467161_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
           fill_in "Article/Chapter Title", with: "ABC"
@@ -364,10 +364,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # todo: should we still have the text?
           # expect(page).to have_content 'Item offsite at Forrestal Annex. Requests for pick-up'
           expect(page).to have_content 'Electronic Delivery'
-          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pickup')
-          select('Technical Services 693 (Staff Only)', from: 'requestable__pickup')
-          select('Technical Services HMT (Staff Only)', from: 'requestable__pickup')
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Request submitted'
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
@@ -412,7 +412,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           check 'requestable_selected_6322174'
           # temporary change issue 438
           # choose('requestable__delivery_mode_6322174_print') # chooses 'edd' radio button
-          # select('Firestone Library', from: 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Item has been requested for pick-up'
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
@@ -435,7 +435,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/11416426'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request this Item'
           expect(page).to have_content 'Request submitted'
         end
@@ -455,7 +455,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/578830'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
-          # select('Firestone Library', from: 'requestable__pickup')
+          # select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request this Item'
           expect(page).to have_content 'Request submitted'
         end
@@ -533,7 +533,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
-        # TODO: once Marquad in library use is available again it should show pickup at marquand also
+        # TODO: once Marquad in library use is available again it should show pick-up at marquand also
         it 'Shows marqaund as an EDD option only' do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
@@ -570,7 +570,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
-        it "allows requests of recap pickup only items" do
+        it "allows requests of recap pick-up only items" do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: nil, bibId: "11578319", callNumber: "DVD", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["32101108035435"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "Chernobyl : a 5-part miniseries", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
@@ -578,7 +578,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'Item is not requestable.'
           expect(page).not_to have_content 'Electronic Delivery'
           expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
@@ -614,7 +614,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             check('requestable__selected', exact: true)
             fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
           end
-          select('Firestone Library', from: 'requestable__pickup')
+          select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annexa_success')
         end
@@ -828,7 +828,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
       let(:user) { FactoryGirl.create(:valid_barcode_patron) }
       it 'displays a request form for a ReCAP item.' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
-          .to_return(status: 200, body: valid_barcode_patron_pickup_only_response, headers: {})
+          .to_return(status: 200, body: valid_barcode_patron_pick_up_only_response, headers: {})
         login_as user
         visit "/requests/#{voyager_id}"
         expect(page).not_to have_content 'Electronic Delivery'
@@ -967,7 +967,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
-        it 'allows digitizing, but not pick up of on on_shelf record' do
+        it 'allows digitizing, but not pick-up of on on_shelf record' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1120,7 +1120,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
-        # TODO: once Marquad in library use is available again it should show pickup at marquand also
+        # TODO: once Marquad in library use is available again it should show pick-up at marquand also
         it 'Shows marqaund as an EDD option only' do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .to_return(status: 200, body: good_response, headers: {})
@@ -1156,7 +1156,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
         end
 
-        it "disallows requests of recap pickup only items" do
+        it "disallows requests of recap pick-up only items" do
           visit '/requests/11578319?mfhd=11259604'
           expect(page).not_to have_button('Request this Item')
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))

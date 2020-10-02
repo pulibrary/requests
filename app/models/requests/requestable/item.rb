@@ -1,11 +1,11 @@
 class Requests::Requestable
   class Item < SimpleDelegator
-    def pickup_location_id
+    def pick_up_location_id
       self['pickup_location_id'] || ""
     end
 
-    # pickup_location_code on the item level
-    def pickup_location_code
+    # pick_up_location_code on the item level
+    def pick_up_location_code
       self['pickup_location_code'] || ""
     end
 
@@ -95,11 +95,11 @@ class Requests::Requestable
         false
       end
 
-      def pickup_location_id
+      def pick_up_location_id
         ""
       end
 
-      def pickup_location_code
+      def pick_up_location_code
         ""
       end
 

@@ -18,8 +18,8 @@ describe Requests::HoldItem, type: :controller do
          "copy_number" => "0",
          "status" => "Not Charged",
          "item_type" => "Gen",
-         "pickup_location_code" => "fcirc",
-         "pickup_location_id" => "489",
+         "pick_up_location_code" => "fcirc",
+         "pick_up_location_id" => "489",
          "type" => "on_shelf" }]
     end
 
@@ -94,7 +94,7 @@ describe Requests::HoldItem, type: :controller do
         expect(hold_request.request_payload(submission.items.first)).to include("<last-interest-date>#{(todays_date + 60).strftime('%Y%m%d')}</last-interest-date>")
       end
 
-      context "no pickup id is present" do
+      context "no pick-up id is present" do
         let(:requestable) do
           [{ "selected" => "true",
              "mfhd" => "9723988",
@@ -105,12 +105,12 @@ describe Requests::HoldItem, type: :controller do
              "copy_number" => "0",
              "status" => "Not Charged",
              "item_type" => "Gen",
-             "pickup_location_code" => "fcirc",
-             "pickup" => "PM",
+             "pick_up_location_code" => "fcirc",
+             "pick_up" => "PM",
              "type" => "on_shelf" }]
         end
 
-        it 'has the correct pickup location id' do
+        it 'has the correct pick-up location id' do
           stub_request(:get, stub_url)
             .to_return(status: 200, body: responses[:get], headers: {})
           stub_request(:put, stub_url)

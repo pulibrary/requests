@@ -8,12 +8,12 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0" class="responsive-table">
         <tr>
           <% item.each do |key, value| %>
-          <% if (key == "barcode" || key == "pickup" || key == "enum" || key == "user_supplied_enum") && value.present? %>
+          <% if (key == "barcode" || key == "pick_up" || key == "enum" || key == "user_supplied_enum") && value.present? %>
           <td valign="top" width="33%" class="responsive-column-container">
             <div style="font-weight:normal;font-size:12px;">
-              <% if key == "pickup" %>Pick-up<% else %><%= format_label(key) %><% end %></div>
+              <% if key == "pick_up" %>Pick-up<% else %><%= format_label(key) %><% end %></div>
             <span style="margin-bottom:0;"
-              class="large-print"><% if key == "pickup" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %>
+              class="large-print"><% if key == "pick_up" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %>
               <%= value.html_safe %></span>
           </td>
           <% end %>

@@ -100,8 +100,8 @@ module Requests
       @services.map(&:errors).flatten
     end
 
-    def pickup_location
-      Requests::BibdataService.delivery_locations[items.first["pickup"]]["library"]
+    def pick_up_location
+      Requests::BibdataService.delivery_locations[items.first["pick_up"]]["library"]
     end
 
     def access_only?

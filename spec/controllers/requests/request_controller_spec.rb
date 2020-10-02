@@ -91,7 +91,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
           "barcode" => "32101098797010",
           "copy_number" => "0",
           "status" => "Not Charged",
-          "pickup" => "",
+          "pick_up" => "",
           "type" => "recap",
           "edd_art_title" => "test",
           "edd_start_page" => "1",
@@ -141,7 +141,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }]) }
       it 'contacts borrow direct and sends no emails ' do
         requestable.first["type"] = "bd"
-        requestable.first["pickup"] = "PA"
+        requestable.first["pick_up"] = "PA"
         requestable.first["bd"] = { query_params: "abc" }
         expect(Requests::RequestMailer).not_to receive(:send)
         expect(Requests::BorrowDirect).to receive(:new).and_return(borrow_direct)
@@ -155,7 +155,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:recal) { instance_double(Requests::Recall, errors: []) }
       it 'contacts recall and sends email' do
         requestable.first["type"] = "recall"
-        requestable.first["pickup"] = "PA"
+        requestable.first["pick_up"] = "PA"
         expect(Requests::Recall).to receive(:new).and_return(recal)
         expect(Requests::RequestMailer).to receive(:send).with("recall_email", anything).and_return(mail_message)
         expect(Requests::RequestMailer).not_to receive(:send).with("recall_confirmation", anything)
@@ -169,7 +169,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:generic) { instance_double(Requests::Generic, errors: []) }
       it 'sends email and confirmation email' do
         requestable.first["type"] = "recap_no_items"
-        requestable.first["pickup"] = "PA"
+        requestable.first["pick_up"] = "PA"
         expect(Requests::Generic).to receive(:new).and_return(generic)
         expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_email", anything).and_return(mail_message)
         expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_confirmation", anything).and_return(mail_message)
@@ -204,7 +204,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
   end
 
-  describe 'POST #recall_pickups' do
+  describe 'POST #recall_pick_ups' do
     let(:user_info) do
       {
         "patron_id" => "12345",
@@ -226,7 +226,10 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     let(:responses) do
       {
         error: '<?xml version="1.0" encoding="UTF-8"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><recall allowed="N"><note type="error">You have already placed a request for this item.</note></recall></response>',
-        success: '<?xml version="1.0" encoding="UTF-8"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><recall allowed="Y"><pickup-locations usage="Mandatory"><pickup-location code="299" default="Y">.Firestone Library Circulation Desk</pickup-location><pickup-location code="533" default="N">693 TSD Circulation Desk</pickup-location><pickup-location code="356" default="N">Architecture Library Circulation Desk</pickup-location><pickup-location code="333" default="N">Donald E. Stokes Library, Wallace Hall, Circulation Desk</pickup-location><pickup-location code="303" default="N">East Asian Library Circulation Desk</pickup-location><pickup-location code="345" default="N">Engineering Library Circulation Desk</pickup-location><pickup-location code="440" default="N">Firestone Microforms Services</pickup-location><pickup-location code="293" default="N">Annex A Circulation Desk</pickup-location><pickup-location code="395" default="N">Interlibrary Services Circulation Desk</pickup-location><pickup-location code="489" default="N">Lewis Library Circulation Desk</pickup-location><pickup-location code="321" default="N">Marquand Library Circulation Desk</pickup-location><pickup-location code="309" default="N">Mendel Music Library Circulation Desk</pickup-location><pickup-location code="312" default="N">Harold P. Furth Plasma Physics Library Circulation Desk</pickup-location><pickup-location code="400" default="N">Pre-Bindery Circulation Desk</pickup-location><pickup-location code="394" default="N">Preservation Office Circulation</pickup-location><pickup-location code="427" default="N">RECAP Circulation</pickup-location><pickup-location code="315" default="N">Rare Books and Special Collections Circulation Desk</pickup-location><pickup-location code="306" default="N">Seeley G. Mudd Library Circulation Desk</pickup-location><pickup-location code="353" default="N">Technical Services Circulation</pickup-location><pickup-location code="359" default="N">Video Collection: Video Circulation Desk</pickup-location><pickup-location code="437" default="N">Borrow Direct Service. Princeton University Library</pickup-location><pickup-location code="439" default="N">zDatabase Maintenance</pickup-location>"    </pickup-locations>"    <dbkey code="" usage="Mandatory">Local Database</dbkey>"    <instructions usage="read-only">Please select an item.</instructions><last-interest-date usage="Mandatory">2017-02-11</last-interest-date><comment max_len="100" usage="Optional"/></recall></response>'
+        success: '<?xml version="1.0" encoding="UTF-8"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><recall allowed="Y"><pick_up-locations usage="Mandatory"><pick_up-location code="299" default="Y">.Firestone Library Circulation Desk</pick_up-location><pick_up-location code="533" default="N">693 TSD Circulation Desk</pick_up-location><pick_up-location code="356" default="N">Architecture Library Circulation Desk</pick_up-location><pick_up-location code="333" default="N">Donald E. Stokes Library, Wallace Hall, Circulation Desk</pick_up-location><pick_up-location code="303" default="N">' \
+          'East Asian Library Circulation Desk</pick_up-location><pick_up-location code="345" default="N">Engineering Library Circulation Desk</pick_up-location><pick_up-location code="440" default="N">Firestone Microforms Services</pick_up-location><pick_up-location code="293" default="N">Annex A Circulation Desk</pick_up-location><pick_up-location code="395" default="N">Interlibrary Services Circulation Desk</pick_up-location><pick_up-location code="489" default="N">Lewis Library Circulation Desk</pick_up-location><pick_up-location code="321" default="N">Marquand Library Circulation Desk</pick_up-location>' \
+          '<pick_up-location code="309" default="N">Mendel Music Library Circulation Desk</pick_up-location><pick_up-location code="312" default="N">Harold P. Furth Plasma Physics Library Circulation Desk</pick_up-location><pick_up-location code="400" default="N">Pre-Bindery Circulation Desk</pick_up-location><pick_up-location code="394" default="N">Preservation Office Circulation</pick_up-location><pick_up-location code="427" default="N">RECAP Circulation</pick_up-location><pick_up-location code="315" default="N">Rare Books and Special Collections Circulation Desk</pick_up-location><pick_up-location code="306" default="N">' \
+          'Seeley G. Mudd Library Circulation Desk</pick_up-location><pick_up-location code="353" default="N">Technical Services Circulation</pick_up-location><pick_up-location code="359" default="N">Video Collection: Video Circulation Desk</pick_up-location><pick_up-location code="437" default="N">Borrow Direct Service. Princeton University Library</pick_up-location><pick_up-location code="439" default="N">zDatabase Maintenance</pick_up-location>"    </pick_up-locations>"    <dbkey code="" usage="Mandatory">Local Database</dbkey>"    <instructions usage="read-only">Please select an item.</instructions><last-interest-date usage="Mandatory">2017-02-11</last-interest-date><comment max_len="100" usage="Optional"/></recall></response>'
       }
     end
     before do
@@ -239,7 +242,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         .with(headers: { 'Accept' => '*/*' })
         .to_return(status: 201, body: responses[:success], headers: {})
     end
-    it 'returns a pickup json response' do
+    it 'returns a pick-up json response' do
       post :recall_pickups, params: { "request" => user_info,
                                       "requestable" => requestable,
                                       "bib" => bib }

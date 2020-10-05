@@ -36,6 +36,10 @@ module Requests
         client = IlliadTransactionClient.new(patron: @submission.patron, bib: @submission.bib, item: item)
         transaction = client.create_request
         errors << { type: 'digitize', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "Invalid Illiad Patron" } if transaction.blank?
+        if transaction == "DISAVOWED"
+          errors << { type: 'digitize', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "You no longer have an active account and may not make digitization requests." }
+          transaction = nil
+        end
         transaction
       end
   end

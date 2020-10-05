@@ -276,7 +276,13 @@ module Requests
 
     def service_error_email(services)
       @services = services
-      destination_email = I18n.t('requests.error.service_error_email')
+      errors = services.map(&:errors).flatten
+      error_types = errors.map { |error| error[:type] }.uniq
+      destination_email = if error_types.include?("digitize")
+                            I18n.t('requests.digitize.invalid_patron.email')
+                          else
+                            I18n.t('requests.error.service_error_email')
+                          end
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
            subject: I18n.t('requests.error.service_error_subject'))

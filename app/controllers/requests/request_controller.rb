@@ -128,7 +128,13 @@ module Requests
       end
 
       def respond_to_service_error(services)
-        flash.now[:error] = I18n.t('requests.submit.service_error')
+        errors = services.map(&:errors).flatten
+        error_types = errors.map { |error| error[:type] }.uniq
+        flash.now[:error] = if error_types.include?("digitize")
+                              errors[error_types.index("digitize")][:error]
+                            else
+                              I18n.t('requests.submit.service_error')
+                            end
         logger.error "Request Service Error"
         Requests::RequestMailer.send("service_error_email", services).deliver_now
       end

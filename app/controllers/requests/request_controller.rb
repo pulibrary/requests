@@ -5,7 +5,6 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:borrow_direct]
 
     def index
       redirect_to('/')
@@ -38,18 +37,6 @@ module Requests
     def recall_pickups
       @pick_ups = Requests::PickupLookup.new(params)
       render json: @pick_ups.returned
-    end
-
-    def borrow_direct
-      @isbns = sanitize(params[:isbns]).split(',')
-      query_params = { isbn: @isbns.first }
-      bd = Requests::BorrowDirectLookup.new
-      if params[:barcode].nil?
-        bd.find(query_params)
-      else
-        bd.find(query_params, sanitize(params[:barcode]))
-      end
-      render json: bd.find_response.to_json
     end
 
     # will post and a JSON document of selected "requestable" objects with selection parameters and

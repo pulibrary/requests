@@ -1394,14 +1394,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request_with_title_author) { described_class.new(params) }
 
     describe '#fallback_query_params' do
-      it 'has a title and author parameters when both are present' do
+      xit 'has a title and author parameters when both are present' do
         expect(request_with_title_author.fallback_query_params.key?(:title)).to be true
         expect(request_with_title_author.fallback_query_params.key?(:author)).to be true
       end
     end
 
     describe '#fallback_query' do
-      it 'returns a borrow direct fallback query url' do
+      xit 'returns a borrow direct fallback query url' do
         expect(request_with_title_author.fallback_query).to be_truthy
         expect(request_with_title_author.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
         expect(request_with_title_author.fallback_query).to include('a+history+of+the+modern+middle+east')

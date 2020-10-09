@@ -5,7 +5,6 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
-
     def index
       redirect_to('/')
     end

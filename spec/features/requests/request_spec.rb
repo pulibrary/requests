@@ -606,12 +606,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(::BorrowDirect::RequestItem).to receive(:new).with("22101008199999").and_return(borrow_direct)
           expect(borrow_direct).to receive(:make_request).with("Firestone Library", isbn: '9780812929645').and_return('123456')
           visit '/requests/1788796?mfhd=2053005'
-          expect(page).to have_content 'Request via Borrow Direct or Interlibrary Loan'
+          expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_2114223')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(0)
           expect(page).to have_content 'Request submitted to BorrowDirect'
           expect(page).to have_content 'Your request number is 123456'
-          expect(page).not_to have_content 'Your request was submittied via Interlibrary Loan which should take 1-2 weeks'
+          expect(page).not_to have_content 'Your request was submittied. Our library staff will review the request and contact you with aviable options.'
         end
 
         it 'Borrow direct unsuccessful, but no exception thrown sent on to illiad' do
@@ -629,13 +629,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/1788796?mfhd=2053005'
-          expect(page).to have_content 'Request via Borrow Direct or Interlibrary Loan'
+          expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_2114223')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(page).to have_content 'Your request was submittied via Interlibrary Loan which should take 1-2 weeks'
+          expect(page).to have_content 'Your request was submitted. Our library staff will review the request and contact you with any questions or updates.'
           expect(page).not_to have_content 'Request submitted to BorrowDirect'
           confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Interlibrary Loan Request Confirmation")
+          expect(confirm_email.subject).to eq("Partner Request Confirmation")
           expect(confirm_email.html_part.body.to_s).to have_content("Requests typically are filled within two weeks when possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
         end
@@ -655,18 +655,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/1788796?mfhd=2053005'
-          expect(page).to have_content 'Request via Borrow Direct or Interlibrary Loan'
+          expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_2114223')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(page).to have_content 'Your request was submittied via Interlibrary Loan which should take 1-2 weeks'
+          expect(page).to have_content 'Your request was submitted. Our library staff will review the request and contact you with any questions or updates.'
           expect(page).not_to have_content 'Request submitted to BorrowDirect'
           confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Interlibrary Loan Request Confirmation")
+          expect(confirm_email.subject).to eq("Partner Request Confirmation")
           expect(confirm_email.html_part.body.to_s).to have_content("Requests typically are filled within two weeks when possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
         end
 
-        it 'allow inter library loan to be requested' do
+        it 'allow interlibrary loan to be requested' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -676,13 +676,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/1505778?mfhd=1729547'
-          expect(page).to have_content 'Request via Interlibrary Loan'
+          expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_1807896')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(page).to have_content 'Your request was submittied via Interlibrary Loan which should take 1-2 weeks'
+          expect(page).to have_content 'Your request was submitted. Our library staff will review the request and contact you with any questions or updates.'
           expect(page).not_to have_content 'Request submitted to BorrowDirect'
           confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Interlibrary Loan Request Confirmation")
+          expect(confirm_email.subject).to eq("Partner Request Confirmation")
           expect(confirm_email.html_part.body.to_s).to have_content("Requests typically are filled within two weeks when possible")
           expect(confirm_email.html_part.body.to_s).to have_content("7th census of U.S.1850")
         end

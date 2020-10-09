@@ -20,7 +20,6 @@ module Requests
     delegate :ctx, :openurl_ctx_kev, to: :@ctx_obj
 
     include Requests::Bibdata
-    include Requests::BdUtils
     include Requests::Scsb
 
     # @option opts [String] :system_id A bib record id or a special collection ID value

@@ -201,7 +201,7 @@ module Requests
       end
 
       def generic_service_only?
-        (service_types & non_generic_services).empty? && !service_types.include?('bd')
+        (service_types & non_generic_services).empty? && (!service_types.include?('bd') && !service_types.include?('ill'))
       end
 
       def non_generic_services

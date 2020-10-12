@@ -5,8 +5,6 @@ include Requests::ApplicationHelper
 
 module Requests
   class RequestController < ApplicationController
-    skip_before_action :verify_authenticity_token, only: [:borrow_direct]
-
     def index
       redirect_to('/')
     end
@@ -38,18 +36,6 @@ module Requests
     def recall_pickups
       @pick_ups = Requests::PickupLookup.new(params)
       render json: @pick_ups.returned
-    end
-
-    def borrow_direct
-      @isbns = sanitize(params[:isbns]).split(',')
-      query_params = { isbn: @isbns.first }
-      bd = Requests::BorrowDirectLookup.new
-      if params[:barcode].nil?
-        bd.find(query_params)
-      else
-        bd.find(query_params, sanitize(params[:barcode]))
-      end
-      render json: bd.find_response.to_json
     end
 
     # will post and a JSON document of selected "requestable" objects with selection parameters and
@@ -119,8 +105,8 @@ module Requests
         # TODO: Why does this go into an infinite loop
         # logger.info "#Request Submission - #{submission.as_json}"
         logger.info "Request Sent"
-        return if submission.service_types.include? 'bd' # emails already sent
-        submission.service_types.each do |type|
+        service_types = submission.service_types.reject { |type| ['bd', 'ill'].include? type } # emails already sent for ill and bd
+        service_types.each do |type|
           Requests::RequestMailer.send("#{type}_email", submission).deliver_now unless type == 'recap_edd'
           Requests::RequestMailer.send("#{type}_confirmation", submission).deliver_now if ['on_shelf', 'on_order', 'in_process', 'pres', 'recap_no_items', 'lewis', 'ppl', 'paging', 'recap', 'recap_edd', 'recap_in_library', 'annexa', 'digitize', 'digitize_fill_in'].include? type
           Requests::RequestMailer.send("scsb_recall_email", submission).deliver_now if type == 'recall' && submission.scsb?

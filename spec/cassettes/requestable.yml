@@ -7198,8 +7198,7 @@ http_interactions:
       - Phusion Passenger 6.0.5
     body:
       encoding: UTF-8
-      string: '[{"barcode":"32101003999685","id":1680020,"location":"res","copy_number":50,"item_sequence_number":1,"status":"Not
-        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":293,"pickup_location_code":"anxacirc","label":"Forrestal
+      string: '[{"barcode":"32101003999685","id":1680020,"location":"res","copy_number":50,"item_sequence_number":1,"status":"Charged","due_date":"5/22/2017","label":"Forrestal
         Annex - Reserve"}]'
   recorded_at: Tue, 09 Jun 2020 22:07:47 GMT
 - request:

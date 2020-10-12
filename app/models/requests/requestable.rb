@@ -60,12 +60,12 @@ module Requests
     end
 
     def request?
-      return false if user_barcode.blank? || !campus_authorized # TODO: remove once we have added option for digitizing requestable items
+      return false if user_barcode.blank? || !covid_trained?
       request_status?
     end
 
     def request_status?
-      on_order? || in_process? || traceable? || aeon? || services.empty?
+      on_order? || in_process? || traceable? || aeon? || borrow_direct? || ill_eligible? || services.empty?
     end
 
     def help_me?
@@ -77,8 +77,10 @@ module Requests
     end
 
     def will_submit_via_form?
-      digitize? || pick_up? || scsb_in_library_use? || ((on_order? || in_process? || traceable?) && user_barcode.present?)
+      digitize? || pick_up? || scsb_in_library_use? || (ill_eligible? && patron.covid_trained?) || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
+
+    ############# End Drives what happens on the form #######################
 
     delegate :pick_up_location_id, :pick_up_location_code, :item_type, :enum_value, :cron_value, :item_data?,
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,

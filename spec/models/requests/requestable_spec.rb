@@ -270,23 +270,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.first.services.include?('recall')).to be_falsey
       end
 
-      # TODO: Remove when campus has re-opened
-      it 'is not available via borrow direct' do
-        expect(requestable.first.services.include?('bd')).to be_falsey
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit 'should be available via borrow direct' do
+      it 'is available via borrow direct' do
         expect(requestable.first.services.include?('bd')).to be_truthy
       end
 
-      # TODO: Remove when campus has re-opened
-      it 'is not available via ILL' do
-        expect(requestable.first.services.include?('ill')).to be_falsey
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit 'should be available via ILL' do
+      it 'is available via ILL' do
         expect(requestable.first.services.include?('ill')).to be_truthy
       end
     end
@@ -434,23 +422,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.first.missing?).to be true
       end
 
-      # TODO: Remove when campus has re-opened
-      it 'is not eligible for borrow direct' do
-        expect(requestable.first.borrow_direct?).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit 'should be eligible for borrow direct' do
+      it 'is eligible for borrow direct' do
         expect(requestable.first.borrow_direct?).to be true
       end
 
-      # TODO: Remove when campus has re-opened
-      it 'is not eligible for ill' do
-        expect(requestable.first.ill_eligible?).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit 'should be eligible for ill' do
+      it 'is eligible for ill' do
         expect(requestable.first.ill_eligible?).to be true
       end
 
@@ -1329,9 +1305,9 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
             "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained" }.with_indifferent_access
         end
 
-        it 'is on_order and not requestable' do
+        it 'is on_order and is requestable' do
           expect(requestable.on_order?).to be_truthy
-          expect(requestable.request?).to be_falsey
+          expect(requestable.request?).to be_truthy
           expect(requestable.request_status?).to be_truthy
         end
       end

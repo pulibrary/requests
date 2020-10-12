@@ -20,7 +20,6 @@ module Requests
     delegate :ctx, :openurl_ctx_kev, to: :@ctx_obj
 
     include Requests::Bibdata
-    include Requests::BdUtils
     include Requests::Scsb
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
@@ -68,7 +67,7 @@ module Requests
     end
 
     def single_aeon_requestable?
-      (filtered_sorted_requestable.size == 1 && filtered_sorted_requestable[filtered_sorted_requestable.keys&.first].size == 1) && first_filtered_requestable&.services&.include?('aeon')
+      (filtered_sorted_requestable.size == 1 && filtered_sorted_requestable[filtered_sorted_requestable.keys&.first]&.size == 1) && first_filtered_requestable&.services&.include?('aeon')
     end
 
     def filtered_sorted_requestable
@@ -154,6 +153,7 @@ module Requests
     end
 
     def any_will_submit_via_form?
+      return false if filtered_sorted_requestable.values.flatten.reject(&:blank?).blank?
       filtered_sorted_requestable.values.flatten.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
     end
 
@@ -188,7 +188,8 @@ module Requests
     def display_metadata
       {
         title: doc["title_citation_display"],
-        author: doc["author_citation_display"]
+        author: doc["author_citation_display"],
+        isbn: doc["isbn_s"]
       }
     end
 
@@ -208,7 +209,7 @@ module Requests
 
     # if a Record is a serial/multivolume no Borrow Direct
     def borrow_direct_eligible?
-      if any_loanable_copies? && any_enumerated?
+      if (any_loanable_copies? && any_enumerated?) || patron.guest?
         false
       else
         requestable.any? { |r| r.services.include? 'bd' }

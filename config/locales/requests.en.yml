@@ -17,7 +17,8 @@ en:
       digitize_success: "Request submitted to Illiad. You can view the status of your request on your account page.  See confirmation email with details about when your item(s) will be available."
       recap_no_items_success: "Request submitted to ReCAP, our offsite storage facility. See confirmation email with details about when your item(s) will be available."
       recall_success: "You have successfully placed a recall. You will be notified when the item is available."
-      bd_success: "Request submitted to BorrowDirect. You can expect delivery within four business days or less. See confirmation email with details about when your item(s) will be available."
+      bd_success: "Request submitted to BorrowDirect. You can expect delivery within six business days or less. See confirmation email with details about when your item(s) will be available."
+      interlibrary_loan_success: "Your request was submitted. Our library staff will review the request and contact you with any questions or updates."
       on_order_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       pres_success: "We will notify you when the preservation work is complete and this item is available."
       in_process_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
@@ -149,9 +150,12 @@ en:
       email_conf_msg: "You have successfully placed a recall. You will be notified when the item is available."
       service_error: "You cannot recall this item. "
       access_msg: 'Access Users are not eligible for Recall requests.'
+    bd_and_ill:   
+      brief_msg: "See if this item can be obtained from one of our partner Libraries."   
+      delivery_label: "Request via Partner Library"
     bd:
-      request_label: "Borrow Direct (4 business days or less)"
-      brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pick-up in 2-4 business days."
+      request_label: "Borrow Direct (6 business days or less)"
+      brief_msg: "See if this item can be obtained from one of our partner Libraries. Items requested are typically available for pick-up in 4-6 business days."
       email_config_msg: "You will be notified via email when your item has arrived and can be picked up"
     in_process:
       email: "fstcirc@princeton.edu"
@@ -166,8 +170,13 @@ en:
       access_msg: 'Non-Princeton users must register for a Research Account to view materials at this location.'
     ill:
       request_label: "Interlibrary Loan (1-2 weeks)"
-      brief_msg: "Request this item from another Library. Requests typically are filled within two weeks when possible."
+      brief_msg: "See if this item can be obtained from one of our partner Libraries."
       access_msg: 'Access Users are not eligible for ILL services.'
+      delivery_label: Request via Partner Library"
+    interlibrary_loan:
+      email_from: "ilsborr@princeton.edu"
+      email_subject: "Partner Request Confirmation"
+      email_conf_msg: 'Item sent to be requested from another Library. Requests typically are filled within two weeks when possible. If there is a problem fulfilling your request a member of our Library Staff will contact you. For more detailed information please login to your <a href="https://lib-illiad.princeton.edu/illiad/illiad.dll">Illiad Account</a>. (Note: Your username and password is the same as the CAS)'
     ask_me:
       request_label: "Help Me Get It"
       brief_msg: "Library staff are working remotely to deliver materials digitally as long as electronic resources are available"

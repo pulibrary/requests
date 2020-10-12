@@ -138,7 +138,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
 
     context "borrow direct requestable" do
-      let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }]) }
+      let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }], handled_by: "borrow_direct") }
       it 'contacts borrow direct and sends no emails ' do
         requestable.first["type"] = "bd"
         requestable.first["pick_up"] = "PA"

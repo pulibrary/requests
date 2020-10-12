@@ -844,13 +844,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_missing.requestable.size).to be >= 1
       end
 
-      # TODO: Remove when campus has re-opened
-      it "does not show missing items as eligible for ill" do
-        expect(request_with_missing.requestable[2].services.include?('ill')).to be_falsey
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "should show missing items as eligible for ill" do
+      it "shows missing items as eligible for ill" do
         expect(request_with_missing.requestable[2].services.include?('ill')).to be_truthy
       end
 
@@ -1026,13 +1020,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request) { described_class.new(params) }
 
     describe "#borrow_direct_eligible?" do
-      # TODO: Remove when campus has re-opened
-      it "is not Borrow Direct Eligible" do
-        expect(request.borrow_direct_eligible?).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "Should be Borrow Direct Eligible" do
+      it "is Borrow Direct Eligible" do
         expect(request.borrow_direct_eligible?).to be true
       end
     end
@@ -1049,25 +1037,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request) { described_class.new(params) }
 
     describe "#borrow_direct_eligible?" do
-      # TODO: Remove when campus has re-opened
-      it "is not Borrow Direct Eligible" do
-        expect(request.borrow_direct_eligible?).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "Should be Borrow Direct Eligible" do
+      it "is Borrow Direct Eligible" do
         expect(request.borrow_direct_eligible?).to be true
       end
     end
 
     describe "#ill_eligible?" do
-      # TODO: Remove when campus has re-opened
-      it 'is not ILL Eligible' do
-        expect(request.ill_eligible?).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit 'Should be ILL Eligible' do
+      it 'is ILL Eligible' do
         expect(request.ill_eligible?).to be true
       end
     end
@@ -1090,46 +1066,27 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request.requestable.size).to be >= 1
       end
 
-      # TODO: Remove when campus has re-opened
-      it "is not eligible for recap services" do
-        expect(request.requestable.first.services.size).to eq(0)
+      it "is eligible for recap services" do
+        expect(request.requestable.first.services.size).to eq(2)
       end
 
-      # TODO: Activate test when campus has re-opened
-      xit "should be eligible for recap services" do
-        expect(request.requestable.first.services.size).to eq(3)
-      end
-
-      # TODO: Remove when campus has re-opened
-      it "is not eligible for ill services" do
-        expect(request.requestable.first.services.include?('ill')).to be_falsey
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "should be eligible for ill services" do
+      it "is eligible for ill services" do
         expect(request.requestable.first.services.include?('ill')).to be_truthy
+        expect(request.requestable.first.ill_eligible?).to be_truthy
       end
 
-      # TODO: Remove when campus has re-opened
-      it "is not eligible for borrow direct services" do
-        expect(request.requestable.first.services.include?('bd')).to be_falsey
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "should be eligible for borrow direct services" do
+      it "is eligible for borrow direct services" do
         expect(request.requestable.first.services.include?('bd')).to be_truthy
       end
 
       # TODO: Remove when campus has re-opened
       it "is not eligible for recall" do
         expect(request.requestable.first.services.include?('recall')).to be_falsey
-        expect(request.requestable.first.ill_eligible?).to be false
       end
 
       # TODO: Activate test when campus has re-opened
       xit "should be eligible for recall" do
         expect(request.requestable.first.services.include?('recall')).to be_truthy
-        expect(request.requestable.first.ill_eligible?).to be true
       end
     end
   end
@@ -1323,13 +1280,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe '#borrow_direct_eligible?' do
       it 'is not borrow_direct_eligible' do
-        expect(request.borrow_direct_eligible?).to be false
+        expect(request.borrow_direct_eligible?).to be true
       end
     end
   end
 
   ### Review this test
-  context 'RBSC Items and Borrow Direct' do
+  context 'RBSC single Item with no isbn' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
@@ -1339,20 +1296,37 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request) { described_class.new(params) }
     describe '#borrow_direct_eligible?' do
-      # TODO: Remove when campus has re-opened
       it 'is not borrow_direct_eligible?' do
         expect(request.borrow_direct_eligible?).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit 'should be borrow_direct_eligible?' do
-        expect(request.borrow_direct_eligible?).to be true
       end
     end
 
     describe '#isbn_numbers?' do
       it 'returns false when there are no isbns present' do
         expect(request.isbn_numbers?).to be false
+      end
+    end
+  end
+
+  context 'single missing item with isbn' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:params) do
+      {
+        system_id: '1788796',
+        mfhd: '2053005',
+        patron: patron
+      }
+    end
+    let(:request) { described_class.new(params) }
+    describe '#borrow_direct_eligible?' do
+      it 'is borrow_direct_eligible?' do
+        expect(request.borrow_direct_eligible?).to be true
+      end
+    end
+
+    describe '#isbn_numbers?' do
+      it 'returns true when there are isbns present' do
+        expect(request.isbn_numbers?).to be true
       end
     end
   end
@@ -1420,14 +1394,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request_with_title_author) { described_class.new(params) }
 
     describe '#fallback_query_params' do
-      it 'has a title and author parameters when both are present' do
+      xit 'has a title and author parameters when both are present' do
         expect(request_with_title_author.fallback_query_params.key?(:title)).to be true
         expect(request_with_title_author.fallback_query_params.key?(:author)).to be true
       end
     end
 
     describe '#fallback_query' do
-      it 'returns a borrow direct fallback query url' do
+      xit 'returns a borrow direct fallback query url' do
         expect(request_with_title_author.fallback_query).to be_truthy
         expect(request_with_title_author.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
         expect(request_with_title_author.fallback_query).to include('a+history+of+the+modern+middle+east')

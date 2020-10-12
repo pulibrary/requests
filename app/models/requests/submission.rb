@@ -14,7 +14,7 @@ module Requests
       @patron = patron
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
-      @bd = params[:bd]
+      @bd = params[:bd] # TODO: can we remove this?
     end
 
     attr_reader :patron, :success_messages
@@ -183,12 +183,17 @@ module Requests
       end
 
       def process_borrow_direct
-        return unless service_types.include? 'bd'
-        bd_success_message = I18n.t('requests.submit.bd_success')
+        return unless service_types.include?('bd') || service_types.include?('ill')
         bd_request = Requests::BorrowDirect.new(self)
         bd_request.handle
         @services << bd_request
-        success_messages << "#{bd_success_message} Your request number is #{bd_request.sent[0][:request_number]}" unless bd_request.errors.count >= 1
+        return if bd_request.errors.present?
+        if bd_request.handled_by == "borrow_direct"
+          success_messages << "#{I18n.t('requests.submit.bd_success')} Your request number is #{bd_request.sent[0][:request_number]}"
+        else
+          Requests::RequestMailer.send("interlibrary_loan_confirmation", self).deliver_now
+          success_messages << I18n.t('requests.submit.interlibrary_loan_success')
+        end
       end
 
       def generic_service?(type)
@@ -196,11 +201,11 @@ module Requests
       end
 
       def generic_service_only?
-        (service_types & non_generic_services).empty?
+        (service_types & non_generic_services).empty? && (!service_types.include?('bd') && !service_types.include?('ill'))
       end
 
       def non_generic_services
-        ['bd', 'recap', 'recall', 'on_shelf', 'digitize']
+        ['recap', 'recall', 'on_shelf', 'digitize']
       end
 
       def generate_success_messages(success_messages)

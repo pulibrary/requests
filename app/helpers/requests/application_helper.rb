@@ -155,11 +155,12 @@ module Requests
         content_tag(:div, id: "fields-print__#{requestable.preferred_request_id}_card", class: "card card-body bg-light") do
           locs = pick_up_locations(requestable, default_pick_ups)
           # temporary changes issue 438
+          name = 'requestable[][pick_up]'
           if locs.size > 1
-            select_tag "requestable[][pick_up]", options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pick_up_placeholder")
+            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pick_up_placeholder")
           else
-            style = requestable.charged? ? 'display:none;margin-top:10px;' : ''
-            name = requestable.charged? ? 'updated_later' : 'requestable[][pick_up]'
+            style = 'margin-top:10px;' if requestable.charged?
+            style ||= ''
             hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pick-up-hidden'
             label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pick-up', style: style.to_s
             hidden + label
@@ -232,7 +233,7 @@ module Requests
       params = request.display_metadata
       content_tag(:dl, class: "dl-horizontal") do
         params.each do |key, value|
-          unless value.nil?
+          if value.present? && display_label[key].present?
             concat content_tag(:dt, display_label[key].to_s)
             concat content_tag(:dd, value.first.to_s, lang: request.language.to_s, id: display_label[key].gsub(/[^0-9a-z ]/i, '').downcase.to_s)
           end
@@ -422,7 +423,12 @@ module Requests
       def display_requestable_list(services)
         return if services.blank? # || services.include?('recap_edd') # || services.include?(recap)
         content_tag(:ul, class: "service-list") do
-          filtered_services = services.reject { |val| val == "on_shelf_edd" || val == "recap_edd" }
+          services_to_filter = ["on_shelf_edd", "recap_edd"]
+          if services.include?('bd') && services.include?('ill')
+            services_to_filter << 'bd' << 'ill'
+            concat content_tag(:li, I18n.t("requests.bd_and_ill.brief_msg").html_safe, class: "service-item")
+          end
+          filtered_services = services.reject { |val| services_to_filter.include?(val) }
           filtered_services.each do |service|
             brief_msg = I18n.t("requests.#{service}.brief_msg")
             concat content_tag(:li, brief_msg.html_safe, class: "service-item")
@@ -440,6 +446,7 @@ module Requests
       end
 
       def pick_up_locations(requestable, default_pick_ups)
+        return [default_pick_ups[0]] if requestable.borrow_direct? || requestable.ill_eligible?
         return available_pick_ups(requestable, default_pick_ups) unless requestable.pending?
         if requestable.location[:holding_library].blank?
           [{ label: requestable.location[:library][:label], gfa_pickup: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]

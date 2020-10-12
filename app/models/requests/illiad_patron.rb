@@ -21,6 +21,7 @@ module Requests
 
     def create_illiad_patron
       return nil if patron.blank?
+
       patron_response = post_json_response(url: 'ILLiadWebPlatform/Users', body: attributes.to_json)
       if patron_response.blank? && error.present? && error["ModelState"].present?
         patron_response = illiad_patron if error["ModelState"]["UserName"] == ["Username #{netid} already exists."]

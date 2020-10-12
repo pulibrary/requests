@@ -205,6 +205,15 @@ module Requests
            subject: subject)
     end
 
+    def interlibrary_loan_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      subject = I18n.t('requests.interlibrary_loan.email_subject')
+      mail(to: destination_email,
+           from: I18n.t('requests.interlibrary_loan.email_from'),
+           subject: subject)
+    end
+
     def recap_email(submission)
       # only send an email to the libraries if this is a barcode user request
       return unless submission.access_only?

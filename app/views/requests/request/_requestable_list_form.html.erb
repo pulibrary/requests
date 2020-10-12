@@ -1,3 +1,4 @@
+<% return unless holdings[mfhd].present? %>
 <% requestable_list = sorted_requestable[mfhd] %>
 <%= hidden_fields_mfhd holdings[mfhd] %>
 <div class="table-responsive">

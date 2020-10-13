@@ -229,18 +229,6 @@ module Requests
       hidden
     end
 
-    def format_brief_record_display(request)
-      params = request.display_metadata
-      content_tag(:dl, class: "dl-horizontal") do
-        params.each do |key, value|
-          if value.present? && display_label[key].present?
-            concat content_tag(:dt, display_label[key].to_s)
-            concat content_tag(:dd, value.first.to_s, lang: request.language.to_s, id: display_label[key].gsub(/[^0-9a-z ]/i, '').downcase.to_s)
-          end
-        end
-      end
-    end
-
     def hidden_fields_borrow_direct(request)
       hidden_bd_tags = ''
       hidden_bd_tags += hidden_field_tag 'bd[auth_id]', '', value: ''
@@ -250,15 +238,6 @@ module Requests
 
     def isbn_string(array_of_isbns)
       array_of_isbns.join(',')
-    end
-
-    def hidden_fields_request(request)
-      hidden_request_tags = ''
-      hidden_request_tags += hidden_field_tag "bib[id]", "", value: request.doc[:id]
-      request.display_metadata.each do |key, value|
-        hidden_request_tags += hidden_field_tag "bib[#{key}]", "", value: value
-      end
-      hidden_request_tags.html_safe
     end
 
     def parse_request(values)

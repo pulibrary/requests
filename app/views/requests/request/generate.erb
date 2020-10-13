@@ -2,7 +2,7 @@
   <%# <div class="col-12"> %>
     <%# <div class="button--start-over"> %>
       <a class="btn btn-primary" id="returnToRecordLink"
-        href=<%= "/catalog/#{@request.system_id}" %>>
+        href="<%= @request.catalog_url%>"">
         <span class="icon-refresh"></span>
         <span class="d-lg-inline">
           Return to record
@@ -21,22 +21,14 @@
       </div>
       <div class="col-12">
         <div class="bibliographic">
-          <%= format_brief_record_display @request %>
+          <%= @request.format_brief_record_display %>
         </div>
       </div>
       <%= render 'flash_messages' %>
     </div>
     <% if @request.requestable? %>
       <div class="col-12">
-        <% if @patron.pick_up_only? %>
-          <div class="alert alert-warning">You are only currently authorized to utilize our book <a href='https://library.princeton.edu/services/book-pick-up'>pick-up service</a>. Please consult with your Department if you would like to book time to spend in our libraries using our <a href='https://library.princeton.edu/services/study-browse'>study-browse service</a>.</div>
-        <% elsif !@patron.guest? && !@patron.campus_authorized %>
-          <div class="alert alert-warning">You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services. 
-          <% if @patron.training_eligable? %>
-            If you would like to have access to pick-up books <a href="https://ehs.princeton.edu/COVIDTraining">please complete the mandatory COVID-19 training</a>.
-          <% end %>
-          </div>
-        <% end %>
+        <%= @request.patron_message %> </div>
         <%= render "form" %>
       </div>
     <% else %>

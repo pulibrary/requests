@@ -22,7 +22,7 @@ module Requests
       @title = "Request ID: #{system_id}"
 
       # needed to see if we can suppress login for this item
-      @request = Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, patron: @patron)
+      @request = RequestDecorator.new(Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, patron: @patron), view_context)
       ### redirect to Aeon non-voyager items or single Aeon requestable
       if @request.thesis? || @request.numismatics?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"

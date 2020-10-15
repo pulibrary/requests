@@ -5,7 +5,9 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
       "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-      "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true, "campus_authorized_category" => "full" }.with_indifferent_access
+      "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => true, "campus_authorized_category" => "full",
+      ldap: { netid: "foo", department: "Test", address: "Box 1234", telephone: nil, givenname: "Foo", surname: "Request",
+              email: "foo@princeton.edu", status: "staff", pustatus: "stf", universityid: "9999999", title: nil } }.with_indifferent_access
   end
   let(:patron) { Requests::Patron.new(user: user, patron: valid_patron) }
 
@@ -57,7 +59,9 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
           "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
-          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none" }.with_indifferent_access
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "none",
+          ldap: { netid: "foo", department: "Test", address: "Box 1234", telephone: nil, givenname: "Foo", surname: "Request",
+                  email: "foo@princeton.edu", status: "staff", pustatus: "stf", universityid: "9999999", title: nil } }.with_indifferent_access
       end
 
       describe '#pick_up?' do
@@ -77,6 +81,22 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       describe '#pick_up?' do
         it 'can not be picked up' do
           expect(requestable.pick_up?).to be_truthy
+        end
+      end
+    end
+
+    context "An undergraduate without campus access but is COVID trained" do
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu", "campus_authorized" => false, "campus_authorized_category" => "trained",
+          ldap: { netid: "foo", department: "Test", address: "Box 1234", telephone: nil, givenname: "Foo", surname: "Request",
+                  email: "foo@princeton.edu", status: "student", pustatus: "undergraduate", universityid: "9999999", title: nil } }.with_indifferent_access
+      end
+
+      describe '#pick_up?' do
+        it 'can not be picked up' do
+          expect(requestable.pick_up?).to be_falsey
         end
       end
     end
@@ -611,7 +631,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
 
-  context 'A requestable item from an Aeon EAL Holding with a null barcode' do
+  context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
     let(:request) { FactoryGirl.build(:aeon_eal_voyager_item, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
@@ -753,7 +773,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
 
-  context 'A requestable item from an Aeon EAL Holding with a null barcode' do
+  context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
     let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['675722'] } }
     let(:holding_id) { '675722' }

@@ -1,5 +1,5 @@
   <%= simple_form_for(:request, { url: '/requests/submit.js', method: :post, remote: true, data: {type: 'script'}} ) do |f| %>
-   <%= hidden_fields_request @request %>
+   <%= @request.hidden_fields %>
     <% unless suppress_login(@request) %>
       <%= f.hidden_field :user_name, value: "#{pul_patron_name @patron}" %>
       <%= f.hidden_field :user_last_name, value: "#{@patron.last_name}" %>

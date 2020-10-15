@@ -66,7 +66,7 @@ module Requests
     end
 
     def login_url(request)
-      url = "/requests/#{request.requestable.first.bib['id']}?"
+      url = "/requests/#{request.bib_id}?"
       params = []
       params.push("mfhd=#{request.mfhd}") unless request.mfhd.nil?
       params.push("source=#{request.source}") unless request.source.nil?

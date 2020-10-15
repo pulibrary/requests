@@ -54,6 +54,10 @@ module Requests
       patron[:campus_authorized]
     end
 
+    def eligible_to_pickup?
+      barcode.present? && (campus_authorized || (covid_trained? && !undergraduate?))
+    end
+
     def pick_up_only?
       !campus_authorized && patron[:campus_authorized_category] == "trained"
     end
@@ -63,7 +67,11 @@ module Requests
     end
 
     def training_eligable?
-      ["staff", "faculty", "student"].include? status
+      ["staff", "faculty", "student"].include?(status) && !undergraduate?
+    end
+
+    def undergraduate?
+      pustatus == "undergraduate"
     end
 
     def telephone

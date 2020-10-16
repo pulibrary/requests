@@ -38,8 +38,6 @@ module Requests
     # top level call, returns a hash of symbols with service objects as values
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
-      return ['ask_me'] if requestable.library_code == 'lewis' || requestable.library_code == 'engineering' # lewis library flood cleanup
-
       if (requestable.voyager_managed? || requestable.scsb?) && requestable.online?
         ['online']
       elsif requestable.voyager_managed? || requestable.scsb?

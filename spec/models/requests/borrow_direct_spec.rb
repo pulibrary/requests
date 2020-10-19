@@ -92,11 +92,27 @@ describe Requests::BorrowDirect do
   it 'Borrow direct unsuccessful error message says repeat request' do
     borrow_direct_stub = ::BorrowDirect::RequestItem.new("22101007797777")
     expect(::BorrowDirect::RequestItem).to receive(:new).with("22101007797777").and_return(borrow_direct_stub)
-    expect(borrow_direct_stub).to receive(:make_request).with("Firestone Library", isbn: '9780544343757').and_raise(BorrowDirect::Error, "PRIRI003 repeated")
+    expect(borrow_direct_stub).to receive(:make_request).with("Firestone Library", isbn: '9780544343757').and_raise(BorrowDirect::Error, "PRIRI003: Internal error; This is a duplicate of a recent request. This request will not be submitted.")
     expect { borrow_direct.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
     expect(borrow_direct.handled_by).to eq("borrow_direct")
     expect(borrow_direct.errors.count).to eq(1)
-    expect(borrow_direct.errors.first[:error]).to eq("Ignoring duplicate Borrow Direct request: PRIRI003 repeated")
+    expect(borrow_direct.errors.first[:error]).to eq("Ignoring duplicate Borrow Direct request: PRIRI003: Internal error; This is a duplicate of a recent request. This request will not be submitted.")
+  end
+
+  it 'Borrow direct unsuccessful error message says not repeat request' do
+    borrow_direct_stub = ::BorrowDirect::RequestItem.new("22101007797777")
+    expect(::BorrowDirect::RequestItem).to receive(:new).with("22101007797777").and_return(borrow_direct_stub)
+    expect(borrow_direct_stub).to receive(:make_request).with("Firestone Library", isbn: '9780544343757').and_raise(BorrowDirect::Error, "PRIRI003: Internal error; Internal error")
+    stub_request(:get, patron_url)
+      .to_return(status: 200, body: responses[:found], headers: {})
+    stub_request(:post, transaction_url)
+      .with(body: hash_including("Username" => "jstudent", "LoanTitle" => "County and city data book.", "ISSN" => "9780544343757"))
+      .to_return(status: 200, body: responses[:transaction_created], headers: {})
+    stub_request(:post, transaction_note_url)
+      .to_return(status: 200, body: responses[:note_created], headers: {})
+    expect { borrow_direct.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
+    expect(borrow_direct.errors.count).to eq(0)
+    expect(borrow_direct.handled_by).to eq("interlibrary_loan")
   end
 
   it 'Borrow unknown exception sends on to' do

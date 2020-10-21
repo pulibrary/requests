@@ -256,6 +256,15 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
       end
+      context "ill enumerate item" do
+        before do
+          stubbed_questions[:charged?] = true
+          stubbed_questions[:enumerated?] = true
+        end
+        it "returns ill in the services" do
+          expect(router.calculate_services).to eq(["ill"])
+        end
+      end
 
       context "pageable" do
         before do

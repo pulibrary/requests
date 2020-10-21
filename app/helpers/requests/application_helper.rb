@@ -265,16 +265,6 @@ module Requests
       suppress_login
     end
 
-    def status_label(requestable)
-      if requestable.charged?
-        content_tag(:span, 'Not Available', class: "availability--label badge-alert badge badge-danger")
-      elsif !requestable.circulates?
-        content_tag(:span, 'On-site access', class: "availability--label badge badge-success")
-      else
-        content_tag(:span, 'Available', class: "availability--label badge badge-success")
-      end
-    end
-
     def item_checkbox(requestable, single_item_form)
       disabled = !requestable.will_submit_via_form?
       check_box_tag "requestable[][selected]", true, check_box_selected(requestable, disabled, single_item_form), class: 'request--select', disabled: disabled, aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }, id: "requestable_selected_#{requestable.preferred_request_id}"

@@ -1,19 +1,27 @@
 module Requests
   class RequestDecorator
-    delegate :patron, :requestable, :first_filtered_requestable, :sorted_requestable, :filtered_sorted_requestable,
-             :ctx, :system_id, :language, :mfhd, :source, :holdings, :default_pick_ups, :fill_in_eligible,
+    delegate :patron,
+             :ctx, :system_id, :language, :mfhd, :source, :holdings, :default_pick_ups,
              :serial?, :borrow_direct_eligible?, :any_loanable_copies?, :requestable?, :all_items_online?,
-             :any_will_submit_via_form?, :thesis?, :numismatics?, :single_aeon_requestable?, :single_item_request?,
+             :thesis?, :numismatics?, :single_aeon_requestable?,
              :user_name, :email, # passed to request as login options on the request form
              to: :request
     delegate :content_tag, :hidden_field_tag, :concat, to: :view_context
 
     alias bib_id system_id
 
-    attr_reader :request, :view_context
+    attr_reader :request, :view_context, :filtered_sorted_requestable, :first_filtered_requestable, :sorted_requestable
     def initialize(request, view_context)
       @request = request
       @view_context = view_context
+      @requestable_list = request.requestable.map { |req| RequestableDecorator.new(req, view_context) }
+      @filtered_sorted_requestable = request.filtered_sorted_requestable.map { |key, value| [key, value.map { |req| RequestableDecorator.new(req, view_context) }] }.to_h
+      @first_filtered_requestable = RequestableDecorator.new(request.first_filtered_requestable, view_context)
+      @sorted_requestable = request.sorted_requestable.map { |key, value| [key, value.map { |req| RequestableDecorator.new(req, view_context) }] }.to_h
+    end
+
+    def requestable
+      @requestable_list
     end
 
     def catalog_url
@@ -49,6 +57,33 @@ module Requests
       end
     end
 
+    def any_will_submit_via_form?
+      return false if filtered_sorted_requestable.values.flatten.reject(&:blank?).blank?
+      filtered_sorted_requestable.values.flatten.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
+    end
+
+    def any_fill_in_eligible?
+      filtered_sorted_requestable.keys.map { |mfhd| fill_in_eligible(mfhd) }.any?
+    end
+
+    def fill_in_eligible(mfhd)
+      fill_in = false
+      unless (sorted_requestable[mfhd].first.services & ["on_order", "online"]).present?
+        if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
+          if sorted_requestable[mfhd].first.item_data?
+            fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')
+          else
+            fill_in = sorted_requestable[mfhd].first.circulates?
+          end
+        end
+      end
+      fill_in
+    end
+
+    def single_item_request?
+      filtered_sorted_requestable.values.flatten.size == 1 && !any_fill_in_eligible?
+    end
+
     private
 
       def patron_message_internal
@@ -76,6 +111,10 @@ module Requests
           id: "Bibliographic ID",
           mfhd: "Holding ID (mfhd)"
         }.with_indifferent_access
+      end
+
+      def fill_in_services
+        ["annexa", "annexb", "recap_no_items", "on_shelf"]
       end
   end
 end

@@ -1427,62 +1427,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
   end
 
-  context "When passed a system_id for a record with a mixed holding, one of which has no item data and is at an annex." do
-    let(:params) do
-      {
-        system_id: '2286894',
-        patron: patron
-      }
-    end
-    let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
-
-    describe "#requestable" do
-      describe "#fill_in_eligible" do
-        it "identifies any mfhds that require fill in option" do
-          expect(request_with_fill_in_eligible_holding.fill_in_eligible("2576882")).to be_truthy
-        end
-      end
-    end
-  end
-
-  # This is an error condition
-  # context "When passed a system_id for a record that has no item data and is not at an annex." do
-  #   let(:params) {
-  #     {
-  #       system_id: '10139326',
-  #       patron: patron,
-  #     }
-  #   }
-  #   let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
-  #
-  #
-  #   describe "#requestable" do
-  #     describe "#fill_in_eligible" do
-  #       it "should identify any mfhds that require fill in option" do
-  #         expect(request_with_fill_in_eligible_holding.fill_in_eligible "9929080").to be_truthy
-  #       end
-  #     end
-  #   end
-  # end
-
-  context "When passed a system_id for a record with enumerable items at annex" do
-    let(:params) do
-      {
-        system_id: '3845517',
-        patron: patron
-      }
-    end
-    let(:request_with_fill_in_eligible_holding) { described_class.new(params) }
-
-    describe "#requestable" do
-      describe "#fill_in_eligible" do
-        it "identifies any mfhds that require fill in option" do
-          expect(request_with_fill_in_eligible_holding.fill_in_eligible("4148813")).to be_truthy
-        end
-      end
-    end
-  end
-
   context "A SCSB id with a single holding" do
     let(:scsb_single_holding_item) { fixture('/SCSB-5290772.json') }
     let(:location_code) { 'scsbcul' }

@@ -39,52 +39,9 @@ module Requests
       @illiad = Requests::Illiad.new(enum: item&.fetch(:enum, nil), chron: item&.fetch(:chron, nil), call_number: holding.first[1]['call_number_browse'])
     end
 
-    ############# Drives what happens on the form #######################
-
-    def digitize?
-      (item_data? || !circulates?) && (on_shelf_edd? || (recap_edd? && !scsb_in_library_use?)) && !request_status?
-    end
-
-    def fill_in_digitize?
-      !item_data? || digitize?
-    end
-
-    def pick_up?
-      return false if etas? || !eligible_to_pickup?
-      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request_status?
-    end
-
-    def fill_in_pick_up?
-      return false if user_barcode.blank? || !covid_trained?
-      !item_data? || pick_up?
-    end
-
-    def request?
-      return false if user_barcode.blank? || !covid_trained?
-      request_status?
-    end
-
-    def request_status?
-      on_order? || in_process? || traceable? || aeon? || borrow_direct? || ill_eligible? || services.empty?
-    end
-
-    def help_me?
-      ask_me? || (!available_for_digitizing? && !aeon?) || (request_status? && !request?)
-    end
-
-    def available_for_appointment?
-      !circulates? && !recap? && !charged? && !aeon? && !etas? && campus_authorized
-    end
-
-    def will_submit_via_form?
-      digitize? || pick_up? || scsb_in_library_use? || (ill_eligible? && patron.covid_trained?) || ((on_order? || in_process? || traceable?) && user_barcode.present?)
-    end
-
-    ############# End Drives what happens on the form #######################
-
     delegate :pick_up_location_id, :pick_up_location_code, :item_type, :enum_value, :cron_value, :item_data?,
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
-             :id, :use_statement, :collection_code, :missing?, :charged?, to: :item
+             :id, :use_statement, :collection_code, :missing?, :charged?, :status_label, to: :item
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
     ## when one is needed. Primarily for non-barcoded Annex items.
@@ -151,10 +108,6 @@ module Requests
       item_type_non_circulate? == false && location[:circulates] == true && open_libraries.include?(location[:library][:code])
     end
 
-    def available_for_digitizing?
-      open_libraries.include?(location[:library][:code])
-    end
-
     def can_be_delivered?
       circulates? && !scsb_in_library_use? && !in_library_use_only?
     end
@@ -202,10 +155,6 @@ module Requests
 
     def on_shelf?
       services.include?('on_shelf')
-    end
-
-    def on_shelf_edd?
-      services.include?('on_shelf_edd')
     end
 
     def borrow_direct?
@@ -307,17 +256,6 @@ module Requests
       return bib["location"].first.downcase if location["code"] == "etas"
       return nil if location['library'].blank?
       location['library']['code']
-    end
-
-    def create_fill_in_requestable
-      fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, patron: @patron)
-      fill_in_req.services = services
-      fill_in_req
-    end
-
-    def libcal_url
-      return unless available_for_appointment?
-      Libcal.url(location['library']['code'])
     end
 
     def etas?

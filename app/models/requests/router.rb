@@ -113,10 +113,8 @@ module Requests
       def calculate_unavailable_services
         services = []
         services << 'bd' if !requestable.enumerated? && cas_user? && !any_loanable? && requestable.bib['isbn_s'].present?
-        # for mongraphs - title level check
-        services << 'ill' if cas_user? && !any_loanable?
-        # for serials - copy level check
-        services << 'ill' if cas_user? && requestable.enumerated?
+        # for mongraphs - title level check OR for serials - copy level check
+        services << 'ill' if (cas_user? && !any_loanable?) || (cas_user? && requestable.enumerated?)
         # TODO: Uncomment this block when library returns to normal operation
         # # for mongraphs - title level check
         # if !any_loanable? && auth_user?

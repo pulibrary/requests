@@ -49,19 +49,6 @@ module Requests
       return true if /^SCSB-\d+/ =~ system_id.to_s
     end
 
-    ### builds a list of possible requestable items
-    # returns a collection of requestable objects or nil
-    def build_requestable
-      return [] if doc.blank?
-      if scsb?
-        build_scsb_requestable
-      elsif !items.nil?
-        build_requestable_with_items
-      else
-        build_requestable_from_data
-      end
-    end
-
     def requestable?
       requestable.size.positive?
     end
@@ -100,24 +87,6 @@ module Requests
       services.include? 'paging'
     end
 
-    def fill_in_eligible(mfhd)
-      fill_in = false
-      unless (sorted_requestable[mfhd].first.services & ["on_order", "online"]).present?
-        if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
-          if sorted_requestable[mfhd].first.item_data?
-            fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')
-          else
-            fill_in = sorted_requestable[mfhd].first.circulates?
-          end
-        end
-      end
-      fill_in
-    end
-
-    def fill_in_services
-      ["annexa", "annexb", "recap_no_items", "on_shelf"]
-    end
-
     # Does this request object have any available copies?
     def any_loanable_copies?
       requestable_unrouted.any? { |request| !(request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)) }
@@ -150,15 +119,6 @@ module Requests
 
     def all_items_online?
       requestable.map(&:online?).reduce(:&)
-    end
-
-    def any_will_submit_via_form?
-      return false if filtered_sorted_requestable.values.flatten.reject(&:blank?).blank?
-      filtered_sorted_requestable.values.flatten.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
-    end
-
-    def any_fill_in_eligible?
-      filtered_sorted_requestable.keys.map { |mfhd| fill_in_eligible(mfhd) }.any?
     end
 
     # returns nil if there are no attached items
@@ -240,11 +200,20 @@ module Requests
       doc['location_code_s'].first
     end
 
-    def single_item_request?
-      filtered_sorted_requestable.values.flatten.size == 1 && !any_fill_in_eligible?
-    end
-
     private
+
+      ### builds a list of possible requestable items
+      # returns a collection of requestable objects or nil
+      def build_requestable
+        return [] if doc.blank?
+        if scsb?
+          build_scsb_requestable
+        elsif !items.nil?
+          build_requestable_with_items
+        else
+          build_requestable_from_data
+        end
+      end
 
       def build_scsb_requestable
         requestable_items = []

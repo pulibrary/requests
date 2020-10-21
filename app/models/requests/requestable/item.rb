@@ -78,6 +78,10 @@ class Requests::Requestable
       self[:scsb_status]
     end
 
+    def status_label
+      self[:status_label]
+    end
+
     class NullItem
       def nil?
         true
@@ -157,6 +161,10 @@ class Requests::Requestable
 
       def charged?
         false
+      end
+
+      def status_label
+        'Not Available'
       end
     end
 

@@ -11,8 +11,11 @@ describe Requests::RequestDecorator do
   end
   let(:patron) { Requests::Patron.new(user: user, session: {}, patron: valid_patron) }
 
-  let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
-  let(:request) { instance_double(Requests::Request, system_id: '123abc', ctx: solr_context, requestable: [requestable], patron: patron, first_filtered_requestable: requestable, display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en') }
+  let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
+  let(:request) do
+    instance_double(Requests::Request, system_id: '123abc', ctx: solr_context, requestable: [requestable], patron: patron, first_filtered_requestable: requestable,
+                                       display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', filtered_sorted_requestable: { "112233" => [requestable] }, sorted_requestable: { "112233" => [requestable] })
+  end
   let(:solr_context) { instance_double(Requests::SolrOpenUrlContext) }
   let(:stubbed_questions) { { etas?: false } }
   let(:ldap) { {} }
@@ -78,6 +81,105 @@ describe Requests::RequestDecorator do
   describe "#format_brief_record_display" do
     it "shows all display metadata" do
       expect(decorator.format_brief_record_display).to eq('<dl class="dl-horizontal"><dt>Title</dt><dd lang="en" id="title">t</dd><dt>Author/Artist</dt><dd lang="en" id="authorartist">a</dd></dl>')
+    end
+  end
+
+  describe "#fill_in_eligible" do
+    context "recap services" do
+      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'] } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.fill_in_eligible("112233")).to be_falsey
+      end
+    end
+
+    context "on_shelf services with no item data and circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.fill_in_eligible("112233")).to be_truthy
+      end
+    end
+
+    context "on_shelf services with no item data and does not circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.fill_in_eligible("112233")).to be_falsey
+      end
+    end
+
+    context "on_shelf services with item data that is not enumerated" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new({}) } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.fill_in_eligible("112233")).to be_falsey
+      end
+    end
+
+    context "on_shelf services with item data that is enumerated" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum' => true) } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.fill_in_eligible("112233")).to be_truthy
+      end
+    end
+
+    context "on_order services" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_order'] } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.fill_in_eligible("112233")).to be_falsey
+      end
+    end
+  end
+
+  describe "#any_fill_in_eligible?" do
+    context "recap services" do
+      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'] } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_fill_in_eligible?).to be_falsey
+      end
+    end
+
+    context "on_shelf services with no item data and circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_fill_in_eligible?).to be_truthy
+      end
+    end
+  end
+
+  describe "#any_will_submit_via_form?" do
+    context "recap services" do
+      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'], will_submit_via_form?: true, item_data?: true, recap_edd?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "on_shelf services with no item data and circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false } }
+      it "submits via form" do
+        expect(decorator.any_will_submit_via_form?).to be_truthy
+      end
+    end
+
+    context "on_shelf services with no item data and circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false, recap_edd?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false } }
+      it "does not submit via form" do
+        expect(decorator.any_will_submit_via_form?).to be_falsey
+      end
+    end
+  end
+
+  describe "#single_item_request?" do
+    context "recap services" do
+      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'] } }
+      it "is a single item" do
+        expect(decorator.single_item_request?).to be_truthy
+      end
+    end
+
+    context "on_shelf services with no item data and circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
+      it "is not a single item" do
+        expect(decorator.single_item_request?).to be_falsey
+      end
     end
   end
 end

@@ -43,16 +43,6 @@ module Requests
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
              :id, :use_statement, :collection_code, :missing?, :charged?, :status_label, to: :item
 
-    ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
-    ## when one is needed. Primarily for non-barcoded Annex items.
-    def preferred_request_id
-      if id.present?
-        id
-      else
-        holding.first[0]
-      end
-    end
-
     # non voyager options
     def thesis?
       holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd'

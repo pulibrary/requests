@@ -1,13 +1,13 @@
 module Requests
   module IlliadMetadata
-    class ArticleExpress < IlliadClient
+    class ArticleExpress
       attr_reader :patron, :bib, :item, :note, :illiad_transaction_status, :attributes
 
-      def initialize(patron:, bib:, item:)
+      def initialize(patron:, bib:, item:, note: "Digitization Request")
         @patron = patron
         @bib = bib
         @item = item
-        @note = ["Digitization Request", item["edd_note"]].join(": ")&.truncate(4000)
+        @note = [note, item["edd_note"]].join(": ")&.truncate(4000)
         @illiad_transaction_status = "Awaiting Article Express Processing"
         @attributes = map_metdata
       end

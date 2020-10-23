@@ -45,7 +45,7 @@ module Requests
       rescue *::BorrowDirect::Error => error
         # duplicate request error, do not send again
         if error.to_s.starts_with?('PRIRI003') && error.to_s.include?('duplicate')
-          errors << { type: 'digitize', bibid: submission.bib, item: bd_item, user_name: submission.user_name, barcode: submission.user_barcode, error: "Ignoring duplicate Borrow Direct request: #{error}" }
+          errors << { type: 'borrow_direct', bibid: submission.bib, item: bd_item, user_name: submission.user_name, barcode: submission.user_barcode, error: "Ignoring duplicate Borrow Direct request: #{error}" }
 
         # borrow direct did not work handle with interlibrary loan
         else
@@ -55,9 +55,9 @@ module Requests
 
       def handle_with_interlibrary_loan(item:)
         @handled_by = "interlibrary_loan"
-        client = IlliadTransactionClient.new(patron: @submission.patron, bib: @submission.bib, item: item, metadata_mapper_class: Requests::IlliadMetadata::Loan)
+        client = IlliadTransactionClient.new(patron: @submission.patron, metadata_mapper: Requests::IlliadMetadata::Loan.new(patron: @submission.patron, bib: @submission.bib, item: item))
         transaction = client.create_request
-        errors << { type: 'digitize', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "Invalid Interlibrary Loan Request" } if transaction.blank?
+        errors << { type: 'interlibrary_loan', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "Invalid Interlibrary Loan Request" } if transaction.blank?
         transaction
       end
   end

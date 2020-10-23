@@ -30,6 +30,8 @@ module Requests
           validate_recap(record, selected)
         when 'on_shelf', 'recall'
           validate_recall_or_bd(record, selected)
+        when "help_me"
+          true # nothing to validate
         when *mail_services
           validate_pick_up_location(record, selected, selected["type"])
         else

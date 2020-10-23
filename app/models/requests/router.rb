@@ -40,7 +40,7 @@ module Requests
     def calculate_services
       if (requestable.voyager_managed? || requestable.scsb?) && requestable.online?
         ['online']
-      elsif requestable.voyager_managed? || requestable.scsb?
+      elsif (requestable.voyager_managed? || requestable.scsb?) && !requestable.aeon?
         calculate_voyager_or_scsb_services
       else # Default Service is Aeon
         ['aeon']
@@ -51,18 +51,16 @@ module Requests
 
       # rubocop:disable Metrics/MethodLength
       def calculate_voyager_or_scsb_services
-        if requestable.charged? && !requestable.aeon? ## my item status is negative
+        return [] unless auth_user?
+
+        if requestable.charged?
           calculate_unavailable_services
-        elsif (requestable.in_process? || requestable.on_order?) && !auth_user?
-          []
         elsif requestable.in_process?
           ['in_process']
         elsif requestable.on_order?
           ['on_order']
         # my item status is positive or non-existent churn through statuses
         ## any check at this level means items must fall in one bucket or another
-        elsif requestable.aeon?
-          ['aeon']
         elsif requestable.preservation?
           ['pres']
         elsif requestable.annexa?
@@ -98,15 +96,13 @@ module Requests
           ['recap_no_items']
         elsif requestable.scsb_in_library_use? && requestable.item[:collection_code] != "MR" && requestable.campus_authorized
           ['recap_in_library']
-        elsif (!requestable.circulates? && !requestable.recap_edd?) || (requestable.scsb_in_library_use? && !requestable.campus_authorized)
+        elsif (!requestable.circulates? && !requestable.recap_edd?) || (requestable.scsb_in_library_use? && (!requestable.eligible_to_pickup? || requestable.etas?))
           ['ask_me']
         elsif auth_user?
           services = []
-          services << 'recap' if !requestable.in_library_use_only? && requestable.circulates? && requestable.campus_authorized
+          services << 'recap' if !requestable.in_library_use_only? && requestable.circulates? && requestable.eligible_to_pickup?
           services << 'recap_edd' if requestable.recap_edd?
           services
-        else
-          []
         end
       end
 
@@ -144,27 +140,15 @@ module Requests
       end
 
       def barcode_user?
-        if @user.provider == 'barcode'
-          true
-        else
-          false
-        end
+        @user.provider == 'barcode'
       end
 
       def cas_user?
-        if @user.provider == 'cas'
-          true
-        else
-          false
-        end
+        @user.provider == 'cas'
       end
 
       def auth_user?
-        if cas_user? || barcode_user?
-          true
-        else
-          false
-        end
+        cas_user? || barcode_user?
       end
   end
 end

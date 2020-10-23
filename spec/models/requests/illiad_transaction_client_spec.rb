@@ -35,7 +35,9 @@ describe Requests::IlliadTransactionClient, type: :controller do
     Requests::Submission.new(params, user_info)
   end
 
-  let(:illiad_transaction) { described_class.new(patron: submission.patron, bib: submission.bib, item: submission.items.first) }
+  let(:metadata_mapper) { Requests::IlliadMetadata::ArticleExpress.new(patron: submission.patron, bib: submission.bib, item: submission.items.first) }
+
+  let(:illiad_transaction) { described_class.new(patron: submission.patron, metadata_mapper: metadata_mapper) }
 
   let(:responses) do
     {
@@ -106,6 +108,32 @@ describe Requests::IlliadTransactionClient, type: :controller do
       expect(transaction["TransactionNumber"]).to eq(1_093_806)
     end
     # rubocop:enable RSpec/MultipleExpectations
+  end
+
+  context "loan metdata mapper" do
+    let(:metadata_mapper) { Requests::IlliadMetadata::Loan.new(patron: submission.patron, bib: submission.bib, item: submission.items.first) }
+
+    describe '#create_request' do
+      let(:user_url) { "#{illiad_transaction.illiad_api_base}/ILLiadWebPlatform/Users" }
+      let(:patron_url) { "#{user_url}/#{user_info.netid}" }
+      let(:transaction_url) { "#{illiad_transaction.illiad_api_base}/ILLiadWebPlatform/transaction" }
+      let(:transaction_note_url) { "#{illiad_transaction.illiad_api_base}/ILLiadWebPlatform/transaction/1093806/notes" }
+
+      it "returns data when user is present" do
+        stub_request(:get, patron_url)
+          .to_return(status: 200, body: responses[:found], headers: {})
+        stub_request(:post, transaction_url)
+          .with(body: hash_including("Username" => "abc234", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Davis, Paul K.", "LoanTitle" => "100 decisive battles : from ancient times to the present", "LoanPublisher" => "Santa Barbara, Calif: ABC-CLIO", "ISSN" => "9781576070758", "CallNumber" => "HF1131 .B485", "CitedIn" => "https://catalog.princeton.edu/catalog/3510207", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1033410889", "DocumentType" => "Book", "LoanPlace" => nil))
+          .to_return(status: 200, body: responses[:transaction_created], headers: {})
+        stub_request(:post, transaction_note_url)
+          .with(body: hash_including("Note" => "Loan Request"))
+          .to_return(status: 200, body: responses[:note_created], headers: {})
+        transaction = illiad_transaction.create_request
+        expect(transaction).not_to be_blank
+        expect(transaction["Username"]).to eq('abc123')
+        expect(transaction["TransactionNumber"]).to eq(1_093_806)
+      end
+    end
   end
 end
 def format_label(label)

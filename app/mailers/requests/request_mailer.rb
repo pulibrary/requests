@@ -306,6 +306,20 @@ module Requests
            subject: I18n.t('requests.digitize.invalid_patron.subject'))
     end
 
+    def help_me_email(submission)
+      # TODO: what should we do for access only users
+    end
+
+    def help_me_confirmation(submission)
+      @submission = submission
+      destination_email = @submission.email
+      subject = I18n.t('requests.help_me.email_subject')
+      subject = I18n.t('requests.help_me_guest.email_subject') if @submission.access_only?
+      mail(to: destination_email,
+           from: I18n.t('requests.default.email_from'),
+           subject: subject)
+    end
+
     private
 
       def paging_pick_ups(submission:)

@@ -317,9 +317,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           select('Firestone Library', from: 'requestable__pick_up')
           expect(page).to have_content "ReCAP Paging Request"
           expect(page).to have_content "Pick-up location: Firestone Library"
-          # temporary changes 438
-          # expect(page).to have_content 'Help Me Get It' # while recap is closed
-          # expect(page).to have_link('Where to find it')
         end
 
         it 'allows CAS patrons to locate an on_shelf record' do
@@ -1039,17 +1036,44 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
-        it 'disallows access to in process recap items' do
+        it 'Help Me Get it for in process recap items' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "", "LoanTitle" => "8. Uluslararası Marsyas Kültür Sanat ve Müzik Festivali : Renkten sese VIII - Seramiğin sesi IV - Fotoğraf sergisi - Dinar'da zaman ve mekan - Mekanın ritmi 18-21 Mayıs 2017, Dinar - Afyonkarahisar = 8th International Marsyas Culture Art and Music...", "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/11521583", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
+            .to_return(status: 200, body: responses[:note_created], headers: {})
           visit "/requests/#{recap_in_process_id}"
-
-          expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("Uluslararası Marsyas Kültür Sanat ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
-        it 'disallows access to  On-Order items' do
+        it 'Help Me Get it for On-Order recap items' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Burrows, Roger", "LoanTitle" => "3D thinking in design and architecture : from antiquity to the future", "LoanPublisher" => nil, "ISSN" => "9780500519547", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/10958705", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
+            .to_return(status: 200, body: responses[:note_created], headers: {})
           visit "/requests/#{on_order_id}"
-          expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
         it 'allows access to a record that has no item data' do
@@ -1304,10 +1328,25 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'www.jstor.org'
         end
 
-        it 'prohibits using Borrow Direct, ILL, and Recall on Missing items' do
+        it 'Help Me Get It instead of using Borrow Direct, ILL, and Recall on Missing items' do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback", "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
+            .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/1788796?mfhd=2053005'
-          expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
+          check "requestable_selected_2114223"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
         it 'allows generic fill in requests enums from Annex or Firestone in mixed holding' do

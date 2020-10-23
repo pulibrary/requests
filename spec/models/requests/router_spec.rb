@@ -186,6 +186,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           stubbed_questions[:ask_me?] = true
           stubbed_questions[:circulates?] = true
           stubbed_questions[:campus_authorized] = true
+          stubbed_questions[:eligible_to_pickup?] = true
         end
         it "returns recap_edd in the services" do
           expect(router.calculate_services).to contain_exactly('recap_edd', 'recap')
@@ -193,6 +194,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         context "user not authorized for campus" do
           it "returns nothing in the services" do
             stubbed_questions[:campus_authorized] = false
+            stubbed_questions[:eligible_to_pickup?] = false
             expect(router.calculate_services).to contain_exactly('recap_edd')
           end
         end
@@ -238,24 +240,41 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
             stubbed_questions[:scsb_in_library_use?] = true
             stubbed_questions[:recap_edd?] = false
             stubbed_questions[:campus_authorized] = false
+            stubbed_questions[:eligible_to_pickup?] = false
           end
-          it "returns recap_in_library in the services" do
+          it "returns ask_me in the services" do
             expect(router.calculate_services).to eq(["ask_me"])
           end
         end
 
-        context "scsb_in_library_use MR collection" do
+        context "scsb_in_library_use MR collection campus authorized" do
           let(:item) { { collection_code: 'MR' } }
           before do
             stubbed_questions[:scsb_in_library_use?] = true
             stubbed_questions[:recap_edd?] = false
             stubbed_questions[:campus_authorized] = true
+            stubbed_questions[:etas?] = false
           end
-          it "returns recap_in_library in the services" do
+          it "returns recap in the services" do
             expect(router.calculate_services).to eq(["recap"])
           end
         end
+
+        context "scsb_in_library_use etas campus authorized" do
+          let(:item) { { collection_code: 'MR' } }
+          before do
+            stubbed_questions[:scsb_in_library_use?] = true
+            stubbed_questions[:recap_edd?] = false
+            stubbed_questions[:campus_authorized] = true
+            stubbed_questions[:etas?] = true
+            stubbed_questions[:etas?] = true
+          end
+          it "returns recap_in_library in the services" do
+            expect(router.calculate_services).to eq(["ask_me"])
+          end
+        end
       end
+
       context "ill enumerate item" do
         before do
           stubbed_questions[:charged?] = true

@@ -29,6 +29,7 @@ en:
       paging_success: "Item has been requested for pick-up"
       # temporary changes issue 438
       on_shelf_success: "Item has been requested for pick-up"
+      help_me_success: "Your request was submitted. Our library staff will review the request and contact you with any questions or updates."
       trace_success: "Item is now being traced."
       error: "We were unable to process your request. Correct the highlighted errors."
       service_error: "There was a problem with this request which Library staff need to investigate. You'll be notified once it's resolved and requested for you."
@@ -177,6 +178,17 @@ en:
       email_from: "ilsborr@princeton.edu"
       email_subject: "Partner Request Confirmation"
       email_conf_msg: 'Item sent to be requested from another Library. Requests typically are filled within two weeks when possible. If there is a problem fulfilling your request a member of our Library Staff will contact you. For more detailed information please login to your <a href="https://lib-illiad.princeton.edu/illiad/illiad.dll">Illiad Account</a>. (Note: Your username and password is the same as the CAS)'
+    help_me:
+      email_from: "ilsborr@princeton.edu"
+      delivery_label: "Help Me Get It"
+      request_label: "Help Me Get It"
+      email_subject: "Help Me Get It Confirmation"
+      brief_msg:
+        full_access: "This item is not accessible to any patron.  Library staff will work to try to get you access to a copy of the desired material."
+        pickup_access: "This item is only available for use in the library. Library staff will work to try to get you access to a digital copy of the desired material."
+        digital_access: "This item is only available for pick-up or in library use. Library staff will work to try to get you access to a digital copy of the desired material."
+        cas_user_no_barcode_no_choice_msg: "Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material."
+      access_msg: "Princeton Faculty, Students, and Staff only."
     ask_me:
       request_label: "Help Me Get It"
       brief_msg: "Library staff are working remotely to deliver materials digitally as long as electronic resources are available"

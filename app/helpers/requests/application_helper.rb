@@ -299,7 +299,7 @@ module Requests
       return unsubmittable? requestable_list unless requestable_list.size == 1
       # temporary changes issue 438 do not disable the button for circulating items
       # requestable_list.first.services.empty? || requestable_list.first.on_reserve? || (requestable_list.first.services.include? 'on_shelf') || requestable_list.first.ask_me?
-      requestable_list.first.services.empty? || requestable_list.first.on_reserve? || requestable_list.first.ask_me?
+      requestable_list.first.services.empty? || requestable_list.first.on_reserve?
     end
 
     def unsubmittable?(requestable_list)

@@ -68,7 +68,7 @@ module Requests
 
     def fill_in_eligible(mfhd)
       fill_in = false
-      unless (sorted_requestable[mfhd].first.services & ["on_order", "online"]).present?
+      unless (sorted_requestable[mfhd].first.services & ["on_order", "online", "recap", "recap_edd", "recap_no_items"]).present?
         if sorted_requestable[mfhd].any? { |r| !(r.services & fill_in_services).empty? }
           if sorted_requestable[mfhd].first.item_data?
             fill_in = true if sorted_requestable[mfhd].first.item.key?('enum')

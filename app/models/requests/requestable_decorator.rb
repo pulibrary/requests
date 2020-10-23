@@ -53,6 +53,7 @@ module Requests
     end
 
     def will_submit_via_form?
+      return false if recap? || recap_edd?
       digitize? || pick_up? || scsb_in_library_use? || (ill_eligible? && patron.covid_trained?) || ((on_order? || in_process? || traceable?) && user_barcode.present?)
     end
 

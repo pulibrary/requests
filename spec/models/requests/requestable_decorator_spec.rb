@@ -747,13 +747,13 @@ describe Requests::RequestableDecorator do
   end
 
   describe "#will_submit_via_form?" do
-    let(:stubbed_questions) { { item_data?: true, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
+    let(:stubbed_questions) { { item_data?: true, services: ["on_shelf"], recap_edd?: false, recap?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
     it 'will not be submitted' do
       expect(decorator.will_submit_via_form?).to be_falsey
     end
 
     context "item data and on_shelf" do
-      let(:stubbed_questions) { { item_data?: true, services: ["on_shelf"], recap_edd?: false, circulates?: true, on_shelf?: true, in_library_use_only?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false } }
+      let(:stubbed_questions) { { item_data?: true, services: ["on_shelf"], recap_edd?: false, recap?: false, circulates?: true, on_shelf?: true, in_library_use_only?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
@@ -762,6 +762,7 @@ describe Requests::RequestableDecorator do
     context "item data and at recap" do
       let(:stubbed_questions) { { item_data?: true, services: ["recap"], recap_edd?: false, recap?: true, circulates?: true, on_shelf?: false, in_library_use_only?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false } }
       it 'will be submitted' do
+        pending "ReCAP is closed for maintenance"
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
@@ -769,6 +770,7 @@ describe Requests::RequestableDecorator do
     context "item data and at recap and edd eligible" do
       let(:stubbed_questions) { { item_data?: true, services: ["recap", "recap_edd"], recap_edd?: true, recap?: true, circulates?: true, on_shelf?: false, in_library_use_only?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false } }
       it 'will be submitted' do
+        pending "ReCAP is closed for maintenance"
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
@@ -776,376 +778,380 @@ describe Requests::RequestableDecorator do
     context "item data and at recap only edd eligible" do
       let(:stubbed_questions) { { item_data?: true, services: ["recap_edd"], recap_edd?: true, recap?: false, circulates?: true, on_shelf?: false, in_library_use_only?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false } }
       it 'will be submitted' do
+        pending "ReCAP is closed for maintenance"
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data, but circulates" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, recap_edd?: true, recap?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data, but circulates and etas" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false, recap_edd?: true, recap?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data, but circulates and etas and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '1122333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '1122333', recap_edd?: true, recap?: false } }
       it 'will be submitted' do
+        pending "ReCAP is closed for maintenance"
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data, but circulates and etas and traceable no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil, recap_edd?: true, recap?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data, but circulates and etas and in_process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '1122333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '1122333', recap_edd?: true, recap?: false } }
       it 'will be submitted' do
+        pending "ReCAP is closed for maintenance"
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data, but circulates and etas and in_process no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil, recap_edd?: true, recap?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data, but circulates and etas and on_order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '11222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '11222333', recap_edd?: true, recap?: false } }
       it 'will be submitted' do
+        pending "ReCAP is closed for maintenance"
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data, but circulates and etas and on_order no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: true, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil, recap_edd?: true, recap?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and scsb_in_library_use" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: true } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: true } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible and traceable and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible and in_process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible and in_process and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible and on_order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and ill_eligible and on_order and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and traceable and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and in_process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and in_process and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and etas and on_order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and etas and on_order and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and traceable and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and in_process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and in_process and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and on order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and on order and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible and traceable and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible and in_process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible and in_process and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible and on order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and ill_eligible and on order and no user bar code" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and scsb_in_library_use" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: true } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: false, scsb_in_library_use?: true } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup?" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '11122233' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: '11122233' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and traceable and no user barcode " do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and in process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and in process and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: false, in_process?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and on_order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and on_order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: false, on_order?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and traceable" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: '111222333' } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and traceable and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and in_process" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and in_process and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and on_order" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: '111222333' } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: '111222333' } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and on_order and no user barcode" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil } }
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
     end
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and scsb_in_library_use?" do
-      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: true } }
+      let(:stubbed_questions) { { item_data?: false, circulates?: false, services: ["on_shelf"], recap?: false, recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: true } }
       it 'will be submitted' do
         expect(decorator.will_submit_via_form?).to be_truthy
       end

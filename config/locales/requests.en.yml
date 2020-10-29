@@ -173,7 +173,7 @@ en:
       request_label: "Interlibrary Loan (1-2 weeks)"
       brief_msg: "See if this item can be obtained from one of our partner Libraries."
       access_msg: 'Access Users are not eligible for ILL services.'
-      delivery_label: Request via Partner Library"
+      delivery_label: "Request via Partner Library"
     interlibrary_loan:
       email_from: "ilsborr@princeton.edu"
       email_subject: "Partner Request Confirmation"

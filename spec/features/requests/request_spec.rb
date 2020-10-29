@@ -1318,9 +1318,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
-        it 'disallows aeon requests' do
+        it 'allows aeon requests for all users' do
           visit '/requests/336525'
-          expect(page).not_to have_content 'Request to View in Reading Room'
+          expect(page).to have_content 'Request to View in Reading Room'
         end
 
         it 'allows guest patrons to access Online items' do

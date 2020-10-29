@@ -38,14 +38,7 @@ describe Requests::RequestableDecorator do
     end
 
     context "no item data and does not circulate and is recap_edd and borrow_direct" do
-      let(:stubbed_questions) { { etas?: false, item_data?: false, circulates?: false, services: ['recap_edd'], recap_edd?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true } }
-      it 'can not be digitized' do
-        expect(decorator.digitize?).to be_falsey
-      end
-    end
-
-    context "no item data and does not circulate and is recap_edd and aeon" do
-      let(:stubbed_questions) { { etas?: false, item_data?: false, circulates?: false, services: ['recap_edd'], recap_edd?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
+      let(:stubbed_questions) { { etas?: false, item_data?: false, circulates?: false, services: ['recap_edd'], recap_edd?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, borrow_direct?: true } }
       it 'can not be digitized' do
         expect(decorator.digitize?).to be_falsey
       end
@@ -114,13 +107,6 @@ describe Requests::RequestableDecorator do
       end
     end
 
-    context "with item data and does not circulate and but is on_shelf edd and aeon" do
-      let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: false, services: ['on_shelf_edd'], recap_edd?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
-      it 'can not be digitized' do
-        expect(decorator.digitize?).to be_falsey
-      end
-    end
-
     context "with item data and does not circulate and is but is on_shelf edd and traceable" do
       let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: false, services: ['on_shelf_edd'], recap_edd?: false, on_order?: false, in_process?: false, traceable?: true } }
       it 'can not be digitized' do
@@ -143,7 +129,7 @@ describe Requests::RequestableDecorator do
     end
 
     context "with item data and does circulate and not on order and not in process and not traceable and not aeon and not borrow_direct and not ill_eligible" do
-      let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, services: ['on_shelf_edd'], on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false } }
+      let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, services: ['on_shelf_edd'], on_order?: false, in_process?: false, traceable?: false, aeon?: true, borrow_direct?: false, ill_eligible?: false } }
       it 'can not be digitized' do
         expect(decorator.digitize?).to be_truthy
       end
@@ -158,13 +144,6 @@ describe Requests::RequestableDecorator do
 
     context "with item data and does circulate and borrow_direct" do
       let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, services: ['on_shelf_edd'], on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true } }
-      it 'can not be digitized' do
-        expect(decorator.digitize?).to be_falsey
-      end
-    end
-
-    context "with item data and does circulate and aeon?" do
-      let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, services: ['on_shelf_edd'], on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
       it 'can not be digitized' do
         expect(decorator.digitize?).to be_falsey
       end
@@ -234,13 +213,6 @@ describe Requests::RequestableDecorator do
         end
       end
 
-      context "not in etas and aeon?" do
-        let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
-        it 'can not be picked up' do
-          expect(decorator.pick_up?).to be_falsey
-        end
-      end
-
       context "not in etas borrow_direct?" do
         let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true } }
         it 'can not be picked up' do
@@ -256,7 +228,7 @@ describe Requests::RequestableDecorator do
       end
 
       context "not in etas on_shelf" do
-        let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, services: ['on_shelf'] } }
+        let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true, borrow_direct?: false, ill_eligible?: false, services: ['on_shelf'] } }
         it 'can be picked up' do
           expect(decorator.pick_up?).to be_truthy
         end
@@ -299,13 +271,6 @@ describe Requests::RequestableDecorator do
 
       context "not in etas, has item data and circulates and traceable?" do
         let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: true } }
-        it 'can not be picked up' do
-          expect(decorator.pick_up?).to be_falsey
-        end
-      end
-
-      context "not in etas, has item data and circulates and aeon?" do
-        let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
@@ -362,13 +327,6 @@ describe Requests::RequestableDecorator do
 
       context "not in etas, has item data and circulates and annexa? and traceable" do
         let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: true } }
-        it 'can not be picked up' do
-          expect(decorator.pick_up?).to be_falsey
-        end
-      end
-
-      context "not in etas, has item data and circulates and annexa? and aeon?" do
-        let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, in_library_use_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
@@ -445,10 +403,17 @@ describe Requests::RequestableDecorator do
       end
     end
 
-    context "does not circulate and not charged? and campus_authorized" do
-      let(:stubbed_questions) { { charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: false, campus_authorized: true } }
-      it 'is not available for an appointment' do
+    context "at an open library does not circulate and not charged? and campus_authorized" do
+      let(:stubbed_questions) { { charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: false, campus_authorized: true, open_libraries: ['abc'], location: { library: { code: 'abc' } } } }
+      it 'is available for an appointment' do
         expect(decorator.available_for_appointment?).to be_truthy
+      end
+    end
+
+    context "at an closed library does not circulate and not charged? and campus_authorized" do
+      let(:stubbed_questions) { { charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: false, campus_authorized: true, open_libraries: ['def'], location: { library: { code: 'abc' } } } }
+      it 'is not available for an appointment' do
+        expect(decorator.available_for_appointment?).to be_falsey
       end
     end
 
@@ -571,13 +536,6 @@ describe Requests::RequestableDecorator do
       end
     end
 
-    context "with item data and does not circulate and but is on_shelf edd and aeon" do
-      let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: false, services: ['on_shelf_edd'], recap_edd?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
-      it 'can not be fill_in_digitize?' do
-        expect(decorator.fill_in_digitize?).to be_falsey
-      end
-    end
-
     context "with item data and does not circulate and is but is on_shelf edd and traceable" do
       let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: false, services: ['on_shelf_edd'], recap_edd?: false, on_order?: false, in_process?: false, traceable?: true } }
       it 'can not be fill_in_digitize?' do
@@ -615,13 +573,6 @@ describe Requests::RequestableDecorator do
 
     context "with item data and does circulate and borrow_direct" do
       let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, services: ['on_shelf_edd'], on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true } }
-      it 'can not be fill_in_digitize?' do
-        expect(decorator.fill_in_digitize?).to be_falsey
-      end
-    end
-
-    context "with item data and does circulate and aeon?" do
-      let(:stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, services: ['on_shelf_edd'], on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
       it 'can not be fill_in_digitize?' do
         expect(decorator.fill_in_digitize?).to be_falsey
       end
@@ -771,13 +722,6 @@ describe Requests::RequestableDecorator do
 
     context "eligible to pick up and borrow_direct" do
       let(:stubbed_questions) { { eligible_to_pickup?: true, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true } }
-      it 'can be requested' do
-        expect(decorator.request?).to be_truthy
-      end
-    end
-
-    context "eligible to pick up and aeon?" do
-      let(:stubbed_questions) { { eligible_to_pickup?: true, on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
       it 'can be requested' do
         expect(decorator.request?).to be_truthy
       end
@@ -1371,9 +1315,9 @@ describe Requests::RequestableDecorator do
     end
 
     context "aeon?" do
-      let(:stubbed_questions) { { on_order?: false, in_process?: false, traceable?: false, aeon?: true } }
+      let(:stubbed_questions) { { on_order?: false, in_process?: false, traceable?: false, aeon?: true, borrow_direct?: false, ill_eligible?: false, services: ['any'] } }
       it 'can be requested' do
-        expect(decorator.request_status?).to be_truthy
+        expect(decorator.request_status?).to be_falsey
       end
     end
 
@@ -1433,8 +1377,8 @@ describe Requests::RequestableDecorator do
       end
     end
 
-    context "an item that does not circulate and not recap and not charged and not aeon and campus authorized" do
-      let(:stubbed_questions) { { etas?: false, circulates?: false, recap?: false, charged?: false, aeon?: false, campus_authorized: true, location: { 'library' => { 'code' => 'firestone' } } } }
+    context "an item at an open library that does not circulate and not recap and not aeon and not charged and campus authorized" do
+      let(:stubbed_questions) { { etas?: false, circulates?: false, recap?: false, charged?: false, aeon?: false, campus_authorized: true, location: { 'library' => { 'code' => 'firestone' } }, open_libraries: ['firestone'] }.with_indifferent_access }
       it "returns a url" do
         expect(decorator.libcal_url).to eq("https://libcal.princeton.edu/seats?lid=1919")
       end
@@ -1504,6 +1448,30 @@ describe Requests::RequestableDecorator do
 
       it "returns the correct message" do
         expect(decorator.help_me_message).to eq("This item is not accessible to any patron.  Library staff will work to try to get you access to a copy of the desired material.")
+      end
+    end
+  end
+
+  describe "#aeon_url" do
+    let(:ctx) { instance_double(Requests::SolrOpenUrlContext) }
+    context "aeon voyager managed" do
+      let(:stubbed_questions) do
+        { services: ['lewis'], charged?: false, aeon?: true,
+          voyager_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
+      end
+      it 'a link for reading room' do
+        expect(decorator.aeon_url(ctx)).to eq('aeon_link')
+      end
+    end
+
+    context "aeon NOT voyager managed" do
+      let(:stubbed_questions) do
+        { services: ['lewis'], charged?: false, aeon?: true,
+          voyager_managed?: false, ask_me?: false, aeon_request_url: 'link',
+          aeon_mapped_params: { abc: 123 } }
+      end
+      it 'a link for reading room' do
+        expect(decorator.aeon_url(ctx)).to eq('https://library.princeton.edu/aeon/aeon.dll?abc=123')
       end
     end
   end

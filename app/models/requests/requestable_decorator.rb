@@ -51,7 +51,7 @@ module Requests
     end
 
     def request_status?
-      on_order? || in_process? || traceable? || aeon? || borrow_direct? || ill_eligible? || services.empty?
+      on_order? || in_process? || traceable? || borrow_direct? || ill_eligible? || services.empty?
     end
 
     def help_me?
@@ -61,7 +61,7 @@ module Requests
     end
 
     def available_for_appointment?
-      !circulates? && !recap? && !charged? && !aeon? && !etas? && campus_authorized
+      !circulates? && !recap? && !charged? && !aeon? && !etas? && campus_authorized && located_in_an_open_library?
     end
 
     def will_submit_via_form?
@@ -107,6 +107,14 @@ module Requests
               "digital_access"
             end
       I18n.t("requests.help_me.brief_msg.#{key}")
+    end
+
+    def aeon_url(request_ctx)
+      if requestable.voyager_managed?
+        requestable.aeon_request_url(request_ctx)
+      else
+        "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}"
+      end
     end
   end
 end

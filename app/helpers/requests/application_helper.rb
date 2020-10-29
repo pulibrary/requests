@@ -42,10 +42,6 @@ module Requests
           content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item', aria: { hidden: true })
       elsif requestable.charged? && !requestable.aeon? && !requestable.ask_me?
         render partial: 'checked_out_options', locals: { requestable: requestable }
-      elsif requestable.aeon? && requestable.voyager_managed?
-        link_to 'Request to View in Reading Room', requestable.aeon_request_url(@request.ctx), class: 'btn btn-primary', aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }
-      elsif requestable.aeon?
-        link_to 'Request to View in Reading Room', "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}", class: 'btn btn-primary', aria: { labelledby: "title enum_#{requestable.preferred_request_id}" }
       else
         display_requestable_list(requestable.services)
       end

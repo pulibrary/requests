@@ -173,7 +173,7 @@ en:
       request_label: "Interlibrary Loan (1-2 weeks)"
       brief_msg: "See if this item can be obtained from one of our partner Libraries."
       access_msg: 'Access Users are not eligible for ILL services.'
-      delivery_label: Request via Partner Library"
+      delivery_label: "Request via Partner Library"
     interlibrary_loan:
       email_from: "ilsborr@princeton.edu"
       email_subject: "Partner Request Confirmation"
@@ -224,4 +224,5 @@ en:
       mendel: '10am - 4pm, Monday - Friday'
       stokes: '10am - 4pm, Monday - Friday'
       lewis: '10am - 4pm, Monday - Friday'
+      marquand: '9am - 1pm Monday, Wednesday and Friday; 1pm - 5pm Tuesday and Thursday'
     lewis_flood_message: 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'

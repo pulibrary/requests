@@ -185,31 +185,6 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       end
     end
 
-    context "aeon voyager managed" do
-      let(:stubbed_questions) do
-        { services: ['lewis'], charged?: false, aeon?: true, preferred_request_id: '123',
-          voyager_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
-      end
-      it 'a link for reading room' do
-        assign(:request, request)
-        expect(helper).to receive(:link_to).with('Request to View in Reading Room', 'aeon_link', anything).and_return 'link'
-        expect(helper.show_service_options(requestable, 'acb')).to eq "link"
-      end
-    end
-
-    context "aeon NOT voyager managed" do
-      let(:stubbed_questions) do
-        { services: ['lewis'], charged?: false, aeon?: true, preferred_request_id: '123',
-          voyager_managed?: false, ask_me?: false, aeon_request_url: 'link',
-          aeon_mapped_params: { abc: 123 } }
-      end
-      it 'a link for reading room' do
-        assign(:request, request)
-        expect(helper).to receive(:link_to).with('Request to View in Reading Room', 'https://library.princeton.edu/aeon/aeon.dll?abc=123', anything).and_return 'link'
-        expect(helper.show_service_options(requestable, 'acb')).to eq "link"
-      end
-    end
-
     context "on shelf not traceable" do
       let(:stubbed_questions) do
         { services: ['on_shelf'], charged?: false, aeon?: false,

@@ -5,16 +5,13 @@
 
 module Requests
   class IlliadTransactionClient < IlliadClient
-    attr_reader :patron, :bib, :item, :note, :illiad_transaction_status, :attributes
+    attr_reader :patron, :note, :illiad_transaction_status, :attributes
 
-    def initialize(patron:, bib:, item:, metadata_mapper_class: Requests::IlliadMetadata::ArticleExpress)
+    def initialize(patron:, metadata_mapper:)
       super()
       @patron = patron
-      @bib = bib
-      @item = item
-      mapper = metadata_mapper_class.new(patron: patron, bib: bib, item: item)
-      @note = ["Digitization Request", item["edd_note"]].join(": ")&.truncate(4000)
-      @attributes = mapper.attributes
+      @note = metadata_mapper.note
+      @attributes = metadata_mapper.attributes
     end
 
     def create_request

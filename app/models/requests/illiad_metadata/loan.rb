@@ -1,13 +1,13 @@
 module Requests
   module IlliadMetadata
-    class Loan < IlliadClient
+    class Loan
       attr_reader :patron, :bib, :item, :note, :illiad_transaction_status, :attributes
 
-      def initialize(patron:, bib:, item:)
+      def initialize(patron:, bib:, item:, note: "Loan Request")
         @patron = patron
         @bib = bib
         @item = item
-        @note = ["Loan Request", item["edd_note"]].join(": ")&.truncate(4000)
+        @note = note&.truncate(4000)
         @illiad_transaction_status = "Awaiting Request Processing"
         @attributes = map_metdata
       end

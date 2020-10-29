@@ -83,6 +83,7 @@ module Requests
       process_recap
       process_borrow_direct
       process_digitize
+      process_help_me
 
       # if !recap && !recall && !bd !(a1 & a2).empty?
       if generic_service_only?
@@ -182,6 +183,18 @@ module Requests
                      end
       end
 
+      def process_help_me
+        return unless service_types.include?('help_me')
+        @services << if access_only?
+                       # Access users cannot use illiad directly
+                       Requests::Generic.new(self)
+                     else
+                       help_me = Requests::HelpMe.new(self)
+                       help_me.handle
+                       help_me
+                     end
+      end
+
       def process_borrow_direct
         return unless service_types.include?('bd') || service_types.include?('ill')
         bd_request = Requests::BorrowDirect.new(self)
@@ -205,7 +218,7 @@ module Requests
       end
 
       def non_generic_services
-        ['recap', 'recall', 'on_shelf', 'digitize']
+        ['recap', 'recall', 'on_shelf', 'digitize', 'help_me']
       end
 
       def generate_success_messages(success_messages)

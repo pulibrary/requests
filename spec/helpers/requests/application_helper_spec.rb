@@ -162,7 +162,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe "#show_service_options" do
-    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+    let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
     let(:request) { instance_double(Requests::Request, ctx: solr_context) }
     let(:solr_context) { instance_double(Requests::SolrOpenUrlContext) }
     context "lewis library" do
@@ -258,7 +258,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe "#preferred_request_content_tag" do
-    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+    let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
     let(:default_pick_ups) { [{ label: 'place', gfa_pickup: 'xx', staff_only: false }] }
     let(:card_div) { '<div id="fields-print__abc123_card" class="card card-body bg-light">' }
 
@@ -338,7 +338,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe "#hidden_fields_item" do
-    let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
+    let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
 
     context "no services" do
       let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }

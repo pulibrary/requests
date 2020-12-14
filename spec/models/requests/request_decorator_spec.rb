@@ -35,12 +35,14 @@ describe Requests::RequestDecorator do
 
   describe "#patron_message" do
     it 'shows the message for the campus unauthorized patron' do
+      pending "holiday closure"
       expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.</div>"
     end
 
     context "staff ldap status" do
       let(:ldap) { { status: 'staff' } }
       it 'shows the message for the campus unauthorized patron' do
+        pending "holiday closure"
         expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.  If you would like to have access to pick-up books <a href='https://ehs.princeton.edu/COVIDTraining'>please complete the mandatory COVID-19 training</a>.</div>"
       end
     end
@@ -54,12 +56,14 @@ describe Requests::RequestDecorator do
       end
 
       it 'shows the message for the campus authorized patron' do
+        pending "holiday closure"
         expect(decorator.patron_message).to eq ""
       end
     end
     context "an etas record" do
       let(:stubbed_questions) { { etas?: true, etas_limited_access: false } }
       it 'shows the message for the etas items' do
+        pending "holiday closure"
         expect(decorator.patron_message).to eq "<div class='alert alert-warning'>We currently cannot lend this item, but you may view an online copy via the <a href='/catalog/123abc'>link in the record page</a></div>"
       end
     end
@@ -67,6 +71,7 @@ describe Requests::RequestDecorator do
     context "an etas recap record" do
       let(:stubbed_questions) { { etas?: true, etas_limited_access: true } }
       it 'shows the message for the etas items' do
+        pending "holiday closure"
         expect(decorator.patron_message).to eq "<div class='alert alert-warning'>We currently cannot lend this item from our ReCAP partner collection due to changes in copyright restrictions.</div>"
       end
     end

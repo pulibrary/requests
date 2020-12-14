@@ -30,9 +30,12 @@ module Requests
 
     # rubocop:disable Rails/OutputSafety
     def patron_message
-      return "" if (patron.campus_authorized && !first_filtered_requestable.etas?) || patron.guest?
+      message = "<div class='alert alert-warning'>"
+      message += "<p>The book pick-up, digitization/scanning, and reference services will not be available Dec. 24 through Jan. 3. Please request digitization/scanning by Dec. 16. Final book pick-up date is Wed., Dec. 23, before 4 p.m.</p>".html_safe
 
-      "<div class='alert alert-warning'>#{patron_message_internal}</div>".html_safe
+      message += patron_message_internal unless (patron.campus_authorized && !first_filtered_requestable.etas?) || patron.guest?
+      message += "</div>"
+      message.html_safe
     end
 
     def hidden_fields

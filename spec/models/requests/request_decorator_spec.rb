@@ -67,7 +67,7 @@ describe Requests::RequestDecorator do
     context "an etas recap record" do
       let(:stubbed_questions) { { etas?: true, etas_limited_access: true } }
       it 'shows the message for the etas items' do
-        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>We currently cannot lend this item from our ReCAP partner collection due to changes in copyright restrictions.</div>"
+        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>We currently cannot lend this item from our ReCAP partner collection because of changes in copyright restrictions.</div>"
       end
     end
   end

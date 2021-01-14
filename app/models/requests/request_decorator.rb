@@ -89,7 +89,7 @@ module Requests
         if first_filtered_requestable.etas?
           "We currently cannot lend this item" +
             if first_filtered_requestable.etas_limited_access
-              " from our ReCAP partner collection due to changes in copyright restrictions."
+              " from our ReCAP partner collection because of changes in copyright restrictions."
             else
               ", but you may view an online copy via the <a href='#{catalog_url}'>link in the record page</a>"
             end

@@ -35,13 +35,13 @@ describe Requests::RequestDecorator do
 
   describe "#patron_message" do
     it 'shows the message for the campus unauthorized patron' do
-      expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. If you are an undergraduate returning to campus for the Spring term your access will be restored on 2/1/2021. If you are not a returning undergraduate please consult with your Department if you believe you should have access to these services.</div>"
+      expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.</div>"
     end
 
     context "staff ldap status" do
       let(:ldap) { { status: 'staff' } }
       it 'shows the message for the campus unauthorized patron' do
-        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. If you are an undergraduate returning to campus for the Spring term your access will be restored on 2/1/2021. If you are not a returning undergraduate please consult with your Department if you believe you should have access to these services.  If you would like to have access to pick-up books <a href='https://ehs.princeton.edu/COVIDTraining'>please complete the mandatory COVID-19 training</a>.</div>"
+        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services.  If you would like to have access to pick-up books <a href='https://ehs.princeton.edu/COVIDTraining'>please complete the mandatory COVID-19 training</a>.</div>"
       end
     end
 

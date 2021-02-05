@@ -94,9 +94,9 @@ module Requests
               ", but you may view an online copy via the <a href='#{catalog_url}'>link in the record page</a>"
             end
         elsif patron.pick_up_only?
-          "You are only currently authorized to utilize our book <a href='https://library.princeton.edu/services/book-pick-up'>pick-up service</a>. Please consult with your Department if you would like to book time to spend in our libraries using our <a href='https://library.princeton.edu/services/study-browse'>study-browse service</a>."
+          "You are only currently authorized to utilize our book <a href='https://library.princeton.edu/services/book-pick-up'>pick-up service</a>. Please consult with <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you would like to book time to spend in our libraries using our <a href='https://library.princeton.edu/services/study-browse'>study-browse service</a>."
         elsif !patron.guest? && !patron.campus_authorized
-          msg = "You are not currently authorized for on-campus services at the Library. Please consult with your Department if you believe you should have access to these services."
+          msg = "You are not currently authorized for on-campus services at the Library. Please send an inquiry to <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you believe you should have access to these services."
           msg += "  If you would like to have access to pick-up books <a href='https://ehs.princeton.edu/COVIDTraining'>please complete the mandatory COVID-19 training</a>." if patron.training_eligable?
           msg
         end

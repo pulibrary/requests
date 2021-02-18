@@ -218,10 +218,10 @@ en:
       cas_user_no_barcode_no_choice_msg: 'Only items available for digitization can be requested when you do not have a barcode registered with the Library'
       auth_user_lookup_fail: 'Failed to lookup your library account'
     library_hours:
-      firestone: '11am - 5pm, Monday - Friday; 1-5 Saturdays and Sundays'
+      firestone: '11am - 6pm, Monday - Friday; 1pm - 5pm Saturdays and Sundays'
       architecture: '9:00am – 11:45pm, Monday - Friday; 11:00am – 10:00pm Saturday; 1:00pm – 11:45pm Sunday'
       eastasian: '9:00am – 11:00pm, Monday - Friday; 10:00am – 5:00pm Saturday; 2:00pm – 11:00pm Sunday'
-      mendel: '	9:00am – 11:45pm, Monday - Thursday; 9:00am – 7:45pm Friday; 11:00am – 10:00pm Saturday; 	12:00pm – 9:45pm Sunday'
+      mendel: '	9:00am – 11:45pm, Monday - Thursday; 9:00am – 7:45pm Friday; 12:00pm – 7:45pm Saturday; 	12:00pm – 9:45pm Sunday'
       stokes: '	9:00am – 11:00pm, Monday - Thursday; 9:00am – 8:00pm Friday; 12:30pm – 11:00pm Saturday; 1:00pm – 11:45pm Sunday'
       lewis: '8:30am – 11:45pm, Monday - Thursday; 	8:30am – 8:45pm Friday;	10:00am – 8:45pm Saturday; 12:00pm – 11:45pm Sunday'
       marquand: '9:00am - 5:00pm, Monday - Friday'

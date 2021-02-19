@@ -13,7 +13,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     it 'handles access patron params when the user form is posted' do
       post :generate, params: { request: { username: 'foobar', email: 'foo@bar.com' },
                                 source: 'pulsearch',
-                                system_id: '6377369' }
+                                system_id: '6377369', mfhd: '6366499' }
       expect(response.status).to eq(200)
     end
   end
@@ -30,6 +30,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         get :generate, params: {
           source: 'pulsearch',
           system_id: '9676483',
+          mfhd: '9504920',
           mode: "trace"
         }
         expect(assigns(:mode)).to eq('trace')
@@ -37,7 +38,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       it 'uses the default request mode and does not set a flash' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: '9676483'
+          system_id: '9676483',
+          mfhd: '9504920'
         }
         expect(flash.now[:notice]).to be_blank
         expect(assigns(:mode)).to eq('standard')
@@ -45,7 +47,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       it 'redirects you when a thesis record is requested' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: 'dsp01rr1720547'
+          system_id: 'dsp01rr1720547',
+          mfhd: 'thesis'
         }
         expect(response.status).to eq(302)
       end
@@ -61,7 +64,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       it 'does not redirects you when multiple aeon records are requested' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: '9576880'
+          system_id: '9576880',
+          mfhd: '10024448'
         }
         expect(response.status).to eq(200)
       end

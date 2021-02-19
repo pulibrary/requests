@@ -29,7 +29,7 @@
       </div>
     <% else %>
       <div class="message flash-alert">
-        <p>See Circulation Desk, there are no requestable items for this record</p>
+        <p><%= @request.non_requestable_mesage %></p>
       </div>
     <% end %>
 </div>

@@ -26,7 +26,7 @@ module Requests
     # @option opts [Fixnum] :mfhd voyager id
     # @option opts [Patron] :patron current Patron object
     # @option opts [String] :source represents system that directed user to request form. i.e.
-    def initialize(system_id:, mfhd: nil, patron: nil, source: nil)
+    def initialize(system_id:, mfhd:, patron: nil, source: nil)
       @system_id = system_id
       @mfhd = mfhd
       @patron = patron
@@ -41,6 +41,10 @@ module Requests
       @requestable_unrouted = build_requestable
       @requestable = route_requests(@requestable_unrouted)
       @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
+
+      # scsb items are the only ones that come in without a MFHD parameter from the catalog now
+      # set it for them, becuase they only ever have one location
+      @mfhd ||= sorted_requestable.keys.first
     end
 
     delegate :user, to: :patron
@@ -257,6 +261,7 @@ module Requests
           end
         end
         items.each do |holding_id, mfhd_items|
+          next if mfhd != holding_id
           requestable_items = build_requestable_from_mfhd_items(requestable_items: requestable_items, holding_id: holding_id, mfhd_items: mfhd_items, barcodesort: barcodesort)
         end
         requestable_items.compact

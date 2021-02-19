@@ -16,6 +16,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: bad_system_id,
+        mfhd: nil,
         patron: patron
       }
     end
@@ -180,6 +181,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '490930',
+        mfhd: '4740830',
         patron: patron
       }
     end
@@ -189,7 +191,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     describe "#requestable" do
       it "has a list of request objects" do
         expect(request_system_id_only_with_holdings_items.requestable).to be_truthy
-        expect(request_system_id_only_with_holdings_items.requestable.size).to eq(98)
+        expect(request_system_id_only_with_holdings_items.requestable.size).to eq(84)
         expect(request_system_id_only_with_holdings_items.any_pageable?).to be(false)
         expect(request_system_id_only_with_holdings_items.requestable[0]).to be_instance_of(Requests::Requestable)
       end
@@ -205,7 +207,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#sorted_requestable" do
       it "returns a list of requestable objects grouped by mfhd" do
-        expect(request_system_id_only_with_holdings_items.sorted_requestable.size).to eq(2)
+        expect(request_system_id_only_with_holdings_items.sorted_requestable.size).to eq(1)
       end
 
       it "assigns items to the correct mfhd" do
@@ -222,6 +224,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '4758976',
+        mfhd: '4977668',
         patron: patron
       }
     end
@@ -248,6 +251,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '2478499',
+        mfhd: '2779466',
         patron: patron
       }
     end
@@ -256,7 +260,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     describe "#requestable" do
       it "has a list of request objects" do
         expect(request_system_id_only_with_holdings_with_some_items.requestable).to be_truthy
-        expect(request_system_id_only_with_holdings_with_some_items.requestable.size).to eq(9)
+        expect(request_system_id_only_with_holdings_with_some_items.requestable.size).to eq(1)
         expect(request_system_id_only_with_holdings_with_some_items.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
@@ -274,6 +278,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '8179402',
+        mfhd: '7946042',
         patron: patron
       }
     end
@@ -290,6 +295,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '6195942',
+        mfhd: '6218590',
         patron: patron
       }
     end
@@ -298,15 +304,31 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     describe "#requestable" do
       it "has a list of requestable objects" do
         expect(request_with_items_at_temp_locations.requestable).to be_truthy
-        expect(request_with_items_at_temp_locations.requestable.size).to eq(7)
+        expect(request_with_items_at_temp_locations.requestable.size).to eq(1)
         expect(request_with_items_at_temp_locations.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
       it "has location data that reflects an item's temporary location" do
         expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('sciresp')
       end
+    end
+  end
 
-      it "locations data that uses a permenant location when no temporary code is specified" do
+  context "A system id that has a holding with item not in a temporary location" do
+    let(:params) do
+      {
+        system_id: '6195942',
+        mfhd: '6218596',
+        patron: patron
+      }
+    end
+    let(:request_with_items_at_temp_locations) { described_class.new(params) }
+
+    describe "#requestable" do
+      it "has a list of requestable objects" do
+        expect(request_with_items_at_temp_locations.requestable).to be_truthy
+        expect(request_with_items_at_temp_locations.requestable.size).to eq(1)
+        expect(request_with_items_at_temp_locations.requestable[0]).to be_instance_of(Requests::Requestable)
         expect(request_with_items_at_temp_locations.requestable.last.location_code).to eq('sci')
       end
     end
@@ -316,6 +338,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '2385868',
+        mfhd: nil,
         patron: patron
       }
     end
@@ -438,7 +461,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed a system_id for a numismatics record" do
     let(:params) do
       {
-        system_id: 'coin-1167/',
+        system_id: 'coin-1167',
         mfhd: 'numismatics',
         patron: patron
       }
@@ -507,6 +530,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: 'coin-1167',
+        mfhd: 'numismatics',
         patron: patron
       }
     end
@@ -568,6 +592,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '2937003',
+        mfhd: '3251699',
         patron: patron
       }
     end
@@ -623,6 +648,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '4340413',
+        mfhd: '4594920',
         patron: patron
       }
     end
@@ -661,6 +687,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9545726',
+        mfhd: '9396713',
         patron: patron
       }
     end
@@ -699,6 +726,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9602549',
+        mfhd: '9442916',
         patron: patron
       }
     end
@@ -802,6 +830,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9602545',
+        mfhd: '9442912',
         patron: patron
       }
     end
@@ -858,6 +887,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9627261',
+        mfhd: '9478752',
         patron: patron
       }
     end
@@ -875,7 +905,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#single_aeon_requestable?" do
       it "identifies itself as a single aeon requestable" do
-        expect(request.single_aeon_requestable?).to be_falsey
+        expect(request.single_aeon_requestable?).to be_truthy
       end
     end
   end
@@ -884,6 +914,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '616086',
+        mfhd: '675720',
         patron: patron
       }
     end
@@ -891,7 +922,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#requestable" do
       it "has a requestable items" do
-        expect(request.requestable.length).to eq(10)
+        expect(request.requestable.length).to eq(1)
       end
 
       it "does not have any item data" do
@@ -905,7 +936,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#single_aeon_requestable?" do
       it "identifies itself as a single aeon requestable" do
-        expect(request.single_aeon_requestable?).to be_falsey
+        expect(request.single_aeon_requestable?).to be_truthy
       end
     end
   end
@@ -922,11 +953,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#requestable" do
       it "has a requestable items" do
-        expect(request.requestable.length).to eq(10)
+        expect(request.requestable.length).to eq(7)
       end
 
-      it "does not have any item data" do
-        expect(request.requestable.first.item).to be_nil
+      it "does have any item data" do
+        expect(request.requestable.first.item).not_to be_nil
       end
 
       it "is eligible for aeon services" do
@@ -945,6 +976,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9676483',
+        mfhd: '9504920',
         patron: patron
       }
     end
@@ -1144,6 +1176,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9994692',
+        mfhd: '9800910',
         patron: patron
       }
     end
@@ -1160,6 +1193,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9746776',
+        mfhd: '9565269',
         patron: patron
       }
     end
@@ -1176,6 +1210,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '4815239',
+        mfhd: '5018096',
         patron: patron
       }
     end
@@ -1197,6 +1232,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '495220',
+        mfhd: '538419',
         patron: patron
       }
     end
@@ -1218,6 +1254,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '7494358',
+        mfhd: '7313959',
         patron: patron
       }
     end
@@ -1246,6 +1283,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '5596067',
+        mfhd: '9378993',
         patron: patron
       }
     end
@@ -1268,6 +1306,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9696811',
+        mfhd: '9814851',
         patron: patron
       }
     end
@@ -1291,6 +1330,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '2631265',
+        mfhd: '4238081',
         patron: patron
       }
     end
@@ -1373,6 +1413,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: '9712355',
+        mfhd: '9533612',
         patron: patron
       }
     end
@@ -1384,35 +1425,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
   end
 
-  context 'A borrow Direct item that is not available' do
-    let(:params) do
-      {
-        system_id: '9907486',
-        patron: patron
-      }
-    end
-    let(:request_with_title_author) { described_class.new(params) }
-
-    describe '#fallback_query_params' do
-      xit 'has a title and author parameters when both are present' do
-        expect(request_with_title_author.fallback_query_params.key?(:title)).to be true
-        expect(request_with_title_author.fallback_query_params.key?(:author)).to be true
-      end
-    end
-
-    describe '#fallback_query' do
-      xit 'returns a borrow direct fallback query url' do
-        expect(request_with_title_author.fallback_query).to be_truthy
-        expect(request_with_title_author.fallback_query).to include(::BorrowDirect::Defaults.html_base_url)
-        expect(request_with_title_author.fallback_query).to include('a+history+of+the+modern+middle+east')
-      end
-    end
-  end
-
   context "When passed a system_id for a record with a single aeon holding" do
     let(:params) do
       {
         system_id: '4693146',
+        mfhd: '4919837',
         patron: patron
       }
     end
@@ -1434,6 +1451,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       {
         system_id: 'SCSB-5290772',
         source: 'pulsearch',
+        mfhd: nil,
         patron: patron
       }
     end
@@ -1483,6 +1501,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       {
         system_id: 'SCSB-5640725',
         source: 'pulsearch',
+        mfhd: nil,
         patron: patron
       }
     end
@@ -1522,6 +1541,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       {
         system_id: 'SCSB-7935196',
         source: 'pulsearch',
+        mfhd: nil,
         patron: patron
       }
     end

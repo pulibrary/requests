@@ -10,14 +10,14 @@ module Requests
 
     alias bib_id system_id
 
-    attr_reader :request, :view_context, :filtered_sorted_requestable, :first_filtered_requestable, :sorted_requestable
+    attr_reader :request, :view_context, :first_filtered_requestable, :sorted_requestable, :non_requestable_mesage
     def initialize(request, view_context)
       @request = request
       @view_context = view_context
       @requestable_list = request.requestable.map { |req| RequestableDecorator.new(req, view_context) }
-      @filtered_sorted_requestable = request.filtered_sorted_requestable.map { |key, value| [key, value.map { |req| RequestableDecorator.new(req, view_context) }] }.to_h
       @first_filtered_requestable = RequestableDecorator.new(request.first_filtered_requestable, view_context)
       @sorted_requestable = request.sorted_requestable.map { |key, value| [key, value.map { |req| RequestableDecorator.new(req, view_context) }] }.to_h
+      @non_requestable_mesage = "See Circulation Desk, there are no requestable items for this record"
     end
 
     def requestable
@@ -57,12 +57,12 @@ module Requests
     end
 
     def any_will_submit_via_form?
-      return false if filtered_sorted_requestable.values.flatten.reject(&:blank?).blank?
-      filtered_sorted_requestable.values.flatten.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
+      return false if sorted_requestable.values.flatten.reject(&:blank?).blank?
+      sorted_requestable.values.flatten.map(&:will_submit_via_form?).any? || any_fill_in_eligible?
     end
 
     def any_fill_in_eligible?
-      filtered_sorted_requestable.keys.map { |mfhd| fill_in_eligible(mfhd) }.any?
+      sorted_requestable.keys.map { |mfhd| fill_in_eligible(mfhd) }.any?
     end
 
     def fill_in_eligible(mfhd)
@@ -80,7 +80,7 @@ module Requests
     end
 
     def single_item_request?
-      filtered_sorted_requestable.values.flatten.size == 1 && !any_fill_in_eligible?
+      sorted_requestable.values.flatten.size == 1 && !any_fill_in_eligible?
     end
 
     private

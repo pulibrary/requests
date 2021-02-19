@@ -125,7 +125,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable }
     describe "#services" do
       it "returns an item status of missing" do
-        expect(requestable.size).to eq(2)
+        expect(requestable.size).to eq(1)
         requestable.first.item["status"] = 'Missing'
         expect(requestable.first.services).to be_truthy
       end
@@ -623,6 +623,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:params) do
       {
         system_id: '9999800',
+        mfhd: '9805244',
         patron: patron
       }
     end
@@ -733,6 +734,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:params) do
       {
         system_id: '9999800',
+        mfhd: '9805244',
         patron: patron
       }
     end
@@ -804,6 +806,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:params) do
       {
         system_id: '9999800',
+        mfhd: '9805244',
         patron: patron
       }
     end

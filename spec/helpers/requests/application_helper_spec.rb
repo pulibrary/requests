@@ -128,7 +128,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         patron: patron
       }
     end
-    let(:aeon_only_request) { Requests::Request.new(params) }
+    let(:aeon_only_request) { Requests::RequestDecorator.new(Requests::Request.new(params), nil) }
     let(:login_suppressed) { helper.suppress_login(aeon_only_request) }
 
     it 'returns a boolean to disable/enable submit' do

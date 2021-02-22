@@ -204,20 +204,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_system_id_only_with_holdings_items.holdings.size).to eq(2)
       end
     end
-
-    describe "#sorted_requestable" do
-      it "returns a list of requestable objects grouped by mfhd" do
-        expect(request_system_id_only_with_holdings_items.sorted_requestable.size).to eq(1)
-      end
-
-      it "assigns items to the correct mfhd" do
-        request_system_id_only_with_holdings_items.sorted_requestable.each do |key, items|
-          items.each do |item|
-            expect(item.holding.keys.first).to eq(key)
-          end
-        end
-      end
-    end
   end
 
   context "with a system_id that only has holdings records" do
@@ -374,20 +360,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_only_system_id.thesis?).to be_falsey
       end
     end
-
-    describe "#sorted_requestable" do
-      it "returns a list of requestable objects grouped by mfhd" do
-        expect(request_with_only_system_id.sorted_requestable.size).to eq(1)
-      end
-
-      it "assigns items to the correct mfhd" do
-        request_with_only_system_id.sorted_requestable.each do |key, items|
-          items.each do |item|
-            expect(item.holding.keys.first).to eq(key)
-          end
-        end
-      end
-    end
   end
 
   context "When passed a system_id for a theses record" do
@@ -418,20 +390,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     describe "#thesis?" do
       it "identifies itself as a thesis request" do
         expect(request_with_only_system_id.thesis?).to be_truthy
-      end
-    end
-
-    describe "#sorted_requestable" do
-      it "returns a list of requestable objects grouped by mfhd" do
-        expect(request_with_only_system_id.sorted_requestable.size).to eq(1)
-      end
-
-      it "assigns items to the correct mfhd" do
-        request_with_only_system_id.sorted_requestable.each do |key, items|
-          items.each do |item|
-            expect(item.holding.keys.first).to eq(key)
-          end
-        end
       end
     end
 
@@ -489,20 +447,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
     end
 
-    describe "#sorted_requestable" do
-      it "returns a list of requestable objects grouped by mfhd" do
-        expect(request_with_only_system_id.sorted_requestable.size).to eq(1)
-      end
-
-      it "assigns items to the correct mfhd" do
-        request_with_only_system_id.sorted_requestable.each do |key, items|
-          items.each do |item|
-            expect(item.holding.keys.first).to eq(key)
-          end
-        end
-      end
-    end
-
     describe "#aeon_mapped_params" do
       it 'includes a Site param' do
         expect(request_with_only_system_id.requestable[0].aeon_mapped_params.key?(:Site)).to be true
@@ -548,20 +492,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
-      end
-    end
-
-    describe "#sorted_requestable" do
-      it "returns a list of requestable objects grouped by mfhd" do
-        expect(request_with_only_system_id.sorted_requestable.size).to eq(1)
-      end
-
-      it "assigns items to the correct mfhd" do
-        request_with_only_system_id.sorted_requestable.each do |key, items|
-          items.each do |item|
-            expect(item.holding.keys.first).to eq(key)
-          end
-        end
       end
     end
 

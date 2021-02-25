@@ -22,7 +22,7 @@
       <span class="error error-items">
       </span>
     </div>
-    <%= render partial: "requestable_list_form", collection: @request.filtered_sorted_requestable.keys, as: :mfhd, locals: { sorted_requestable: @request.sorted_requestable, holdings: @request.holdings, default_pick_ups: @request.default_pick_ups } %>
+    <%= render partial: "requestable_list_form", locals: { requestable_list: @request.requestable, mfhd: @request.mfhd, holdings: @request.holdings, default_pick_ups: @request.default_pick_ups } %>
     <% if !@request.all_items_online? && @request.any_will_submit_via_form? %>
       <%= f.submit submit_message(@request.requestable), class: "btn btn-primary submit--request", disabled: submit_button_disabled(@request.requestable), data: { disable_with: "Submitting Request" } %>
     <% elsif @patron.barcode.blank? %>

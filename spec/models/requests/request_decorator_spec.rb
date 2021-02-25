@@ -13,8 +13,8 @@ describe Requests::RequestDecorator do
 
   let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
   let(:request) do
-    instance_double(Requests::Request, system_id: '123abc', ctx: solr_context, requestable: [requestable], patron: patron, first_filtered_requestable: requestable,
-                                       display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', filtered_sorted_requestable: { "112233" => [requestable] }, sorted_requestable: { "112233" => [requestable] })
+    instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [requestable], patron: patron, first_filtered_requestable: requestable,
+                                       display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en')
   end
   let(:solr_context) { instance_double(Requests::SolrOpenUrlContext) }
   let(:stubbed_questions) { { etas?: false } }
@@ -88,50 +88,6 @@ describe Requests::RequestDecorator do
     context "recap services" do
       let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'] } }
       it "identifies any mfhds that require fill in option" do
-        expect(decorator.fill_in_eligible("112233")).to be_falsey
-      end
-    end
-
-    context "on_shelf services with no item data and circulates" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
-      it "identifies any mfhds that require fill in option" do
-        expect(decorator.fill_in_eligible("112233")).to be_truthy
-      end
-    end
-
-    context "on_shelf services with no item data and does not circulates" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false } }
-      it "identifies any mfhds that require fill in option" do
-        expect(decorator.fill_in_eligible("112233")).to be_falsey
-      end
-    end
-
-    context "on_shelf services with item data that is not enumerated" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new({}) } }
-      it "identifies any mfhds that require fill in option" do
-        expect(decorator.fill_in_eligible("112233")).to be_falsey
-      end
-    end
-
-    context "on_shelf services with item data that is enumerated" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum' => true) } }
-      it "identifies any mfhds that require fill in option" do
-        expect(decorator.fill_in_eligible("112233")).to be_truthy
-      end
-    end
-
-    context "on_order services" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_order'] } }
-      it "identifies any mfhds that require fill in option" do
-        expect(decorator.fill_in_eligible("112233")).to be_falsey
-      end
-    end
-  end
-
-  describe "#any_fill_in_eligible?" do
-    context "recap services" do
-      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'] } }
-      it "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_falsey
       end
     end
@@ -140,6 +96,34 @@ describe Requests::RequestDecorator do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
       it "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
+      end
+    end
+
+    context "on_shelf services with no item data and does not circulates" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_fill_in_eligible?).to be_falsey
+      end
+    end
+
+    context "on_shelf services with item data that is not enumerated" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new({}) } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_fill_in_eligible?).to be_falsey
+      end
+    end
+
+    context "on_shelf services with item data that is enumerated" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum' => true) } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_fill_in_eligible?).to be_truthy
+      end
+    end
+
+    context "on_order services" do
+      let(:stubbed_questions) { { etas?: false, services: ['on_order'] } }
+      it "identifies any mfhds that require fill in option" do
+        expect(decorator.any_fill_in_eligible?).to be_falsey
       end
     end
   end
@@ -180,6 +164,26 @@ describe Requests::RequestDecorator do
       it "is not a single item" do
         expect(decorator.single_item_request?).to be_falsey
       end
+    end
+  end
+
+  describe "#only_aeon?" do
+    it "Is aeon when every request is aeon" do
+      request1 = instance_double(Requests::RequestableDecorator, aeon?: true)
+      request2 = instance_double(Requests::RequestableDecorator, aeon?: true)
+      request = instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [request1, request2], patron: patron, first_filtered_requestable: requestable,
+                                                   display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en')
+      decorator = described_class.new(request, view_context)
+      expect(decorator.only_aeon?).to be_truthy
+    end
+
+    it "Is not aeon when one request is not aeon" do
+      request1 = instance_double(Requests::RequestableDecorator, aeon?: true)
+      request2 = instance_double(Requests::RequestableDecorator, aeon?: false)
+      request = instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [request1, request2], patron: patron, first_filtered_requestable: requestable,
+                                                   display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en')
+      decorator = described_class.new(request, view_context)
+      expect(decorator.only_aeon?).to be_falsey
     end
   end
 end

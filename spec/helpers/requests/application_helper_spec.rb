@@ -31,6 +31,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '8179402',
+        mfhd: '7946042',
         patron: patron
       }
     end
@@ -47,6 +48,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '9222024',
+          mfhd: '9092827',
           patron: patron
         }
       end
@@ -65,6 +67,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '3848872',
+          mfhd: '4151880',
           patron: patron
         }
       end
@@ -125,7 +128,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         patron: patron
       }
     end
-    let(:aeon_only_request) { Requests::Request.new(params) }
+    let(:aeon_only_request) { Requests::RequestDecorator.new(Requests::Request.new(params), nil) }
     let(:login_suppressed) { helper.suppress_login(aeon_only_request) }
 
     it 'returns a boolean to disable/enable submit' do

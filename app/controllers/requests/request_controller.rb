@@ -12,7 +12,8 @@ module Requests
     def generate
       system_id = sanitize(params[:system_id])
       source = sanitize(params[:source]) if params[:source].present?
-      mfhd = sanitize(params[:mfhd]) if params[:mfhd].present?
+      mfhd = sanitize(params[:mfhd])
+      params.require(:mfhd) unless system_id.starts_with?("SCSB") # there are not multiple locations for shared items so no MFHD is passed
 
       @user = current_or_guest_user
 
@@ -23,6 +24,12 @@ module Requests
 
       # needed to see if we can suppress login for this item
       @request = RequestDecorator.new(Requests::Request.new(system_id: system_id, mfhd: mfhd, source: source, patron: @patron), view_context)
+      redirect_single_aeon_thesis_numistatics
+    rescue ActionController::ParameterMissing
+      @request = EmptyRequestDecorator.new(system_id: system_id)
+    end
+
+    def redirect_single_aeon_thesis_numistatics
       ### redirect to Aeon non-voyager items or single Aeon requestable
       if @request.thesis? || @request.numismatics?
         redirect_to "#{Requests.config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"

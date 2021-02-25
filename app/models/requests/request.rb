@@ -26,7 +26,7 @@ module Requests
     # @option opts [Fixnum] :mfhd voyager id
     # @option opts [Patron] :patron current Patron object
     # @option opts [String] :source represents system that directed user to request form. i.e.
-    def initialize(system_id:, mfhd: nil, patron: nil, source: nil)
+    def initialize(system_id:, mfhd:, patron: nil, source: nil)
       @system_id = system_id
       @mfhd = mfhd
       @patron = patron
@@ -41,6 +41,10 @@ module Requests
       @requestable_unrouted = build_requestable
       @requestable = route_requests(@requestable_unrouted)
       @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
+
+      # scsb items are the only ones that come in without a MFHD parameter from the catalog now
+      # set it for them, because they only ever have one location
+      @mfhd ||= requestable.first.holding.keys[0] if requestable?
     end
 
     delegate :user, to: :patron
@@ -54,30 +58,11 @@ module Requests
     end
 
     def single_aeon_requestable?
-      (filtered_sorted_requestable.size == 1 && filtered_sorted_requestable[filtered_sorted_requestable.keys&.first]&.size == 1) && first_filtered_requestable&.services&.include?('aeon')
-    end
-
-    def filtered_sorted_requestable
-      if mfhd.present?
-        { mfhd => sorted_requestable[mfhd] }
-      else
-        sorted_requestable
-      end
+      requestable.size == 1 && first_filtered_requestable&.services&.include?('aeon')
     end
 
     def first_filtered_requestable
-      filtered_sorted_requestable[filtered_sorted_requestable.keys&.first]&.first
-    end
-
-    # returns an array of requestable hashes of  grouped under a common mfhd
-    def sorted_requestable
-      sorted = {}
-      requestable.each do |requestable|
-        mfhd = requestable.holding.keys[0]
-        sorted[mfhd] ||= []
-        sorted[mfhd] << requestable
-      end
-      sorted
+      requestable&.first
     end
 
     # Does this request object have any pageable items?
@@ -257,6 +242,7 @@ module Requests
           end
         end
         items.each do |holding_id, mfhd_items|
+          next if mfhd != holding_id
           requestable_items = build_requestable_from_mfhd_items(requestable_items: requestable_items, holding_id: holding_id, mfhd_items: mfhd_items, barcodesort: barcodesort)
         end
         requestable_items.compact
@@ -266,21 +252,7 @@ module Requests
         return if doc[:holdings_1display].nil?
         @mfhd ||= 'thesis' if thesis?
         @mfhd ||= 'numismatics' if numismatics?
-        if @mfhd
-          params = build_requestable_params(holding: { @mfhd.to_sym.to_s => holdings[@mfhd].with_indifferent_access }, location: locations[holdings[@mfhd]["location_code"]])
-          requestable_items = [Requests::Requestable.new(params)]
-        else
-          requestable_items = build_requestable_from_holding_list
-        end
-        requestable_items
-      end
-
-      def build_requestable_from_holding_list
-        requestable_items = []
-        holdings.each_key do |holding_id|
-          requestable_items << build_requestable_from_holding(holding_id, holdings[holding_id])
-        end
-        requestable_items
+        [build_requestable_from_holding(@mfhd, holdings[@mfhd].with_indifferent_access)]
       end
 
       def build_requestable_from_mfhd_items(requestable_items:, holding_id:, mfhd_items:, barcodesort:)
@@ -352,6 +324,7 @@ module Requests
       def load_items_by_bib_id
         mfhd_items = {}
         items_by_bib(@system_id).each do |holding_id, item_info|
+          next if @mfhd != holding_id
           mfhd_items[holding_id] = load_item_for_holding(holding_id: holding_id, item_info: item_info)
         end
         mfhd_items

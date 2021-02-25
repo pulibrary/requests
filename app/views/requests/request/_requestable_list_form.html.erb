@@ -1,5 +1,4 @@
 <% return unless holdings[mfhd].present? %>
-<% requestable_list = sorted_requestable[mfhd] %>
 <%= hidden_fields_mfhd holdings[mfhd] %>
 <div class="table-responsive">
   <div id="holding<%= mfhd %>" class="table items table">
@@ -26,7 +25,7 @@
       <th id="delivery_options">Delivery Options</th>
     </thead>
     <tbody>
-      <% fill_in_eligible = @request.fill_in_eligible(mfhd) %>
+      <% fill_in_eligible = @request.any_fill_in_eligible? %>
       <% if fill_in_eligible %>
         <%= render partial: "requestable_fill_in_field", locals: { requestable: requestable_list.last.create_fill_in_requestable, default_pick_ups: default_pick_ups, requestable_list: requestable_list } %>
       <% end %>

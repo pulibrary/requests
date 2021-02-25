@@ -13,6 +13,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
     let(:params) do
       {
         system_id: 'SCSB-2635660',
+        mfhd: nil,
         source: 'CUL',
         patron: patron
       }

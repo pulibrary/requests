@@ -14,11 +14,11 @@ class Requests::Requestable
     end
 
     def enum_value
-      self['enum']
+      self['enum'] || ""
     end
 
     def cron_value
-      self['chron']
+      self['chron'] || ""
     end
 
     def item_data?

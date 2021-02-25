@@ -236,29 +236,8 @@ module Requests
       array_of_isbns.join(',')
     end
 
-    def parse_request(values)
-      @mfhd = values.mfhd
-      @sorted_requestable = values.sorted_requestable
-    end
-
-    def mfhd_requests
-      return [] if @sorted_requestable.nil? || @mfhd.nil?
-
-      @sorted_requestable.fetch(@mfhd, [])
-    end
-
-    def non_aeon_requests
-      mfhd_requests.select { |req| !req.aeon? }
-    end
-
     def suppress_login(request)
-      parse_request(request)
-
-      suppress_login = false
-      if @mfhd.present?
-        suppress_login = true if non_aeon_requests.empty?
-      end
-      suppress_login
+      request.only_aeon?
     end
 
     def item_checkbox(requestable, single_item_form)

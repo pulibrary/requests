@@ -11,4 +11,4 @@
 <%= render 'patron_info' %>
 <%= render 'covid_pick_up_guidelines' %>
 <%= render 'bib_info' %>
-<%= render 'item_info' %>
+<%= render partial: 'item_info', locals: { show_edd_fields: false } %>

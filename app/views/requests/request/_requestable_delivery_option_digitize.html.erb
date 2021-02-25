@@ -12,7 +12,7 @@
     <%= hidden_field_tag "requestable[][edd_call_number]", requestable.call_number %> 
     <%= hidden_field_tag "requestable[][edd_oclc_number]", illiad_params["rft.oclcnum"] %> 
     <%= hidden_field_tag "requestable[][edd_title]", illiad_params["title"] %>     
-    <%= hidden_field_tag "requestable[][library_code]", requestable.library_code %>
+    <%= hidden_field_tag "requestable[][library_code]", requestable.off_site_location %>
     <%= hidden_field_tag "requestable[][type]", type %>
     </div>
   <% end %>

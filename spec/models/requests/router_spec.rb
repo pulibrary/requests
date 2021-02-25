@@ -71,7 +71,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         { voyager_managed?: true, online?: false, in_process?: false,
           charged?: false, on_order?: false, aeon?: false,
           preservation?: false, annexa?: false, annexb?: false,
-          plasma?: false, lewis?: false, recap?: false,
+          plasma?: false, lewis?: false, recap?: false, held_at_marquand_library?: false,
           item_data?: false, recap_edd?: false, pageable?: false, scsb_in_library_use?: false, item: item,
           library_code: 'ABC' }
       end
@@ -183,7 +183,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           stubbed_questions[:recap?] = true
           stubbed_questions[:item_data?] = true
           stubbed_questions[:recap_edd?] = true
-          stubbed_questions[:in_library_use_only?] = false
+          stubbed_questions[:holding_library_in_library_only?] = false
           stubbed_questions[:ask_me?] = true
           stubbed_questions[:circulates?] = true
           stubbed_questions[:campus_authorized] = true
@@ -215,7 +215,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
 
-        context "scsb_in_library_use" do
+        context "scsb_in_library" do
           before do
             stubbed_questions[:scsb_in_library_use?] = true
           end
@@ -224,7 +224,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
 
-        context "scsb_in_library_use AR collection" do
+        context "scsb_in_library AR collection" do
           let(:item) { { collection_code: 'AR' } }
           before do
             stubbed_questions[:scsb_in_library_use?] = true
@@ -235,7 +235,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
 
-        context "scsb_in_library_use MR collection" do
+        context "scsb_in_library MR collection" do
           let(:item) { { collection_code: 'MR' } }
           before do
             stubbed_questions[:scsb_in_library_use?] = true
@@ -248,7 +248,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
 
-        context "scsb_in_library_use MR collection campus authorized" do
+        context "scsb_in_library MR collection campus authorized" do
           let(:item) { { collection_code: 'MR' } }
           before do
             stubbed_questions[:scsb_in_library_use?] = true
@@ -261,7 +261,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
 
-        context "scsb_in_library_use etas campus authorized" do
+        context "scsb_in_library etas campus authorized" do
           let(:item) { { collection_code: 'MR' } }
           before do
             stubbed_questions[:scsb_in_library_use?] = true

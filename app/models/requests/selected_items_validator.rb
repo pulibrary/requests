@@ -2,8 +2,6 @@
 module Requests
   class SelectedItemsValidator < ActiveModel::Validator
     def mail_services
-      # temporary changes issue 438
-      # ["paging", "pres", "annexa", "annexb", "trace", "on_order", "in_process", "ppl", "lewis"]
       ["paging", "pres", "annexa", "annexb", "trace", "on_order", "in_process", "ppl", "lewis", "on_shelf"]
     end
 
@@ -20,14 +18,14 @@ module Requests
       def validate_selected(record, selected)
         return unless selected['selected'] == 'true'
         case selected["type"]
-        when 'digitize', "digitize_fill_in"
+        when 'digitize', 'digitize_fill_in', 'marquand_edd', 'clancy_edd', "clancy_unavailable_edd"
           validate_delivery_mode(record: record, selected: selected)
         when 'bd', 'ill'
           validate_recall_or_bd(record, selected, pick_up_phrase: 'delivery of your borrow direct item', action_phrase: 'requested via Borrow Direct')
         when 'recap_no_items'
           validate_recap_no_items(record, selected)
-        when 'recap', 'recap_edd', 'recap_in_library'
-          validate_recap(record, selected)
+        when 'recap', 'recap_edd', 'recap_in_library', 'clancy_in_library', 'marquand_in_library', 'recap_marquand_edd', 'recap_marquand_in_library'
+          validate_offsite(record, selected)
         when 'on_shelf', 'recall'
           validate_recall_or_bd(record, selected)
         when "help_me"
@@ -62,8 +60,8 @@ module Requests
         record.errors[:items] << { selected['mfhd'] => { 'text' => 'Please select a pick-up location for your selected ReCAP item', 'type' => 'pick_up' } }
       end
 
-      def validate_recap(record, selected)
-        return unless validate_item_id(record: record, selected: selected, action_phrase: 'Requested from Recap')
+      def validate_offsite(record, selected)
+        return unless validate_item_id(record: record, selected: selected, action_phrase: 'Requested from Off-site Facility')
         validate_delivery_mode(record: record, selected: selected)
       end
 

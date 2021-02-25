@@ -1,26 +1,5 @@
-<tr class="email-header">
-  <td colspan="2" style="padding: 18px;border-top: 6px solid #e77500;">
-    <%= render 'request_header_patron' %>
-  </td>
-</tr>
-
-<tr class="pikcup-info">
-  <td colspan="2" style="padding: 18px;">
-  <div style="text-align:center;margin:18px 0;">
-    <p class="body-content">You will be notified via email when your item is available.  At that point, please utilize our study-browse service to make a reservation to come into the Library.  Please proceed to the circulation desk to retrieve the item and view it in your assigned seat.</p>
-  </div>
-   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pick_up_location["code"]) } %>
-  </td>
-</tr>
-
-<tr class="bib-info">
-  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
-    <%= render 'bib_info_patron' %>
-  </td>
-</tr>
-
-<tr>
-  <td colspan="2" style="padding: 18px;border-top:1px solid #ccc;">
-    <%= render 'item_info' %>
-  </td>
-</tr>
+<% if @submission.access_only? %>
+   <%= render partial: 'in_library_confirmation', locals: { type: 'recap_guest'} %>
+<% else %>
+   <%= render partial: 'in_library_confirmation', locals: { type: 'recap_in_library'} %>
+<% end %>

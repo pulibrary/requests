@@ -4,8 +4,8 @@ module Requests
   class HoldItem
     include Requests::Voyager
 
-    def initialize(submission)
-      @service_type = 'on_shelf'
+    def initialize(submission, service_type: 'on_shelf')
+      @service_type = service_type
       @submission = submission
       @errors = []
       @sent = []
@@ -36,7 +36,7 @@ module Requests
         if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
           status = place_hold(item, params)
         elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
-          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].permit(params["request"].keys))
+          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].to_h)
         end
         status
       end
@@ -66,7 +66,7 @@ module Requests
           bib = bib.permit(params["bib"].keys) if bib.respond_to?(:permit)
           request = params["request"]
           request = request.permit(params["request"].keys) if request.respond_to?(:permit)
-          errors << reponse_json["response"].merge(bib).merge(request.to_h)
+          errors << reponse_json["response"].merge(bib).merge(request.to_h).merge(type: @service_type)
         end
         status
       end

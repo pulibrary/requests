@@ -1133,4 +1133,194 @@ describe Requests::Submission do
       expect(submission.scsb?).to be true
     end
   end
+
+  context 'Clancy Item' do
+    let(:requestable) do
+      [
+        { "selected" => "true", "bibid" => "5636487", "mfhd" => "5744248", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "5214248", "barcode" => "32101072349515", "copy_number" => "1",
+          "status" => "On-Site", "type" => "clancy_in_library", "fill_in" => "false",
+          "delivery_mode_5214248" => "in_library", "pick_up" => "PA" }
+      ]
+    end
+
+    let(:bib) { { "id" => "5636487", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+    let(:submission) do
+      described_class.new(params, user_info)
+    end
+
+    describe "#process_submission" do
+      before do
+        ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
+      end
+
+      it 'items contacts clancy and voyager' do
+        voyager_url = stub_voyager_hold_success('5636487', '5214248', '99999')
+        clancy_url = stub_clancy_post(barcode: "32101072349515")
+        expect(submission).to be_valid
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).to have_been_made
+      end
+
+      it "returns hold errors" do
+        voyager_url = stub_voyager_hold_failure('5636487', '5214248', '99999')
+        clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).not_to have_been_made
+        expect(submission.service_errors.first[:type]).to eq('clancy_hold')
+      end
+
+      it 'returns clancy errors' do
+        voyager_url = stub_voyager_hold_success('5636487', '5214248', '99999')
+        clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
+        expect(submission).to be_valid
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).to have_been_made
+        expect(submission.service_errors.first[:type]).to eq('clancy')
+      end
+    end
+  end
+
+  context 'Clancy EDD Item' do
+    let(:requestable) do
+      [
+        { "selected" => "true", "bibid" => "5636487", "mfhd" => "5744248", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "5214248", "barcode" => "32101072349515", "copy_number" => "1",
+          "status" => "On-Site", "type" => "clancy_edd", "fill_in" => "false",
+          "delivery_mode_5214248" => "edd", "pick_up" => "PA", "edd_art_title" => "Test This is only a test", "edd_start_page" => "",
+          "edd_end_page" => "", "edd_volume_number" => "", "edd_issue" => "", "edd_author" => "", "edd_note" => "This is a test",
+          "edd_genre" => "book", "edd_location" => "Marquand Library", "edd_isbn" => "9782754101578", "edd_date" => "2008",
+          "edd_publisher" => "Paris: Hazan", "edd_call_number" => "ND553.P6 D24 2008q", "edd_oclc_number" => "263300578", "edd_title" => "Picasso" }
+      ]
+    end
+
+    let(:bib) { { "id" => "5636487", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+    let(:submission) do
+      described_class.new(params, user_info)
+    end
+
+    describe "#process_submission" do
+      let(:patron_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/foo" }
+      let(:transaction_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction" }
+      let(:transaction_note_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction/1093806/notes" }
+
+      let(:responses) do
+        {
+          found: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"Yes","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
+          disavowed: '{"UserName":"abc234","ExternalUserId":"123abc","LastName":"Alpha","FirstName":"Capa","SSN":"9999999","Status":"GS - Library Staff","EMailAddress":"abc123@princeton.edu","Phone":"99912345678","Department":"Library","NVTGC":"ILL","NotificationMethod":"Electronic","DeliveryMethod":"Hold for Pickup","LoanDeliveryMethod":"Hold for Pickup","LastChangedDate":"2020-04-06T11:08:05","AuthorizedUsers":null,"Cleared":"DIS","Web":true,"Address":"123 Blah Lane","Address2":null,"City":"Blah Place","State":"PA","Zip":"99999","Site":"Firestone","ExpirationDate":"2021-04-06T11:08:05","Number":null,"UserRequestLimit":null,"Organization":null,"Fax":null,"ShippingAcctNo":null,"ArticleBillingCategory":null,"LoanBillingCategory":null,"Country":null,"SAddress":null,"SAddress2":null,"SCity":null,"SState":null,"SZip":null,"SCountry":null,"RSSID":null,"AuthType":"Default","UserInfo1":null,"UserInfo2":null,"UserInfo3":null,"UserInfo4":null,"UserInfo5":null,"MobilePhone":null}',
+          transaction_created: '{"TransactionNumber":1093806,"Username":"abc123","RequestType":"Article","PhotoArticleAuthor":null,"PhotoJournalTitle":null,"PhotoItemPublisher":null,"LoanPlace":null,"LoanEdition":null,"PhotoJournalTitle":"Test Title","PhotoJournalVolume":"21","PhotoJournalIssue":"4","PhotoJournalMonth":null,"PhotoJournalYear":"2011","PhotoJournalInclusivePages":"165-183","PhotoArticleAuthor":"Williams, Joseph; Woolwine, David","PhotoArticleTitle":"Test Article","CitedIn":null,"CitedTitle":null,"CitedDate":null,"CitedVolume":null,"CitedPages":null,"NotWantedAfter":null,"AcceptNonEnglish":false,"AcceptAlternateEdition":true,"ArticleExchangeUrl":null,"ArticleExchangePassword":null,"TransactionStatus":"Awaiting Request Processing","TransactionDate":"2020-06-15T18:34:44.98","ISSN":"XXXXX","ILLNumber":null,"ESPNumber":null,"LendingString":null,"BaseFee":null,"PerPage":null,"Pages":null,"DueDate":null,"RenewalsAllowed":false,"SpecIns":null,"Pieces":null,"LibraryUseOnly":null,"AllowPhotocopies":false,' \
+                              '"LendingLibrary":null,"ReasonForCancellation":null,"CallNumber":null,"Location":null,"Maxcost":null,"ProcessType":"Borrowing","ItemNumber":null,"LenderAddressNumber":null,"Ariel":false,"Patron":null,"PhotoItemAuthor":null,"PhotoItemPlace":null,"PhotoItemPublisher":null,"PhotoItemEdition":null,"DocumentType":null,"InternalAcctNo":null,"PriorityShipping":null,"Rush":"Regular","CopyrightAlreadyPaid":"Yes","WantedBy":null,"SystemID":"OCLC","ReplacementPages":null,"IFMCost":null,"CopyrightPaymentMethod":null,"ShippingOptions":null,"CCCNumber":null,"IntlShippingOptions":null,"ShippingAcctNo":null,"ReferenceNumber":null,"CopyrightComp":null,"TAddress":null,"TAddress2":null,"TCity":null,"TState":null,"TZip":null,"TCountry":null,"TFax":null,"TEMailAddress":null,"TNumber":null,"HandleWithCare":false,"CopyWithCare":false,"RestrictedUse":false,"ReceivedVia":null,"CancellationCode":null,"BillingCategory":null,"CCSelected":null,"OriginalTN":null,"OriginalNVTGC":null,"InProcessDate":null,' \
+                              '"InvoiceNumber":null,"BorrowerTN":null,"WebRequestForm":null,"TName":null,"TAddress3":null,"IFMPaid":null,"BillingAmount":null,"ConnectorErrorStatus":null,"BorrowerNVTGC":null,"CCCOrder":null,"ShippingDetail":null,"ISOStatus":null,"OdysseyErrorStatus":null,"WorldCatLCNumber":null,"Locations":null,"FlagType":null,"FlagNote":null,"CreationDate":"2020-06-15T18:34:44.957","ItemInfo1":null,"ItemInfo2":null,"ItemInfo3":null,"ItemInfo4":null,"SpecIns":null,"SpecialService":"Digitization Request: ","DeliveryMethod":null,"Web":null,"PMID":null,"DOI":null,"LastOverdueNoticeSent":null,"ExternalRequest":null}',
+          transaction_error: '{"Message":"The request is invalid."}',
+          note_created: '{"Message":"An error occurred adding note to transaction 1093946"}'
+        }
+      end
+
+      before do
+        stub_request(:get, patron_url)
+          .to_return(status: 200, body: responses[:found], headers: {})
+      end
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it 'items contacts illiad' do
+        clancy_url = stub_clancy_post(barcode: "32101072349515")
+        stub_request(:post, transaction_url)
+          .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+          .to_return(status: 200, body: responses[:transaction_created], headers: {})
+        stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
+        expect(submission).to be_valid
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:get, patron_url)).to have_been_made
+        expect(a_request(:post, transaction_url)).to have_been_made
+        expect(a_request(:post, transaction_note_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).to have_been_made
+      end
+      # rubocop:enable RSpec/MultipleExpectations
+
+      it "returns illiad errors" do
+        stub_request(:post, transaction_url)
+          .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+          .to_return(status: 503, body: responses[:transaction_error], headers: {})
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:get, patron_url)).to have_been_made
+        expect(a_request(:post, transaction_url)).to have_been_made
+        expect(submission.service_errors.first[:type]).to eq('clancy_edd')
+      end
+
+      it "returns clancy errors" do
+        clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
+        stub_request(:post, transaction_url).to_return(status: 200, body: responses[:transaction_created], headers: {})
+        stub_request(:post, transaction_url)
+          .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => "09/09/2021", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+          .to_return(status: 200, body: responses[:transaction_created], headers: {})
+        stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:get, patron_url)).to have_been_made
+        expect(a_request(:post, transaction_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).to have_been_made
+        expect(submission.service_errors.first[:type]).to eq('clancy')
+      end
+    end
+  end
+
+  context 'Marquand non Clancy Item' do
+    let(:requestable) do
+      [
+        { "selected" => "true", "bibid" => "5636487", "mfhd" => "5744248", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "5214248", "barcode" => "32101072349515", "copy_number" => "1",
+          "status" => "On-Site", "type" => "marquand_in_library", "fill_in" => "false",
+          "delivery_mode_5214248" => "in_library", "pick_up" => "PA" }
+      ]
+    end
+
+    let(:bib) { { "id" => "5636487", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+    let(:submission) do
+      described_class.new(params, user_info)
+    end
+
+    describe "#process_submission" do
+      it 'items contacts voyager and emails marquand' do
+        voyager_url = stub_voyager_hold_success('5636487', '5214248', '99999')
+        expect(submission).to be_valid
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:put, voyager_url)).to have_been_made
+      end
+
+      it "returns hold errors" do
+        voyager_url = stub_voyager_hold_failure('5636487', '5214248', '99999')
+        clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).not_to have_been_made
+        expect(submission.service_errors.first[:type]).to eq('marquand_in_library')
+      end
+    end
+  end
 end

@@ -5,7 +5,10 @@ module Requests
     include Requests::Voyager
 
     def initialize(submission)
-      @service_type = 'digitize'
+      @service_types = { digitize: { cited_pages: 'COVID-19 Campus Closure', note: 'Digitization Request' },
+                         marquand_edd: { cited_pages: 'Marquand EDD', note: 'Digitization Request Marquand Item' },
+                         clancy_edd: { cited_pages: 'Marquand Clancy EDD', note: 'Digitization Request Marquand Item at Clancy' },
+                         clancy_unavailable_edd: { cited_pages: 'Marquand Clancy UNAVAIL EDD', note: 'Digitization Request Marquand Item at Clancy (Unavailable)' } }
       @submission = submission
       @errors = []
       @sent = []
@@ -13,12 +16,14 @@ module Requests
     end
 
     def handle
-      items = @submission.filter_items_by_service(@service_type)
-      items.each do |item|
-        item_status = handle_item(item: item)
-        if item_status.present?
-          item["transaction_number"] = item_status["TransactionNumber"].to_s
-          @sent << item_status unless item_status.blank?
+      @service_types.each do |service_type, params|
+        items = @submission.filter_items_by_service(service_type.to_s)
+        items.each do |item|
+          item_status = handle_item(item: item, **params)
+          if item_status.present?
+            item["transaction_number"] = item_status["TransactionNumber"].to_s
+            @sent << item_status unless item_status.blank?
+          end
         end
       end
       return false if @errors.present?
@@ -32,8 +37,8 @@ module Requests
 
     private
 
-      def handle_item(item:)
-        client = IlliadTransactionClient.new(patron: @submission.patron, metadata_mapper: Requests::IlliadMetadata::ArticleExpress.new(patron: @submission.patron, bib: @submission.bib, item: item))
+      def handle_item(item:, note:, cited_pages:)
+        client = IlliadTransactionClient.new(patron: @submission.patron, metadata_mapper: Requests::IlliadMetadata::ArticleExpress.new(patron: @submission.patron, bib: @submission.bib, item: item, note: note, cited_pages: cited_pages))
         transaction = client.create_request
         errors << { type: 'digitize', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "Invalid Illiad Patron" } if transaction.blank?
         if transaction == "DISAVOWED"

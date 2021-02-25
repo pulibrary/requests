@@ -41,7 +41,7 @@ module Requests
 
     delegate :pick_up_location_id, :pick_up_location_code, :item_type, :enum_value, :cron_value, :item_data?,
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
-             :id, :use_statement, :collection_code, :missing?, :charged?, :status_label, to: :item
+             :id, :use_statement, :collection_code, :missing?, :charged?, :status_label, :barcode?, :barcode, to: :item
 
     # non voyager options
     def thesis?
@@ -67,9 +67,15 @@ module Requests
       library_code == 'recap'
     end
 
+    def clancy?
+      return false unless held_at_marquand_library?
+
+      clancy_item.at_clancy? && clancy_item.available?
+    end
+
     def recap_edd?
-      (scsb? && scsb_edd_collection_codes.include?(collection_code)) ||
-        ((location[:recap_electronic_delivery_location] == true) && !scsb?)
+      return location[:recap_electronic_delivery_location] == true unless scsb?
+      scsb_edd_collection_codes.include?(collection_code) && !scsb_in_library_use?
     end
 
     def lewis?
@@ -99,7 +105,7 @@ module Requests
     end
 
     def can_be_delivered?
-      circulates? && !scsb_in_library_use? && !in_library_use_only?
+      circulates? && !scsb_in_library_use? && !holding_library_in_library_only?
     end
 
     def always_requestable?
@@ -198,18 +204,14 @@ module Requests
       scsb? && item[:use_statement] == "In Library Use"
     end
 
-    def in_library_use_only?
+    def holding_library_in_library_only?
       return false unless location["holding_library"]
-      ["marquand", "lewis"].include? location["holding_library"]["code"]
+      ["marquand", "lewis"].include? holding_library
     end
 
-    def barcode?
-      return false unless item?
-      /^[0-9]+/.match(barcode).present?
-    end
-
-    def barcode
-      item[:barcode]
+    def holding_library
+      return library_code if location.blank? || location[:holding_library].blank? || location[:holding_library][:code].blank?
+      location[:holding_library][:code]
     end
 
     def ask_me?
@@ -250,6 +252,22 @@ module Requests
 
     def etas?
       etas_limited_access || location[:code] == 'etas' || location[:code] == 'etasrcp'
+    end
+
+    def held_at_marquand_library?
+      library_code == 'marquand'
+    end
+
+    def clancy_item
+      @clancy_item ||= Requests::ClancyItem.new(barcode: barcode)
+    end
+
+    def item_at_clancy?
+      held_at_marquand_library? && clancy_item.at_clancy?
+    end
+
+    def available?
+      (always_requestable? && !held_at_marquand_library?) || item.available?
     end
 
     private

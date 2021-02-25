@@ -15,6 +15,8 @@ module Requests
       @items = selected_items(params[:requestable])
       @bib = params[:bib]
       @bd = params[:bd] # TODO: can we remove this?
+      @services = []
+      @success_messages = []
     end
 
     attr_reader :patron, :success_messages
@@ -75,15 +77,13 @@ module Requests
     end
 
     def process_submission
-      @services = []
-      @success_messages = []
-
       process_hold
       process_recall
       process_recap
       process_borrow_direct
       process_digitize
       process_help_me
+      process_clancy
 
       # if !recap && !recall && !bd !(a1 & a2).empty?
       if generic_service_only?
@@ -109,23 +109,28 @@ module Requests
       user_barcode == 'ACCESS'
     end
 
+    def marquand?
+      items.first["holding_library"] == 'marquand'
+    end
+
     private
 
       # rubocop:disable Metrics/MethodLength
       def categorize_by_delivery_and_location(item)
-        if item["library_code"] == 'recap' && (item["type"] == "digitize_fill_in" || item["type"] == "recap_no_items")
+        library_code = item["library_code"]
+        if recap_no_items?(item)
           item["type"] = "recap_no_items"
-        elsif item["library_code"] == 'recap'
-          item["type"] = "recap"
+        elsif off_site?(library_code)
+          item["type"] = library_code
           item["type"] += "_edd" if edd?(item)
           item["type"] += "_in_library" if in_library?(item)
         elsif item["type"] == "paging"
           item["type"] = "digitize" if edd?(item)
-        elsif print?(item) && item["library_code"] == 'annexa'
+        elsif print?(item) && library_code == 'annexa'
           item["type"] = "annexa"
-        elsif edd?(item) && item["library_code"].present?
+        elsif edd?(item) && library_code.present?
           item["type"] = "digitize"
-        elsif print?(item) && item["library_code"].present?
+        elsif print?(item) && library_code.present?
           item["type"] = "on_shelf"
         end
         item
@@ -144,6 +149,14 @@ module Requests
         delivery_mode.present? && delivery_mode == "in_library"
       end
 
+      def recap_no_items?(item)
+        item["library_code"] == 'recap' && (item["type"] == "digitize_fill_in" || item["type"] == "recap_no_items")
+      end
+
+      def off_site?(library_code)
+        library_code == 'recap' || library_code == 'marquand' || library_code == 'clancy' || library_code == 'recap_marquand' || library_code == 'clancy_unavailable'
+      end
+
       def print?(item)
         delivery_mode = delivery_mode(item)
         delivery_mode.present? && delivery_mode == "print"
@@ -154,8 +167,11 @@ module Requests
       end
 
       def process_hold
-        return unless service_types.include? 'on_shelf'
-        @services << Requests::HoldItem.new(self)
+        if service_types.include? 'on_shelf'
+          @services << Requests::HoldItem.new(self)
+        elsif service_types.include? 'marquand_in_library'
+          @services << Requests::HoldItem.new(self, service_type: 'marquand_in_library')
+        end
       end
 
       def process_recall
@@ -164,9 +180,9 @@ module Requests
       end
 
       def process_digitize
-        return unless service_types.include?('digitize')
+        return if (['digitize', 'marquand_edd', 'clancy_unavailable_edd'] & service_types).blank?
         @services << if access_only?
-                       # Access users cannot use recap service directly
+                       # Access users cannot use illiad service directly
                        Requests::Generic.new(self)
                      else
                        Requests::DigitizeItem.new(self)
@@ -181,6 +197,15 @@ module Requests
                      else
                        Requests::Recap.new(self)
                      end
+      end
+
+      def process_clancy
+        return if (['clancy_in_library', 'clancy_edd'] & service_types).blank?
+        clancy_services = []
+        clancy_services << Requests::Clancy.new(self) if service_types.include?('clancy_in_library')
+        clancy_services << Requests::ClancyEdd.new(self) if service_types.include?('clancy_edd')
+        clancy_services.each(&:handle)
+        @services += clancy_services
       end
 
       def process_help_me
@@ -218,7 +243,7 @@ module Requests
       end
 
       def non_generic_services
-        ['recap', 'recall', 'on_shelf', 'digitize', 'help_me']
+        ['recap', 'recall', 'on_shelf', 'digitize', 'help_me', 'clancy_in_library', 'clancy_edd', 'marquand_edd', 'marquand_in_library']
       end
 
       def generate_success_messages(success_messages)

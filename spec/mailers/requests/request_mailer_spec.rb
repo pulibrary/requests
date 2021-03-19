@@ -630,7 +630,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.in_process.patron_conf_msg')
+      expect(mail.body.encoded).to have_content I18n.t('requests.in_process.email_conf_msg')
     end
   end
 
@@ -936,7 +936,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     it "renders the email to the library" do
-      expect(mail.subject).to eq(I18n.t('requests.recap_guest.email_subject'))
+      expect(mail.subject).to eq("#{I18n.t('requests.recap_guest.email_subject')} - ACCESS")
       expect(mail.cc).to be_nil
       expect(mail.to).to eq([I18n.t('requests.recap.guest_email_destination')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
@@ -997,20 +997,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
 
     let(:scsb_recall_mail) do
       Requests::RequestMailer.send("scsb_recall_email", submission_for_recall).deliver_now
-    end
-
-    let(:mail) do
-      Requests::RequestMailer.send("recall_confirmation", submission_for_recall).deliver_now
-    end
-
-    it "renders the headers" do
-      expect(mail.subject).to eq(I18n.t('requests.recall.email_subject'))
-      expect(mail.to).to eq(['a@b.com'])
-      expect(mail.from).to eq([I18n.t('requests.default.email_from')])
-    end
-
-    it "renders the body" do
-      expect(mail.body.encoded).to have_content I18n.t('requests.recall.email_conf_msg')
     end
 
     it "renders the headers for a staff email" do

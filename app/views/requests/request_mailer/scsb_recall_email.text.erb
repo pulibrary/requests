@@ -5,4 +5,4 @@ Recall Request by Patron - Please Process
 
 <%= render 'patron_info' %>
 <%= render 'bib_info' %>
-<%= render 'item_info' %>
+<%= render partial: 'item_info', locals: { show_edd_fields: false } %>

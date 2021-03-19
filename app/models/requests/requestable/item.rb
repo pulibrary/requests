@@ -82,6 +82,18 @@ class Requests::Requestable
       self[:status_label]
     end
 
+    def available?
+      available_statuses.include?(status) || available_statuses.include?(scsb_status)
+    end
+
+    def barcode?
+      /^[0-9]+/.match(barcode).present?
+    end
+
+    def barcode
+      self[:barcode]
+    end
+
     class NullItem
       def nil?
         true
@@ -166,9 +178,25 @@ class Requests::Requestable
       def status_label
         'Not Available'
       end
+
+      def available?
+        false
+      end
+
+      def barcode?
+        false
+      end
+
+      def barcode
+        ''
+      end
     end
 
     private
+
+      def available_statuses
+        ["Not Charged", "On-Site", "On Shelf", "Available"]
+      end
 
       def unavailable_statuses
         ['Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',

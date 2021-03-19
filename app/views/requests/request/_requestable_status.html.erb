@@ -4,4 +4,5 @@
     <br/>
     <%= requestable.item[:use_statement] %>
   <% end %>
+  <%= hidden_field_tag "requestable[][holding_library]", "", value: requestable.holding_library %>
 </td>

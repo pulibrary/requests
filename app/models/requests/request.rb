@@ -218,7 +218,6 @@ module Requests
 
       def build_holding_scsb_items(id:, values:, availability_data:, requestable_items:)
         return requestable_items if values['items'].nil?
-
         barcodesort = {}
         values['items'].each { |item| barcodesort[item['barcode']] = item }
         availability_data.each do |item|
@@ -292,7 +291,7 @@ module Requests
         holding_locations = {}
         doc[:location_code_s].each do |loc|
           location = get_location(loc)
-          location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) unless location[:delivery_locations].empty?
+          location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) if location[:delivery_locations]&.present?
           holding_locations[loc] = location
         end
         holding_locations

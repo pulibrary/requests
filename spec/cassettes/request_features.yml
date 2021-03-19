@@ -20162,4 +20162,178 @@ http_interactions:
         4 (Jan 2013 - Oct 2013)","label":"Special Collections - Cotsen Children''s
         Library","status_label":"On-site access"}]'
   recorded_at: Fri, 19 Feb 2021 16:36:43 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/10137841/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 05 Mar 2021 12:49:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - d251f3fa-54d1-4026-b02c-c58f4acb739c
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"dabd94b494c7e51ef5dcd25ae49730a0"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.221531'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger 6.0.6
+    body:
+      encoding: UTF-8
+      string: '{"id":"10137841","numeric_id_b":true,"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[]}","title_display":"ASIA
+        COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM.","title_t":["ASIA
+        COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM."],"title_citation_display":["ASIA
+        COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM"],"compiled_created_t":["ASIA
+        COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM."],"pub_created_display":["Fukuoka
+        Asian Art Museum. 2015"],"pub_created_s":["Fukuoka Asian Art Museum. 2015"],"pub_citation_display":["Fukuoka
+        Asian Art Museum"],"pub_date_display":["9999"],"pub_date_start_sort":9999,"cataloged_tdt":"2017-03-17T20:10:57Z","format":["Book"],"description_display":["112
+        pp. with 113 ills. (111 col.). 30 x 23 cm."],"description_t":["112 pp. with
+        113 ills. (111 col.). 30 x 23 cm."],"number_of_pages_citation_display":["112
+        pp. with 113 ills. (111 col.)."],"language_display":["Bilingual in Japanese
+        and English."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"isbn_display":["(Paperbound)"],"holdings_1display":"{\"9927777\":{\"location\":\"Marquand
+        Library\",\"library\":\"Marquand Library\",\"location_code\":\"sa\"}}","location_code_s":["sa"],"location":["Marquand
+        Library"],"location_display":["Marquand Library"],"advanced_location_s":["sa","Marquand
+        Library"],"_version_":1682902547079102464,"timestamp":"2020-11-09T16:55:36.010Z"}'
+  recorded_at: Fri, 05 Mar 2021 12:49:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?id=10137841
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 05 Mar 2021 12:49:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 6dd3d22c-6048-4e43-a954-493bf403c008
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"5d85dcd1a1b75504fb2773075eff2b51"
+      X-Runtime:
+      - '0.074758'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '{"9927777":{"more_items":false,"location":"sa","copy_number":0,"item_id":7577319,"on_reserve":"N","patron_group_charged":null,"status":"On-Site
+        - In Process","label":"Marquand Library","status_label":"In process"}}'
+  recorded_at: Fri, 05 Mar 2021 12:49:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9927777
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 05 Mar 2021 12:49:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"329bcd4613de851080d702947a15695a"
+      X-Runtime:
+      - '0.073637'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 8b4d18cb-df52-421b-befd-37d7fd488f1a
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101097503864","id":7577319,"location":"sa","copy_number":0,"item_sequence_number":1,"status":"On-Site
+        - In Process","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Marquand
+        Library","status_label":"In process"}]'
+  recorded_at: Fri, 05 Mar 2021 12:49:29 GMT
 recorded_with: VCR 6.0.0

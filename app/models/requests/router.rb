@@ -52,7 +52,6 @@ module Requests
       # rubocop:disable Metrics/MethodLength
       def calculate_voyager_or_scsb_services
         return [] unless auth_user?
-
         if requestable.charged?
           calculate_unavailable_services
         elsif requestable.in_process?
@@ -73,6 +72,8 @@ module Requests
           calculate_recap_services
         elsif requestable.pageable?
           ['paging']
+        elsif requestable.held_at_marquand_library?
+          calculate_marquand_services
         else
           calculate_on_shelf_services
           # goes to stack mapping
@@ -100,7 +101,7 @@ module Requests
           ['ask_me']
         elsif auth_user?
           services = []
-          services << 'recap' if !requestable.in_library_use_only? && requestable.circulates? && requestable.eligible_to_pickup?
+          services << 'recap' if !requestable.holding_library_in_library_only? && requestable.circulates? && requestable.eligible_to_pickup?
           services << 'recap_edd' if requestable.recap_edd?
           services
         end
@@ -125,6 +126,16 @@ module Requests
         #   end
         # end
         services
+      end
+
+      def calculate_marquand_services
+        if requestable.item_at_clancy? && !requestable.clancy?
+          ['clancy_unavailable']
+        elsif requestable.clancy?
+          ['clancy_in_library', 'clancy_edd']
+        else
+          ['marquand_in_library', 'marquand_edd']
+        end
       end
 
       def any_loanable?

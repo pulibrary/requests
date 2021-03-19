@@ -798,6 +798,19 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_with_missing) { described_class.new(params) }
 
+    before do
+      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
+      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026169985")
+        .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026169985\",\"status\":\"Item not Found\"}", headers: {})
+      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026132058")
+        .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026132058\",\"status\":\"Item not Found\"}", headers: {})
+      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101025649177")
+        .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649177\",\"status\":\"Item not Found\"}", headers: {})
+      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101025649169")
+        .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649169\",\"status\":\"Item not Found\"}", headers: {})
+      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026173334")
+        .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026173334\",\"status\":\"Item not Found\"}", headers: {})
+    end
     describe "#requestable" do
       it "has an requestable items" do
         expect(request_with_missing.requestable.size).to be >= 1
@@ -1385,20 +1398,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         patron: patron
       }
     end
-    let(:scsb_availability_params) do
-      {
-        bibliographicId: "12134967",
-        institutionId: "CUL"
-      }
-    end
-    let(:scsb_availability_response) { fixture('/scsb_single_avail.json') }
     let(:request_scsb) { described_class.new(params) }
     before do
       stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
         .to_return(status: 200, body: scsb_single_holding_item, headers: {})
-      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
-        .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
-        .to_return(status: 200, body: scsb_availability_response)
+      stub_scsb_availability(bib_id: "5992543", institution_id: "CUL", barcode: 'CU11388110')
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=65339789")
         .to_return(status: 200, body: '[]')
     end
@@ -1422,6 +1426,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_scsb.requestable.first.recap_edd?).to be true
       end
     end
+    describe '#available?' do
+      it 'is available' do
+        expect(request_scsb.requestable.first.available?).to be true
+      end
+    end
   end
 
   context "A SCSB id that does not allow edd" do
@@ -1435,20 +1444,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         patron: patron
       }
     end
-    let(:scsb_availability_params) do
-      {
-        bibliographicId: "9488888",
-        institutionId: "CUL"
-      }
-    end
-    let(:scsb_availability_response) { fixture('/scsb_single_avail.json') }
     let(:request_scsb) { described_class.new(params) }
     before do
       stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
         .to_return(status: 200, body: scsb_edd_item, headers: {})
-      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
-        .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
-        .to_return(status: 200, body: scsb_availability_response)
+      stub_scsb_availability(bib_id: "9488888", institution_id: "CUL", barcode: 'MR00429228')
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=748826840")
         .to_return(status: 200, body: '[]')
     end
@@ -1460,6 +1460,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     describe '#recap_edd?' do
       it 'is requestable via EDD' do
         expect(request_scsb.requestable.first.recap_edd?).to be false
+      end
+    end
+    describe '#available?' do
+      it 'is available' do
+        expect(request_scsb.requestable.first.available?).to be true
       end
     end
   end
@@ -1475,24 +1480,61 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         patron: patron
       }
     end
-    let(:scsb_availability_params) do
-      {
-        bibliographicId: ".b106574619",
-        institutionId: "NYPL"
-      }
-    end
-    let(:scsb_availability_response) { fixture('/scsb_single_avail.json') }
     let(:request_scsb) { described_class.new(params) }
     before do
       stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
         .to_return(status: 200, body: scsb_no_format, headers: {})
-      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
-        .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
-        .to_return(status: 200, body: scsb_availability_response)
+      stub_scsb_availability(bib_id: ".b106574619", institution_id: "NYPL", barcode: '33433088591924')
     end
     describe '#requestable' do
       it 'has an unknown format' do
         expect(request_scsb.ctx.referent.format).to eq('unknown')
+      end
+    end
+
+    describe '#available?' do
+      it 'is available' do
+        expect(request_scsb.requestable.first.available?).to be true
+      end
+    end
+  end
+
+  context "Marquand item in Clancy" do
+    let(:valid_patron) do
+      { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+        "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+        "patron_id" => "99999", "active_email" => "foo@princeton.edu",
+        campus_authorized: true, campus_authorized_category: "full" }.with_indifferent_access
+    end
+    let(:marquand) { fixture('/5620053.json') }
+    let(:availability) { fixture('/availability_5620053.json') }
+    let(:mfhd_availability) { fixture('/availability_5749706.json') }
+    let(:location_code) { 'scsbnypl' }
+    let(:params) do
+      {
+        system_id: '5620053',
+        source: 'pulsearch',
+        mfhd: '5749706',
+        patron: patron
+      }
+    end
+    let(:request) { described_class.new(params) }
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
+        .to_return(status: 200, body: marquand, headers: {})
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?id=#{params[:system_id]}")
+        .to_return(status: 200, body: availability, headers: {})
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?mfhd=#{params[:mfhd]}")
+        .to_return(status: 200, body: mfhd_availability, headers: {})
+      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
+      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101068477817")
+        .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101068477817\",\"status\":\"Item In at Rest\"}", headers: {})
+    end
+    describe '#requestable' do
+      it 'has an unknown format' do
+        requestable = request.requestable.first
+        expect(requestable.circulates?).to be_falsey
+        expect(requestable.services).to eq(['clancy_in_library', 'clancy_edd'])
       end
     end
   end

@@ -1,14 +1,5 @@
 <% if @submission.access_only? %>
-<%= I18n.t('requests.recap_guest.email_subject') %>
-
-<%= I18n.t('requests.recap_guest.email_conf_msg') %>
+   <%= render partial: 'in_library_confirmation', locals: { type: 'recap_guest'} %>
 <% else %>
-<%= I18n.t('requests.recap.email_subject') %>
-
-<%= I18n.t('requests.recap.email_conf_msg') %>
+   <%= render partial: 'in_library_confirmation', locals: { type: 'recap_in_library'} %>
 <% end %>
-
-<%= render 'patron_info' %>
-   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pick_up_location["code"]) } %>
-<%= render 'bib_info' %>
-<%= render 'item_info' %>

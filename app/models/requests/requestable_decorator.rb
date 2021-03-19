@@ -2,10 +2,10 @@ module Requests
   class RequestableDecorator
     delegate :system_id, :aeon_mapped_params, :services, :charged?, :annexa?, :annexb?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
              :ask_me?, :etas?, :etas_limited_access, :aeon_request_url, :location, :temp_loc?, :call_number, :eligible_to_pickup?,
-             :in_library_use_only?, :bib, :circulates?, :open_libraries, :item_data?, :recap_edd?, :user_barcode,
-             :holding, :item_location_code, :item?, :item, :scsb?, :status_label, :use_restriction?, :library_code, :enum_value,
-             :cron_value, :illiad_request_parameters, :location_label, :online?, :aeon?, :borrow_direct?, :patron,
-             :ill_eligible?, :scsb_in_library_use?, :pick_up_locations, :on_shelf?, :pending?, :recap?, :illiad_request_url,
+             :holding_library_in_library_only?, :holding_library, :bib, :circulates?, :open_libraries, :item_data?, :recap_edd?, :user_barcode, :clancy?,
+             :holding, :item_location_code, :item?, :item, :scsb?, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,
+             :cron_value, :illiad_request_parameters, :location_label, :online?, :aeon?, :borrow_direct?, :patron, :held_at_marquand_library?,
+             :ill_eligible?, :scsb_in_library_use?, :pick_up_locations, :on_shelf?, :pending?, :recap?, :illiad_request_url, :available?,
              :campus_authorized, :on_order?, :urls, :in_process?, :voyager_managed?, :covid_trained?, :title, :map_url, to: :requestable
     delegate :content_tag, :hidden_field_tag, :concat, to: :view_context
 
@@ -28,7 +28,7 @@ module Requests
     end
 
     def digitize?
-      (item_data? || !circulates?) && (on_shelf_edd? || (recap_edd? && !scsb_in_library_use?)) && !request_status?
+      (item_data? || !circulates?) && (on_shelf_edd? || recap_edd? || marquand_edd?) && !request_status?
     end
 
     def fill_in_digitize?
@@ -37,7 +37,7 @@ module Requests
 
     def pick_up?
       return false if etas? || !eligible_to_pickup?
-      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !in_library_use_only? && !scsb_in_library_use? && !request_status?
+      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !holding_library_in_library_only? && !scsb_in_library_use? && !request_status?
     end
 
     def fill_in_pick_up?
@@ -61,11 +61,11 @@ module Requests
     end
 
     def available_for_appointment?
-      !circulates? && !recap? && !charged? && !aeon? && !etas? && campus_authorized && located_in_an_open_library?
+      !circulates? && !off_site? && !charged? && !aeon? && !etas? && campus_authorized && located_in_an_open_library?
     end
 
     def will_submit_via_form?
-      digitize? || pick_up? || scsb_in_library_use? || (ill_eligible? && patron.covid_trained?) || (user_barcode.present? && (on_order? || in_process? || traceable?)) || help_me?
+      digitize? || pick_up? || scsb_in_library_use? || off_site? || (ill_eligible? && patron.covid_trained?) || (user_barcode.present? && (on_order? || in_process? || traceable?)) || help_me?
     end
 
     def located_in_an_open_library?
@@ -76,6 +76,30 @@ module Requests
       services.include?('on_shelf_edd')
     end
 
+    def marquand_edd?
+      !(['clancy_edd', 'clancy_unavailable', 'marquand_edd'] & services).empty?
+    end
+
+    def in_library_use_required?
+      !etas? && available? && (!held_at_marquand_library? || !item_at_clancy? || clancy?) && ((off_site? && !circulates?) || holding_library_in_library_only? || scsb_in_library_use?) && campus_authorized
+    end
+
+    def off_site?
+      recap? || annexa? || item_at_clancy? || held_at_marquand_library?
+    end
+
+    def off_site_location
+      if clancy?
+        "clancy" # at clancy and available
+      elsif item_at_clancy?
+        "clancy_unavailable" # at clancy but not available
+      elsif recap? && holding_library == "marquand"
+        "recap_marquand"
+      else
+        library_code
+      end
+    end
+
     def create_fill_in_requestable
       fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, patron: patron)
       fill_in_req.services = services
@@ -83,8 +107,14 @@ module Requests
     end
 
     def libcal_url
-      return unless available_for_appointment?
-      Libcal.url(location['library']['code'])
+      code = if off_site? && !held_at_marquand_library? && location[:holding_library].present?
+               location[:holding_library][:code]
+             elsif !off_site? || held_at_marquand_library?
+               location[:library][:code]
+             else
+               "firestone"
+             end
+      Libcal.url(code)
     end
 
     def status_badge
@@ -116,5 +146,27 @@ module Requests
         "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}"
       end
     end
+
+    def in_library_use_location_label
+      if requestable.held_at_marquand_library? || (recap? && requestable.holding_library == "marquand")
+        "Marquand Library at Firestone"
+      else
+        first_delivery_location[:label]
+      end
+    end
+
+    def in_library_use_location_code
+      first_delivery_location[:gfa_pickup] || "PA"
+    end
+
+    private
+
+      def first_delivery_location
+        if requestable.location[:delivery_locations].blank? || requestable.location[:delivery_locations].empty?
+          {}
+        else
+          requestable.location[:delivery_locations].first
+        end
+      end
   end
 end

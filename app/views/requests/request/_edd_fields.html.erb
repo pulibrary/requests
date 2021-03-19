@@ -1,5 +1,5 @@
 <div aria-live='polite' class='<%= collapse_field %>' id='fields-eed__<%= "#{requestable.preferred_request_id}" %>'>
-  <small id="requestable__type_recap_edd_caption_<%= requestable.preferred_request_id %>" class="form-text brief-msg"><%= I18n.t('requests.recap_edd.brief_msg') %></small>
+  <small id="requestable__type_recap_edd_caption_<%= requestable.preferred_request_id %>" class="form-text brief-msg"><%= I18n.t("requests.#{requestable.off_site_location}_edd.brief_msg", default: I18n.t("requests.default_edd.brief_msg")) %></small>
   <div class="card card-body bg-light">
     <fieldset class="form-group required">
       <%= label_tag "requestable__edd_art_title", 'Article/Chapter Title (Required)', class: 'control-label col-sm-12' %>

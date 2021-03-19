@@ -36,6 +36,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(stackmap_url).to include("#{requestable.bib[:id]}/stackmap?cn=#{call_number}&loc=#{location_code}")
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context "Is a bibliographic record from the thesis collection" do
@@ -75,6 +87,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Mudd Manuscript Library')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -118,6 +142,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Special Collections - Numismatics Collection')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'A requestable item with a missing status' do
@@ -148,6 +184,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.first.location_label).to eq('Firestone Library')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable.first).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable.first).not_to be_available
+      end
+    end
   end
 
   context 'A requestable item with hold_request status' do
@@ -173,6 +221,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable_on_hold.location_label).to eq('ReCAP')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable_on_hold).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable_on_hold).not_to be_available
       end
     end
   end
@@ -205,6 +265,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         it 'has a location label' do
           expect(requestable.first.location_label).to eq('Firestone Library')
         end
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable.first).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable.first).not_to be_available
       end
     end
   end
@@ -255,6 +327,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Firestone Library')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
@@ -284,6 +368,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('East Asian Library - Rare Books')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'A requestable serial item that has volume and item data in its openurl' do
@@ -303,6 +399,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -332,6 +440,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Special Collections - Rare Books')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -364,6 +484,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Special Collections - Rare Books')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'A MUDD holding' do
@@ -394,16 +526,42 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('ReCAP - Marquand Library (Rare) use only')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'A Non-Recap Marquand holding' do
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:user) { FactoryGirl.build(:user) }
-    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } }, patron: patron) }
+    let(:item) { { status: "Available" } }
+    let(:location) { { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } } }
+    let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: location, patron: patron, item: item) }
 
     describe '#site' do
       it 'returns a Marquand site param' do
-        expect(requestable.in_library_use_only?).to be_truthy
+        expect(requestable.holding_library_in_library_only?).to be_truthy
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is marquand" do
+        expect(requestable).to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -429,6 +587,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('Special Collections - John Witherspoon Library')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -494,6 +664,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'A requestable item from Forrestal Annex with no item data' do
@@ -552,6 +734,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Forrestal Annex - Princeton Collection')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
+      end
+    end
   end
 
   context 'On Order materials' do
@@ -592,6 +786,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.location_label).to eq('Firestone Library')
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable).not_to be_available
+      end
+    end
   end
 
   context 'Pending Order materials' do
@@ -607,6 +813,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     describe '#location_label' do
       it 'has a location label' do
         expect(requestable.location_label).to eq('ReCAP - Marquand Library use only')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable).not_to be_available
       end
     end
   end
@@ -636,6 +854,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
       it "has recap edd request service available" do
         expect(requestable.services.include?('recap_edd')).to be true
+      end
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
 
@@ -748,6 +972,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
       it "has recap edd request service available" do
         expect(requestable.services.include?('recap_edd')).to be true
+      end
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+
+      describe "#available?" do
+        it "is available" do
+          expect(requestable).to be_available
+        end
       end
     end
 
@@ -863,6 +1096,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable_charged.services.include?('ill')).to be false
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable_charged).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable_charged).not_to be_available
+      end
+    end
   end
   context 'A requestable item from a RBSC holding creates an openurl with volume and call number info' do
     let(:user) { FactoryGirl.build(:user) }
@@ -876,6 +1121,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
       it 'includes the call number of the holding' do
         expect(aeon_ctx).to include('CallNumber=2015-0801N')
+      end
+    end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -911,19 +1168,43 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable.etas_limited_access). to be_falsey
       end
     end
+
+    describe "#held_at_marquand_library?" do
+      it "is not marquand" do
+        expect(requestable).not_to be_held_at_marquand_library
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable).not_to be_available
+      end
+    end
   end
 
   context 'A SCSB Item from a location with a pick-up restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_ar) }
     let(:requestable) { request.requestable.first }
+
+    before do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=29065769")
+        .to_return(status: 200, body: '[]')
+      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        .to_return(status: 200, body: "[{\"itemBarcode\":\"AR65651294\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]")
+    end
+
     describe '#pick_up_locations' do
       it 'has a single pick-up location' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=29065769")
-          .to_return(status: 200, body: '[]')
         expect(requestable.pick_up_locations.size).to eq(1)
         expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('PJ')
         expect(requestable.item["use_statement"]).to eq('In Library Use')
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end
@@ -931,12 +1212,24 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_mr) }
     let(:requestable) { request.requestable.first }
+
+    before do
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=17322905")
+        .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
+      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        .to_return(status: 200, body: "[{\"itemBarcode\":\"MR72802120\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]")
+    end
+
     describe '#pick_up_locations' do
       it 'has a single pick-up location' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=17322905")
-          .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
         expect(requestable.pick_up_locations.size).to eq(1)
         expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('PK')
+      end
+    end
+
+    describe "#available?" do
+      it "is available" do
+        expect(requestable).to be_available
       end
     end
   end

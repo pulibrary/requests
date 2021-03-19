@@ -40,7 +40,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
       }
     end
 
-    before { stub_delivery_locations }
+    before do
+      stub_delivery_locations
+      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
+    end
 
     context 'all patrons' do
       describe 'When unauthenticated patron visits a request item', js: true do
@@ -230,6 +233,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content I18n.t("requests.submit.recap_success")
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("ʻAwāṭif madfūnah")
@@ -272,6 +277,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.cc).to be_blank
           expect(email.html_part.body.to_s).to have_content("Karşılaştırmalı mitoloji : Tolkien ne yaptı?")
           expect(confirm_email.subject).to eq("In Process Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Karşılaştırmalı mitoloji : Tolkien ne yaptı?")
@@ -293,10 +300,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("On Order Request")
-          expect(email.to).to eq(["fstcirc@princeton.edu"])
+          expect(email.to).to eq(["marquandoffsite@princeton.edu"])
           expect(email.cc).to be_blank
           expect(email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
           expect(confirm_email.subject).to eq("On Order Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
@@ -333,7 +342,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.to).to eq(["fstpage@princeton.edu"])
           expect(email.cc).to be_blank
           expect(email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
+          expect(email.html_part.body.to_s).not_to have_content("9785988562320")
           expect(confirm_email.subject).to eq("Firestone Library Pick-up Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
@@ -362,6 +374,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("L'écrivain, magazine litteraire trimestriel")
@@ -394,6 +408,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.cc).to be_blank
           expect(email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
           expect(confirm_email.subject).to eq("Annex Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
@@ -412,6 +428,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
@@ -439,6 +457,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.cc).to be_nil
           expect(email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
           expect(confirm_email.subject).to eq("Lewis Library Pick-up Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
@@ -506,6 +526,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.cc).to be_nil
           expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
           expect(confirm_email.subject).to eq("Paging Request for Firestone Library")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
@@ -534,6 +556,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
@@ -546,6 +570,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
           choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          expect(page).to have_content I18n.t('requests.recap_edd.brief_msg')
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Article/Chapter Title (Required)'
@@ -571,6 +596,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.subject).to eq("On the Shelf Paging Request (UESNB) NA1585.A23 S7 2020")
           expect(email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
           expect(confirm_email.subject).to eq("Architecture Library Pick-up Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received")
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
@@ -589,6 +616,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received")
           expect(confirm_email.html_part.body.to_s).to have_content("Chernobyl : a 5-part miniseries")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
@@ -635,6 +664,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'Request submitted to BorrowDirect'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Partner Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Requests typically are filled within two weeks when possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
         end
@@ -661,6 +692,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'Request submitted to BorrowDirect'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Partner Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Requests typically are filled within two weeks when possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
         end
@@ -682,6 +715,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'Request submitted to BorrowDirect'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Partner Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Requests typically are filled within two weeks when possible")
           expect(confirm_email.html_part.body.to_s).to have_content("7th census of U.S.1850")
         end
@@ -699,32 +734,66 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content I18n.t('requests.submit.annexa_success')
         end
 
-        it 'allows a non circulating item with not item data to be digitized' do
+        it 'allows a non circulating item with no item data to be digitized' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
-                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
+                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
+          stub_clancy_status(barcode: "32101072349515")
           visit '/requests/4127409?mfhd=4403772'
+          choose('requestable__delivery_mode_4403772_edd') # chooses 'edd' radio button
+          expect(page).to have_content I18n.t('requests.marquand_edd.brief_msg')
           expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Not Available'
+          expect(page).not_to have_content 'Available for In Library Use'
           fill_in "Article/Chapter Title", with: "ABC"
           fill_in "Author", with: "I Aman Author"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content(I18n.t('requests.marquand_edd.email_conf_msg'))
           expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan")
+          expect(marquand_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
+          expect(marquand_email.html_part.body.to_s).to have_content("ABC")
+          expect(marquand_email.html_part.body.to_s).to have_content("I Aman Author")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
+        end
+
+        it 'allows an in processitem to be requested from marquand' do
+          stub_clancy_status(barcode: "32101097503864")
+          visit 'requests/10137841?mfhd=9927777'
+          expect(page).to have_content 'In Process materials are typically available in several business days'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("In Process Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("In Process materials can typically be picked up at the Circulation Desk of your choice in several business days")
+          expect(confirm_email.html_part.body.to_s).to have_content("ASIA COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("In Process Request")
+          expect(marquand_email.html_part.body.to_s).to have_content("ASIA COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
         end
 
         context 'disavowed user' do
           it 'allows a non circulating item with not item data to be digitized to be requested, but then errors' do
             stub_request(:get, patron_url)
               .to_return(status: 200, body: responses[:disavowed], headers: {})
+            stub_clancy_status(barcode: "32101072349515")
             visit '/requests/4127409?mfhd=4403772'
             expect(page).to have_content 'Electronic Delivery'
+            choose('requestable__delivery_mode_4403772_edd') # chooses 'edd' radio button
             fill_in "Article/Chapter Title", with: "ABC"
             fill_in "Author", with: "I Aman Author"
             expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -753,6 +822,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("James Connolly")
@@ -771,6 +842,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
           expect(confirm_email.html_part.body.to_s).to have_content("Semitistik")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
@@ -793,6 +866,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received. We will process the requests as soon as possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
@@ -815,6 +890,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content(" Your request to pick this item up has been received. We will process the requests as soon as possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Chong wen men shang shui ya men xian xing shui ze")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
@@ -837,6 +914,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
           expect(confirm_email.html_part.body.to_s).to have_content("Let's face the music : the golden age of popular song")
           expect(confirm_email.html_part.body.to_s).to have_content("ABC")
@@ -844,17 +923,141 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
-        it "Shows a Appointment link for a marquand in library use item" do
+        it "places a hold and sends emails for a marquand in library use item" do
+          stub_voyager_hold_success('5636487', '5214248', '77777')
+          stub_clancy_status(barcode: "32101072349515")
+          visit '/requests/5636487?mfhd=5744248'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Available for In Library Use'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_link('make an appointment', href: "https://libcal.princeton.edu/seats?lid=10656")
+          choose('requestable__delivery_mode_5214248_in_library') # chooses 'in library' radio button
+          expect(page).to have_content('Marquand Library at Firestone')
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("You will be notified via email when your item is available.")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Pick-up By")
+          expect(confirm_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request In Library")
+          expect(marquand_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
+        end
+
+        it "places a hold and a clancy request for a marquand in library use item at Clancy" do
+          stub_voyager_hold_success('5636487', '5214248', '77777')
+          stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
+          stub_clancy_post(barcode: "32101072349515")
           visit '/requests/5636487?mfhd=5744248'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_link('make an appointment', href: "https://libcal.princeton.edu/seats?lid=10656")
+          expect(page).to have_content 'Available for In Library Use'
+          expect(page).to have_content I18n.t("requests.clancy_in_library.brief_msg")
+          expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
+          choose('requestable__delivery_mode_5214248_in_library') # chooses 'in_library' radio button
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("Book your appointment")
+          expect(confirm_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Clancy In Library")
+          expect(marquand_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
+        end
+
+        it "only has edd for a marquand in library use item at Clancy that is unavailable" do
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Cambridge, Mass: Harvard University P...", "ISSN" => "9780674030930", "CallNumber" => "N7668.D6 J64 2008", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487",
+                                       "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy UNAVAIL EDD", "AcceptNonEnglish" => true, "ESPNumber" => "213495319", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .with(body: hash_including("Note" => "Digitization Request Marquand Item at Clancy (Unavailable)"))
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          stub_clancy_status(barcode: "32101072349515", status: "Item In Accession Process")
+          visit '/requests/5636487?mfhd=5744248'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).not_to have_content 'Available for In Library Use'
+          expect(page).to have_content 'Electronic Delivery'
+          choose('requestable__delivery_mode_5214248_edd') # chooses 'edd' radio button
+          expect(page).to have_content I18n.t('requests.clancy_unavailable_edd.brief_msg')
+          expect(page).to have_content I18n.t("requests.clancy_unavailable_edd.note_msg")
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect(page).not_to have_content("translation missing")
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request EDD Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Book your appointment")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(confirm_email.html_part.body.to_s).to have_content(I18n.t("requests.clancy_unavailable_edd.email_conf_msg"))
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan - Unavailable at Clancy")
+          expect(marquand_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(marquand_email.html_part.body.to_s).to have_content("ABC")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
+        end
+
+        it "sends an email and places an illiad request for a marquand edd item at Clancy" do
+          stub_voyager_hold_success('5636487', '5214248', '77777')
+          stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
+          stub_clancy_post(barcode: "32101072349515")
+          stub_request(:get, patron_url)
+            .to_return(status: 200, body: responses[:found], headers: {})
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Cambridge, Mass: Harvard University P...", "ISSN" => "9780674030930", "CallNumber" => "N7668.D6 J64 2008", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487",
+                                       "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "213495319", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "ABC"))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .with(body: hash_including("Note" => "Digitization Request Marquand Item at Clancy"))
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          visit '/requests/5636487?mfhd=5744248'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Available for In Library Use'
+          expect(page).to have_content I18n.t("requests.clancy_in_library.brief_msg")
+          expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
+          choose('requestable__delivery_mode_5214248_edd') # chooses 'edd' radio button
+          expect(page).to have_content I18n.t('requests.clancy_edd.brief_msg')
+          expect(page).to have_content I18n.t("requests.clancy_edd.note_msg")
+          fill_in "Article/Chapter Title", with: "ABC"
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request EDD Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 4-8 business days")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Book your appointment")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Clancy Scan")
+          expect(marquand_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
         end
 
         it "shows in library use option for SCSB ReCAP items in Firestone" do
           stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
             .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
+          stub_scsb_availability(bib_id: ".b215204128", institution_id: "NYPL", barcode: '33433121206696')
           visit 'requests/SCSB-8953469'
           expect(page).not_to have_content 'Help Me Get It'
           expect(page).to have_content 'Available for In Library'
@@ -863,6 +1066,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Book your appointment")
           expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
@@ -877,11 +1082,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           choose('requestable__delivery_mode_8298341_in_library') # chooses 'in_library' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Available for In Library'
-          expect(page).to have_content('Pick-up location: Marquand Library')
+          expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
           expect(page).not_to have_content 'Physical Item Delivery'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("2-4 business days")
           expect(confirm_email.html_part.body.to_s).to have_content("Book your appointment")
           expect(confirm_email.html_part.body.to_s).to have_content("Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
@@ -1031,6 +1239,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("Uluslararası Marsyas Kültür Sanat ")
@@ -1051,6 +1261,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
@@ -1075,6 +1287,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
@@ -1098,6 +1312,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(email.cc).to be_nil
           expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to eq([])
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
@@ -1122,6 +1338,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
@@ -1147,6 +1365,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("L'écrivain, magazine litteraire trimestriel")
@@ -1170,6 +1390,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
@@ -1196,6 +1418,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Request submitted to Illiad'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
@@ -1247,6 +1471,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
@@ -1285,6 +1511,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business")
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
         end
@@ -1320,6 +1548,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
@@ -1349,6 +1579,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
@@ -1360,7 +1592,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
-                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
+                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
@@ -1368,11 +1600,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Electronic Delivery'
           fill_in "Article/Chapter Title", with: "ABC"
           fill_in "Author", with: "I Aman Author"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content(I18n.t('requests.marquand_edd.email_conf_msg'))
           expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
+          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan")
+          expect(marquand_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
+          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(marquand_email.cc).to be_blank
         end
       end
     end

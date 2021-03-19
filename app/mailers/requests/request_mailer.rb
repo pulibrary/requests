@@ -33,19 +33,11 @@ module Requests
     end
 
     def pres_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.pres.email')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
+      request_email(submission: submission, subject_key: 'requests.pres.email_subject', destination_key: 'requests.pres.email')
     end
 
     def pres_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.pres.email_subject'), @submission.user_barcode))
+      confirmation_email(submission: submission, subject_key: 'requests.pres.email_subject')
     end
 
     def annexa_email(submission)
@@ -57,11 +49,7 @@ module Requests
     end
 
     def annexa_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.annexa.email_subject'), @submission.user_barcode))
+      confirmation_email(submission: submission, subject_key: 'requests.annexa.email_subject')
     end
 
     def annexb_email(submission)
@@ -76,19 +64,11 @@ module Requests
     end
 
     def annexb_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.annexb.email_subject'), @submission.user_barcode))
+      confirmation_email(submission: submission, subject_key: 'requests.annexb.email_subject')
     end
 
     def ppl_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.ppl.email')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.ppl.email_subject'), @submission.user_barcode))
+      request_email(submission: submission, subject_key: 'requests.ppl.email_subject', destination_key: 'requests.ppl.email')
     end
 
     def ppl_confirmation(submission)
@@ -123,59 +103,41 @@ module Requests
     end
 
     def on_order_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.on_order.email_subject'), @submission.user_barcode))
+      destination_key = if submission.marquand?
+                          'requests.marquand_in_process.email_destination'
+                        else
+                          'requests.default.email_destination'
+                        end
+      request_email(submission: submission, subject_key: 'requests.on_order.email_subject', destination_key: destination_key)
     end
 
     def on_order_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.on_order.email_subject'), @submission.user_barcode))
+      confirmation_email(submission: submission, subject_key: 'requests.on_order.email_subject')
     end
 
     def in_process_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.in_process.email_subject'), @submission.user_barcode))
+      destination_key = if submission.marquand?
+                          'requests.marquand_in_process.email_destination'
+                        else
+                          'requests.default.email_destination'
+                        end
+      request_email(submission: submission, subject_key: 'requests.in_process.email_subject', destination_key: destination_key)
     end
 
     def in_process_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.in_process.email_subject'), @submission.user_barcode))
+      confirmation_email(submission: submission, subject_key: 'requests.in_process.email_subject')
     end
 
     def trace_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.default.email_destination')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.trace.email_subject'), @submission.user_barcode))
+      request_email(submission: submission, subject_key: 'requests.trace.email_subject')
     end
 
     def trace_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.trace.email_subject'), @submission.user_barcode))
+      confirmation_email(submission: submission, subject_key: 'requests.trace.email_subject')
     end
 
     def recap_no_items_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.recap_no_items.email')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.recap_no_items.email_subject'), @submission.user_barcode))
+      request_email(submission: submission, subject_key: 'requests.recap_no_items.email_subject', destination_key: 'requests.recap_no_items.email')
     end
 
     def recap_no_items_confirmation(submission)
@@ -197,90 +159,100 @@ module Requests
     end
 
     def digitize_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      subject = I18n.t('requests.digitize.email_subject')
-      mail(to: destination_email,
-           from: I18n.t('requests.digitize.email_from'),
-           subject: subject)
+      confirmation_email(submission: submission, subject_key: 'requests.digitize.email_subject', from_key: 'requests.digitize.email_from')
     end
 
     def interlibrary_loan_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      subject = I18n.t('requests.interlibrary_loan.email_subject')
-      mail(to: destination_email,
-           from: I18n.t('requests.interlibrary_loan.email_from'),
-           subject: subject)
+      confirmation_email(submission: submission, subject_key: 'requests.interlibrary_loan.email_subject', from_key: 'requests.interlibrary_loan.email_from')
     end
 
     def recap_email(submission)
       # only send an email to the libraries if this is a barcode user request
       return unless submission.access_only?
-      @submission = submission
-      destination_email = I18n.t('requests.recap.guest_email_destination')
-      subject = I18n.t('requests.recap_guest.email_subject')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject)
+      request_email(submission: submission, subject_key: 'requests.recap_guest.email_subject', destination_key: 'requests.recap.guest_email_destination')
     end
 
     def recap_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      subject = I18n.t('requests.recap.email_subject')
-      subject = I18n.t('requests.recap_guest.email_subject') if @submission.access_only?
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject)
+      subject_key = 'requests.recap.email_subject'
+      subject_key = 'requests.recap_guest.email_subject' if submission.access_only?
+
+      confirmation_email(submission: submission, subject_key: subject_key)
+    end
+
+    def recap_marquand_edd_email(submission); end
+
+    def recap_marquand_edd_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.recap_edd.email_subject', partial: 'recap_edd_confirmation')
+    end
+
+    def recap_marquand_in_library_email(submission); end
+
+    def recap_marquand_in_library_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.recap_in_library.email_subject')
     end
 
     def recap_in_library_email(submission)
-      # only send an email to the libraries if this is a barcode user request
-      return unless submission.access_only?
-      @submission = submission
-      destination_email = I18n.t('requests.recap.guest_email_destination')
-      subject = I18n.t('requests.recap_guest.email_subject')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject)
+      # only send an email to the libraries if this is a barcode user request or marquand
+      if submission.access_only?
+        request_email(submission: submission, subject_key: 'requests.recap_guest.email_subject', destination_key: 'requests.recap.guest_email_destination')
+      elsif submission.marquand?
+        request_email(submission: submission, subject_key: 'requests.recap_marquand.email_subject', destination_key: 'requests.recap_marquand.email_destination')
+      end
     end
 
     def recap_in_library_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      subject = I18n.t('requests.recap_in_library.email_subject')
-      subject = I18n.t('requests.recap_guest.email_subject') if @submission.access_only?
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject)
+      subject_key = 'requests.recap_in_library.email_subject'
+      subject_key = 'requests.recap_guest.email_subject' if submission.access_only?
+
+      confirmation_email(submission: submission, subject_key: subject_key)
     end
 
     def recap_edd_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      subject = I18n.t('requests.recap_edd.email_subject')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject)
+      confirmation_email(submission: submission, subject_key: 'requests.recap_edd.email_subject')
     end
 
-    # goes directly to voyager
-    def recall_confirmation(submission)
-      @submission = submission
-      destination_email = @submission.email
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: I18n.t('requests.recall.email_subject'))
+    def clancy_in_library_email(submission)
+      request_email(submission: submission, subject_key: 'requests.clancy_in_library.email_subject', destination_key: 'requests.clancy_in_library.email_destination')
     end
 
-    # depracated - TODO: clean up
+    def clancy_in_library_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.clancy_in_library.confirmation_subject')
+    end
+
+    def clancy_unavailable_edd_email(submission)
+      request_email(submission: submission, subject_key: 'requests.clancy_unavailable_edd.email_subject', destination_key: 'requests.clancy_unavailable_edd.email_destination')
+    end
+
+    def clancy_unavailable_edd_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.clancy_unavailable_edd.confirmation_subject')
+    end
+
+    def clancy_edd_email(submission)
+      request_email(submission: submission, subject_key: 'requests.clancy_edd.email_subject', destination_key: 'requests.clancy_edd.email_destination')
+    end
+
+    def clancy_edd_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.clancy_edd.confirmation_subject')
+    end
+
+    def marquand_edd_email(submission)
+      request_email(submission: submission, subject_key: 'requests.marquand_edd.email_subject', destination_key: 'requests.marquand_edd.email_destination')
+    end
+
+    def marquand_edd_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.marquand_edd.confirmation_subject')
+    end
+
+    def marquand_in_library_email(submission)
+      request_email(submission: submission, subject_key: 'requests.marquand_in_library.email_subject', destination_key: 'requests.marquand_in_library.email_destination')
+    end
+
+    def marquand_in_library_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.marquand_in_library.confirmation_subject')
+    end
+
     def scsb_recall_email(submission)
-      @submission = submission
-      destination_email = I18n.t('requests.recap.scsb_recall_destination')
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: I18n.t('requests.recall.staff_email_subject'))
+      request_email(submission: submission, subject_key: 'requests.recall.staff_email_subject', destination_key: 'requests.recap.scsb_recall_destination')
     end
 
     def service_error_email(services)
@@ -321,6 +293,24 @@ module Requests
     end
 
     private
+
+      def confirmation_email(submission:, subject_key:, from_key: 'requests.default.email_from', partial: nil)
+        @submission = submission
+        destination_email = @submission.email
+        subject = I18n.t(subject_key)
+        mail(to: destination_email,
+             from: I18n.t(from_key),
+             subject: subject,
+             template_name: partial)
+      end
+
+      def request_email(submission:, subject_key:, destination_key: 'requests.default.email_destination', from_key: 'requests.default.email_from')
+        @submission = submission
+        destination_email = I18n.t(destination_key)
+        mail(to: destination_email,
+             from: I18n.t(from_key),
+             subject: subject_line(I18n.t(subject_key), @submission.user_barcode))
+      end
 
       def paging_pick_ups(submission:)
         @delivery_mode = submission.items[0]["delivery_mode_#{submission.items[0]['mfhd']}"]

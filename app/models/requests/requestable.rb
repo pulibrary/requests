@@ -69,7 +69,6 @@ module Requests
 
     def clancy?
       return false unless held_at_marquand_library?
-
       clancy_item.at_clancy? && clancy_item.available?
     end
 
@@ -268,6 +267,11 @@ module Requests
 
     def available?
       (always_requestable? && !held_at_marquand_library?) || item.available?
+    end
+
+    def cul_avery?
+      return false unless item?
+      item[:collection_code].present? && item[:collection_code] == 'AR'
     end
 
     private

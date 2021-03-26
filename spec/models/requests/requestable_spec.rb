@@ -1207,7 +1207,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
         expect(requestable).to be_available
       end
     end
+
+    describe "#cul_avery?" do
+      it 'is an Avery Item' do
+        expect(requestable.cul_avery?).to be_truthy
+      end
+    end
   end
+
   context 'A SCSB Item from a location with no pick-up restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_mr) }

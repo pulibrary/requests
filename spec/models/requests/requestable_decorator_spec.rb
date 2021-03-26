@@ -13,7 +13,7 @@ describe Requests::RequestableDecorator do
   let(:patron) { Requests::Patron.new(user: user, session: {}, patron: valid_patron) }
 
   let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
-  let(:default_stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: false, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false } }
+  let(:default_stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: false, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, cul_avery?: false } }
   let(:stubbed_questions) { default_stubbed_questions.merge(etas?: false) }
   let(:view_context) { ActionView::Base.new }
   let(:ldap) { {} }
@@ -1517,6 +1517,13 @@ describe Requests::RequestableDecorator do
       end
     end
 
+    context "avery item at recap from marquand" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(recap?: true, library_code: 'abc', cul_avery?: true, holding_library: 'recap') }
+      it 'is off site' do
+        expect(decorator.off_site_location).to eq('recap_marquand')
+      end
+    end
+
     context "at annex" do
       let(:stubbed_questions) { default_stubbed_questions.merge(annexa?: true, library_code: 'abc') }
       it 'is off site' do
@@ -1554,6 +1561,13 @@ describe Requests::RequestableDecorator do
 
     context "has a delivery location" do
       let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: true, location: { delivery_locations: [{ gfa_pickup: 'PJ', label: 'abc' }] }) }
+      it 'shows the location code' do
+        expect(decorator.in_library_use_location_code).to eq('PJ')
+      end
+    end
+
+    context "is an avery item" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: true, cul_avery?: true) }
       it 'shows the location code' do
         expect(decorator.in_library_use_location_code).to eq('PJ')
       end

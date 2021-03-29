@@ -392,10 +392,10 @@ module Requests
       def pick_up_locations(requestable, default_pick_ups)
         return [default_pick_ups[0]] if requestable.borrow_direct? || requestable.ill_eligible?
         return available_pick_ups(requestable, default_pick_ups) unless requestable.pending?
-        if requestable.location[:holding_library].blank?
-          [{ label: requestable.location[:library][:label], gfa_pickup: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
+        if requestable.delivery_location_label.present?
+          [{ label: requestable.delivery_location_label, gfa_pickup: requestable.delivery_location_code, staff_only: false }]
         else
-          [{ label: requestable.location[:holding_library][:label], gfa_pickup: gfa_lookup(requestable.location[:holding_library][:code]), staff_only: false }]
+          [{ label: requestable.location[:library][:label], gfa_pickup: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
         end
       end
 

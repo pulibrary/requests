@@ -278,11 +278,10 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services pending at a location" do
-      let(:holding_location) { { holding_library: { label: 'cool library', code: 'xx' } } }
-      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: true, on_shelf?: false, location: holding_location, charged?: false, borrow_direct?: false, ill_eligible?: false } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: 'abc123', pending?: true, on_shelf?: false, delivery_location_label: "cool library", delivery_location_code: "xx", charged?: false, borrow_direct?: false, ill_eligible?: false } }
       it 'shows the holding location' do
         expect(helper.preferred_request_content_tag(requestable, default_pick_ups)).to eq \
-          card_div + '<input type="hidden" name="requestable[][pick_up]" id="requestable__pick_up" value="" class="single-pick-up-hidden" /><label class="single-pick-up" style="" for="requestable__pick_up">Pick-up location: cool library</label></div>'
+          card_div + '<input type="hidden" name="requestable[][pick_up]" id="requestable__pick_up" value="xx" class="single-pick-up-hidden" /><label class="single-pick-up" style="" for="requestable__pick_up">Pick-up location: cool library</label></div>'
       end
     end
 

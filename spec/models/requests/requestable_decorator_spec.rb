@@ -1539,37 +1539,37 @@ describe Requests::RequestableDecorator do
     end
   end
 
-  describe "#in_library_use_location_label" do
+  describe "#delivery_location_label" do
     let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: false, location: { delivery_locations: [{ gfa_pickup: 'PJ', label: 'abc' }] }) }
     it 'shows the location label' do
-      expect(decorator.in_library_use_location_label).to eq('abc')
+      expect(decorator.delivery_location_label).to eq('abc')
     end
 
     context "at marquand" do
       let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: true, location: { delivery_locations: [{ gfa_pickup: 'PJ', label: 'abc' }] }) }
       it 'shows the marquand name' do
-        expect(decorator.in_library_use_location_label).to eq('Marquand Library at Firestone')
+        expect(decorator.delivery_location_label).to eq('Marquand Library at Firestone')
       end
     end
   end
 
-  describe "#in_library_use_location_code" do
+  describe "#delivery_location_code" do
     let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: false, location: {}) }
     it 'shows the default location code' do
-      expect(decorator.in_library_use_location_code).to eq('PA')
+      expect(decorator.delivery_location_code).to eq('PA')
     end
 
     context "has a delivery location" do
       let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: true, location: { delivery_locations: [{ gfa_pickup: 'PJ', label: 'abc' }] }) }
       it 'shows the location code' do
-        expect(decorator.in_library_use_location_code).to eq('PJ')
+        expect(decorator.delivery_location_code).to eq('PJ')
       end
     end
 
     context "is an avery item" do
       let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: true, cul_avery?: true) }
       it 'shows the location code' do
-        expect(decorator.in_library_use_location_code).to eq('PJ')
+        expect(decorator.delivery_location_code).to eq('PJ')
       end
     end
   end

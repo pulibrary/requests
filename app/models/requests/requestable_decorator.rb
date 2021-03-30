@@ -147,7 +147,7 @@ module Requests
       end
     end
 
-    def in_library_use_location_label
+    def delivery_location_label
       if requestable.held_at_marquand_library? || (recap? && (requestable.holding_library == "marquand" || requestable.cul_avery?))
         "Marquand Library at Firestone"
       else
@@ -155,7 +155,7 @@ module Requests
       end
     end
 
-    def in_library_use_location_code
+    def delivery_location_code
       if requestable.cul_avery?
         "PJ"
       else

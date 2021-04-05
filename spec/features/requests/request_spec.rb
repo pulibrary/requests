@@ -216,7 +216,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
       describe 'When visiting a voyager ID as a CAS User' do
         it 'allow CAS patrons to request an available ReCAP item.' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "9493318", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
                                        requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
@@ -230,6 +231,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
           select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content I18n.t("requests.submit.recap_success")
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
@@ -360,7 +362,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
         it 'allows patrons to request a physical recap item' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "9944355", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
                                        itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
             .to_return(status: 200, body: good_response, headers: {})
@@ -371,6 +374,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
           fill_in "Article/Chapter Title", with: "ABC"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
@@ -388,8 +392,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         # end
 
         it 'allows patrons to request a Forrestal annex' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550?mfhd=1086817'
           choose('requestable__delivery_mode_1184074_print') # chooses 'print' radio button
           # todo: should we still have the text?
@@ -418,13 +420,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to request a Lewis recap item digitally' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307?mfhd=6962326'
           choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Pick-up location: Lewis Library'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
@@ -439,8 +443,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it 'allows patrons to request a Lewis' do
           stub_voyager_hold_success('7053307', '6322174', '77777')
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307?mfhd=6934399'
           expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
@@ -467,13 +469,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to request a on-order' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           visit '/requests/11416426?mfhd=11107640'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request this Item'
+          expect(a_request(:post, scsb_url)).not_to have_been_made
           expect(page).to have_content 'Request submitted'
         end
 
@@ -487,7 +489,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it 'allows patrons to request a PPL Item' do
           pending "PPL library closed"
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/578830'
           expect(page).to have_content 'Pick-up location: Firestone Library'
@@ -498,8 +501,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows filtering items by mfhd' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).to have_content 'Pick-up location: Lewis Library'
@@ -508,8 +509,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'show a fill in form if the item is an enumeration (Journal ect.) and choose a print copy' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit 'requests/10574699?mfhd=10320354'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
@@ -554,6 +553,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           choose('requestable__delivery_mode_10320354_edd') # choose the print radio button
           fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, transaction_url)).to have_been_made
+          expect(a_request(:post, transaction_note_url)).to have_been_made
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
@@ -566,8 +567,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         # TODO: once Marquad in library use is available again it should show pick-up at marquand also
         it 'Shows marqaund as an EDD option only' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
           choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t('requests.recap_edd.brief_msg')
@@ -583,8 +582,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it "shows items in the Architecture Library as available" do
           stub_voyager_hold_success('11787671', '8307797', '77777')
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11787671?mfhd=11449656'
           # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Electronic Delivery'
@@ -605,7 +602,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "allows requests of recap pick-up only items" do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: nil, bibId: "11578319", callNumber: "DVD", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["32101108035435"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "Chernobyl : a 5-part miniseries", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11578319?mfhd=11259604'
@@ -614,6 +612,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
           select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
@@ -830,7 +829,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "allows an Recap etas item to be digitized" do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "7599", callNumber: "PJ3002 .S4", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101073604215"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Semitistik", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7599?mfhd=8413'
@@ -840,6 +840,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'If the specific volume does not appear in the list below, please enter it here:'
           fill_in "Article/Chapter Title", with: "ABC"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
@@ -853,7 +854,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it "allows a columbia item that is not in hathi etas to be picked up or digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=21154437")
             .to_return(status: 200, body: '[]')
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-2879197", callNumber: "PG3479.3.I84 Z778 1987g", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU01805363"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/SCSB-2879197'
@@ -863,6 +865,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content('Pick-up location: Firestone Circulation Desk')
           expect(page).to have_content 'ReCAP PG3479.3.I84 Z778 1987g'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
@@ -877,7 +880,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it "allows a columbia item that is open access to be picked up or digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=502557695")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"3863391","status":"ALLOW","origin":"CUL"}]')
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-4634001", callNumber: "4596 2907.88 1901", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU51481294"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Chong wen men shang shui ya men xian xing shui ze. 崇文門 商稅 衙門 現行 稅則.", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/SCSB-4634001'
@@ -887,6 +891,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content('Pick-up location: Firestone Circulation Desk')
           expect(page).to have_content 'ReCAP 4596 2907.88 1901'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
@@ -901,7 +906,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it "allows a columbia item that is ETAS to only be digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=19774500")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"1000066","status":"DENY","origin":"CUL"}]')
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-2879206", callNumber: "ML3477 .G74 1989g", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU61436348"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Let's face the music : the golden age of popular song", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/SCSB-2879206'
@@ -911,6 +917,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           fill_in "Article/Chapter Title", with: "ABC"
           expect(page).to have_content 'ReCAP ML3477 .G74 1989g'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
@@ -1054,7 +1061,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it "shows in library use option for SCSB ReCAP items in Firestone" do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
           stub_scsb_availability(bib_id: ".b215204128", institution_id: "NYPL", barcode: '33433121206696')
@@ -1063,6 +1071,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Available for In Library'
           expect(page).not_to have_content 'Electronic Delivery'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
@@ -1075,7 +1084,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'Shows marqaund recap item as an EDD or In Library Use' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "11780965", callNumber: "N6923.B257 H84 2020", chapterTitle: "", deliveryLocation: "PJ", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101106347378"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
@@ -1085,6 +1095,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
           expect(page).not_to have_content 'Physical Item Delivery'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
+          expect(a_request(:post, scsb_url)).to have_been_made
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
@@ -1201,7 +1213,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
       describe 'When visiting a voyager ID as a CAS User' do
         it 'allow CAS patrons to request an available ReCAP item.' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "9493318", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
                                        requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
@@ -1352,7 +1365,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
         it 'allows patrons to request a physical recap item' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "9944355", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: '198572131', requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9944355?mfhd=9757511'
@@ -1362,6 +1376,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
           fill_in "Article/Chapter Title", with: "ABC"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
@@ -1373,20 +1388,20 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows patrons to request a Forrestal annex' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/945550?mfhd=1086817'
           expect(page).not_to have_content 'Pick-up location: '
           expect(page).to have_content 'Electronic Delivery'
         end
 
         it 'allows patrons to request a Lewis recap item digitally' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7053307?mfhd=6962326'
           expect(page).not_to have_content 'Available for In Library Use'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content 'Request submitted'
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
@@ -1434,8 +1449,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows filtering items by mfhd' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192?mfhd=7699134'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
@@ -1445,8 +1458,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'shows an error if MFHD is not present' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/7917192'
           expect(page).not_to have_content 'Please Select a location on the main record page.'
         end
@@ -1481,7 +1492,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         # TODO: once Marquad in library use is available again it should show pick-up at marquand also
         it 'Shows ReCAP marqaund as an EDD option only' do
-          stub_request(:post, "#{Requests.config[:scsb_base]}/requestItem/requestItem")
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
           choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button

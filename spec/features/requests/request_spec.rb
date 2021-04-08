@@ -650,7 +650,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing",
                                        "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback",
-                                       "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "",
+                                       "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => "HC102.5.T78 A3 1997", "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "",
                                        "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
@@ -678,7 +678,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing",
                                        "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback",
-                                       "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "",
+                                       "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => "HC102.5.T78 A3 1997", "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "",
                                        "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
@@ -702,7 +702,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "U.S. census office", "LoanTitle" => "7th census of U.S.1850",
-                                       "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/1505778", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+                                       "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => "Oversize HA202.1850.A5q", "CitedIn" => "https://catalog.princeton.edu/catalog/1505778", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
@@ -1264,7 +1264,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Burrows, Roger", "LoanTitle" => "3D thinking in design and architecture : from antiquity to the future", "LoanPublisher" => nil, "ISSN" => "9780500519547", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/10958705", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Burrows, Roger", "LoanTitle" => "3D thinking in design and architecture : from antiquity to the future", "LoanPublisher" => nil, "ISSN" => "9780500519547", "CallNumber" => "NA2750 .B867 2018", "CitedIn" => "https://catalog.princeton.edu/catalog/10958705", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
@@ -1549,7 +1549,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback", "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback", "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => "HC102.5.T78 A3 1997", "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))

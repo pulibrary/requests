@@ -114,7 +114,8 @@ module Requests
       mfhd_items = if @mfhd && serial?
                      load_serial_items
                    else
-                     load_items_by_bib_id
+                     # load_items_by_bib_id
+                     load_items_by_mfhd
                    end
       mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
     end
@@ -307,15 +308,25 @@ module Requests
         }
       end
 
+      # Not sure why this method exists
       def load_serial_items
         mfhd_items = {}
         items_as_json = items_by_mfhd(@mfhd)
-        if !items_as_json.empty?
+        unless items_as_json.empty?
           items_with_symbols = items_to_symbols(items_as_json)
           mfhd_items[@mfhd] = items_with_symbols
-        else
-          empty_mfhd = items_by_bib(@system_id)
-          mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
+        end
+        # else
+        #   empty_mfhd = items_by_bib(@system_id)
+        #   mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
+        # end
+        mfhd_items
+      end
+
+      def load_items_by_mfhd
+        mfhd_items = {}
+        items_by_mfhd(@mfhd).each do |item_info|
+          mfhd_items[@mfhd] = load_item_for_holding(holding_id: @mfhd, item_info: item_info)
         end
         mfhd_items
       end

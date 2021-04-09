@@ -2,6 +2,7 @@
 <%= hidden_fields_mfhd holdings[mfhd] %>
 <div class="table-responsive">
   <div id="holding<%= mfhd %>" class="table items table">
+    <% # byebug %>
     <h2><%= current_location_label(holdings[mfhd]["location"], requestable_list) %> </h2>
 
       <% unless holdings[mfhd]["location_has"].nil? %>

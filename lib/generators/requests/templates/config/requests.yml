@@ -3,7 +3,7 @@
 defaults: &defaults
   umlaut_base: https://getit.princeton.edu
   bibdata_base: https://bibdata.princeton.edu
-  pulsearch_base: https://catalog.princeton.edu
+  pulsearch_base: https://catalog-alma-qa.princeton.edu
   proxy_base: https://library.princeton.edu/resolve/lookup?url=
   voyager_api_base: https://webvoyage.princeton.edu:7014
   aeon_base: https://library.princeton.edu/aeon/aeon.dll
@@ -17,6 +17,7 @@ development:
 
 test:
   <<: *defaults
+  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>
 
 production:
   <<: *defaults

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :none } do
+describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new_episodes } do
   context "A Princeton Community User has signed in" do
     let(:user) { FactoryGirl.create(:user) }
     let(:valid_patron) { { "netid" => "foo" }.with_indifferent_access }

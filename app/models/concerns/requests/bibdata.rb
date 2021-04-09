@@ -13,8 +13,9 @@ module Requests
       parse_response(response)
     end
 
-    def items_by_mfhd(mfhd_id)
-      response = bibdata_conn.get "/availability?mfhd=#{mfhd_id}"
+    def items_by_mfhd(system_id, mfhd_id)
+      # response = bibdata_conn.get "/availability?mfhd=#{mfhd_id}"
+      response = bibdata_conn.get "/bibliographic/#{system_id}/holdings/#{mfhd}/availability.json"
       parse_response(response)
     end
 

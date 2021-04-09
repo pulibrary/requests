@@ -71,7 +71,7 @@ class Requests::Requestable
     end
 
     def status
-      self[:status]
+      self[:status_label]
     end
 
     def scsb_status
@@ -195,11 +195,11 @@ class Requests::Requestable
     private
 
       def available_statuses
-        ["Not Charged", "On-Site", "On Shelf", "Available"]
+        ["Not Charged", "On-Site", "On Shelf", "Available", "Item in place"]
       end
 
       def unavailable_statuses
-        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
+        ['unavailable', 'Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
          'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
          'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
          'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',

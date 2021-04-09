@@ -348,7 +348,7 @@ module Requests
 
     def system_status_label(requestable)
       return "" if requestable.item.blank?
-      content_tag(:div, requestable.item[:status], class: 'system-status') unless requestable.item.key? :scsb_status
+      content_tag(:div, requestable.item[:status_label], class: 'system-status') unless requestable.item.key? :scsb_status
     end
 
     def display_urls(requestable)

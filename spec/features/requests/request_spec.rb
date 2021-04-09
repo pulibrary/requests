@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-describe 'request', vcr: { cassette_name: 'request_features', record: :none }, type: :feature do
+describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
   # rubocop:disable RSpec/MultipleExpectations
   describe "request form" do
     let(:voyager_id) { '9493318?mfhd=9351967' }

@@ -49,7 +49,6 @@ http_interactions:
       string: '{"label":"","code":"scsbcul","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"library":{"label":"ReCAP","code":"recap","order":3},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
         Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
         258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
-    http_version: 
   recorded_at: Fri, 08 Dec 2017 20:29:15 GMT
 - request:
     method: get
@@ -159,6 +158,53 @@ http_interactions:
         Storage","address":"Friend Center for Engineering Education, Princeton, NJ
         08544","phone_number":" 609-258-3200","contact_email":" englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":false,"digital_location":true,"url":"https://bibdata.princeton.edu/locations/delivery_locations/33.json","library":{"label":"Engineering
         Library","code":"engineering","order":2}}]'
-    http_version: 
   recorded_at: Thu, 26 Mar 2020 19:36:32 GMT
-recorded_with: VCR 4.0.0
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:34:13 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.057297'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - cd54f832-ed67-4da1-abd2-52e85f2a5892
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: 'Record:  not found.'
+  recorded_at: Fri, 09 Apr 2021 18:34:13 GMT
+recorded_with: VCR 6.0.0

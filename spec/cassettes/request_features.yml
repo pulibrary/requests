@@ -20336,4 +20336,1333 @@ http_interactions:
         - In Process","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Marquand
         Library","status_label":"In process"}]'
   recorded_at: Fri, 05 Mar 2021 12:49:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9351967
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"1fdec0174ef70fccfa6afcdb47df31e7"
+      X-Runtime:
+      - '0.064477'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 192de752-6649-4e67-9456-18693117268d
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101095798938","id":7303228,"location":"rcppa","copy_number":0,"item_sequence_number":0,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"ReCAP","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:07 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9927777
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:11 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"329bcd4613de851080d702947a15695a"
+      X-Runtime:
+      - '0.066018'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - fbc20dab-2207-4ed7-8bcc-021d42dc84ca
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101097503864","id":7577319,"location":"sa","copy_number":0,"item_sequence_number":1,"status":"On-Site
+        - In Process","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Marquand
+        Library","status_label":"In process"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:11 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6962326
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"252eec41209903177578e46331d71b30"
+      X-Runtime:
+      - '0.067589'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 7fff39f5-d746-4dd5-aa90-3189260c8a21
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101051217659","id":6357449,"location":"rcppn","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Closed","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"ReCAP
+        - Lewis Library use only","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:12 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=7426272
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:12 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.059415'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - e34be62e-dc51-4ae8-9205-b685579c3866
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: 'Record: 7426272 not found.'
+  recorded_at: Fri, 09 Apr 2021 18:26:13 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:13 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.058793'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 6bd4f943-eecd-463c-bc36-6fa2dd0e4112
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: 'Record:  not found.'
+  recorded_at: Fri, 09 Apr 2021 18:26:13 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=11443781
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"46d22e889bd835dc6420de7104ab2422"
+      X-Runtime:
+      - '0.067447'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - ae2d9b5f-71a7-4ef4-a269-f7b32f4bb9d3
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101106347378","id":8298341,"location":"rcppj","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Closed","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"ReCAP
+        - Marquand Library use only","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:15 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=6934399
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"8042c2975c8200c7aa1e88fa17212f7e"
+      X-Runtime:
+      - '0.063002'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 513c3122-4e95-4164-85c9-4e765aebec77
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101085651972","id":6322174,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Lewis
+        Library","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:16 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=1086817
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"ca3c591ca5973429a825aaa651821b98"
+      X-Runtime:
+      - '0.069351'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 66861a44-ffab-49e4-b27b-77783fd8c668
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101023814336","id":1184074,"location":"anxafst","temp_loc":"etas","copy_number":1,"item_sequence_number":1,"status":"Online
+        access","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Online
+        - HathiTrust Emergency Temporary Access","status_label":"Online access"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:18 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5744248
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"b38c3c6a46d01db925c89b3d428739d5"
+      X-Runtime:
+      - '0.062837'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - dea45701-2990-4e75-97fd-4d9ff8ab1341
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101072349515","id":5214248,"location":"sa","copy_number":1,"item_sequence_number":1,"status":"On-Site","on_reserve":"N","item_type":"Closed","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Marquand
+        Library","status_label":"On-site access"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:19 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=10878427
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:20 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.059111'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - a79ebf7d-9e4f-4320-a8b8-71d3d6bb900f
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: 'Record: 10878427 not found.'
+  recorded_at: Fri, 09 Apr 2021 18:26:20 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=10672583
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"f31a21590649d645ea34fa58063140f9"
+      X-Runtime:
+      - '0.065055'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - d7ad5e9c-d8b0-466f-a7f3-086b9775a839
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101102770037","id":7913416,"location":"ues","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Architecture
+        Library","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:21 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=10672583
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"f31a21590649d645ea34fa58063140f9"
+      X-Runtime:
+      - '0.066850'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 42069299-5826-4ff5-b03c-e9f1018c459f
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101102770037","id":7913416,"location":"ues","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Architecture
+        Library","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:21 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=8413
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:23 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"f6a087e8f2601748148619e4ff2b197e"
+      X-Runtime:
+      - '0.068392'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - f6a3a740-9ce3-4560-af4e-1a71e039a53d
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101073604215","id":5550761,"location":"rcppa","temp_loc":"etasrcp","copy_number":1,"item_sequence_number":1,"status":"Online
+        access","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"ReCAP
+        - HathiTrust Emergency Temporary Access ReCAP","status_label":"Online access"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:23 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=1729547
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"b5d2a4c6f378ed5e4049c710be14a422"
+      X-Runtime:
+      - '0.058987'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 4e607471-4f36-4bf4-99eb-5874e9654b72
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101007605528","id":1807896,"location":"f","copy_number":1,"item_sequence_number":1,"status":"Missing","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Firestone
+        Library","status_label":"Missing"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:24 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=179618
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"194d53b93cdb39655da28f0b57c78d22"
+      X-Runtime:
+      - '0.065010'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 461d3a1b-a484-4f36-92ce-f99a14a3efd6
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101002913638","id":174926,"location":"f","temp_loc":"etas","copy_number":1,"item_sequence_number":1,"status":"Online
+        access","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Online
+        - HathiTrust Emergency Temporary Access","status_label":"Online access"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:25 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=10028102
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"b824b3eff5440ac9bbf65d1f54b3ff31"
+      X-Runtime:
+      - '0.065570'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - ee0a41f8-4b27-4fbb-be19-55d695643858
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101101305488","id":7626545,"location":"rcppa","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"ReCAP","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:26 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=7699134
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:29 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"99e05c689f4fd4e220c4ce7c0ac7030e"
+      X-Runtime:
+      - '0.066933'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - c4de67e2-2a50-4a10-bdc4-f15d291914f3
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101092126620","id":6760554,"location":"sci","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Lewis
+        Library","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:29 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=11449656
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"a70caa5e63481d4327157dca959ca1e1"
+      X-Runtime:
+      - '0.065081'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - d8479a11-8bd2-4572-8595-e91168d6b8c4
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101111080964","id":8307797,"location":"ues","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Architecture
+        Library","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:30 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9436228
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:31 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"61dad4a725e68f9eb429098a771539f2"
+      X-Runtime:
+      - '0.065014'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - e1e1243b-76e8-4054-a4fc-91e8725f42a1
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101093054474","id":7354442,"location":"sciref","copy_number":0,"item_sequence_number":0,"status":"On-Site","on_reserve":"N","item_type":"NoCirc","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Lewis
+        Library - Reference (Fine Hall Wing)","status_label":"On-site access"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:31 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=9588984
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"4edddb5c5795517065d75f7ff3419c3b"
+      X-Runtime:
+      - '0.067668'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 77796845-1029-4cfe-87f2-50ecb198b87d
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101098986266","id":7502706,"location":"f","temp_loc":"etas","copy_number":0,"item_sequence_number":1,"status":"Online
+        access","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Online
+        - HathiTrust Emergency Temporary Access","status_label":"Online access"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:32 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=11259604
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"f28164dfe598549e5da5ec7ae131fba0"
+      X-Runtime:
+      - '0.064087'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 396247fa-80b0-4168-a1da-4fec42a1413f
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101108035435","id":8209896,"location":"rcpqv","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"2-Week","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"enum":"disc
+        1-2","enum_display":"disc 1-2","label":"ReCAP - Video Collection","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:34 GMT
+- request:
+    method: post
+    uri: https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction
+    body:
+      encoding: UTF-8
+      string: '{"Username":"jstudent","TransactionStatus":"Awaiting Article Express
+        Processing","RequestType":"Article","ProcessType":"Borrowing","NotWantedAfter":"10/09/2021","WantedBy":"Yes,
+        until the semester''s","PhotoItemAuthor":"Chekhov, Anton Pavlovich","PhotoArticleAuthor":"","PhotoJournalTitle":"Pʹesy
+        Пьесы","PhotoItemPublisher":"Moskva: Letniĭ sad","ISSN":"9785988562320","CallNumber":"PG3455
+        .A2 2015","PhotoJournalInclusivePages":"-","CitedIn":"https://catalog.princeton.edu/catalog/9770811","PhotoJournalYear":"2015","PhotoJournalVolume":"","PhotoJournalIssue":"","ItemInfo3":"","ItemInfo4":"","CitedPages":"COVID-19
+        Campus Closure","AcceptNonEnglish":true,"ESPNumber":"964907363","DocumentType":"Book","Location":"Online
+        - HathiTrust Emergency Temporary Access","PhotoArticleTitle":"ABC"}'
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Apikey:
+      - 260fb618-7750-4b42-bebd-4706a11073cf
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Failed Validation
+    headers:
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Expires:
+      - "-1"
+      Server:
+      - Microsoft-IIS/10.0
+      X-Aspnet-Version:
+      - 4.0.30319
+      X-Powered-By:
+      - ASP.NET
+      Date:
+      - Fri, 09 Apr 2021 18:26:37 GMT
+      Content-Length:
+      - '101'
+    body:
+      encoding: UTF-8
+      string: '{"Message":"The request is invalid.","ModelState":{"Username":["jstudent
+        is not a valid username."]}}'
+  recorded_at: Fri, 09 Apr 2021 18:26:37 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=11226341
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:39 GMT
+      Content-Type:
+      - text/plain; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.059192'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - d42428c6-30fd-4fec-92a5-310760e2ec4a
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: 'Record: 11226341 not found.'
+  recorded_at: Fri, 09 Apr 2021 18:26:39 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=11206838
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:26:43 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"66fdccd8460623fbf6f19f979c19b1e7"
+      X-Runtime:
+      - '0.068196'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 9b6edadb-dbaf-4561-b500-c5475fb1609b
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101108195858","id":8185207,"location":"rcppa","copy_number":0,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"ReCAP","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:26:43 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5018096
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:27:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"26093dedf9c1c9f780c441ad055c0072"
+      X-Runtime:
+      - '0.065939'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 579b641c-0861-42be-b98f-422ae69ee055
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101059892883","id":4397582,"location":"spia","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Stokes
+        Library - SPIA","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:27:07 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/availability?mfhd=5018096
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.5
+      Date:
+      - Fri, 09 Apr 2021 18:27:07 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"26093dedf9c1c9f780c441ad055c0072"
+      X-Runtime:
+      - '0.062360'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 3826571b-7fe4-4d4c-b28c-f6c410296688
+      X-Powered-By:
+      - Phusion Passenger 6.0.5
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101059892883","id":4397582,"location":"spia","copy_number":1,"item_sequence_number":1,"status":"Not
+        Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Stokes
+        Library - SPIA","status_label":"Available"}]'
+  recorded_at: Fri, 09 Apr 2021 18:27:07 GMT
 recorded_with: VCR 6.0.0

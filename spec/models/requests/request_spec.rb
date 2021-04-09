@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Request, vcr: { cassette_name: 'request_models', record: :none } do
+describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
   let(:user) { FactoryGirl.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",

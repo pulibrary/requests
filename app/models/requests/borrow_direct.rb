@@ -36,19 +36,27 @@ module Requests
     private
 
       def handle_with_borrow_direct(bd_item:)
-        request_number = ::BorrowDirect::RequestItem.new(@submission.user_barcode).make_request(@pickup_location, isbn: isbn)
+        request_item = ::BorrowDirect::RequestItem.new(@submission.user_barcode)
+        # Allow 2 minutes since these requests seem to be taking a really long time
+        request_item.timeout = 200
+        request_number = request_item.make_request(@pickup_location, isbn: isbn)
         if request_number.present?
           @sent << { request_number: request_number }
         else
           handle_with_interlibrary_loan(item: bd_item)
         end
       rescue *::BorrowDirect::Error => error
+        handle_borrow_direct_error(error: error, bd_item: bd_item)
+      end
+
+      def handle_borrow_direct_error(error:, bd_item:)
         # duplicate request error, do not send again
         if error.to_s.starts_with?('PRIRI003') && error.to_s.include?('duplicate')
           errors << { type: 'borrow_direct', bibid: submission.bib, item: bd_item, user_name: submission.user_name, barcode: submission.user_barcode, error: "Ignoring duplicate Borrow Direct request: #{error}" }
 
         # borrow direct did not work handle with interlibrary loan
         else
+          Rails.logger.warn("Error with borrow direct handeling with ILL #{error.inspect}")
           handle_with_interlibrary_loan(item: bd_item)
         end
       end

@@ -6,7 +6,7 @@ module Requests
     include Requests::Scsb
 
     def initialize(submission)
-      @service_types = ['recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library']
+      @service_types = ['recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library', 'recap_marquand_edd']
       @submission = submission
       @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
       @errors = [] # array of hashes with bibid and item_id and error message

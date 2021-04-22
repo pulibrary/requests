@@ -190,7 +190,7 @@ module Requests
       end
 
       def process_recap
-        return if (['recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library'] & service_types).blank?
+        return if (['recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library', 'recap_marquand_edd'] & service_types).blank?
         @services << if access_only?
                        # Access users cannot use recap service directly
                        Requests::Generic.new(self)

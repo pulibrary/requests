@@ -567,6 +567,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         # TODO: once Marquad in library use is available again it should show pick-up at marquand also
         it 'Shows marqaund as an EDD option only' do
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
+            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/11780965?mfhd=11443781'
           choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t('requests.recap_edd.brief_msg')
@@ -575,6 +578,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Article/Chapter Title (Required)'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
           email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("Electronic Document Delivery Request Confirmation")
           expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")

@@ -1295,8 +1295,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '1788796',
-        mfhd: '2053005',
+        system_id: '9917887963506421',
+        mfhd: '22196156490006421',
         patron: patron
       }
     end

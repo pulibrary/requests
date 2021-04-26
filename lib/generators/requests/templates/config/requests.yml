@@ -2,7 +2,7 @@
 
 defaults: &defaults
   umlaut_base: https://getit.princeton.edu
-  bibdata_base: https://bibdata.princeton.edu
+  bibdata_base: https://bibdata-alma-staging.princeton.edu
   pulsearch_base: https://catalog-alma-qa.princeton.edu
   proxy_base: https://library.princeton.edu/resolve/lookup?url=
   voyager_api_base: https://webvoyage.princeton.edu:7014
@@ -13,11 +13,11 @@ defaults: &defaults
   scsb_active_mq: uat-recap-direct.htcinc.com
 development:
   <<: *defaults
-  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>
+  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata-alma-staging.princeton.edu" %>
 
 test:
   <<: *defaults
-  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata.princeton.edu" %>
+  bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata-alma-staging.princeton.edu" %>
 
 production:
   <<: *defaults

@@ -311,7 +311,7 @@ module Requests
       # Not sure why this method exists
       def load_serial_items
         mfhd_items = {}
-        items_as_json = items_by_mfhd(@system_id,@mfhd)
+        items_as_json = items_by_mfhd(@system_id, @mfhd)
         unless items_as_json.empty?
           items_with_symbols = items_to_symbols(items_as_json)
           mfhd_items[@mfhd] = items_with_symbols
@@ -323,34 +323,37 @@ module Requests
         mfhd_items
       end
 
+      ## this method should be the only place we load item availability
       def load_items_by_mfhd
         mfhd_items = {}
-        items_by_mfhd(@system_id,@mfhd).each do |item_info|
+        items_by_mfhd(@system_id, @mfhd).each do |item_info|
           mfhd_items[@mfhd] = load_item_for_holding(holding_id: @mfhd, item_info: item_info)
         end
         mfhd_items
       end
 
-      def load_items_by_bib_id
-        mfhd_items = {}
-        items_by_bib(@system_id).each do |holding_id, item_info|
-          next if @mfhd != holding_id
-          mfhd_items[holding_id] = load_item_for_holding(holding_id: holding_id, item_info: item_info)
-        end
-        mfhd_items
-      end
+      # def load_items_by_bib_id
+      #   mfhd_items = {}
+      #   items_by_bib(@system_id).each do |holding_id, item_info|
+      #     next if @mfhd != holding_id
+      #     mfhd_items[holding_id] = load_item_for_holding(holding_id: holding_id, item_info: item_info)
+      #   end
+      #   mfhd_items
+      # end
 
       def load_item_for_holding(holding_id:, item_info:)
         if item_info[:more_items] == false
-          if item_info[:status_label].starts_with?('On-Order') || item_info[:status_label].starts_with?('Pending Order')
+          if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
             [item_info]
-          elsif item_info[:status_label].starts_with?('Online')
+          elsif item_info[:status].starts_with?('Online')
             [item_info]
           else
-            items_to_symbols(items_by_mfhd(@system_id,holding_id))
+            ## we don't need to call this again
+            items_to_symbols(items_by_mfhd(@system_id, holding_id))
           end
         else
-          items_to_symbols(items_by_mfhd(@system_id,holding_id))
+          ## we don't need to call this again
+          items_to_symbols(items_by_mfhd(@system_id, holding_id))
         end
       end
 

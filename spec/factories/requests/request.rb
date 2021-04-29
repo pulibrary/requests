@@ -1,11 +1,6 @@
 require 'factory_girl'
 
 FactoryGirl.define do
-  # factory :request_online, class: 'Requests::Request' do
-  #   system_id 8_553_130
-  #   initialize_with { new(system_id) }
-  # end
-
   factory :request_no_items, class: 'Requests::Request' do
     system_id 4_492_846
     mfhd '4745646'
@@ -26,46 +21,6 @@ FactoryGirl.define do
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end
-
-  # factory :request_with_items_available, class: 'Requests::Request' do
-  #   system_id 1 # get real ID
-  #   initialize_with { new(system_id) }
-  # end
-
-  # factory :request_always_available_no_items, class: 'Requests::Request' do
-  #   system_id 8_5752_09
-  #   initialize_with { new(system_id) }
-  # end
-
-  # factory :request_always_available_with_items_charged, class: 'Requests::Request' do
-  #   system_id 8_575_209
-  #   initialize_with { new(system_id) }
-  # end
-
-  # factory :request_serial_format, class: 'Requests::Request' do
-  #   system_id 1 # get real ID
-  #   initialize_with { new(system_id) }
-  # end
-
-  # factory :request_aeon, class: 'Requests::Request' do
-  #   system_id 9_561_302
-  #   initialize_with { new(system_id) }
-  # end
-
-  # factory :request_recap, class: 'Requests::Request' do
-  #   system_id 1 # get real ID
-  #   initialize_with { new(system_id) }
-  # end
-
-  #  factory :request_aeon_recap, class: 'Requests::Request' do
-  #   system_id 1 # get real ID
-  #   initialize_with { new(system_id) }
-  # end
-
-  # factory :request_recap_edd_eligible, class: 'Requests::Request' do
-  #   system_id 1 # get real ID
-  #   initialize_with { new(system_id) }
-  # end
 
   factory :request_thesis, class: 'Requests::Request' do
     system_id "dsp01rr1720547"
@@ -102,29 +57,8 @@ FactoryGirl.define do
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end
 
-  factory :request_paging_mutliple_mfhd, class: 'Requests::Request' do
-    system_id 2_942_771
-    mfhd '4504821'
-    patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
-    initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
-  end
-
   # missing item
   factory :request_missing_item, class: 'Requests::Request' do
-    system_id 1_389_121
-    mfhd '1594697'
-    patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
-    initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
-  end
-
-  factory :request_missing_item_barcode_patron, class: 'Requests::Request' do
-    system_id 1_389_121
-    mfhd '1594697'
-    patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
-    initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
-  end
-
-  factory :request_missing_item_unauthenticated_patron, class: 'Requests::Request' do
     system_id 1_389_121
     mfhd '1594697'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }

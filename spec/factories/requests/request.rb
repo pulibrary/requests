@@ -2,8 +2,8 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :request_no_items, class: 'Requests::Request' do
-    system_id 4_492_846
-    mfhd '4745646'
+    system_id 9944928463506421
+    mfhd '2217515100006421'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end

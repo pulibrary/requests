@@ -32,8 +32,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:bad_system_id) { 'foo' }
     let(:params) do
       {
-        system_id: '8880549',
-        mfhd: '8805567',
+        system_id: '9988805493506421',
+        mfhd: '22208751700006421',
         patron: patron
       }
     end
@@ -108,7 +108,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a mfhd" do
         expect(request_with_holding_item.requestable[0].holding).to be_truthy
-        expect(request_with_holding_item.requestable[0].holding.key?("8805567")).to be_truthy
+        expect(request_with_holding_item.requestable[0].holding.key?(params[:mfhd])).to be_truthy
       end
 
       it "has location data" do
@@ -119,14 +119,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#load_locations" do
       it "provides a list of location data" do
         expect(request_with_holding_item.locations.size).to eq(1)
-        expect(request_with_holding_item.locations.key?('ues')).to be_truthy
+        expect(request_with_holding_item.locations.key?('arch$stacks')).to be_truthy
       end
     end
 
     describe "#system_id" do
       it "has a system id" do
         expect(request_with_holding_item.system_id).to be_truthy
-        expect(request_with_holding_item.system_id).to eq('8880549')
+        expect(request_with_holding_item.system_id).to eq('9988805493506421')
       end
     end
 
@@ -152,8 +152,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "with a system_id and a mfhd that only has a holding record" do
     let(:params) do
       {
-        system_id: '1791763',
-        mfhd: '2056183',
+        system_id: '9917917633506421',
+        mfhd: '22178797250006421',
         patron: patron
       }
     end
@@ -168,7 +168,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "has a mfhd" do
         expect(request_with_only_holding.requestable[0].holding).to be_truthy
-        expect(request_with_only_holding.requestable[0].holding.key?("2056183")).to be_truthy
+        expect(request_with_only_holding.requestable[0].holding.key?(params[:mfhd])).to be_truthy
       end
 
       it "has location data" do
@@ -180,8 +180,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "with a system_id only that has holdings and item records" do
     let(:params) do
       {
-        system_id: '490930',
-        mfhd: '4740830',
+        system_id: '994909303506421',
+        mfhd: '22240456670006421',
         patron: patron
       }
     end
@@ -209,8 +209,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "with a system_id that only has holdings records" do
     let(:params) do
       {
-        system_id: '4758976',
-        mfhd: '4977668',
+        system_id: '9947589763506421',
+        mfhd: '22101312640006421',
         patron: patron
       }
     end
@@ -236,8 +236,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "with a system_id that has holdings records that do and don't have item records attached" do
     let(:params) do
       {
-        system_id: '2478499',
-        mfhd: '2779466',
+        system_id: '9924784993506421',
+        mfhd: '22170331510006421',
         patron: patron
       }
     end
@@ -263,8 +263,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "A system id that has a holding with item on reserve" do
     let(:params) do
       {
-        system_id: '8179402',
-        mfhd: '7946042',
+        system_id: '9981794023506421',
+        mfhd: '22237592660006421',
         patron: patron
       }
     end
@@ -280,8 +280,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "A system id that has a holding with items in a temporary location" do
     let(:params) do
       {
-        system_id: '6195942',
-        mfhd: '6218590',
+        system_id: '9961959423506421',
+        mfhd: '22192559740006421',
         patron: patron
       }
     end
@@ -295,7 +295,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has location data that reflects an item's temporary location" do
-        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('sciresp')
+        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('lewis$resterm')
       end
     end
   end
@@ -303,8 +303,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "A system id that has a holding with item not in a temporary location" do
     let(:params) do
       {
-        system_id: '6195942',
-        mfhd: '6218596',
+        system_id: '9961959423506421',
+        mfhd: '22192559740006421',
         patron: patron
       }
     end
@@ -315,7 +315,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(request_with_items_at_temp_locations.requestable).to be_truthy
         expect(request_with_items_at_temp_locations.requestable.size).to eq(1)
         expect(request_with_items_at_temp_locations.requestable[0]).to be_instance_of(Requests::Requestable)
-        expect(request_with_items_at_temp_locations.requestable.last.location_code).to eq('sci')
+        expect(request_with_items_at_temp_locations.requestable.last.location_code).to eq('lewis$resterm')
       end
     end
   end
@@ -323,7 +323,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "a system_id with no holdings or items" do
     let(:params) do
       {
-        system_id: '2385868',
+        system_id: '9923858683506421',
         mfhd: nil,
         patron: patron
       }
@@ -340,8 +340,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "when a recap with no items" do
     let(:params) do
       {
-        system_id: '4759591',
-        mfhd: '4978217',
+        system_id: '9947595913506421',
+        mfhd: '2232011730006421',
         patron: patron
       }
     end
@@ -365,8 +365,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a system_id for a theses record" do
     let(:params) do
       {
-        system_id: 'dsp01rr1720547',
-        mfhd: 'thesis',
+        system_id: '99dsp01rr17205473506421',
+        mfhd: '2232011730006421',
         patron: patron
       }
     end
@@ -521,8 +521,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for a paging location in nec outside of call number range" do
     let(:params) do
       {
-        system_id: '2937003',
-        mfhd: '3251699',
+        system_id: '9929370033506421',
+        mfhd: '22107682210006421',
         patron: patron
       }
     end
@@ -530,7 +530,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "is unavailable" do
-        expect(request_at_paging_outside.requestable[0].location_code).to eq('nec')
+        expect(request_at_paging_outside.requestable[0].location_code).to eq('firestone$nec')
         expect(request_at_paging_outside.any_pageable?).to be(false)
         expect(request_at_paging_outside.requestable[0].pageable?).to be_nil
       end
@@ -577,8 +577,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for a paging location in f outside of call number range" do
     let(:params) do
       {
-        system_id: '4340413',
-        mfhd: '4594920',
+        system_id: '9943404133506421',
+        mfhd: '2254777780006421',
         patron: patron
       }
     end
@@ -586,7 +586,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#pageable?" do
       it "is be false" do
-        expect(request_at_paging_f.requestable[0].location_code).to eq('f')
+        expect(request_at_paging_f.requestable[0].location_code).to eq('recap$pa')
         expect(request_at_paging_f.requestable[0].pageable?).to be_nil
       end
     end
@@ -616,8 +616,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for a paging location f outside of call number range" do
     let(:params) do
       {
-        system_id: '9545726',
-        mfhd: '9396713',
+        system_id: '9995457263506421',
+        mfhd: '22154199260006421',
         patron: patron
       }
     end
@@ -625,7 +625,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "is unavailable" do
-        expect(request_at_paging_f.requestable[0].location_code).to eq('f')
+        expect(request_at_paging_f.requestable[0].location_code).to eq('firestone$stacks')
         expect(request_at_paging_f.requestable[0].pageable?).to eq(nil)
         expect(request_at_paging_f.any_pageable?).to be(false)
         expect(request_at_paging_f.requestable[0].voyager_managed?).to eq(true)
@@ -655,8 +655,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9602549',
-        mfhd: '9442916',
+        system_id: '9996025493506421',
+        mfhd: '22152849890006421',
         patron: patron
       }
     end
@@ -702,8 +702,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9602551',
-        mfhd: '9442918',
+        system_id: '9996025513506421',
+        mfhd: '22152847900006421',
         patron: patron
       }
     end
@@ -759,8 +759,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an Item in a pageable location that has no call number" do
     let(:params) do
       {
-        system_id: '9602545',
-        mfhd: '9442912',
+        system_id: '9996025453506421',
+        mfhd: '22152823160006421',
         patron: patron
       }
     end
@@ -772,7 +772,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "is in a pageable location" do
-        expect(request_no_callnum.requestable[0].location_code).to eq('f')
+        expect(request_no_callnum.requestable[0].location_code).to eq('firestone$stacks')
         expect(request_no_callnum.requestable[0].voyager_managed?).to eq(true)
       end
 
@@ -791,8 +791,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a mfhd with missing items" do
     let(:params) do
       {
-        system_id: '2002206',
-        mfhd: '2281830',
+        system_id: '9920022063506421',
+        mfhd: '22140105450006421',
         patron: patron
       }
     end

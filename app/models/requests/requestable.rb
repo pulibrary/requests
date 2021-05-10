@@ -64,7 +64,7 @@ module Requests
 
     def recap?
       return false unless location_valid?
-      library_code == 'recap'
+      library_code == 'recap' || holding_library == 'recap'
     end
 
     def clancy?
@@ -122,7 +122,7 @@ module Requests
 
     def in_process?
       return false unless item? && !scsb?
-      item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
+      item[:status_label] == 'Acquisition technical services' #'In Process' || item[:status] == 'On-Site - In Process'
     end
 
     def on_order?

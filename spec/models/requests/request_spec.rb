@@ -365,7 +365,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a system_id for a theses record" do
     let(:params) do
       {
-        system_id: '99dsp01rr17205473506421',
+        system_id: 'dsp01rr1720547',
         mfhd: '2232011730006421',
         patron: patron
       }
@@ -829,8 +829,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an Aeon ID" do
     let(:params) do
       {
-        system_id: '9627261',
-        mfhd: '9478752',
+        system_id: '9996272613506421',
+        mfhd: '2244110690006421',
         patron: patron
       }
     end
@@ -856,8 +856,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "Aeon item with holdings without items" do
     let(:params) do
       {
-        system_id: '616086',
-        mfhd: '675720',
+        system_id: '996160863506421',
+        mfhd: '22256352610006421',
         patron: patron
       }
     end
@@ -887,9 +887,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "Aeon item with holdings without items with mfhd" do
     let(:params) do
       {
-        system_id: '616086',
+        system_id: '996160863506421',
         patron: patron,
-        mfhd: '675722'
+        mfhd: '22256352620006421'
       }
     end
     let(:request) { described_class.new(params) }
@@ -918,8 +918,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When Passed a ReCAP ID" do
     let(:params) do
       {
-        system_id: '9676483',
-        mfhd: '9504920',
+        system_id: '9996764833506421',
+        mfhd: '2275983490006421',
         patron: patron
       }
     end
@@ -950,8 +950,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When Passed a ReCAP ID and mfhd for a serial at a non EDD location" do
     let(:params) do
       {
-        system_id: '426420',
-        mfhd: '464640',
+        system_id: '994264203506421',
+        mfhd: '2284673070006421',
         patron: patron
       }
     end
@@ -987,8 +987,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an unavailable item where other local copies are on reserve." do
     let(:params) do
       {
-        system_id: '9168829',
-        mfhd: '9048082',
+        system_id: '9991688293506421',
+        mfhd: '22209242250006421',
         patron: patron
       }
     end
@@ -1004,8 +1004,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a Recallable Item that is eligible for Borrow Direct" do
     let(:params) do
       {
-        system_id: '9738136',
-        mfhd: '9558038',
+        system_id: '9997381363506421',
+        mfhd: '22209576230006421',
         patron: patron
       }
     end
@@ -1069,8 +1069,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'When passed an item that is traceable and mappable' do
     let(:params) do
       {
-        system_id: '9907433',
-        mfhd: '9723988',
+        system_id: '9999074333506421',
+        mfhd: '22248460150006421',
         patron: patron
       }
     end
@@ -1101,8 +1101,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'When passed a holding with a null item record' do
     let(:params) do
       {
-        system_id: '495501',
-        mfhd: '538750',
+        system_id: '994955013506421',
+        mfhd: '22246895310006421',
         patron: patron
       }
     end
@@ -1118,7 +1118,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'When passed a holding with all online items' do
     let(:params) do
       {
-        system_id: '9994692',
+        system_id: '9999946923506421',
         mfhd: '9800910',
         patron: patron
       }
@@ -1135,8 +1135,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'When passed a holdings with mixed physical and online items' do
     let(:params) do
       {
-        system_id: '9746776',
-        mfhd: '9565269',
+        system_id: '9997467763506421',
+        mfhd: '2263454980006421',
         patron: patron
       }
     end
@@ -1152,8 +1152,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'When passed a non-enumerated holdings with at least one loanable item' do
     let(:params) do
       {
-        system_id: '4815239',
-        mfhd: '5018096',
+        system_id: '9948152393506421',
+        mfhd: '2229814610006421',
         patron: patron
       }
     end
@@ -1174,8 +1174,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'Enumerated record with charged items' do
     let(:params) do
       {
-        system_id: '495220',
-        mfhd: '538419',
+        system_id: '994952203506421',
+        mfhd: '22247009760006421',
         patron: patron
       }
     end
@@ -1196,8 +1196,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'Enumerated record without charged items' do
     let(:params) do
       {
-        system_id: '7494358',
-        mfhd: '7313959',
+        system_id: '9974943583506421',
+        mfhd: '2216383480006421',
         patron: patron
       }
     end
@@ -1225,8 +1225,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '5596067',
-        mfhd: '9378993',
+        system_id: '9955960673506421',
+        mfhd: '22119868580006421',
         patron: patron
       }
     end
@@ -1248,8 +1248,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '9696811',
-        mfhd: '9814851',
+        system_id: '9996968113506421',
+        mfhd: '22117193590006421',
         patron: patron
       }
     end
@@ -1272,7 +1272,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '2631265',
+        system_id: '9926312653506421',
         mfhd: '4238081',
         patron: patron
       }
@@ -1317,8 +1317,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context 'When a barcode only user visits the site' do
     let(:params) do
       {
-        system_id: '495501',
-        mfhd: '538750',
+        system_id: '994955013506421',
+        mfhd: '22246895310006421',
         patron: patron
       }
     end
@@ -1333,8 +1333,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed mfhd and source params" do
     let(:params) do
       {
-        system_id: '1969881',
-        mfhd: '2246633',
+        system_id: '9919698813506421',
+        mfhd: '2275228980006421',
         source: 'pulsearch',
         patron: patron
       }
@@ -1343,7 +1343,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#request" do
       it "has accessible mfhd param" do
-        expect(request_with_optional_params.mfhd).to eq('2246633')
+        expect(request_with_optional_params.mfhd).to eq('2275228980006421')
       end
 
       it "has accessible source param" do
@@ -1355,15 +1355,15 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for a preservation office location" do
     let(:params) do
       {
-        system_id: '9712355',
-        mfhd: '9533612',
+        system_id: '9997123553506421',
+        mfhd: '2229149680006421',
         patron: patron
       }
     end
     let(:request_for_preservation) { described_class.new(params) }
     describe "#requestable" do
       it "has a preservation location code" do
-        expect(request_for_preservation.requestable[0].location_code).to eq('pres')
+        expect(request_for_preservation.requestable[0].location_code).to eq('firestone$pres')
       end
     end
   end
@@ -1371,8 +1371,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a system_id for a record with a single aeon holding" do
     let(:params) do
       {
-        system_id: '4693146',
-        mfhd: '4919837',
+        system_id: '9946931463506421',
+        mfhd: '22134335010006421',
         patron: patron
       }
     end
@@ -1512,9 +1512,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:location_code) { 'scsbnypl' }
     let(:params) do
       {
-        system_id: '5620053',
+        system_id: '9956200533506421',
         source: 'pulsearch',
-        mfhd: '5749706',
+        mfhd: '2219823460006421',
         patron: patron
       }
     end

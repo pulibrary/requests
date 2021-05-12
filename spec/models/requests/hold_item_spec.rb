@@ -10,10 +10,10 @@ describe Requests::HoldItem, type: :controller do
 
     let(:requestable) do
       [{ "selected" => "true",
-         "mfhd" => "9723988",
+         "mfhd" => "22212632750006421",
          "call_number" => "HQ1532 .P44 2019",
          "location_code" => "f",
-         "item_id" => "8183358",
+         "item_id" => "23212632740006421",
          "barcode" => "32101107924928",
          "copy_number" => "0",
          "status" => "Not Charged",
@@ -25,7 +25,7 @@ describe Requests::HoldItem, type: :controller do
 
     let(:bib) do
       {
-        "id" => "11451836",
+        "id" => "99114518363506421",
         "title" => "Beautiful evidence",
         "author" => "Tufte, Edward R.",
         "date" => "2006"
@@ -97,10 +97,10 @@ describe Requests::HoldItem, type: :controller do
       context "no pick-up id is present" do
         let(:requestable) do
           [{ "selected" => "true",
-             "mfhd" => "9723988",
+             "mfhd" => "22212632750006421",
              "call_number" => "HQ1532 .P44 2019",
              "location_code" => "f",
-             "item_id" => "8183358",
+             "item_id" => "23212632740006421",
              "barcode" => "32101107924928",
              "copy_number" => "0",
              "status" => "Not Charged",

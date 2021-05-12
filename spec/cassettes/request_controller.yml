@@ -1906,4 +1906,608 @@ http_interactions:
       string: '[{"barcode":"32101100136363","id":7633635,"location":"mudd","copy_number":0,"item_sequence_number":1,"status":"On-Site","on_reserve":"N","item_type":"Closed","pickup_location_id":299,"pickup_location_code":"fcirc","patron_group_charged":null,"label":"Mudd
         Manuscript Library","status_label":"On-site access"}]'
   recorded_at: Fri, 09 Apr 2021 18:29:56 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/9676483/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:45 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 302 Found
+      Cache-Control:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 56016e75-53b5-4887-80a5-48a5a222b11d
+      Location:
+      - https://catalog-alma-qa.princeton.edu/catalog/9996764833506421
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.028561'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/catalog/9996764833506421">redirected</a>.</body></html>
+  recorded_at: Wed, 12 May 2021 03:16:45 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9676483/holdings/9504920/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - d6113ea3-e9f9-4566-aa00-f0097dc01aa6
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.556668'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: 'null'
+  recorded_at: Wed, 12 May 2021 03:16:46 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/delivery_locations.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"d2e6e7b80f2d594008773c8e784d476f"
+      X-Runtime:
+      - '0.030812'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - b7b4ef7a-b24c-4205-b972-4bb6d43585cc
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"label":"Plasma Physics Library","address":"Forrestal Campus Princeton,
+        NJ 08544","phone_number":"609-243-3565","contact_email":"ppllib@princeton.edu","gfa_pickup":"PQ","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/126.json","library":{"label":"Harold
+        P. Furth Plasma Physics Library","code":"plasma","order":0}},{"label":"Architecture
+        Library","address":"School of Architecture Building, Second Floor Princeton,
+        NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/127.json","library":{"label":"Architecture
+        Library","code":"arch","order":0}},{"label":"East Asian Library","address":"Frist
+        Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"PL","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/128.json","library":{"label":"East
+        Asian Library","code":"eastasian","order":0}},{"label":"Engineering Library","address":"Friend
+        Center for Engineering Education Princeton, NJ 08544","phone_number":"609-258-3200","contact_email":"englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/129.json","library":{"label":"Engineering
+        Library","code":"engineer","order":0}},{"label":"Firestone Library, Microforms","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PF","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/130.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Marquand Library of Art
+        and Archaeology","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PJ","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/131.json","library":{"label":"Marquand
+        Library","code":"marquand","order":0}},{"label":"Mendel Music Library","address":"Woolworth
+        Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/132.json","library":{"label":"Mendel
+        Music Library","code":"mendel","order":0}},{"label":"Mudd Manuscript Library","address":"65
+        Olden Street Princeton, NJ 08544","phone_number":"609-258-6345","contact_email":"mudd@princeton.edu","gfa_pickup":"PH","staff_only":false,"pickup_location":false,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/133.json","library":{"label":"Mudd
+        Manuscript Library","code":"mudd","order":0}},{"label":"Stokes Library","address":"Wallace
+        Hall, Lower Level Princeton, NJ 08544","phone_number":"609-258-5455","contact_email":"piaprlib@princeton.edu","gfa_pickup":"PM","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/134.json","library":{"label":"Stokes
+        Library","code":"stokes","order":0}},{"label":"Special Collections","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/135.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Lewis Library","address":"Washington
+        Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/136.json","library":{"label":"Lewis
+        Library","code":"lewis","order":0}},{"label":"Firestone Library","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/137.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"ReCAP ILL","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"IL","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/138.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"East Asian Library. Microforms","address":"Frist
+        Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"QL","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/139.json","library":{"label":"East
+        Asian Library","code":"eastasian","order":0}},{"label":"Lewis Library (Rare)","address":"Washington
+        Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PS","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/140.json","library":{"label":"Lewis
+        Library","code":"lewis","order":0}},{"label":"Marquand Library of Art and
+        Archaeology (Rare)","address":"McCormick Hall Princeton, NJ 08544","phone_number":"609-258-5863","contact_email":"marquand@princeton.edu","gfa_pickup":"PZ","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/141.json","library":{"label":"Marquand
+        Library","code":"marquand","order":0}},{"label":"Mendel Music Library. Sound/Video","address":"Woolworth
+        Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"QK","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/142.json","library":{"label":"Mendel
+        Music Library","code":"mendel","order":0}},{"label":"Firestone Library, Microforms
+        (Firestone Use Only)","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-3252","contact_email":"microfms@princeton.edu","gfa_pickup":"PB","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/143.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Preservation","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/144.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Firestone Circulation Desk","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609 258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/145.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Engineering Library Off-Site
+        Storage","address":"Friend Center for Engineering Education, Princeton, NJ
+        08544","phone_number":" 609-258-3200","contact_email":" englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":false,"digital_location":true,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/146.json","library":{"label":"Engineering
+        Library","code":"engineer","order":0}},{"label":"Technical Services 693","address":"693
+        Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":true,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/147.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Firestone Library, Resource
+        Sharing","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QA","staff_only":true,"pickup_location":true,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/148.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}},{"label":"Technical Services HMT","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":true,"digital_location":false,"url":"https://bibdata-alma-staging.princeton.edu/locations/delivery_locations/149.json","library":{"label":"Firestone
+        Library","code":"firestone","order":0}}]'
+  recorded_at: Wed, 12 May 2021 03:16:46 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/9576880/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:47 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 302 Found
+      Cache-Control:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - eea576c4-ef15-4735-b979-7a59b1f7d506
+      Location:
+      - https://catalog-alma-qa.princeton.edu/catalog/9995768803506421
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.048121'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/catalog/9995768803506421">redirected</a>.</body></html>
+  recorded_at: Wed, 12 May 2021 03:16:47 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9576880/holdings/10024448/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 022c8a9e-dc21-4b3a-9ec6-97daf9ffaf6e
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.553321'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: 'null'
+  recorded_at: Wed, 12 May 2021 03:16:47 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9576880/holdings/10043356/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:48 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.241070'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 62cf334b-f515-40c1-b2b5-e0de1c95d0ed
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: 'null'
+  recorded_at: Wed, 12 May 2021 03:16:48 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/dsp01rr1720547/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:48 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 302 Found
+      Cache-Control:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - cabc3365-32de-4ed4-9a22-a8ef0e421699
+      Location:
+      - https://catalog-alma-qa.princeton.edu/404
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.035641'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/404">redirected</a>.</body></html>
+  recorded_at: Wed, 12 May 2021 03:16:48 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/dsp01rr1720547/holdings/thesis/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 2cd4bf99-5972-4e48-9ff8-a4025fa1daa8
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.578437'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 12 May 2021 03:16:49 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/6377369/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:49 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 302 Found
+      Cache-Control:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 8d93f6d4-6620-4096-bbf3-1d7c7199ebc2
+      Location:
+      - https://catalog-alma-qa.princeton.edu/catalog/9963773693506421
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.060270'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/catalog/9963773693506421">redirected</a>.</body></html>
+  recorded_at: Wed, 12 May 2021 03:16:49 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/6377369/holdings/6366499/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 12 May 2021 03:16:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.260915'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - b5298edf-374c-4233-b44c-c37545291e89
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: 'null'
+  recorded_at: Wed, 12 May 2021 03:16:50 GMT
 recorded_with: VCR 6.0.0

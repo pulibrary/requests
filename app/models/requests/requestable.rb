@@ -122,7 +122,7 @@ module Requests
 
     def in_process?
       return false unless item? && !scsb?
-      item[:status_label] == 'Acquisition technical services' #'In Process' || item[:status] == 'On-Site - In Process'
+      item[:status_label] == 'Acquisition technical services' # 'In Process' || item[:status] == 'On-Site - In Process'
     end
 
     def on_order?

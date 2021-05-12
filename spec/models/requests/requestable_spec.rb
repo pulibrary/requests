@@ -365,7 +365,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('East Asian Library - Rare Books')
+        expect(requestable.location_label).to eq('Special Collections - East Asian Library (Gest) Rare Books')
       end
     end
 

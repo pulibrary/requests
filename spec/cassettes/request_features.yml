@@ -3810,4 +3810,187 @@ http_interactions:
       encoding: UTF-8
       string: 'null'
   recorded_at: Thu, 13 May 2021 02:39:07 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/9999443553506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 03:50:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - a4d4ac92-d01e-4d9c-baea-94d4db3f6cb5
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"68e9d099d1c92c19bb2a9bb29617c768"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.024487'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5OTk0NDM1NTM1MDY0MjEiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9jaXRhdGlvbl9kaXNwbGF5IjpbIkFzc29jaWF0aW9uIGRlcyBlzIFjcml2YWlucyBkdSBTZcyBbmXMgWdhbCJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltcIkFzc29jaWF0aW9uIGRlcyBlzIFjcml2YWlucyBkdSBTZcyBbmXMgWdhbFwiXSxcInRyYW5zbGF0b3JzXCI6W10sXCJlZGl0b3JzXCI6W10sXCJjb21waWxlcnNcIjpbXX0iLCJhdXRob3JfcyI6WyJBc3NvY2lhdGlvbiBkZXMgZcyBY3JpdmFpbnMgZHUgU2XMgW5lzIFnYWwiXSwidW5pZm9ybV90aXRsZV9zIjpbIkXMgWNyaXZhaW4gKERha2FyLCBTZW5lZ2FsIDogMjAxNikiXSwidGl0bGVfZGlzcGxheSI6IkwnZcyBY3JpdmFpbiwgbWFnYXppbmUgbGl0dGVyYWlyZSB0cmltZXN0cmllbC4iLCJ0aXRsZV90IjpbIkwnZcyBY3JpdmFpbiwgbWFnYXppbmUgbGl0dGVyYWlyZSB0cmltZXN0cmllbC4iXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyJMJ2XMgWNyaXZhaW4sIG1hZ2F6aW5lIGxpdHRlcmFpcmUgdHJpbWVzdHJpZWwiXSwiY29tcGlsZWRfY3JlYXRlZF90IjpbIkwnZcyBY3JpdmFpbiwgbWFnYXppbmUgbGl0dGVyYWlyZSB0cmltZXN0cmllbC4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJTZW5lZ2FsIDogQ2Fpc3NlIGRlIFNlY3VyaXRlIFNvY2lhbCBkdSBTZW5lZ2FsLCBbZGF0ZSBvZiBwdWJsaWNhdGlvbiBub3QgaWRlbnRpZmllZF0iXSwicHViX2NyZWF0ZWRfcyI6WyJTZW5lZ2FsIDogQ2Fpc3NlIGRlIFNlY3VyaXRlIFNvY2lhbCBkdSBTZW5lZ2FsLCBbZGF0ZSBvZiBwdWJsaWNhdGlvbiBub3QgaWRlbnRpZmllZF0iXSwicHViX2NpdGF0aW9uX2Rpc3BsYXkiOlsiU2VuZWdhbDogQ2Fpc3NlIGRlIFNlY3VyaXRlIFNvY2lhbCBkdSBTZW5lZ2FsIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMjAxNiJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE2LCJwdWJfZGF0ZV9lbmRfc29ydCI6OTk5OSwiY2F0YWxvZ2VkX3RkdCI6IjIwMjAtMTItMDJUMjE6MzE6MDhaIiwiZm9ybWF0IjpbIkpvdXJuYWwiXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyJ2b2x1bWVzIl0sImRlc2NyaXB0aW9uX3QiOlsidm9sdW1lcyJdLCJudW1iZXJfb2ZfcGFnZXNfY2l0YXRpb25fZGlzcGxheSI6WyJ2b2x1bWVzIl0sImdlb2NvZGVfZGlzcGxheSI6WyJBZnJpY2EiLCJTZW5lZ2FsIl0sImNvbnRpbnVlc19kaXNwbGF5IjpbIkXMgWNyaXZhaW4sIGpvdXJuYWwgY3VsdHVyZWwgcGFuYWZyaWNhaW4iXSwic291cmNlX2Rlc2Nfbm90ZXNfZGlzcGxheSI6WyJEZXNjcmlwdGlvbiBiYXNlZCBvbjogSG9ycyBzZcyBcmllIChwdWJsaXNoZWQgaW4gMjAxNj8pOyB0aXRsZSBmcm9tIGNvdmVyLiIsIkxhdGVzdCBpc3N1ZSBjb25zdWx0ZWQ6IEhvcnMgc2XMgXJpZSAocHVibGlzaGVkIGluIDIwMTY/KS4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiRnJlbmNoIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJmcmUiXSwibGFuZ3VhZ2VfaWFuYV9zIjpbImZyIl0sImxjX3N1YmplY3RfZGlzcGxheSI6WyJBdXRob3JzLCBBZnJpY2Fu4oCUUGVyaW9kaWNhbHMiLCJTZW5lZ2Fs4oCUUGVyaW9kaWNhbHMiXSwic3ViamVjdF9mYWNldCI6WyJBdXRob3JzLCBBZnJpY2Fu4oCUUGVyaW9kaWNhbHMiLCJTZW5lZ2Fs4oCUUGVyaW9kaWNhbHMiLCJQZXJpb2RpY2FscyJdLCJsY2dmdF9zIjpbIlBlcmlvZGljYWxzIl0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNwbGF5Ijoie1wiSXNzdWluZyBib2R5XCI6W1wiQXNzb2NpYXRpb24gZGVzIGXMgWNyaXZhaW5zIGR1IFNlzIFuZcyBZ2FsXCJdfSIsIm90aGVyX3ZlcnNpb25fcyI6WyIwODUyMDAxMSJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjIyMjAyODIyNTYwMDA2NDIxXCI6e1wibG9jYXRpb25fY29kZVwiOlwicmVjYXAkcGFcIixcImxvY2F0aW9uXCI6XCJSZUNBUCAtIFJlbW90ZSBTdG9yYWdlXCIsXCJsaWJyYXJ5XCI6XCJSZUNBUFwiLFwiY2FsbF9udW1iZXJcIjpcIkRUNTQ5IC5FMjc0cSBPdmVyc2l6ZVwiLFwiY2FsbF9udW1iZXJfYnJvd3NlXCI6XCJEVDU0OSAuRTI3NHEgT3ZlcnNpemVcIixcImxvY2F0aW9uX2hhc1wiOltcIkhvcnMgc2XMgXJpZSAoMjAxNilcIl0sXCJpdGVtc1wiOlt7XCJob2xkaW5nX2lkXCI6XCIyMjIwMjgyMjU2MDAwNjQyMVwiLFwiaWRcIjpcIjIzMjAyODIyNTUwMDA2NDIxXCIsXCJzdGF0dXNfYXRfbG9hZFwiOlwiMVwiLFwiZW51bWVyYXRpb25cIjpcIjIwMTZcIixcImJhcmNvZGVcIjpcIjMyMTAxMDk4NzIyODQ0XCIsXCJjb3B5X251bWJlclwiOlwiMVwifV19fSIsInJlY2FwX25vdGVzX2Rpc3BsYXkiOlsiIC0gIl0sImxvY2F0aW9uX2NvZGVfcyI6WyJyZWNhcCRwYSJdLCJsb2NhdGlvbiI6WyJSZUNBUCJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIlJlQ0FQIC0gUmVtb3RlIFN0b3JhZ2UiXSwiYWR2YW5jZWRfbG9jYXRpb25fcyI6WyJyZWNhcCRwYSIsIlJlQ0FQIl0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiRFQ1NDkgLkUyNzRxIE92ZXJzaXplIl0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkRUNTQ5IC5FMjc0cSBPdmVyc2l6ZSJdLCJjYWxsX251bWJlcl9sb2NhdG9yX2Rpc3BsYXkiOlsiRFQ1NDkgLkUyNzRxIl0sIl92ZXJzaW9uXyI6MTY5NzAwMzc5ODU3MDk5MTYxNiwidGltZXN0YW1wIjoiMjAyMS0wNC0xNFQwODoyODo1Ny40NzRaIn0=
+  recorded_at: Thu, 13 May 2021 03:50:52 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/recap$pa.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 03:50:52 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 28a4a49f-09c5-4fed-9ebd-18e2bf5a67ab
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"e2db5d427242f9c4956122281c5d0973"
+      X-Runtime:
+      - '0.015899'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Remote Storage","code":"recap$pa","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"recap_rmt","library":{"label":"ReCAP","code":"recap","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Plasma
+        Physics Library","address":"Forrestal Campus Princeton, NJ 08544","phone_number":"609-243-3565","contact_email":"ppllib@princeton.edu","gfa_pickup":"PQ","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Architecture
+        Library","address":"School of Architecture Building, Second Floor Princeton,
+        NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"East
+        Asian Library","address":"Frist Campus Center, Room 317 Princeton, NJ 08544","phone_number":"609-258-3182","contact_email":"gestcirc@princeton.edu","gfa_pickup":"PL","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Engineering
+        Library","address":"Friend Center for Engineering Education Princeton, NJ
+        08544","phone_number":"609-258-3200","contact_email":"englib@princeton.edu","gfa_pickup":"PT","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Mendel
+        Music Library","address":"Woolworth Center Princeton, NJ 08544","phone_number":"609-258-3230","contact_email":"muslib@princeton.edu","gfa_pickup":"PK","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Stokes
+        Library","address":"Wallace Hall, Lower Level Princeton, NJ 08544","phone_number":"609-258-5455","contact_email":"piaprlib@princeton.edu","gfa_pickup":"PM","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Lewis
+        Library","address":"Washington Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true},{"label":"ReCAP
+        ILL","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"IL","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Preservation","address":"One
+        Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QP","staff_only":true,"pickup_location":false,"digital_location":false},{"label":"Technical
+        Services 693","address":"693 Alexander Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QT","staff_only":true,"pickup_location":true,"digital_location":false},{"label":"Firestone
+        Library, Resource Sharing","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"QA","staff_only":true,"pickup_location":true,"digital_location":false},{"label":"Technical
+        Services HMT","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"catalogn@princeton.edu","gfa_pickup":"QC","staff_only":true,"pickup_location":true,"digital_location":false}]}'
+  recorded_at: Thu, 13 May 2021 03:50:52 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9999443553506421/holdings/22202822560006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 03:50:54 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"0ae26885b61d522980fcce5cde9764c6"
+      X-Runtime:
+      - '1.622721'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - a5bfeb00-811b-4cc1-a044-9f402abd113f
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101098722844","id":"23202822550006421","holding_id":"22202822560006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"pa","pickup_location_code":"pa","location":"recap$pa","label":"ReCAP","description":"2016","enum_display":"2016","chron_display":"","in_temp_library":false}]'
+  recorded_at: Thu, 13 May 2021 03:50:54 GMT
 recorded_with: VCR 6.0.0

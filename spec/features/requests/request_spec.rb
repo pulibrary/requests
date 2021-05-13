@@ -48,7 +48,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     context 'all patrons' do
       describe 'When unauthenticated patron visits a request item', js: true do
         it "displays three authentication options" do
-          visit '/requests/9944355?mfhd=9757511'
+          visit '/requests/9999443553506421?mfhd=22202822560006421'
           expect(page).to have_content(I18n.t('requests.account.netid_login_msg'))
           expect(page).not_to have_content(I18n.t('requests.account.barcode_login_msg'))
           expect(page).not_to have_content(I18n.t('requests.account.other_user_login_msg'))
@@ -79,7 +79,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     context 'unauthenticated patron' do
       describe 'When visiting a request item without logging in', js: true do
         it 'allows guest patrons to identify themselves and view the form' do
-          visit '/requests/9944355?mfhd=9757511'
+          visit '/requests/9999443553506421?mfhd=22202822560006421'
           pending "Guest have no access during COVID-19 pandemic"
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
@@ -103,7 +103,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # TODO: Activate test when campus has re-opened
         it 'allows guest patrons to request a physical recap item' do
           pending "Guest have no access during COVID-19 pandemic"
-          visit '/requests/9944355?mfhd=9757511'
+          visit '/requests/9999443553506421?mfhd=22202822560006421'
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'

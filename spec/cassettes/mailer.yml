@@ -2,118 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: https://bibdata.princeton.edu/locations/holding_locations/f.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.0.0
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.17.6
-      Date:
-      - Wed, 18 Mar 2020 20:13:46 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      Etag:
-      - W/"250b12294d5b9710e9827751c996ca99"
-      X-Runtime:
-      - '0.009157'
-      Access-Control-Request-Method:
-      - GET
-      X-Request-Id:
-      - 69ddd055-f269-4b59-bca9-dca83585e2b0
-      X-Powered-By:
-      - Phusion Passenger 6.0.4
-    body:
-      encoding: UTF-8
-      string: '{"label":"","code":"f","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"Firestone
-        Library","code":"firestone","order":1},"holding_library":null,"hours_location":{"label":"Firestone
-        Library - Building and Circulation/Reserves Hours","code":"firestone"},"delivery_locations":[{"label":"Firestone
-        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-  recorded_at: Wed, 18 Mar 2020 20:13:46 GMT
-- request:
-    method: get
-    uri: https://bibdata.princeton.edu/locations/holding_locations/c.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.0.0
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.17.6
-      Date:
-      - Wed, 18 Mar 2020 20:13:47 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      Etag:
-      - W/"36424b67bf9d8cf7afbd86fc55d51a7b"
-      X-Runtime:
-      - '0.008475'
-      Access-Control-Request-Method:
-      - GET
-      X-Request-Id:
-      - 7cefac71-e04e-4c68-8e91-63496fa803ab
-      X-Powered-By:
-      - Phusion Passenger 6.0.4
-    body:
-      encoding: UTF-8
-      string: '{"label":"","code":"c","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":false,"always_requestable":false,"circulates":true,"library":{"label":"East
-        Asian Library","code":"eastasian","order":2},"holding_library":null,"hours_location":{"label":"East
-        Asian Library","code":"eastasian"},"delivery_locations":[]}'
-  recorded_at: Wed, 18 Mar 2020 20:13:47 GMT
-- request:
-    method: get
     uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/c.json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.3.0
+      - Faraday v1.4.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -126,7 +21,7 @@ http_interactions:
       Server:
       - nginx/1.19.10
       Date:
-      - Wed, 12 May 2021 03:13:05 GMT
+      - Thu, 13 May 2021 02:37:59 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -135,16 +30,16 @@ http_interactions:
       - keep-alive
       Status:
       - 404 Not Found
-      X-Request-Id:
-      - 37ced846-7ae0-4682-baac-b08491a397c4
       X-Runtime:
-      - '0.010372'
+      - '0.007376'
+      X-Request-Id:
+      - 4399b503-2b8b-4525-b589-cce72b9612f7
       X-Powered-By:
       - Phusion Passenger 6.0.7
     body:
       encoding: UTF-8
       string: '{"status":404,"error":"Not Found"}'
-  recorded_at: Wed, 12 May 2021 03:13:05 GMT
+  recorded_at: Thu, 13 May 2021 02:38:00 GMT
 - request:
     method: get
     uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/f.json
@@ -153,7 +48,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.3.0
+      - Faraday v1.4.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -166,7 +61,7 @@ http_interactions:
       Server:
       - nginx/1.19.10
       Date:
-      - Wed, 12 May 2021 03:13:06 GMT
+      - Thu, 13 May 2021 02:38:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -175,14 +70,14 @@ http_interactions:
       - keep-alive
       Status:
       - 404 Not Found
-      X-Runtime:
-      - '0.009290'
       X-Request-Id:
-      - d9302ffc-0123-4767-ba4d-6e48f877da9f
+      - 4f419c16-59ef-4ced-82b4-fef38cd1a2f0
+      X-Runtime:
+      - '0.008712'
       X-Powered-By:
       - Phusion Passenger 6.0.7
     body:
       encoding: UTF-8
       string: '{"status":404,"error":"Not Found"}'
-  recorded_at: Wed, 12 May 2021 03:13:06 GMT
+  recorded_at: Thu, 13 May 2021 02:38:00 GMT
 recorded_with: VCR 6.0.0

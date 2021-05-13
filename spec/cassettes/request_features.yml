@@ -4162,4 +4162,229 @@ http_interactions:
       string: '[{"barcode":"32101095798938","id":"23131438400006421","holding_id":"22131438430006421","copy_number":"0","status":"Available","status_label":"Item
         in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"pa","pickup_location_code":"pa","location":"recap$pa","label":"ReCAP","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
   recorded_at: Thu, 13 May 2021 04:12:30 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/9948884943506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 04:48:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - c0634580-8187-4e4e-8c48-7e2aa5e80230
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"54396df2975fd78274a0ada4d986ed78"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.021814'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5NDg4ODQ5NDM1MDY0MjEiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIlNhbmJvcm4gTWFwIENvbXBhbnkiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiU2FuYm9ybiBNYXAgQ29tcGFueSIsIkxpYnJhcnkgb2YgQ29uZ3Jlc3MiXSwiYXV0aG9yX3JvbGVzXzFkaXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXCJMaWJyYXJ5IG9mIENvbmdyZXNzXCJdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIlNhbmJvcm4gTWFwIENvbXBhbnlcIn0iLCJhdXRob3JfcyI6WyJTYW5ib3JuIE1hcCBDb21wYW55IiwiTGlicmFyeSBvZiBDb25ncmVzcy4gTWFwIERpdmlzaW9uIl0sIm1hcmNfcmVsYXRvcl9kaXNwbGF5IjpbIkF1dGhvciJdLCJ0aXRsZV9kaXNwbGF5IjoiRnJlZWhvbGQsIE4uIEouIFttYXBdLiIsInRpdGxlX3QiOlsiRnJlZWhvbGQsIE4uIEouIFttYXBdLiJdLCJ0aXRsZV9jaXRhdGlvbl9kaXNwbGF5IjpbIkZyZWVob2xkLCBOLiBKLiJdLCJjb21waWxlZF9jcmVhdGVkX3QiOlsiRnJlZWhvbGQsIE4uIEouIFttYXBdLiJdLCJwdWJfY3JlYXRlZF9kaXNwbGF5IjpbIk5ldyBZb3JrIDogU2FuYm9ybiBNYXAgXHUwMDI2IFB1Ymxpc2hpbmcgQ28uLCBMaW1pdGVkLCAxODg1LiJdLCJwdWJfY3JlYXRlZF9zIjpbIk5ldyBZb3JrIDogU2FuYm9ybiBNYXAgXHUwMDI2IFB1Ymxpc2hpbmcgQ28uLCBMaW1pdGVkLCAxODg1LiJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJOZXcgWW9yazogU2FuYm9ybiBNYXAgXHUwMDI2IFB1Ymxpc2hpbmcgQ28uLCBMaW1pdGVkIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMTg4NSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoxODg1LCJjYXRhbG9nZWRfdGR0IjoiMjAyMC0xMi0wMlQyMTowODo0NVoiLCJmb3JtYXQiOlsiTWFwIl0sImVsZWN0cm9uaWNfYWNjZXNzXzFkaXNwbGF5Ijoie1wiaHR0cHM6Ly9jYXRhbG9nLnByaW5jZXRvbi5lZHUvY2F0YWxvZy80ODg4NDk0I3ZpZXdcIjpbXCJEaWdpdGFsIGNvbnRlbnRcIl0sXCJpaWlmX21hbmlmZXN0X3BhdGhzXCI6e1wiaHR0cDovL2Fya3MucHJpbmNldG9uLmVkdS9hcms6Lzg4NDM1L241ODN4eDkxeFwiOlwiaHR0cHM6Ly9maWdneS5wcmluY2V0b24uZWR1L2NvbmNlcm4vc2Nhbm5lZF9tYXBzL2JhMjhkYTFhLTBiMmQtNDRhMC1iNDU1LTIyYjVmZTc1MzJmMy9tYW5pZmVzdFwifX0iLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjEgbWFwIG9uIDMgc2hlZXRzIDogY29sLiA7IGVhY2ggNjQgeCA1NCBjbS4iXSwiZGVzY3JpcHRpb25fdCI6WyJTY2FsZSBbY2EuIDE6NjAwXS4gNTAgZnQuIHRvIGFuIGluY2guIiwiMSBtYXAgb24gMyBzaGVldHMgOiBjb2wuIDsgZWFjaCA2NCB4IDU0IGNtLiJdLCJudW1iZXJfb2ZfcGFnZXNfY2l0YXRpb25fZGlzcGxheSI6WyIxIG1hcCBvbiAzIHNoZWV0cyJdLCJnZW9jb2RlX2Rpc3BsYXkiOlsiTmV3IEplcnNleSJdLCJzY2FsZV9kaXNwbGF5IjpbIlNjYWxlIFtjYS4gMTo2MDBdLiA1MCBmdC4gdG8gYW4gaW5jaC4iXSwibm90ZXNfZGlzcGxheSI6WyJcIkphbi4gMTg4NS5cIiIsIkluY2x1ZGVzIGtleSBhbmQgdGV4dC4iLCJOb3J0aCBvcmllbnRlZCB0b3dhcmQgdXBwZXIgbGVmdC4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiRW5nbGlzaCJdLCJsYW5ndWFnZV9jb2RlX3MiOlsiZW5nIl0sImxhbmd1YWdlX2lhbmFfcyI6WyJlbiJdLCJwcm92ZW5hbmNlX2Rpc3BsYXkiOlsiSGlzdG9yaWMgTWFwcyBjb3B5IGhhcyBzdGFtcCBvZiBNYXAgRGl2aXNpb24sIExpYnJhcnkgb2YgQ29uZ3Jlc3MsIGRhdGVkIE1hci4gNiwgMTg4NS4iXSwibGNfc3ViamVjdF9kaXNwbGF5IjpbIlJlYWwgcHJvcGVydHnigJROZXcgSmVyc2V54oCURnJlZWhvbGTigJRNYXBzIiwiRnJlZWhvbGQgKE4uSi4p4oCUTWFwcyJdLCJzdWJqZWN0X2ZhY2V0IjpbIlJlYWwgcHJvcGVydHnigJROZXcgSmVyc2V54oCURnJlZWhvbGTigJRNYXBzIiwiRnJlZWhvbGQgKE4uSi4p4oCUTWFwcyIsIkZpcmUgaW5zdXJhbmNlIG1hcHPigJROZXcgSmVyc2V54oCURnJlZWhvbGTigJQxODg1IiwiTWFwc+KAlE5ldyBKZXJzZXnigJRGcmVlaG9sZOKAlDE4ODUiLCJNYXBzIl0sImxjZ2Z0X3MiOlsiTWFwcyJdLCJhYXRfcyI6WyJGaXJlIGluc3VyYW5jZSBtYXBz4oCUTmV3IEplcnNleeKAlEZyZWVob2xk4oCUMTg4NSIsIk1hcHPigJROZXcgSmVyc2V54oCURnJlZWhvbGTigJQxODg1Il0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNwbGF5Ijoie1wiRm9ybWVyIG93bmVyXCI6W1wiTGlicmFyeSBvZiBDb25ncmVzcy4gTWFwIERpdmlzaW9uXCJdfSIsImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wiMjIxOTc3ODI5MjAwMDY0MjFcIjp7XCJsb2NhdGlvbl9jb2RlXCI6XCJyZWNhcCR4cFwiLFwibG9jYXRpb25cIjpcIlJlQ0FQIC0gSGlzdG9yaWMgTWFwcyBPZmYtU2l0ZSBTdG9yYWdlXCIsXCJsaWJyYXJ5XCI6XCJSZUNBUFwiLFwiY2FsbF9udW1iZXJcIjpcIkhNQzA0IChGcmVlaG9sZClcIixcImNhbGxfbnVtYmVyX2Jyb3dzZVwiOlwiSE1DMDQgKEZyZWVob2xkKVwiLFwiaXRlbXNcIjpbe1wiaG9sZGluZ19pZFwiOlwiMjIxOTc3ODI5MjAwMDY0MjFcIixcImlkXCI6XCIyMzE5Nzc4Mjg5MDAwNjQyMVwiLFwic3RhdHVzX2F0X2xvYWRcIjpcIjFcIixcImVudW1lcmF0aW9uXCI6XCJTaGVldCAzXCIsXCJiYXJjb2RlXCI6XCIzMjEwMTA1NDA3ODYxMVwiLFwiY29weV9udW1iZXJcIjpcIjFcIn0se1wiaG9sZGluZ19pZFwiOlwiMjIxOTc3ODI5MjAwMDY0MjFcIixcImlkXCI6XCIyMzE5Nzc4MjkwMDAwNjQyMVwiLFwic3RhdHVzX2F0X2xvYWRcIjpcIjFcIixcImVudW1lcmF0aW9uXCI6XCJTaGVldCAyXCIsXCJiYXJjb2RlXCI6XCIzMjEwMTA1NDA3ODYwM1wiLFwiY29weV9udW1iZXJcIjpcIjFcIn0se1wiaG9sZGluZ19pZFwiOlwiMjIxOTc3ODI5MjAwMDY0MjFcIixcImlkXCI6XCIyMzE5Nzc4MjkxMDAwNjQyMVwiLFwic3RhdHVzX2F0X2xvYWRcIjpcIjFcIixcImVudW1lcmF0aW9uXCI6XCJTaGVldCAxXCIsXCJiYXJjb2RlXCI6XCIzMjEwMTA1NDA3ODU5NVwiLFwiY29weV9udW1iZXJcIjpcIjFcIn1dfX0iLCJyZWNhcF9ub3Rlc19kaXNwbGF5IjpbIiAtICJdLCJsb2NhdGlvbl9jb2RlX3MiOlsicmVjYXAkeHAiXSwibG9jYXRpb24iOlsiUmVDQVAiLCJTcGVjaWFsIENvbGxlY3Rpb25zIl0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiUmVDQVAgLSBIaXN0b3JpYyBNYXBzIE9mZi1TaXRlIFN0b3JhZ2UiXSwiYWR2YW5jZWRfbG9jYXRpb25fcyI6WyJyZWNhcCR4cCIsIlJlQ0FQIiwiU3BlY2lhbCBDb2xsZWN0aW9ucyJdLCJuYW1lX3RpdGxlX2Jyb3dzZV9zIjpbIlNhbmJvcm4gTWFwIENvbXBhbnkuIEZyZWVob2xkLCBOLiBKLiJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIkhNQzA0IChGcmVlaG9sZCkgIl0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkhNQzA0IChGcmVlaG9sZCkgIl0sImNhbGxfbnVtYmVyX2xvY2F0b3JfZGlzcGxheSI6WyJITUMwNCAoRnJlZWhvbGQpIl0sImVsZWN0cm9uaWNfcG9ydGZvbGlvX3MiOlsie1wiZGVzY1wiOm51bGwsXCJ0aXRsZVwiOm51bGwsXCJ1cmxcIjpcImh0dHBzOi8vbmEwNy5hbG1hLmV4bGlicmlzZ3JvdXAuY29tL3ZpZXcvdXJlc29sdmVyLzAxUFJJX0lOU1Qvb3BlbnVybD91Lmlnbm9yZV9kYXRlX2NvdmVyYWdlPXRydWVcdTAwMjZwb3J0Zm9saW9fcGlkPTUzMjc4MTkwMDMwMDA2NDIxXHUwMDI2Rm9yY2VfZGlyZWN0PXRydWVcIixcInN0YXJ0XCI6bnVsbCxcImVuZFwiOlwibGF0ZXN0XCJ9Il0sIl92ZXJzaW9uXyI6MTY5Njk4NjA1MzM1MDUyMjg4MCwidGltZXN0YW1wIjoiMjAyMS0wNC0xNFQwMzo0Njo1NC4zMDhaIn0=
+  recorded_at: Thu, 13 May 2021 04:48:09 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/recap$xp.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 04:48:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 00a88527-d1c4-4909-b9fb-4bf6bf6cd939
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"6b499c29087db96217ee1498c83cde2f"
+      X-Runtime:
+      - '0.044080'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Historic Maps Off-Site Storage","code":"recap$xp","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"remote_storage":"","library":{"label":"ReCAP","code":"recap","order":0},"holding_library":{"label":"Special
+        Collections","code":"rare","order":0},"hours_location":null,"delivery_locations":[{"label":"Special
+        Collections","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true}]}'
+  recorded_at: Thu, 13 May 2021 04:48:09 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9948884943506421/holdings/7426272/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 04:48:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"4f53cda18c2baa0c0354bb5f9a3ecbe5"
+      X-Runtime:
+      - '2.222157'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - f83c470e-e3bf-4f54-a14c-7fdcf5336983
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: "[]"
+  recorded_at: Thu, 13 May 2021 04:48:12 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9948884943506421/holdings/22197782920006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 13 May 2021 04:48:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 5da0e451-c7ec-4055-8ded-0bbbbc93f447
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"33f2b996aa4261b64068bfd8303f5b6c"
+      X-Runtime:
+      - '2.391153'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101054078611","id":"23197782890006421","holding_id":"22197782920006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Closed","pickup_location_id":"xp","pickup_location_code":"xp","location":"recap$xp","label":"ReCAP","description":"Sheet
+        3","enum_display":"Sheet 3","chron_display":"","in_temp_library":false},{"barcode":"32101054078603","id":"23197782900006421","holding_id":"22197782920006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Closed","pickup_location_id":"xp","pickup_location_code":"xp","location":"recap$xp","label":"ReCAP","description":"Sheet
+        2","enum_display":"Sheet 2","chron_display":"","in_temp_library":false},{"barcode":"32101054078595","id":"23197782910006421","holding_id":"22197782920006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Closed","pickup_location_id":"xp","pickup_location_code":"xp","location":"recap$xp","label":"ReCAP","description":"Sheet
+        1","enum_display":"Sheet 1","chron_display":"","in_temp_library":false}]'
+  recorded_at: Thu, 13 May 2021 04:48:45 GMT
 recorded_with: VCR 6.0.0

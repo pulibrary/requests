@@ -342,6 +342,7 @@ module Requests
       # end
 
       def load_item_for_holding(holding_id:, item_info:)
+        # new check needed here
         if item_info[:more_items] == false
           if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
             [item_info]
@@ -353,7 +354,8 @@ module Requests
           end
         else
           ## we don't need to call this again
-          items_to_symbols(items_by_mfhd(@system_id, holding_id))
+          # items_to_symbols(items_by_mfhd(@system_id, holding_id))
+          items_to_symbols([item_info])
         end
       end
 

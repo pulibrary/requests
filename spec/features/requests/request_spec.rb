@@ -14,8 +14,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:on_shelf_no_items_id) { '308?mfhd=341' }
     let(:temp_item_id) { '4815239' }
     let(:temp_id_mfhd) { '5018096' }
-    let(:iiif_manifest_item) { '4888494' }
-    let(:mutiple_items) { '7917192' }
+    let(:mutiple_items) { '9979171923506421' }
 
     let(:patron_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/Users/jstudent" }
     let(:transaction_url) { "https://lib-illiad.princeton.edu/ILLiadWebPlatform/transaction" }
@@ -353,11 +352,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
-        end
-
-        it 'displays an ark link for a plum item' do
-          visit "/requests/#{iiif_manifest_item}?mfhd=7426272"
-          expect(page).to have_link('Digital content', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
         end
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
@@ -1360,11 +1354,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
-        end
-
-        it 'displays an ark link for a plum item' do
-          visit "/requests/#{iiif_manifest_item}?mfhd=7426272"
-          expect(page).to have_link('Digital content', href: "https://catalog.princeton.edu/catalog/#{iiif_manifest_item}#view")
         end
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }

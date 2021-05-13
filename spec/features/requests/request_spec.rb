@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'request', vcr: { cassette_name: 'request_features', record: :new_episodes }, type: :feature do
   # rubocop:disable RSpec/MultipleExpectations
   describe "request form" do
-    let(:voyager_id) { '9493318?mfhd=9351967' }
+    let(:voyager_id) { '9994933183506421?mfhd=22131438430006421' }
     let(:online_id) { '11169709?mfhd=10878427' }
     let(:thesis_id) { 'dsp01rr1720547' }
     let(:in_process_id) { '10144698?mfhd=9933878' }
@@ -218,7 +218,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allow CAS patrons to request an available ReCAP item.' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9493318", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
+            .with(body: hash_including(author: "", bibId: "9994933183506421", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
                                        requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           stub_request(:post, Requests.config[:scsb_base])
@@ -228,7 +228,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Electronic Delivery'
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
-          choose('requestable__delivery_mode_7303228_print') # chooses 'print' radio button
+          choose('requestable__delivery_mode_23131438400006421_print') # chooses 'print' radio button
           select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(a_request(:post, scsb_url)).to have_been_made

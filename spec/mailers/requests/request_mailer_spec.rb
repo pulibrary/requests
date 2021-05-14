@@ -1159,7 +1159,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
-      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (F) PS3566.I428 A6 2015")
+      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (FIRESTONE$STACKS) PS3566.I428 A6 2015")
       expect(mail.to).to eq([I18n.t('requests.on_shelf.email')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
@@ -1215,7 +1215,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
-      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (C) PL2727.S2 C574 1998")
+      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (EASTASIAN$CJK) PL2727.S2 C574 1998")
       expect(mail.to).to eq(["gestcirc@princeton.edu"])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end

@@ -89,7 +89,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows guest patrons to see aeon requests' do
-          visit '/requests/336525?mfhd=367883'
+          visit '/requests/993365253506421?mfhd=22220245570006421'
           pending "Guest have no access during COVID-19 pandemic"
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
@@ -147,7 +147,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows guest patrons to request Aeon items' do
           pending "Guest have no access during COVID-19 pandemic"
-          visit '/requests/2167669'
+          visit '/requests/9921676693506421'
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
@@ -157,7 +157,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'prohibits guest patrons from using Borrow Direct, ILL, and Recall on Missing items' do
           pending "Guest have no access during COVID-19 pandemic"
-          visit '/requests/1788796?mfhd=2053005'
+          visit '/requests/9917887963506421?mfhd=22196156490006421'
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
@@ -168,7 +168,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # TODO: Activate test when campus has re-opened
         it 'allows guests to request from Annex, but not from Firestone in mixed holding' do
           pending "Guest have no access during COVID-19 pandemic"
-          visit '/requests/2286894'
+          visit '/requests/9922868943506421'
           click_link(I18n.t('requests.account.other_user_login_msg'))
           fill_in 'request_email', with: 'name@email.com'
           fill_in 'request_user_name', with: 'foobar'
@@ -190,8 +190,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
       let(:recap_params) do
         {
-          Bbid: "9493318",
-          barcode: "22101008199999",
+          Bbid: "9994933183506421",
+          barcode: "23131438400006421",
           item: "7303228",
           lname: "Student",
           delivery: "p",
@@ -358,7 +358,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows patrons to request a physical recap item' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9944355", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
+            .with(body: hash_including(author: "", bibId: "9999443553506421", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
                                        itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9944355?mfhd=9757511'
@@ -386,7 +386,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # end
 
         it 'allows patrons to request a Forrestal annex' do
-          visit '/requests/945550?mfhd=1086817'
+          visit '/requests/999455503506421?mfhd=2221072930006421'
           choose('requestable__delivery_mode_1184074_print') # chooses 'print' radio button
           # todo: should we still have the text?
           # expect(page).to have_content 'Item offsite at Forrestal Annex. Requests for pick-up'
@@ -437,7 +437,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows patrons to request a Lewis' do
           stub_voyager_hold_success('7053307', '6322174', '77777')
-          visit '/requests/7053307?mfhd=6934399'
+          visit '/requests/9970533073506421?mfhd=22214952030006421'
           expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           check 'requestable_selected_6322174'
@@ -464,7 +464,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows patrons to request a on-order' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
-          visit '/requests/11416426?mfhd=11107640'
+          visit '/requests/99114164263506421?mfhd=22138658470006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pick_up')
@@ -474,7 +474,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows patrons to ask for digitizing on non circulating items' do
-          visit '/requests/9594840?mfhd=9436228'
+          visit '/requests/9995948403506421?mfhd=2258775160006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
@@ -486,7 +486,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/578830'
+          visit '/requests/995788303506421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pick_up')
@@ -495,7 +495,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows filtering items by mfhd' do
-          visit '/requests/7917192?mfhd=7699134'
+          visit '/requests/9979171923506421?mfhd=22230315710006421'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).not_to have_content 'Copy 2'
@@ -503,7 +503,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'show a fill in form if the item is an enumeration (Journal ect.) and choose a print copy' do
-          visit 'requests/10574699?mfhd=10320354'
+          visit 'requests/99105746993506421?mfhd=22217601660006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
           within(".user-supplied-input") do
@@ -532,12 +532,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Mefisto : rivista di medicina, filosofia, storia", "PhotoItemPublisher" => "", "ISSN" => "", "CallNumber" => "R131.A1 M38", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/10574699", "PhotoJournalYear" => "2017", "PhotoJournalVolume" => "ABC ZZZ",
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Mefisto : rivista di medicina, filosofia, storia", "PhotoItemPublisher" => "", "ISSN" => "", "CallNumber" => "R131.A1 M38", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/99105746993506421", "PhotoJournalYear" => "2017", "PhotoJournalVolume" => "ABC ZZZ",
                                        "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1028553183", "DocumentType" => "Article", "Location" => "Firestone Library", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit 'requests/10574699?mfhd=10320354'
+          visit 'requests/99105746993506421?mfhd=22217601660006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
           within(".user-supplied-input") do
@@ -564,7 +564,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/11780965?mfhd=11443781'
+          visit '/requests/99117809653506421?mfhd=22203397490006421'
           choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t('requests.recap_edd.brief_msg')
           expect(page).to have_content 'Electronic Delivery'
@@ -580,7 +580,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it "shows items in the Architecture Library as available" do
           stub_voyager_hold_success('11787671', '8307797', '77777')
-          visit '/requests/11787671?mfhd=11449656'
+          visit '/requests/99117876713506421?mfhd=22196862260006421'
           # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Physical Item Delivery'
@@ -602,9 +602,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it "allows requests of recap pick-up only items" do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: nil, bibId: "11578319", callNumber: "DVD", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["32101108035435"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "Chernobyl : a 5-part miniseries", username: "jstudent", volume: nil))
+            .with(body: hash_including(author: nil, bibId: "99115783193506421", callNumber: "DVD", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["32101108035435"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "Chernobyl : a 5-part miniseries", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/11578319?mfhd=11259604'
+          visit '/requests/99115783193506421?mfhd=22155047580006421'
           expect(page).not_to have_content 'Item is not requestable.'
           expect(page).not_to have_content 'Electronic Delivery'
           expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
@@ -622,7 +622,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows guest patrons to access Online items' do
-          visit '/requests/9994692?mfhd=9800910'
+          visit '/requests/9999946923506421?mfhd=9800910'
           expect(page).to have_content 'www.jstor.org'
         end
 
@@ -653,7 +653,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/1788796?mfhd=2053005'
+          visit '/requests/9917887963506421?mfhd=22196156490006421'
           expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_2114223')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -681,7 +681,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/1788796?mfhd=2053005'
+          visit '/requests/9917887963506421?mfhd=22196156490006421'
           expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_2114223')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -704,7 +704,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/1505778?mfhd=1729547'
+          visit '/requests/9915057783506421?mfhd=2259945160006421'
           expect(page).to have_content 'Request via Partner Library'
           check('requestable_selected_1807896')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -719,7 +719,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows cas user to request from Annex or Firestone in mixed holding' do
-          visit '/requests/2286894?mfhd=2576882'
+          visit '/requests/9922868943506421?mfhd=22109192590006421'
           expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_user_supplied_enum_2576882'
           within('#request_user_supplied_2576882') do
@@ -736,12 +736,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
-                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
+                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9941274093506421", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
           stub_clancy_status(barcode: "32101072349515")
-          visit '/requests/4127409?mfhd=4403772'
+          visit '/requests/9941274093506421?mfhd=22197827810006421'
           choose('requestable__delivery_mode_4403772_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t('requests.marquand_edd.brief_msg')
           expect(page).to have_content 'Electronic Delivery'
@@ -767,7 +767,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows an in processitem to be requested from marquand' do
           stub_clancy_status(barcode: "32101097503864")
-          visit 'requests/10137841?mfhd=9927777'
+          visit 'requests/99101378413506421?mfhd=22201004360006421'
           expect(page).to have_content 'In Process materials are typically available in several business days'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           confirm_email = ActionMailer::Base.deliveries.last
@@ -788,7 +788,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             stub_request(:get, patron_url)
               .to_return(status: 200, body: responses[:disavowed], headers: {})
             stub_clancy_status(barcode: "32101072349515")
-            visit '/requests/4127409?mfhd=4403772'
+            visit '/requests/9941274093506421?mfhd=22197827810006421'
             expect(page).to have_content 'Electronic Delivery'
             choose('requestable__delivery_mode_4403772_edd') # chooses 'edd' radio button
             fill_in "Article/Chapter Title", with: "ABC"
@@ -805,11 +805,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Edwards, Ruth Dudley", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "James Connolly", "PhotoItemPublisher" => "Dublin: Gill and Macmillan", "ISSN" => "9780717111121 9780717111114", "CallNumber" => "DA965.C7 E36 1981", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/162632", "PhotoJournalYear" => "1981", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "8391816", "DocumentType" => "Book", "Location" => "Online - HathiTrust Emergency Temporary Access", "PhotoArticleTitle" => "ABC"))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Edwards, Ruth Dudley", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "James Connolly", "PhotoItemPublisher" => "Dublin: Gill and Macmillan", "ISSN" => "9780717111121 9780717111114", "CallNumber" => "DA965.C7 E36 1981", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/991626323506421", "PhotoJournalYear" => "1981", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "8391816", "DocumentType" => "Book", "Location" => "Online - HathiTrust Emergency Temporary Access", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/162632?mfhd=179618'
+          visit '/requests/991626323506421?mfhd=2239424020006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access DA965.C7 E36 1981'
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
@@ -831,7 +831,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "7599", callNumber: "PJ3002 .S4", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101073604215"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Semitistik", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/7599?mfhd=8413'
+          visit '/requests/9975993506421?mfhd=22153200840006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'ReCAP- HathiTrust Emergency Temporary Access ReCAP PJ3002 .S4'
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
@@ -877,7 +877,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it "allows a columbia item that is open access to be picked up or digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=502557695")
-            .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"3863391","status":"ALLOW","origin":"CUL"}]')
+            .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"9938633913506421","status":"ALLOW","origin":"CUL"}]')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-4634001", callNumber: "4596 2907.88 1901", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU51481294"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Chong wen men shang shui ya men xian xing shui ze. 崇文門 商稅 衙門 現行 稅則.", username: "jstudent", volume: ""))
@@ -903,7 +903,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it "allows a columbia item that is ETAS to only be digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=19774500")
-            .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"1000066","status":"DENY","origin":"CUL"}]')
+            .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"99310000663506421","status":"DENY","origin":"CUL"}]')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-2879206", callNumber: "ML3477 .G74 1989g", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU61436348"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Let's face the music : the golden age of popular song", username: "jstudent", volume: ""))
@@ -931,7 +931,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it "places a hold and sends emails for a marquand in library use item" do
           stub_voyager_hold_success('5636487', '5214248', '77777')
           stub_clancy_status(barcode: "32101072349515")
-          visit '/requests/5636487?mfhd=5744248'
+          visit '/requests/9956364873506421?mfhd=22186505500006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Available for In Library Use'
           expect(page).to have_content 'Electronic Delivery'
@@ -957,7 +957,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_voyager_hold_success('5636487', '5214248', '77777')
           stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
           stub_clancy_post(barcode: "32101072349515")
-          visit '/requests/5636487?mfhd=5744248'
+          visit '/requests/9956364873506421?mfhd=22186505500006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Available for In Library Use'
@@ -991,7 +991,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .with(body: hash_including("Note" => "Digitization Request Marquand Item at Clancy (Unavailable)"))
             .to_return(status: 200, body: responses[:note_created], headers: {})
           stub_clancy_status(barcode: "32101072349515", status: "Item In Accession Process")
-          visit '/requests/5636487?mfhd=5744248'
+          visit '/requests/9956364873506421?mfhd=22186505500006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).not_to have_content 'Available for In Library Use'
           expect(page).to have_content 'Electronic Delivery'
@@ -1025,13 +1025,13 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Cambridge, Mass: Harvard University P...", "ISSN" => "9780674030930", "CallNumber" => "N7668.D6 J64 2008", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487",
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Cambridge, Mass: Harvard University P...", "ISSN" => "9780674030930", "CallNumber" => "N7668.D6 J64 2008", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9956364873506421",
                                        "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "213495319", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Digitization Request Marquand Item at Clancy"))
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/5636487?mfhd=5744248'
+          visit '/requests/9956364873506421?mfhd=22186505500006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Available for In Library Use'
@@ -1084,9 +1084,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'Shows marqaund recap item as an EDD or In Library Use' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "11780965", callNumber: "N6923.B257 H84 2020", chapterTitle: "", deliveryLocation: "PJ", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101106347378"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance", username: "jstudent", volume: ""))
+            .with(body: hash_including(author: "", bibId: "99117809653506421", callNumber: "N6923.B257 H84 2020", chapterTitle: "", deliveryLocation: "PJ", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101106347378"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/11780965?mfhd=11443781'
+          visit '/requests/99117809653506421?mfhd=22203397510006421'
           choose('requestable__delivery_mode_8298341_in_library') # chooses 'in_library' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Available for In Library'
@@ -1187,8 +1187,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
       let(:recap_params) do
         {
-          Bbid: "9493318",
-          item: "7303228",
+          Bbid: "9994933183506421",
+          item: "23131438400006421",
           lname: "Student",
           delivery: "p",
           pickup: "PN",
@@ -1213,7 +1213,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allow CAS patrons to request an available ReCAP item.' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9493318", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
+            .with(body: hash_including(author: "", bibId: "9994933183506421", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
                                        requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           stub_request(:post, Requests.config[:scsb_base])
@@ -1240,7 +1240,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "", "LoanTitle" => "8. Uluslararası Marsyas Kültür Sanat ve Müzik Festivali : Renkten sese VIII - Seramiğin sesi IV - Fotoğraf sergisi - Dinar'da zaman ve mekan - Mekanın ritmi 18-21 Mayıs 2017, Dinar - Afyonkarahisar = 8th International Marsyas Culture Art and Music...", "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/11521583", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "", "LoanTitle" => "8. Uluslararası Marsyas Kültür Sanat ve Müzik Festivali : Renkten sese VIII - Seramiğin sesi IV - Fotoğraf sergisi - Dinar'da zaman ve mekan - Mekanın ritmi 18-21 Mayıs 2017, Dinar - Afyonkarahisar = 8th International Marsyas Culture Art and Music...", "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/99115215833506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
@@ -1262,7 +1262,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Burrows, Roger", "LoanTitle" => "3D thinking in design and architecture : from antiquity to the future", "LoanPublisher" => nil, "ISSN" => "9780500519547", "CallNumber" => "NA2750 .B867 2018", "CitedIn" => "https://catalog.princeton.edu/catalog/10958705", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Burrows, Roger", "LoanTitle" => "3D thinking in design and architecture : from antiquity to the future", "LoanPublisher" => nil, "ISSN" => "9780500519547", "CallNumber" => "NA2750 .B867 2018", "CitedIn" => "https://catalog.princeton.edu/catalog/99109587053506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
@@ -1284,7 +1284,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Maryland", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "An act to secure fair elections in Maryland", "PhotoItemPublisher" => "n.p.", "ISSN" => "", "CallNumber" => "P94.849.036.15", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/3018567", "PhotoJournalYear" => "", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "27412908", "DocumentType" => "Book", "Location" => "Forrestal Annex - Princeton Collection", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Maryland", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "An act to secure fair elections in Maryland", "PhotoItemPublisher" => "n.p.", "ISSN" => "", "CallNumber" => "P94.849.036.15", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9930185673506421", "PhotoJournalYear" => "", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "27412908", "DocumentType" => "Book", "Location" => "Forrestal Annex - Princeton Collection", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
@@ -1335,14 +1335,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Chekhov, Anton Pavlovich", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Pʹesy Пьесы", "PhotoItemPublisher" => "Moskva: Letniĭ sad", "ISSN" => "9785988562320", "CallNumber" => "PG3455 .A2 2015", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9770811", "PhotoJournalYear" => "2015", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "964907363", "DocumentType" => "Book", "Location" => "Firestone Library", "PhotoArticleTitle" => "ABC"))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Chekhov, Anton Pavlovich", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Pʹesy Пьесы", "PhotoItemPublisher" => "Moskva: Letniĭ sad", "ISSN" => "9785988562320", "CallNumber" => "PG3455 .A2 2015", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9997708113506421", "PhotoJournalYear" => "2015", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "964907363", "DocumentType" => "Book", "Location" => "Firestone Library", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
 
           stub_voyager_hold_success('9770811', '7502706', '77777')
 
-          visit "/requests/9770811?mfhd=9588984"
+          visit "/requests/9997708113506421?mfhd=2268938710006421"
           expect(page).not_to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'Electronic Delivery'
           fill_in "Article/Chapter Title", with: "ABC"
@@ -1360,9 +1360,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows patrons to request a physical recap item' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9944355", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: '198572131', requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
+            .with(body: hash_including(author: "", bibId: "9999443553506421", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: '198572131', requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/9944355?mfhd=9757511'
+          visit '/requests/9999443553506421?mfhd=22202822560006421'
           expect(page).not_to have_content 'Pick-up location: '
           expect(page).to have_content 'Electronic Delivery'
           choose('requestable__delivery_mode_7467161_edd') # chooses 'edd' radio button
@@ -1390,7 +1390,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/7053307?mfhd=6962326'
+          visit '/requests/9970533073506421?mfhd=22214952030006421'
           expect(page).not_to have_content 'Available for In Library Use'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -1411,11 +1411,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Alexakis, Spyros", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "The decomposition of global conformal invariants", "PhotoItemPublisher" => "Princeton: Princeton University Press", "ISSN" => "9780691153476 9780691153483", "CallNumber" => "QA646 .A44 2012", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/7053307", "PhotoJournalYear" => "2012", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "757838203", "DocumentType" => "Book", "Location" => "Lewis Library", "PhotoArticleTitle" => "ABC"))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Alexakis, Spyros", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "The decomposition of global conformal invariants", "PhotoItemPublisher" => "Princeton: Princeton University Press", "ISSN" => "9780691153476 9780691153483", "CallNumber" => "QA646 .A44 2012", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9970533073506421", "PhotoJournalYear" => "2012", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "757838203", "DocumentType" => "Book", "Location" => "Lewis Library", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/7053307?mfhd=6934399'
+          visit '/requests/9970533073506421?mfhd=22214952030006421'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           within('#request_6322174') do
@@ -1434,7 +1434,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows patrons to ask for digitizing on non circulating items' do
-          visit '/requests/9594840?mfhd=9436228'
+          visit '/requests/9995948403506421?mfhd=2258775160006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
@@ -1442,7 +1442,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows filtering items by mfhd' do
-          visit '/requests/7917192?mfhd=7699134'
+          visit '/requests/9979171923506421?mfhd=22230315710006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
@@ -1451,7 +1451,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'shows an error if MFHD is not present' do
-          visit '/requests/7917192'
+          visit '/requests/9979171923506421'
           expect(page).not_to have_content 'Please Select a location on the main record page.'
         end
 
@@ -1464,7 +1464,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
 
-          visit 'requests/10574699?mfhd=10320354'
+          visit 'requests/99105746993506421?mfhd=22217601660006421'
           expect(page).to have_button('Request this Item')
           expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
           fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
@@ -1488,7 +1488,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/11780965?mfhd=11443781'
+          visit '/requests/99117809653506421?mfhd=22203397490006421'
           choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
@@ -1504,11 +1504,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Steele, James", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory", "PhotoItemPublisher" => "New York, NY: The American University...", "ISSN" => "9789774168901", "CallNumber" => "NA1585.A23 S7 2020", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/11787671", "PhotoJournalYear" => "2020", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1137152638", "DocumentType" => "Book", "Location" => "Architecture Library - New Book Shelf", "PhotoArticleTitle" => "ABC"))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Steele, James", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory", "PhotoItemPublisher" => "New York, NY: The American University...", "ISSN" => "9789774168901", "CallNumber" => "NA1585.A23 S7 2020", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/99117876713506421", "PhotoJournalYear" => "2020", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1137152638", "DocumentType" => "Book", "Location" => "Architecture Library - New Book Shelf", "PhotoArticleTitle" => "ABC"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/11787671?mfhd=11449656'
+          visit '/requests/99117876713506421?mfhd=22196862260006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).not_to have_content 'Pick-up location: Architecture Library'
@@ -1523,18 +1523,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "disallows requests of recap pick-up only items" do
-          visit '/requests/11578319?mfhd=11259604'
+          visit '/requests/99115783193506421?mfhd=22155047580006421'
           expect(page).not_to have_button('Request this Item')
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
         it 'allows aeon requests for all users' do
-          visit '/requests/7352936?mfhd=7179463'
+          visit '/requests/9973529363506421?mfhd=22111313060006421'
           expect(page).to have_content 'Request to View in Reading Room'
         end
 
         it 'allows guest patrons to access Online items' do
-          visit '/requests/9994692?mfhd=9800910'
+          visit '/requests/9999946923506421?mfhd=22131438430006421'
           expect(page).to have_content 'www.jstor.org'
         end
 
@@ -1542,12 +1542,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback", "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => "HC102.5.T78 A3 1997", "CitedIn" => "https://catalog.princeton.edu/catalog/1788796", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback", "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => "HC102.5.T78 A3 1997", "CitedIn" => "https://catalog.princeton.edu/catalog/9917887963506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/1788796?mfhd=2053005'
+          visit '/requests/9917887963506421?mfhd=22196156490006421'
           expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
           check "requestable_selected_2114223"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -1569,7 +1569,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/2286894?mfhd=2576882'
+          visit '/requests/9922868943506421?mfhd=22109192590006421'
           expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_user_supplied_enum_2576882'
           expect(page).to have_content 'Electronic Delivery'
@@ -1597,11 +1597,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
-                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
+                                       "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9941274093506421", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/4127409?mfhd=4403772'
+          visit '/requests/9941274093506421?mfhd=22197827810006421'
           expect(page).to have_content 'Electronic Delivery'
           fill_in "Article/Chapter Title", with: "ABC"
           fill_in "Author", with: "I Aman Author"

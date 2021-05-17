@@ -1,8 +1,8 @@
 describe Requests::Illiad, vcr: { cassette_name: 'request_models', record: :new_episodes } do
   let(:params) do
     {
-      system_id: '8880549',
-      mfhd: '8805567',
+      system_id: '9988805493506421',
+      mfhd: '22208751700006421',
       user: user
     }
   end
@@ -22,7 +22,7 @@ describe Requests::Illiad, vcr: { cassette_name: 'request_models', record: :new_
   end
 
   let(:ctx) do
-    document = SolrDocument.new(id: '8880549')
+    document = SolrDocument.new(id: '9988805493506421')
     Requests::SolrOpenUrlContext.new(solr_doc: document.solr_document).ctx
   end
 

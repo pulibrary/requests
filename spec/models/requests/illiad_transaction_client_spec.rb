@@ -8,7 +8,7 @@ describe Requests::IlliadTransactionClient, type: :controller do
     Requests::Patron.new(user: user, session: {}, patron: valid_patron)
   end
   let(:requestable) do
-    [{ "selected" => "true", "bibid" => "10921934", "mfhd" => "10637717", "call_number" => "HF1131 .B485",
+    [{ "selected" => "true", "bibid" => "10921934", "mfhd" => "22241110470006421", "call_number" => "HF1131 .B485",
        "location_code" => "f", "item_id" => "7892830", "barcode" => "32101102865654", "enum" => "2019",
        "copy_number" => "0", "status" => "Not Charged", "type" => "on_shelf", "pick_up" => "PA", "edd_author" => "That One",
        "edd_genre" => "journal", "edd_isbn" => "", "edd_date" => "", "edd_publisher" => "Santa Barbara, Calif: ABC-CLIO",
@@ -19,7 +19,7 @@ describe Requests::IlliadTransactionClient, type: :controller do
   end
 
   let(:bib) do
-    { "id" => "3510207", "title" => "100 decisive battles : from ancient times to the present", "author" => "Davis, Paul K.",
+    { "id" => "9935102073506421", "title" => "100 decisive battles : from ancient times to the present", "author" => "Davis, Paul K.",
       "isbn" => "9781576070758", "oclc_number" => "42579288", "date" => "1999" }
   end
 

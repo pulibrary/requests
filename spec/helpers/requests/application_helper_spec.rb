@@ -30,8 +30,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '8179402',
-        mfhd: '7946042',
+        system_id: '9981794023506421',
+        mfhd: '22237592660006421',
         patron: patron
       }
     end
@@ -47,8 +47,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     context "Firestone Classics Collection (Clas)" do
       let(:params) do
         {
-          system_id: '9222024',
-          mfhd: '9092827',
+          system_id: '9992220243506421',
+          mfhd: '22251138630006421',
           patron: patron
         }
       end
@@ -66,8 +66,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     describe 'lewis library' do
       let(:params) do
         {
-          system_id: '3848872',
-          mfhd: '4151880',
+          system_id: '9938488723506421',
+          mfhd: '22205589710006421',
           patron: patron
         }
       end
@@ -81,8 +81,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   describe 'firestone pick_up_choices' do
     let(:params) do
       {
-        system_id: '491654',
-        mfhd: '534140',
+        system_id: '994916543506421',
+        mfhd: '22113812540006421',
         patron: patron
       }
     end
@@ -101,8 +101,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   describe 'multiple delivery options' do
     let(:params) do
       {
-        system_id: '426420',
-        mfhd: '3538795',
+        system_id: '994264203506421',
+        mfhd: '2284677130006421',
         patron: patron
       }
     end
@@ -123,8 +123,8 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:patron) { Requests::Patron.new(user: unauthenticated_patron, session: {}) }
     let(:params) do
       {
-        system_id: '7352936',
-        mfhd: '7179463',
+        system_id: '9973529363506421',
+        mfhd: '22111313060006421',
         patron: patron
       }
     end

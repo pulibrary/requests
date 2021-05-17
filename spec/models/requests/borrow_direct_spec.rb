@@ -15,9 +15,9 @@ describe Requests::BorrowDirect do
     [
       {
         "selected" => "true",
-        "mfhd" => "534137",
+        "mfhd" => "22113812720006421",
         "call_number" => "HA202 .U581",
-        "location_code" => "rcppa",
+        "location_code" => "recap$pa",
         "item_id" => "3059236",
         "delivery_mode_3059236" => "print",
         "barcode" => "32101044283008",
@@ -41,7 +41,7 @@ describe Requests::BorrowDirect do
   end
   let(:bib) do
     {
-      "id" => "491654",
+      "id" => "994916543506421",
       "title" => "County and city data book.",
       "author" => "United States",
       "date" => "1949",

@@ -365,7 +365,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('East Asian Library - Rare Books')
+        expect(requestable.location_label).to eq('Special Collections - East Asian Library (Gest) Rare Books')
       end
     end
 
@@ -840,8 +840,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
     let(:params) do
       {
-        system_id: '9999800',
-        mfhd: '9805244',
+        system_id: '9999998003506421',
+        mfhd: '2293023360006421',
         patron: patron
       }
     end
@@ -957,8 +957,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
     let(:params) do
       {
-        system_id: '9999800',
-        mfhd: '9805244',
+        system_id: '9999998003506421',
+        mfhd: '2293023360006421',
         patron: patron
       }
     end
@@ -1038,8 +1038,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
     let(:params) do
       {
-        system_id: '9999800',
-        mfhd: '9805244',
+        system_id: '9999998003506421',
+        mfhd: '2293023360006421',
         patron: patron
       }
     end
@@ -1112,7 +1112,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A requestable item from a RBSC holding creates an openurl with volume and call number info' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_aeon_holding_volume_note) }
-    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '675722' }.first }
+    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '22256352610006421' }.first }
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#aeon_openurl' do
       it 'includes the location_has note as the volume' do

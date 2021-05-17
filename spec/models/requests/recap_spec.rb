@@ -9,10 +9,10 @@ describe Requests::Recap do
     end
     let(:requestable) do
       [{ "selected" => "true",
-         "mfhd" => "534137",
+         "mfhd" => "22113812720006421",
          "call_number" => "HA202 .U581",
-         "location_code" => "rcppa",
-         "item_id" => "6067274",
+         "location_code" => "recap$pa",
+         "item_id" => "23113812570006421",
          "barcode" => "32101082413400",
          "enum" => "1956",
          "copy_number" => "1",
@@ -29,10 +29,10 @@ describe Requests::Recap do
          "library_code" => "recap",
          "pick_up" => "PA" },
        { "selected" => "true",
-         "mfhd" => "534137",
+         "mfhd" => "22113812720006421",
          "call_number" => "HA202 .U581",
-         "location_code" => "rcppa",
-         "item_id" => "3147971",
+         "location_code" => "recap$pa",
+         "item_id" => "23113812580006421",
          "barcode" => "32101094934260",
          "enum" => "1947",
          "copy_number" => "1",
@@ -52,7 +52,7 @@ describe Requests::Recap do
 
     let(:bib) do
       {
-        "id" => "491654",
+        "id" => "994916543506421",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"

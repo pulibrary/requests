@@ -13,7 +13,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     it 'handles access patron params when the user form is posted' do
       post :generate, params: { request: { username: 'foobar', email: 'foo@bar.com' },
                                 source: 'pulsearch',
-                                system_id: '6377369', mfhd: '6366499' }
+                                system_id: '9963773693506421', mfhd: '22239658680006421' }
       expect(response.status).to eq(200)
     end
   end
@@ -29,8 +29,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       it 'sets the current request mode to trace when supplied' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: '9676483',
-          mfhd: '9504920',
+          system_id: '9996764833506421',
+          mfhd: '2275983490006421',
           mode: "trace"
         }
         expect(assigns(:mode)).to eq('trace')
@@ -38,8 +38,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       it 'uses the default request mode and does not set a flash' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: '9676483',
-          mfhd: '9504920'
+          system_id: '9996764833506421',
+          mfhd: '2275983490006421'
         }
         expect(flash.now[:notice]).to be_blank
         expect(assigns(:mode)).to eq('standard')
@@ -55,17 +55,17 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       it 'redirects you when a single aeon record is requested' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: '9576880',
-          mfhd: '10043356'
+          system_id: '9995768803506421',
+          mfhd: '2298692690006421'
         }
         expect(response.status).to eq(302)
       end
 
-      it 'does not redirects you when multiple aeon records are requested' do
+      it 'does not redirect you when multiple aeon records are requested' do
         get :generate, params: {
           source: 'pulsearch',
-          system_id: '9576880',
-          mfhd: '10024448'
+          system_id: '9995768803506421',
+          mfhd: '2298692650006421'
         }
         expect(response.status).to eq(200)
       end
@@ -87,8 +87,8 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       [
         {
           "selected" => "true",
-          "bibid" => "9590420",
-          "mfhd" => "9432516",
+          "bibid" => "9995904203506421",
+          "mfhd" => "2297676790006421",
           "call_number" => "PN1995.9.A76 P7613 2015",
           "location_code" => "rcppj",
           "item_id" => "7391704",
@@ -109,7 +109,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
     let(:bib) do
       {
-        "id" => "9590420"
+        "id" => "9995904203506421"
       }.with_indifferent_access
     end
 
@@ -218,13 +218,13 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     let(:requestable) do
       [
         {
-          "item_id" => "552328"
+          "item_id" => "23173625050006421"
         }.with_indifferent_access
       ]
     end
     let(:bib) do
       {
-        "id" => "462029"
+        "id" => "994620293506421"
       }.with_indifferent_access
     end
     let(:responses) do

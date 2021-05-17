@@ -263,8 +263,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "A system id that has a holding with item on reserve" do
     let(:params) do
       {
-        system_id: '9981794023506421',
-        mfhd: '22237592660006421',
+        system_id: '9931973043506421',
+        mfhd: '22185253590006421',
         patron: patron
       }
     end
@@ -655,8 +655,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9996025493506421',
-        mfhd: '22152849890006421',
+        system_id: '9954176583506421',
+        mfhd: '22201569680006421',
         patron: patron
       }
     end
@@ -702,8 +702,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9996025513506421',
-        mfhd: '22152847900006421',
+        system_id: '9954176583506421',
+        mfhd: '22201569680006421',
         patron: patron
       }
     end

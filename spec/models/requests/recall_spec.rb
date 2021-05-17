@@ -13,7 +13,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
     end
     let(:requestable) do
       [{ "selected" => "true",
-         "mfhd" => "5039570",
+         "mfhd" => "2229814560006421",
          "call_number" => "P93.5 .T847 2006",
          "location_code" => "f",
          "item_id" => "4428451",
@@ -26,7 +26,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
 
     let(:bib) do
       {
-        "id" => "4815239",
+        "id" => "9948152393506421",
         "title" => "Beautiful evidence",
         "author" => "Tufte, Edward R.",
         "date" => "2006"

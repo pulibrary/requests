@@ -791,8 +791,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a mfhd with missing items" do
     let(:params) do
       {
-        system_id: '9920022063506421',
-        mfhd: '22140105450006421',
+        system_id: '993704573506421',
+        mfhd: '22272118950006421',
         patron: patron
       }
     end
@@ -889,7 +889,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '996160863506421',
         patron: patron,
-        mfhd: '22256352620006421'
+        mfhd: '22256352610006421'
       }
     end
     let(:request) { described_class.new(params) }

@@ -326,9 +326,10 @@ module Requests
       ## this method should be the only place we load item availability
       def load_items_by_mfhd
         mfhd_items = {}
-        items_by_mfhd(@system_id, @mfhd).each do |item_info|
-          mfhd_items[@mfhd] = load_item_for_holding(holding_id: @mfhd, item_info: item_info)
-        end
+        mfhd_items[@mfhd] = items_by_mfhd(@system_id, @mfhd)
+        #items_by_mfhd(@system_id, @mfhd).each do |item_info|
+        #  mfhd_items[item_info['id']] = load_item_for_holding(holding_id: @mfhd, item_info: item_info)
+        #end
         mfhd_items
       end
 
@@ -341,23 +342,23 @@ module Requests
       #   mfhd_items
       # end
 
-      def load_item_for_holding(holding_id:, item_info:)
-        # new check needed here
-        if item_info[:more_items] == false
-          if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
-            [item_info]
-          elsif item_info[:status].starts_with?('Online')
-            [item_info]
-          else
-            ## we don't need to call this again
-            items_to_symbols(items_by_mfhd(@system_id, holding_id))
-          end
-        else
-          ## we don't need to call this again
-          # items_to_symbols(items_by_mfhd(@system_id, holding_id))
-          items_to_symbols([item_info])
-        end
-      end
+      # def load_item_for_holding(holding_id:, item_info:)
+      #   # new check needed here
+      #   if item_info[:more_items] == false
+      #     if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
+      #       [item_info]
+      #     elsif item_info[:status].starts_with?('Online')
+      #       [item_info]
+      #     else
+      #       ## we don't need to call this again
+      #       items_to_symbols(items_by_mfhd(@system_id, holding_id))
+      #     end
+      #   else
+      #     ## we don't need to call this again
+      #     # items_to_symbols(items_by_mfhd(@system_id, holding_id))
+      #     items_to_symbols([item_info])
+      #   end
+      # end
 
       def items_to_symbols(items = [])
         items_with_symbols = []
@@ -368,7 +369,7 @@ module Requests
       end
 
       def item_current_location(item)
-        item['temp_loc'] || item['location']
+        item['in_temp_library'] || item['location']
       end
 
       def include_etas_in_holdings(holdings)

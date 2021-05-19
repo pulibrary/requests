@@ -43,8 +43,8 @@ module Requests
       if item.present?
         ctx.referent.set_metadata('iteminfo5', item[:id]&.to_s)
         if enumerated?
-          ctx.referent.set_metadata('volume', item[:enum])
-          ctx.referent.set_metadata('issue', item[:chron]) if item[:chron].present?
+          ctx.referent.set_metadata('volume', item[:enum_display])
+          ctx.referent.set_metadata('issue', item[:chron_display]) if item[:chron_display].present?
         else
           ctx.referent.set_metadata('volume', holding.first.last['location_has']&.first)
           ctx.referent.set_metadata('issue', nil)

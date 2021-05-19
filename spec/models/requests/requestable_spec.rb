@@ -1182,7 +1182,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
 
-  context 'A SCSB Item from a location with a pick-up restrictions' do
+  context 'A SCSB Item from a location with a pick-up and in library use restriction' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_ar) }
     let(:requestable) { request.requestable.first }
@@ -1215,7 +1215,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
 
-  context 'A SCSB Item from a location with no pick-up restrictions' do
+  context 'A SCSB Item from a location with a pick-up restrictions' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_mr) }
     let(:requestable) { request.requestable.first }
@@ -1231,12 +1231,19 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       it 'has a single pick-up location' do
         expect(requestable.pick_up_locations.size).to eq(1)
         expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('PK')
+        expect(requestable.pick_up_locations.first[:label]).to eq('Mendel Music Library')
       end
     end
 
     describe "#available?" do
       it "is available" do
         expect(requestable).to be_available
+      end
+    end
+
+    describe "#cul_music?" do
+      it 'is an Music Library Item' do
+        expect(requestable.cul_music?).to be_truthy
       end
     end
   end

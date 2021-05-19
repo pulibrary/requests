@@ -274,6 +274,11 @@ module Requests
       item[:collection_code].present? && item[:collection_code] == 'AR'
     end
 
+    def cul_music?
+      return false unless item?
+      item[:collection_code].present? && item[:collection_code] == 'MR'
+    end
+
     private
 
       def scsb_locations

@@ -384,15 +384,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable serial item that has volume and item data in its openurl' do
     let(:request) { FactoryGirl.build(:aeon_rbsc_enumerated, patron: patron) }
-    let(:requestable_holding) { request.requestable.select { |r| r.holding['6720550'] } }
+    let(:requestable_holding) { request.requestable.select { |r| r.holding['22127290370006421'] } }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     describe '#aeon_open_url' do
       it 'returns an openurl with volume data' do
-        expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(requestable.item[:enum])}")
+        expect(requestable.aeon_openurl(request.ctx)).to include("rft.volume=#{CGI.escape(requestable.item[:enum_display])}")
       end
 
       it 'returns an openurl with issue data' do
-        expect(requestable.aeon_openurl(request.ctx)).to include("rft.issue=#{CGI.escape(requestable.item[:chron])}")
+        expect(requestable.aeon_openurl(request.ctx)).to include("rft.issue=#{CGI.escape(requestable.item[:chron_display])}")
       end
     end
 

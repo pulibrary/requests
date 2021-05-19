@@ -1140,7 +1140,7 @@ describe Requests::Submission do
         { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
           "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "clancy_in_library", "fill_in" => "false",
-          "delivery_mode_5214248" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23186505470006421" => "in_library", "pick_up" => "PA" }
       ]
     end
 
@@ -1162,29 +1162,29 @@ describe Requests::Submission do
       end
 
       it 'items contacts clancy and voyager' do
-        voyager_url = stub_voyager_hold_success('9956364873506421', '5214248', '99999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).to have_been_made
       end
 
       it "returns hold errors" do
-        voyager_url = stub_voyager_hold_failure('9956364873506421', '5214248', '99999')
+        alma_url = stub_alma_hold_failure('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).not_to have_been_made
         expect(submission.service_errors.first[:type]).to eq('clancy_hold')
       end
 
       it 'returns clancy errors' do
-        voyager_url = stub_voyager_hold_success('9956364873506421', '5214248', '99999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).to have_been_made
         expect(submission.service_errors.first[:type]).to eq('clancy')
       end
@@ -1289,11 +1289,11 @@ describe Requests::Submission do
         { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
           "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "marquand_in_library", "fill_in" => "false",
-          "delivery_mode_5214248" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23186505470006421" => "in_library", "pick_up" => "PA" }
       ]
     end
 
-    let(:bib) { { "id" => "5636487", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
+    let(:bib) { { "id" => "9956364873506421", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
     let(:params) do
       {
         request: user_info,
@@ -1305,19 +1305,21 @@ describe Requests::Submission do
       described_class.new(params, user_info)
     end
 
+    let(:clancy_url) { "#{ENV['CLANCY_BASE_URL']}/circrequests/v1" }
+
     describe "#process_submission" do
-      it 'items contacts voyager and emails marquand' do
-        voyager_url = stub_voyager_hold_success('9956364873506421', '5214248', '99999')
+      it 'items contacts voyager and does not email marquand or contact clancy' do
+        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).not_to have_been_made
       end
 
       it "returns hold errors" do
-        voyager_url = stub_voyager_hold_failure('9956364873506421', '5214248', '99999')
-        clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
+        alma_url = stub_alma_hold_failure('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).not_to have_been_made
         expect(submission.service_errors.first[:type]).to eq('marquand_in_library')
       end

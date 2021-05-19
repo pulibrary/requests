@@ -31,42 +31,24 @@ module Requests
 
       def handle_item(item:)
         status = {}
-        params = build_params(item: item)
-        response_json = hold_status_data(params: params)
-        if response_json["hold"].present? && response_json["hold"]["allowed"] == "Y"
-          status = place_hold(item, params)
-        elsif response_json["hold"].blank? || (response_json["hold"].present? && response_json["hold"]["note"] != "You have already placed a request for this item.")
-          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created" } }.merge(params["bib"].permit(params["bib"].keys)).merge(params["request"].to_h)
+        begin
+          status = place_hold(item)
+        rescue Alma::BibRequest::ItemAlreadyExists => exists
+          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold already exists", message: exists.message } }.merge(@submission.bib.to_h).merge(item.to_h).with_indifferent_access
+        rescue StandardError => invalid
+          errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created", message: invalid.message } }.merge(@submission.bib.to_h).merge(item.to_h).with_indifferent_access
         end
         status
       end
 
-      def build_params(item:)
-        params = param_mapping(@submission.bib, @submission.patron, item)
-        params["bib"] = @submission.bib
-        params['requestable'] = @submission.items
-        params['request'] = @submission.patron
-        params
-      end
-
-      def hold_status_data(params:)
-        response = get_hold_status(params)
-        Hash.from_xml(response.body)["response"]
-      end
-
-      def place_hold(item, params)
+      def place_hold(item)
         status = {}
-        payload = request_payload(item, parameter_name: "hold-request-parameters", expiration_period: 7)
-        response = put_hold_request(params, payload)
-        reponse_json = Hash.from_xml(response.body)
-        if reponse_json["response"]["reply_code"] == "0"
-          status = item.merge(payload: payload)
+        options = { mms_id: @submission.bib['id'], holding_id: item["mfhd"], item_pid: item['item_id'], user_id: @submission.patron.university_id, request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: item["pick_up_location_code"] }
+        response = Requests::AlmaHoldRequest.submit(options)
+        if response.success?
+          status = item.merge(payload: options, response: response.raw_response.parsed_response)
         else
-          bib = params["bib"]
-          bib = bib.permit(params["bib"].keys) if bib.respond_to?(:permit)
-          request = params["request"]
-          request = request.permit(params["request"].keys) if request.respond_to?(:permit)
-          errors << reponse_json["response"].merge(bib).merge(request.to_h).merge(type: @service_type)
+          errors << reponse_json["response"].merge(@submission.bib.to_h).merge(item.to_h).merge(type: @service_type)
         end
         status
       end

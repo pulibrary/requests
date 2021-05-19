@@ -331,12 +331,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
           end
 
-          it 'allows CAS patrons to request a record that has no item data' do
-            visit "/requests/#{no_items_id}"
-            check('requestable__selected', exact: true)
-            fill_in 'requestable[][user_supplied_enum]', with: 'Some Volume'
-            expect(page).to have_button('Request Selected Items', disabled: false)
-          end
+        it 'allows CAS patrons to locate an on_shelf record' do
+          stub_alma_hold_success('9770811', '9588984', '7502706', '960594184')
 
           xit 'allows CAS patrons to locate an on_shelf record that has no item data' do
             visit "/requests/#{on_shelf_no_items_id}"
@@ -429,18 +425,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           end
 
         it 'allows patrons to request a Lewis' do
-          stub_voyager_hold_success('7053307', '6322174', '77777')
+          stub_alma_hold_success('9970533073506421', '22214952030006421', '23214952020006421', '960594184')
           visit '/requests/9970533073506421?mfhd=22214952030006421'
           expect(page).to have_content 'Pick-up location: Lewis Library'
-          check 'requestable_selected_6322174'
+          check 'requestable_selected_23214952020006421'
           # temporary change issue 438
-          # choose('requestable__delivery_mode_6322174_print') # chooses 'edd' radio button
+          # choose('requestable__delivery_mode_23214952020006421_print') # chooses 'edd' radio button
           # select('Firestone Library', from: 'requestable__pick_up')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Item has been requested for pick-up'
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
-          expect(email.subject).to eq("On the Shelf Paging Request (SCI) QA646 .A44 2012")
+          expect(email.subject).to eq("On the Shelf Paging Request (LEWIS$STACKS) QA646 .A44 2012")
           expect(email.to).to eq(["lewislib@princeton.edu"])
           expect(email.cc).to be_nil
           expect(email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
@@ -565,7 +561,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "shows items in the Architecture Library as available" do
-          stub_voyager_hold_success('11787671', '8307797', '77777')
+          stub_alma_hold_success('99117876713506421', '22196862260006421', '23196862250006421', '960594184')
           visit '/requests/99117876713506421?mfhd=22196862260006421'
           # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Electronic Delivery'
@@ -927,14 +923,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "places a hold and sends emails for a marquand in library use item" do
-          stub_voyager_hold_success('5636487', '5214248', '77777')
+          stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '960594184')
           stub_clancy_status(barcode: "32101072349515")
           visit '/requests/9956364873506421?mfhd=22186505500006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Available for In Library Use'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_link('make an appointment', href: "https://libcal.princeton.edu/seats?lid=10656")
-          choose('requestable__delivery_mode_5214248_in_library') # chooses 'in library' radio button
+          choose('requestable__delivery_mode_23186505470006421_in_library') # chooses 'in library' radio button
           expect(page).to have_content('Marquand Library at Firestone')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           confirm_email = ActionMailer::Base.deliveries.last
@@ -952,7 +948,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "places a hold and a clancy request for a marquand in library use item at Clancy" do
-          stub_voyager_hold_success('5636487', '5214248', '77777')
+          stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '960594184')
           stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
           stub_clancy_post(barcode: "32101072349515")
           visit '/requests/9956364873506421?mfhd=22186505500006421'
@@ -961,7 +957,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Available for In Library Use'
           expect(page).to have_content I18n.t("requests.clancy_in_library.brief_msg")
           expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
-          choose('requestable__delivery_mode_5214248_in_library') # chooses 'in_library' radio button
+          choose('requestable__delivery_mode_23186505470006421_in_library') # chooses 'in_library' radio button
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           confirm_email = ActionMailer::Base.deliveries.last
           expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
@@ -1012,7 +1008,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "sends an email and places an illiad request for a marquand edd item at Clancy" do
-          stub_voyager_hold_success('5636487', '5214248', '77777')
+          stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '960594184')
           stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
           stub_clancy_post(barcode: "32101072349515")
           stub_request(:get, patron_url)
@@ -1030,7 +1026,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Available for In Library Use'
           expect(page).to have_content I18n.t("requests.clancy_in_library.brief_msg")
           expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
-          choose('requestable__delivery_mode_5214248_edd') # chooses 'edd' radio button
+          choose('requestable__delivery_mode_23186505470006421_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t('requests.clancy_edd.brief_msg')
           expect(page).to have_content I18n.t("requests.clancy_edd.note_msg")
           fill_in "Article/Chapter Title", with: "ABC"
@@ -1392,14 +1388,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, transaction_note_url)
             .to_return(status: 200, body: responses[:note_created], headers: {})
 
-          it 'allows digitizing, but not pick-up of on on_shelf record' do
-            stub_request(:get, patron_url)
-              .to_return(status: 200, body: responses[:found], headers: {})
-            stub_request(:post, transaction_url)
-              .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Chekhov, Anton Pavlovich", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Pʹesy Пьесы", "PhotoItemPublisher" => "Moskva: Letniĭ sad", "ISSN" => "9785988562320", "CallNumber" => "PG3455 .A2 2015", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9770811", "PhotoJournalYear" => "2015", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "964907363", "DocumentType" => "Book", "Location" => "Firestone Library", "PhotoArticleTitle" => "ABC"))
-              .to_return(status: 200, body: responses[:transaction_created], headers: {})
-            stub_request(:post, transaction_note_url)
-              .to_return(status: 200, body: responses[:note_created], headers: {})
+          stub_alma_hold_success('9997708113506421', '2268938710006421', '2268938710006421', '960594184')
 
           visit "/requests/9997708113506421?mfhd=2268938710006421"
           expect(page).not_to have_content 'Pick-up location: Firestone Library'

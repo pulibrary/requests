@@ -14,11 +14,11 @@ class Requests::Requestable
     end
 
     def enum_value
-      self['enum'] || ""
+      self['enum_display'] || ""
     end
 
     def cron_value
-      self['chron'] || ""
+      self['chron_display'] || ""
     end
 
     def item_data?
@@ -42,7 +42,7 @@ class Requests::Requestable
     end
 
     def enumerated?
-      self[:enum].present?
+      self[:enum_display].present?
     end
 
     # item type on the item level

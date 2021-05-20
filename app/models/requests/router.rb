@@ -11,7 +11,7 @@ module Requests
 
     # Possible Services
     # :online
-    # :annexa
+    # :annex
     # :annexb
     # :on_shelf
     # :on_order
@@ -62,8 +62,8 @@ module Requests
         ## any check at this level means items must fall in one bucket or another
         elsif requestable.preservation?
           ['pres']
-        elsif requestable.annexa?
-          ['annexa', 'on_shelf_edd']
+        elsif requestable.annex?
+          ['annex', 'on_shelf_edd']
         elsif requestable.annexb?
           ['annexb']
         elsif requestable.plasma?

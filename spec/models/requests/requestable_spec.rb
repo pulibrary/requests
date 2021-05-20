@@ -162,7 +162,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe "#services" do
       it "returns an item status of missing" do
         expect(requestable.size).to eq(1)
-        requestable.first.item["status"] = 'Missing'
         expect(requestable.first.services).to be_truthy
       end
 
@@ -181,7 +180,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.first.location_label).to eq('Firestone Library')
+        expect(requestable.first.location_label).to eq('Lewis Library - Lewis Library (SCI)')
       end
     end
 
@@ -899,10 +898,10 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    let(:request_missing) { FactoryGirl.build(:request_missing_item) }
-    let(:requestable_missing) { request_missing.requestable.first }
-
     describe '# missing requestable' do
+      let(:request_missing) { FactoryGirl.build(:request_missing_item) }
+      let(:requestable_missing) { request_missing.requestable.first }
+
       # TODO: Remove when campus has re-opened
       it "does not have borrow direct request service available" do
         expect(requestable_missing.services.include?('bd')).to be false

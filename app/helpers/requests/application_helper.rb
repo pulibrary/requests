@@ -402,7 +402,7 @@ module Requests
       def hidden_fields_for_item(item:, preferred_request_id:)
         hidden = hidden_field_tag("requestable[][item_id]", "", value: preferred_request_id.to_s, id: "requestable_item_id_#{preferred_request_id}")
         hidden += hidden_field_tag("requestable[][barcode]", "", value: item['barcode'].to_s, id: "requestable_barcode_#{preferred_request_id}") unless item["barcode"].nil?
-        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enum"].nil?
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum_display'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enum_display"].nil?
         hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enumeration"].nil?
         hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{preferred_request_id}")
         hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{preferred_request_id}")

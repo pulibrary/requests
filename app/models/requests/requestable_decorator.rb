@@ -1,6 +1,6 @@
 module Requests
   class RequestableDecorator
-    delegate :system_id, :aeon_mapped_params, :services, :charged?, :annexa?, :annexb?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
+    delegate :system_id, :aeon_mapped_params, :services, :charged?, :annex?, :annexb?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
              :ask_me?, :etas?, :etas_limited_access, :aeon_request_url, :location, :temp_loc?, :call_number, :eligible_to_pickup?,
              :holding_library_in_library_only?, :holding_library, :bib, :circulates?, :open_libraries, :item_data?, :recap_edd?, :user_barcode, :clancy?,
              :holding, :item_location_code, :item?, :item, :scsb?, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,
@@ -37,7 +37,7 @@ module Requests
 
     def pick_up?
       return false if etas? || !eligible_to_pickup?
-      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !holding_library_in_library_only? && !scsb_in_library_use? && !request_status?
+      item_data? && (on_shelf? || recap? || annex?) && circulates? && !holding_library_in_library_only? && !scsb_in_library_use? && !request_status?
     end
 
     def fill_in_pick_up?
@@ -81,7 +81,7 @@ module Requests
     end
 
     def off_site?
-      recap? || annexa? || item_at_clancy? || held_at_marquand_library?
+      recap? || annex? || item_at_clancy? || held_at_marquand_library?
     end
 
     def off_site_location

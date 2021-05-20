@@ -112,7 +112,7 @@ module Requests
       end
 
       def fill_in_services
-        ["annexa", "annexb", "recap_no_items", "on_shelf"]
+        ["annex", "annexb", "recap_no_items", "on_shelf"]
       end
   end
 end

@@ -126,8 +126,8 @@ module Requests
           item["type"] += "_in_library" if in_library?(item)
         elsif item["type"] == "paging"
           item["type"] = "digitize" if edd?(item)
-        elsif print?(item) && library_code == 'annexa'
-          item["type"] = "annexa"
+        elsif print?(item) && library_code == 'annex'
+          item["type"] = "annex"
         elsif edd?(item) && library_code.present?
           item["type"] = "digitize"
         elsif print?(item) && library_code.present?

@@ -40,16 +40,16 @@ module Requests
       confirmation_email(submission: submission, subject_key: 'requests.pres.email_subject')
     end
 
-    def annexa_email(submission)
+    def annex_email(submission)
       @submission = submission
-      destination_email = annexa_email_destinations(submission: @submission)
+      destination_email = annex_email_destinations(submission: @submission)
       mail(to: destination_email,
            from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.annexa.email_subject'), @submission.user_barcode))
+           subject: subject_line(I18n.t('requests.annex.email_subject'), @submission.user_barcode))
     end
 
-    def annexa_confirmation(submission)
-      confirmation_email(submission: submission, subject_key: 'requests.annexa.email_subject')
+    def annex_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.annex.email_subject')
     end
 
     def annexb_email(submission)
@@ -321,18 +321,18 @@ module Requests
         end
       end
 
-      def annexa_email_destinations(submission:)
-        annexa_items(submission: submission).map do |item|
+      def annex_email_destinations(submission:)
+        annex_items(submission: submission).map do |item|
           if item["location_code"] == 'anxadoc'
             I18n.t('requests.anxadoc.email')
           else
-            I18n.t('requests.annexa.email')
+            I18n.t('requests.annex.email')
           end
         end
       end
 
-      def annexa_items(submission:)
-        submission.items.select { |item| item["type"] == 'annexa' }
+      def annex_items(submission:)
+        submission.items.select { |item| item["type"] == 'annex' }
       end
 
       def subject_line(request_subject, barcode)

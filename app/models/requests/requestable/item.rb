@@ -195,15 +195,23 @@ class Requests::Requestable
     private
 
       def available_statuses
-        ["Not Charged", "On-Site", "On Shelf", "Available", "Item in place"]
+        voyager = ["Not Charged", "On-Site", "On Shelf"]
+        scsb = ["Available"]
+        alma = ['Item in place', 'Acqusition', 'Technical Migration', 'Acquisition technical services']
+        voyager + scsb + alma
       end
 
       def unavailable_statuses
-        ['unavailable', 'Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
-         'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
-         'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-         'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+        voyager = ['unavailable', 'Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
+                   'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
+                   'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
+                   'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
+                   'Missing', 'On-Site - On Hold', 'Inaccessible']
+        scsb = ['Not Available', "Item Barcode doesn't exist in SCSB database."]
+        alma = ['Claimed Returned', 'Lost', 'Hold Shelf', 'Transit', 'Missing', 'Resource Sharing Request',
+                'Lost Resource Sharing Item', 'Requested', 'In Transit to Remote Storage', 'Lost and paid',
+                'Loan', 'Controlled Digital Lending', 'At Preservation']
+        voyager + scsb + alma
       end
   end
 end

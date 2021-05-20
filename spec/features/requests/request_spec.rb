@@ -7,7 +7,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:voyager_id) { '9994933183506421?mfhd=22131438430006421' }
     let(:online_id) { '11169709?mfhd=10878427' }
     let(:thesis_id) { 'dsp01rr1720547' }
-    let(:in_process_id) { '10144698?mfhd=9933878' }
+    let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
     let(:recap_in_process_id) { '10247806?mfhd=10028102' }
     let(:on_order_id) { '10958705?mfhd=10672583' }
     let(:no_items_id) { '3018567?mfhd=3334792' }
@@ -257,7 +257,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows CAS patrons to request In-Process items and can only be delivered to their holding library' do
           visit "/requests/#{in_process_id}"
           expect(page).to have_content 'In Process'
-          expect(page).to have_content 'Pick-up location: Marquand Library'
+          expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_button('Request this Item', disabled: false)
           click_button 'Request this Item'
           expect(page).to have_content I18n.t("requests.submit.in_process_success")

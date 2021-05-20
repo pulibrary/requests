@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-datatables'
   s.add_dependency 'net-ldap'
+  s.add_dependency 'alma'
 
   s.add_development_dependency 'bixby', '~> 2.0'
   s.add_development_dependency 'sqlite3'

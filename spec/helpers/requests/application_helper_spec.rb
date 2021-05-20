@@ -339,7 +339,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "with item enum" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enum' => 'vvv' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enum_display' => 'vvv' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="vvv" />'
       end

@@ -23,7 +23,7 @@ en:
       pres_success: "We will notify you when the preservation work is complete and this item is available."
       in_process_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       annex_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
-      annexa_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
+      annex_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       annexb_success: "Request submitted. See confirmation email with details about when your item(s) will be available."
       ppl_success: ""
       clancy_in_library_success: "Request submitted. See confirmation email with details about when your item(s) will be available to view."
@@ -43,7 +43,7 @@ en:
     online:
       brief_msg: "This item is online. The material may be restricted to Princeton NetID Holders only."
       access_msg: 'Access to many online resources is restricted to Princeton Users.'
-    annexa:
+    annex:
       email: "forranx@princeton.edu"
       email_subject: "Annex Request"
       brief_msg: "Item offsite at Forrestal Annex. Requests for pick-up typically take 1-2 business days to process."
@@ -273,7 +273,7 @@ en:
       in_library_use_msg_html: To view your item, please follow the instructions in the email notifying you the item is available.  The instructions will indicate how to book a study-browse appointment in %{location_label}.
     marquand_in_process:
       email_destination: 'marquandoffsite@princeton.edu'
-    annexa_in_library:
+    annex_in_library:
       delivery_label: "Available for In Library Use"
       brief_msg: "Item off-site at Forrestal Annex facility. Request for delivery in 1-2 business days."
       email_subject: "Patron Initiated Catalog Request In Library Confirmation"

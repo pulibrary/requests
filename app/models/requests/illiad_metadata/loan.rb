@@ -46,7 +46,7 @@ module Requests
         end
 
         def volume_number(item)
-          vol = [item["user_supplied_enum"], item["edd_volume_number"], item["enum"]].reject(&:blank?)
+          vol = [item["user_supplied_enum"], item["edd_volume_number"], item["enum_display"]].reject(&:blank?)
           vol.join(', ')&.truncate(30)
         end
 

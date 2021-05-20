@@ -60,8 +60,8 @@ FactoryGirl.define do
 
   # missing item
   factory :request_missing_item, class: 'Requests::Request' do
-    system_id '9913891213506421'
-    mfhd '22256065790006421'
+    system_id '9915486663506421'
+    mfhd '22272105960006421'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end
@@ -150,8 +150,8 @@ FactoryGirl.define do
   end
 
   factory :missing_item, class: 'Requests::Request' do
-    system_id '9913891213506421'
-    mfhd_id '22256065790006421'
+    system_id '9915486663506421'
+    mfhd_id '22272105960006421'
     source 'pulsearch'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, patron: patron, mfhd: mfhd_id, source: source) }

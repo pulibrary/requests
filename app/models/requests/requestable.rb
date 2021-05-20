@@ -122,12 +122,12 @@ module Requests
 
     def in_process?
       return false unless item? && !scsb?
-      item[:status_label] == 'Acquisition technical services' # 'In Process' || item[:status] == 'On-Site - In Process'
+      in_process_statuses.include?(item[:status_label])
     end
 
     def on_order?
       return false unless item? && !scsb?
-      item[:status_label].starts_with?('Acquisition') || item[:status_label].starts_with?('Acquisition')
+      item[:status_label] == 'Acquisition'
     end
 
     def item?
@@ -291,6 +291,10 @@ module Requests
 
       def location_valid?
         location.key?(:library) && location[:library].key?(:code)
+      end
+
+      def in_process_statuses
+        ["Acquisition technical services"]
       end
   end
 end

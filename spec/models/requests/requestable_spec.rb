@@ -307,7 +307,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A circulating item' do
     let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
     let(:requestable) { request.requestable[0] }
-    # let(:item) {"barcode":"32101022548893","id":282628,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","enum":"vol.18","chron":"1992","enum_display":"vol.18 (1992)","label":"Firestone Library"}
+    # let(:item) {"barcode":"32101022548893","id":282628,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","enum_display":"vol.18","chron":"1992","enum_display":"vol.18 (1992)","label":"Firestone Library"}
     let(:no_circ_item_id) { requestable.item['id'] }
     let(:no_circ_item_type) { requestable.item['item_type'] }
     let(:no_circ_pick_up_location_id) { requestable.item['pickup_location_id'] }

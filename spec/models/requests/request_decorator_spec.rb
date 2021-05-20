@@ -129,8 +129,7 @@ describe Requests::RequestDecorator do
     end
 
     context "on_shelf services with item data that is enumerated" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum' => true) } }
-      # close everything for the alma migration
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum_display' => true) } }
       xit "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
       end

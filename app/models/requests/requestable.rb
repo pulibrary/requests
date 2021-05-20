@@ -90,8 +90,8 @@ module Requests
     end
 
     # merge these two
-    def annexa?
-      location_valid? && location[:library][:code] == 'annexa'
+    def annex?
+      location_valid? && location[:library][:code] == 'annex'
     end
 
     # locations temporarily moved to annex should work
@@ -218,7 +218,7 @@ module Requests
     end
 
     def open_libraries
-      open = ['firestone', 'annexa', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
+      open = ['firestone', 'annex', 'recap', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
       open << "online" if etas?
       open
     end

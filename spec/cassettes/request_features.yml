@@ -8589,4 +8589,57 @@ http_interactions:
         Library","temp_location_code":"lewis$resterm","temp_location_label":"Lewis
         Library"}]'
   recorded_at: Thu, 20 May 2021 18:55:15 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/arch$stacks.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 20:15:44 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 330f0d18-29e8-426d-94ad-0c4f0bcb0972
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"5930da18ce818a6854f76a4b0218857a"
+      X-Runtime:
+      - '0.139825'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Architecture Library","code":"arch$stacks","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Architecture
+        Library","code":"arch","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Architecture
+        Library","address":"School of Architecture Building, Second Floor Princeton,
+        NJ 08544","phone_number":"609-258-3256","contact_email":"ues@princeton.edu","gfa_pickup":"PW","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+  recorded_at: Thu, 20 May 2021 20:15:44 GMT
 recorded_with: VCR 6.0.0

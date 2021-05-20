@@ -556,15 +556,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 
-        # TODO: once Marquad in library use is available again it should show pick-up at marquand also
-        it 'Shows marqaund as an EDD option only' do
+        it 'Shows Marqaund Recap Item as an EDD option or In Library Use, no delivery' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/99117809653506421?mfhd=22203397490006421'
-          choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
+          visit '/requests/99117809653506421?mfhd=22203397510006421'
+          choose('requestable__delivery_mode_23203397500006421_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t('requests.recap_edd.brief_msg')
           expect(page).to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Available for In Library Use'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Article/Chapter Title (Required)'
           fill_in "Title", with: "my stuff"
@@ -585,7 +585,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
-          expect(email.subject).to eq("On the Shelf Paging Request (UESNB) NA1585.A23 S7 2020")
+          expect(email.subject).to eq("On the Shelf Paging Request (ARCH$STACKS) NA1585.A23 S7 2020")
           expect(email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
           expect(confirm_email.subject).to eq("Architecture Library Pick-up Request")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")

@@ -22,7 +22,7 @@ describe Requests::HelpMe do
         "item_id" => "23113812570006421",
         "delivery_mode_3059236" => "print",
         "barcode" => "32101044283008",
-        "enum" => "2000 (13th ed.)",
+        "enum_display" => "2000 (13th ed.)",
         "copy_number" => "1",
         "status" => "Not Charged",
         "type" => "help_me",

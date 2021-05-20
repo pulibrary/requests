@@ -62,12 +62,12 @@ module Requests
 
     def any_fill_in_eligible?
       fill_in = false
-      unless (requestable.first.services & ["on_order", "online"]).present?
+      unless (requestable.count == 1) && (requestable.first.services & ["on_order", "online"]).present?
         if requestable.any? { |r| !(r.services & fill_in_services).empty? }
-          if requestable.first.item_data?
-            fill_in = true if requestable.first.item.key?('enum')
+          if any_items?
+            fill_in = true if any_enumerated?
           else
-            fill_in = requestable.first.circulates?
+            fill_in = any_circulate?
           end
         end
       end
@@ -113,6 +113,18 @@ module Requests
 
       def fill_in_services
         ["annex", "annexb", "recap_no_items", "on_shelf"]
+      end
+
+      def any_circulate?
+        requestable.any?(&:circulates?)
+      end
+
+      def any_enumerated?
+        requestable.any? { |r| r.item&.key?('enum_display') }
+      end
+
+      def any_items?
+        requestable.any?(&:item_data?)
       end
   end
 end

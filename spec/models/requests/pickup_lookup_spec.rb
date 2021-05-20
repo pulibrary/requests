@@ -24,7 +24,7 @@ describe Requests::PickupLookup do
           "location_code" => "rcppa",
           "item_id" => "23173625050006421",
           "barcode" => "32101089306938",
-          "enum" => "Bd.1, T.1",
+          "enum_display" => "Bd.1, T.1",
           "copy_number" => "1",
           "status" => "Charged",
           "item_type" => "Gen",

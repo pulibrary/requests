@@ -1114,23 +1114,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  # 9994692
-  context 'When passed a holding with all online items' do
-    let(:params) do
-      {
-        system_id: '9999946923506421',
-        mfhd: '9800910',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
-    describe '#requestable' do
-      it "is all online" do
-        expect(request.all_items_online?).to be true
-      end
-    end
-  end
-
   # 9746776
   context 'When passed a holdings with mixed physical and online items' do
     let(:params) do

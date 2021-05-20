@@ -11,7 +11,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:recap_in_process_id) { '10247806?mfhd=10028102' }
     let(:on_order_id) { '10958705?mfhd=10672583' }
     let(:no_items_id) { '3018567?mfhd=3334792' }
-    let(:on_shelf_no_items_id) { '308?mfhd=341' }
+    let(:on_shelf_no_items_id) { '993083506421?mfhd=22261908670006421' }
     let(:temp_item_id) { '4815239' }
     let(:temp_id_mfhd) { '5018096' }
     let(:mutiple_items) { '9979171923506421' }
@@ -180,7 +180,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
           select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request Selected Items'
-          expect(page).to have_content I18n.t('requests.submit.annexa_success')
+          expect(page).to have_content I18n.t('requests.submit.annex_success')
         end
       end
     end
@@ -323,33 +323,33 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
-          choose('requestable__delivery_mode_341_print') # chooses 'print' radio button
+          choose('requestable__delivery_mode_22261908670006421_print') # chooses 'print' radio button
           select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
           expect(page).to have_content "ReCAP Paging Request"
         end
 
         it 'allows CAS patrons to locate an on_shelf record' do
-          stub_alma_hold_success('9770811', '9588984', '7502706', '960594184')
+          stub_alma_hold_success('9912636153506421', '22272105130006421', '23272105120006421', '960594184')
 
-          visit "/requests/9770811?mfhd=9588984"
+          visit "requests/9912636153506421?mfhd=22272105130006421"
           expect(page).to have_content 'Pick-up location: Firestone Library'
-          choose('requestable__delivery_mode_7502706_print') # chooses 'print' radio button
+          choose('requestable__delivery_mode_23272105120006421_print') # chooses 'print' radio button
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'Electronic Delivery'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
-          expect(email.subject).to eq("On the Shelf Paging Request (F) PG3455 .A2 2015")
+          expect(email.subject).to eq("On the Shelf Paging Request (FIRESTONE$STACKS) PR3187 .L443 1951")
           expect(email.to).to eq(["fstpage@princeton.edu"])
           expect(email.cc).to be_blank
-          expect(email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
-          expect(email.html_part.body.to_s).not_to have_content("9785988562320")
+          expect(email.html_part.body.to_s).to have_content("John Webster; a critical study")
+          expect(email.html_part.body.to_s).not_to have_content("9912636153506421") # does not show detailed metadata
           expect(confirm_email.subject).to eq("Firestone Library Pick-up Request")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
-          expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
+          expect(confirm_email.html_part.body.to_s).to have_content("John Webster; a critical study")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
@@ -387,7 +387,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows patrons to request a Forrestal annex' do
           visit '/requests/999455503506421?mfhd=2221072930006421'
-          choose('requestable__delivery_mode_1184074_print') # chooses 'print' radio button
+          choose('requestable__delivery_mode_2321072920006421_print') # chooses 'print' radio button
           # todo: should we still have the text?
           # expect(page).to have_content 'Item offsite at Forrestal Annex. Requests for pick-up'
           expect(page).to have_content 'Electronic Delivery'
@@ -725,7 +725,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           end
           select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request Selected Items'
-          expect(page).to have_content I18n.t('requests.submit.annexa_success')
+          expect(page).to have_content I18n.t('requests.submit.annex_success')
         end
 
         it 'allows a non circulating item with no item data to be digitized' do

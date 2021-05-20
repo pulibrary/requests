@@ -8003,4 +8003,123 @@ http_interactions:
         Library","code":"lewis","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Lewis
         Library","address":"Washington Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true}]}'
   recorded_at: Wed, 19 May 2021 17:47:56 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/99121095223506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 15:46:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 274ed17c-6f3d-4143-985f-7009f90c6655
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"9d5dc80316db4900c5361c792d70805a"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.019241'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5MTIxMDk1MjIzNTA2NDIxIiwibnVtZXJpY19pZF9iIjp0cnVlLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdfSIsInRpdGxlX2Rpc3BsYXkiOiJcIi4uLiBkYXVlcnQgZXdpZyBzY2hvzIhuIHVuZCB1bnZlcmFsdGV0IC4uLlwiIDogSm9oYW5uIE1pY2hhZWwgSGF5ZG4gLSBrZWluIHZlcmdlc3NlbmVyIE1laXN0ZXIhIC8gaGVyYXVzZ2VnZWJlbiB2b24gRXZhIE1hcmlhIFN0b8yIY2tsZXIgdW5kIEFnbmVzIEJyYW5kdG5lci4iLCJ0aXRsZV90IjpbIlwiLi4uIGRhdWVydCBld2lnIHNjaG/MiG4gdW5kIHVudmVyYWx0ZXQgLi4uXCIgOiBKb2hhbm4gTWljaGFlbCBIYXlkbiAtIGtlaW4gdmVyZ2Vzc2VuZXIgTWVpc3RlciEgLyBoZXJhdXNnZWdlYmVuIHZvbiBFdmEgTWFyaWEgU3RvzIhja2xlciB1bmQgQWduZXMgQnJhbmR0bmVyLiJdLCJ0aXRsZV9jaXRhdGlvbl9kaXNwbGF5IjpbIlwiLi4uIGRhdWVydCBld2lnIHNjaG/MiG4gdW5kIHVudmVyYWx0ZXQgLi4uXCIgOiBKb2hhbm4gTWljaGFlbCBIYXlkbiAtIGtlaW4gdmVyZ2Vzc2VuZXIgTWVpc3RlciEiXSwiY29tcGlsZWRfY3JlYXRlZF90IjpbIlwiLi4uIGRhdWVydCBld2lnIHNjaG/MiG4gdW5kIHVudmVyYWx0ZXQgLi4uXCIgOiBKb2hhbm4gTWljaGFlbCBIYXlkbiAtIGtlaW4gdmVyZ2Vzc2VuZXIgTWVpc3RlciEgLyBoZXJhdXNnZWdlYmVuIHZvbiBFdmEgTWFyaWEgU3RvzIhja2xlciB1bmQgQWduZXMgQnJhbmR0bmVyLiJdLCJwdWJfY3JlYXRlZF9kaXNwbGF5IjpbIldpZW4gOiBIb2xsaXR6ZXIsIFsyMDIwXSIsIsKpMjAyMCJdLCJwdWJfY3JlYXRlZF9zIjpbIldpZW4gOiBIb2xsaXR6ZXIsIFsyMDIwXSIsIsKpMjAyMCJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJXaWVuOiBIb2xsaXR6ZXIiXSwicHViX2RhdGVfZGlzcGxheSI6WyIyMDIwIl0sInB1Yl9kYXRlX3N0YXJ0X3NvcnQiOjIwMjAsImNhdGFsb2dlZF90ZHQiOiIyMDIwLTEyLTAyVDE1OjAzOjUxWiIsImZvcm1hdCI6WyJCb29rIl0sImRlc2NyaXB0aW9uX2Rpc3BsYXkiOlsiMjMwIHBhZ2VzIDogaWxsdXN0cmF0aW9ucyAoY2hpZWZseSBjb2xvcikgOyAyNSBjbSJdLCJkZXNjcmlwdGlvbl90IjpbIjIzMCBwYWdlcyA6IGlsbHVzdHJhdGlvbnMgKGNoaWVmbHkgY29sb3IpIDsgMjUgY20iXSwibnVtYmVyX29mX3BhZ2VzX2NpdGF0aW9uX2Rpc3BsYXkiOlsiMjMwIHBhZ2VzIl0sImJpYl9yZWZfbm90ZXNfZGlzcGxheSI6WyJJbmNsdWRlcyBiaWJsaW9ncmFwaGljYWwgcmVmZXJlbmNlcyBhbmQgaW5kZXhlcy4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiR2VybWFuIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJnZXIiXSwibGFuZ3VhZ2VfaWFuYV9zIjpbImRlIl0sImlzYm5fZGlzcGxheSI6WyI5NzgzOTkwMTI4NDY2IChoYXJkYm91bmQpIl0sInN0YW5kYXJkX25vXzFkaXNwbGF5Ijoie1wiSW50ZXJuYXRpb25hbCBBcnRpY2xlIE51bWJlclwiOltcIjk3ODM5OTAxMjg0NjZcIl19IiwiaXNibl9zIjpbIjk3ODM5OTAxMjg0NjYiXSwib3RoZXJfdmVyc2lvbl9zIjpbIjk3ODM5OTAxMjg0NjYiXSwiaG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCIyMjE4MzI2MjUzMDAwNjQyMVwiOntcImxvY2F0aW9uX2NvZGVcIjpcImZpcmVzdG9uZSRzdGFja3NcIixcImxvY2F0aW9uXCI6XCJGaXJlc3RvbmUgTGlicmFyeSAtIEZpcmVzdG9uZSBMaWJyYXJ5IFN0YWNrc1wiLFwibGlicmFyeVwiOlwiRmlyZXN0b25lIExpYnJhcnlcIn19IiwibG9jYXRpb25fY29kZV9zIjpbImZpcmVzdG9uZSRzdGFja3MiXSwibG9jYXRpb24iOlsiRmlyZXN0b25lIExpYnJhcnkiXSwibG9jYXRpb25fZGlzcGxheSI6WyJGaXJlc3RvbmUgTGlicmFyeSAtIEZpcmVzdG9uZSBMaWJyYXJ5IFN0YWNrcyJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbImZpcmVzdG9uZSRzdGFja3MiLCJGaXJlc3RvbmUgTGlicmFyeSJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIiJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyIiXSwiX3ZlcnNpb25fIjoxNjk3MDA2MjQ4MTE3OTI3OTM2LCJ0aW1lc3RhbXAiOiIyMDIxLTA0LTE0VDA5OjA3OjUzLjUzNFoifQ==
+  recorded_at: Thu, 20 May 2021 15:46:08 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99121095223506421/holdings/22183262530006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 15:46:10 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - e364a199-bd69-43df-886e-374cba43fd4a
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"c79a9168ae45f8296c5e71001f6646f3"
+      X-Runtime:
+      - '1.869517'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"","id":"23477399820006421","holding_id":"22183262530006421","copy_number":"","status":"Available","status_label":"Acquisition
+        technical services","status_source":"work_order","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"firestone$stacks","label":"Firestone
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Thu, 20 May 2021 15:46:10 GMT
 recorded_with: VCR 6.0.0

@@ -328,9 +328,9 @@ module Requests
       def load_items_by_mfhd
         mfhd_items = {}
         mfhd_items[@mfhd] = items_by_mfhd(@system_id, @mfhd)
-        #items_by_mfhd(@system_id, @mfhd).each do |item_info|
+        # items_by_mfhd(@system_id, @mfhd).each do |item_info|
         #  mfhd_items[item_info['id']] = load_item_for_holding(holding_id: @mfhd, item_info: item_info)
-        #end
+        # end
         mfhd_items
       end
 

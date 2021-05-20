@@ -417,8 +417,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/7053307?mfhd=6962326'
-          choose('requestable__delivery_mode_6357449_edd') # chooses 'edd' radio button
+          visit '/requests/9970533073506421?mfhd=22214952010006421'
+          choose('requestable__delivery_mode_23214952000006421_edd') # chooses 'edd' radio button
           expect(page).to have_content 'Pick-up location: Lewis Library'
           fill_in "Title", with: "my stuff"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -495,7 +495,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows filtering items by mfhd' do
-          visit '/requests/9979171923506421?mfhd=22230315710006421'
+          visit '/requests/9979171923506421?mfhd=22230315750006421'
           expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).not_to have_content 'Copy 2'
@@ -509,9 +509,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           within(".user-supplied-input") do
             check('requestable__selected')
           end
-          fill_in "requestable_user_supplied_enum_10320354", with: "ABC ZZZ"
-          choose('requestable__delivery_mode_10320354_print') # choose the print radio button
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          fill_in "requestable_user_supplied_enum_22217601660006421", with: "ABC ZZZ"
+          choose('requestable__delivery_mode_22217601660006421_print') # choose the print radio button
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("Paging Request for Firestone Library")

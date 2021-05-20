@@ -8484,4 +8484,109 @@ http_interactions:
         Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
         Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
   recorded_at: Thu, 20 May 2021 17:25:16 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9970533073506421/holdings/22214952010006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 18:55:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 1dc67ca7-5d6e-48fb-b599-fe94ee1e86df
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"90ca6a4f182f79aba85e0de52c3aa4d9"
+      X-Runtime:
+      - '1.702143'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101051217659","id":"23214952000006421","holding_id":"22214952010006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Closed","pickup_location_id":"pn","pickup_location_code":"pn","location":"recap$pn","label":"ReCAP","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Thu, 20 May 2021 18:55:12 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9979171923506421/holdings/22230315750006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 18:55:14 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - e424dbff-46ba-4cd1-83cc-3bcf1e23aba7
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"c2e8af16775118bf932cf10cc4d8deba"
+      X-Runtime:
+      - '1.237552'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101092126620","id":"23230315740006421","holding_id":"22230315750006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"lewis$resterm","label":"Lewis
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":true,"temp_library_code":"lewis","temp_library_label":"Lewis
+        Library","temp_location_code":"lewis$resterm","temp_location_label":"Lewis
+        Library"}]'
+  recorded_at: Thu, 20 May 2021 18:55:15 GMT
 recorded_with: VCR 6.0.0

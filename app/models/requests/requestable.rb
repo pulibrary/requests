@@ -218,7 +218,7 @@ module Requests
     end
 
     def open_libraries
-      open = ['firestone', 'annex', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
+      open = ['firestone', 'annex', 'marquand', 'mendel', 'stokes', 'eastasian', 'arch', 'lewis', 'engineering']
       open << "online" if etas?
       open
     end

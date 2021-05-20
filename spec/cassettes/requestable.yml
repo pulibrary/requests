@@ -4635,4 +4635,194 @@ http_interactions:
       string: '[{"barcode":"32101099186403","id":"2393023350006421","holding_id":"2293023360006421","copy_number":"0","status":"Available","status_label":"Item
         in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"pa","pickup_location_code":"pa","location":"recap$pa","label":"ReCAP","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
   recorded_at: Thu, 13 May 2021 03:25:23 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/9915486663506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 15:45:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 7efa2452-abe4-44f0-b5b8-bed5d1e504ed
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"a31402c18dcff801b4ab3ac2068bccfb"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.028425'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: '{"id":"9915486663506421","numeric_id_b":true,"author_display":["Broecker,
+        Wallace S., 1931-"],"author_citation_display":["Broecker, Wallace S."],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Broecker,
+        Wallace S.\"}","author_s":["Broecker, Wallace S., 1931-"],"marc_relator_display":["Author"],"title_display":"Chemical
+        oceanography [by] Wallace S. Broecker. Under the general editorship of Kenneth
+        S. Deffeyes.","title_t":["Chemical oceanography [by] Wallace S. Broecker.
+        Under the general editorship of Kenneth S. Deffeyes."],"title_citation_display":["Chemical
+        oceanography"],"compiled_created_t":["Chemical oceanography [by] Wallace S.
+        Broecker. Under the general editorship of Kenneth S. Deffeyes."],"pub_created_display":["New
+        York, Harcourt Brace Jovanovich [1974]"],"pub_created_s":["New York, Harcourt
+        Brace Jovanovich [1974]"],"pub_citation_display":["New York: Harcourt Brace
+        Jovanovich"],"pub_date_display":["1974"],"pub_date_start_sort":1974,"cataloged_tdt":"2020-12-03T02:43:53Z","format":["Book"],"description_display":["x,
+        214 p. illus. 24 cm."],"description_t":["x, 214 p. illus. 24 cm."],"number_of_pages_citation_display":["x,
+        214 p."],"bib_ref_notes_display":["Includes bibliographical references."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"lc_subject_display":["Chemical
+        oceanography"],"subject_facet":["Chemical oceanography"],"isbn_display":["0155064371"],"lccn_display":["   74001519  "],"lccn_s":["74001519"],"isbn_s":["9780155064379"],"oclc_s":["983935"],"other_version_s":["9780155064379","ocm00983935"],"holdings_1display":"{\"22272105960006421\":{\"location_code\":\"lewis$stacks\",\"location\":\"Lewis
+        Library - Lewis Library (SCI)\",\"library\":\"Lewis Library\",\"call_number\":\"GC98.B76\",\"call_number_browse\":\"GC98.B76\",\"items\":[{\"holding_id\":\"22272105960006421\",\"id\":\"23272105950006421\",\"status_at_load\":\"0\",\"barcode\":\"32101009400266\",\"copy_number\":\"2\"}]},\"22272105920006421\":{\"location_code\":\"lewis$stacks\",\"location\":\"Lewis
+        Library - Lewis Library (SCI)\",\"library\":\"Lewis Library\",\"call_number\":\"GC98.B76\",\"call_number_browse\":\"GC98.B76\",\"items\":[{\"holding_id\":\"22272105920006421\",\"id\":\"23272105910006421\",\"status_at_load\":\"1\",\"barcode\":\"32101011081369\",\"copy_number\":\"4\"}]},\"22272105940006421\":{\"location_code\":\"lewis$stacks\",\"location\":\"Lewis
+        Library - Lewis Library (SCI)\",\"library\":\"Lewis Library\",\"call_number\":\"GC98.B76\",\"call_number_browse\":\"GC98.B76\",\"items\":[{\"holding_id\":\"22272105940006421\",\"id\":\"23272105930006421\",\"status_at_load\":\"1\",\"barcode\":\"32101010100947\",\"copy_number\":\"3\"}]}}","recap_notes_display":["
+        - "],"location_code_s":["lewis$stacks"],"location":["Lewis Library"],"location_display":["Lewis
+        Library - Lewis Library (SCI)"],"advanced_location_s":["lewis$stacks","Lewis
+        Library"],"name_title_browse_s":["Broecker, Wallace S., 1931-. Chemical oceanography"],"call_number_display":["GC98.B76
+        "],"call_number_browse_s":["GC98.B76 "],"call_number_locator_display":["GC98.B76"],"_version_":1696957394103304192,"timestamp":"2021-04-13T20:11:22.734Z"}'
+  recorded_at: Thu, 20 May 2021 15:45:03 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/lewis$stacks.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 15:45:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - f54c790a-58dd-4207-a70d-50bc784de313
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"be853da116d252a3b9bf54c6161f8802"
+      X-Runtime:
+      - '0.050674'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Lewis Library (SCI)","code":"lewis$stacks","aeon_location":false,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Lewis
+        Library","code":"lewis","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Lewis
+        Library","address":"Washington Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+  recorded_at: Thu, 20 May 2021 15:45:03 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9915486663506421/holdings/22272105960006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 20 May 2021 15:45:05 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 9a1e5de0-72a0-4841-a1c5-ad043d3579bf
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"625c5f41972fc727b6456f1500b4a043"
+      X-Runtime:
+      - '1.630926'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101009400266","id":"23272105950006421","holding_id":"22272105960006421","copy_number":"2","status":"Not
+        Available","status_label":"Lost","status_source":"process_type","process_type":"LOST_LOAN","on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"lewis$stacks","label":"Lewis
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Thu, 20 May 2021 15:45:05 GMT
 recorded_with: VCR 6.0.0

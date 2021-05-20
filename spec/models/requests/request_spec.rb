@@ -1001,11 +1001,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed a Recallable Item that is eligible for Borrow Direct" do
+  context "When passed a Loaned Item that is eligible for Borrow Direct" do
     let(:params) do
       {
-        system_id: '9997381363506421',
-        mfhd: '22209576230006421',
+        system_id: '993703593506421',
+        mfhd: '22272145180006421',
         patron: patron
       }
     end

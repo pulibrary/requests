@@ -67,7 +67,7 @@ class Requests::Requestable
     end
 
     def charged?
-      unavailable_statuses.include?(status) || unavailable_statuses.include?(scsb_status)
+      unavailable_statuses.include?(status_label) || unavailable_statuses.include?(scsb_status)
     end
 
     def status

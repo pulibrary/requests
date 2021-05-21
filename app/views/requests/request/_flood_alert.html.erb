@@ -1,3 +1,3 @@
-    <% if requestable.library_code == 'lewis' || requestable.library_code == 'engineering' # lewis library flood cleanup %>
+    <% if requestable.library_code == 'engineering' # Eng library flood cleanup %>
       <div  class='alert alert-warning' ><%= I18n.t("requests.lewis_flood_message") %> </div>    
     <% end %>

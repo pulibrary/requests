@@ -445,7 +445,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_voyager_hold_success('7053307', '6322174', '77777')
           visit '/requests/7053307?mfhd=6934399'
           expect(page).to have_content 'Pick-up location: Lewis Library'
-          expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           check 'requestable_selected_6322174'
           # temporary change issue 438
           # choose('requestable__delivery_mode_6322174_print') # chooses 'edd' radio button
@@ -483,7 +482,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/9594840?mfhd=9436228'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
-          expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).to have_css '.submit--request'
         end
 
@@ -502,7 +500,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
 
         it 'allows filtering items by mfhd' do
           visit '/requests/7917192?mfhd=7699134'
-          expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).not_to have_content 'Copy 2'
           expect(page).not_to have_content 'Copy 3'
@@ -1428,7 +1425,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             .to_return(status: 200, body: responses[:note_created], headers: {})
           visit '/requests/7053307?mfhd=6934399'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
-          expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           within('#request_6322174') do
             fill_in "Article/Chapter Title", with: "ABC"
           end
@@ -1448,7 +1444,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/9594840?mfhd=9436228'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
-          expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).to have_css '.submit--request'
         end
 
@@ -1456,7 +1451,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/7917192?mfhd=7699134'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_content 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'
           expect(page).not_to have_content 'Copy 2'
           expect(page).not_to have_content 'Copy 3'
         end

@@ -21,7 +21,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#services' do
       it 'has a service on on_shelf' do
-        expect(requestable.services).to contain_exactly('on_shelf', 'on_shelf_edd')
+        # Technical - Migration
+        expect(requestable.services).to contain_exactly("bd", "ill")
       end
     end
 

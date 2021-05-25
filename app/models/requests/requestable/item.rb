@@ -75,7 +75,7 @@ class Requests::Requestable
     end
 
     def scsb_status
-      self[:scsb_status]
+      self[:scsb_status] || self[:status]
     end
 
     def status_label

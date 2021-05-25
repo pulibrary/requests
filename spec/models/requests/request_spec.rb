@@ -263,8 +263,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "A system id that has a holding with item on reserve" do
     let(:params) do
       {
-        system_id: '9981794023506421',
-        mfhd: '22237592660006421',
+        system_id: '9931973043506421',
+        mfhd: '22185253590006421',
         patron: patron
       }
     end
@@ -655,8 +655,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9996025493506421',
-        mfhd: '22152849890006421',
+        system_id: '9954176583506421',
+        mfhd: '22201569680006421',
         patron: patron
       }
     end
@@ -702,8 +702,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9996025513506421',
-        mfhd: '22152847900006421',
+        system_id: '9954176583506421',
+        mfhd: '22201569680006421',
         patron: patron
       }
     end
@@ -791,8 +791,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a mfhd with missing items" do
     let(:params) do
       {
-        system_id: '9920022063506421',
-        mfhd: '22140105450006421',
+        system_id: '993704573506421',
+        mfhd: '22272118950006421',
         patron: patron
       }
     end
@@ -889,7 +889,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '996160863506421',
         patron: patron,
-        mfhd: '22256352620006421'
+        mfhd: '22256352610006421'
       }
     end
     let(:request) { described_class.new(params) }
@@ -951,7 +951,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '994264203506421',
-        mfhd: '2284673070006421',
+        mfhd: '2284665060006421',
         patron: patron
       }
     end
@@ -1001,11 +1001,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed a Recallable Item that is eligible for Borrow Direct" do
+  context "When passed a Loaned Item that is eligible for Borrow Direct" do
     let(:params) do
       {
-        system_id: '9997381363506421',
-        mfhd: '22209576230006421',
+        system_id: '993703593506421',
+        mfhd: '22272145180006421',
         patron: patron
       }
     end
@@ -1110,23 +1110,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe '#requestable' do
       it "has an requestable items" do
         expect(request.requestable.size).to be >= 1
-      end
-    end
-  end
-
-  # 9994692
-  context 'When passed a holding with all online items' do
-    let(:params) do
-      {
-        system_id: '9999946923506421',
-        mfhd: '9800910',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
-    describe '#requestable' do
-      it "is all online" do
-        expect(request.all_items_online?).to be true
       end
     end
   end
@@ -1249,7 +1232,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9996968113506421',
-        mfhd: '22117193590006421',
+        mfhd: '22117193570006421',
         patron: patron
       }
     end

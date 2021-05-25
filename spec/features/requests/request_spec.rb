@@ -5,7 +5,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   # rubocop:disable RSpec/MultipleExpectations
   describe "request form" do
     let(:voyager_id) { '9994933183506421?mfhd=22131438430006421' }
-    let(:online_id) { '11169709?mfhd=10878427' }
+    # let(:online_id) { '11169709?mfhd=10878427' }
     let(:thesis_id) { 'dsp01rr1720547' }
     let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
     let(:recap_in_process_id) { '10247806?mfhd=10028102' }
@@ -251,10 +251,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         #   expect(page).to have_content 'Help Me Get It'
         # end
 
-        it 'does display the online access message' do
-          visit "/requests/#{online_id}"
-          expect(page).to have_content 'Online'
-        end
+        # it 'does display the online access message' do
+        #   visit "/requests/#{online_id}"
+        #   expect(page).to have_content 'Online'
+        # end
 
         it 'allows CAS patrons to request In-Process items and can only be delivered to their holding library' do
           visit "/requests/#{in_process_id}"
@@ -317,10 +317,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows CAS patrons to request a record that has no item data' do
-          visit "/requests/#{no_items_id}"
+          visit "/requests/99113283293506421?mfhd=2256094420006421"
           check('requestable__selected', exact: true)
           fill_in 'requestable[][user_supplied_enum]', with: 'Some Volume'
-          expect(page).to have_button('Request Selected Items', disabled: false)
+          expect(page).to have_button('Request this Item', disabled: false)
         end
 
         it 'allows CAS patrons to locate an on_shelf record that has no item data' do
@@ -360,13 +360,16 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows patrons to request a physical recap item' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9999443553506421", callNumber: "Oversize DT549 .E274q", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
+            .with(body: hash_including(author: "", bibId: "9999443553506421", callNumber: "DT549 .E274q Oversize", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
                                        itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
             .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/9944355?mfhd=9757511'
+          stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+            .with(body: hash_including(bibliographicId: "9999443553506421", institutionId: "PUL"))
+            .to_return(status: 200, body: "[{\"itemBarcode\":\"32101098722844\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]", headers: {})
+          visit '/requests/9999443553506421?mfhd=22202822560006421'
           expect(page).to have_content 'Electronic Delivery'
           select('Firestone Library', from: 'requestable__pick_up')
-          choose('requestable__delivery_mode_7467161_edd') # chooses 'edd' radio button
+          choose('requestable__delivery_mode_23202822550006421_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
           fill_in "Article/Chapter Title", with: "ABC"
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -863,7 +866,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "allows a columbia item that is not in hathi etas to be picked up or digitized" do
-          # TODO: - No scsb items are indexed
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=21154437")
             .to_return(status: 200, body: '[]')
           stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2879197/raw")
@@ -892,7 +894,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "allows a columbia item that is open access to be picked up or digitized" do
-          # TODO: - No scsb items are indexed
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=502557695")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"9938633913506421","status":"ALLOW","origin":"CUL"}]')
           stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-4634001/raw")
@@ -921,7 +922,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "allows a columbia item that is ETAS to only be digitized" do
-          # TODO: - No scsb items are indexed
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=19774500")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"99310000663506421","status":"DENY","origin":"CUL"}]')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
@@ -1085,7 +1085,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it "shows in library use option for SCSB ReCAP items in Firestone" do
-          # TODO: - Can not test SCSB yet
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))

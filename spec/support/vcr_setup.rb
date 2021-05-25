@@ -9,7 +9,4 @@ VCR.configure do |c|
   c.ignore_request do |request|
     request.uri.include? 'patron'
   end
-  c.ignore_request do |request|
-    request.uri.include? 'SCSB-' # don't load SCSB calls to pulsearch
-  end
 end

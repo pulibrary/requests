@@ -846,34 +846,38 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
-          it 'allows an etas item to be digitized' do
-            stub_request(:get, patron_url)
-              .to_return(status: 200, body: responses[:found], headers: {})
-            stub_request(:post, transaction_url)
-              .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Edwards, Ruth Dudley", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "James Connolly", "PhotoItemPublisher" => "Dublin: Gill and Macmillan", "ISSN" => "9780717111121 9780717111114", "CallNumber" => "DA965.C7 E36 1981", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/162632", "PhotoJournalYear" => "1981", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "8391816", "DocumentType" => "Book", "Location" => "Online - HathiTrust Emergency Temporary Access", "PhotoArticleTitle" => "ABC"))
-              .to_return(status: 200, body: responses[:transaction_created], headers: {})
-            stub_request(:post, transaction_note_url)
-              .to_return(status: 200, body: responses[:note_created], headers: {})
-            visit '/requests/162632?mfhd=179618'
-            expect(page).to have_content 'Electronic Delivery'
-            expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access DA965.C7 E36 1981'
-            expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
-            expect(page).not_to have_content('make an appointment')
-            fill_in "Article/Chapter Title", with: "ABC"
-            expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-            expect(page).to have_content 'Request submitted'
-            confirm_email = ActionMailer::Base.deliveries.last
-            expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-            expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.to).to eq(["a@b.com"])
-            expect(confirm_email.cc).to be_blank
-            expect(confirm_email.html_part.body.to_s).to have_content("James Connolly")
-          end
+        xit "allows a columbia item that is not in hathi etas to be picked up or digitized" do
+          stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=21154437")
+            .to_return(status: 200, body: '[]')
+          stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2879197/raw")
+            .to_return(status: 200, body: fixture('/SCSB-2879197.json'), headers: {})
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
+            .with(body: hash_including(author: "", bibId: "SCSB-2879197", callNumber: "PG3479.3.I84 Z778 1987g", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU01805363"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/SCSB-2879197'
+          expect(page).to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'Electronic Delivery'
+          choose('requestable__delivery_mode_4497908_print') # chooses 'print' radio button
+          expect(page).to have_content('Pick-up location: Firestone Circulation Desk')
+          expect(page).to have_content 'ReCAP PG3479.3.I84 Z778 1987g'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
+          expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received. We will process the requests as soon as possible")
+          expect(confirm_email.html_part.body.to_s).to have_content("Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva")
+          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+        end
 
         xit "allows a columbia item that is open access to be picked up or digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=502557695")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"9938633913506421","status":"ALLOW","origin":"CUL"}]')
+          stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-4634001/raw")
+            .to_return(status: 200, body: fixture('/SCSB-4634001.json'), headers: {})
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-4634001", callNumber: "4596 2907.88 1901", chapterTitle: "", deliveryLocation: "QX", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU51481294"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Chong wen men shang shui ya men xian xing shui ze. 崇文門 商稅 衙門 現行 稅則.", username: "jstudent", volume: ""))
@@ -900,6 +904,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=19774500")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"99310000663506421","status":"DENY","origin":"CUL"}]')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2879206/raw")
+            .to_return(status: 200, body: fixture('/SCSB-2879206.json'), headers: {})
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "SCSB-2879206", callNumber: "ML3477 .G74 1989g", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["CU61436348"], itemOwningInstitution: "CUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Let's face the music : the golden age of popular song", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
@@ -1048,41 +1054,27 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-          it "only has edd for a marquand in library use item at Clancy that is unavailable" do
-            stub_request(:get, patron_url)
-              .to_return(status: 200, body: responses[:found], headers: {})
-            stub_request(:post, transaction_url)
-              .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Cambridge, Mass: Harvard University P...", "ISSN" => "9780674030930", "CallNumber" => "N7668.D6 J64 2008", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487",
-                                         "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy UNAVAIL EDD", "AcceptNonEnglish" => true, "ESPNumber" => "213495319", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "ABC"))
-              .to_return(status: 200, body: responses[:transaction_created], headers: {})
-            stub_request(:post, transaction_note_url)
-              .with(body: hash_including("Note" => "Digitization Request Marquand Item at Clancy (Unavailable)"))
-              .to_return(status: 200, body: responses[:note_created], headers: {})
-            stub_clancy_status(barcode: "32101072349515", status: "Item In Accession Process")
-            visit '/requests/5636487?mfhd=5744248'
-            expect(page).not_to have_content 'Physical Item Delivery'
-            expect(page).not_to have_content 'Available for In Library Use'
-            expect(page).to have_content 'Electronic Delivery'
-            choose('requestable__delivery_mode_5214248_edd') # chooses 'edd' radio button
-            expect(page).to have_content I18n.t('requests.clancy_unavailable_edd.brief_msg')
-            expect(page).to have_content I18n.t("requests.clancy_unavailable_edd.note_msg")
-            fill_in "Article/Chapter Title", with: "ABC"
-            expect(page).not_to have_content("translation missing")
-            expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
-            confirm_email = ActionMailer::Base.deliveries.last
-            expect(confirm_email.subject).to eq("Patron Initiated Catalog Request EDD Confirmation")
-            expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
-            expect(confirm_email.html_part.body.to_s).to have_content(I18n.t("requests.clancy_unavailable_edd.email_conf_msg"))
-            expect(confirm_email.html_part.body.to_s).to have_content("ABC")
-            marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
-            expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan - Unavailable at Clancy")
-            expect(marquand_email.html_part.body.to_s).to have_content("Dogs : history, myth, art")
-            expect(marquand_email.html_part.body.to_s).to have_content("ABC")
-            expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
-            expect(marquand_email.cc).to be_blank
-          end
+        xit "shows in library use option for SCSB ReCAP items in Firestone" do
+          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+          stub_request(:post, scsb_url)
+            .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
+            .to_return(status: 200, body: good_response, headers: {})
+          stub_scsb_availability(bib_id: ".b215204128", institution_id: "NYPL", barcode: '33433121206696')
+          stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-8953469/raw")
+            .to_return(status: 200, body: fixture('/SCSB-8953469.json'), headers: {})
+          visit 'requests/SCSB-8953469'
+          expect(page).not_to have_content 'Help Me Get It'
+          expect(page).to have_content 'Available for In Library'
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(a_request(:post, scsb_url)).to have_been_made
+          expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
+        end
 
         xit 'Shows marqaund recap item as an EDD or In Library Use' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"

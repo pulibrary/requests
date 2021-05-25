@@ -1142,6 +1142,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
     describe '#pick_up_locations' do
       it 'has a single pick-up location' do
+        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-5235419/raw")
+          .to_return(status: 200, body: fixture('/SCSB-5235419.json'), headers: {})
         stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
           .to_return(status: 200, body: '[]')
         expect(requestable.pick_up_locations.size).to eq(1)
@@ -1162,6 +1164,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_scsb_no_oclc) }
     let(:requestable) { request.requestable.first }
+
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-5396104/raw")
+        .to_return(status: 200, body: fixture('/SCSB-5396104.json'), headers: {})
+    end
 
     describe '#etas_limited_access' do
       it 'is not restricted' do
@@ -1188,6 +1195,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
 
     before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2650865/raw")
+        .to_return(status: 200, body: fixture('/SCSB-2650865.json'), headers: {})
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=29065769")
         .to_return(status: 200, body: '[]')
       stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
@@ -1221,6 +1230,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
 
     before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2901229/raw")
+        .to_return(status: 200, body: fixture('/SCSB-2901229.json'), headers: {})
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=17322905")
         .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
       stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")

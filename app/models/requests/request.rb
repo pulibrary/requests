@@ -370,7 +370,11 @@ module Requests
       end
 
       def item_current_location(item)
-        item['in_temp_library'] || item['location']
+        if item['in_temp_library']
+          item['temp_location_code']
+        else
+          item['location']
+        end
       end
 
       def include_etas_in_holdings(holdings)

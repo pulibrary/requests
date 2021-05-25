@@ -9015,56 +9015,6 @@ http_interactions:
   recorded_at: Fri, 21 May 2021 17:39:57 GMT
 - request:
     method: get
-    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/scsbcul.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Tue, 25 May 2021 12:11:31 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - 0f665235-5449-4c07-8b8a-0dadb5c27c17
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Etag:
-      - W/"9bb9d008a767f4828d78445deee4050f"
-      X-Runtime:
-      - '0.540189'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: '{"label":"","code":"scsbcul","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":null,"library":{"label":"ReCAP","code":"recap","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
-  recorded_at: Tue, 25 May 2021 12:11:31 GMT
-- request:
-    method: get
     uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-2879197/holdings//availability.json
     body:
       encoding: US-ASCII
@@ -9432,7 +9382,9 @@ http_interactions:
       - Phusion Passenger 6.0.7
     body:
       encoding: UTF-8
-      string: '{"label":"","code":"scsbnypl","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":null,"library":{"label":"ReCAP","code":"recap","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+      string: '{"label":"","code":"scsbnypl","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":null,"library":{"label":"ReCAP","code":"recap","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
+        258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
   recorded_at: Tue, 25 May 2021 12:11:35 GMT
 - request:
     method: get
@@ -9581,4 +9533,173 @@ http_interactions:
       encoding: UTF-8
       string: '{"status":404,"error":"Not Found"}'
   recorded_at: Tue, 25 May 2021 15:12:26 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/scsbcul.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Tue, 25 May 2021 17:53:46 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - a92e91d5-59ac-4eca-9ce7-1031cb8ded19
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"6da3f24a5f6ed5367e1a84a85b199739"
+      X-Runtime:
+      - '0.013290'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"scsbcul","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":null,"library":{"label":"ReCAP","code":"recap","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
+        258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false}]}'
+  recorded_at: Tue, 25 May 2021 17:53:46 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/99113283293506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Tue, 25 May 2021 18:53:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 9c75f91a-9515-4eca-b8b0-620b0e5c2704
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"3018510ae9c0d8f38f33e1b446bc8768"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.016572'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5MTEzMjgzMjkzNTA2NDIxIiwibnVtZXJpY19pZF9iIjp0cnVlLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdfSIsInRpdGxlX2Rpc3BsYXkiOiJMb2dvdGVjaG5pYSA6IGRla2FwZW50aGXMhG1lcm8gcGhpbG9sb2dpa28ga2FpIGtyaXRpa28gcGVyaW9kaWtvLiIsInRpdGxlX3QiOlsiTG9nb3RlY2huaWEgOiBkZWthcGVudGhlzIRtZXJvIHBoaWxvbG9naWtvIGthaSBrcml0aWtvIHBlcmlvZGlrby4iXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyJMb2dvdGVjaG5pYSA6IGRla2FwZW50aGXMhG1lcm8gcGhpbG9sb2dpa28ga2FpIGtyaXRpa28gcGVyaW9kaWtvIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJMb2dvdGVjaG5pYSA6IGRla2FwZW50aGXMhG1lcm8gcGhpbG9sb2dpa28ga2FpIGtyaXRpa28gcGVyaW9kaWtvLiJdLCJwdWJfY3JlYXRlZF9kaXNwbGF5IjpbIkF0aGXMhG5hIDogTGVvzIRuaWRhcyBQYXVsaWRlzIQsIFsxOS0tP10tIl0sInB1Yl9jcmVhdGVkX3MiOlsiQXRoZcyEbmEgOiBMZW/MhG5pZGFzIFBhdWxpZGXMhCwgWzE5LS0/XS0iXSwicHViX2NpdGF0aW9uX2Rpc3BsYXkiOlsiQXRoZcyEbmE6IExlb8yEbmlkYXMgUGF1bGlkZcyEIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiOTk5OSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0Ijo5OTk5LCJwdWJfZGF0ZV9lbmRfc29ydCI6OTk5OSwiY2F0YWxvZ2VkX3RkdCI6IjIwMjAtMTItMDJUMDU6MzM6MjlaIiwiZm9ybWF0IjpbIkpvdXJuYWwiXSwiZnJlcXVlbmN5X2Rpc3BsYXkiOlsiRGVrYXBlbnRoZcyEbWVyZcyEIl0sImxhbmd1YWdlX2ZhY2V0IjpbIkdyZWVrLCBNb2Rlcm4gKDE0NTMtICkiXSwibGFuZ3VhZ2VfY29kZV9zIjpbImdyZSJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiZWwiXSwic291cmNlX2FjcXVpc2l0aW9uX2Rpc3BsYXkiOlsiR2lmdCBvZiBLb3N0YXMgYW5kIExpbmRhIE15cnNpYWRlcyB0byB0aGUgUHJvZ3JhbSBpbiBIZWxsZW5pYyBTdHVkaWVzIGZvciB0aGUgUHJpbmNldG9uIFVuaXZlcnNpdHkgTGlicmFyeS4iXSwibGNfc3ViamVjdF9kaXNwbGF5IjpbIk1vZGVybiBncmVlayBsYW5ndWFnZSBhbmQgTGl0ZXJhdHVyZeKAlFBlcmlvZGljYWxzIl0sInN1YmplY3RfZmFjZXQiOlsiTW9kZXJuIGdyZWVrIGxhbmd1YWdlIGFuZCBMaXRlcmF0dXJl4oCUUGVyaW9kaWNhbHMiLCJQZXJpb2RpY2FscyJdLCJsY2dmdF9zIjpbIlBlcmlvZGljYWxzIl0sIm9jbGNfcyI6WyI4ODA1MDIzOTIiXSwib3RoZXJfdmVyc2lvbl9zIjpbIm9jbjg4MDUwMjM5MiJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjIyNTYwOTQ0MjAwMDY0MjFcIjp7XCJsb2NhdGlvbl9jb2RlXCI6XCJyZWNhcCRwYVwiLFwibG9jYXRpb25cIjpcIlJlQ0FQIC0gUmVtb3RlIFN0b3JhZ2VcIixcImxpYnJhcnlcIjpcIlJlQ0FQXCJ9fSIsImxvY2F0aW9uX2NvZGVfcyI6WyJyZWNhcCRwYSJdLCJsb2NhdGlvbiI6WyJSZUNBUCJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIlJlQ0FQIC0gUmVtb3RlIFN0b3JhZ2UiXSwiYWR2YW5jZWRfbG9jYXRpb25fcyI6WyJyZWNhcCRwYSIsIlJlQ0FQIl0sImNhbGxfbnVtYmVyX2Rpc3BsYXkiOlsiIl0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIiJdLCJfdmVyc2lvbl8iOjE2OTY5ODIxNDE3Mjc5MzI0MTYsInRpbWVzdGFtcCI6IjIwMjEtMDQtMTRUMDI6NDQ6NDMuOTMwWiJ9
+  recorded_at: Tue, 25 May 2021 18:53:32 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99113283293506421/holdings/2256094420006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Tue, 25 May 2021 18:53:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - f7b57d8c-ddae-4b6a-b87c-cd902b7a8742
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"4f53cda18c2baa0c0354bb5f9a3ecbe5"
+      X-Runtime:
+      - '1.856512'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: "[]"
+  recorded_at: Tue, 25 May 2021 18:53:34 GMT
 recorded_with: VCR 6.0.0

@@ -1400,7 +1400,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_single_holding_item, headers: {})
       stub_scsb_availability(bib_id: "5992543", institution_id: "CUL", barcode: 'CU11388110')
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=65339789")
@@ -1446,7 +1446,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_edd_item, headers: {})
       stub_scsb_availability(bib_id: "9488888", institution_id: "CUL", barcode: 'MR00429228')
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=748826840")
@@ -1482,7 +1482,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_no_format, headers: {})
       stub_scsb_availability(bib_id: ".b106574619", institution_id: "NYPL", barcode: '33433088591924')
     end

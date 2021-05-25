@@ -417,8 +417,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
     let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
-    let(:requestable_holding) { request.requestable.select { |r| r.holding['675722'] } }
-    let(:holding_id) { '675722' }
+    let(:requestable_holding) { request.requestable.select { |r| r.holding['22256352610006421'] } }
+    let(:holding_id) { '22256352610006421' }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     let(:enumeration) { 'v.7' }
 

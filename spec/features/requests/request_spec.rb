@@ -5,7 +5,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
   # rubocop:disable RSpec/MultipleExpectations
   describe "request form" do
     let(:voyager_id) { '9994933183506421?mfhd=22131438430006421' }
-    # let(:online_id) { '11169709?mfhd=10878427' }
     let(:thesis_id) { 'dsp01rr1720547' }
     let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
     let(:recap_in_process_id) { '10247806?mfhd=10028102' }
@@ -249,11 +248,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         #   visit "/requests/#{voyager_id}"
         #   expect(page).to have_content "Requests for ReCAP materials will be unavailable during a planned system update"
         #   expect(page).to have_content 'Help Me Get It'
-        # end
-
-        # it 'does display the online access message' do
-        #   visit "/requests/#{online_id}"
-        #   expect(page).to have_content 'Online'
         # end
 
         it 'allows CAS patrons to request In-Process items and can only be delivered to their holding library' do
@@ -628,10 +622,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
 
-        it 'allows guest patrons to access Online items' do
-          # TODO: online no longer have holdings in alma so no mfhd
+        it 'doe snot error for Online items' do
           visit '/requests/9999946923506421?mfhd=9800910'
-          expect(page).to have_content 'www.jstor.org'
+          expect(page).to have_content 'there are no requestable items for this record'
         end
 
         it 'Borrow Direct successful on Missing items' do
@@ -733,12 +726,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'allows cas user to request from Annex or Firestone in mixed holding' do
-          visit '/requests/9922868943506421?mfhd=22109192590006421'
+          visit '/requests/9922868943506421?mfhd=22109192600006421'
           expect(page).to have_field 'requestable__selected', disabled: false
-          expect(page).to have_field 'requestable_user_supplied_enum_2576882'
-          within('#request_user_supplied_2576882') do
+          expect(page).to have_field 'requestable_user_supplied_enum_22109192600006421'
+          within('#request_user_supplied_22109192600006421') do
             check('requestable__selected', exact: true)
-            fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
+            fill_in 'requestable_user_supplied_enum_22109192600006421', with: 'test'
           end
           select('Firestone Library', from: 'requestable__pick_up')
           click_button 'Request Selected Items'
@@ -781,7 +774,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        it 'allows an in processitem to be requested from marquand' do
+        it 'allows an in process item to be requested from marquand' do
           # TODO: there is not really a good example of an in process item currently
           stub_clancy_status(barcode: "32101097503864")
           visit 'requests/99101378413506421?mfhd=22201004360006421'
@@ -1256,12 +1249,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).not_to have_content 'Physical Item Delivery'
         end
 
-        it 'does display the online access message' do
-          # TODO: do we need to deal with this?
-          visit "/requests/#{online_id}"
-          expect(page).to have_content 'Online'
-        end
-
         it 'disallows access to in process items' do
           visit "/requests/#{in_process_id}"
           expect(page).not_to have_content 'Pick-up location: Marquand Library'
@@ -1570,10 +1557,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Request to View in Reading Room'
         end
 
-        it 'allows guest patrons to access Online items' do
-          # TODO: do we have to deal with online
+        it 'allows guest patrons to see there are no items for Online only' do
           visit '/requests/9999946923506421?mfhd=22131438430006421'
-          expect(page).to have_content 'www.jstor.org'
+          expect(page).to have_content 'there are no requestable items for this record'
         end
 
         it 'Help Me Get It instead of using Borrow Direct, ILL, and Recall on Missing items' do

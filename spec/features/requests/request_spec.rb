@@ -8,7 +8,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:thesis_id) { 'dsp01rr1720547' }
     let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
     let(:recap_in_process_id) { '10247806?mfhd=10028102' }
-    let(:on_order_id) { '10958705?mfhd=10672583' }
+    let(:on_order_id) { '99120493093506421?mfhd=2251949020006421' }
     let(:no_items_id) { '9941274093506421?mfhd=22197827810006421' }
     let(:on_shelf_no_items_id) { '993083506421?mfhd=22261908670006421' }
     let(:temp_item_id) { '4815239' }
@@ -297,15 +297,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
           confirm_email = ActionMailer::Base.deliveries.last
           expect(email.subject).to eq("On Order Request")
-          expect(email.to).to eq(["marquandoffsite@princeton.edu"])
+          expect(email.to).to eq(["fstcirc@princeton.edu"])
           expect(email.cc).to be_blank
-          expect(email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
+          expect(email.html_part.body.to_s).to have_content("The declaration of war on Cleopatra : an examination of the evidence for the antiquity of the ceremony enacted by Octavian in the Campus Martius")
           expect(confirm_email.subject).to eq("On Order Request")
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
-          expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
+          expect(confirm_email.html_part.body.to_s).to have_content("The declaration of war on Cleopatra : an examination of the evidence for the antiquity of the ceremony enacted by Octavian in the Campus Martius")
           expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
           expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
         end
@@ -1276,11 +1276,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         it 'Help Me Get it for On-Order recap items' do
-          # TODO: can not do on order yet
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Burrows, Roger", "LoanTitle" => "3D thinking in design and architecture : from antiquity to the future", "LoanPublisher" => nil, "ISSN" => "9780500519547", "CallNumber" => "NA2750 .B867 2018", "CitedIn" => "https://catalog.princeton.edu/catalog/99109587053506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Johnson, F. Neil", "LoanTitle" => "The declaration of war on Cleopatra : an examination of the evidence for the antiquity of the ceremony enacted by Octavian in the Campus Martius", "LoanPublisher" => nil, "ISSN" => "9781871622935", "CallNumber" => nil, "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/99120493093506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
           stub_request(:post, transaction_note_url)
             .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
@@ -1294,7 +1293,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("3D thinking in design and architecture")
+          expect(confirm_email.html_part.body.to_s).to have_content("The declaration of war on Cleopatra ")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
         end
 

@@ -97,6 +97,7 @@ module Requests
     end
 
     def recap?
+      return false if locations.blank?
       locations.each_value do |location|
         return true if location[:library] && location[:library][:code] == 'recap'
       end
@@ -264,7 +265,7 @@ module Requests
         else
           requestable_items << build_requestable_from_holding(holding_id, holdings[holding_id])
         end
-        requestable_items
+        requestable_items.compact
       end
 
       def build_requestable_mfhd_item(_requestable_items, holding_id, item, barcodesort)
@@ -284,6 +285,7 @@ module Requests
       end
 
       def build_requestable_from_holding(holding_id, holding)
+        return if holding.blank?
         params = build_requestable_params(holding: { holding_id.to_sym.to_s => holding }, location: locations[holding["location_code"]])
         Requests::Requestable.new(params)
       end

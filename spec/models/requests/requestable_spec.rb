@@ -731,7 +731,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Forrestal Annex - Princeton Collection')
+        expect(requestable.location_label).to eq('Forrestal Annex - Annex Princeton Collection')
       end
     end
 
@@ -783,7 +783,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Firestone Library')
+        expect(requestable.location_label).to eq('Firestone Library - Stacks')
       end
     end
 

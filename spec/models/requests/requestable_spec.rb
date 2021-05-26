@@ -812,7 +812,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('ReCAP - Marquand Library use only')
+        expect(requestable.location_label).to eq('Firestone Library - Stacks')
       end
     end
 

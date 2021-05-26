@@ -67,7 +67,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '9938488723506421',
-          mfhd: '22205589710006421',
+          mfhd: '22205589810006421',
           patron: patron
         }
       end
@@ -94,7 +94,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pick_up_choices(lewis_request_with_multiple_requestable.requestable.last, default_pick_ups)
-      expect(choices).to eq("<div id=\"fields-print__3826440\" class=\"collapse request--print\"><div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div><div id=\"fields-print__3826440_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pick_up]\" id=\"requestable__pick_up\" value=\"PN\" class=\"single-pick-up-hidden\" /><label class=\"single-pick-up\" style=\"\" for=\"requestable__pick_up\">Pick-up location: Lewis Library</label></div></div>")
+      expect(choices).to eq("<div id=\"fields-print__23113812530006421\" class=\"collapse request--print\"><div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div><div id=\"fields-print__23113812530006421_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pick_up]\" id=\"requestable__pick_up\" value=\"PN\" class=\"single-pick-up-hidden\" /><label class=\"single-pick-up\" style=\"\" for=\"requestable__pick_up\">Pick-up location: Lewis Library</label></div></div>")
     end
   end
 
@@ -102,7 +102,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '994264203506421',
-        mfhd: '2284677130006421',
+        mfhd: '2284684460006421',
         patron: patron
       }
     end
@@ -114,7 +114,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pick_up_choices(lewis_request_with_multiple_requestable.requestable.last, default_pick_ups)
-      expect(choices).to eq("<div id=\"fields-print__2578961\" class=\"collapse request--print show\"><ul class=\"service-list\"><li class=\"service-item\">Item offsite at Fine Annex. Request for delivery in 1-2 business days.</li></ul><div id=\"fields-print__2578961_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pick_up]\" id=\"requestable__pick_up\" value=\"PA\" class=\"single-pick-up-hidden\" /><label class=\"single-pick-up\" style=\"\" for=\"requestable__pick_up\">Pick-up location: Firestone Library</label></div></div>")
+      expect(choices).to eq("<div id=\"fields-print__2384684450006421\" class=\"collapse request--print\"><ul class=\"service-list\"><li class=\"service-item\">Item offsite at Forrestal Annex. Requests for pick-up typically take 1-2 business days to process.</li></ul><div id=\"fields-print__2384684450006421_card\" class=\"card card-body bg-light\"><select name=\"requestable[][pick_up]\" id=\"requestable__pick_up\"><option value=\"\">Select a Delivery Location</option><option value=\"PA\">Firestone Library</option>\n<option value=\"PW\">Architecture Library</option>\n<option value=\"PL\">East Asian Library</option>\n<option value=\"PN\">Lewis Library</option>\n<option value=\"PK\">Mendel Music Library</option>\n<option value=\"PM\">Stokes Library</option>\n<option value=\"QA\">Firestone Library, Resource Sharing (Staff Only)</option>\n<option value=\"QT\">Technical Services 693 (Staff Only)</option>\n<option value=\"QC\">Technical Services HMT (Staff Only)</option></select></div></div>")
     end
   end
 

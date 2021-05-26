@@ -10,8 +10,8 @@ FactoryGirl.define do
 
   #  I think this is a problem record
   factory :request_on_order, class: 'Requests::Request' do
-    system_id '99114164263506421'
-    mfhd '22138658470006421'
+    system_id '993263506421'
+    mfhd '22261939430006421'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end

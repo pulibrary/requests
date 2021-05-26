@@ -15203,4 +15203,685 @@ http_interactions:
         in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Closed","pickup_location_id":"ga","pickup_location_code":"ga","location":"rare$ga","label":"Special
         Collections","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
   recorded_at: Tue, 25 May 2021 15:14:08 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9938488723506421/holdings/22205589810006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 26 May 2021 12:07:39 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 57c6afa5-1de5-4160-8f62-b2c5c37c8891
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"f3594e2e5496f41e662647aa7c885663"
+      X-Runtime:
+      - '1.923898'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101048628455","id":"23205589800006421","holding_id":"22205589810006421","copy_number":"1","status":"Not
+        Available","status_label":"Loan","status_source":"process_type","process_type":"LOAN","on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"lewis$stacks","label":"Lewis
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Wed, 26 May 2021 12:07:39 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/994264203506421/holdings/2284684460006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 26 May 2021 12:07:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - f12376da-12a0-4b0b-b1a8-1a09b2174438
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"21a2a35fa70bfcd81bb400877bf4fd7a"
+      X-Runtime:
+      - '4.020955'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101023694183","id":"2384682270006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"index v. 277-282 1979","enum_display":"index v. 277-282","chron_display":"1979","in_temp_library":false},{"barcode":"32101014661696","id":"2384682280006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v. 337-342 1989","enum_display":"Index, v. 337-342","chron_display":"1989","in_temp_library":false},{"barcode":"32101014572299","id":"2384682290006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 342, no. 6245-6252 Nov.-Dec. 1989","enum_display":"vol.
+        342, no. 6245-6252","chron_display":"Nov.-Dec. 1989","in_temp_library":false},{"barcode":"32101014738676","id":"2384682300006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 341, no. 6237-6244 Sept.-Oct. 1989","enum_display":"vol.
+        341, no. 6237-6244","chron_display":"Sept.-Oct. 1989","in_temp_library":false},{"barcode":"32101014818445","id":"2384682310006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 340, no. 6228-6236 July-Aug. 1989","enum_display":"vol.
+        340, no. 6228-6236","chron_display":"July-Aug. 1989","in_temp_library":false},{"barcode":"32101014762296","id":"2384682320006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 339, no. 6219-6227 May-June 1989","enum_display":"vol.
+        339, no. 6219-6227","chron_display":"May-June 1989","in_temp_library":false},{"barcode":"32101014795403","id":"2384682330006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 338, no. 6210-6218 Mar.-Apr. 1989","enum_display":"vol.
+        338, no. 6210-6218","chron_display":"Mar.-Apr. 1989","in_temp_library":false},{"barcode":"32101016034405","id":"2384682340006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 337, no. 6202-6209 Jan.-Feb. 1989","enum_display":"vol.
+        337, no. 6202-6209","chron_display":"Jan.-Feb. 1989","in_temp_library":false},{"barcode":"32101016022558","id":"2384682350006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, 331-336 1988","enum_display":"Index, 331-336","chron_display":"1988","in_temp_library":false},{"barcode":"32101016029413","id":"2384682360006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 336, no. 6194-6201 Nov.-Dec. 1988","enum_display":"vol.
+        336, no. 6194-6201","chron_display":"Nov.-Dec. 1988","in_temp_library":false},{"barcode":"32101009711662","id":"2384682370006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 335, no. 6185-6189 Sept. 1988","enum_display":"vol.
+        335, no. 6185-6189","chron_display":"Sept. 1988","in_temp_library":false},{"barcode":"32101009893395","id":"2384682380006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 334, no. 6177-6184 July-Aug. 1988","enum_display":"vol.
+        334, no. 6177-6184","chron_display":"July-Aug. 1988","in_temp_library":false},{"barcode":"32101009711670","id":"2384682390006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 335, no. 6190-6193 Oct. 1988","enum_display":"vol.
+        335, no. 6190-6193","chron_display":"Oct. 1988","in_temp_library":false},{"barcode":"32101014321028","id":"2384682400006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 333, no. 6168-6176 May-June 1988","enum_display":"vol.
+        333, no. 6168-6176","chron_display":"May-June 1988","in_temp_library":false},{"barcode":"32101014411274","id":"2384682410006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 332, no. 6164-6167 Apr. 1988","enum_display":"vol.
+        332, no. 6164-6167","chron_display":"Apr. 1988","in_temp_library":false},{"barcode":"32101014411258","id":"2384682420006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 332, no. 6159-6163 Mar. 1988","enum_display":"vol.
+        332, no. 6159-6163","chron_display":"Mar. 1988","in_temp_library":false},{"barcode":"32101011115175","id":"2384682430006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 331, no. 6151-6158 Jan.-Feb. 1988","enum_display":"vol.
+        331, no. 6151-6158","chron_display":"Jan.-Feb. 1988","in_temp_library":false},{"barcode":"32101011115407","id":"2384682440006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, 325-330 1987","enum_display":"Index, 325-330","chron_display":"1987","in_temp_library":false},{"barcode":"32101011105531","id":"2384682450006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 330, no. 6143-6150 Nov.-Dec., 1987","enum_display":"v.
+        330, no. 6143-6150","chron_display":"Nov.-Dec., 1987","in_temp_library":false},{"barcode":"32101014123275","id":"2384682460006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 329, no. 6138-6142 Oct. 1/7-Oct. 29/Nov 4, 1987","enum_display":"v.
+        329, no. 6138-6142","chron_display":"Oct. 1/7-Oct. 29/Nov 4, 1987","in_temp_library":false},{"barcode":"32101014123267","id":"2384682470006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.329, no. 6134-6137 Sept. 3/9-Sept 24/30, 1987","enum_display":"v.329,
+        no. 6134-6137","chron_display":"Sept. 3/9-Sept 24/30, 1987","in_temp_library":false},{"barcode":"32101011510417","id":"2384682480006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 328, no. 6125-6129 July 2/8-July 30/Aug. 5, 1987","enum_display":"v.
+        328, no. 6125-6129","chron_display":"July 2/8-July 30/Aug. 5, 1987","in_temp_library":false},{"barcode":"32101011510409","id":"2384682510006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 328, no. 6130-6133 Aug. 6/12-Aug. 27/Sept. 2, 1987","enum_display":"v.
+        328, no. 6130-6133","chron_display":"Aug. 6/12-Aug. 27/Sept. 2, 1987","in_temp_library":false},{"barcode":"32101011558663","id":"2384682520006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 327, no. 6117-6124 May 7/13-June 25/July 1, 1987","enum_display":"v.
+        327, no. 6117-6124","chron_display":"May 7/13-June 25/July 1, 1987","in_temp_library":false},{"barcode":"32101011647334","id":"2384682530006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 326, no. 6112-6116 Apr. 2/8-Apr. 30/May 6, 1987","enum_display":"v.
+        326, no. 6112-6116","chron_display":"Apr. 2/8-Apr. 30/May 6, 1987","in_temp_library":false},{"barcode":"32101011647342","id":"2384682540006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 326, no. 6108-6111 Mar. 5/11-Mar 26/Apr. 1, 1987","enum_display":"v.
+        326, no. 6108-6111","chron_display":"Mar. 5/11-Mar 26/Apr. 1, 1987","in_temp_library":false},{"barcode":"32101011942990","id":"2384682550006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v. 319-324 1986","enum_display":"Index, v. 319-324","chron_display":"1986","in_temp_library":false},{"barcode":"32101014211633","id":"2384682560006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 325, no. 6104-6107 Feb. 5/11-Feb. 26/Mar. 4, 1987","enum_display":"v.
+        325, no. 6104-6107","chron_display":"Feb. 5/11-Feb. 26/Mar. 4, 1987","in_temp_library":false},{"barcode":"32101011828496","id":"2384682570006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 325, no. 6099-6103 Jan. 1/7- Jan. 29/Feb. 4, 1987","enum_display":"v.
+        325, no. 6099-6103","chron_display":"Jan. 1/7- Jan. 29/Feb. 4, 1987","in_temp_library":false},{"barcode":"32101011938782","id":"2384682580006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 324, no. 6092-6098 Nov.-Dec., 1986","enum_display":"v.
+        324, no. 6092-6098","chron_display":"Nov.-Dec., 1986","in_temp_library":false},{"barcode":"32101011944855","id":"2384682590006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 323 Oct. 30-Nov. 5, 1986","enum_display":"vol.
+        323","chron_display":"Oct. 30-Nov. 5, 1986","in_temp_library":false},{"barcode":"32101011404777","id":"2384682600006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 323, no. 6087-6090 Oct., 1986","enum_display":"v.
+        323, no. 6087-6090","chron_display":"Oct., 1986","in_temp_library":false},{"barcode":"32101011404751","id":"2384682610006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 323, no. 6083-6086 Sept. 4/10-Sept. 25/Oct. 1, 1986","enum_display":"v.
+        323, no. 6083-6086","chron_display":"Sept. 4/10-Sept. 25/Oct. 1, 1986","in_temp_library":false},{"barcode":"32101011503099","id":"2384682620006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 322, no. 6079-6082 Aug. 7/13-Aug 28/Sept. 3, 1986","enum_display":"v.
+        322, no. 6079-6082","chron_display":"Aug. 7/13-Aug 28/Sept. 3, 1986","in_temp_library":false},{"barcode":"32101011503081","id":"2384682650006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 322, no. 6074-6078 July 3/9-July 31/Aug. 6, 1986","enum_display":"v.
+        322, no. 6074-6078","chron_display":"July 3/9-July 31/Aug. 6, 1986","in_temp_library":false},{"barcode":"32101011372446","id":"2384682660006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 321, no. 6069-6073 May 29/June 4-June 26/July 2,
+        1986","enum_display":"v. 321, no. 6069-6073","chron_display":"May 29/June
+        4-June 26/July 2, 1986","in_temp_library":false},{"barcode":"32101011372453","id":"2384682670006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 321, no. 6065-6068 May, 1986","enum_display":"v.
+        321, no. 6065-6068","chron_display":"May, 1986","in_temp_library":false},{"barcode":"32101011372461","id":"2384682680006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.320, no.6061-6064 Apr., 1986","enum_display":"v.320,
+        no.6061-6064","chron_display":"Apr., 1986","in_temp_library":false},{"barcode":"32101011372479","id":"2384682690006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 320, no. 6057-6060 Mar. 6/12-Mar. 27/Apr. 2, 1986","enum_display":"vol.
+        320, no. 6057-6060","chron_display":"Mar. 6/12-Mar. 27/Apr. 2, 1986","in_temp_library":false},{"barcode":"32101009294222","id":"2384682700006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 319, no. 6048-6055 Jan.-Feb., 1986","enum_display":"v.
+        319, no. 6048-6055","chron_display":"Jan.-Feb., 1986","in_temp_library":false},{"barcode":"32101009196898","id":"2384682710006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 318, no. 6041-6047 Nov. 7/13-Dec., 19, 1985/Jan.
+        1, 1986","enum_display":"v. 318, no. 6041-6047","chron_display":"Nov. 7/13-Dec.,
+        19, 1985/Jan. 1, 1986","in_temp_library":false},{"barcode":"32101009363332","id":"2384682720006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v. 313/318 1985","enum_display":"Index, v. 313/318","chron_display":"1985","in_temp_library":false},{"barcode":"32101011372487","id":"2384682730006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 319, no. 6056 Feb. 27, 1986","enum_display":"vol.
+        319, no. 6056","chron_display":"Feb. 27, 1986","in_temp_library":false},{"barcode":"32101009196880","id":"2384682740006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 317, no. 6032-6040 Sept. 5/11-Oct. 31/Nov. 6, 1985","enum_display":"v.
+        317, no. 6032-6040","chron_display":"Sept. 5/11-Oct. 31/Nov. 6, 1985","in_temp_library":false},{"barcode":"32101009070184","id":"2384682750006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.316, no. 6031-v.317, no. 6039 Aug. 29/Sept. 4-Oct.
+        24/30, 1985","enum_display":"v.316, no. 6031-v.317, no. 6039","chron_display":"Aug.
+        29/Sept. 4-Oct. 24/30, 1985","in_temp_library":false},{"barcode":"32101009939487","id":"2384682760006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 316, no.6023-6030 July-Aug., 1985","enum_display":"v.
+        316, no.6023-6030","chron_display":"July-Aug., 1985","in_temp_library":false},{"barcode":"32101009045988","id":"2384682770006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 315, no. 6015-6022 May 9, 1985-June 27, 1985","enum_display":"v.
+        315, no. 6015-6022","chron_display":"May 9, 1985-June 27, 1985","in_temp_library":false},{"barcode":"32101011940598","id":"2384682780006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.315, no. 6014 May 2, 1985","enum_display":"v.315,
+        no. 6014","chron_display":"May 2, 1985","in_temp_library":false},{"barcode":"32101009044114","id":"2384682790006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 314, no. 6006-6013 Mar. 7-May 1, 1985","enum_display":"vol.
+        314, no. 6006-6013","chron_display":"Mar. 7-May 1, 1985","in_temp_library":false},{"barcode":"32101039870959","id":"2384682800006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.312, no.5989-5996 Nov. 1, 1984-Jan. 2, 1985","enum_display":"v.312,
+        no.5989-5996","chron_display":"Nov. 1, 1984-Jan. 2, 1985","in_temp_library":false},{"barcode":"32101039870942","id":"2384682810006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.311, no.5981-5988 Sept. 6-Oct. 31, 1984","enum_display":"v.311,
+        no.5981-5988","chron_display":"Sept. 6-Oct. 31, 1984","in_temp_library":false},{"barcode":"32101039870934","id":"2384682820006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 310, no.5972-5980 July 5-Sept. 5, 1984","enum_display":"v.
+        310, no.5972-5980","chron_display":"July 5-Sept. 5, 1984","in_temp_library":false},{"barcode":"32101039870926","id":"2384682830006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.309, no. 5963-5971 May-July, 1984","enum_display":"v.309,
+        no. 5963-5971","chron_display":"May-July, 1984","in_temp_library":false},{"barcode":"32101039870918","id":"2384682840006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.308, no.5954-5962 Mar.-Apr., 1984","enum_display":"v.308,
+        no.5954-5962","chron_display":"Mar.-Apr., 1984","in_temp_library":false},{"barcode":"32101039870967","id":"2384682850006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.313, nos. 5997-6005 Jan. 3-Feb. 28, 1985","enum_display":"v.313,
+        nos. 5997-6005","chron_display":"Jan. 3-Feb. 28, 1985","in_temp_library":false},{"barcode":"32101039870900","id":"2384682860006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.307 Jan.-Feb., 1984","enum_display":"v.307","chron_display":"Jan.-Feb.,
+        1984","in_temp_library":false},{"barcode":"32101039870892","id":"2384682870006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.306 Nov.-Dec., 1983","enum_display":"v.306","chron_display":"Nov.-Dec.,
+        1983","in_temp_library":false},{"barcode":"32101039870884","id":"2384682880006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.305, no. 5929-5937 Sept.-Oct., 1983","enum_display":"v.305,
+        no. 5929-5937","chron_display":"Sept.-Oct., 1983","in_temp_library":false},{"barcode":"32101039885726","id":"2384682890006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.304, no. 5921-5928 July-Aug., 1983","enum_display":"v.304,
+        no. 5921-5928","chron_display":"July-Aug., 1983","in_temp_library":false},{"barcode":"32101039870728","id":"2384682900006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.303, no. 5912-5919 May-June, 1983","enum_display":"v.303,
+        no. 5912-5919","chron_display":"May-June, 1983","in_temp_library":false},{"barcode":"32101009928548","id":"2384682910006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.301-306 1983","enum_display":"Index, v.301-306","chron_display":"1983","in_temp_library":false},{"barcode":"32101039870751","id":"2384682920006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.295-300 1982","enum_display":"Index, v.295-300","chron_display":"1982","in_temp_library":false},{"barcode":"32101039870736","id":"2384682930006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.302, no.5903-5911 March-April, 1983","enum_display":"v.302,
+        no.5903-5911","chron_display":"March-April, 1983","in_temp_library":false},{"barcode":"32101039870744","id":"2384682940006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.300-301, no. 5894-5902 Jan.-Feb., 1983","enum_display":"v.300-301,
+        no. 5894-5902","chron_display":"Jan.-Feb., 1983","in_temp_library":false},{"barcode":"32101036066023","id":"2384682960006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.299, no.5883-5893 Oct.-Dec., 1982","enum_display":"v.299,
+        no.5883-5893","chron_display":"Oct.-Dec., 1982","in_temp_library":false},{"barcode":"32101039870769","id":"2384682970006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.298-299 no. 5876-5882","enum_display":"v.298-299","chron_display":"no.
+        5876-5882 | Aug.-Sept., 1982","in_temp_library":false},{"barcode":"32101039870777","id":"2384683000006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.298, no. 5869-5875 July-Aug., 1982","enum_display":"v.298,
+        no. 5869-5875","chron_display":"July-Aug., 1982","in_temp_library":false},{"barcode":"32101039870785","id":"2384683010006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.296-297, no. 5860-5868 April-June, 1982","enum_display":"v.296-297,
+        no. 5860-5868","chron_display":"April-June, 1982","in_temp_library":false},{"barcode":"32101039870793","id":"2384683020006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.296, no. 5852-5859 Mar-Apr., 1982","enum_display":"v.296,
+        no. 5852-5859","chron_display":"Mar-Apr., 1982","in_temp_library":false},{"barcode":"32101039870801","id":"2384683030006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.295, no.5844-5851 Jan.-Feb., 1992","enum_display":"v.295,
+        no.5844-5851","chron_display":"Jan.-Feb., 1992","in_temp_library":false},{"barcode":"32101039870819","id":"2384683040006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v. 289-294 1981","enum_display":"Index, v. 289-294","chron_display":"1981","in_temp_library":false},{"barcode":"32101039870827","id":"2384683050006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.294, no.5836-5843 Nov.-Dec., 1981","enum_display":"v.294,
+        no.5836-5843","chron_display":"Nov.-Dec., 1981","in_temp_library":false},{"barcode":"32101039870835","id":"2384683060006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.293, no. 5827-5835 Sept.-Oct., 1982","enum_display":"v.293,
+        no. 5827-5835","chron_display":"Sept.-Oct., 1982","in_temp_library":false},{"barcode":"32101039870843","id":"2384683070006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.292, no.5818-5826 July-Aug., 1981","enum_display":"v.292,
+        no.5818-5826","chron_display":"July-Aug., 1981","in_temp_library":false},{"barcode":"32101039870850","id":"2384683090006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.291, no. 5801-5817 May-June, 1981","enum_display":"v.291,
+        no. 5801-5817","chron_display":"May-June, 1981","in_temp_library":false},{"barcode":"32101039870868","id":"2384683100006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.290, no.5801-5809 March-April, 1981","enum_display":"v.290,
+        no.5801-5809","chron_display":"March-April, 1981","in_temp_library":false},{"barcode":"32101039870876","id":"2384683130006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.289, no. 5793-5800 Jan.-March, 1981","enum_display":"v.289,
+        no. 5793-5800","chron_display":"Jan.-March, 1981","in_temp_library":false},{"barcode":"32101039870710","id":"2384683140006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.283-288 1980","enum_display":"Index, v.283-288","chron_display":"1980","in_temp_library":false},{"barcode":"32101039885734","id":"2384683150006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 288, no.5786-5792 Nov.-Dec., 1980","enum_display":"v.
+        288, no.5786-5792","chron_display":"Nov.-Dec., 1980","in_temp_library":false},{"barcode":"32101039870702","id":"2384683160006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.286, no.5768-5776 July-Aug., 1980","enum_display":"v.286,
+        no.5768-5776","chron_display":"July-Aug., 1980","in_temp_library":false},{"barcode":"32101039870694","id":"2384683170006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.285, no. 5759-5767 May-June, 1980","enum_display":"v.285,
+        no. 5759-5767","chron_display":"May-June, 1980","in_temp_library":false},{"barcode":"32101039870686","id":"2384683180006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.284, no. 5751-5758 March-April, 1980","enum_display":"v.284,
+        no. 5751-5758","chron_display":"March-April, 1980","in_temp_library":false},{"barcode":"32101039870660","id":"2384683190006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.277/282 1979","enum_display":"Index, v.277/282","chron_display":"1979","in_temp_library":false},{"barcode":"32101039870652","id":"2384683200006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.282, no. 5734-5741 Nov.-Dec., 1979","enum_display":"v.282,
+        no. 5734-5741","chron_display":"Nov.-Dec., 1979","in_temp_library":false},{"barcode":"32101039870645","id":"2384683210006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.281, no.5726-5733 Sept.-Oct., 1979","enum_display":"v.281,
+        no.5726-5733","chron_display":"Sept.-Oct., 1979","in_temp_library":false},{"barcode":"32101039870678","id":"2384683220006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.283, no.5742-5750 Jan. 3-Feb. 28, 1980","enum_display":"v.283,
+        no.5742-5750","chron_display":"Jan. 3-Feb. 28, 1980","in_temp_library":false},{"barcode":"32101039870637","id":"2384683230006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.280, no.5717-5725 July-Aug., 1979","enum_display":"v.280,
+        no.5717-5725","chron_display":"July-Aug., 1979","in_temp_library":false},{"barcode":"32101039870629","id":"2384683240006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.279, no. 5708-5716 May-June, 1979","enum_display":"v.279,
+        no. 5708-5716","chron_display":"May-June, 1979","in_temp_library":false},{"barcode":"32101039870611","id":"2384683250006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.278, no.5693-5707 Mar.-Apr., 1979","enum_display":"v.278,
+        no.5693-5707","chron_display":"Mar.-Apr., 1979","in_temp_library":false},{"barcode":"32101017125079","id":"2384683260006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.271-276 1978","enum_display":"Index, v.271-276","chron_display":"1978","in_temp_library":false},{"barcode":"32101039870603","id":"2384683270006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.277, no. 5631-5698 Jan.-Feb., 1978","enum_display":"v.277,
+        no. 5631-5698","chron_display":"Jan.-Feb., 1978","in_temp_library":false},{"barcode":"32101039870587","id":"2384683280006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.275-276, no. 5675-5690 Sept.-Dec., 1978","enum_display":"v.275-276,
+        no. 5675-5690","chron_display":"Sept.-Dec., 1978","in_temp_library":false},{"barcode":"32101039870579","id":"2384683290006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.273-274, no.5657-5674 May-Aug., 1978","enum_display":"v.273-274,
+        no.5657-5674","chron_display":"May-Aug., 1978","in_temp_library":false},{"barcode":"32101039870595","id":"2384683300006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.271-272, no. 5640-5656 Jan-Apr., 1978","enum_display":"v.271-272,
+        no. 5640-5656","chron_display":"Jan-Apr., 1978","in_temp_library":false},{"barcode":"32101017125053","id":"2384683310006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.265/270 1977","enum_display":"Index, v.265/270","chron_display":"1977","in_temp_library":false},{"barcode":"32101039870561","id":"2384683320006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.269-270, no. 5623-5639 Sept.-Dec., 1977","enum_display":"v.269-270,
+        no. 5623-5639","chron_display":"Sept.-Dec., 1977","in_temp_library":false},{"barcode":"32101039870405","id":"2384683330006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.268, no.5615-5622 Jul.-Aug., 1977","enum_display":"v.268,
+        no.5615-5622","chron_display":"Jul.-Aug., 1977","in_temp_library":false},{"barcode":"32101039870413","id":"2384683340006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.267, no.5606-5614 May-June, 1977","enum_display":"v.267,
+        no.5606-5614","chron_display":"May-June, 1977","in_temp_library":false},{"barcode":"32101039870421","id":"2384683350006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.266, no.5597-5605 Mar.-Apr., 1977","enum_display":"v.266,
+        no.5597-5605","chron_display":"Mar.-Apr., 1977","in_temp_library":false},{"barcode":"32101039870439","id":"2384683360006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.265, no.5589-5596 Jan.-Feb., 1977","enum_display":"v.265,
+        no.5589-5596","chron_display":"Jan.-Feb., 1977","in_temp_library":false},{"barcode":"32101017125087","id":"2384683370006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.259-264 1976","enum_display":"Index, v.259-264","chron_display":"1976","in_temp_library":false},{"barcode":"32101039870454","id":"2384683380006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.263, no. 5572-5580 Sept.-Oct., 1976","enum_display":"v.263,
+        no. 5572-5580","chron_display":"Sept.-Oct., 1976","in_temp_library":false},{"barcode":"32101039870462","id":"2384683390006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.262, no.5563-5571 July-Aug., 1976","enum_display":"v.262,
+        no.5563-5571","chron_display":"July-Aug., 1976","in_temp_library":false},{"barcode":"32101039870470","id":"2384683400006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.261, no.5555-5562 May-June, 1976","enum_display":"v.261,
+        no.5555-5562","chron_display":"May-June, 1976","in_temp_library":false},{"barcode":"32101039870447","id":"2384683410006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.264, no.5581-5588 Nov.-Dec., 1976","enum_display":"v.264,
+        no.5581-5588","chron_display":"Nov.-Dec., 1976","in_temp_library":false},{"barcode":"32101039870488","id":"2384683420006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.260 , no.5540-5554 Mar.-Apr., 1976","enum_display":"v.260
+        , no.5540-5554","chron_display":"Mar.-Apr., 1976","in_temp_library":false},{"barcode":"32101017125061","id":"2384683430006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, 253/258 1975","enum_display":"Index, 253/258","chron_display":"1975","in_temp_library":false},{"barcode":"32101039870496","id":"2384683440006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.259, no.5538-5545 Jan.-Feb., 1976","enum_display":"v.259,
+        no.5538-5545","chron_display":"Jan.-Feb., 1976","in_temp_library":false},{"barcode":"32101039870504","id":"2384683450006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.258, no.5530-5537 Nov.-Dec., 1975","enum_display":"v.258,
+        no.5530-5537","chron_display":"Nov.-Dec., 1975","in_temp_library":false},{"barcode":"32101039870512","id":"2384683460006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.257, no. 5521-5529 Sept.-Oct., 1975","enum_display":"v.257,
+        no. 5521-5529","chron_display":"Sept.-Oct., 1975","in_temp_library":false},{"barcode":"32101039870520","id":"2384683470006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.256, no.5512-5520 July-Aug., 1975","enum_display":"v.256,
+        no.5512-5520","chron_display":"July-Aug., 1975","in_temp_library":false},{"barcode":"32101039870538","id":"2384683480006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.255, no.5503-5511 May-June, 1975","enum_display":"v.255,
+        no.5503-5511","chron_display":"May-June, 1975","in_temp_library":false},{"barcode":"32101039870546","id":"2384683490006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.254,no.5495-5502 Mar.-Apr., 1975","enum_display":"v.254,no.5495-5502","chron_display":"Mar.-Apr.,
+        1975","in_temp_library":false},{"barcode":"32101039870553","id":"2384683500006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.253,no.5486-5494 Jan.-Feb., 1975","enum_display":"v.253,no.5486-5494","chron_display":"Jan.-Feb.,
+        1975","in_temp_library":false},{"barcode":"32101017125095","id":"2384683510006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.247/252 1974","enum_display":"Index, v.247/252","chron_display":"1974","in_temp_library":false},{"barcode":"32101039863855","id":"2384683520006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.251, no. 5470-5427 Sept.-Oct., 1974","enum_display":"v.251,
+        no. 5470-5427","chron_display":"Sept.-Oct., 1974","in_temp_library":false},{"barcode":"32101039863863","id":"2384683530006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.250, no.5461-5469 July-Aug., 1974","enum_display":"v.250,
+        no.5461-5469","chron_display":"July-Aug., 1974","in_temp_library":false},{"barcode":"32101039863871","id":"2384683540006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.249,no.5452-5460 May-June, 1974","enum_display":"v.249,no.5452-5460","chron_display":"May-June,
+        1974","in_temp_library":false},{"barcode":"32101039863889","id":"2384683550006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.248, no.5443-5451 Mar.-April, 1974","enum_display":"v.248,
+        no.5443-5451","chron_display":"Mar.-April, 1974","in_temp_library":false},{"barcode":"32101039863897","id":"2384683560006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.247, no.5435-5442 Jan.-Feb., 1974","enum_display":"v.247,
+        no.5435-5442","chron_display":"Jan.-Feb., 1974","in_temp_library":false},{"barcode":"32101039863905","id":"2384683570006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.246, no.5427-5434 Nov.-Dec., 1973","enum_display":"v.246,
+        no.5427-5434","chron_display":"Nov.-Dec., 1973","in_temp_library":false},{"barcode":"32101017125103","id":"2384683580006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.241/246 1973","enum_display":"Index, v.241/246","chron_display":"1973","in_temp_library":false},{"barcode":"32101039863848","id":"2384683590006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.252, no.5478-5485 Nov.-Dec., 1974","enum_display":"v.252,
+        no.5478-5485","chron_display":"Nov.-Dec., 1974","in_temp_library":false},{"barcode":"32101039863913","id":"2384683600006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.245, no. 5423-5426 Oct. 1973","enum_display":"v.245,
+        no. 5423-5426","chron_display":"Oct. 1973","in_temp_library":false},{"barcode":"32101039863921","id":"2384683610006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.245, no.5419-5422 Sept. 1973","enum_display":"v.245,
+        no.5419-5422","chron_display":"Sept. 1973","in_temp_library":false},{"barcode":"32101039863939","id":"2384683640006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.244, no 5414-5418 Aug. 1973","enum_display":"v.244,
+        no 5414-5418","chron_display":"Aug. 1973","in_temp_library":false},{"barcode":"32101039863954","id":"2384683650006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.243, no.5401-5404 May, 1973","enum_display":"v.243,
+        no.5401-5404","chron_display":"May, 1973","in_temp_library":false},{"barcode":"32101039863962","id":"2384683660006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.243, no.5405-5409 June, 1973","enum_display":"v.243,
+        no.5405-5409","chron_display":"June, 1973","in_temp_library":false},{"barcode":"32101039863970","id":"2384683670006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.242, no.5397-5400 April, 1973","enum_display":"v.242,
+        no.5397-5400","chron_display":"April, 1973","in_temp_library":false},{"barcode":"32101039863988","id":"2384683680006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.242, no.5392-5396 Mar., 1973","enum_display":"v.242,
+        no.5392-5396","chron_display":"Mar., 1973","in_temp_library":false},{"barcode":"32101039863996","id":"2384683690006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.241, no.5388-5391 Feb., 1973","enum_display":"v.241,
+        no.5388-5391","chron_display":"Feb., 1973","in_temp_library":false},{"barcode":"32101039863368","id":"2384683700006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.241, no.5384-5387 Jan., 1973","enum_display":"v.241,
+        no.5384-5387","chron_display":"Jan., 1973","in_temp_library":false},{"barcode":"32101039863947","id":"2384683710006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.244, no.5410-5413 July, 1973","enum_display":"v.244,
+        no.5410-5413","chron_display":"July, 1973","in_temp_library":false},{"barcode":"32101039863376","id":"2384683720006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.240, no.5379-5383 Dec., 1972","enum_display":"v.240,
+        no.5379-5383","chron_display":"Dec., 1972","in_temp_library":false},{"barcode":"32101039863384","id":"2384683730006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.240, no.5375-5378 Nov., 1972","enum_display":"v.240,
+        no.5375-5378","chron_display":"Nov., 1972","in_temp_library":false},{"barcode":"32101039863392","id":"2384683740006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.239 Sept.-Oct., 1972","enum_display":"v.239","chron_display":"Sept.-Oct.,
+        1972","in_temp_library":false},{"barcode":"32101039863400","id":"2384683750006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.238 July-August, 1972","enum_display":"v.238","chron_display":"July-August,
+        1972","in_temp_library":false},{"barcode":"32101039863418","id":"2384683760006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 237, no. 5349-5357 May 5-June 30, 1972","enum_display":"v.
+        237, no. 5349-5357","chron_display":"May 5-June 30, 1972","in_temp_library":false},{"barcode":"32101017125111","id":"2384683770006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index, v.235-240 1972","enum_display":"Index, v.235-240","chron_display":"1972","in_temp_library":false},{"barcode":"32101039863426","id":"2384683780006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.236, no. 5340-5348 Mar.3-Apr.28, 1972","enum_display":"v.236,
+        no. 5340-5348","chron_display":"Mar.3-Apr.28, 1972","in_temp_library":false},{"barcode":"32101039863434","id":"2384683790006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.235, no 5332-5339 Jan-Feb, 1972","enum_display":"v.235,
+        no 5332-5339","chron_display":"Jan-Feb, 1972","in_temp_library":false},{"barcode":"32101017125129","id":"2384683800006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"Index v.229-234 1971","enum_display":"Index v.229-234","chron_display":"1971","in_temp_library":false},{"barcode":"32101039863442","id":"2384683810006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.234, no.5323-5331 Nov.-Dec.1971","enum_display":"v.234,
+        no.5323-5331","chron_display":"Nov.-Dec.1971","in_temp_library":false},{"barcode":"32101039863459","id":"2384683820006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.233, no.5314-5322 Sept.-Oct.1971","enum_display":"v.233,
+        no.5314-5322","chron_display":"Sept.-Oct.1971","in_temp_library":false},{"barcode":"32101039863467","id":"2384683830006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.232 Jul-Aug 1971","enum_display":"v.232","chron_display":"Jul-Aug
+        1971","in_temp_library":false},{"barcode":"32101021360878","id":"2384683840006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.231 May-June 1971","enum_display":"vol.231","chron_display":"May-June
+        1971","in_temp_library":false},{"barcode":"32101021360886","id":"2384683850006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.230 Mar-Apr.1971","enum_display":"vol.230","chron_display":"Mar-Apr.1971","in_temp_library":false},{"barcode":"32101021360894","id":"2384683880006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.229 Jan-Feb 1971","enum_display":"vol.229","chron_display":"Jan-Feb
+        1971","in_temp_library":false},{"barcode":"32101017124981","id":"2384683890006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.228 Dec.1970","enum_display":"v.228","chron_display":"Dec.1970","in_temp_library":false},{"barcode":"32101021783822","id":"2384683900006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.228, no.5271-5274 Nov.1970","enum_display":"vol.228,
+        no.5271-5274","chron_display":"Nov.1970","in_temp_library":false},{"barcode":"32101016462903","id":"2384683910006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.228, no.5266-5270 Oct.1970","enum_display":"vol.228,
+        no.5266-5270","chron_display":"Oct.1970","in_temp_library":false},{"barcode":"32101016161729","id":"2384683920006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.227, no.5257-5261 Aug. 1970","enum_display":"vol.227,
+        no.5257-5261","chron_display":"Aug. 1970","in_temp_library":false},{"barcode":"32101021783814","id":"2384683930006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.227, no.5263-5265 Sept.12-26,1970","enum_display":"vol.227,
+        no.5263-5265","chron_display":"Sept.12-26,1970","in_temp_library":false},{"barcode":"32101021783848","id":"2384683940006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.227, no.5253-5256 July 1970","enum_display":"vol.227,
+        no.5253-5256","chron_display":"July 1970","in_temp_library":false},{"barcode":"32101014151326","id":"2384683950006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.226, no.5249-5252 June 1970","enum_display":"v.226,
+        no.5249-5252","chron_display":"June 1970","in_temp_library":false},{"barcode":"32101021783830","id":"2384683960006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.226, no.5244-5248 May 1970","enum_display":"vol.226,
+        no.5244-5248","chron_display":"May 1970","in_temp_library":false},{"barcode":"32101021783863","id":"2384683970006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.226, no.5240-5243 Apr.1970","enum_display":"vol.226,
+        no.5240-5243","chron_display":"Apr.1970","in_temp_library":false},{"barcode":"32101021783855","id":"2384683980006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.225, no 5236-5239 Mar.1970","enum_display":"vol.225,
+        no 5236-5239","chron_display":"Mar.1970","in_temp_library":false},{"barcode":"32101021783806","id":"2384683990006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.225, no.5232-5235 Feb.1970","enum_display":"vol.225,
+        no.5232-5235","chron_display":"Feb.1970","in_temp_library":false},{"barcode":"32101009716760","id":"2384684000006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.225, no.5227-5231 Jan 1970","enum_display":"vol.225,
+        no.5227-5231","chron_display":"Jan 1970","in_temp_library":false},{"barcode":"32101039863475","id":"2384684010006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.224, no.5223-5226 Dec.6-Dec.27, 1969","enum_display":"v.224,
+        no.5223-5226","chron_display":"Dec.6-Dec.27, 1969","in_temp_library":false},{"barcode":"32101039863483","id":"2384684020006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.224, no.5214-5217 Oct.4-Oct.25, 1969","enum_display":"v.224,
+        no.5214-5217","chron_display":"Oct.4-Oct.25, 1969","in_temp_library":false},{"barcode":"32101039863491","id":"2384684030006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.223, no.5210-5213 Sept.1969","enum_display":"v.223,
+        no.5210-5213","chron_display":"Sept.1969","in_temp_library":false},{"barcode":"32101021783871","id":"2384684040006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.223, no.5205-5209 Aug. 1969","enum_display":"vol.223,
+        no.5205-5209","chron_display":"Aug. 1969","in_temp_library":false},{"barcode":"32101021783798","id":"2384684050006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.223, no.5201-5204 July 1969","enum_display":"vol.223,
+        no.5201-5204","chron_display":"July 1969","in_temp_library":false},{"barcode":"32101009716752","id":"2384684060006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.222, no 5192-5196 May 1969","enum_display":"vol.222,
+        no 5192-5196","chron_display":"May 1969","in_temp_library":false},{"barcode":"32101021783780","id":"2384684070006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.222, no.5197-5200 June 1969","enum_display":"vol.222,
+        no.5197-5200","chron_display":"June 1969","in_temp_library":false},{"barcode":"32101009718535","id":"2384684080006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.222, no.5192-5191 Apr. 1969","enum_display":"vol.222,
+        no.5192-5191","chron_display":"Apr. 1969","in_temp_library":false},{"barcode":"32101009716745","id":"2384684090006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.221, no.5183-5187 March 1969","enum_display":"vol.221,
+        no.5183-5187","chron_display":"March 1969","in_temp_library":false},{"barcode":"32101009716737","id":"2384684100006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.221, no 5179-5182 Feb. 1969","enum_display":"vol.221,
+        no 5179-5182","chron_display":"Feb. 1969","in_temp_library":false},{"barcode":"32101009716729","id":"2384684120006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.220, no.5171-5174 Dec. 1968","enum_display":"vol.220,
+        no.5171-5174","chron_display":"Dec. 1968","in_temp_library":false},{"barcode":"32101009716992","id":"2384684130006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.220, no.5166-5170 Nov. 1968","enum_display":"vol.220,
+        no.5166-5170","chron_display":"Nov. 1968","in_temp_library":false},{"barcode":"32101039863509","id":"2384684140006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.220, no.5162-5165 Oct. 1968","enum_display":"vol.220,
+        no.5162-5165","chron_display":"Oct. 1968","in_temp_library":false},{"barcode":"32101009716984","id":"2384684170006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.219, no. 5158-5161 Sept. 1968","enum_display":"vol.219,
+        no. 5158-5161","chron_display":"Sept. 1968","in_temp_library":false},{"barcode":"32101009716976","id":"2384684180006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.219, no 5149-5152 July 1968","enum_display":"vol.219,
+        no 5149-5152","chron_display":"July 1968","in_temp_library":false},{"barcode":"32101017124973","id":"2384684190006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.219, no. 5153-5157 Aug. 1968","enum_display":"v.219,
+        no. 5153-5157","chron_display":"Aug. 1968","in_temp_library":false},{"barcode":"32101009716968","id":"2384684200006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.218, no 5144-5148 June 1968","enum_display":"vol.218,
+        no 5144-5148","chron_display":"June 1968","in_temp_library":false},{"barcode":"32101014781270","id":"2384684210006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.218 May 1968","enum_display":"v.218","chron_display":"May
+        1968","in_temp_library":false},{"barcode":"32101017124999","id":"2384684220006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.218 Apr. 1968","enum_display":"v.218","chron_display":"Apr.
+        1968","in_temp_library":false},{"barcode":"32101009716950","id":"2384684230006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol.217, no.5131-5135 Mar. 1968","enum_display":"vol.217,
+        no.5131-5135","chron_display":"Mar. 1968","in_temp_library":false},{"barcode":"32101009716943","id":"2384684250006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 217, no. 5127-5130 Feb. 1968","enum_display":"vol.
+        217, no. 5127-5130","chron_display":"Feb. 1968","in_temp_library":false},{"barcode":"32101039863517","id":"2384684280006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 217, no. 5123-5126 Jan. 1968","enum_display":"vol.
+        217, no. 5123-5126","chron_display":"Jan. 1968","in_temp_library":false},{"barcode":"32101039863202","id":"2384684290006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.216, no. 5118-5122 Dec.2-Dec.30, 1967","enum_display":"v.216,
+        no. 5118-5122","chron_display":"Dec.2-Dec.30, 1967","in_temp_library":false},{"barcode":"32101039863210","id":"2384684300006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.216, no.5114-5117 Nov.4-Nov.25, 1967","enum_display":"v.216,
+        no.5114-5117","chron_display":"Nov.4-Nov.25, 1967","in_temp_library":false},{"barcode":"32101039863228","id":"2384684310006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 216, no. 5110-5113 Oct.7-Oct.28, 1967","enum_display":"v.
+        216, no. 5110-5113","chron_display":"Oct.7-Oct.28, 1967","in_temp_library":false},{"barcode":"32101039863236","id":"2384684320006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 215, no.5105-5109 Sept.2-Sept 30, 1967","enum_display":"v.
+        215, no.5105-5109","chron_display":"Sept.2-Sept 30, 1967","in_temp_library":false},{"barcode":"32101039863244","id":"2384684330006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.215, no. 5101-5104 Aug 5-Aug 26, 1967","enum_display":"v.215,
+        no. 5101-5104","chron_display":"Aug 5-Aug 26, 1967","in_temp_library":false},{"barcode":"32101039863251","id":"2384684340006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.215, no.5096-5100 July 1-July 29, 1984","enum_display":"v.215,
+        no.5096-5100","chron_display":"July 1-July 29, 1984","in_temp_library":false},{"barcode":"32101039863269","id":"2384684350006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.214, no.5092-5095 June 3-June 24, 1967","enum_display":"v.214,
+        no.5092-5095","chron_display":"June 3-June 24, 1967","in_temp_library":false},{"barcode":"32101039863277","id":"2384684360006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.214, no.5088-5091 May 6-May 27, 1967","enum_display":"v.214,
+        no.5088-5091","chron_display":"May 6-May 27, 1967","in_temp_library":false},{"barcode":"32101039863285","id":"2384684370006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.214, no.5083-5087 Apr 1-Apr.29, 1967","enum_display":"v.214,
+        no.5083-5087","chron_display":"Apr 1-Apr.29, 1967","in_temp_library":false},{"barcode":"32101039863293","id":"2384684380006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.213, no.5079-5082 March, 1967","enum_display":"v.213,
+        no.5079-5082","chron_display":"March, 1967","in_temp_library":false},{"barcode":"32101039863301","id":"2384684390006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 213 Feb. 1967","enum_display":"v. 213","chron_display":"Feb.
+        1967","in_temp_library":false},{"barcode":"32101039863319","id":"2384684400006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.213,no. 5071-5074 Jan.7-Jan.28, 1967","enum_display":"v.213,no.
+        5071-5074","chron_display":"Jan.7-Jan.28, 1967","in_temp_library":false},{"barcode":"32101039863327","id":"2384684410006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v. 212 Dec. 1966","enum_display":"v. 212","chron_display":"Dec.
+        1966","in_temp_library":false},{"barcode":"32101039863335","id":"2384684420006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.212  no.5062-5065 Nov. 1966","enum_display":"v.212  no.5062-5065","chron_display":"Nov.
+        1966","in_temp_library":false},{"barcode":"32101039863343","id":"2384684430006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.212  no.5057-5061 Oct. 1966","enum_display":"v.212  no.5057-5061","chron_display":"Oct.
+        1966","in_temp_library":false},{"barcode":"32101039863350","id":"2384684440006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"v.210-211 Indices Apr.-Sept. 1966","enum_display":"v.210-211
+        Indices","chron_display":"Apr.-Sept. 1966","in_temp_library":false},{"barcode":"32101031062142","id":"2384684450006421","holding_id":"2284684460006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"annex$stacks","label":"Forrestal
+        Annex","description":"vol. 287, no.5777-5785 Sept-Oct, 1980","enum_display":"vol.
+        287, no.5777-5785","chron_display":"Sept-Oct, 1980","in_temp_library":false}]'
+  recorded_at: Wed, 26 May 2021 12:07:45 GMT
 recorded_with: VCR 6.0.0

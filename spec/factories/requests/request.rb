@@ -17,8 +17,8 @@ FactoryGirl.define do
   end
 
   factory :request_pending, class: 'Requests::Request' do
-    system_id '99118890853506421'
-    mfhd '2241051640006421'
+    system_id '99117154533506421'
+    mfhd '22213813890006421'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end

@@ -127,7 +127,7 @@ module Requests
 
     def on_order?
       return false unless item? && !scsb?
-      item[:status_label] == 'Acquisition'
+      ['Acquisition', 'Hold Shelf'].include? item[:status_label]
     end
 
     def item?

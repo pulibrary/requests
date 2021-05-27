@@ -200,7 +200,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable item with hold_request status' do
     let(:request) { FactoryGirl.build(:request_serial_with_item_on_hold, patron: patron) }
-    let(:requestable_on_hold) { request.requestable[8] }
+    let(:requestable_on_hold) { request.requestable[0] }
     let(:requestable_not_on_hold) { request.requestable.first }
     describe '#hold_request?' do
       it 'with a Hold Request status it should be on hold' do
@@ -812,7 +812,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('ReCAP - Marquand Library use only')
+        expect(requestable.location_label).to eq('Firestone Library - Stacks')
       end
     end
 

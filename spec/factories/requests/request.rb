@@ -183,8 +183,8 @@ FactoryGirl.define do
   end
 
   factory :request_serial_with_item_on_hold, class: 'Requests::Request' do
-    system_id '9945635193506421'
-    mfhd_id '22207305070006421'
+    system_id '99117154533506421'
+    mfhd_id '22213813890006421'
     source 'pulsearch'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, patron: patron, mfhd: mfhd_id, source: source) }

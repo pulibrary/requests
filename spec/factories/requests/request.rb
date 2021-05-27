@@ -24,7 +24,7 @@ FactoryGirl.define do
   end
 
   factory :request_thesis, class: 'Requests::Request' do
-    system_id "dsp01rr1720547"
+    system_id "dsp019c67wp402"
     mfhd 'thesis'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }

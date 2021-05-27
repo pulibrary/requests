@@ -366,7 +366,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: 'dsp01rr1720547',
-        mfhd: '2232011730006421',
+        mfhd: 'thesis',
         patron: patron
       }
     end
@@ -380,6 +380,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a thesis holding location" do
+        # todo- mudd location code does not exists in bibdata, but is being passed back by the index
         expect(request_with_only_system_id.requestable[0].holding.key?('thesis')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd'
@@ -715,11 +716,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a requestable with 'on order' service" do
-        expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
+        expect(request_with_on_order.requestable.last.services.include?('on_order')).to be_truthy
       end
 
       it "has a requestable on order item" do
-        expect(request_with_on_order.requestable[0].voyager_managed?).to eq(true)
+        expect(request_with_on_order.requestable.last.voyager_managed?).to eq(true)
       end
     end
   end
@@ -791,8 +792,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a mfhd with missing items" do
     let(:params) do
       {
-        system_id: '993704573506421',
-        mfhd: '22272118950006421',
+        system_id: '9920022063506421',
+        mfhd: '22140105560006421',
         patron: patron
       }
     end

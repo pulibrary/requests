@@ -55,6 +55,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:request_thesis, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:holding_id) { "thesis" }
+
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp019c67wp402/raw")
+        .to_return(status: 200, body: fixture('/dsp019c67wp402.json'), headers: {})
+    end
+
     describe "#thesis?" do
       it "returns true when record is a senior thesis" do
         expect(requestable.thesis?).to be_truthy
@@ -87,7 +93,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Mudd Manuscript Library')
+        expect(requestable.location_label).to eq('Mudd Manuscript Library - Seeley G. Mudd Library')
       end
     end
 

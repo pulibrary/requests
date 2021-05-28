@@ -2268,73 +2268,6 @@ http_interactions:
   recorded_at: Thu, 27 May 2021 13:20:43 GMT
 - request:
     method: get
-    uri: https://catalog-alma-qa.princeton.edu/catalog/dsp01rr1720547/raw
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 27 May 2021 13:20:44 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Referrer-Policy:
-      - strict-origin-when-cross-origin
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Request-Id:
-      - 3270656b-558c-4dd4-bc7a-554a835d8d89
-      X-Download-Options:
-      - noopen
-      X-Ua-Compatible:
-      - IE=edge,chrome=1
-      Etag:
-      - W/"9fe669c668f33904479e37a24389f03d"
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Runtime:
-      - '0.020459'
-      X-Content-Type-Options:
-      - nosniff
-      X-Powered-By:
-      - Phusion Passenger(R) 6.0.8
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Headers:
-      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImRzcDAxcnIxNzIwNTQ3IiwidGl0bGVfdCI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXHJcbkFuIEV4YW1pbmF0aW9uIG9mIEh1bWFuIE1lZGljYWwgRXhwZXJpbWVudGF0aW9uIGluIE5hemkgR2VybWFueSBhbmQgdGhlIFVuaXRlZCBTdGF0ZXMiXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyLigJxBbmQgVGhlbiBUaGV5IENhbWUgRm9yIE1l4oCdXHJcbkFuIEV4YW1pbmF0aW9uIG9mIEh1bWFuIE1lZGljYWwgRXhwZXJpbWVudGF0aW9uIGluIE5hemkgR2VybWFueSBhbmQgdGhlIFVuaXRlZCBTdGF0ZXMiXSwidGl0bGVfZGlzcGxheSI6IuKAnEFuZCBUaGVuIFRoZXkgQ2FtZSBGb3IgTWXigJ1cclxuQW4gRXhhbWluYXRpb24gb2YgSHVtYW4gTWVkaWNhbCBFeHBlcmltZW50YXRpb24gaW4gTmF6aSBHZXJtYW55IGFuZCB0aGUgVW5pdGVkIFN0YXRlcyIsImVsZWN0cm9uaWNfYWNjZXNzXzFkaXNwbGF5Ijoie1wiaHR0cDovL2Fya3MucHJpbmNldG9uLmVkdS9hcms6Lzg4NDM1L2RzcDAxcnIxNzIwNTQ3XCI6W1wiRGF0YVNwYWNlXCIsXCJDaXRhdGlvbiBvbmx5XCJdfSIsInJlc3RyaWN0aW9uc19ub3RlX2Rpc3BsYXkiOlsiV2Fsay1pbiBBY2Nlc3MuIFRoaXMgdGhlc2lzIGNhbiBvbmx5IGJlIHZpZXdlZCBvbiBjb21wdXRlciB0ZXJtaW5hbHMgYXQgdGhlIFx1MDAzY2EgaHJlZj1odHRwOi8vbXVkZC5wcmluY2V0b24uZWR1XHUwMDNlTXVkZCBNYW51c2NyaXB0IExpYnJhcnlcdTAwM2MvYVx1MDAzZS4iXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJBQzEwMiJdLCJjYWxsX251bWJlcl9icm93c2VfcyI6WyJBQzEwMiJdLCJsYW5ndWFnZV9mYWNldCI6WyJFbmdsaXNoIl0sImF1dGhvcl9kaXNwbGF5IjpbIkRvZHlrLCBIaWxsYXJ5IEFseXNlIl0sImF1dGhvcl9zIjpbIkRvZHlrLCBIaWxsYXJ5IEFseXNlIiwiUm91c2UsIENhcm9seW4gTS4iLCJQcmluY2V0b24gVW5pdmVyc2l0eS4gRGVwYXJ0bWVudCBvZiBIaXN0b3J5Il0sImFkdmlzb3JfZGlzcGxheSI6WyJSb3VzZSwgQ2Fyb2x5biBNLiJdLCJkZXBhcnRtZW50X2Rpc3BsYXkiOlsiUHJpbmNldG9uIFVuaXZlcnNpdHkuIERlcGFydG1lbnQgb2YgSGlzdG9yeSJdLCJkZXNjcmlwdGlvbl9kaXNwbGF5IjpbIjEwMyBwYWdlcyJdLCJsb2NhdGlvbiI6WyJNdWRkIE1hbnVzY3JpcHQgTGlicmFyeSJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0sImxvY2F0aW9uX2NvZGVfcyI6WyJtdWRkIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsibXVkZCIsIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5Il0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1widGhlc2lzXCI6e1wibG9jYXRpb25cIjpcIk11ZGQgTWFudXNjcmlwdCBMaWJyYXJ5XCIsXCJsaWJyYXJ5XCI6XCJNdWRkIE1hbnVzY3JpcHQgTGlicmFyeVwiLFwibG9jYXRpb25fY29kZVwiOlwibXVkZFwiLFwiY2FsbF9udW1iZXJcIjpcIkFDMTAyXCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIkFDMTAyXCIsXCJkc3BhY2VcIjp0cnVlfX0iLCJjbGFzc195ZWFyX3MiOlsiMjAxNSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE1LCJwdWJfZGF0ZV9lbmRfc29ydCI6MjAxNSwiZm9ybWF0IjpbIlNlbmlvciB0aGVzaXMiXSwiaGFzaGVkX2lkX3MiOlsiMTg0YTI1OGEzMDBjMmM2ZCJdLCJfdmVyc2lvbl8iOjE3MDAzNjIwOTk1MjU0MTkwMDgsInRpbWVzdGFtcCI6IjIwMjEtMDUtMjFUMTA6MDc6MTcuNjY2WiJ9
-  recorded_at: Thu, 27 May 2021 13:20:44 GMT
-- request:
-    method: get
     uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/mudd.json
     body:
       encoding: US-ASCII
@@ -10808,4 +10741,56 @@ http_interactions:
       string: '{"label":"Numismatics Collection","code":"rare$num","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"remote_storage":"","library":{"label":"Special
         Collections","code":"rare","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
   recorded_at: Fri, 28 May 2021 15:06:39 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/mudd$stacks.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 17:00:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 5663782d-4b5b-4876-92c8-c2473f14fd81
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"06ad039355ae58fa9bc185bba2ab762a"
+      X-Runtime:
+      - '0.043187'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Seeley G. Mudd Library","code":"mudd$stacks","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"remote_storage":"","library":{"label":"Mudd
+        Manuscript Library","code":"mudd","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Mudd
+        Manuscript Library","address":"65 Olden Street Princeton, NJ 08544","phone_number":"609-258-6345","contact_email":"mudd@princeton.edu","gfa_pickup":"PH","staff_only":false,"pickup_location":false,"digital_location":true}]}'
+  recorded_at: Fri, 28 May 2021 17:00:21 GMT
 recorded_with: VCR 6.0.0

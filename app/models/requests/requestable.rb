@@ -45,7 +45,7 @@ module Requests
 
     # non voyager options
     def thesis?
-      holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd'
+      holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd$stacks'
     end
 
     def numismatics?

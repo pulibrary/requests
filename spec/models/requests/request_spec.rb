@@ -372,6 +372,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_with_only_system_id) { described_class.new(params) }
 
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
+        .to_return(status: 200, body: fixture('/dsp01rr1720547.json'), headers: {})
+    end
+
     describe "#requestable" do
       it "has a list of request objects" do
         expect(request_with_only_system_id.requestable).to be_truthy
@@ -383,7 +388,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         # todo- mudd location code does not exists in bibdata, but is being passed back by the index
         expect(request_with_only_system_id.requestable[0].holding.key?('thesis')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd$stacks'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -498,7 +503,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         expect(request_with_only_system_id.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
-      it "has a thesis holding location" do
+      it "has a numismatics holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'

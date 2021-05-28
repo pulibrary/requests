@@ -49,7 +49,7 @@ module Requests
     end
 
     def numismatics?
-      holding.key?("numismatics") && holding["numismatics"][:location_code] == 'num'
+      holding.key?("numismatics") && holding["numismatics"][:location_code] == 'rare$num'
     end
 
     # Reading Room Request

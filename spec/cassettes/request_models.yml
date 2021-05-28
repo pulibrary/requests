@@ -2375,120 +2375,6 @@ http_interactions:
   recorded_at: Thu, 27 May 2021 13:20:44 GMT
 - request:
     method: get
-    uri: https://catalog-alma-qa.princeton.edu/catalog/coin-1167/raw
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 302
-      message: Found
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 27 May 2021 13:20:45 GMT
-      Content-Type:
-      - text/html; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 302 Found
-      Cache-Control:
-      - no-cache
-      Referrer-Policy:
-      - strict-origin-when-cross-origin
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Request-Id:
-      - 329b6838-8d9c-4413-a835-58d0a00d43a7
-      Location:
-      - https://catalog-alma-qa.princeton.edu/404
-      X-Download-Options:
-      - noopen
-      X-Ua-Compatible:
-      - IE=edge,chrome=1
-      X-Runtime:
-      - '0.026548'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      X-Powered-By:
-      - Phusion Passenger(R) 6.0.8
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Headers:
-      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
-    body:
-      encoding: UTF-8
-      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/404">redirected</a>.</body></html>
-  recorded_at: Thu, 27 May 2021 13:20:45 GMT
-- request:
-    method: get
-    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/coin-1167/holdings/numismatics/availability.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 400
-      message: Bad Request
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 27 May 2021 13:20:46 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 400 Bad Request
-      Cache-Control:
-      - no-cache
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - b97d070d-508a-49d7-9b6c-bbb4f4710017
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      X-Runtime:
-      - '0.560158'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: ''
-  recorded_at: Thu, 27 May 2021 13:20:46 GMT
-- request:
-    method: get
     uri: https://catalog-alma-qa.princeton.edu/catalog/9929370033506421/raw
     body:
       encoding: US-ASCII
@@ -10544,4 +10430,382 @@ http_interactions:
         Available","status_label":"Loan","status_source":"process_type","process_type":"LOAN","on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"lewis$stacks","label":"Lewis
         Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
   recorded_at: Thu, 27 May 2021 22:59:12 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/996160863506421/holdings/22256352630006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 12:27:34 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '2489'
+      Last-Modified:
+      - Tue, 25 May 2021 20:19:00 GMT
+      Connection:
+      - keep-alive
+      Etag:
+      - '"60ad5bb4-9b9"'
+      Accept-Ranges:
+      - bytes
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+            <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+            <meta http-equiv="Pragma" content="no-cache"/>
+            <meta http-equiv="Expires" content="0"/>
+            <title>Error | Princeton University Library</title>
+            <style>
+              body {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+
+                align-items: center;
+                background-color: #f9f7ee;
+                display: flex;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                  "Segoe UI Symbol";
+                font-size: 18px;
+                height: 100vh;
+                justify-content: center;
+              }
+
+              main {
+                background: #fff;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+                max-width: 95vw;
+                min-height: 25vh;
+                padding: 5rem;
+                position: relative;
+                text-align: center;
+              }
+
+              h1 {
+                margin: 0;
+                padding: 0;
+              }
+
+              p {
+                color: rgba(0, 0, 0, 0.75);
+                font-size: 1.2rem;
+                line-height: 1.4;
+                margin: 0 auto;
+                max-width: 55ch;
+                padding: 2rem 0 0;
+              }
+
+              a,
+              a:visited {
+                color: rgb(45, 112, 180);
+                font-size: 1rem;
+                font-weight: 700;
+                text-decoration: none;
+              }
+
+              a:hover,
+              a:focus {
+                text-decoration: underline;
+              }
+
+              img {
+                margin-top: 3rem;
+                width: 250px;
+              }
+            </style>
+          </head>
+          <body>
+            <main>
+              <div class="wrapper">
+                <h1>Looks like something went wrong!</h1>
+                <p>
+                  We track these errors automatically, but if the problem persists feel
+                  free to contact us. In the meantime, try refreshing.
+                </p>
+                <p>
+                  <a href="mailto:lsupport@princeton.edu?subject=Getting an error"
+                    >Contact Library Support</a
+                  >
+                  &mdash;
+                  <a href="https://library.princeton.edu">Try the Library Site</a>
+                  &mdash;
+                  <a href="https://catalog.princeton.edu">Try the Library Catalog</a>
+                </p>
+                <a href="https://library.princeton.edu"
+                  ><img src="pul-logo-new.svg" alt="Princeton University Library"
+                /></a>
+              </div>
+            </main>
+          </body>
+        </html>
+  recorded_at: Fri, 28 May 2021 12:27:34 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9955960673506421/holdings/22119868660006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 13:02:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - cb6318e5-7f4f-4661-b62b-4f2d6c199950
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"a0475e88faed0a883a0555eb93cecabe"
+      X-Runtime:
+      - '2.132179'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101077447819","id":"23119868650006421","holding_id":"22119868660006421","copy_number":"1","status":"Not
+        Available","status_label":"Loan","status_source":"process_type","process_type":"LOAN","on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"lewis$stacks","label":"Lewis
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Fri, 28 May 2021 13:02:28 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/9925693243506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 13:09:25 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 34e067cb-45ac-4f22-8a32-ef8a31f3e993
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"7162c0ac74c9f12db7850f6a78c80e78"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.020276'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: '{"id":"9925693243506421","numeric_id_b":true,"author_display":["Richardson,
+        Samuel, 1689-1761"],"author_citation_display":["Richardson, Samuel"],"author_roles_1display":"{\"secondary_authors\":[],\"translators\":[],\"editors\":[],\"compilers\":[],\"primary_author\":\"Richardson,
+        Samuel\"}","author_s":["Richardson, Samuel, 1689-1761"],"marc_relator_display":["Author"],"title_display":"Clarissa
+        Harlowe; or, The history of a young lady. By Samuel Richardson. With thirty-four
+        illustrations reproduced from the engravings by Themas Stothard.","title_t":["Clarissa
+        Harlowe; or, The history of a young lady. By Samuel Richardson. With thirty-four
+        illustrations reproduced from the engravings by Themas Stothard."],"title_citation_display":["Clarissa
+        Harlowe; or, The history of a young lady"],"compiled_created_t":["Clarissa
+        Harlowe; or, The history of a young lady. By Samuel Richardson. With thirty-four
+        illustrations reproduced from the engravings by Themas Stothard."],"pub_created_display":["London,
+        Chapman \u0026 Hall ld., 1902."],"pub_created_s":["London, Chapman \u0026
+        Hall ld., 1902."],"pub_citation_display":["London: Chapman \u0026 Hall ld."],"pub_date_display":["1902"],"pub_date_start_sort":1902,"cataloged_tdt":"2020-12-02T19:39:23Z","format":["Book"],"description_display":["9
+        v. fronts., plates (incl. 1 facsim.) 18 cm."],"description_t":["9 v. fronts.,
+        plates (incl. 1 facsim.) 18 cm."],"number_of_pages_citation_display":["9 v."],"series_display":["The
+        novels of Samuel Richardson... With an introduction by Ethel M.M. McKenna.
+        vol. V-XIII"],"notes_display":["With reproduction of original title page of
+        v. 1, London, 1748.","Vol.3 in Photocopy."],"language_facet":["English"],"language_code_s":["eng"],"language_iana_s":["en"],"oclc_s":["5293818"],"other_version_s":["ocm05293818"],"holdings_1display":"{\"22177909800006421\":{\"location_code\":\"firestone$stacks\",\"location\":\"Firestone
+        Library - Firestone Library Stacks\",\"library\":\"Firestone Library\",\"call_number\":\"PR3664
+        .C4 1902\",\"call_number_browse\":\"PR3664 .C4 1902\",\"location_has\":[\"v.2-9\"],\"items\":[{\"holding_id\":\"22177909800006421\",\"id\":\"23177909780006421\",\"status_at_load\":\"1\",\"enumeration\":\"vol.2\",\"barcode\":\"32101003176631\",\"copy_number\":\"0\"},{\"holding_id\":\"22177909800006421\",\"id\":\"23177909790006421\",\"status_at_load\":\"0\",\"enumeration\":\"vol.3\",\"barcode\":\"32101006630972\",\"copy_number\":\"1\"}]}}","recap_notes_display":["
+        - "],"location_code_s":["firestone$stacks"],"location":["Firestone Library"],"location_display":["Firestone
+        Library - Firestone Library Stacks"],"advanced_location_s":["firestone$stacks","Firestone
+        Library"],"name_title_browse_s":["Richardson, Samuel, 1689-1761. Clarissa
+        Harlowe"],"call_number_display":["PR3664 .C4 1902 "],"call_number_browse_s":["PR3664
+        .C4 1902 "],"call_number_locator_display":["PR3664 .C4 1902"],"_version_":1696969619236978688,"timestamp":"2021-04-13T23:25:41.514Z"}'
+  recorded_at: Fri, 28 May 2021 13:09:25 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/9925693243506421/holdings/22177909800006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 13:09:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 48b4dd47-56c0-4e3f-be64-2c22bd75d713
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"e43aef979e55ac859a338d387c0776ff"
+      X-Runtime:
+      - '1.709074'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101003176631","id":"23177909780006421","holding_id":"22177909800006421","copy_number":"0","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"firestone$stacks","label":"Firestone
+        Library","description":"vol.2","enum_display":"vol.2","chron_display":"","in_temp_library":false},{"barcode":"32101006630972","id":"23177909790006421","holding_id":"22177909800006421","copy_number":"1","status":"Not
+        Available","status_label":"Technical - Migration","status_source":"process_type","process_type":"TECHNICAL","on_reserve":"N","item_type":"Gen","pickup_location_id":"stacks","pickup_location_code":"stacks","location":"firestone$stacks","label":"Firestone
+        Library","description":"vol.3","enum_display":"vol.3","chron_display":"","in_temp_library":false}]'
+  recorded_at: Fri, 28 May 2021 13:09:27 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/rare$num.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 15:06:39 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 9d059a9b-7791-4b72-ae58-69ba586534ac
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"4f9caca2cc58603e8e5a5a095b84cd5d"
+      X-Runtime:
+      - '0.013369'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Numismatics Collection","code":"rare$num","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"remote_storage":"","library":{"label":"Special
+        Collections","code":"rare","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+  recorded_at: Fri, 28 May 2021 15:06:39 GMT
 recorded_with: VCR 6.0.0

@@ -815,16 +815,15 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request_with_missing) { described_class.new(params) }
 
     before do
-      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026169985")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026169985")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026169985\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026132058")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026132058")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026132058\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101025649177")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101025649177")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649177\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101025649169")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101025649169")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649169\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026173334")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026173334")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026173334\",\"status\":\"Item not Found\"}", headers: {})
     end
     describe "#requestable" do
@@ -1525,8 +1524,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         .to_return(status: 200, body: availability, headers: {})
       stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?mfhd=#{params[:mfhd]}")
         .to_return(status: 200, body: mfhd_availability, headers: {})
-      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101068477817")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101068477817")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101068477817\",\"status\":\"Item In at Rest\"}", headers: {})
     end
     describe '#requestable' do

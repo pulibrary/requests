@@ -24,13 +24,13 @@ def stub_alma_hold_failure(id, mfhd, item_id, patron_id)
 end
 
 def stub_clancy_post(barcode:, status: 'Item Requested', deny: 'N')
-  clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
+  clancy_url = "#{Requests.config[:clancy_base]}/circrequests/v1"
   stub_request(:post, clancy_url).to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"request_count\":\"1\",\"results\":[{\"item\":\"#{barcode}\",\"deny\":\"#{deny}\",\"istatus\":\"#{status}\"}]}", headers: {})
   clancy_url
 end
 
 def stub_clancy_status(barcode:, status: "Item not Found")
-  stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/#{barcode}")
+  stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/#{barcode}")
     .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"#{barcode}\",\"status\":\"#{status}\"}", headers: {})
 end
 

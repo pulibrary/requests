@@ -11,6 +11,7 @@ defaults: &defaults
   scsb_base: https://uat-recap.htcinc.com:9093
   # scsb_base: https://scsb.recaplib.org:9093
   scsb_active_mq: uat-recap-direct.htcinc.com
+  clancy_base: <%= ENV['CLANCY_BASE_URL'] || "https://example.caiasoft.com/api" %>
 development:
   <<: *defaults
   bibdata_base: <%= ENV['BIBDATA_BASE'] || "https://bibdata-alma-staging.princeton.edu" %>

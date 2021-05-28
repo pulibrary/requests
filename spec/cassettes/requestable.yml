@@ -2925,72 +2925,6 @@ http_interactions:
   recorded_at: Thu, 13 May 2021 02:36:59 GMT
 - request:
     method: get
-    uri: https://catalog-alma-qa.princeton.edu/catalog/coin-1167/raw
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.1
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 302
-      message: Found
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 13 May 2021 02:37:00 GMT
-      Content-Type:
-      - text/html; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 302 Found
-      Cache-Control:
-      - no-cache
-      Referrer-Policy:
-      - strict-origin-when-cross-origin
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Request-Id:
-      - 9cc4e994-d99b-4d2b-a9dc-502aedc65143
-      Location:
-      - https://catalog-alma-qa.princeton.edu/404
-      X-Download-Options:
-      - noopen
-      X-Ua-Compatible:
-      - IE=edge,chrome=1
-      X-Runtime:
-      - '0.027048'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      X-Powered-By:
-      - Phusion Passenger(R) 6.0.8
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Headers:
-      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
-    body:
-      encoding: UTF-8
-      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/404">redirected</a>.</body></html>
-  recorded_at: Thu, 13 May 2021 02:37:00 GMT
-- request:
-    method: get
     uri: https://bibdata-alma-staging.princeton.edu/bibliographic/coin-1167/holdings/numismatics/availability.json
     body:
       encoding: US-ASCII
@@ -5773,4 +5707,55 @@ http_interactions:
       encoding: UTF-8
       string: '{"status":404,"error":"Not Found"}'
   recorded_at: Thu, 27 May 2021 22:58:48 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/rare$num.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Fri, 28 May 2021 15:24:03 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - a81cdfa0-3dbd-4e11-8a23-c06ecaa3f04c
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"4f9caca2cc58603e8e5a5a095b84cd5d"
+      X-Runtime:
+      - '0.028075'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Numismatics Collection","code":"rare$num","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"remote_storage":"","library":{"label":"Special
+        Collections","code":"rare","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+  recorded_at: Fri, 28 May 2021 15:24:04 GMT
 recorded_with: VCR 6.0.0

@@ -427,6 +427,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_with_only_system_id) { described_class.new(params) }
 
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+        .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
+    end
+
     describe "#requestable" do
       it "has a list of request objects" do
         expect(request_with_only_system_id.requestable).to be_truthy
@@ -437,7 +442,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a numismatics holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -475,11 +480,16 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: 'coin-1167',
-        mfhd: 'numismatics',
+        mfhd: nil,
         patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
+
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+        .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
+    end
 
     describe "#requestable" do
       it "has a list of request objects" do
@@ -491,7 +501,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       it "has a thesis holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -857,8 +867,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "Aeon item with holdings without items" do
     let(:params) do
       {
-        system_id: '996160863506421',
-        mfhd: '22256352610006421',
+        system_id: '9917917633506421',
+        mfhd: '22178797250006421',
         patron: patron
       }
     end
@@ -1209,8 +1219,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '9955960673506421',
-        mfhd: '22119868580006421',
+        system_id: '9925693243506421',
+        mfhd: '22177909800006421',
         patron: patron
       }
     end

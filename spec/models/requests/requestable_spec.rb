@@ -108,6 +108,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:request_numismatics, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:holding_id) { "numismatics" }
+
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+        .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
+    end
+
     describe "#numismatics?" do
       it "returns true when record is a senior thesis" do
         expect(requestable.numismatics?).to be_truthy

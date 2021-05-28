@@ -4,7 +4,7 @@ module Requests
   class ClancyItem
     attr_reader :clancy_conn, :api_key, :barcode, :errors
 
-    def initialize(barcode: nil, connection: Faraday.new(url: ENV['CLANCY_BASE_URL']))
+    def initialize(barcode: nil, connection: Faraday.new(url: Requests.config[:clancy_base]))
       @clancy_conn = connection
       @api_key = ENV['CLANCY_API_KEY']
       @barcode = barcode

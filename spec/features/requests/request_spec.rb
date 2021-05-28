@@ -40,7 +40,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     before do
       stub_delivery_locations
-      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
     end
 
     context 'all patrons' do

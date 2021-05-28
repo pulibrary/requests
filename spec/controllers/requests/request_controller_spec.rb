@@ -45,6 +45,9 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         expect(assigns(:mode)).to eq('standard')
       end
       it 'redirects you when a thesis record is requested' do
+        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
+          .to_return(status: 200, body: fixture('/dsp01rr1720547.json'), headers: {})
+
         get :generate, params: {
           source: 'pulsearch',
           system_id: 'dsp01rr1720547',

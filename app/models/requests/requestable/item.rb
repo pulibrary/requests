@@ -197,7 +197,7 @@ class Requests::Requestable
       def available_statuses
         voyager = ["Not Charged", "On-Site", "On Shelf"]
         scsb = ["Available"]
-        alma = ['Item in place', 'Acquisition', 'Technical Migration', 'Acquisition technical services']
+        alma = ['Item in place', 'Acquisition', 'Technical Migration', 'Acquisition technical services', 'Acquisitions and Cataloging']
         voyager + scsb + alma
       end
 

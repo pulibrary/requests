@@ -38,7 +38,7 @@ class Requests::Requestable
     end
 
     def hold_request?
-      status == 'Hold Request'
+      status_label == 'Hold Shelf'
     end
 
     def enumerated?
@@ -63,7 +63,7 @@ class Requests::Requestable
     end
 
     def missing?
-      status == 'Missing'
+      status_label == 'Missing'
     end
 
     def charged?

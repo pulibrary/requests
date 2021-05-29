@@ -150,8 +150,8 @@ FactoryGirl.define do
   end
 
   factory :missing_item, class: 'Requests::Request' do
-    system_id '9915486663506421'
-    mfhd_id '22272105960006421'
+    system_id '99119368513506421'
+    mfhd_id '2215335430006421'
     source 'pulsearch'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, patron: patron, mfhd: mfhd_id, source: source) }
@@ -233,7 +233,7 @@ FactoryGirl.define do
 
   factory :mfhd_with_no_circ_and_circ_item, class: 'Requests::Request' do
     system_id '992577173506421'
-    mfhd_id '22246536860006421d'
+    mfhd_id '22246536860006421'
     source 'pulsearch'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, patron: patron, mfhd: mfhd_id, source: source) }

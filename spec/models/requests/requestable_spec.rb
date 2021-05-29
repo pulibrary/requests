@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :new_episodes } do
+describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :all } do
   let(:user) { FactoryGirl.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
@@ -780,35 +780,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         it 'is on_order and is requestable' do
           expect(requestable.on_order?).to be_truthy
         end
-      end
-    end
-
-    describe '#location_label' do
-      it 'has a location label' do
-        expect(requestable.location_label).to eq('Firestone Library - Stacks')
-      end
-    end
-
-    describe "#held_at_marquand_library?" do
-      it "is not marquand" do
-        expect(requestable).not_to be_held_at_marquand_library
-      end
-    end
-
-    describe "#available?" do
-      it "is not available" do
-        expect(requestable).not_to be_available
-      end
-    end
-  end
-
-  context 'Pending Order materials' do
-    let(:request) { FactoryGirl.build(:request_pending, patron: patron) }
-    let(:requestable) { request.requestable.first } # assume only one requestable
-
-    describe 'with a status of pending orders' do
-      it 'is treated like on order items' do
-        expect(requestable.on_order?).to be true
       end
     end
 

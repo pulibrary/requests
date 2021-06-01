@@ -83,7 +83,7 @@ class Requests::Requestable
     end
 
     def available?
-      available_statuses.include?(status) || available_statuses.include?(scsb_status)
+      available_statuses.include?(status_label) || available_statuses.include?(scsb_status)
     end
 
     def barcode?

@@ -797,7 +797,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe "#available?" do
       it "is available" do
-        expect(requestable).to be_available
+        expect(requestable).not_to be_available
       end
     end
   end

@@ -20,8 +20,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:stackmap_url) { requestable.map_url(mfhd_id) }
 
     describe '#services' do
-      it 'has bd servces' do
-        # Technical - Migration
+      it 'has on shelf and digitization services' do
         expect(requestable.services).to contain_exactly("on_shelf", "on_shelf_edd")
       end
     end

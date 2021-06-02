@@ -260,6 +260,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
+  # on reserve flag = N in the availability response, should be Y
+  # https://bibdata-alma-staging.princeton.edu/bibliographic/9931973043506421/holdings/22185253590006421/availability.json
+  # https://github.com/pulibrary/bibdata/issues/1363
   context "A system id that has a holding with item on reserve" do
     let(:params) do
       {
@@ -999,22 +1002,23 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context "When passed an unavailable item where other local copies are on reserve." do
-    let(:params) do
-      {
-        system_id: '9991688293506421',
-        mfhd: '22209242250006421',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
+  # Now that we don't consider multiple holdings I think this is invalid
+  # context "When passed an unavailable item where other local copies are on reserve." do
+  #   let(:params) do
+  #     {
+  #       system_id: '9991688293506421',
+  #       mfhd: '22209242250006421',
+  #       patron: patron
+  #     }
+  #   end
+  #   let(:request) { described_class.new(params) }
 
-    describe "#borrow_direct_eligible?" do
-      it "is Borrow Direct Eligible" do
-        expect(request.borrow_direct_eligible?).to be true
-      end
-    end
-  end
+  #   describe "#borrow_direct_eligible?" do
+  #     it "is Borrow Direct Eligible" do
+  #       expect(request.borrow_direct_eligible?).to be true
+  #     end
+  #   end
+  # end
 
   context "When passed a Loaned Item that is eligible for Borrow Direct" do
     let(:params) do
@@ -1242,28 +1246,31 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
   end
 
-  context 'Multi-holding record with charged items and items available at restricted locations' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) do
-      {
-        system_id: '9996968113506421',
-        mfhd: '22117193570006421',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
-    describe '#any_loanable_copies?' do
-      it "has available copy" do
-        expect(request.any_loanable_copies?).to be false
-      end
-    end
+  # Since we don't load multiple holdings any longer I'm not sure this is a valid test scenario
+  #
+  # context 'Multi-holding record with charged items and items available at restricted locations' do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) do
+  #     {
+  #       system_id: '9996968113506421',
+  #       mfhd: '22117193570006421',
+  #       patron: patron
+  #     }
+  #   end
+  #   let(:request) { described_class.new(params) }
+  #   describe '#any_loanable_copies?' do
+  #     it "has available copy" do
+  #       byebug
+  #       expect(request.any_loanable_copies?).to be false
+  #     end
+  #   end
 
-    describe '#borrow_direct_eligible?' do
-      it 'is not borrow_direct_eligible' do
-        expect(request.borrow_direct_eligible?).to be true
-      end
-    end
-  end
+  #   describe '#borrow_direct_eligible?' do
+  #     it 'is not borrow_direct_eligible' do
+  #       expect(request.borrow_direct_eligible?).to be true
+  #     end
+  #   end
+  # end
 
   ### Review this test
   context 'RBSC single Item with no isbn' do

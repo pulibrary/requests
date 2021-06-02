@@ -38,7 +38,7 @@ class Requests::Requestable
     end
 
     def hold_request?
-      status == 'Hold Request'
+      status_label == 'Hold Shelf'
     end
 
     def enumerated?
@@ -63,7 +63,7 @@ class Requests::Requestable
     end
 
     def missing?
-      status == 'Missing'
+      status_label == 'Missing'
     end
 
     def charged?
@@ -83,7 +83,7 @@ class Requests::Requestable
     end
 
     def available?
-      available_statuses.include?(status) || available_statuses.include?(scsb_status)
+      available_statuses.include?(status_label) || available_statuses.include?(scsb_status)
     end
 
     def barcode?
@@ -197,7 +197,7 @@ class Requests::Requestable
       def available_statuses
         voyager = ["Not Charged", "On-Site", "On Shelf"]
         scsb = ["Available"]
-        alma = ['Item in place', 'Acquisition', 'Technical Migration', 'Acquisition technical services']
+        alma = ['Item in place']
         voyager + scsb + alma
       end
 
@@ -210,7 +210,8 @@ class Requests::Requestable
         scsb = ['Not Available', "Item Barcode doesn't exist in SCSB database."]
         alma = ['Claimed Returned', 'Lost', 'Hold Shelf', 'Transit', 'Missing', 'Resource Sharing Request',
                 'Lost Resource Sharing Item', 'Requested', 'In Transit to Remote Storage', 'Lost and paid',
-                'Loan', 'Controlled Digital Lending', 'At Preservation', 'Technical - Migration']
+                'Loan', 'Controlled Digital Lending', 'At Preservation', 'Technical - Migration',
+                'Acquisition', 'Technical Migration', 'Acquisition technical services', 'Acquisitions and Cataloging']
         voyager + scsb + alma
       end
   end

@@ -153,11 +153,11 @@ module Requests
           # temporary changes issue 438
           name = 'requestable[][pick_up]'
           if locs.size > 1
-            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pick_up_placeholder")
+            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], { 'pick_up' => loc[:gfa_pickup], 'pick_up_location_code' => loc[:pick_up_location_code] }.to_json] }), prompt: I18n.t("requests.default.pick_up_placeholder")
           else
             style = 'margin-top:10px;' if requestable.charged?
             style ||= ''
-            hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pick-up-hidden'
+            hidden = hidden_field_tag name.to_s, "", value: { 'pick_up' => locs[0][:gfa_pickup], 'pick_up_location_code' => locs[0][:pick_up_location_code] }.to_json, class: 'single-pick-up-hidden'
             label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pick-up', style: style.to_s
             hidden + label
           end
@@ -393,8 +393,9 @@ module Requests
         return [default_pick_ups[0]] if requestable.borrow_direct? || requestable.ill_eligible?
         return available_pick_ups(requestable, default_pick_ups) unless requestable.pending?
         if requestable.delivery_location_label.present?
-          [{ label: requestable.delivery_location_label, gfa_pickup: requestable.delivery_location_code, staff_only: false }]
+          [{ label: requestable.delivery_location_label, gfa_pickup: requestable.delivery_location_code, pick_up_location_code: requestable.pick_up_location_code, staff_only: false }]
         else
+          # TODO: Why is this option here
           [{ label: requestable.location[:library][:label], gfa_pickup: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
         end
       end

@@ -740,12 +740,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    ## The JSON response for holding w/no items is empty now
+    ## The JSON response for holding w/no items is empty now. We used to check the availability at the bib level, but that is not available in alma
+    ##  We must therefore assume that a holding with no itesm is not available
     ## https://bibdata-alma-staging.princeton.edu/bibliographic/9944928463506421/holdings/2217515100006421/availability.json
-    ## These return as not available but they should be treated as "always requestable"
     describe "#available?" do
-      it "is available" do
-        expect(requestable).to be_available
+      it "is not available" do
+        expect(requestable).not_to be_available
       end
     end
   end
@@ -796,7 +796,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     describe "#available?" do
-      it "is available" do
+      it "is not available" do
+        pending "https://github.com/pulibrary/bibdata/issues/1381"
         expect(requestable).not_to be_available
       end
     end

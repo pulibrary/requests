@@ -104,7 +104,13 @@ module Requests
         params[:requestable].each do |requestable|
           params['user_supplied_enum'] = sanitize(requestable['user_supplied_enum']) if requestable.key? 'user_supplied_enum'
         end
-        params
+        lparams = params.permit(bib: [:id, :title, :author, :isbn])
+        lparams[:requestable] = params[:requestable].map do |requestable|
+          json_pick_up = requestable[:pick_up]
+          requestable = requestable.merge(JSON.parse(json_pick_up)) unless json_pick_up.blank?
+          requestable.permit!
+        end
+        lparams
       end
 
       def respond_to_submit_success(submission)

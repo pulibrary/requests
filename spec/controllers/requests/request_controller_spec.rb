@@ -148,7 +148,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }], handled_by: "borrow_direct") }
       it 'contacts borrow direct and sends no emails ' do
         requestable.first["type"] = "bd"
-        requestable.first["pick_up"] = "PA"
+        requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
         requestable.first["bd"] = { query_params: "abc" }
         expect(Requests::RequestMailer).not_to receive(:send)
         expect(Requests::BorrowDirect).to receive(:new).and_return(borrow_direct)
@@ -162,7 +162,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:recal) { instance_double(Requests::Recall, errors: []) }
       it 'contacts recall and sends email' do
         requestable.first["type"] = "recall"
-        requestable.first["pick_up"] = "PA"
+        requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
         expect(Requests::Recall).to receive(:new).and_return(recal)
         expect(Requests::RequestMailer).to receive(:send).with("recall_email", anything).and_return(mail_message)
         expect(Requests::RequestMailer).not_to receive(:send).with("recall_confirmation", anything)
@@ -176,7 +176,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       let(:generic) { instance_double(Requests::Generic, errors: []) }
       it 'sends email and confirmation email' do
         requestable.first["type"] = "recap_no_items"
-        requestable.first["pick_up"] = "PA"
+        requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
         expect(Requests::Generic).to receive(:new).and_return(generic)
         expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_email", anything).and_return(mail_message)
         expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_confirmation", anything).and_return(mail_message)

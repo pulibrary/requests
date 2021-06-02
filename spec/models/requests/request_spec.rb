@@ -681,10 +681,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request_with_on_order) { described_class.new(params) }
     let(:firestone_circ) do
-      { label: "Firestone Library", gfa_pickup: "PA", staff_only: false }
+      { label: "Firestone Library", gfa_pickup: "PA", pick_up_location_code: "firestone", staff_only: false }
     end
     let(:architecture) do
-      { label: "Architecture Library", gfa_pickup: "PW", staff_only: false }
+      { label: "Architecture Library", gfa_pickup: "PW", pick_up_location_code: "arch", staff_only: false }
     end
 
     describe "#requestable" do
@@ -1260,7 +1260,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   #   let(:request) { described_class.new(params) }
   #   describe '#any_loanable_copies?' do
   #     it "has available copy" do
-  #       byebug
   #       expect(request.any_loanable_copies?).to be false
   #     end
   #   end

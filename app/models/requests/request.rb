@@ -149,7 +149,7 @@ module Requests
     def build_pick_ups
       pick_up_locations = []
       Requests::BibdataService.delivery_locations.each_value do |pick_up|
-        pick_up_locations << { label: pick_up["label"], gfa_pickup: pick_up["gfa_pickup"], staff_only: pick_up["staff_only"] } if pick_up["pickup_location"] == true
+        pick_up_locations << { label: pick_up["label"], gfa_pickup: pick_up["gfa_pickup"], pick_up_location_code: pick_up["library"]["code"] || 'firestone', staff_only: pick_up["staff_only"] } if pick_up["pickup_location"] == true
       end
       # pick_up_locations.sort_by! { |loc| loc[:label] }
       sort_pick_ups(pick_up_locations)
@@ -277,7 +277,7 @@ module Requests
         params = build_requestable_params(
           item: item.with_indifferent_access,
           holding: { holding_id.to_sym.to_s => holdings[holding_id] },
-          location: @locations[item_loc]
+          location: locations[item_loc]
         )
         # sometimes availability returns items without any status
         # see https://github.com/pulibrary/marc_liberation/issues/174
@@ -302,11 +302,13 @@ module Requests
       end
 
       def build_requestable_params(params)
+        location = params[:location]
+        location["delivery_locations"] = location["delivery_locations"].map { |loc| loc.merge("pick_up_location_code" => 'firestone') { |_key, v1, _v2| v1 } }
         {
           bib: doc.with_indifferent_access,
           holding: params[:holding],
           item: params[:item],
-          location: params[:location],
+          location: location,
           patron: patron
         }
       end

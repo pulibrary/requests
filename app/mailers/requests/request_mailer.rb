@@ -323,7 +323,7 @@ module Requests
 
       def annex_email_destinations(submission:)
         annex_items(submission: submission).map do |item|
-          if item["location_code"] == 'anxadoc'
+          if item["location_code"] == 'annex$doc'
             I18n.t('requests.anxadoc.email')
           else
             I18n.t('requests.annex.email')

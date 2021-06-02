@@ -7,7 +7,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
     let(:voyager_id) { '9994933183506421?mfhd=22131438430006421' }
     let(:thesis_id) { 'dsp01rr1720547' }
     let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
-    let(:recap_in_process_id) { '10247806?mfhd=10028102' }
+    # going to need to review this with Mark to see if this example is good
+    let(:recap_in_process_id) { '99105873133506421?mfhd=22251746380006421' }
     let(:on_order_id) { '99120493093506421?mfhd=2251949020006421' }
     let(:no_items_id) { '9941274093506421?mfhd=22197827810006421' }
     let(:on_shelf_no_items_id) { '993083506421?mfhd=22261908670006421' }
@@ -257,16 +258,34 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
         end
 
-          # it 'allow CAS patrons to request an available ReCAP item with Help Me' do
-          #   visit "/requests/#{voyager_id}"
-          #   expect(page).to have_content "Requests for ReCAP materials will be unavailable during a planned system update"
-          #   expect(page).to have_content 'Help Me Get It'
-          # end
+        xit 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
+          visit "/requests/#{recap_in_process_id}"
+          expect(page).to have_content 'In Process'
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up')
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          expect(page).to have_content I18n.t("requests.submit.in_process_success")
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("In Process Request")
+          expect(email.to).to eq(["fstcirc@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("Unrecognised by the world at large")
+          expect(confirm_email.subject).to eq("In Process Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Unrecognised by the world at large")
+          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+        end
 
-          it 'does display the online access message' do
-            visit "/requests/#{online_id}"
-            expect(page).to have_content 'Online'
-          end
+        # it 'makes sure In-Process ReCAP items get Help Me' do
+        #   visit "/requests/#{recap_in_process_id}"
+        #   expect(page).to have_content "Requests for ReCAP materials will be unavailable during a planned system update"
+        #   expect(page).to have_content 'Help Me Get It'
+        # end
 
         it 'allows CAS patrons to request On-Order items' do
           visit "/requests/#{on_order_id}"
@@ -434,7 +453,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
         it 'allows patrons to request a on-order' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
-          visit '/requests/99114164263506421?mfhd=22138658470006421'
+          ## having trouble finding a firestone item in BL.
+          visit '/requests/99121699843506421?mfhd=22184441650006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pick_up')
@@ -787,55 +807,57 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             expect(marquand_email.cc).to be_blank
           end
 
-        it 'allows an etas item to be digitized' do
-          # TODO: - Do we need to worry about ETAS?
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Edwards, Ruth Dudley", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "James Connolly", "PhotoItemPublisher" => "Dublin: Gill and Macmillan", "ISSN" => "9780717111121 9780717111114", "CallNumber" => "DA965.C7 E36 1981", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/991626323506421", "PhotoJournalYear" => "1981", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "8391816", "DocumentType" => "Book", "Location" => "Online - HathiTrust Emergency Temporary Access", "PhotoArticleTitle" => "ABC"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
-          visit '/requests/991626323506421?mfhd=2239424020006421'
-          expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access DA965.C7 E36 1981'
-          expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
-          expect(page).not_to have_content('make an appointment')
-          fill_in "Article/Chapter Title", with: "ABC"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(page).to have_content 'Request submitted'
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_blank
-          expect(confirm_email.html_part.body.to_s).to have_content("James Connolly")
-        end
+        # it 'allows an etas item to be digitized' do
+        #   # TODO: - Do we need to worry about ETAS? No, PUL ETAS is being deprecated at alma go live
+        #   stub_request(:get, patron_url)
+        #     .to_return(status: 200, body: responses[:found], headers: {})
+        #   stub_request(:post, transaction_url)
+        #     .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Edwards, Ruth Dudley", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "James Connolly", "PhotoItemPublisher" => "Dublin: Gill and Macmillan", "ISSN" => "9780717111121 9780717111114", "CallNumber" => "DA965.C7 E36 1981", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/991626323506421", "PhotoJournalYear" => "1981", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "8391816", "DocumentType" => "Book", "Location" => "Online - HathiTrust Emergency Temporary Access", "PhotoArticleTitle" => "ABC"))
+        #     .to_return(status: 200, body: responses[:transaction_created], headers: {})
+        #   stub_request(:post, transaction_note_url)
+        #     .to_return(status: 200, body: responses[:note_created], headers: {})
+        #   visit '/requests/991626323506421?mfhd=2239424020006421'
+        #   expect(page).to have_content 'Electronic Delivery'
+        #   expect(page).to have_content 'Online- HathiTrust Emergency Temporary Access DA965.C7 E36 1981'
+        #   expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
+        #   expect(page).not_to have_content('make an appointment')
+        #   fill_in "Article/Chapter Title", with: "ABC"
+        #   expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        #   expect(page).to have_content 'Request submitted'
+        #   confirm_email = ActionMailer::Base.deliveries.last
+        #   expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+        #   expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+        #   expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+        #   expect(confirm_email.to).to eq(["a@b.com"])
+        #   expect(confirm_email.cc).to be_blank
+        #   expect(confirm_email.html_part.body.to_s).to have_content("James Connolly")
+        # end
 
-        xit "allows an Recap etas item to be digitized" do
-          # TODO: - Do we need to worry about ETAS?
-          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
-          stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "7599", callNumber: "PJ3002 .S4", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101073604215"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Semitistik", username: "jstudent", volume: ""))
-            .to_return(status: 200, body: good_response, headers: {})
-          visit '/requests/9975993506421?mfhd=22153200840006421'
-          expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_content 'ReCAP- HathiTrust Emergency Temporary Access ReCAP PJ3002 .S4'
-          expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
-          expect(page).not_to have_content 'If the specific volume does not appear in the list below, please enter it here:'
-          fill_in "Article/Chapter Title", with: "ABC"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(a_request(:post, scsb_url)).to have_been_made
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
-          expect(confirm_email.html_part.body.to_s).to have_content("Semitistik")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
-        end
+        # it "allows an Recap etas item to be digitized" do
+        #   # TODO: - Do we need to worry about ETAS?
+        #   scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+        #   stub_request(:post, scsb_url)
+        #     .with(body: hash_including(author: "", bibId: "7599", callNumber: "PJ3002 .S4", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101073604215"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Semitistik", username: "jstudent", volume: ""))
+        #     .to_return(status: 200, body: good_response, headers: {})
+        #   visit '/requests/9975993506421?mfhd=22153200840006421'
+        #   expect(page).to have_content 'Electronic Delivery'
+        #   expect(page).to have_content 'ReCAP- HathiTrust Emergency Temporary Access ReCAP PJ3002 .S4'
+        #   expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
+        #   expect(page).not_to have_content 'If the specific volume does not appear in the list below, please enter it here:'
+        #   fill_in "Article/Chapter Title", with: "ABC"
+        #   expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        #   expect(a_request(:post, scsb_url)).to have_been_made
+        #   confirm_email = ActionMailer::Base.deliveries.last
+        #   expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+        #   expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+        #   expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+        #   expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+        #   expect(confirm_email.html_part.body.to_s).to have_content("Semitistik")
+        #   expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
+        #   expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
+        # end
 
+        # need to check on CUL etas
         xit "allows a columbia item that is not in hathi etas to be picked up or digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=21154437")
             .to_return(status: 200, body: '[]')

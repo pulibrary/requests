@@ -275,6 +275,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#requestable" do
       it "is on reserve" do
+        pending "https://github.com/pulibrary/bibdata/issues/1363"
         expect(request_with_items_on_reserve.requestable.first.on_reserve?).to be_truthy
       end
     end
@@ -1511,9 +1512,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
         "patron_id" => "99999", "active_email" => "foo@princeton.edu",
         campus_authorized: true, campus_authorized_category: "full" }.with_indifferent_access
     end
-    let(:marquand) { fixture('/5620053.json') }
-    let(:availability) { fixture('/availability_5620053.json') }
-    let(:mfhd_availability) { fixture('/availability_5749706.json') }
+    let(:marquand) { fixture('/9956200533506421_raw.json') }
+    let(:mfhd_availability) { fixture('/availability_2219823460006421.json') }
     let(:location_code) { 'scsbnypl' }
     let(:params) do
       {
@@ -1527,9 +1527,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     before do
       stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: marquand, headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?id=#{params[:system_id]}")
-        .to_return(status: 200, body: availability, headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?mfhd=#{params[:mfhd]}")
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/bibliographic/#{params[:system_id]}/holdings/#{params[:mfhd]}/availability.json")
         .to_return(status: 200, body: mfhd_availability, headers: {})
       stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101068477817")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101068477817\",\"status\":\"Item In at Rest\"}", headers: {})

@@ -16,19 +16,18 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
     let(:mfhd_id) { requestable.holding.first[0] }
     let(:call_number) { CGI.escape(requestable.holding[mfhd_id]['call_number']) }
-    let(:location_code) { requestable.holding[mfhd_id]['location_code'] }
+    let(:location_code) { CGI.escape(requestable.holding[mfhd_id]['location_code']) }
     let(:stackmap_url) { requestable.map_url(mfhd_id) }
 
     describe '#services' do
-      it 'has a service on on_shelf' do
-        # Technical - Migration
-        expect(requestable.services).to contain_exactly("bd", "ill")
+      it 'has on shelf and digitization services' do
+        expect(requestable.services).to contain_exactly("on_shelf", "on_shelf_edd")
       end
     end
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Firestone Library')
+        expect(requestable.location_label).to eq('Firestone Library - Stacks')
       end
     end
 
@@ -213,26 +212,21 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A requestable item with hold_request status' do
     let(:request) { FactoryGirl.build(:request_serial_with_item_on_hold, patron: patron) }
     let(:requestable_on_hold) { request.requestable[0] }
-    let(:requestable_not_on_hold) { request.requestable.first }
     describe '#hold_request?' do
-      it 'with a Hold Request status it should be on hold' do
+      it 'with a Hold Request status it should be on the hold shelf' do
         expect(requestable_on_hold.hold_request?).to be true
-      end
-      it 'is on hold with a Not Charged status' do
-        expect(requestable_not_on_hold.hold_request?).to be false
       end
     end
 
     describe '#services' do
-      it 'is not recallable' do
-        expect(requestable_on_hold.services.include?('recall')).to be false
-        expect(requestable_on_hold.recallable?).to be false
+      it 'is available for resource sharing' do
+        expect(requestable_on_hold.services.include?('ill')).to be true
       end
     end
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable_on_hold.location_label).to eq('ReCAP')
+        expect(requestable_on_hold.location_label).to eq('Firestone Library - Stacks')
       end
     end
 
@@ -253,14 +247,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:request) { FactoryGirl.build(:missing_item, patron: patron) }
     let(:requestable) { request.requestable }
     describe '#services' do
-      it 'is does not have a recall service' do
-        expect(requestable.first.services.include?('recall')).to be false
-      end
-
-      it 'is not recallable' do
-        expect(requestable.first.recallable?).to be false
-      end
-
       it 'is missing' do
         expect(requestable.first.missing?).to be true
       end
@@ -275,7 +261,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       describe '#location_label' do
         it 'has a location label' do
-          expect(requestable.first.location_label).to eq('Firestone Library')
+          expect(requestable.first.location_label).to eq('Firestone Library - Stacks')
         end
       end
     end
@@ -307,11 +293,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'gets values' do
         expect(requestable.item_data?).to be true
         expect(requestable.item_type_non_circulate?).to be true
-        expect(requestable.pick_up_location_id).to eq 299
-        expect(requestable.pick_up_location_code).to eq 'fcirc'
+        expect(requestable.pick_up_location_id).to eq 'stacks'
+        expect(requestable.pick_up_location_code).to eq 'stacks'
         expect(requestable.enum_value).to eq 'vol.22'
         expect(requestable.cron_value).to eq '1996'
-        expect(requestable.location_label).to eq('Firestone Library')
+        expect(requestable.location_label).to eq('Firestone Library - Stacks')
       end
     end
   end
@@ -327,16 +313,16 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:no_circ_pick_up_location_code) { requestable.item['pickup_location_code'] }
 
     describe '#item_type_circulate' do
-      it 'returns the item type from voyager' do
+      it 'returns the item type from alma' do
         expect(requestable.item_type_non_circulate?).to be false
-        expect(requestable.pick_up_location_id).to eq 299
-        expect(requestable.pick_up_location_code).to eq 'fcirc'
+        expect(requestable.pick_up_location_id).to eq 'stacks'
+        expect(requestable.pick_up_location_code).to eq 'stacks'
       end
     end
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Firestone Library')
+        expect(requestable.location_label).to eq('Firestone Library - Stacks')
       end
     end
 
@@ -486,8 +472,9 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#aeon_openurl' do
       let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
 
+      ## no idea why these two don't match
       it 'includes basic metadata' do
-        expect(aeon_ctx).to include('&rft.genre=unknown&rft.title=Beethoven%27s+andante+cantabile+aus+dem+Trio+op.+97%2C+fu%CC%88r+orchester&rft.creator=Beethoven%2C+Ludwig+van&rft.aucorp=Leipzig%3A+Kahnt&rft.pub=Leipzig%3A+Kahnt&rft.format=musical+score&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Aunknown&rft_id=https%3A%2F%2Fbibdata.princeton.edu%2Fbibliographic%2F2535845&rft_id=info%3Aoclcnum%2F25615303&rfr_id=info%3Asid%2Fcatalog.princeton.edu%3Agenerator&CallNumber=M1004.L6+B3&ItemInfo1=Reading+Room+Access+Only&Location=ex&ReferenceNumber=2535845&Site=RBSC')
+        expect(aeon_ctx).to include('ctx_id=&ctx_enc=info%3Aofi%2Fenc%3AUTF-8&rft.genre=unknown&rft.title=Beethoven%27s+andante+cantabile+aus+dem+Trio+op.+97%2C+fu%CC%88r+orchester&rft.creator=Beethoven%2C+Ludwig+van&rft.aucorp=Leipzig%3A+Kahnt&rft.pub=Leipzig%3A+Kahnt&rft.format=musical+score&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Aunknown&rft_id=https%3A%2F%2Fbibdata.princeton.edu%2Fbibliographic%2F9925358453506421&rft_id=info%3Aoclcnum%2F25615303&rfr_id=info%3Asid%2Fcatalog.princeton.edu%3Agenerator&CallNumber=M1004.L6+B3&ItemInfo1=Reading+Room+Access+Only&Location=rare%24ex&ReferenceNumber=9925358453506421&Site=RBSC')
       end
     end
 
@@ -535,7 +522,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('ReCAP - Marquand Library (Rare) use only')
+        expect(requestable.location_label).to eq('ReCAP - Remote Storage: Marquand Library (Rare) use only')
       end
     end
 
@@ -598,7 +585,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Special Collections - John Witherspoon Library')
+        expect(requestable.location_label).to eq('Special Collections - Rare Books Oversize')
       end
     end
 
@@ -753,6 +740,9 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
+    ## The JSON response for holding w/no items is empty now
+    ## https://bibdata-alma-staging.princeton.edu/bibliographic/9944928463506421/holdings/2217515100006421/availability.json
+    ## These return as not available but they should be treated as "always requestable"
     describe "#available?" do
       it "is available" do
         expect(requestable).to be_available
@@ -762,7 +752,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'On Order materials' do
     let(:request) { FactoryGirl.build(:request_on_order, patron: patron) }
-    let(:requestable) { request.requestable.first } # assume only one requestable
+    let(:requestable) { request.requestable.last } # serial records on order at the end
 
     describe 'with a status of on_order ' do
       it 'is on_order and requestable' do
@@ -795,7 +785,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('Firestone Library - Stacks')
+        expect(requestable.location_label).to eq('Firestone Library - Classics Collection')
       end
     end
 
@@ -806,36 +796,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     describe "#available?" do
-      it "is not available" do
-        expect(requestable).not_to be_available
-      end
-    end
-  end
-
-  context 'Pending Order materials' do
-    let(:request) { FactoryGirl.build(:request_pending, patron: patron) }
-    let(:requestable) { request.requestable.first } # assume only one requestable
-
-    describe 'with a status of pending orders' do
-      it 'is treated like on order items' do
-        expect(requestable.on_order?).to be true
-      end
-    end
-
-    describe '#location_label' do
-      it 'has a location label' do
-        expect(requestable.location_label).to eq('Firestone Library - Stacks')
-      end
-    end
-
-    describe "#held_at_marquand_library?" do
-      it "is not marquand" do
-        expect(requestable).not_to be_held_at_marquand_library
-      end
-    end
-
-    describe "#available?" do
-      it "is not available" do
+      it "is available" do
         expect(requestable).not_to be_available
       end
     end
@@ -876,7 +837,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged) }
-    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['1594698'] } }
+    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22256065790006421'] } }
     let(:requestable_charged) { requestable_holding.first }
 
     describe '# checked-out requestable' do
@@ -898,11 +859,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       # TODO: Activate test when campus has re-opened
       xit "should have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be true
-      end
-
-      # TODO: Remove when campus has re-opened
-      it "does not have recall request service available" do
-        expect(requestable_charged.services.include?('recall')).to be false
       end
 
       # TODO: Activate test when campus has re-opened
@@ -1006,20 +962,10 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     # end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged_barcode_patron) }
-    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['1594698'] } }
+    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22256065790006421'] } }
     let(:requestable_charged) { requestable_holding.first }
 
     describe '#checked-out requestable' do
-      # TODO: Remove when campus has re-opened
-      it "does not have recall request service available" do
-        expect(requestable_charged.services.include?('recall')).to be false
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "should have recall request service available" do
-        expect(requestable_charged.services.include?('recall')).to be true
-      end
-
       # Barcode users should NOT have the following privileges ...
 
       it "does not have Borrow Direct request service available" do
@@ -1163,13 +1109,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
     end
 
-    describe '#etas_limited_access' do
-      it 'is not restricted' do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
-          .to_return(status: 200, body: '[]')
-        expect(requestable.etas_limited_access). to be_falsey
-      end
-    end
+    # ETAS Status not relevant for Alma
+    # describe '#etas_limited_access' do
+    #   it 'is not restricted' do
+    #     stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
+    #       .to_return(status: 200, body: '[]')
+    #     expect(requestable.etas_limited_access). to be_falsey
+    #   end
+    # end
   end
 
   context 'A SCSB Item with no oclc number' do

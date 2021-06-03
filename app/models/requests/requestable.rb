@@ -64,7 +64,7 @@ module Requests
 
     def recap?
       return false unless location_valid?
-      library_code == 'recap' || holding_library == 'recap'
+      location[:remote_storage] == "recap_rmt"
     end
 
     def clancy?

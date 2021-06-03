@@ -835,6 +835,10 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it "is available" do
         expect(requestable).to be_available
       end
+
+      it "is recap" do
+        expect(requestable).to be_recap
+      end
     end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged) }

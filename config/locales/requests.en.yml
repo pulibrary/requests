@@ -291,7 +291,7 @@ en:
       cas_user_no_barcode_no_choice_msg: 'Only items available for digitization can be requested when you do not have a barcode registered with the Library'
       auth_user_lookup_fail: 'Failed to lookup your library account'
     library_hours:
-      firestone: '9:00am - 7:00pm, Monday - Friday; 11:00am - 7:00pm Saturdays and Sundays'
+      firestone: '11:00am - 5:00pm, Monday - Friday; 12:00pm - 3:00pm Saturdays and Sundays'
       architecture: '9:00am – 5:00pm, Monday - Friday'
       eastasian: '8:00am – 4:30pm, Monday - Friday'
       mendel: '	9:00am – 4:45pm, Monday - Friday'

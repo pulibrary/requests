@@ -224,6 +224,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, Requests.config[:scsb_base])
             .with(headers: { 'Accept' => '*/*' })
             .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
+          stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/9994933183506421/holdings/22131438430006421/items/23131438400006421/requests?user_id=960594184")
+            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
+            .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
           visit "/requests/#{voyager_id}"
           expect(page).to have_content 'Electronic Delivery'
           # some weird issue with this and capybara examining the page source shows it is there.
@@ -603,6 +606,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: nil, bibId: "99115783193506421", callNumber: "DVD", chapterTitle: nil, deliveryLocation: "PA", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["32101108035435"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "Chernobyl : a 5-part miniseries", username: "jstudent", volume: nil))
             .to_return(status: 200, body: good_response, headers: {})
+          stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/99115783193506421/holdings/22155047580006421/items/23155047570006421/requests?user_id=960594184")
+            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
+            .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
           visit '/requests/99115783193506421?mfhd=22155047580006421'
           expect(page).not_to have_content 'Item is not requestable.'
           expect(page).not_to have_content 'Electronic Delivery'
@@ -1110,6 +1116,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .with(body: hash_including(author: "", bibId: "99117809653506421", callNumber: "N6923.B257 H84 2020", chapterTitle: "", deliveryLocation: "PJ", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101106347378"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance", username: "jstudent", volume: ""))
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/99117809653506421?mfhd=22203397510006421'
+          stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/99117809653506421/holdings/22203397510006421/items/23203397500006421/requests?user_id=960594184")
+            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "pj"))
+            .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
           choose('requestable__delivery_mode_23203397500006421_in_library') # chooses 'in_library' radio button
           expect(page).to have_content 'Electronic Delivery'
           expect(page).to have_content 'Available for In Library'
@@ -1243,6 +1252,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           stub_request(:post, Requests.config[:scsb_base])
             .with(headers: { 'Accept' => '*/*' })
             .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
+          stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/9994933183506421/holdings/22131438430006421/items/23131438400006421/requests?user_id=960594184")
+            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
+            .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
           visit "/requests/#{voyager_id}"
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'

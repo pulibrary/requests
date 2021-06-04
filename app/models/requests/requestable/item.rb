@@ -94,6 +94,10 @@ class Requests::Requestable
       self[:barcode]
     end
 
+    def scsb?
+      ['scsbnypl', 'scsbcul'].include? self["location_code"]
+    end
+
     class NullItem
       def nil?
         true
@@ -189,6 +193,10 @@ class Requests::Requestable
 
       def barcode
         ''
+      end
+
+      def scsb?
+        false
       end
     end
 

@@ -61,9 +61,11 @@ module Requests
     end
 
     def scsb?
-      items = @items.select { |item| ['scsbnypl', 'scsbcul'].include? item["location_code"] }
-      return true unless items.empty?
-      return false if items.empty?
+      @items.select { |item| scsb_item?(item) }.size.positive?
+    end
+
+    def scsb_item?(item)
+      ['scsbnypl', 'scsbcul'].include? item["location_code"]
     end
 
     def service_types
@@ -113,6 +115,12 @@ module Requests
       items.first["holding_library"] == 'marquand'
     end
 
+    def edd?(item)
+      # return false if item["type"] == "digitize_fill_in"
+      delivery_mode = delivery_mode(item)
+      delivery_mode.present? && delivery_mode == "edd"
+    end
+
     private
 
       # rubocop:disable Metrics/MethodLength
@@ -136,12 +144,6 @@ module Requests
         item
       end
       # rubocop:enable Metrics/MethodLength
-
-      def edd?(item)
-        # return false if item["type"] == "digitize_fill_in"
-        delivery_mode = delivery_mode(item)
-        delivery_mode.present? && delivery_mode == "edd"
-      end
 
       def in_library?(item)
         # return false if item["type"] == "digitize_fill_in"
@@ -167,11 +169,15 @@ module Requests
       end
 
       def process_hold
-        if service_types.include? 'on_shelf'
-          @services << Requests::HoldItem.new(self)
-        elsif service_types.include? 'marquand_in_library'
-          @services << Requests::HoldItem.new(self, service_type: 'marquand_in_library')
-        end
+        return unless service_types.include?('on_shelf') || service_types.include?('marquand_in_library')
+
+        hold = if service_types.include? 'on_shelf'
+                 Requests::HoldItem.new(self)
+               elsif service_types.include? 'marquand_in_library'
+                 Requests::HoldItem.new(self, service_type: 'marquand_in_library')
+               end
+        hold.handle
+        @services << hold
       end
 
       def process_recall

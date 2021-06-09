@@ -366,58 +366,6 @@ http_interactions:
   recorded_at: Thu, 03 Jun 2021 17:25:57 GMT
 - request:
     method: get
-    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/firestone$stacks.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:25:57 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - 6bcd58e5-7b94-4f3c-bd1d-855f2a33f248
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Etag:
-      - W/"2076b9061eb9f7f5fc8d6b9cd11d00a0"
-      X-Runtime:
-      - '0.013692'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: '{"label":"Stacks","code":"firestone$stacks","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Firestone
-        Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
-        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-  recorded_at: Thu, 03 Jun 2021 17:25:57 GMT
-- request:
-    method: get
     uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/rare$ex.json
     body:
       encoding: US-ASCII
@@ -637,175 +585,6 @@ http_interactions:
         and Cataloging","status_source":"work_order","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$stacks","label":"Firestone
         Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
   recorded_at: Thu, 03 Jun 2021 17:26:06 GMT
-- request:
-    method: get
-    uri: https://catalog-alma-qa.princeton.edu/catalog/99120493093506421/raw
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:26:08 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Referrer-Policy:
-      - strict-origin-when-cross-origin
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Request-Id:
-      - 76909fee-d68a-40ad-ad7e-d73f156e4e03
-      X-Download-Options:
-      - noopen
-      X-Ua-Compatible:
-      - IE=edge,chrome=1
-      Etag:
-      - W/"0f299e445b3833fb4870c66f61a74db9"
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Runtime:
-      - '0.018140'
-      X-Content-Type-Options:
-      - nosniff
-      X-Powered-By:
-      - Phusion Passenger(R) 6.0.8
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Headers:
-      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Ijk5MTIwNDkzMDkzNTA2NDIxIiwibnVtZXJpY19pZF9iIjp0cnVlLCJhdXRob3JfZGlzcGxheSI6WyJKb2huc29uLCBGLiBOZWlsIChGcmVkZXJpY2sgTmVpbCkiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiSm9obnNvbiwgRi4gTmVpbCJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIkpvaG5zb24sIEYuIE5laWxcIn0iLCJhdXRob3JfcyI6WyJKb2huc29uLCBGLiBOZWlsIChGcmVkZXJpY2sgTmVpbCkiXSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rpc3BsYXkiOiJUaGUgZGVjbGFyYXRpb24gb2Ygd2FyIG9uIENsZW9wYXRyYSA6IGFuIGV4YW1pbmF0aW9uIG9mIHRoZSBldmlkZW5jZSBmb3IgdGhlIGFudGlxdWl0eSBvZiB0aGUgY2VyZW1vbnkgZW5hY3RlZCBieSBPY3RhdmlhbiBpbiB0aGUgQ2FtcHVzIE1hcnRpdXMgLyBOZWlsIEpvaG5zb24uIiwidGl0bGVfdCI6WyJUaGUgZGVjbGFyYXRpb24gb2Ygd2FyIG9uIENsZW9wYXRyYSA6IGFuIGV4YW1pbmF0aW9uIG9mIHRoZSBldmlkZW5jZSBmb3IgdGhlIGFudGlxdWl0eSBvZiB0aGUgY2VyZW1vbnkgZW5hY3RlZCBieSBPY3RhdmlhbiBpbiB0aGUgQ2FtcHVzIE1hcnRpdXMgLyBOZWlsIEpvaG5zb24uIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiVGhlIGRlY2xhcmF0aW9uIG9mIHdhciBvbiBDbGVvcGF0cmEgOiBhbiBleGFtaW5hdGlvbiBvZiB0aGUgZXZpZGVuY2UgZm9yIHRoZSBhbnRpcXVpdHkgb2YgdGhlIGNlcmVtb255IGVuYWN0ZWQgYnkgT2N0YXZpYW4gaW4gdGhlIENhbXB1cyBNYXJ0aXVzIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJUaGUgZGVjbGFyYXRpb24gb2Ygd2FyIG9uIENsZW9wYXRyYSA6IGFuIGV4YW1pbmF0aW9uIG9mIHRoZSBldmlkZW5jZSBmb3IgdGhlIGFudGlxdWl0eSBvZiB0aGUgY2VyZW1vbnkgZW5hY3RlZCBieSBPY3RhdmlhbiBpbiB0aGUgQ2FtcHVzIE1hcnRpdXMgLyBOZWlsIEpvaG5zb24uIl0sImVkaXRpb25fZGlzcGxheSI6WyJTZWNvbmQgZWRpdGlvbi4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJDYXJuZm9ydGggOiBNYXJpdXMgUHJlc3MsIDIwMTguIl0sInB1Yl9jcmVhdGVkX3MiOlsiQ2FybmZvcnRoIDogTWFyaXVzIFByZXNzLCAyMDE4LiJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJDYXJuZm9ydGg6IE1hcml1cyBQcmVzcyJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTgiXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxOCwiY2F0YWxvZ2VkX3RkdCI6IjIwMjEtMDMtMDZUMTQ6MzI6MDRaIiwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyIxIHZvbHVtZSA6IGlsbHVzdHJhdGlvbnMgKGNvbG91cikgOyAyNCBjbSJdLCJkZXNjcmlwdGlvbl90IjpbIjEgdm9sdW1lIDogaWxsdXN0cmF0aW9ucyAoY29sb3VyKSA7IDI0IGNtIl0sIm51bWJlcl9vZl9wYWdlc19jaXRhdGlvbl9kaXNwbGF5IjpbIjEgdm9sdW1lIl0sImdlb2NvZGVfZGlzcGxheSI6WyJFdXJvcGUiLCJNaWRkbGUgRWFzdCIsIkFmcmljYSwgTm9ydGgiXSwibm90ZXNfZGlzcGxheSI6WyJQcmV2aW91cyBlZGl0aW9uOiAyMDE1LiJdLCJiaWJfcmVmX25vdGVzX2Rpc3BsYXkiOlsiSW5jbHVkZXMgYmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMuIl0sImxhbmd1YWdlX2ZhY2V0IjpbIkVuZ2xpc2giXSwibGFuZ3VhZ2VfY29kZV9zIjpbImVuZyJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiZW4iXSwibGNfc3ViamVjdF9kaXNwbGF5IjpbIkF1Z3VzdHVzLCBFbXBlcm9yIG9mIFJvbWUsIDYzIEIuQy4tMTQgQS5ELiIsIkNsZW9wYXRyYSwgUXVlZW4gb2YgRWd5cHQsIC0zMCBCLkMuIiwiUm9tZeKAlEhpc3RvcnnigJRSZXB1YmxpYywgMjY1LTMwIEIuQy4iXSwic3ViamVjdF9mYWNldCI6WyJBdWd1c3R1cywgRW1wZXJvciBvZiBSb21lLCA2MyBCLkMuLTE0IEEuRC4iLCJDbGVvcGF0cmEsIFF1ZWVuIG9mIEVneXB0LCAtMzAgQi5DLiIsIlJvbWXigJRIaXN0b3J54oCUUmVwdWJsaWMsIDI2NS0zMCBCLkMuIl0sImlzYm5fZGlzcGxheSI6WyI5NzgxODcxNjIyOTM1IiwiMTg3MTYyMjkzWCJdLCJpc2JuX3MiOlsiOTc4MTg3MTYyMjkzNSJdLCJvY2xjX3MiOlsiMTA2NDM5NzkyOSJdLCJvdGhlcl92ZXJzaW9uX3MiOlsib24xMDY0Mzk3OTI5Iiwib24xMDc4NTUzMjEzIiwiOTc4MTg3MTYyMjkzNSJdLCJzdWJqZWN0X2VyYV9mYWNldCI6WyIyNjUtMzAgQi5DIiwiUmVwdWJsaWMsIDI2NS0zMCBCLkMiXSwiaG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCIyMjUxOTQ5MDIwMDA2NDIxXCI6e1wibG9jYXRpb25fY29kZVwiOlwiZmlyZXN0b25lJGNsYXNcIixcImxvY2F0aW9uXCI6XCJGaXJlc3RvbmUgTGlicmFyeSAtIENsYXNzaWNzIENvbGxlY3Rpb25cIixcImxpYnJhcnlcIjpcIkZpcmVzdG9uZSBMaWJyYXJ5XCIsXCJpdGVtc1wiOlt7XCJob2xkaW5nX2lkXCI6XCIyMjUxOTQ5MDIwMDA2NDIxXCIsXCJpZFwiOlwiMjM0NzY3Njk1NjAwMDY0MjFcIixcInN0YXR1c19hdF9sb2FkXCI6XCIwXCJ9XX19IiwicmVjYXBfbm90ZXNfZGlzcGxheSI6WyIgLSAiXSwibG9jYXRpb25fY29kZV9zIjpbImZpcmVzdG9uZSRjbGFzIl0sImxvY2F0aW9uIjpbIkZpcmVzdG9uZSBMaWJyYXJ5Il0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiRmlyZXN0b25lIExpYnJhcnkgLSBDbGFzc2ljcyBDb2xsZWN0aW9uIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsiZmlyZXN0b25lJGNsYXMiLCJGaXJlc3RvbmUgTGlicmFyeSJdLCJuYW1lX3RpdGxlX2Jyb3dzZV9zIjpbIkpvaG5zb24sIEYuIE5laWwgKEZyZWRlcmljayBOZWlsKS4gVGhlIGRlY2xhcmF0aW9uIG9mIHdhciBvbiBDbGVvcGF0cmEiXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyIiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiIl0sIl92ZXJzaW9uXyI6MTY5NzAxOTgwNzk5MDI4NDI4OCwidGltZXN0YW1wIjoiMjAyMS0wNC0xNFQxMjo0MzoyNS4yMDZaIn0=
-  recorded_at: Thu, 03 Jun 2021 17:26:08 GMT
-- request:
-    method: get
-    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/firestone$clas.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:26:09 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - 62d20cf2-a9c8-4d9a-ab42-874ad1ad0aa5
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Etag:
-      - W/"f20c8894da1c984b43eb0d1abb025f73"
-      X-Runtime:
-      - '0.008125'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: '{"label":"Classics Collection","code":"firestone$clas","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Firestone
-        Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
-  recorded_at: Thu, 03 Jun 2021 17:26:09 GMT
-- request:
-    method: get
-    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99120493093506421/holdings/2251949020006421/availability.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:26:10 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - 6b64eacd-248b-4109-855e-c9eb45f24189
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Etag:
-      - W/"66b7a3d38ac47c62c73e526cb9481c01"
-      X-Runtime:
-      - '0.782451'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: '[{"barcode":"","id":"23476769560006421","holding_id":"2251949020006421","copy_number":"","status":"Available","status_label":"Acquisition","status_source":"process_type","process_type":"ACQ","on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$clas","label":"Firestone
-        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
-  recorded_at: Thu, 03 Jun 2021 17:26:10 GMT
 - request:
     method: get
     uri: https://catalog-alma-qa.princeton.edu/catalog/9994692/raw
@@ -1721,58 +1500,6 @@ http_interactions:
   recorded_at: Thu, 03 Jun 2021 17:26:30 GMT
 - request:
     method: get
-    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/firestone$stacks.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:26:30 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - aa08b5c4-7932-4cad-9055-ac5f6f699820
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Etag:
-      - W/"2076b9061eb9f7f5fc8d6b9cd11d00a0"
-      X-Runtime:
-      - '0.008042'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: '{"label":"Stacks","code":"firestone$stacks","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Firestone
-        Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
-        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
-  recorded_at: Thu, 03 Jun 2021 17:26:30 GMT
-- request:
-    method: get
     uri: https://catalog-alma-qa.princeton.edu/catalog/999455503506421/raw
     body:
       encoding: US-ASCII
@@ -2309,123 +2036,6 @@ http_interactions:
         Library","code":"lewis","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Lewis
         Library","address":"Washington Road and Ivy Lane Princeton, NJ 08544","phone_number":"609-258-6004","contact_email":"lewislib@princeton.edu","gfa_pickup":"PN","staff_only":false,"pickup_location":true,"digital_location":true}]}'
   recorded_at: Thu, 03 Jun 2021 17:26:36 GMT
-- request:
-    method: get
-    uri: https://catalog-alma-qa.princeton.edu/catalog/99121699843506421/raw
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 302
-      message: Found
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:26:36 GMT
-      Content-Type:
-      - text/html; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 302 Found
-      Cache-Control:
-      - no-cache
-      Referrer-Policy:
-      - strict-origin-when-cross-origin
-      X-Permitted-Cross-Domain-Policies:
-      - none
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Request-Id:
-      - 9801a893-dddd-45f4-93c6-4096eb56b497
-      Location:
-      - https://catalog-alma-qa.princeton.edu/404
-      X-Download-Options:
-      - noopen
-      X-Ua-Compatible:
-      - IE=edge,chrome=1
-      X-Runtime:
-      - '0.087455'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      X-Powered-By:
-      - Phusion Passenger(R) 6.0.8
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Credentials:
-      - 'true'
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Headers:
-      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
-    body:
-      encoding: UTF-8
-      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/404">redirected</a>.</body></html>
-  recorded_at: Thu, 03 Jun 2021 17:26:36 GMT
-- request:
-    method: get
-    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99121699843506421/holdings/22184441650006421/availability.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:26:37 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Status:
-      - 200 OK
-      Cache-Control:
-      - max-age=0, private, must-revalidate
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Request-Id:
-      - 53e8c8ee-079f-4cce-9181-c900566dd122
-      Access-Control-Allow-Headers:
-      - Origin, Content-Type, Accept, Authorization, Token
-      Etag:
-      - W/"84e514de67ff76222d31848bf2a31438"
-      X-Runtime:
-      - '0.692113'
-      Access-Control-Request-Method:
-      - GET
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: '[{"barcode":"32101109981868","id":"23184441640006421","holding_id":"22184441650006421","copy_number":"0","status":"Available","status_label":"Acquisition","status_source":"process_type","process_type":"ACQ","on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$stacks","label":"Firestone
-        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
-  recorded_at: Thu, 03 Jun 2021 17:26:37 GMT
 - request:
     method: get
     uri: https://catalog-alma-qa.princeton.edu/catalog/9995948403506421/raw
@@ -5303,4 +4913,558 @@ http_interactions:
         in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$stacks","label":"Firestone
         Library","description":"v. 11-12 1932-34","enum_display":"v. 11-12","chron_display":"1932-34","in_temp_library":false}]'
   recorded_at: Thu, 03 Jun 2021 17:27:15 GMT
+- request:
+    method: post
+    uri: https://api-na.hosted.exlibrisgroup.com/almaws/v1/bibs/99117809653506421/holdings/22203397510006421/items/23203397500006421/requests?user_id=960594184
+    body:
+      encoding: UTF-8
+      string: '{"request_type":"HOLD","pickup_location_type":"LIBRARY","pickup_location_library":"recap"}'
+    headers:
+      Authorization:
+      - apikey TESTME
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Tue, 08 Jun 2021 21:41:13 GMT
+      Connection:
+      - close
+      Server:
+      - CA-API-Gateway/9.0
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-encoding
+    body:
+      encoding: ASCII-8BIT
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<web_service_result
+        xmlns=\"http://com/exlibris/urm/general/xmlbeans\">\r\n            <errorsExist>true</errorsExist>\r\n
+        \           <errorList>\r\n                        <error>\r\n                                    <errorCode>UNAUTHORIZED</errorCode>\r\n
+        \                                   <errorMessage>API-key not defined or not
+        configured to allow this API.</errorMessage>\r\n                        </error>\r\n
+        \           </errorList>\r\n</web_service_result>"
+  recorded_at: Tue, 08 Jun 2021 21:41:14 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/99121699843506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 302
+      message: Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 03:50:13 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 302 Found
+      Cache-Control:
+      - no-cache
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - c0b0b0a8-b9e3-42f5-b405-273ae91b5402
+      Location:
+      - https://catalog-alma-qa.princeton.edu/404
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      X-Runtime:
+      - '0.034972'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: UTF-8
+      string: <html><body>You are being <a href="https://catalog-alma-qa.princeton.edu/404">redirected</a>.</body></html>
+  recorded_at: Wed, 09 Jun 2021 03:50:13 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99121699843506421/holdings/22184441650006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 03:50:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 3655b6ce-38f8-46d6-96ae-dc13cdb09694
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"3847d9c3e192e8532d760a063d5d26d8"
+      X-Runtime:
+      - '1.950331'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101109981868","id":"23184441640006421","holding_id":"22184441650006421","copy_number":"0","status":"Not
+        Available","status_label":"Acquisition","status_source":"process_type","process_type":"ACQ","on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$stacks","label":"Firestone
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Wed, 09 Jun 2021 03:50:15 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/99120493093506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 03:51:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - ed12a772-02c1-4b35-8c83-3738720c064f
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"2e39c92da9b029be48fff21ac2a7f319"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.016228'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5MTIwNDkzMDkzNTA2NDIxIiwibnVtZXJpY19pZF9iIjp0cnVlLCJhdXRob3JfZGlzcGxheSI6WyJKb2huc29uLCBGLiBOZWlsIChGcmVkZXJpY2sgTmVpbCkiXSwiYXV0aG9yX2NpdGF0aW9uX2Rpc3BsYXkiOlsiSm9obnNvbiwgRi4gTmVpbCJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIkpvaG5zb24sIEYuIE5laWxcIn0iLCJhdXRob3JfcyI6WyJKb2huc29uLCBGLiBOZWlsIChGcmVkZXJpY2sgTmVpbCkiXSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rpc3BsYXkiOiJUaGUgZGVjbGFyYXRpb24gb2Ygd2FyIG9uIENsZW9wYXRyYSA6IGFuIGV4YW1pbmF0aW9uIG9mIHRoZSBldmlkZW5jZSBmb3IgdGhlIGFudGlxdWl0eSBvZiB0aGUgY2VyZW1vbnkgZW5hY3RlZCBieSBPY3RhdmlhbiBpbiB0aGUgQ2FtcHVzIE1hcnRpdXMgLyBOZWlsIEpvaG5zb24uIiwidGl0bGVfdCI6WyJUaGUgZGVjbGFyYXRpb24gb2Ygd2FyIG9uIENsZW9wYXRyYSA6IGFuIGV4YW1pbmF0aW9uIG9mIHRoZSBldmlkZW5jZSBmb3IgdGhlIGFudGlxdWl0eSBvZiB0aGUgY2VyZW1vbnkgZW5hY3RlZCBieSBPY3RhdmlhbiBpbiB0aGUgQ2FtcHVzIE1hcnRpdXMgLyBOZWlsIEpvaG5zb24uIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiVGhlIGRlY2xhcmF0aW9uIG9mIHdhciBvbiBDbGVvcGF0cmEgOiBhbiBleGFtaW5hdGlvbiBvZiB0aGUgZXZpZGVuY2UgZm9yIHRoZSBhbnRpcXVpdHkgb2YgdGhlIGNlcmVtb255IGVuYWN0ZWQgYnkgT2N0YXZpYW4gaW4gdGhlIENhbXB1cyBNYXJ0aXVzIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJUaGUgZGVjbGFyYXRpb24gb2Ygd2FyIG9uIENsZW9wYXRyYSA6IGFuIGV4YW1pbmF0aW9uIG9mIHRoZSBldmlkZW5jZSBmb3IgdGhlIGFudGlxdWl0eSBvZiB0aGUgY2VyZW1vbnkgZW5hY3RlZCBieSBPY3RhdmlhbiBpbiB0aGUgQ2FtcHVzIE1hcnRpdXMgLyBOZWlsIEpvaG5zb24uIl0sImVkaXRpb25fZGlzcGxheSI6WyJTZWNvbmQgZWRpdGlvbi4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJDYXJuZm9ydGggOiBNYXJpdXMgUHJlc3MsIDIwMTguIl0sInB1Yl9jcmVhdGVkX3MiOlsiQ2FybmZvcnRoIDogTWFyaXVzIFByZXNzLCAyMDE4LiJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJDYXJuZm9ydGg6IE1hcml1cyBQcmVzcyJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTgiXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxOCwiY2F0YWxvZ2VkX3RkdCI6IjIwMjEtMDMtMDZUMTQ6MzI6MDRaIiwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyIxIHZvbHVtZSA6IGlsbHVzdHJhdGlvbnMgKGNvbG91cikgOyAyNCBjbSJdLCJkZXNjcmlwdGlvbl90IjpbIjEgdm9sdW1lIDogaWxsdXN0cmF0aW9ucyAoY29sb3VyKSA7IDI0IGNtIl0sIm51bWJlcl9vZl9wYWdlc19jaXRhdGlvbl9kaXNwbGF5IjpbIjEgdm9sdW1lIl0sImdlb2NvZGVfZGlzcGxheSI6WyJFdXJvcGUiLCJNaWRkbGUgRWFzdCIsIkFmcmljYSwgTm9ydGgiXSwibm90ZXNfZGlzcGxheSI6WyJQcmV2aW91cyBlZGl0aW9uOiAyMDE1LiJdLCJiaWJfcmVmX25vdGVzX2Rpc3BsYXkiOlsiSW5jbHVkZXMgYmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMuIl0sImxhbmd1YWdlX2ZhY2V0IjpbIkVuZ2xpc2giXSwibGFuZ3VhZ2VfY29kZV9zIjpbImVuZyJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiZW4iXSwibGNfc3ViamVjdF9kaXNwbGF5IjpbIkF1Z3VzdHVzLCBFbXBlcm9yIG9mIFJvbWUsIDYzIEIuQy4tMTQgQS5ELiIsIkNsZW9wYXRyYSwgUXVlZW4gb2YgRWd5cHQsIC0zMCBCLkMuIiwiUm9tZeKAlEhpc3RvcnnigJRSZXB1YmxpYywgMjY1LTMwIEIuQy4iXSwic3ViamVjdF9mYWNldCI6WyJBdWd1c3R1cywgRW1wZXJvciBvZiBSb21lLCA2MyBCLkMuLTE0IEEuRC4iLCJDbGVvcGF0cmEsIFF1ZWVuIG9mIEVneXB0LCAtMzAgQi5DLiIsIlJvbWXigJRIaXN0b3J54oCUUmVwdWJsaWMsIDI2NS0zMCBCLkMuIl0sImlzYm5fZGlzcGxheSI6WyI5NzgxODcxNjIyOTM1IiwiMTg3MTYyMjkzWCJdLCJpc2JuX3MiOlsiOTc4MTg3MTYyMjkzNSJdLCJvY2xjX3MiOlsiMTA2NDM5NzkyOSJdLCJvdGhlcl92ZXJzaW9uX3MiOlsib24xMDY0Mzk3OTI5Iiwib24xMDc4NTUzMjEzIiwiOTc4MTg3MTYyMjkzNSJdLCJzdWJqZWN0X2VyYV9mYWNldCI6WyIyNjUtMzAgQi5DIiwiUmVwdWJsaWMsIDI2NS0zMCBCLkMiXSwiaG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCIyMjUxOTQ5MDIwMDA2NDIxXCI6e1wibG9jYXRpb25fY29kZVwiOlwiZmlyZXN0b25lJGNsYXNcIixcImxvY2F0aW9uXCI6XCJGaXJlc3RvbmUgTGlicmFyeSAtIENsYXNzaWNzIENvbGxlY3Rpb25cIixcImxpYnJhcnlcIjpcIkZpcmVzdG9uZSBMaWJyYXJ5XCIsXCJpdGVtc1wiOlt7XCJob2xkaW5nX2lkXCI6XCIyMjUxOTQ5MDIwMDA2NDIxXCIsXCJpZFwiOlwiMjM0NzY3Njk1NjAwMDY0MjFcIixcInN0YXR1c19hdF9sb2FkXCI6XCIwXCJ9XX19IiwicmVjYXBfbm90ZXNfZGlzcGxheSI6WyIgLSAiXSwibG9jYXRpb25fY29kZV9zIjpbImZpcmVzdG9uZSRjbGFzIl0sImxvY2F0aW9uIjpbIkZpcmVzdG9uZSBMaWJyYXJ5Il0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiRmlyZXN0b25lIExpYnJhcnkgLSBDbGFzc2ljcyBDb2xsZWN0aW9uIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsiZmlyZXN0b25lJGNsYXMiLCJGaXJlc3RvbmUgTGlicmFyeSJdLCJuYW1lX3RpdGxlX2Jyb3dzZV9zIjpbIkpvaG5zb24sIEYuIE5laWwgKEZyZWRlcmljayBOZWlsKS4gVGhlIGRlY2xhcmF0aW9uIG9mIHdhciBvbiBDbGVvcGF0cmEiXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyIiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiIl0sIl92ZXJzaW9uXyI6MTY5NzAxOTgwNzk5MDI4NDI4OCwidGltZXN0YW1wIjoiMjAyMS0wNC0xNFQxMjo0MzoyNS4xOTVaIn0=
+  recorded_at: Wed, 09 Jun 2021 03:51:59 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/firestone$clas.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 03:51:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - c9652c34-d66f-41b9-b9ea-9fc4f5fcb00f
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"f20c8894da1c984b43eb0d1abb025f73"
+      X-Runtime:
+      - '0.039961'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Classics Collection","code":"firestone$clas","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Firestone
+        Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+  recorded_at: Wed, 09 Jun 2021 03:51:59 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99120493093506421/holdings/2251949020006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 03:52:02 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 8519a9bb-1684-4d9b-aa7b-f80d2041e177
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"9f3fd4b144b7e06fbc41d47a5f60e0e9"
+      X-Runtime:
+      - '2.065281'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"","id":"23476769560006421","holding_id":"2251949020006421","copy_number":"","status":"Not
+        Available","status_label":"Acquisition","status_source":"process_type","process_type":"ACQ","on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$clas","label":"Firestone
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Wed, 09 Jun 2021 03:52:02 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/firestone$stacks.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 04:00:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - c7543981-b858-4a8d-8356-332db365070f
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"2076b9061eb9f7f5fc8d6b9cd11d00a0"
+      X-Runtime:
+      - '0.016425'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Stacks","code":"firestone$stacks","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Firestone
+        Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+  recorded_at: Wed, 09 Jun 2021 04:00:16 GMT
+- request:
+    method: get
+    uri: https://catalog-alma-qa.princeton.edu/catalog/99113412093506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 04:01:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 7b6b405b-8fa5-45bd-a5a3-ecefaee5ca9e
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"78b51c570660ee30d7f154c75411a0dc"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.017475'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.8
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5MTEzNDEyMDkzNTA2NDIxIiwibnVtZXJpY19pZF9iIjp0cnVlLCJhdXRob3JfY2l0YXRpb25fZGlzcGxheSI6WyJTaGF3bCwgTmlzaSIsIkJ1Y2tlbGwsIFRvYmlhcyBTLiIsIkFsY2FsYcyBLCBLYXRobGVlbiIsIkthbmcsIE1pbnNvbyIsIkJhcm5lcywgU3RldmVuIiwiT253dWFsdSwgQ2hpbmVsbyIsIkplbm5pbmdzLCBBbGV4IiwiWWHMgW7Mg2V6LCBBbGJlcnRvIiwiR29oLCBKYXltZWUiLCJZdSwgRS4gTGlseSIsIkxvd2FjaGVlLCBLYXJpbiIsIk1vcmVuby1HYXJjaWEsIFNpbHZpYSIsIkRhcywgSW5kcmEiLCJNZW5vbiwgQW5pbCIsIkhhaXJzdG9uLCBBbmRyZWEiLCJHb3RvLCBIaXJvbWkiLCJSb2FuaG9yc2UsIFJlYmVjY2EiLCJMaXR0bGUgQmFkZ2VyLCBEYXJjaWUiXSwiYXV0aG9yX3JvbGVzXzFkaXNwbGF5Ijoie1wic2Vjb25kYXJ5X2F1dGhvcnNcIjpbXCJCdWNrZWxsLCBUb2JpYXMgUy5cIixcIkFsY2FsYcyBLCBLYXRobGVlblwiLFwiS2FuZywgTWluc29vXCIsXCJCYXJuZXMsIFN0ZXZlblwiLFwiT253dWFsdSwgQ2hpbmVsb1wiLFwiSmVubmluZ3MsIEFsZXhcIixcIllhzIFuzINleiwgQWxiZXJ0b1wiLFwiR29oLCBKYXltZWVcIixcIll1LCBFLiBMaWx5XCIsXCJMb3dhY2hlZSwgS2FyaW5cIixcIk1vcmVuby1HYXJjaWEsIFNpbHZpYVwiLFwiRGFzLCBJbmRyYVwiLFwiTWVub24sIEFuaWxcIixcIkhhaXJzdG9uLCBBbmRyZWFcIixcIkdvdG8sIEhpcm9taVwiLFwiUm9hbmhvcnNlLCBSZWJlY2NhXCIsXCJMaXR0bGUgQmFkZ2VyLCBEYXJjaWVcIl0sXCJ0cmFuc2xhdG9yc1wiOltdLFwiZWRpdG9yc1wiOltcIlNoYXdsLCBOaXNpXCJdLFwiY29tcGlsZXJzXCI6W119IiwiYXV0aG9yX3MiOlsiU2hhd2wsIE5pc2kiLCJCdWNrZWxsLCBUb2JpYXMgUy4iLCJBbGNhbGHMgSwgS2F0aGxlZW4sIDE5NTQtIiwiS2FuZywgTWluc29vIiwiQmFybmVzLCBTdGV2ZW4sIDE5NTItIiwiT253dWFsdSwgQ2hpbmVsbyIsIkplbm5pbmdzLCBBbGV4IiwiWWHMgW7Mg2V6LCBBbGJlcnRvIiwiR29oLCBKYXltZWUiLCJZdSwgRS4gTGlseSIsIkxvd2FjaGVlLCBLYXJpbiIsIk1vcmVuby1HYXJjaWEsIFNpbHZpYSIsIkRhcywgSW5kcmEiLCJNZW5vbiwgQW5pbCAoTm92ZWxpc3QpLiIsIkhhaXJzdG9uLCBBbmRyZWEiLCJHb3RvLCBIaXJvbWksIDE5NjYtIiwiUm9hbmhvcnNlLCBSZWJlY2NhIiwiTGl0dGxlIEJhZGdlciwgRGFyY2llIl0sInRpdGxlX2Rpc3BsYXkiOiJOZXcgc3VucyA6IG9yaWdpbmFsIHNwZWN1bGF0aXZlIGZpY3Rpb24gYnkgcGVvcGxlIG9mIGNvbG9yIC8gZWRpdGVkIGJ5IE5pc2kgU2hhd2wuIiwidGl0bGVfdCI6WyJOZXcgc3VucyA6IG9yaWdpbmFsIHNwZWN1bGF0aXZlIGZpY3Rpb24gYnkgcGVvcGxlIG9mIGNvbG9yIC8gZWRpdGVkIGJ5IE5pc2kgU2hhd2wuIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiTmV3IHN1bnMgOiBvcmlnaW5hbCBzcGVjdWxhdGl2ZSBmaWN0aW9uIGJ5IHBlb3BsZSBvZiBjb2xvciJdLCJjb21waWxlZF9jcmVhdGVkX3QiOlsiTmV3IHN1bnMgOiBvcmlnaW5hbCBzcGVjdWxhdGl2ZSBmaWN0aW9uIGJ5IHBlb3BsZSBvZiBjb2xvciAvIGVkaXRlZCBieSBOaXNpIFNoYXdsLiJdLCJwdWJfY3JlYXRlZF9kaXNwbGF5IjpbIk94Zm9yZCwgVUsgOiBTb2xhcmlzLCBhbiBpbXByaW50IG9mIFJlYmVsbGlvbiBQdWJsaXNoaW5nIEx0ZCwgMjAxOS4iLCLCqTIwMTkiXSwicHViX2NyZWF0ZWRfcyI6WyJPeGZvcmQsIFVLIDogU29sYXJpcywgYW4gaW1wcmludCBvZiBSZWJlbGxpb24gUHVibGlzaGluZyBMdGQsIDIwMTkuIiwiwqkyMDE5Il0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5IjpbIk94Zm9yZCwgVUs6IFNvbGFyaXMsIGFuIGltcHJpbnQgb2YgUmViZWxsaW9uIFB1Ymxpc2hpbmcgTHRkIl0sInB1Yl9kYXRlX2Rpc3BsYXkiOlsiMjAxOSJdLCJwdWJfZGF0ZV9zdGFydF9zb3J0IjoyMDE5LCJwdWJfZGF0ZV9lbmRfc29ydCI6MjAxOSwiY2F0YWxvZ2VkX3RkdCI6IjIwMjAtMTItMDJUMjI6MTg6MzlaIiwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyIyNzkgcGFnZXMgOyAyMyBjbSJdLCJkZXNjcmlwdGlvbl90IjpbIjI3OSBwYWdlcyA7IDIzIGNtIl0sIm51bWJlcl9vZl9wYWdlc19jaXRhdGlvbl9kaXNwbGF5IjpbIjI3OSBwYWdlcyJdLCJzdW1tYXJ5X25vdGVfZGlzcGxheSI6WyJcIidUaGVyZSdzIG5vdGhpbmcgbmV3IHVuZGVyIHRoZSBzdW4sIGJ1dCB0aGVyZSBhcmUgbmV3IHN1bnMsJyBwcm9jbGFpbWVkIE9jdGF2aWEgRS4gQnV0bGVyLiBOZXcgU3VuczogT3JpZ2luYWwgU3BlY3VsYXRpdmUgRmljdGlvbiBieSBQZW9wbGUgb2YgQ29sb3Igc2hvd2Nhc2VzIGVtZXJnaW5nIGFuZCBzZWFzb25lZCB3cml0ZXJzIG9mIG1hbnkgcmFjZXMgdGVsbGluZyBzdG9yaWVzIGZpbGxlZCB3aXRoIHNob2NraW5nIGRlbGlnaHRzLCBwb3dlcmZ1bCB2aXNpb25zIG9mIHRoZSBmYW1pbGlhciBtYWRlIHN0cmFuZ2UuIEJldHdlZW4gdGhpcyBib29rJ3MgY292ZXJzIGJ1cm4gdGFsZXMgb2Ygc2NpZW5jZSBmaWN0aW9uLCBmYW50YXN5LCBob3Jyb3IsIGFuZCB0aGVpciBpbmRlZmluYWJsZSBvdmVybGFwcGluZ3MuIFRoZXNlIGFyZSBhdXRob3JzIGF3YXJlIG9mIG91ciBtYW55IHBvc3NpYmxlIHBhc3RzIGFuZCBmdXR1cmVzLCBhdXRob3JzIGZyZWVkIG9mIHN0ZXJlb3R5cGVzIGFuZCBjbGljaGXMgXMsIHJlYWR5IHRvIGRhenpsZSB5b3Ugd2l0aCB0aGVpciBkYXJpbmcgZ2VuaXVzLiBVbmV4cGVjdGVkIGJyaWxsaWFuY2Ugc2hpbmVzIGZvcnRoIGZyb20gZXZlcnkgcGFnZS5cIi0tQmFjayBjb3Zlci4iXSwibm90ZXNfZGlzcGxheSI6WyJcIkludHJvZHVjdGlvbiBieSBMZVZhciBCdXJ0b24gOyBpbmNsdWRpbmcgc3RvcmllcyBieSBJbmRyYXByYW1pdCBEYXMsIEUgTGlseSBZdSwgUmViZWNhIFJvYW5ob3JzZSwgQW5pbCBNZW5vbiwgSmF5bWVlIEdvaCBhbmQgbWFueSBvdGhlcnNcIi0tQ292ZXIuIl0sImxhbmd1YWdlX2ZhY2V0IjpbIkVuZ2xpc2giXSwibGFuZ3VhZ2VfY29kZV9zIjpbImVuZyJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiZW4iXSwiY29udGVudHNfZGlzcGxheSI6WyJGb3Jld29yZCAvIExlVmFyIEJ1cnRvbiAtLSBUaGUgZ2FsYWN0aWMgdG91cmlzdCBpbmR1c3RyaWFsIGNvbXBsZXggLyBUb2JpYXMgUy4gQnVja2VsbCAtLSBEZWVyIGRhbmNlciAvIEthdGhsZWVuIEFsY2FsYcyBIC0tIFRoZSB2aXJ0dWUgb2YgdW5mYWl0aGZ1bCB0cmFuc2xhdGlvbnMgLyBNaW5zb28gS2FuZyAtLSBDb21lIGhvbWUgdG8gQXRyb3BvcyAvIFN0ZXZlbiBCYXJuZXMgLS0gVGhlIGZpbmUgcHJpbnQgLyBDaGluZWxvIE9ud3VhbHUgLS0gdW5raW5kIG9mIG1lcmN5IC8gQWxleCBKZW5uaW5ncyAtLSBCdXJuIHRoZSBzaGlwcyAvIEFsYmVydG8gWWHMgW7Mg2V6IC0tIFRoZSBmcmVlZG9tIG9mIHRoZSBzaGlmdGluZyBzZWEgLyBKYXltZWUgR29oIC0tIFRocmVlIHZhcmlhdGlvbnMgb24gYSB0aGVtZSBvZiBpbXBlcmlhbCBhdHRpcmUgLyBFLiBMaWx5IFl1IC0tIEJsb29kIGFuZCBiZWxscyAvIEthcmluIExvd2FjaGVlIC0tIEdpdmUgbWUgeW91ciBibGFjayB3aW5ncyBvaCBzaXN0ZXIgLyBTeWx2aWEgTW9yZW5vLUdhcmNpYSAtLSBUaGUgc2hhZG93IHdlIGNhc3QgdGhyb3VnaCB0aW1lIC8gSW5kcmFwcmFtaXQgRGFzIC0tIFRoZSByb2JvdHMgb2YgRWRlbiAvIEFuaWwgTWVub24gLS0gRHVtYiBob3VzZSAvIEFuZHJlYSBIYWlyc3RvbiAtLSBPbmUgZWFzeSB0cmljayAvIEhpcm9taSBHb3RvIC0tIEhhcnZlc3QgLyBSZWJlY2NhIFJvYW5ob3JzZSAtLSBLZWxzZXkgYW5kIHRoZSBidXJkZW5lZCBicmVhdGggLyBEYXJjaWUgTGl0dGxlIEJhZGdlciAtLSBBZnRlcndvcmQgLyBOaXNpIFNoYXdsIC0tIENvbnRyaWJ1dG9yIGJpb2dyYXBoaWVzLiJdLCJsY19zdWJqZWN0X2Rpc3BsYXkiOlsiU3BlY3VsYXRpdmUgZmljdGlvbiwgQW1lcmljYW4iLCJTcGVjdWxhdGl2ZSBmaWN0aW9uLCBDYW5hZGlhbiIsIlNob3J0IHN0b3JpZXMsIEFtZXJpY2FuIiwiU2hvcnQgc3RvcmllcywgQ2FuYWRpYW4iXSwic3ViamVjdF9mYWNldCI6WyJTcGVjdWxhdGl2ZSBmaWN0aW9uLCBBbWVyaWNhbiIsIlNwZWN1bGF0aXZlIGZpY3Rpb24sIENhbmFkaWFuIiwiU2hvcnQgc3RvcmllcywgQW1lcmljYW4iLCJTaG9ydCBzdG9yaWVzLCBDYW5hZGlhbiIsIlNob3J0IHN0b3JpZXMiXSwibGNnZnRfcyI6WyJTaG9ydCBzdG9yaWVzIl0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNwbGF5Ijoie1wiRWRpdG9yXCI6W1wiU2hhd2wsIE5pc2lcIl19IiwiY29udGFpbnNfMWRpc3BsYXkiOiJbW1wiQnVja2VsbCwgVG9iaWFzIFMuXCIsXCJHYWxhY3RpYyB0b3VyaXN0IGluZHVzdHJpYWwgY29tcGxleC5cIl0sW1wiQWxjYWxhzIEsIEthdGhsZWVuLCAxOTU0LVwiLFwiRGVlciBkYW5jZXIuXCJdLFtcIkthbmcsIE1pbnNvby5cIixcIlZpcnR1ZSBvZiB1bmZhaXRoZnVsIHRyYW5zbGF0aW9ucy5cIl0sW1wiQmFybmVzLCBTdGV2ZW4sIDE5NTItXCIsXCJDb21lIGhvbWUgdG8gQXRyb3Bvcy5cIl0sW1wiT253dWFsdSwgQ2hpbmVsby5cIixcIkZpbmUgcHJpbnQuXCJdLFtcIkplbm5pbmdzLCBBbGV4LlwiLFwiVW5raW5kIG9mIG1lcmN5LlwiXSxbXCJZYcyBbsyDZXosIEFsYmVydG8uXCIsXCJCdXJuIHRoZSBzaGlwcy5cIl0sW1wiR29oLCBKYXltZWUuXCIsXCJGcmVlZG9tIG9mIHRoZSBzaGlmdGluZyBzZWEuXCJdLFtcIll1LCBFLiBMaWx5LlwiLFwiVGhyZWUgdmFyaWF0aW9ucyBvbiBhIHRoZW1lIG9mIGltcGVyaWFsIGF0dGlyZS5cIl0sW1wiTG93YWNoZWUsIEthcmluLlwiLFwiQmxvb2QgYW5kIGJlbGxzLlwiXSxbXCJNb3Jlbm8tR2FyY2lhLCBTaWx2aWEuXCIsXCJHaXZlIG1lIHlvdXIgYmxhY2sgd2luZ3Mgb2ggc2lzdGVyLlwiXSxbXCJEYXMsIEluZHJhLlwiLFwiU2hhZG93IHdlIGNhc3QgdGhyb3VnaCB0aW1lLlwiXSxbXCJNZW5vbiwgQW5pbCAoTm92ZWxpc3QpLlwiLFwiUm9ib3RzIG9mIEVkZW4uXCJdLFtcIkhhaXJzdG9uLCBBbmRyZWEuXCIsXCJEdW1iIGhvdXNlLlwiXSxbXCJHb3RvLCBIaXJvbWksIDE5NjYtXCIsXCJPbmUgZWFzeSB0cmljay5cIl0sW1wiUm9hbmhvcnNlLCBSZWJlY2NhLlwiLFwiSGFydmVzdC5cIl0sW1wiTGl0dGxlIEJhZGdlciwgRGFyY2llLlwiLFwiS2Vsc2V5IGFuZCB0aGUgYnVyZGVuZWQgYnJlYXRoLlwiXV0iLCJpc2JuX2Rpc3BsYXkiOlsiOTc4MTc4MTA4NTc4MyAoKHBhcGVyYmFjaykpIiwiMTc4MTA4NTc4MSAoKHBhcGVyYmFjaykpIl0sImlzYm5fcyI6WyI5NzgxNzgxMDg1NzgzIl0sIm9jbGNfcyI6WyIxMDg4OTI1NzExIl0sIm90aGVyX3ZlcnNpb25fcyI6WyI5NzgxNzgxMDg1NzgzIiwib24xMDg4OTI1NzExIiwib24xMDQzMTg0MDMwIl0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wiMjIyMTM0MTU2NDAwMDY0MjFcIjp7XCJsb2NhdGlvbl9jb2RlXCI6XCJmaXJlc3RvbmUkc3RhY2tzXCIsXCJsb2NhdGlvblwiOlwiRmlyZXN0b25lIExpYnJhcnkgLSBGaXJlc3RvbmUgTGlicmFyeSBTdGFja3NcIixcImxpYnJhcnlcIjpcIkZpcmVzdG9uZSBMaWJyYXJ5XCIsXCJjYWxsX251bWJlclwiOlwiUFM2NDguUzUgTjM5NyAyMDE5XCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIlBTNjQ4LlM1IE4zOTcgMjAxOVwiLFwiaXRlbXNcIjpbe1wiaG9sZGluZ19pZFwiOlwiMjIyMTM0MTU2NDAwMDY0MjFcIixcImlkXCI6XCIyMzIxMzQxNTYzMDAwNjQyMVwiLFwic3RhdHVzX2F0X2xvYWRcIjpcIjBcIixcImJhcmNvZGVcIjpcIjMyMTAxMTAxODA4MjAwXCIsXCJjb3B5X251bWJlclwiOlwiMFwifV19fSIsInJlY2FwX25vdGVzX2Rpc3BsYXkiOlsiIC0gIl0sImxvY2F0aW9uX2NvZGVfcyI6WyJmaXJlc3RvbmUkc3RhY2tzIl0sImxvY2F0aW9uIjpbIkZpcmVzdG9uZSBMaWJyYXJ5Il0sImxvY2F0aW9uX2Rpc3BsYXkiOlsiRmlyZXN0b25lIExpYnJhcnkgLSBGaXJlc3RvbmUgTGlicmFyeSBTdGFja3MiXSwiYWR2YW5jZWRfbG9jYXRpb25fcyI6WyJmaXJlc3RvbmUkc3RhY2tzIiwiRmlyZXN0b25lIExpYnJhcnkiXSwibmFtZV90aXRsZV9icm93c2VfcyI6WyJCdWNrZWxsLCBUb2JpYXMgUy4gR2FsYWN0aWMgdG91cmlzdCBpbmR1c3RyaWFsIGNvbXBsZXgiLCJBbGNhbGHMgSwgS2F0aGxlZW4sIDE5NTQtIERlZXIgZGFuY2VyIiwiS2FuZywgTWluc29vLiBWaXJ0dWUgb2YgdW5mYWl0aGZ1bCB0cmFuc2xhdGlvbnMiLCJCYXJuZXMsIFN0ZXZlbiwgMTk1Mi0gQ29tZSBob21lIHRvIEF0cm9wb3MiLCJPbnd1YWx1LCBDaGluZWxvLiBGaW5lIHByaW50IiwiSmVubmluZ3MsIEFsZXguIFVua2luZCBvZiBtZXJjeSIsIllhzIFuzINleiwgQWxiZXJ0by4gQnVybiB0aGUgc2hpcHMiLCJHb2gsIEpheW1lZS4gRnJlZWRvbSBvZiB0aGUgc2hpZnRpbmcgc2VhIiwiWXUsIEUuIExpbHkuIFRocmVlIHZhcmlhdGlvbnMgb24gYSB0aGVtZSBvZiBpbXBlcmlhbCBhdHRpcmUiLCJMb3dhY2hlZSwgS2FyaW4uIEJsb29kIGFuZCBiZWxscyIsIk1vcmVuby1HYXJjaWEsIFNpbHZpYS4gR2l2ZSBtZSB5b3VyIGJsYWNrIHdpbmdzIG9oIHNpc3RlciIsIkRhcywgSW5kcmEuIFNoYWRvdyB3ZSBjYXN0IHRocm91Z2ggdGltZSIsIk1lbm9uLCBBbmlsIChOb3ZlbGlzdCkuIFJvYm90cyBvZiBFZGVuIiwiSGFpcnN0b24sIEFuZHJlYS4gRHVtYiBob3VzZSIsIkdvdG8sIEhpcm9taSwgMTk2Ni0gT25lIGVhc3kgdHJpY2siLCJSb2FuaG9yc2UsIFJlYmVjY2EuIEhhcnZlc3QiLCJMaXR0bGUgQmFkZ2VyLCBEYXJjaWUuIEtlbHNleSBhbmQgdGhlIGJ1cmRlbmVkIGJyZWF0aCJdLCJjYWxsX251bWJlcl9kaXNwbGF5IjpbIlBTNjQ4LlM1IE4zOTcgMjAxOSAiXSwiY2FsbF9udW1iZXJfYnJvd3NlX3MiOlsiUFM2NDguUzUgTjM5NyAyMDE5ICJdLCJjYWxsX251bWJlcl9sb2NhdG9yX2Rpc3BsYXkiOlsiUFM2NDguUzUgTjM5NyAyMDE5Il0sIl92ZXJzaW9uXyI6MTY5NzAzMDc1NTY1NjQwMDg5NiwidGltZXN0YW1wIjoiMjAyMS0wNC0xNFQxNTozNzoyNS44MThaIn0=
+  recorded_at: Wed, 09 Jun 2021 04:01:15 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/locations/holding_locations/firestone$stacks.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 04:01:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - d030cb31-69eb-457b-a86b-36b8f7fd6f1c
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"2076b9061eb9f7f5fc8d6b9cd11d00a0"
+      X-Runtime:
+      - '0.008337'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '{"label":"Stacks","code":"firestone$stacks","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","library":{"label":"Firestone
+        Library","code":"firestone","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Library","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"fstcirc@princeton.edu","gfa_pickup":"PA","staff_only":false,"pickup_location":true,"digital_location":true}]}'
+  recorded_at: Wed, 09 Jun 2021 04:01:16 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/99113412093506421/holdings/22213415640006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.4.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 09 Jun 2021 04:01:17 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - ab60b2b5-8191-4f65-a7a2-fde419744c61
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Etag:
+      - W/"e0830925374eba89872ea1e42fda5f9f"
+      X-Runtime:
+      - '1.532240'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101101808200","id":"23213415630006421","holding_id":"22213415640006421","copy_number":"0","status":"Not
+        Available","status_label":"Acquisitions and Cataloging","status_source":"work_order","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"firestone","pickup_location_code":"firestone","location":"firestone$stacks","label":"Firestone
+        Library","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Wed, 09 Jun 2021 04:01:17 GMT
 recorded_with: VCR 6.0.0

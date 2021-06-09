@@ -457,7 +457,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         it 'allows patrons to request a on-order' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           ## having trouble finding a firestone item in BL.
-          visit '/requests/99121699843506421?mfhd=22184441650006421'
+          visit '/requests/99120493093506421?mfhd=2251949020006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           # temporary change issue 438
           # select('Firestone Library', from: 'requestable__pick_up')
@@ -763,10 +763,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        it 'allows an in process item to be requested from marquand' do
-          # TODO: there is not really a good example of an in process item currently
-          stub_clancy_status(barcode: "32101097503864")
-          visit 'requests/99101378413506421?mfhd=22201004360006421'
+        it 'allows an in process item to be requested' do
+          visit '/requests/99113412093506421?mfhd=22213415640006421'
           expect(page).to have_content 'In Process materials are typically available in several business days'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           confirm_email = ActionMailer::Base.deliveries.last
@@ -774,12 +772,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("In Process materials can typically be picked up at the Circulation Desk of your choice in several business days")
-          expect(confirm_email.html_part.body.to_s).to have_content("ASIA COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM")
-          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
-          expect(marquand_email.subject).to eq("In Process Request")
-          expect(marquand_email.html_part.body.to_s).to have_content("ASIA COLLECTION 100: FROM THE COLLECTION OF THE FUKUOKA ASIAN ART MUSEUM")
-          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
-          expect(marquand_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("New suns : original speculative fiction by people of color")
+          in_process_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          expect(in_process_email.subject).to eq("In Process Request")
+          expect(in_process_email.html_part.body.to_s).to have_content("New suns : original speculative fiction by people of color")
+          expect(in_process_email.to).to eq(["fstcirc@princeton.edu"])
+          expect(in_process_email.cc).to be_blank
         end
 
           it 'allows a non circulating item with no item data to be digitized' do

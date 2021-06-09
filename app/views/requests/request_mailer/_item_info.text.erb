@@ -8,7 +8,7 @@ Items Requested
   <% unless item[:selected].empty? %>
     <% recalled = (item[:type] == "recall") ? true : false %>
     <% item.each do |key, value| %>
-      <% unless key == "selected" || value.empty? %>
+      <% unless key == "selected" || value.blank? %>
         <%= format_label(key) %>: <% if key == "pick_up" && !recalled %><%= Requests::BibdataService.delivery_locations[value]['label'].html_safe %>,<% end %><%= value.html_safe %>
       <% end %>
     <% end %>

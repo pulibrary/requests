@@ -1071,6 +1071,12 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         expect(requestable_charged).not_to be_available
       end
     end
+
+    describe "#resource_shared?" do
+      it 'is not resource shared' do
+        expect(requestable).not_to be_resource_shared
+      end
+    end
   end
   context 'A requestable item from a RBSC holding creates an openurl with volume and call number info' do
     let(:user) { FactoryGirl.build(:user) }
@@ -1219,6 +1225,56 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe "#cul_music?" do
       it 'is an Music Library Item' do
         expect(requestable.cul_music?).to be_truthy
+      end
+    end
+
+    describe "#resource_shared?" do
+      it 'is not resource shared' do
+        expect(requestable).not_to be_resource_shared
+      end
+    end
+  end
+
+  context 'An Item being shared with another institution' do
+    let(:request) { Requests::Request.new(system_id: '9977664533506421', mfhd: '22109013720006421', patron: patron) }
+    let(:requestable) { request.requestable.first }
+
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/9977664533506421/raw")
+        .to_return(status: 200, body: fixture('/9977664533506421.json'), headers: {})
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/bibliographic/9977664533506421/holdings/22109013720006421/availability.json")
+        .to_return(status: 200, body: '[{"barcode":"32101092097763","id":"23109013710006421","holding_id":"22109013720006421","copy_number":"1",'\
+                                      '"status":"Not Available","status_label":"Resource Sharing Request","status_source":"process_type","process_type":"ILL","on_reserve":"N","item_type":"Gen","pickup_location_id":"RES_SHARE",'\
+                                      '"pickup_location_code":"RES_SHARE","location":"RES_SHARE$OUT_RS_REQ","label":"ReCAP","description":"","enum_display":"","chron_display":"","in_temp_library":true,"temp_library_code":"RES_SHARE",'\
+                                      '"temp_library_label":"Resource Sharing Library","temp_location_code":"RES_SHARE$OUT_RS_REQ","temp_location_label":"Resource Sharing Library"}]')
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/locations/holding_locations/RES_SHARE$OUT_RS_REQ.json")
+        .to_return(status: 200, body: '{"label":"Borrowing Resource Sharing Requests","code":"RES_SHARE$OUT_RS_REQ","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,'\
+                                      '"remote_storage":"","library":{"label":"Resource Sharing Library","code":"RES_SHARE","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}')
+      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        .to_return(status: 200, body: "[{\"itemBarcode\":\"MR72802120\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]")
+    end
+
+    describe '#pick_up_locations' do
+      it 'has no pick-up location' do
+        expect(requestable.pick_up_locations).to be_blank
+      end
+    end
+
+    describe "#available?" do
+      it "is not available" do
+        expect(requestable).not_to be_available
+      end
+    end
+
+    describe "#cul_music?" do
+      it 'is not an Music Library Item' do
+        expect(requestable).not_to be_cul_music
+      end
+    end
+
+    describe "#resource_shared?" do
+      it 'is resource shared' do
+        expect(requestable).to be_resource_shared
       end
     end
   end

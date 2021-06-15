@@ -7,7 +7,7 @@ module Requests
              :cron_value, :illiad_request_parameters, :location_label, :online?, :aeon?, :borrow_direct?, :patron, :held_at_marquand_library?,
              :ill_eligible?, :scsb_in_library_use?, :pick_up_locations, :on_shelf?, :pending?, :recap?, :illiad_request_url, :available?,
              :campus_authorized, :on_order?, :urls, :in_process?, :voyager_managed?, :covid_trained?, :title, :map_url, :cul_avery?, :cul_music?,
-             :pick_up_location_code, to: :requestable
+             :pick_up_location_code, :resource_shared?, to: :requestable
     delegate :content_tag, :hidden_field_tag, :concat, to: :view_context
 
     alias bib_id system_id
@@ -58,7 +58,7 @@ module Requests
     def help_me?
       (request_status? && !eligible_to_pickup?) || # a requestable item that the user can not pick up
         ask_me? || # recap scsb in library only items
-        (!located_in_an_open_library? && !aeon?) # item in a closed library that is not aeon managed
+        (!located_in_an_open_library? && !aeon? && !resource_shared?) # item in a closed library that is not aeon managed or resource shared
     end
 
     def will_submit_via_form?
@@ -66,6 +66,7 @@ module Requests
     end
 
     def located_in_an_open_library?
+      return false if location[:library].blank?
       open_libraries.include?(library_code)
     end
 

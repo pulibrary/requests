@@ -2,6 +2,11 @@ require 'faraday'
 
 module Requests
   class Patron
+    class ServerError < StandardError; end
+    class PerSecondThresholdError < StandardError; end
+    class ResourceNotFoundError < StandardError; end
+    class ForbiddenError < StandardError; end
+
     attr_reader :user, :session, :patron, :errors
 
     delegate :guest?, :provider, to: :user
@@ -116,7 +121,7 @@ module Requests
       def load_patron(user:)
         if !user.guest?
           patron = current_patron(user.uid)
-          errors << "A problem occurred looking up your library account." if patron == false
+          errors << "A problem occurred looking up your library account." if patron.nil?
           # Uncomment to fake being a non barcoded user
           # patron[:barcode] = nil
           patron || {}
@@ -127,38 +132,71 @@ module Requests
         end
       end
 
+      def bibdata_uri
+        Requests.config[:bibdata_base]
+      end
+
+      def build_patron_uri(uid:)
+        "#{bibdata_uri}/patron/#{uid}"
+      end
+
+      def api_request_patron(id:)
+        request_uri = build_patron_uri(uid: id)
+        response = Faraday.get("#{request_uri}?ldap=true")
+
+        case response.status
+        when 500
+          raise(ServerError)
+        when 429
+          raise(PerSecondThresholdError)
+        when 404
+          raise(ResourceNotFoundError)
+        when 403
+          raise(ForbiddenError)
+        end
+
+        response
+      rescue ServerError
+        Rails.logger.error('Error Patron Data Service.')
+        nil
+      rescue PerSecondThresholdError
+        error_message = "The maximum number of HTTP requests per second for the Alma API has been exceeded."
+        Rails.logger.error(error_message)
+        errors << error_message
+        nil
+      rescue ResourceNotFoundError
+        Rails.logger.error("404 Patron #{id} cannot be found in the Patron Data Service.")
+        nil
+      rescue ForbiddenError
+        Rails.logger.error("403 Not Authorized to Connect to Patron Data Service at #{request_uri} for patron ID #{id}")
+        nil
+      rescue Faraday::Error::ConnectionFailed
+        Rails.logger.error("Unable to connect to #{bibdata_uri}")
+        nil
+      end
+
       def current_patron(uid)
-        return false unless uid
-        begin
-          patron_record = Faraday.get "#{Requests.config[:bibdata_base]}/patron/#{uid}?ldap=true"
-        rescue Faraday::Error::ConnectionFailed
-          Rails.logger.info("Unable to connect to #{Requests.config[:bibdata_base]}")
-          return false
-        end
-        return false if patron_errors?(patron_record: patron_record, uid: uid)
-        JSON.parse(patron_record.body).with_indifferent_access
+        return unless uid
+
+        api_response = api_request_patron(id: uid)
+        return if api_response.nil?
+
+        patron_resource = JSON.parse(api_response.body)
+        patron_resource.with_indifferent_access
       end
 
-      def patron_errors?(patron_record:, uid:)
-        return false if patron_record.status == 200
-        if patron_record.status == 403
-          Rails.logger.info('403 Not Authorized to Connect to Patron Data Service at '\
-                      "#{Requests.config[:bibdata_base]}/patron/#{uid}")
-        elsif patron_record.status == 404
-          Rails.logger.info("404 Patron #{uid} cannot be found in the Patron Data Service.")
-        elsif patron_record.status == 500
-          Rails.logger.info('Error Patron Data Service.')
-        end
-        true
-      end
-
-      def access_patron(email, user_name)
+      def build_access_patron(email:, user_name:)
         {
           last_name: user_name,
           active_email: email,
           barcode: 'ACCESS',
           barcode_status: 0
-        }.with_indifferent_access
+        }
+      end
+
+      def access_patron(email, user_name)
+        built = build_access_patron(email: email, user_name: user_name)
+        built.with_indifferent_access
       end
 
       def access_patron?

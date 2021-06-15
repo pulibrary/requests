@@ -28,34 +28,30 @@ require 'rspec/rails'
 require 'selenium/webdriver'
 require 'webdrivers'
 require 'webmock/rspec'
+require 'coveralls'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
+)
+
+SimpleCov.start('rails') do
+  add_filter '/lib/generators/requests/install_generator.rb'
+  add_filter '/lib/generators/requests/templates/borrow_direct.rb'
+  add_filter '/lib/generators/requests/templates/requests_initializer.rb'
+  add_filter '/lib/generators/requests/templates/lib/omniauth/strategies/omniauth-barcode.rb'
+  add_filter '/lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
+  add_filter '/lib/requests/version.rb'
+  add_filter '/lib/requests/engine.rb'
+  add_filter '/lib/requests.rb'
+  add_filter '/app/models/concerns/requests/gfa.rb' # no longer used
+  add_filter '/spec'
+  add_filter '.internal_test_app'
+end
 
 WebMock.disable_net_connect!(allow_localhost: false)
 
-if ENV['CI']
-  require 'coveralls'
-  SimpleCov.formatter = Coveralls::SimpleCov::Formatter
-end
-
-if ENV['CI'] || ENV['COVERAGE']
-  SimpleCov.start('rails') do
-    add_filter '/lib/generators/requests/install_generator.rb'
-    add_filter '/lib/generators/requests/templates/borrow_direct.rb'
-    add_filter '/lib/generators/requests/templates/requests_initializer.rb'
-    add_filter '/lib/generators/requests/templates/lib/omniauth/strategies/omniauth-barcode.rb'
-    add_filter '/lib/generators/requests/templates/app/controllers/users/omniauth_callbacks_controller.rb'
-    add_filter '/lib/requests/version.rb'
-    add_filter '/lib/requests/engine.rb'
-    add_filter '/lib/requests.rb'
-    add_filter '/app/models/concerns/requests/gfa.rb' # no longer used
-    add_filter '/spec'
-    add_filter '.internal_test_app'
-  end
-end
-
-# Capybara.register_driver :poltergeist do |app|
-#   Capybara::Poltergeist::Driver.new(app, timeout: 60)
-# end
-# Capybara.javascript_driver = :poltergeist
 Capybara.default_driver = :rack_test # This is a faster driver
 
 puts "Looking for chrome"
@@ -65,10 +61,6 @@ puts `which google-chrome`
 puts "Looking for google-chrome-stable"
 puts `which google-chrome-stable`
 puts "Selenium default #{Selenium::WebDriver::Chrome.path}"
-
-# Capybara.register_driver :chrome do |app|
-#   Capybara::Selenium::Driver.new(app, browser: :chrome)
-# end
 
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.load_selenium

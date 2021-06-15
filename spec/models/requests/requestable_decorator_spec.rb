@@ -13,7 +13,7 @@ describe Requests::RequestableDecorator do
   let(:patron) { Requests::Patron.new(user: user, session: {}, patron: valid_patron) }
 
   let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
-  let(:default_stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: false, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, cul_avery?: false } }
+  let(:default_stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: false, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, cul_avery?: false, resource_shared?: false } }
   let(:stubbed_questions) { default_stubbed_questions.merge(etas?: false) }
   let(:view_context) { ActionView::Base.new }
   let(:ldap) { {} }
@@ -1541,6 +1541,43 @@ describe Requests::RequestableDecorator do
       let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: false, cul_avery?: false, cul_music?: true) }
       it 'shows the location code' do
         expect(decorator.delivery_location_code).to eq('PK')
+      end
+    end
+  end
+
+  describe "#help_me?" do
+    context "any service in an open library" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: ['on_shelf'], location: { library: { code: 'abc12' } }) }
+      it 'does not need help' do
+        expect(decorator.help_me?).to be_falsey
+      end
+    end
+
+    context "ask me" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: true, open_libraries: ['abc12'], services: ['on_shelf']) }
+      it 'does not need help' do
+        expect(decorator.help_me?).to be_truthy
+      end
+    end
+
+    context "no services in an closed library" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: [], location: {}) }
+      it 'does need help' do
+        expect(decorator.help_me?).to be_truthy
+      end
+    end
+
+    context "no services in an open library" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: [], location: { library: { code: 'abc12' } }) }
+      it 'does not need help' do
+        expect(decorator.help_me?).to be_falsey
+      end
+    end
+
+    context "no services being resource shared" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(resource_shared?: true, ask_me?: false, open_libraries: ['abc12'], services: [], location: { library: { code: 'abc12' } }) }
+      it 'does not need help' do
+        expect(decorator.help_me?).to be_falsey
       end
     end
   end

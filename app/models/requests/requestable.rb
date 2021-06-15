@@ -280,6 +280,10 @@ module Requests
       item[:collection_code].present? && item[:collection_code] == 'MR'
     end
 
+    def resource_shared?
+      library_code == "RES_SHARE"
+    end
+
     private
 
       def scsb_locations

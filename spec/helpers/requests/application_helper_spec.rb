@@ -351,7 +351,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="sss" />'
       end
       it 'hides the enum display if the copy number is zero (0)' do
-        expect(helper.enum_copy_display(requestable.item)).to be ""
+        expect(helper.enum_copy_display(requestable.item)).to eq("")
       end
     end
 

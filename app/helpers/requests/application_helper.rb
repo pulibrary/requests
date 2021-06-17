@@ -108,7 +108,7 @@ module Requests
 
     # rubocop:disable Style/NumericPredicate
     def enum_copy_display(item)
-      return "" if item.blank?
+      return "" if item.blank? || item[:copy_number] == "0"
       display = ""
       display += item[:enum_display] unless item[:enum_display].nil?
       display += " " if !item[:enum_display].nil? && !item[:copy_number].nil?

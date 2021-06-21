@@ -98,7 +98,7 @@ module Requests
 
     def recap?
       locations.each_value do |location|
-        return true if location[:library][:code] == 'recap'
+        return true if location[:library] && location[:library][:code] == 'recap'
       end
       false
     end

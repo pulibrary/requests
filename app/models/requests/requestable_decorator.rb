@@ -69,7 +69,7 @@ module Requests
     end
 
     def located_in_an_open_library?
-      open_libraries.include?(location[:library][:code])
+      open_libraries.include?(library_code)
     end
 
     def on_shelf_edd?

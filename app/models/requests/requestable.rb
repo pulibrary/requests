@@ -244,7 +244,6 @@ module Requests
     end
 
     def library_code
-      return bib["location"].first.downcase if location["code"] == "etas"
       return nil if location['library'].blank?
       location['library']['code']
     end

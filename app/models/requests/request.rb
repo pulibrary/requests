@@ -100,6 +100,7 @@ module Requests
       locations.each_value do |location|
         return true if location[:library][:code] == 'recap'
       end
+      false
     end
 
     def all_items_online?

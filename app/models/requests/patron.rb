@@ -145,30 +145,22 @@ module Requests
 
         case response.status
         when 500
-          raise(ServerError)
+          Rails.logger.error('Error Patron Data Service.')
+          nil
         when 429
-          raise(PerSecondThresholdError)
+          error_message = "The maximum number of HTTP requests per second for the Alma API has been exceeded."
+          Rails.logger.error(error_message)
+          errors << error_message
+          nil
         when 404
-          raise(ResourceNotFoundError)
+          Rails.logger.error("404 Patron #{id} cannot be found in the Patron Data Service.")
+          nil
         when 403
-          raise(ForbiddenError)
+          Rails.logger.error("403 Not Authorized to Connect to Patron Data Service at #{request_uri} for patron ID #{id}")
+          nil
+        else
+          response
         end
-
-        response
-      rescue ServerError
-        Rails.logger.error('Error Patron Data Service.')
-        nil
-      rescue PerSecondThresholdError
-        error_message = "The maximum number of HTTP requests per second for the Alma API has been exceeded."
-        Rails.logger.error(error_message)
-        errors << error_message
-        nil
-      rescue ResourceNotFoundError
-        Rails.logger.error("404 Patron #{id} cannot be found in the Patron Data Service.")
-        nil
-      rescue ForbiddenError
-        Rails.logger.error("403 Not Authorized to Connect to Patron Data Service at #{request_uri} for patron ID #{id}")
-        nil
       rescue Faraday::Error::ConnectionFailed
         Rails.logger.error("Unable to connect to #{bibdata_uri}")
         nil

@@ -348,7 +348,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     context "with item enumeration" do
       let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { id: "aaabbb", enumeration: 'sss', copy_number: '0', enum_display: 'v.2' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
-        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="sss" />'
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" />'
       end
       it 'hides the enum display if the copy number is zero (0)' do
         expect(helper.enum_copy_display(requestable.item)).to eq("v.2 sss")

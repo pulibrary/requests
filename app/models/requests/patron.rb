@@ -2,11 +2,6 @@ require 'faraday'
 
 module Requests
   class Patron
-    class ServerError < StandardError; end
-    class PerSecondThresholdError < StandardError; end
-    class ResourceNotFoundError < StandardError; end
-    class ForbiddenError < StandardError; end
-
     attr_reader :user, :session, :patron, :errors
 
     delegate :guest?, to: :user

@@ -1581,5 +1581,28 @@ describe Requests::RequestableDecorator do
       end
     end
   end
+
+  describe "#status_badge" do
+    let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, status_label: 'Item in place', status: 'Available') }
+
+    it 'shows the status' do
+      expect(decorator.status_badge).to eq('<span class="availability--label badge badge-success">Available - Item in place</span>')
+    end
+
+    context 'Status label nil' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, status_label: nil, status: 'Available') }
+
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-success">Available</span>')
+      end
+    end
+
+    context 'Charged item' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: true, status_label: 'Technical - Migration', status: 'Not Available') }
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-danger">Not Available - Technical - Migration</span>')
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength

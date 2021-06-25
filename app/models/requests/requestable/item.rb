@@ -185,6 +185,10 @@ class Requests::Requestable
         'Not Available'
       end
 
+      def status
+        ''
+      end
+
       def available?
         false
       end

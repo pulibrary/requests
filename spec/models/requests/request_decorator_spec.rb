@@ -34,14 +34,28 @@ describe Requests::RequestDecorator do
   end
 
   describe "#patron_message" do
-    it 'shows the message for the campus unauthorized patron' do
-      expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please send an inquiry to <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you believe you should have access to these services.</div>"
+    it 'does not show the message for the campus unauthorized patron' do
+      expect(decorator.patron_message).to eq ""
+    end
+
+    context "student ldap status" do
+      let(:ldap) { { status: 'student', pustatus: "undergraduate" } }
+      it 'shows the message for the campus unauthorized patron' do
+        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please send an inquiry to <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you believe you should have access to these services.</div>"
+      end
     end
 
     context "staff ldap status" do
       let(:ldap) { { status: 'staff' } }
-      it 'shows the message for the campus unauthorized patron' do
-        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please send an inquiry to <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you believe you should have access to these services.  If you would like to have access to pick-up books <a href='https://ehs.princeton.edu/COVIDTraining'>please complete the mandatory COVID-19 training</a>.</div>"
+      it 'does not show the message for the campus unauthorized patron' do
+        expect(decorator.patron_message).to eq ""
+      end
+    end
+
+    context "faculty ldap status" do
+      let(:ldap) { { status: 'faculty' } }
+      it 'does not show the message for the campus unauthorized patron' do
+        expect(decorator.patron_message).to eq ""
       end
     end
 
@@ -53,7 +67,7 @@ describe Requests::RequestDecorator do
           ldap: ldap, campus_authorized: true }.with_indifferent_access
       end
 
-      it 'shows the message for the campus authorized patron' do
+      it 'does not show the message for the campus unauthorized patron' do
         expect(decorator.patron_message).to eq ""
       end
     end

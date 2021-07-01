@@ -1142,16 +1142,15 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'A covid-trained pick-up only user' do
-      let(:user) { FactoryGirl.create(:valid_barcode_patron) }
+      let(:user) { FactoryGirl.create(:user) }
       it 'displays a request form for a ReCAP item.' do
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_pick_up_only_response, headers: {})
         login_as user
         visit "/requests/#{voyager_id}"
-        expect(page).not_to have_content 'Electronic Delivery'
-        expect(page).not_to have_selector '#request_user_barcode', visible: false
-        expect(page).to have_content('You are only currently authorized to utilize our book')
-        expect(page).not_to have_content('If you would like to have access to pick-up books')
+        expect(page).to have_content 'Electronic Delivery'
+        expect(page).to have_content('Physical Item Delivery')
+        expect(page).to have_selector '#request_user_barcode', visible: false
       end
     end
 
@@ -1177,9 +1176,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         login_as user
         visit "/requests/#{voyager_id}"
         expect(page).to have_content 'Electronic Delivery'
+        expect(page).to have_content('Physical Item Delivery')
         expect(page).to have_selector '#request_user_barcode', visible: false
-        expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
-        expect(page).to have_content('If you would like to have access to pick-up books')
+        expect(page).not_to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
+        expect(page).not_to have_content('If you would like to have access to pick-up books')
       end
     end
 

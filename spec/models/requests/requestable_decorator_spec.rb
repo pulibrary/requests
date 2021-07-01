@@ -978,8 +978,8 @@ describe Requests::RequestableDecorator do
 
     context "no item data and does not circulate and etas and ill_eligible" do
       let(:stubbed_questions) { default_stubbed_questions.merge(item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false, user_barcode: '111222', aeon?: false, borrow_direct?: false, eligible_to_pickup?: true, ask_me?: false, open_libraries: ['abc'], library_code: 'abc') }
-      it 'will not be submitted' do
-        expect(decorator.will_submit_via_form?).to be_falsey
+      it 'will be submitted' do
+        expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
@@ -1230,8 +1230,8 @@ describe Requests::RequestableDecorator do
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible" do
       let(:stubbed_questions) { default_stubbed_questions.merge(item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: false, user_barcode: '111222', borrow_direct?: false, ask_me?: false, open_libraries: ['abc'], library_code: 'abc', aeon?: false) }
-      it 'will not be submitted' do
-        expect(decorator.will_submit_via_form?).to be_falsey
+      it 'will be submitted' do
+        expect(decorator.will_submit_via_form?).to be_truthy
       end
     end
 
@@ -1244,6 +1244,13 @@ describe Requests::RequestableDecorator do
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and traceable and no user barcode" do
       let(:stubbed_questions) { default_stubbed_questions.merge(item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: false, traceable?: true, user_barcode: nil, ask_me?: false, open_libraries: ['abc'], library_code: 'abc', aeon?: false) }
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu",
+          ldap: ldap }.with_indifferent_access
+      end
+
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
@@ -1258,6 +1265,12 @@ describe Requests::RequestableDecorator do
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and in_process and no user barcode" do
       let(:stubbed_questions) { default_stubbed_questions.merge(item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: false, in_process?: true, user_barcode: nil, ask_me?: false, open_libraries: ['abc'], library_code: 'abc', aeon?: false) }
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu",
+          ldap: ldap }.with_indifferent_access
+      end
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
@@ -1272,6 +1285,12 @@ describe Requests::RequestableDecorator do
 
     context "no item data and does not circulate and not etas and eligible_to_pickup? and ill_eligible and on_order and no user barcode" do
       let(:stubbed_questions) { default_stubbed_questions.merge(item_data?: false, circulates?: false, services: ["on_shelf"], recap_edd?: false, etas?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, ill_eligible?: true, patron: patron, on_order?: true, user_barcode: nil, ask_me?: false, open_libraries: ['abc'], library_code: 'abc', aeon?: false) }
+      let(:valid_patron) do
+        { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
+          "university_id" => "9999999", "patron_group" => "staff",
+          "patron_id" => "99999", "active_email" => "foo@princeton.edu",
+          ldap: ldap }.with_indifferent_access
+      end
       it 'will not be submitted' do
         expect(decorator.will_submit_via_form?).to be_falsey
       end
@@ -1373,6 +1392,7 @@ describe Requests::RequestableDecorator do
 
   describe "#help_me_message" do
     let(:stubbed_questions) { default_stubbed_questions.merge(patron: patron, open_libraries: ['abc'], library_code: 'abc', scsb_in_library_use?: false) }
+    let(:ldap) { { pustatus: "undergraduate" } }
 
     it "returns the unauthorized patron message" do
       expect(decorator.help_me_message).to eq("This item is only available for pick-up or in library use. Library staff will work to try to get you access to a digital copy of the desired material.")
@@ -1381,13 +1401,13 @@ describe Requests::RequestableDecorator do
     context "trained patron" do
       let(:valid_patron) do
         { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
-          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
+          "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "student",
           "patron_id" => "99999", "active_email" => "foo@princeton.edu",
           ldap: ldap, campus_authorized: false, campus_authorized_category: "trained" }.with_indifferent_access
       end
 
       it "returns the trained patron message" do
-        expect(decorator.help_me_message).to eq("This item is only available for use in the library. Library staff will work to try to get you access to a digital copy of the desired material.")
+        expect(decorator.help_me_message).to eq("This item is only available for pick-up or in library use. Library staff will work to try to get you access to a digital copy of the desired material.")
       end
 
       context "closed library" do

@@ -1,8 +1,0 @@
-<tr class='request--make-appointment' id='request_online_items_<%= "#{requestable.holding.keys[0]}" %>'>
-  <td class='request--select'></td>
-  <td class='request--enum'></td>
-  <%= render partial: 'requestable_status', locals: { requestable: requestable } %>
-  <td>
-    Please utilize our study-browse service to <%= link_to I18n.t('requests.appointment.request_label'), requestable.libcal_url, target: :_blank %> to come in and view the item in the Library    
-  </td>
-</tr>

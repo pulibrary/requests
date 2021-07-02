@@ -50,7 +50,7 @@ en:
       # temporary changes issue 438
       #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
       email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you the item will be available for pick-up in Firestone Lobby between the hours of 11am - 3pm, Monday - Friday."
-      in_library_use_msg_html: After notification of your item's arrival at %{location_label}, you will need to <a href="%{libcal_url}">make a study-browse appointment</a> to come into the Library to view it
+      in_library_use_msg_html: After notification of your item's arrival at %{location_label}, you should visit the Library to view it
     anxadoc:
       email: "docstor@princeton.edu"
     annexb:
@@ -136,7 +136,7 @@ en:
       email_conf_msg: "You will be notified via email when your item is available."
       guest_email_destination: "fstcirc@princeton.edu"
       scsb_recall_destination: 'recapproblems@princeton.edu'
-      in_library_use_msg_html: After notification of your item's arrival at %{location_label}, you will need to <a href="%{libcal_url}">make a study-browse appointment</a> to come into the Library to view it
+      in_library_use_msg_html: After notification of your item's arrival at %{location_label}, you should visit the Library to view it
     recap_edd:
       email_subject: "Electronic Document Delivery Request Confirmation"
       # brief_msg: "Item off-site at ReCAP facility. Request an article or book chapter be scanned for you and delivered as a PDF file in 1-2 business days. If you need more than an article or chapter, please request the physical item. The Library complies with all applicable copyright laws."
@@ -224,7 +224,7 @@ en:
       delivery_label: "Available for In Library Use"
       brief_msg: "Item off-site at ReCAP facility. Request for delivery in 1-2 business days."
       email_subject: "Patron Initiated Catalog Request In Library Confirmation"
-      email_conf_msg: "You will be notified via email when your item is available.  At that point, please utilize our study-browse service to make a reservation to come into the Library.  Please proceed to the circulation desk to retrieve the item and view it in your assigned seat."
+      email_conf_msg: "You will be notified via email when your item is available.  At that point, you can visit the Library and proceed to the circulation desk to retrieve the item and view it in the library."
     recap_marquand_in_library:
       delivery_label: "Available for In Library Use"
       brief_msg: "Marquand Item off-site at ReCAP facility. Requests typically take 2-4 business days."

@@ -370,62 +370,6 @@ describe Requests::RequestableDecorator do
     end
   end
 
-  describe "#available_for_appointment?" do
-    let(:stubbed_questions) { default_stubbed_questions.merge(circulates?: true) }
-    it 'is not available for an appointment' do
-      expect(decorator.available_for_appointment?).to be_falsey
-    end
-
-    context "does not circulate and in recap" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(circulates?: false, recap?: true) }
-      it 'is not available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_falsey
-      end
-    end
-
-    context "does not circulate and charged?" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: true, circulates?: false, recap?: false) }
-      it 'is not available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_falsey
-      end
-    end
-
-    context "does not circulate and not charged? and aeon?" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, circulates?: false, recap?: false, aeon?: true) }
-      it 'is not available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_falsey
-      end
-    end
-
-    context "does not circulate and not charged? and etas" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: true) }
-      it 'is not available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_falsey
-      end
-    end
-
-    context "at an open library does not circulate and not charged? and campus_authorized" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: false, campus_authorized: true, open_libraries: ['abc'], library_code: 'abc') }
-      it 'is available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_truthy
-      end
-    end
-
-    context "at an closed library does not circulate and not charged? and campus_authorized" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: false, campus_authorized: true, open_libraries: ['def'], library_code: 'abc') }
-      it 'is not available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_falsey
-      end
-    end
-
-    context "does not circulate and not charged? and not campus_authorized" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, circulates?: false, recap?: false, aeon?: false, etas?: false, campus_authorized: false) }
-      it 'is not available for an appointment' do
-        expect(decorator.available_for_appointment?).to be_falsey
-      end
-    end
-  end
-
   describe "#located_in_an_open_library?" do
     let(:stubbed_questions) { default_stubbed_questions.merge(open_libraries: ['abc'], library_code: 'abc') }
     it 'is available for digitizing' do

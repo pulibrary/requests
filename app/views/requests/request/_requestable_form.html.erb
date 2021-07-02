@@ -1,6 +1,3 @@
-<% if requestable.available_for_appointment? %>
-  <%= render partial: "requestable_make_appointment", locals: { requestable: requestable, single_item_request: @request.single_item_request? } %>
-<% end %>
 <% if requestable.aeon? %>
   <%= render partial: 'requestable_form_aeon', locals: { requestable: requestable, mfhd: mfhd, default_pick_ups: default_pick_ups, request_context: @request.ctx, single_item_request: @request.single_item_request? } %>
 <% elsif requestable.help_me? %>

@@ -4,7 +4,7 @@ module Requests
   class Patron
     attr_reader :user, :session, :patron, :errors
 
-    delegate :guest?, to: :user
+    delegate :guest?, :provider, to: :user
 
     def initialize(user:, session: {}, patron: nil)
       @user = user
@@ -51,7 +51,8 @@ module Requests
     end
 
     def campus_authorized
-      patron[:campus_authorized]
+      # only students need to be authorized for campus.  Other folks with a netid are allowed to be on campus
+      patron[:campus_authorized] || (!undergraduate? && !guest? && !barcode_provider? && barcode.present?)
     end
 
     def eligible_to_pickup?
@@ -158,6 +159,14 @@ module Requests
           barcode: 'ACCESS',
           barcode_status: 0
         }.with_indifferent_access
+      end
+
+      def access_patron?
+        barcode == "ACCESS"
+      end
+
+      def barcode_provider?
+        provider == "barcode"
       end
   end
 end

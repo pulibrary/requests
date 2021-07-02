@@ -50,13 +50,13 @@ describe Requests::Patron do
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
-        patron = described_class.new(user: instance_double(User, guest?: false, uid: 'foo'), session: {})
+        patron = described_class.new(user: instance_double(User, guest?: false, provider: 'cas', uid: 'foo'), session: {})
         expect(patron).to be_truthy
         expect(patron.active_email).to eq('a@b.com')
         expect(patron.netid).to be_nil
-        expect(patron.campus_authorized).to be_falsey
+        expect(patron.campus_authorized).to be_truthy
         expect(patron.training_eligable?).to be_falsey
-        expect(patron.eligible_to_pickup?).to be_falsey
+        expect(patron.eligible_to_pickup?).to be_truthy
       end
     end
   end

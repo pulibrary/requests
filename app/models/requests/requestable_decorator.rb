@@ -60,10 +60,6 @@ module Requests
         (!located_in_an_open_library? && !aeon?) # item in a closed library that is not aeon managed
     end
 
-    def available_for_appointment?
-      !circulates? && !off_site? && !charged? && !aeon? && !etas? && campus_authorized && located_in_an_open_library?
-    end
-
     def will_submit_via_form?
       digitize? || pick_up? || scsb_in_library_use? || off_site? || (ill_eligible? && patron.covid_trained?) || (user_barcode.present? && (on_order? || in_process? || traceable?)) || help_me?
     end

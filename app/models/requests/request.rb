@@ -302,15 +302,19 @@ module Requests
       end
 
       def build_requestable_params(params)
-        location = params[:location]
-        location["delivery_locations"] = location["delivery_locations"].map { |loc| loc.merge("pick_up_location_code" => 'firestone') { |_key, v1, _v2| v1 } }
         {
           bib: doc.with_indifferent_access,
           holding: params[:holding],
           item: params[:item],
-          location: location,
+          location: build_requestable_location(params),
           patron: patron
         }
+      end
+
+      def build_requestable_location(params)
+        location = params[:location]
+        location["delivery_locations"] = location["delivery_locations"].map { |loc| loc.merge("pick_up_location_code" => 'firestone') { |_key, v1, _v2| v1 } } if location["delivery_locations"].present?
+        location
       end
 
       # Not sure why this method exists

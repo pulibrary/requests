@@ -68,7 +68,6 @@ module Requests
     def located_in_an_open_library?
       # close everything for the alma migration
       false
-      # return false if location[:library].blank?
       # open_libraries.include?(library_code)
     end
 

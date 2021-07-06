@@ -66,7 +66,6 @@ module Requests
     end
 
     def located_in_an_open_library?
-      return false if location[:library].blank?
       open_libraries.include?(library_code)
     end
 

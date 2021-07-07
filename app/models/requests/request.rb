@@ -313,8 +313,16 @@ module Requests
 
       def build_requestable_location(params)
         location = params[:location]
-        location["delivery_locations"] = location["delivery_locations"].map { |loc| loc.merge("pick_up_location_code" => 'firestone') { |_key, v1, _v2| v1 } } if location["delivery_locations"].present?
+        location["delivery_locations"] = build_delivery_locations(location["delivery_locations"]) if location["delivery_locations"].present?
         location
+      end
+
+      def build_delivery_locations(delivery_locations)
+        delivery_locations.map do |loc|
+          pick_up_code = loc["library"]["code"] if loc["library"].present?
+          pick_up_code ||= 'firestone'
+          loc.merge("pick_up_location_code" => pick_up_code) { |_key, v1, _v2| v1 }
+        end
       end
 
       # Not sure why this method exists

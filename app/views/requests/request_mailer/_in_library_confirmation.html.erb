@@ -9,7 +9,6 @@
   <div style="text-align:center;margin:18px 0;">
     <p class="body-content"><%= I18n.t("requests.#{type}.email_conf_msg")%></p>
   </div>
-   <%= render partial: 'covid_library_guidelines', locals: { libcal_url: Requests::Libcal.url(@submission.pick_up_location["code"]) } %>
   </td>
 </tr>
 

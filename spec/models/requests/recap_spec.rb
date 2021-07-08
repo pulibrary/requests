@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# rubocop:disable RSpec/MultipleExpectations
 describe Requests::Recap do
   context 'ReCAP Request' do
     let(:valid_patron) { { "netid" => "foo", "university_id" => "99999999" }.with_indifferent_access }
@@ -87,6 +88,7 @@ describe Requests::Recap do
         stub_request(:post, scsb_url).
           # with(headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
           to_return(status: 401, body: "Unauthorized", headers: {})
+        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(0)
         expect(recap_request.errors.size).to eq(2)
         expect(a_request(:post, scsb_url)).to have_been_made.twice
@@ -98,6 +100,7 @@ describe Requests::Recap do
         stub_request(:post, scsb_url).
           # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
           to_return(status: 200, body: bad_response, headers: {})
+        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(0)
         expect(recap_request.errors.size).to eq(2)
         expect(a_request(:post, scsb_url)).to have_been_made.twice
@@ -112,24 +115,44 @@ describe Requests::Recap do
         stub_request(:post, alma_url)
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
           .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
-        stub_request(:post, alma2_url)
-          .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "mudd"))
-          .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
+        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(2)
         expect(recap_request.errors.size).to eq(0)
         expect(a_request(:post, scsb_url)).to have_been_made.twice
         expect(a_request(:post, alma_url)).to have_been_made
-        expect(a_request(:post, alma2_url)).not_to have_been_made
+        expect(a_request(:post, alma2_url)).not_to have_been_made # no alma hold for edd
+      end
+
+      it "captures errors in the alma hold request" do
+        stub_request(:post, scsb_url).
+          # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+          to_return(status: 200, body: good_response, headers: {})
+        stub_request(:post, alma_url)
+          .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
+          .to_return(status: 200, body: fixture("alma_hold_error_response.json"), headers: { 'content-type': 'application/json' })
+        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect(recap_request.submitted.size).to eq(2)
+        expect(recap_request.errors.size).to eq(0)
+        expect(a_request(:post, scsb_url)).to have_been_made.twice
+        expect(a_request(:post, alma_url)).to have_been_made
+        expect(a_request(:post, alma2_url)).not_to have_been_made # no alma hold for EDD
+        error_email = ActionMailer::Base.deliveries.last
+        expect(error_email.subject).to eq("Request Service Error")
+        expect(error_email.html_part.body.to_s).not_to include("translation missing")
+        expect(error_email.text_part.body.to_s).not_to include("translation missing")
+        expect(error_email.to).to eq(["recapproblems@princeton.edu"])
+        expect(error_email.cc).to be_blank
+        expect(error_email.html_part.body.to_s).to include("Recap request was successful, but creating the hold in Alma had an error: Can not create hold")
       end
 
       context 'when the SCSB web service responds with an invalid response' do
         subject(:recap) { described_class.new(submission) }
 
-        # rubocop:disable RSpec/MultipleExpectations
         it 'logs an error' do
           stub_request(:post, scsb_url).to_return(status: 200, body: '{invalid', headers: {})
           allow(Rails.logger).to receive(:error)
 
+          expect { recap }.to change { ActionMailer::Base.deliveries.count }.by(0)
           expect(recap.submitted.size).to eq(0)
           expect(recap.errors.size).to eq(2)
           expect(Rails.logger).to have_received(:error).with(/Invalid response from the SCSB server/).twice
@@ -137,7 +160,6 @@ describe Requests::Recap do
           expect(a_request(:post, alma_url)).not_to have_been_made
           expect(a_request(:post, alma2_url)).not_to have_been_made
         end
-        # rubocop:enable RSpec/MultipleExpectations
       end
     end
   end
@@ -233,6 +255,7 @@ describe Requests::Recap do
         stub_request(:post, alma2_url)
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "mudd"))
           .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
+        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(2)
         expect(recap_request.errors.size).to eq(0)
         expect(a_request(:post, scsb_url)).to have_been_made.twice
@@ -242,3 +265,4 @@ describe Requests::Recap do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

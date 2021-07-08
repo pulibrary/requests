@@ -53,8 +53,13 @@ module Requests
         return if submission.scsb_item?(item) || submission.edd?(item)
 
         hold = Requests::HoldItem.new(@submission, service_type: "recap")
-        status = hold.handle_item(item: item)
-        @errors << { type: 'hold-for-recap', error: hold.errors.first } unless status
+        hold.handle_item(item: item)
+        return if hold.errors.empty?
+        hold.errors.map! do |error|
+          reply_text = error["reply_text"]
+          error.merge("reply_text" => "Recap request was successful, but creating the hold in Alma had an error: #{reply_text}")
+        end
+        Requests::RequestMailer.send("service_error_email", [hold]).deliver_now
       end
   end
 end

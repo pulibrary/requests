@@ -1099,7 +1099,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/99117809653506421?mfhd=22203397510006421'
           stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/99117809653506421/holdings/22203397510006421/items/23203397500006421/requests?user_id=960594184")
-            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "pj"))
+            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "recap"))
             .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
           choose('requestable__delivery_mode_23203397500006421_in_library') # chooses 'in_library' radio button
           expect(page).to have_content 'Electronic Delivery'

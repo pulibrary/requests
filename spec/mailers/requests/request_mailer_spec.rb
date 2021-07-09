@@ -183,7 +183,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(confirmation.to).to eq([submission_for_no_items.email])
       expect(confirmation.from).to eq([I18n.t('requests.default.email_from')])
       expect(confirmation.body.encoded).to have_content(I18n.t('requests.paging.email_conf_msg'))
-      expect(confirmation.body.encoded).to have_content('Wear a mask or face covering')
     end
   end
 
@@ -246,9 +245,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(confirmation_mail.cc).to be_nil
       expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.html_part.body.to_s).to have_content('Wear a mask or face covering')
       expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content('Wear a mask or face covering')
     end
   end
 
@@ -312,9 +309,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(confirmation_mail.cc).to be_nil
       expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.html_part.body.to_s).to have_content('Wear a mask or face covering')
       expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content('Wear a mask or face covering')
     end
   end
 
@@ -806,9 +801,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(confirmation_mail.cc).to be_nil
       expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
-      expect(confirmation_mail.html_part.body.to_s).to have_content('Wear a mask or face covering')
       expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.recap.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content('Wear a mask or face covering')
     end
   end
 
@@ -873,9 +866,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
 
     it "renders the body" do
       expect(mail.html_part.body.to_s).to have_content I18n.t('requests.recap_edd.email_conf_msg')
-      expect(mail.html_part.body.to_s).not_to have_content('Wear a mask or face covering')
       expect(mail.text_part.body.to_s).to have_content I18n.t('requests.recap_edd.email_conf_msg')
-      expect(mail.text_part.body.to_s).not_to have_content('Wear a mask or face covering')
     end
   end
 
@@ -950,9 +941,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       expect(confirmation_mail.to).to eq([submission_for_recap.email])
       expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
-      expect(confirmation_mail.html_part.body.to_s).to have_content('Wear a mask or face covering')
       expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.recap_guest.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content('Wear a mask or face covering')
     end
   end
 

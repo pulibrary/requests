@@ -100,9 +100,7 @@ en:
       email_covid_msg: "When picking up and/or dropping off your books: 
         <ul>
           <li>please do so promptly</li>
-          <li>remain only in the designated pick-up area</li>
-          <li>wear a mask or face covering</li>
-          <li>and follow social distancing guidelines</li> 
+          <li>remain only in the designated pick-up area</li> 
         </ul>
         Please plan to limit your number of trips to the Library. We appreciate your help in our efforts to slow the spread of Covid-19."
     on_order:
@@ -232,7 +230,7 @@ en:
       confirmation_subject: "Patron Initiated Catalog Request In Library Confirmation"
       email_conf_msg: "You will be notified via email when your item is available.  Request for Marquand items typically take 2-4 business days.  Your request to view this item has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for consultation in either the West Atrium Reading Room or Scribner Reading Room on C Floor in Firestone Library."
     clancy:
-      in_library_use_msg_html: To view your item, please follow the instructions in the email notifying you the item is available.  The instructions will indicate how to book a study-browse appointment in %{location_label}.
+      in_library_use_msg_html: To view your item, please follow the instructions in the email notifying you the item is available.
     clancy_unavailable_edd:
       brief_msg: "Request articles or book chapters. They will typically be delivered as a PDF file in 4-8 business days. Please use the title field to indicate the article or chapter you wish to obtain. Use the notes field for additional comments or instructions. The Library complies with all applicable copyright laws."
       email_subject: "Patron Initiated Catalog Request Scan - Unavailable at Clancy"
@@ -270,7 +268,7 @@ en:
       confirmation_subject: "Patron Initiated Catalog Request In Library Confirmation"
       email_conf_msg: "You will be notified via email when your item is available.  Your request to view this item has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for consultation in either the West Atrium Reading Room or Scribner Reading Room on C Floor in Firestone Library."
     marquand:
-      in_library_use_msg_html: To view your item, please follow the instructions in the email notifying you the item is available.  The instructions will indicate how to book a study-browse appointment in %{location_label}.
+      in_library_use_msg_html: To view your item, please follow the instructions in the email notifying you the item is available.
     marquand_in_process:
       email_destination: 'marquandoffsite@princeton.edu'
     annexa_in_library:
@@ -298,4 +296,3 @@ en:
       stokes: '	8:30am – 4:45pm, Monday - Friday'
       lewis: '8:30am – 8:45pm, Monday - Thursday; 8:30am – 4:45pm Friday'
       marquand: '9:00am - 4:45pm, Monday - Friday'
-    lewis_flood_message: 'Due to recent water damage, a small number of items in this collection may not be accessible. If the material requested is not available someone will contact you to make arrangements to follow up.'

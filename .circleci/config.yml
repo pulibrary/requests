@@ -30,7 +30,7 @@ jobs:
       # Install the Gem dependencies
       - restore_cache:
           keys:
-          - requests-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "requests.gemspec" }}
+          - requests-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "requests.gemspec" }}-{{ checksum ".tool-versions" }}
 
       - run:
           name: Install the Gem dependencies
@@ -47,7 +47,7 @@ jobs:
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
       - save_cache:
-          key: requests-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "requests.gemspec" }}
+          key: requests-{{ checksum "spec/test_app_templates/lib/generators/test_app_generator.rb" }}-{{ checksum "requests.gemspec" }}-{{ checksum ".tool-versions" }}
           paths:
             - ./vendor/bundle
             - ./.internal_test_app

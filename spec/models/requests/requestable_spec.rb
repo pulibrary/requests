@@ -620,7 +620,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A Non-Recap Marquand holding' do
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:user) { FactoryGirl.build(:user) }
-    let(:item) { { status: "Available" } }
+    let(:item) { { status: "Available", location_code: "scsbnypl" }.with_indifferent_access }
     let(:location) { { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } } }
     let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: location, patron: patron, item: item) }
 
@@ -899,7 +899,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe "#available?" do
       it "is not available" do
-        pending "https://github.com/pulibrary/bibdata/issues/1381"
         expect(requestable).not_to be_available
       end
     end

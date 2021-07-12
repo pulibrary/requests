@@ -150,7 +150,7 @@ en:
       access_msg: 'Access Users are not eligible for Electronic Delivery Services requests.'
       note_msg: 'All scans will be in black and white unless color is noted.'
     recap_marquand:
-      in_library_use_msg_html: After notification of your item's arrival at %{location_label}, you will receive a notification to come into the Library to view it
+      in_library_use_msg_html: To view your item, please follow the instructions in the email notifying you the item is available.
     recap_no_items:
       email: "recapproblems@princeton.edu"
       email_subject: "ReCAP Non-Barcoded Request."

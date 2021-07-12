@@ -69,7 +69,7 @@ class Requests::Requestable
     def charged?
       return false if status_label == 'Acquisition'
       return false if status_label == 'Acquisitions and Cataloging'
-      unavailable_statuses.include?(status_label) || unavailable_statuses.include?(scsb_status)
+      unavailable_statuses.include?(status_label) || scsb? && unavailable_statuses.include?(scsb_status)
     end
 
     def status
@@ -85,7 +85,7 @@ class Requests::Requestable
     end
 
     def available?
-      available_statuses.include?(status_label) || available_statuses.include?(scsb_status)
+      available_statuses.include?(status_label) || scsb? && available_statuses.include?(scsb_status)
     end
 
     def barcode?

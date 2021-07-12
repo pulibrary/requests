@@ -227,8 +227,10 @@ module Requests
           barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
         end
         barcodesort.each_value do |item|
+          location_code = holdings[id]['location_code']
+          item['location_code'] = location_code
           params = build_requestable_params(item: item.with_indifferent_access, holding: { id.to_sym.to_s => holdings[id] },
-                                            location: locations[holdings[id]['location_code']])
+                                            location: locations[location_code])
           requestable_items << Requests::Requestable.new(params)
         end
         requestable_items

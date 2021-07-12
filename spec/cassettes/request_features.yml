@@ -3397,113 +3397,6 @@ http_interactions:
   recorded_at: Thu, 03 Jun 2021 17:26:59 GMT
 - request:
     method: get
-    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-8953469/holdings//availability.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Faraday v1.4.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Server:
-      - nginx/1.19.10
-      Date:
-      - Thu, 03 Jun 2021 17:27:01 GMT
-      Content-Type:
-      - text/html; charset=utf-8
-      Content-Length:
-      - '1564'
-      Connection:
-      - keep-alive
-      Status:
-      - 404 Not Found
-      X-Request-Id:
-      - caf0f62a-b47b-487c-8323-653ba593e88d
-      X-Runtime:
-      - '0.001139'
-      X-Powered-By:
-      - Phusion Passenger 6.0.7
-    body:
-      encoding: UTF-8
-      string: |
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>The page you were looking for doesn't exist (404)</title>
-          <meta name="viewport" content="width=device-width,initial-scale=1">
-          <style>
-          body {
-            background-color: #EFEFEF;
-            color: #2E2F30;
-            text-align: center;
-            font-family: arial, sans-serif;
-            margin: 0;
-          }
-
-          div.dialog {
-            width: 95%;
-            max-width: 33em;
-            margin: 4em auto 0;
-          }
-
-          div.dialog > div {
-            border: 1px solid #CCC;
-            border-right-color: #999;
-            border-left-color: #999;
-            border-bottom-color: #BBB;
-            border-top: #B00100 solid 4px;
-            border-top-left-radius: 9px;
-            border-top-right-radius: 9px;
-            background-color: white;
-            padding: 7px 12% 0;
-            box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-          }
-
-          h1 {
-            font-size: 100%;
-            color: #730E15;
-            line-height: 1.5em;
-          }
-
-          div.dialog > p {
-            margin: 0 0 1em;
-            padding: 1em;
-            background-color: #F7F7F7;
-            border: 1px solid #CCC;
-            border-right-color: #999;
-            border-left-color: #999;
-            border-bottom-color: #999;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 4px;
-            border-top-color: #DADADA;
-            color: #666;
-            box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-          }
-          </style>
-        </head>
-
-        <body>
-          <!-- This file lives in public/404.html -->
-          <div class="dialog">
-            <div>
-              <h1>The page you were looking for doesn't exist.</h1>
-              <p>You may have mistyped the address or the page may have moved.</p>
-            </div>
-            <p>If you are the application owner check the logs for more information.</p>
-          </div>
-        </body>
-        </html>
-  recorded_at: Thu, 03 Jun 2021 17:27:02 GMT
-- request:
-    method: get
     uri: https://catalog-alma-qa.princeton.edu/catalog/9997708113506421/raw
     body:
       encoding: US-ASCII
@@ -5585,4 +5478,111 @@ http_interactions:
         Collections","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true,"library":{"label":"Firestone
         Library","code":"firestone","order":0}}]}'
   recorded_at: Wed, 07 Jul 2021 18:01:48 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-8953469/holdings//availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Mon, 12 Jul 2021 12:13:25 GMT
+      Content-Type:
+      - text/html; charset=utf-8
+      Content-Length:
+      - '1564'
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      X-Request-Id:
+      - e2d2dad0-67da-4c72-ba8a-4f7087358dac
+      X-Runtime:
+      - '0.011548'
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: |
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>The page you were looking for doesn't exist (404)</title>
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <style>
+          body {
+            background-color: #EFEFEF;
+            color: #2E2F30;
+            text-align: center;
+            font-family: arial, sans-serif;
+            margin: 0;
+          }
+
+          div.dialog {
+            width: 95%;
+            max-width: 33em;
+            margin: 4em auto 0;
+          }
+
+          div.dialog > div {
+            border: 1px solid #CCC;
+            border-right-color: #999;
+            border-left-color: #999;
+            border-bottom-color: #BBB;
+            border-top: #B00100 solid 4px;
+            border-top-left-radius: 9px;
+            border-top-right-radius: 9px;
+            background-color: white;
+            padding: 7px 12% 0;
+            box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+          }
+
+          h1 {
+            font-size: 100%;
+            color: #730E15;
+            line-height: 1.5em;
+          }
+
+          div.dialog > p {
+            margin: 0 0 1em;
+            padding: 1em;
+            background-color: #F7F7F7;
+            border: 1px solid #CCC;
+            border-right-color: #999;
+            border-left-color: #999;
+            border-bottom-color: #999;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-top-color: #DADADA;
+            color: #666;
+            box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
+          }
+          </style>
+        </head>
+
+        <body>
+          <!-- This file lives in public/404.html -->
+          <div class="dialog">
+            <div>
+              <h1>The page you were looking for doesn't exist.</h1>
+              <p>You may have mistyped the address or the page may have moved.</p>
+            </div>
+            <p>If you are the application owner check the logs for more information.</p>
+          </div>
+        </body>
+        </html>
+  recorded_at: Mon, 12 Jul 2021 12:13:25 GMT
 recorded_with: VCR 6.0.0

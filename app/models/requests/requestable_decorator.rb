@@ -92,6 +92,8 @@ module Requests
         "clancy_unavailable" # at clancy but not available
       elsif recap? && (holding_library == "marquand" || requestable.cul_avery?)
         "recap_marquand"
+      elsif recap?
+        "recap"
       else
         library_code
       end

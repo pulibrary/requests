@@ -1478,7 +1478,7 @@ describe Requests::RequestableDecorator do
     context "at recap" do
       let(:stubbed_questions) { default_stubbed_questions.merge(recap?: true, library_code: 'abc', holding_library: 'abc') }
       it 'is off site' do
-        expect(decorator.off_site_location).to eq('abc')
+        expect(decorator.off_site_location).to eq('recap')
       end
     end
 

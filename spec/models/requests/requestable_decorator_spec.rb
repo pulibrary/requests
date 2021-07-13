@@ -1611,6 +1611,13 @@ describe Requests::RequestableDecorator do
         expect(decorator.status_badge).to eq('<span class="availability--label badge badge-danger">Not Available - Technical - Migration</span>')
       end
     end
+
+    context 'migration item that is available' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(status_label: 'Technical - Migration', status: 'Available') }
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-success">Available - Technical - Migration</span>')
+      end
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength

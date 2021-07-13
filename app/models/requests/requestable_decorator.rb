@@ -115,10 +115,10 @@ module Requests
     end
 
     def status_badge
-      css_class = if requestable.charged?
-                    "badge-danger"
-                  else
+      css_class = if requestable.status == "Available"
                     "badge-success"
+                  else
+                    "badge-danger"
                   end
       status = if requestable.status_label.nil?
                  requestable.status

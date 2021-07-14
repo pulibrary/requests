@@ -1232,4 +1232,44 @@ http_interactions:
       string: '{"label":"Graphic Arts Reference Collection","code":"rare$garf","aeon_location":true,"recap_electronic_delivery_location":false,"open":false,"requestable":true,"always_requestable":true,"circulates":false,"remote_storage":"","library":{"label":"Special
         Collections","code":"rare","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
   recorded_at: Wed, 07 Jul 2021 17:53:23 GMT
+- request:
+    method: post
+    uri: https://uat-recap.htcinc.com:9093/requestItem/requestItem
+    body:
+      encoding: UTF-8
+      string: '{"author":"","bibId":"9995904203506421","callNumber":"PN1995.9.A76
+        P7613 2015","chapterTitle":"test","deliveryLocation":"","emailAddress":"a@b.com","endPage":"1","issue":"1","itemBarcodes":["32101098797010"],"itemOwningInstitution":"PUL","patronBarcode":"22101008199999","requestNotes":"","requestType":"EDD","requestingInstitution":"PUL","startPage":"1","titleIdentifier":null,"username":"jstudent","volume":"1"}'
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Api-Key:
+      - TESTME
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: ''
+    headers:
+      Date:
+      - Wed, 14 Jul 2021 19:19:13 GMT
+      Content-Length:
+      - '22'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - AWSALB=7cxAefq4MU+k3UbmP8E+IvBiNLvG17wVnqA963V3365tinIohJ7pasGHh01Whps/kTAkYBTnIb/PJ6ClVkuJcBjTYBK1BEYOW3gV9eMonnfHQ0NydVg+dZ5OFWce;
+        Expires=Wed, 21 Jul 2021 19:19:13 GMT; Path=/
+      - AWSALBCORS=7cxAefq4MU+k3UbmP8E+IvBiNLvG17wVnqA963V3365tinIohJ7pasGHh01Whps/kTAkYBTnIb/PJ6ClVkuJcBjTYBK1BEYOW3gV9eMonnfHQ0NydVg+dZ5OFWce;
+        Expires=Wed, 21 Jul 2021 19:19:13 GMT; Path=/; SameSite=None; Secure
+    body:
+      encoding: UTF-8
+      string: 'Authentication Failed
+
+        '
+  recorded_at: Wed, 14 Jul 2021 19:19:13 GMT
 recorded_with: VCR 6.0.0

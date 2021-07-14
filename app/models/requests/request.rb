@@ -13,7 +13,8 @@ module Requests
     attr_reader :requestable
     attr_reader :requestable_unrouted
     attr_reader :holdings
-    attr_reader :locations
+    attr_reader :location
+    attr_reader :location_code
     attr_reader :items
     attr_reader :pick_ups
     alias default_pick_ups pick_ups
@@ -28,23 +29,22 @@ module Requests
     # @option opts [String] :source represents system that directed user to request form. i.e.
     def initialize(system_id:, mfhd:, patron: nil, source: nil)
       @system_id = system_id
-      @mfhd = mfhd
+      @doc = solr_doc(system_id)
+      @holdings = JSON.parse(doc[:holdings_1display] || '{}')
+      # scsb items are the only ones that come in without a MFHD parameter from the catalog now
+      # set it for them, because they only ever have one location
+      @mfhd = mfhd || @holdings.keys.first
       @patron = patron
       @source = source
       ### These should be re-factored
-      @doc = solr_doc(system_id)
-      @holdings = JSON.parse(doc[:holdings_1display] || '{}')
       include_etas_in_holdings(@holdings)
-      @locations = load_locations
+      @location_code = @holdings[@mfhd]["location_code"] if @holdings[@mfhd].present?
+      @location = load_location
       @items = load_items
       @pick_ups = build_pick_ups
       @requestable_unrouted = build_requestable
       @requestable = route_requests(@requestable_unrouted)
       @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
-
-      # scsb items are the only ones that come in without a MFHD parameter from the catalog now
-      # set it for them, because they only ever have one location
-      @mfhd ||= requestable.first.holding.keys[0] if requestable?
     end
 
     delegate :user, to: :patron
@@ -97,11 +97,8 @@ module Requests
     end
 
     def recap?
-      return false if locations.blank?
-      locations.each_value do |location|
-        return true if location[:library] && location[:library][:code] == 'recap'
-      end
-      false
+      return false if location.blank?
+      location[:remote_storage] == "recap_rmt"
     end
 
     def all_items_online?
@@ -221,19 +218,27 @@ module Requests
 
       def build_holding_scsb_items(id:, values:, availability_data:, requestable_items:)
         return requestable_items if values['items'].nil?
-        barcodesort = {}
-        values['items'].each { |item| barcodesort[item['barcode']] = item }
-        availability_data.each do |item|
-          barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
-        end
+        barcodesort = build_barcode_sort(items: values['items'], availability_data: availability_data)
         barcodesort.each_value do |item|
-          location_code = holdings[id]['location_code']
           item['location_code'] = location_code
           params = build_requestable_params(item: item.with_indifferent_access, holding: { id.to_sym.to_s => holdings[id] },
-                                            location: locations[location_code])
+                                            location: location)
           requestable_items << Requests::Requestable.new(params)
         end
         requestable_items
+      end
+
+      def build_barcode_sort(items:, availability_data:)
+        barcodesort = {}
+        items.each do |item|
+          item[:status_label] = "In Process"
+          barcodesort[item['barcode']] = item
+        end
+        availability_data.each do |item|
+          next if barcodesort[item['itemBarcode']].nil?
+          barcodesort[item['itemBarcode']]['status_label'] = item['itemAvailabilityStatus']
+        end
+        barcodesort
       end
 
       def build_requestable_with_items
@@ -241,9 +246,7 @@ module Requests
         barcodesort = {}
         if recap?
           availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
-          availability_data.each do |item|
-            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus'] unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
-          end
+          barcodesort = build_barcode_sort(items: items[mfhd], availability_data: availability_data)
         end
         items.each do |holding_id, mfhd_items|
           next if mfhd != holding_id
@@ -274,33 +277,39 @@ module Requests
         item_loc = item_current_location(item)
         ## This check is needed in case the item level data denotes a temporary
         ## location
-        locations[item_loc] = get_location(item_loc) unless locations.key? item_loc
-        item['scsb_status'] = barcodesort[item['barcode']] unless barcodesort.empty?
+        current_location = get_current_location(item_loc: item_loc)
+        item['status_label'] = barcodesort[item['barcode']][:status_label] unless barcodesort.empty?
         params = build_requestable_params(
           item: item.with_indifferent_access,
           holding: { holding_id.to_sym.to_s => holdings[holding_id] },
-          location: locations[item_loc]
+          location: current_location
         )
         # sometimes availability returns items without any status
         # see https://github.com/pulibrary/marc_liberation/issues/174
         Requests::Requestable.new(params) # unless item["status"].nil?
       end
 
+      def get_current_location(item_loc:)
+        if item_loc != location_code
+          @temp_locations ||= {}
+          @temp_locations[item_loc] = get_location_data(item_loc) if @temp_locations[item_loc].blank?
+          @temp_locations[item_loc]
+        else
+          location
+        end
+      end
+
       def build_requestable_from_holding(holding_id, holding)
         return if holding.blank?
-        params = build_requestable_params(holding: { holding_id.to_sym.to_s => holding }, location: locations[holding["location_code"]])
+        params = build_requestable_params(holding: { holding_id.to_sym.to_s => holding }, location: location)
         Requests::Requestable.new(params)
       end
 
-      def load_locations
-        return if doc[:location_code_s].nil?
-        holding_locations = {}
-        doc[:location_code_s].each do |loc|
-          location = get_location(loc)
-          location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) if location[:delivery_locations]&.present?
-          holding_locations[loc] = location
-        end
-        holding_locations
+      def load_location
+        return if location_code.nil?
+        location = get_location_data(location_code)
+        location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) if location[:delivery_locations]&.present?
+        location
       end
 
       def build_requestable_params(params)

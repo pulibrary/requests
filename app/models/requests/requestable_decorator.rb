@@ -132,7 +132,7 @@ module Requests
             else
               "digital_access"
             end
-      I18n.t("requests.help_me.brief_msg.#{key}")
+      I18n.t("requests.help_me.brief_msg.#{key}").html_safe
     end
 
     def aeon_url(request_ctx)

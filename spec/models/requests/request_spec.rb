@@ -1181,7 +1181,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
-      it "has available copy" do
+      xit "has available copy" do
         expect(request.any_loanable_copies?).to be true
       end
     end
@@ -1203,7 +1203,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
-      it "has available copy" do
+      xit "has available copy" do
         expect(request.any_loanable_copies?).to be true
       end
     end

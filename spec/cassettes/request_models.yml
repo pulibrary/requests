@@ -9960,4 +9960,187 @@ http_interactions:
         Collections","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609-258-1470","contact_email":"rbsc@princeton.edu","gfa_pickup":"PG","staff_only":false,"pickup_location":false,"digital_location":true,"library":{"label":"Firestone
         Library","code":"firestone","order":0}}]}'
   recorded_at: Wed, 07 Jul 2021 20:02:59 GMT
+- request:
+    method: post
+    uri: https://uat-recap.htcinc.com:9093/sharedCollection/bibAvailabilityStatus
+    body:
+      encoding: UTF-8
+      string: '{"bibliographicId":"994916543506421","institutionId":"PUL"}'
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Api-Key:
+      - TESTME
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: ''
+    headers:
+      Date:
+      - Wed, 14 Jul 2021 16:06:17 GMT
+      Content-Length:
+      - '22'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - AWSALB=immgH0it3nm6r4ejfwFOPV/lj9ay7awG3vJT5ZeY4R0diCzwlcCyEwWjmWrEuKbWmAaCALXrpFoZ7hH4nwfqphU719xXwGabVIEGqquFkhn3fel6oeArKm21Cafk;
+        Expires=Wed, 21 Jul 2021 16:06:17 GMT; Path=/
+      - AWSALBCORS=immgH0it3nm6r4ejfwFOPV/lj9ay7awG3vJT5ZeY4R0diCzwlcCyEwWjmWrEuKbWmAaCALXrpFoZ7hH4nwfqphU719xXwGabVIEGqquFkhn3fel6oeArKm21Cafk;
+        Expires=Wed, 21 Jul 2021 16:06:17 GMT; Path=/; SameSite=None; Secure
+    body:
+      encoding: UTF-8
+      string: 'Authentication Failed
+
+        '
+  recorded_at: Wed, 14 Jul 2021 16:06:17 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-5290772/holdings/5278611/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:23:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 68e39f6e-209d-4c47-b12d-84505b1acf13
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.259578'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:23:49 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-5640725/holdings/5630217/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:23:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 973cfdaf-a9bb-497d-b1e5-f613a1710d17
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.405858'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:23:51 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-7935196/holdings/8076325/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:23:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 46d129a6-5d74-4c92-9c7a-b43ace187b60
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.570162'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:23:52 GMT
 recorded_with: VCR 6.0.0

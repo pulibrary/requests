@@ -67,15 +67,16 @@ class Requests::Requestable
     end
 
     def charged?
-      unavailable_statuses.include?(status_label) || scsb? && unavailable_statuses.include?(scsb_status)
+      unavailable_statuses.include?(status_label)
     end
 
     def status
-      self[:status]
-    end
-
-    def scsb_status
-      self[:scsb_status] || self[:status]
+      return self[:status] if self[:status].present?
+      if available?
+        "Available"
+      else
+        "Not Available"
+      end
     end
 
     def status_label
@@ -83,7 +84,7 @@ class Requests::Requestable
     end
 
     def available?
-      available_statuses.include?(status_label) || scsb? && available_statuses.include?(scsb_status)
+      available_statuses.include?(status_label)
     end
 
     def barcode?

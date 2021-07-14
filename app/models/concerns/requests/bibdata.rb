@@ -19,7 +19,7 @@ module Requests
       parse_response(response)
     end
 
-    def get_location(location_code)
+    def get_location_data(location_code)
       response = bibdata_conn.get "/locations/holding_locations/#{location_code}.json"
       parse_response(response)
     end
@@ -69,7 +69,7 @@ module Requests
 
     # get the location contact email from thr delivery locations via the library code
     def get_location_contact_email(location_code)
-      code = get_location(location_code)
+      code = get_location_data(location_code)
       library_code = code[:library]["code"]
       return I18n.t('requests.on_shelf.email') if library_code == "firestone"
       delivery_location = Requests::BibdataService.delivery_locations.select { |_key, value| value[:library][:code] == library_code }

@@ -620,7 +620,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A Non-Recap Marquand holding' do
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:user) { FactoryGirl.build(:user) }
-    let(:item) { { status: "Available", location_code: "scsbnypl" }.with_indifferent_access }
+    let(:item) { { status_label: "Available", location_code: "scsbnypl" }.with_indifferent_access }
     let(:location) { { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } } }
     let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: location, patron: patron, item: item) }
 
@@ -924,6 +924,10 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
 
     describe '# offsite requestable' do
+      before do
+        stub_scsb_availability(bib_id: "9999998003506421", institution_id: "PUL", barcode: '32101099186403')
+      end
+
       xit "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
@@ -1040,6 +1044,10 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:requestable) { request.requestable.first }
 
     describe '#requestable' do
+      before do
+        stub_scsb_availability(bib_id: "9999998003506421", institution_id: "PUL", barcode: '32101099186403')
+      end
+
       # TODO: Activate test when campus has re-opened
       xit "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true

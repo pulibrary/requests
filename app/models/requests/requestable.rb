@@ -299,7 +299,7 @@ module Requests
       end
 
       def in_process_statuses
-        ["Acquisition technical services", "Acquisitions and Cataloging"]
+        ["Acquisition technical services", "Acquisitions and Cataloging", "In Process"]
       end
   end
 end

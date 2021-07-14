@@ -116,10 +116,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
     end
 
-    describe "#load_locations" do
-      it "provides a list of location data" do
-        expect(request_with_holding_item.locations.size).to eq(1)
-        expect(request_with_holding_item.locations.key?('arch$stacks')).to be_truthy
+    describe "#load_location" do
+      it "provides the location of the data" do
+        expect(request_with_holding_item.location[:code]).to eq('arch$stacks')
       end
     end
 
@@ -945,6 +944,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:request) { described_class.new(params) }
 
     describe "#requestable" do
+      before do
+        stub_scsb_availability(bib_id: "9996764833506421", institution_id: "PUL", barcode: '32101099103457')
+      end
+
       it "has an requestable items" do
         expect(request.requestable.size).to be >= 1
       end

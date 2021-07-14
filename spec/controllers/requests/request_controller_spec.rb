@@ -27,6 +27,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       end
 
       it 'sets the current request mode to trace when supplied' do
+        stub_scsb_availability(bib_id: "9996764833506421", institution_id: "PUL", barcode: '32101099103457')
         get :generate, params: {
           source: 'pulsearch',
           system_id: '9996764833506421',
@@ -36,6 +37,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         expect(assigns(:mode)).to eq('trace')
       end
       it 'uses the default request mode and does not set a flash' do
+        stub_scsb_availability(bib_id: "9996764833506421", institution_id: "PUL", barcode: '32101099103457')
         get :generate, params: {
           source: 'pulsearch',
           system_id: '9996764833506421',

@@ -7562,4 +7562,235 @@ http_interactions:
         258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false,"library":{"label":"Firestone
         Library","code":"firestone","order":0}}]}'
   recorded_at: Wed, 07 Jul 2021 19:30:16 GMT
+- request:
+    method: post
+    uri: https://uat-recap.htcinc.com:9093/sharedCollection/bibAvailabilityStatus
+    body:
+      encoding: UTF-8
+      string: '{"bibliographicId":"9967949663506421","institutionId":"PUL"}'
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Api-Key:
+      - TESTME
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: ''
+    headers:
+      Date:
+      - Wed, 14 Jul 2021 16:06:43 GMT
+      Content-Length:
+      - '22'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - AWSALB=ocBY4kMFFhGeepWG3WarUCqD4hB1XcWp2HE/GKChzsPtSkQVUEdmKU6jfqhi7lwBuOulfj1xZihOuI16RtrkQLR7eCy9VG9COUkEEx/lIy7p9SwTtukZZGHYcj97;
+        Expires=Wed, 21 Jul 2021 16:06:43 GMT; Path=/
+      - AWSALBCORS=ocBY4kMFFhGeepWG3WarUCqD4hB1XcWp2HE/GKChzsPtSkQVUEdmKU6jfqhi7lwBuOulfj1xZihOuI16RtrkQLR7eCy9VG9COUkEEx/lIy7p9SwTtukZZGHYcj97;
+        Expires=Wed, 21 Jul 2021 16:06:43 GMT; Path=/; SameSite=None; Secure
+    body:
+      encoding: UTF-8
+      string: 'Authentication Failed
+
+        '
+  recorded_at: Wed, 14 Jul 2021 16:06:43 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-5235419/holdings/5222238/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:24:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - cabc1776-dfa5-4799-b327-2343a3613167
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.274045'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:24:10 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-5396104/holdings/5386007/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:24:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - f275972c-6cd1-4483-86c0-2dc687eb61a8
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.632912'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:24:11 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-2650865/holdings/2628739/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:24:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - 0aa55bcc-49c0-4ea0-a5ee-6bfd5776e21f
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.283984'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:24:12 GMT
+- request:
+    method: get
+    uri: https://bibdata-alma-staging.princeton.edu/bibliographic/SCSB-2901229/holdings/2878971/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Wed, 14 Jul 2021 18:24:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - a6d05354-727a-43ff-bd32-7cd6b11fdfd9
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      X-Runtime:
+      - '0.605532'
+      Access-Control-Request-Method:
+      - GET
+      X-Powered-By:
+      - Phusion Passenger 6.0.7
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Wed, 14 Jul 2021 18:24:13 GMT
 recorded_with: VCR 6.0.0

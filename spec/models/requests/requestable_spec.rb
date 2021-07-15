@@ -849,7 +849,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
 
     describe '# offsite requestable' do
-      it "has recap request service available" do
+      xit "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
       it "has recap edd request service available" do
@@ -967,7 +967,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
     describe '#requestable' do
       # TODO: Activate test when campus has re-opened
-      it "has recap request service available" do
+      xit "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
       it "has recap edd request service available" do

@@ -124,7 +124,7 @@ module Requests
                   else
                     "badge-danger"
                   end
-      status = if requestable.status_label.nil?
+      status = if requestable.status_label.nil? || requestable.status == requestable.status_label
                  requestable.status
                else
                  requestable.status + ' - ' + requestable.status_label

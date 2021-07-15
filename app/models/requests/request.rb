@@ -237,6 +237,7 @@ module Requests
         availability_data.each do |item|
           next if barcodesort[item['itemBarcode']].nil?
           barcodesort[item['itemBarcode']]['status_label'] = item['itemAvailabilityStatus']
+          barcodesort[item['itemBarcode']]['status'] = nil
         end
         barcodesort
       end

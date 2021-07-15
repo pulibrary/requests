@@ -218,6 +218,32 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
 
       describe 'When visiting a voyager ID as a CAS User' do
+        xit 'Shows a ReCAP item that is at preservation and conservation as a partner request' do
+          stub_request(:post, transaction_url)
+            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Zhongguo xin li xue hui", "LoanTitle" => "Xin li ke xue = Journal of psychological science 心理科学 = Journal of psychological science", "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => "BF8.C5 H76", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/9941150973506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
+            .to_return(status: 200, body: responses[:transaction_created], headers: {})
+          stub_request(:post, transaction_note_url)
+            .with(body: hash_including("Note" => "Loan Request"))
+            .to_return(status: 200, body: responses[:note_created], headers: {})
+          stub_scsb_availability(bib_id: "9941150973506421", institution_id: "PUL", barcode: '32101083342913', item_availability_status: 'Not Available')
+          visit 'requests/9941150973506421?mfhd=22196983310006421&source=pulsearch'
+          expect(page).to have_content 'Not Available - Preservation and Conservation'
+          check "requestable_selected_23196983060006421"
+          expect(page).to have_content 'Request via Partner Library'
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(page).to have_content 'Your request was submitted. Our library staff will review the request and contact you with any questions or updates.'
+          expect(page).not_to have_content 'Request submitted to BorrowDirect'
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Partner Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Xin li ke xue = Journal of psychological science 心理科学 = Journal of psychological science")
+          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
+          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+        end
+
         xit 'allow CAS patrons to request an available ReCAP item.' do
           stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"

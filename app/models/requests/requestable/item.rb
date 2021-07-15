@@ -223,7 +223,7 @@ class Requests::Requestable
         scsb = ['Not Available', "Item Barcode doesn't exist in SCSB database."]
         alma = ['Claimed Returned', 'Lost', 'Hold Shelf', 'Transit', 'Missing', 'Resource Sharing Request',
                 'Lost Resource Sharing Item', 'Requested', 'In Transit to Remote Storage', 'Lost and paid',
-                'Loan', 'Controlled Digital Lending', 'At Preservation', 'Technical - Migration']
+                'Loan', 'Controlled Digital Lending', 'At Preservation', 'Technical - Migration', 'Preservation and Conservation']
         voyager + scsb + alma
       end
   end

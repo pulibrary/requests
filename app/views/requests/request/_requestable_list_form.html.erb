@@ -2,7 +2,7 @@
 <%= hidden_fields_mfhd holdings[mfhd] %>
 <div class="table-responsive">
   <div id="holding<%= mfhd %>" class="table items table">
-    <h2><%= current_location_label(holdings[mfhd]["location"], requestable_list) %> </h2>
+    <h2><%= current_location_label(@request.location_label, requestable_list) %> </h2>
 
       <% unless holdings[mfhd]["location_has"].nil? %>
           <div>
@@ -17,7 +17,7 @@
   </div>
 </div>
 <div class="table-responsive-sm">
-  <table class="table table-striped table-bordered request--available_items <%= show_tablesorter(requestable_list) %>" summary='<%= current_location_label(holdings[mfhd]["location"], requestable_list) %>'>
+  <table class="table table-striped table-bordered request--available_items <%= show_tablesorter(requestable_list) %>" summary='<%= current_location_label(@request.location_label, requestable_list) %>'>
     <thead class="visually-hidden-sm">
       <th>Select</th>
       <th class="w-25">Enumeration</th>

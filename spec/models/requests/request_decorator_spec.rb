@@ -200,4 +200,27 @@ describe Requests::RequestDecorator do
       expect(decorator.only_aeon?).to be_falsey
     end
   end
+
+  describe "#location_label?" do
+    it "shows the library name" do
+      request = instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [], patron: patron, first_filtered_requestable: requestable,
+                                                   display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', holdings: { '112233' => { "library" => 'abc' } })
+      decorator = described_class.new(request, view_context)
+      expect(decorator.location_label).to eq('abc')
+    end
+
+    it "shows the library name and location" do
+      request = instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [], patron: patron, first_filtered_requestable: requestable,
+                                                   display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', holdings: { '112233' => { "library" => 'abc', "location" => "123" } })
+      decorator = described_class.new(request, view_context)
+      expect(decorator.location_label).to eq('abc - 123')
+    end
+
+    it "shows the nothing if the holding is empty" do
+      request = instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [], patron: patron, first_filtered_requestable: requestable,
+                                                   display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', holdings: {})
+      decorator = described_class.new(request, view_context)
+      expect(decorator.location_label).to eq('')
+    end
+  end
 end

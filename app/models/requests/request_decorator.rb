@@ -82,6 +82,17 @@ module Requests
       requestable.map(&:aeon?).all?
     end
 
+    def location_label
+      return "" if holding.blank?
+      label = holding["library"]
+      label += " - #{holding['location']}" if holding["location"].present?
+      label
+    end
+
+    def holding
+      holdings[mfhd]
+    end
+
     private
 
       def patron_message_internal

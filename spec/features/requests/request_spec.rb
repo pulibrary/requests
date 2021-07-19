@@ -240,8 +240,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Xin li ke xue = Journal of psychological science 心理科学 = Journal of psychological science")
-          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
-          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
         xit 'allow CAS patrons to request an available ReCAP item.' do
@@ -340,7 +339,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        it 'allows CAS patrons to request a record that has no item data' do
+        xit 'allows CAS patrons to request a ReCAP record that has no item data' do
           visit "/requests/99113283293506421?mfhd=2256094420006421"
           check('requestable__selected', exact: true)
           fill_in 'requestable[][user_supplied_enum]', with: 'Some Volume'
@@ -577,7 +576,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         xit 'Shows Marqaund Recap Item as an EDD option or In Library Use, no delivery' do
@@ -888,8 +887,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         #   expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
         #   expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
         #   expect(confirm_email.html_part.body.to_s).to have_content("Semitistik")
-        #   expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask or face covering")
-        #   expect(confirm_email.html_part.body.to_s).not_to have_content("Please do not use disinfectant or cleaning product on books")
+        #   expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         # end
 
         # need to check on CUL etas
@@ -1167,8 +1165,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Concert, 2019, December 08")
-          expect(confirm_email.html_part.body.to_s).to have_content("Wear a mask or face covering")
-          expect(confirm_email.html_part.body.to_s).to have_content("Please do not use disinfectant or cleaning product on books")
+          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
       end
     end
@@ -1346,7 +1343,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("Unrecognised by the world at large : a biography of Dr Henry Parse")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
         it 'Help Me Get it for On-Order recap items' do
@@ -1368,7 +1365,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("The declaration of war on Cleopatra ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allows access to a record that has no item data' do
@@ -1416,6 +1413,21 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
             expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
           end
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("ReCAP Non-Barcoded Request.")
+          expect(email.to).to eq(["recapproblems@princeton.edu"])
+          expect(email.cc).to be_nil
+          expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to eq([])
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+        end
 
         it 'allows digitizing, but not pick-up of on on_shelf record' do
           stub_request(:get, patron_url)
@@ -1565,7 +1577,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         # TODO: once Marquad in library use is available again it should show pick-up at marquand also
@@ -1648,7 +1660,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Wear a mask")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allows generic fill in requests enums from Annex or Firestone in mixed holding' do
@@ -1671,6 +1683,16 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
             fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
             check "requestable__selected"
           end
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_nil
+          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+        end
 
         it 'allows a non circulating item with not item data to be digitized' do
           stub_request(:get, patron_url)

@@ -61,17 +61,19 @@ module Requests
     end
 
     def any_fill_in_eligible?
-      fill_in = false
-      unless (requestable.first.services & ["on_order", "online"]).present?
-        if requestable.any? { |r| !(r.services & fill_in_services).empty? }
-          if requestable.first.item_data?
-            fill_in = true if requestable.first.item.key?('enum')
-          else
-            fill_in = requestable.first.circulates?
-          end
-        end
-      end
-      fill_in
+      # close everything for the alma migration
+      false
+      # fill_in = false
+      # unless (requestable.first.services & ["on_order", "online"]).present?
+      #   if requestable.any? { |r| !(r.services & fill_in_services).empty? }
+      #     if requestable.first.item_data?
+      #       fill_in = true if requestable.first.item.key?('enum')
+      #     else
+      #       fill_in = requestable.first.circulates?
+      #     end
+      #   end
+      # end
+      # fill_in
     end
 
     def single_item_request?

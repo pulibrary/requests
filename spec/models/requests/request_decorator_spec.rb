@@ -108,7 +108,8 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
-      it "identifies any mfhds that require fill in option" do
+      # close everything for the alma migration
+      xit "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
       end
     end
@@ -129,7 +130,8 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with item data that is enumerated" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum' => true) } }
-      it "identifies any mfhds that require fill in option" do
+      # close everything for the alma migration
+      xit "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
       end
     end
@@ -159,7 +161,8 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false, recap_edd?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annexa?: false, clancy?: false, item_at_clancy?: false, held_at_marquand_library?: false, open_libraries: ['abc'], library_code: 'abc' } }
-      it "does not submit via form" do
+      # close everything for the alma migration
+      xit "does not submit via form" do
         expect(decorator.any_will_submit_via_form?).to be_falsey
       end
     end
@@ -175,7 +178,8 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
-      it "is not a single item" do
+      # close everything for the alma migration
+      xit "is not a single item" do
         expect(decorator.single_item_request?).to be_falsey
       end
     end

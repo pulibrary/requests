@@ -2,6 +2,25 @@ require 'spec_helper'
 
 # rubocop:disable RSpec/MultipleExpectations
 describe Requests::Patron do
+  subject(:patron) do
+    described_class.new(user: user, session: session, patron: patron_values)
+  end
+
+  let(:session) do
+    {}
+  end
+  let(:first_name) { "Test" }
+  let(:patron_values) do
+    {
+      first_name: first_name
+    }
+  end
+  let(:uid) { 'foo' }
+  let(:guest?) { false }
+  let(:user) do
+    instance_double(User, guest?: guest?, uid: uid)
+  end
+  let(:bibdata_uri) { Requests.config[:bibdata_base] }
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
@@ -96,11 +115,52 @@ describe Requests::Patron do
       end
     end
   end
+  context 'when the HTTP request threshold error is raised for the BibData API' do
+    describe '#current_patron' do
+      let(:patron_values) { nil }
 
+      before do
+        stub_request(
+          :get,
+          "#{bibdata_uri}/patron/#{uid}?ldap=true"
+        ).to_return(
+          status: 429
+        )
+      end
+
+      it 'logs errors for the patron' do
+        expect(patron.errors).to include("The maximum number of HTTP requests per second for the Alma API has been exceeded.")
+      end
+    end
+  end
   context 'Passing in patron information instead of loading it from bibdata' do
     it "does not call to bibdata" do
       patron = described_class.new(user: instance_double(User, guest?: false, uid: 'foo'), session: {}, patron: { barcode: "1234567890" })
       expect(patron.barcode).to eq('1234567890')
+    end
+  end
+
+  describe '#first_name' do
+    it "accesses the first name passed in the API values" do
+      expect(patron.first_name).to eq(first_name)
+    end
+
+    context "when loading the patron data from the LDAP server" do
+      let(:givenname) { 'LDAP' }
+      let(:ldap) do
+        {
+          givenname: givenname
+        }
+      end
+      let(:patron_values) do
+        {
+          ldap: ldap
+        }
+      end
+
+      it "accesses the first name passed in the LDAP attributes" do
+        expect(patron.first_name).to eq(givenname)
+      end
     end
   end
 end

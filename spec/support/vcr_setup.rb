@@ -5,11 +5,8 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.ignore_localhost = true
   c.configure_rspec_metadata!
-  c.ignore_hosts 'webvoyage.princeton.edu', 'uat-recap.htcinc.com', 'scsb.recaplib.org', BorrowDirect::Defaults.api_base, 'chromedriver.storage.googleapis.com'
+  c.ignore_hosts 'webvoyage.princeton.edu', 'https://uat-recap.htcinc.com.htcinc.com', 'scsb.recaplib.org', BorrowDirect::Defaults.api_base, 'chromedriver.storage.googleapis.com'
   c.ignore_request do |request|
     request.uri.include? 'patron'
-  end
-  c.ignore_request do |request|
-    request.uri.include? 'SCSB-' # don't load SCSB calls to pulsearch
   end
 end

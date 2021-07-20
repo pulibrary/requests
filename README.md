@@ -60,3 +60,15 @@ This project rocks and uses MIT-LICENSE.
     1. ```mfhd``` https://pulsearch.princeton.edu/requests/9702169?mfhd=9525518 - Ask for a specifif holding recoord
     2. ```source``` https://pulsearch.princeton.edu/requests/9702169?mfhd=9525518&source=pulsearch - Facilitates redirection to the source system that generated the request. Currently responds to ```pulsearch``` or ```catalog```, other values will be ignored.
 2. ```/requests/{thesis_id}``` Example: https://pulsearch.princeton.edu/requests/dsp01vx021h212. This will result in a redirect to the AEON system.
+
+## Testing User Roles
+
+Under current campus access policies if you are interactively testing this gem you need to grant your net ID full campus access privileges. You can do by adding your net ID to the campus access list in the bibdata instance you are testing with. To do so:
+
+1. Connect to the server. ```ssh deploy@bibdata-alma-staging1.princeton```
+2. Change to the directory where the rails app is running. ```cd /opt/marc_liberation/current```
+2. Enter the rails console for environment you want to working with. ```RAILS_ENV=production bundle exec rails c```
+3. Add your net ID: ```CampusAccess.create(uid:'mynetid')```
+
+
+

@@ -13,7 +13,8 @@ module Requests
     attr_reader :requestable
     attr_reader :requestable_unrouted
     attr_reader :holdings
-    attr_reader :locations
+    attr_reader :location
+    attr_reader :location_code
     attr_reader :items
     attr_reader :pick_ups
     alias default_pick_ups pick_ups
@@ -28,23 +29,22 @@ module Requests
     # @option opts [String] :source represents system that directed user to request form. i.e.
     def initialize(system_id:, mfhd:, patron: nil, source: nil)
       @system_id = system_id
-      @mfhd = mfhd
+      @doc = solr_doc(system_id)
+      @holdings = JSON.parse(doc[:holdings_1display] || '{}')
+      # scsb items are the only ones that come in without a MFHD parameter from the catalog now
+      # set it for them, because they only ever have one location
+      @mfhd = mfhd || @holdings.keys.first
       @patron = patron
       @source = source
       ### These should be re-factored
-      @doc = solr_doc(system_id)
-      @holdings = JSON.parse(doc[:holdings_1display] || '{}')
       include_etas_in_holdings(@holdings)
-      @locations = load_locations
+      @location_code = @holdings[@mfhd]["location_code"] if @holdings[@mfhd].present?
+      @location = load_location
       @items = load_items
       @pick_ups = build_pick_ups
       @requestable_unrouted = build_requestable
       @requestable = route_requests(@requestable_unrouted)
       @ctx_obj = Requests::SolrOpenUrlContext.new(solr_doc: @doc)
-
-      # scsb items are the only ones that come in without a MFHD parameter from the catalog now
-      # set it for them, because they only ever have one location
-      @mfhd ||= requestable.first.holding.keys[0] if requestable?
     end
 
     delegate :user, to: :patron
@@ -97,10 +97,8 @@ module Requests
     end
 
     def recap?
-      locations.each_value do |location|
-        return true if location[:library] && location[:library][:code] == 'recap'
-      end
-      false
+      return false if location.blank?
+      location[:remote_storage] == "recap_rmt"
     end
 
     def all_items_online?
@@ -115,7 +113,8 @@ module Requests
       mfhd_items = if @mfhd && serial?
                      load_serial_items
                    else
-                     load_items_by_bib_id
+                     # load_items_by_bib_id
+                     load_items_by_mfhd
                    end
       mfhd_items.empty? ? nil : mfhd_items.with_indifferent_access
     end
@@ -147,7 +146,7 @@ module Requests
     def build_pick_ups
       pick_up_locations = []
       Requests::BibdataService.delivery_locations.each_value do |pick_up|
-        pick_up_locations << { label: pick_up["label"], gfa_pickup: pick_up["gfa_pickup"], staff_only: pick_up["staff_only"] } if pick_up["pickup_location"] == true
+        pick_up_locations << { label: pick_up["label"], gfa_pickup: pick_up["gfa_pickup"], pick_up_location_code: pick_up["library"]["code"] || 'firestone', staff_only: pick_up["staff_only"] } if pick_up["pickup_location"] == true
       end
       # pick_up_locations.sort_by! { |loc| loc[:label] }
       sort_pick_ups(pick_up_locations)
@@ -219,17 +218,29 @@ module Requests
 
       def build_holding_scsb_items(id:, values:, availability_data:, requestable_items:)
         return requestable_items if values['items'].nil?
-        barcodesort = {}
-        values['items'].each { |item| barcodesort[item['barcode']] = item }
-        availability_data.each do |item|
-          barcodesort[item['itemBarcode']]['status'] = item['itemAvailabilityStatus'] unless barcodesort[item['itemBarcode']].nil?
-        end
+        barcodesort = build_barcode_sort(items: values['items'], availability_data: availability_data)
         barcodesort.each_value do |item|
+          item['location_code'] = location_code
           params = build_requestable_params(item: item.with_indifferent_access, holding: { id.to_sym.to_s => holdings[id] },
-                                            location: locations[holdings[id]['location_code']])
+                                            location: location)
           requestable_items << Requests::Requestable.new(params)
         end
         requestable_items
+      end
+
+      def build_barcode_sort(items:, availability_data:)
+        barcodesort = {}
+        items.each do |item|
+          item[:status_label] = "In Process" unless item["status_source"] == "work_order"
+          barcodesort[item['barcode']] = item
+        end
+        availability_data.each do |item|
+          barcode_item = barcodesort[item['itemBarcode']]
+          next if barcode_item.nil? || barcode_item["status_source"] == "work_order"
+          barcode_item['status_label'] = item['itemAvailabilityStatus']
+          barcode_item['status'] = nil
+        end
+        barcodesort
       end
 
       def build_requestable_with_items
@@ -237,9 +248,7 @@ module Requests
         barcodesort = {}
         if recap?
           availability_data = items_by_id(system_id, scsb_owning_institution(scsb_location))
-          availability_data.each do |item|
-            barcodesort[item['itemBarcode']] = item['itemAvailabilityStatus'] unless item['errorMessage'] == "Bib Id doesn't exist in SCSB database."
-          end
+          barcodesort = build_barcode_sort(items: items[mfhd], availability_data: availability_data)
         end
         items.each do |holding_id, mfhd_items|
           next if mfhd != holding_id
@@ -263,39 +272,46 @@ module Requests
         else
           requestable_items << build_requestable_from_holding(holding_id, holdings[holding_id])
         end
-        requestable_items
+        requestable_items.compact
       end
 
       def build_requestable_mfhd_item(_requestable_items, holding_id, item, barcodesort)
         item_loc = item_current_location(item)
         ## This check is needed in case the item level data denotes a temporary
         ## location
-        locations[item_loc] = get_location(item_loc) unless locations.key? item_loc
-        item['scsb_status'] = barcodesort[item['barcode']] unless barcodesort.empty?
+        current_location = get_current_location(item_loc: item_loc)
+        item['status_label'] = barcodesort[item['barcode']][:status_label] unless barcodesort.empty?
         params = build_requestable_params(
           item: item.with_indifferent_access,
           holding: { holding_id.to_sym.to_s => holdings[holding_id] },
-          location: @locations[item_loc]
+          location: current_location
         )
         # sometimes availability returns items without any status
         # see https://github.com/pulibrary/marc_liberation/issues/174
-        Requests::Requestable.new(params) unless item["status"].nil?
+        Requests::Requestable.new(params) # unless item["status"].nil?
+      end
+
+      def get_current_location(item_loc:)
+        if item_loc != location_code
+          @temp_locations ||= {}
+          @temp_locations[item_loc] = get_location_data(item_loc) if @temp_locations[item_loc].blank?
+          @temp_locations[item_loc]
+        else
+          location
+        end
       end
 
       def build_requestable_from_holding(holding_id, holding)
-        params = build_requestable_params(holding: { holding_id.to_sym.to_s => holding }, location: locations[holding["location_code"]])
+        return if holding.blank?
+        params = build_requestable_params(holding: { holding_id.to_sym.to_s => holding }, location: location)
         Requests::Requestable.new(params)
       end
 
-      def load_locations
-        return if doc[:location_code_s].nil?
-        holding_locations = {}
-        doc[:location_code_s].each do |loc|
-          location = get_location(loc)
-          location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) if location[:delivery_locations]&.present?
-          holding_locations[loc] = location
-        end
-        holding_locations
+      def load_location
+        return if location_code.nil?
+        location = get_location_data(location_code)
+        location[:delivery_locations] = sort_pick_ups(location[:delivery_locations]) if location[:delivery_locations]&.present?
+        location
       end
 
       def build_requestable_params(params)
@@ -303,46 +319,76 @@ module Requests
           bib: doc.with_indifferent_access,
           holding: params[:holding],
           item: params[:item],
-          location: params[:location],
+          location: build_requestable_location(params),
           patron: patron
         }
       end
 
+      def build_requestable_location(params)
+        location = params[:location]
+        location["delivery_locations"] = build_delivery_locations(location["delivery_locations"]) if location["delivery_locations"].present?
+        location
+      end
+
+      def build_delivery_locations(delivery_locations)
+        delivery_locations.map do |loc|
+          pick_up_code = loc["library"]["code"] if loc["library"].present?
+          pick_up_code ||= 'firestone'
+          loc.merge("pick_up_location_code" => pick_up_code) { |_key, v1, _v2| v1 }
+        end
+      end
+
+      # Not sure why this method exists
       def load_serial_items
         mfhd_items = {}
-        items_as_json = items_by_mfhd(@mfhd)
-        if !items_as_json.empty?
+        items_as_json = items_by_mfhd(@system_id, @mfhd)
+        unless items_as_json.empty?
           items_with_symbols = items_to_symbols(items_as_json)
           mfhd_items[@mfhd] = items_with_symbols
-        else
-          empty_mfhd = items_by_bib(@system_id)
-          mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
         end
+        # else
+        #   empty_mfhd = items_by_bib(@system_id)
+        #   mfhd_items[@mfhd] = [empty_mfhd[@mfhd]]
+        # end
         mfhd_items
       end
 
-      def load_items_by_bib_id
+      ## this method should be the only place we load item availability
+      def load_items_by_mfhd
         mfhd_items = {}
-        items_by_bib(@system_id).each do |holding_id, item_info|
-          next if @mfhd != holding_id
-          mfhd_items[holding_id] = load_item_for_holding(holding_id: holding_id, item_info: item_info)
-        end
+        mfhd_items[@mfhd] = items_by_mfhd(@system_id, @mfhd)
+        # items_by_mfhd(@system_id, @mfhd).each do |item_info|
+        #  mfhd_items[item_info['id']] = load_item_for_holding(holding_id: @mfhd, item_info: item_info)
+        # end
         mfhd_items
       end
 
-      def load_item_for_holding(holding_id:, item_info:)
-        if item_info[:more_items] == false
-          if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
-            [item_info]
-          elsif item_info[:status].starts_with?('Online')
-            [item_info]
-          else
-            items_to_symbols(items_by_mfhd(holding_id))
-          end
-        else
-          items_to_symbols(items_by_mfhd(holding_id))
-        end
-      end
+      # def load_items_by_bib_id
+      #   mfhd_items = {}
+      #   items_by_bib(@system_id).each do |holding_id, item_info|
+      #     next if @mfhd != holding_id
+      #     mfhd_items[holding_id] = load_item_for_holding(holding_id: holding_id, item_info: item_info)
+      #   end
+      #   mfhd_items
+      # end
+
+      # def load_item_for_holding(holding_id:, item_info:)
+      #   # new check needed here
+      #   if item_info[:more_items] == false
+      #     if item_info[:status].starts_with?('On-Order') || item_info[:status].starts_with?('Pending Order')
+      #       [item_info]
+      #     elsif item_info[:status].starts_with?('Online')
+      #       [item_info]
+      #     else
+      #       ## we don't need to call this again
+      #       items_to_symbols(items_by_mfhd(@system_id, holding_id))
+      #     end
+      #   else
+      #     ## we don't need to call this again
+      #     # items_to_symbols(items_by_mfhd(@system_id, holding_id))
+      #     items_to_symbols([item_info])
+      #   end
+      # end
 
       def items_to_symbols(items = [])
         items_with_symbols = []
@@ -353,7 +399,11 @@ module Requests
       end
 
       def item_current_location(item)
-        item['temp_loc'] || item['location']
+        if item['in_temp_library']
+          item['temp_location_code']
+        else
+          item['location']
+        end
       end
 
       def include_etas_in_holdings(holdings)

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'request', vcr: { cassette_name: 'bd_request_features', record: :new_episodes }, type: :feature do
-  let(:direct_match) { '1358454' }
-  let(:no_direct_match) { '10159926' }
-  let(:no_isbn) { '2559160' }
+  let(:direct_match) { '9913584543506421' }
+  let(:no_direct_match) { '99101599263506421' }
+  let(:no_isbn) { '9925591603506421' }
 
   let(:user) { FactoryGirl.create(:user) }
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }

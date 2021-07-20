@@ -24,10 +24,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9533612",
+          "mfhd" => "2229149680006421",
           "call_number" => "TR465 .C666 2016",
-          "location_code" => "pres",
-          "item_id" => "3059236",
+          "location_code" => "firestone$pres",
+          "item_id" => "2329149670006421",
           "barcode" => "32101044283008",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -41,7 +41,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9712355",
+        "id" => "9997123553506421",
         "title" => "The atlas of water damage on inkjet-printed fine art /",
         "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }
@@ -78,10 +78,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9533612",
+          "mfhd" => "2229149680006421",
           "call_number" => "TR465 .C666 2016",
-          "location_code" => "pres",
-          "item_id" => "3059236",
+          "location_code" => "firestone$pres",
+          "item_id" => "2329149670006421",
           "barcode" => "32101044283008",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -95,7 +95,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9712355",
+        "id" => "9997123553506421",
         "title" => "The atlas of water damage on inkjet-printed fine art /",
         "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }
@@ -186,17 +186,17 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
   end
 
-  context "send annexa email request" do
+  context "send annex email request" do
     let(:requestable) do
       [
         {
           "selected" => "true",
-          "mfhd" => "2576882",
+          "mfhd" => "22109192590006421",
           "call_number" => "Oversize HQ766 .B53f",
-          "location_code" => "l",
-          "item_id" => "2286894",
+          "location_code" => "firestone$stacks",
+          "item_id" => "23109192510006421",
           "status" => "Not Charged",
-          "type" => "annexa",
+          "type" => "annex",
           "pick_up" => "PQ"
         }.with_indifferent_access,
         {
@@ -206,7 +206,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "2286894",
+        "id" => "9922868943506421",
         "title" => "The atlas of water damage on inkjet-printed fine art /",
         "author" => "Connor, Meghan Burge, Daniel Rochester Institute of Technology"
       }.with_indifferent_access
@@ -219,33 +219,33 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       }
     end
 
-    let(:submission_for_annexa) do
+    let(:submission_for_annex) do
       Requests::Submission.new(params, user_info)
     end
 
     let(:mail) do
-      Requests::RequestMailer.send("annexa_email", submission_for_annexa).deliver_now
+      Requests::RequestMailer.send("annex_email", submission_for_annex).deliver_now
     end
 
     let(:confirmation_mail) do
-      Requests::RequestMailer.send("annexa_confirmation", submission_for_annexa).deliver_now
+      Requests::RequestMailer.send("annex_confirmation", submission_for_annex).deliver_now
     end
 
     it "renders email to library staffs" do
-      expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
-      expect(mail.to).to eq([I18n.t('requests.annexa.email')])
+      expect(mail.subject).to eq(I18n.t('requests.annex.email_subject'))
+      expect(mail.to).to eq([I18n.t('requests.annex.email')])
       expect(mail.cc).to be_nil
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(mail.body.encoded).to have_content I18n.t('requests.annexa.email_conf_msg')
+      expect(mail.body.encoded).to have_content I18n.t('requests.annex.email_conf_msg')
     end
 
     it "renders email confirmation" do
-      expect(confirmation_mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
-      expect(confirmation_mail.to).to eq([submission_for_annexa.email])
+      expect(confirmation_mail.subject).to eq(I18n.t('requests.annex.email_subject'))
+      expect(confirmation_mail.to).to eq([submission_for_annex.email])
       expect(confirmation_mail.cc).to be_nil
       expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
+      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annex.email_conf_msg')
+      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annex.email_conf_msg')
     end
   end
 
@@ -254,12 +254,12 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "6549667",
+          "mfhd" => "2246662610006421",
           "call_number" => "Y 4.C 73/7:S.HRG.109-1132",
-          "location_code" => "anxadoc",
-          "item_id" => "6068846",
+          "location_code" => "annex$doc",
+          "item_id" => "2346662600006421",
           "status" => "Not Charged",
-          "type" => "annexa",
+          "type" => "annex",
           "pick_up" => "PA"
         }.with_indifferent_access,
         {
@@ -269,7 +269,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "6592589",
+        "id" => "9965925893506421",
         "title" => "The Coast Guard's fiscal year 2007 budget request.",
         "author" => "United States"
       }.with_indifferent_access
@@ -287,29 +287,29 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
 
     let(:mail) do
-      Requests::RequestMailer.send("annexa_email", submission_for_anxadoc).deliver_now
+      Requests::RequestMailer.send("annex_email", submission_for_anxadoc).deliver_now
     end
 
     let(:confirmation_mail) do
-      Requests::RequestMailer.send("annexa_confirmation", submission_for_anxadoc).deliver_now
+      Requests::RequestMailer.send("annex_confirmation", submission_for_anxadoc).deliver_now
     end
 
     it "renders and email to the librarians" do
-      expect(mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
+      expect(mail.subject).to eq(I18n.t('requests.annex.email_subject'))
       expect(mail.to).to eq([I18n.t('requests.anxadoc.email')])
       expect(mail.cc).to be_nil
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
+      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annex.email_conf_msg')
+      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annex.email_conf_msg')
     end
 
     it "renders a confirmation" do
-      expect(confirmation_mail.subject).to eq(I18n.t('requests.annexa.email_subject'))
+      expect(confirmation_mail.subject).to eq(I18n.t('requests.annex.email_subject'))
       expect(confirmation_mail.to).to eq([submission_for_anxadoc.email])
       expect(confirmation_mail.cc).to be_nil
       expect(confirmation_mail.from).to eq([I18n.t('requests.default.email_from')])
-      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
-      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annexa.email_conf_msg')
+      expect(confirmation_mail.html_part.body.to_s).to have_content I18n.t('requests.annex.email_conf_msg')
+      expect(confirmation_mail.text_part.body.to_s).to have_content I18n.t('requests.annex.email_conf_msg')
     end
   end
 
@@ -318,9 +318,9 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9840542",
+          "mfhd" => "22119027990006421",
           "call_number" => "QK629.A4 K45 2016",
-          "location_code" => "anxb",
+          "location_code" => "22119027990006421",
           "item_id" => "7528249",
           "barcode" => "32101095859144",
           "copy_number" => "0",
@@ -335,7 +335,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10042951",
+        "id" => "99100429513506421",
         "title" => "Agaricus of North America /",
         "author" => "Kerrigan, Richard Wade"
       }.with_indifferent_access
@@ -372,10 +372,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9840542",
+          "mfhd" => "22119027990006421",
           "call_number" => "QK629.A4 K45 2016",
-          "location_code" => "anxb",
-          "item_id" => "7528249",
+          "location_code" => "annex$stacks",
+          "item_id" => "23119027980006421",
           "barcode" => "32101095859144",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -389,7 +389,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10042951",
+        "id" => "99100429513506421",
         "title" => "Agaricus of North America /",
         "author" => "Kerrigan, Richard Wade"
       }.with_indifferent_access
@@ -426,9 +426,9 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9878235",
-          "location_code" => "j",
-          "item_id" => "10081566",
+          "mfhd" => "22256196730006421",
+          "location_code" => "recap$pa",
+          "item_id" => "23256196720006421",
           "status" => "On-Order",
           "pick_up" => "PA"
         }.with_indifferent_access,
@@ -439,7 +439,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10081566",
+        "id" => "99100815663506421",
         "title" => "Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
         "author" => "Goto, Seimei"
       }.with_indifferent_access
@@ -477,9 +477,9 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9878235",
-          "location_code" => "j",
-          "item_id" => "10081566",
+          "mfhd" => "22256196730006421",
+          "location_code" => "recap$pa",
+          "item_id" => "23256196720006421",
           "status" => "On-Order",
           "pick_up" => "PA"
         }.with_indifferent_access,
@@ -490,7 +490,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10081566",
+        "id" => "99100815663506421",
         "title" => "Amidakujishiki Goto Seimei shinpojiumu=zadan hen アミダクジ式ゴトウメイセイ【シンポジウム＝座談篇】",
         "author" => "Goto, Seimei"
       }.with_indifferent_access
@@ -528,10 +528,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9479064",
+          "mfhd" => "2219343870006421",
           "call_number" => "PQ8098.429.E58 C37 2015",
-          "location_code" => "f",
-          "item_id" => "7384386",
+          "location_code" => "firestone$stacks",
+          "item_id" => "2319343860006421",
           "barcode" => "32101098590092",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -544,7 +544,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9646099",
+        "id" => "9996460993506421",
         "title" => "Cartas romanas /",
         "author" => "Serrano del Pozo, Ignacio"
       }.with_indifferent_access
@@ -581,10 +581,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9479064",
+          "mfhd" => "2219343870006421",
           "call_number" => "PQ8098.429.E58 C37 2015",
-          "location_code" => "f",
-          "item_id" => "7384386",
+          "location_code" => "firestone$stacks",
+          "item_id" => "2319343860006421",
           "barcode" => "32101098590092",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -597,7 +597,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9646099",
+        "id" => "9996460993506421",
         "title" => "Cartas romanas /",
         "author" => "Serrano del Pozo, Ignacio"
       }.with_indifferent_access
@@ -634,10 +634,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9810292",
+          "mfhd" => "22114648430006421",
           "call_number" => "GT3405 .L44 2017",
-          "location_code" => "f",
-          "item_id" => "7499956",
+          "location_code" => "firestone$stacks",
+          "item_id" => "23114648420006421",
           "barcode" => "32101095686430",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -650,7 +650,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10005935",
+        "id" => "99100059353506421",
         "title" => "The 21st century meeting and event technologies : powerful tools for better planning, marketing, and evaluation /",
         "author" => "Lee, Seungwon Boshnakova, Dessislava Goldblatt, Joe Jeff"
       }.with_indifferent_access
@@ -687,9 +687,9 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9810292",
+          "mfhd" => "22114648430006421",
           "call_number" => "GT3405 .L44 2017",
-          "location_code" => "f",
+          "location_code" => "firestone$stacks",
           "item_id" => "7499956",
           "barcode" => "32101095686430",
           "copy_number" => "0",
@@ -703,7 +703,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10005935",
+        "id" => "99100059353506421",
         "title" => "The 21st century meeting and event technologies : powerful tools for better planning, marketing, and evaluation /",
         "author" => "Lee, Seungwon Boshnakova, Dessislava Goldblatt, Joe Jeff"
       }.with_indifferent_access
@@ -740,12 +740,12 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9757511",
+          "mfhd" => "22202822560006421",
           "call_number" => "Oversize DT549 .E274q",
-          "location_code" => "rcppa",
-          "item_id" => "7467161",
+          "location_code" => "recap$pa",
+          "item_id" => "23202822550006421",
           "barcode" => "32101098722844",
-          "enum" => "2016",
+          "enum_display" => "2016",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -766,7 +766,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9944355",
+        "id" => "9999443553506421",
         "title" => "L'écrivain, magazine litteraire trimestriel.",
         "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
@@ -810,12 +810,12 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9757511",
+          "mfhd" => "22202822560006421",
           "call_number" => "Oversize DT549 .E274q",
-          "location_code" => "rcppa",
-          "item_id" => "7467161",
+          "location_code" => "recap$pa",
+          "item_id" => "23202822550006421",
           "barcode" => "32101098722844",
-          "enum" => "2016",
+          "enu_display" => "2016",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -836,7 +836,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9944355",
+        "id" => "9999443553506421",
         "title" => "L'écrivain, magazine litteraire trimestriel.",
         "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
@@ -875,12 +875,12 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9757511",
+          "mfhd" => "22202822560006421",
           "call_number" => "Oversize DT549 .E274q",
-          "location_code" => "rcppa",
-          "item_id" => "7467161",
+          "location_code" => "recap$pa",
+          "item_id" => "23202822550006421",
           "barcode" => "32101098722844",
-          "enum" => "2016",
+          "enum_display" => "2016",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -901,7 +901,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9944355",
+        "id" => "9999443553506421",
         "title" => "L'écrivain, magazine litteraire trimestriel.",
         "author" => "Association des écrivains du Sénégal"
       }.with_indifferent_access
@@ -950,10 +950,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "6794304",
+          "mfhd" => "22269760880006421",
           "call_number" => "B2430.D484 G54 2011",
-          "location_code" => "f",
-          "item_id" => "6195366",
+          "location_code" => "firestone$stacks",
+          "item_id" => "23269760870006421",
           "barcode" => "32101081296699",
           "copy_number" => "1",
           "status" => "Renewed",
@@ -967,7 +967,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "6883125",
+        "id" => "9968831253506421",
         "title" => "Derrida : a very short introduction /",
         "author" => "Glendinning, Simon"
       }.with_indifferent_access
@@ -1004,10 +1004,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "10066344",
+          "mfhd" => "22188891830006421",
           "call_number" => "QC92.U54 A36 2017",
-          "location_code" => "ppl",
-          "item_id" => "7659317",
+          "location_code" => "plasma$stacks",
+          "item_id" => "23188891820006421",
           "barcode" => "32101101395745",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -1021,7 +1021,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10292269",
+        "id" => "99102922693506421",
         "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
         "author" => "Kosti, Ourania"
       }.with_indifferent_access
@@ -1058,10 +1058,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "10066344",
+          "mfhd" => "22188891830006421",
           "call_number" => "QC92.U54 A36 2017",
-          "location_code" => "ppl",
-          "item_id" => "7659317",
+          "location_code" => "plasma$stacks",
+          "item_id" => "23188891820006421",
           "barcode" => "32101101395745",
           "copy_number" => "0",
           "status" => "Not Charged",
@@ -1075,7 +1075,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "10292269",
+        "id" => "99102922693506421",
         "title" => "Adopting the International System of units for radiation measurements in the United States : proceedings of a workshop /",
         "author" => "Kosti, Ourania"
       }.with_indifferent_access
@@ -1112,10 +1112,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
       [
         {
           "selected" => "true",
-          "mfhd" => "9092827",
+          "mfhd" => "22251138630006421",
           "call_number" => "PS3566.I428 A6 2015",
-          "location_code" => "f",
-          "item_id" => "7267874",
+          "location_code" => "firestone$stacks",
+          "item_id" => "23251138620006421",
           "barcode" => "32101096297443",
           "copy_number" => "1",
           "status" => "Not Charged",
@@ -1129,7 +1129,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "9222024",
+        "id" => "9992220243506421",
         "title" => "This angel on my chest : stories",
         "author" => "Pietrzyk, Leslie"
       }.with_indifferent_access
@@ -1148,7 +1148,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
-      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (F) PS3566.I428 A6 2015")
+      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (FIRESTONE$STACKS) PS3566.I428 A6 2015")
       expect(mail.to).to eq([I18n.t('requests.on_shelf.email')])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
       expect(mail.body.encoded).to have_content I18n.t('requests.on_shelf.email_conf_msg')
@@ -1168,10 +1168,10 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     let(:requestable) do
       [
         { "selected" => "true",
-          "mfhd" => "3892744",
+          "mfhd" => "22223742640006421",
           "call_number" => "PL2727.S2 C574 1998",
-          "location_code" => "c",
-          "item_id" => "3020750",
+          "location_code" => "eastasian$cjk",
+          "item_id" => "23223742630006421",
           "barcode" => "32101042398345",
           "copy_number" => "1",
           "status" => "Not Charged",
@@ -1184,7 +1184,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
     let(:bib) do
       {
-        "id" => "3573258",
+        "id" => "9935732583506421",
         "title" => "Hong lou fang zhen : Da guan yuan zai Gong wang fu 红楼访真　: 大观园在恭王府　",
         "author" => "Zhou, Ruchang"
       }.with_indifferent_access
@@ -1204,7 +1204,7 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     # rubocop:disable RSpec/ExampleLength
     it "sends the email and renders the headers and body" do
       mail = Requests::RequestMailer.send("on_shelf_email", submission_for_on_shelf).deliver_now
-      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (C) PL2727.S2 C574 1998")
+      expect(mail.subject).to eq("#{I18n.t('requests.on_shelf.email_subject')} (EASTASIAN$CJK) PL2727.S2 C574 1998")
       expect(mail.to).to eq(["gestcirc@princeton.edu"])
       expect(mail.from).to eq([I18n.t('requests.default.email_from')])
     end

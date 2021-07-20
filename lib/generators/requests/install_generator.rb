@@ -10,7 +10,9 @@ module Requests
       1. Creates a requests_inializer.rb in config/initializers.
       2. Creates a requests.yml populated with usabale default values in config.
       3. Creates a requests.en.yml locale file
-      4. Updates .gitignore
+      4. Creates a alma.rb in config/initializers.
+      4. Creates a alma.yml in config/alma.yml.
+      5. Updates .gitignore
     EOS
 
     def requests_initializer
@@ -21,8 +23,20 @@ module Requests
       copy_file 'borrow_direct.rb', 'config/initializers/borrow_direct.rb'
     end
 
+    def alma_initializer
+      copy_file 'alma_initializer.rb', 'config/initializers/alma.rb'
+    end
+
     def requests_config
       copy_file './config/requests.yml', 'config/requests.yml'
+    end
+
+    def alma_config
+      inject_into_file 'config/application.rb', before: %(  end\n) do
+        %(    config.alma = config_for(:alma).with_indifferent_access\n)
+      end
+
+      copy_file './config/alma.yml', 'config/alma.yml'
     end
 
     def requests_locales

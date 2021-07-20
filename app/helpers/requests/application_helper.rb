@@ -49,8 +49,8 @@ module Requests
 
     def show_service_options_fill_in(requestable)
       content_tag(:ul, class: "service-list") do
-        brief_msg = if requestable.annexa?
-                      I18n.t("requests.annexa.brief_msg")
+        brief_msg = if requestable.annex?
+                      I18n.t("requests.annex.brief_msg")
                     elsif requestable.annexb?
                       I18n.t("requests.annexb.brief_msg")
                     elsif requestable.preservation?
@@ -78,7 +78,7 @@ module Requests
 
     def output_request_input(requestable)
       output = ""
-      ['annexa', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace', 'on_shelf'].each do |type|
+      ['annex', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace', 'on_shelf'].each do |type|
         next unless requestable.services.include?(type)
         output = request_input(type)
         break
@@ -88,8 +88,8 @@ module Requests
 
     # only requestable services that support "user-supplied volume info"
     def hidden_service_options_fill_in(requestable)
-      if requestable.annexa?
-        request_input('annexa')
+      if requestable.annex?
+        request_input('annex')
       elsif requestable.annexb?
         request_input('annexb')
       elsif requestable.services.include? 'recap_no_items'
@@ -114,7 +114,7 @@ module Requests
       display += " " if !item[:enum_display].nil? && !item[:copy_number].nil?
       # For scsb materials
       display += item[:enumeration] if item[:enumeration]
-      display += "Copy #{item[:copy_number]}" unless item[:copy_number].nil? || (item[:copy_number]) == 0 || item[:copy_number] == 1 || item[:copy_number] == '1'
+      display += "Copy #{item[:copy_number]}" unless item[:copy_number].nil? || item[:copy_number] == '0' || item[:copy_number] == 1 || item[:copy_number] == '1'
       display
     end
     # rubocop:enable Style/NumericPredicate
@@ -153,11 +153,11 @@ module Requests
           # temporary changes issue 438
           name = 'requestable[][pick_up]'
           if locs.size > 1
-            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], loc[:gfa_pickup]] }), prompt: I18n.t("requests.default.pick_up_placeholder")
+            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], { 'pick_up' => loc[:gfa_pickup], 'pick_up_location_code' => loc[:pick_up_location_code] }.to_json] }), prompt: I18n.t("requests.default.pick_up_placeholder")
           else
             style = 'margin-top:10px;' if requestable.charged?
             style ||= ''
-            hidden = hidden_field_tag name.to_s, "", value: (locs[0][:gfa_pickup]).to_s, class: 'single-pick-up-hidden'
+            hidden = hidden_field_tag name.to_s, "", value: { 'pick_up' => locs[0][:gfa_pickup], 'pick_up_location_code' => locs[0][:pick_up_location_code] }.to_json, class: 'single-pick-up-hidden'
             label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pick-up', style: style.to_s
             hidden + label
           end
@@ -168,7 +168,7 @@ module Requests
       idx = (default_pick_ups.map { |loc| loc[:label] }).index(requestable.location["library"]["label"]) # || 0
       if idx.present?
         [default_pick_ups[idx]]
-      elsif requestable.recap? || requestable.annexa?
+      elsif requestable.recap? || requestable.annex?
         locations = requestable.pick_up_locations || default_pick_ups
         # open libraries
         pick_ups = locations.select { |loc| ['PJ', 'PA', 'PL', 'PK', 'PM', 'QX', 'PW', 'PN', 'QA', 'QT', 'QC'].include?(loc[:gfa_pickup]) }
@@ -283,8 +283,8 @@ module Requests
 
     def submitable_services
       # temporary changes issue 438 do not disable the button for circulating items
-      # ['in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
-      ['on_shelf', 'in_process', 'on_order', 'annexa', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
+      # ['in_process', 'on_order', 'annex', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
+      ['on_shelf', 'in_process', 'on_order', 'annex', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
     end
 
     def submit_message(requestable_list)
@@ -295,7 +295,7 @@ module Requests
       if requestable_list.first.services.empty?
         no_item
       elsif requestable_list.first.charged?
-        return multi_item if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+        return multi_item if requestable_list.first.annex? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
         single_item # no_item
       else
         submit_message_for_requestable_items(requestable_list)
@@ -306,7 +306,7 @@ module Requests
       single_item = "Request this Item"
       multi_item = "Request Selected Items"
       trace = "Trace this item"
-      if requestable_list.first.annexa? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+      if requestable_list.first.annex? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
         multi_item
       elsif requestable_list.first.traceable?
         trace
@@ -393,8 +393,9 @@ module Requests
         return [default_pick_ups[0]] if requestable.borrow_direct? || requestable.ill_eligible?
         return available_pick_ups(requestable, default_pick_ups) unless requestable.pending?
         if requestable.delivery_location_label.present?
-          [{ label: requestable.delivery_location_label, gfa_pickup: requestable.delivery_location_code, staff_only: false }]
+          [{ label: requestable.delivery_location_label, gfa_pickup: requestable.delivery_location_code, pick_up_location_code: requestable.pick_up_location_code, staff_only: false }]
         else
+          # TODO: Why is this option here
           [{ label: requestable.location[:library][:label], gfa_pickup: gfa_lookup(requestable.location[:library][:code]), staff_only: false }]
         end
       end
@@ -402,7 +403,7 @@ module Requests
       def hidden_fields_for_item(item:, preferred_request_id:)
         hidden = hidden_field_tag("requestable[][item_id]", "", value: preferred_request_id.to_s, id: "requestable_item_id_#{preferred_request_id}")
         hidden += hidden_field_tag("requestable[][barcode]", "", value: item['barcode'].to_s, id: "requestable_barcode_#{preferred_request_id}") unless item["barcode"].nil?
-        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enum"].nil?
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum_display'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enum_display"].nil?
         hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enumeration"].nil?
         hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{preferred_request_id}")
         hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{preferred_request_id}")

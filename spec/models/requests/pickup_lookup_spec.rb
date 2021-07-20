@@ -19,12 +19,12 @@ describe Requests::PickupLookup do
       [
         {
           "selected" => "true",
-          "mfhd" => "502503",
+          "mfhd" => "22173625100006421",
           "call_number" => "AS142.V54 A458 Bd.490, etc.",
           "location_code" => "rcppa",
-          "item_id" => "552328",
+          "item_id" => "23173625050006421",
           "barcode" => "32101089306938",
-          "enum" => "Bd.1, T.1",
+          "enum_display" => "Bd.1, T.1",
           "copy_number" => "1",
           "status" => "Charged",
           "item_type" => "Gen",
@@ -35,7 +35,7 @@ describe Requests::PickupLookup do
 
     let(:bib) do
       {
-        "id" => "462029",
+        "id" => "994620293506421",
         "title" => "Sämtliche Werke und Briefe /",
         "author" => "Feuchtersleben, Ernst Seidler, Herbert Heger, Hedwig Blume, Hermann",
         "date" => "1987"

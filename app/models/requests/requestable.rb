@@ -41,15 +41,15 @@ module Requests
 
     delegate :pick_up_location_id, :pick_up_location_code, :item_type, :enum_value, :cron_value, :item_data?,
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
-             :id, :use_statement, :collection_code, :missing?, :charged?, :status_label, :barcode?, :barcode, to: :item
+             :id, :use_statement, :collection_code, :missing?, :charged?, :status, :status_label, :barcode?, :barcode, to: :item
 
     # non voyager options
     def thesis?
-      holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd'
+      holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd$stacks'
     end
 
     def numismatics?
-      holding.key?("numismatics") && holding["numismatics"][:location_code] == 'num'
+      holding.key?("numismatics") && holding["numismatics"][:location_code] == 'rare$num'
     end
 
     # Reading Room Request
@@ -64,7 +64,7 @@ module Requests
 
     def recap?
       return false unless location_valid?
-      library_code == 'recap'
+      location[:remote_storage] == "recap_rmt"
     end
 
     def clancy?
@@ -90,8 +90,8 @@ module Requests
     end
 
     # merge these two
-    def annexa?
-      location_valid? && location[:library][:code] == 'annexa'
+    def annex?
+      location_valid? && location[:library][:code] == 'annex'
     end
 
     # locations temporarily moved to annex should work
@@ -122,12 +122,12 @@ module Requests
 
     def in_process?
       return false unless item? && !scsb?
-      item[:status] == 'In Process' || item[:status] == 'On-Site - In Process'
+      in_process_statuses.include?(item[:status_label])
     end
 
     def on_order?
       return false unless item? && !scsb?
-      item[:status].starts_with?('On-Order') || item[:status].starts_with?('Pending Order')
+      item[:status_label] == 'Acquisition'
     end
 
     def item?
@@ -218,7 +218,7 @@ module Requests
     end
 
     def open_libraries
-      open = ['firestone', 'annexa', 'marquand', 'mendel', 'stokes', 'eastasian', 'architecture', 'lewis', 'engineering']
+      open = ['firestone', 'annex', 'marquand', 'mendel', 'stokes', 'eastasian', 'arch', 'lewis', 'engineer']
       open << "online" if etas?
       open
     end
@@ -266,6 +266,8 @@ module Requests
 
     def available?
       (always_requestable? && !held_at_marquand_library?) || item.available?
+      # This dealt with no item records be "available" but broke a bunch of other tests
+      # ((always_requestable? && !held_at_marquand_library?) || (!has_item_data? || item.available?))
     end
 
     def cul_avery?
@@ -276,6 +278,10 @@ module Requests
     def cul_music?
       return false unless item?
       item[:collection_code].present? && item[:collection_code] == 'MR'
+    end
+
+    def resource_shared?
+      library_code == "RES_SHARE"
     end
 
     private
@@ -290,6 +296,10 @@ module Requests
 
       def location_valid?
         location.key?(:library) && location[:library].key?(:code)
+      end
+
+      def in_process_statuses
+        ["Acquisition technical services", "Acquisitions and Cataloging", "In Process"]
       end
   end
 end

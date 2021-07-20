@@ -29,6 +29,7 @@ module Requests
       def handle_item(item)
         # place the item on hold
         hold = Requests::HoldItem.new(@submission, service_type: item["type"])
+        hold.handle
 
         if hold.errors.empty?
           # request it from the clancy facility

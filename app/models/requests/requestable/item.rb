@@ -14,11 +14,11 @@ class Requests::Requestable
     end
 
     def enum_value
-      self['enum'] || ""
+      self['enum_display'] || ""
     end
 
     def cron_value
-      self['chron'] || ""
+      self['chron_display'] || ""
     end
 
     def item_data?
@@ -38,11 +38,11 @@ class Requests::Requestable
     end
 
     def hold_request?
-      status == 'Hold Request'
+      status_label == 'Hold Shelf'
     end
 
     def enumerated?
-      self[:enum].present?
+      self[:enum_display].present?
     end
 
     # item type on the item level
@@ -63,19 +63,20 @@ class Requests::Requestable
     end
 
     def missing?
-      status == 'Missing'
+      status_label == 'Missing'
     end
 
     def charged?
-      unavailable_statuses.include?(status) || unavailable_statuses.include?(scsb_status)
+      unavailable_statuses.include?(status_label)
     end
 
     def status
-      self[:status]
-    end
-
-    def scsb_status
-      self[:scsb_status]
+      return self[:status] if self[:status].present?
+      if available?
+        "Available"
+      else
+        "Not Available"
+      end
     end
 
     def status_label
@@ -83,7 +84,7 @@ class Requests::Requestable
     end
 
     def available?
-      available_statuses.include?(status) || available_statuses.include?(scsb_status)
+      available_statuses.include?(status_label)
     end
 
     def barcode?
@@ -92,6 +93,10 @@ class Requests::Requestable
 
     def barcode
       self[:barcode]
+    end
+
+    def scsb?
+      ['scsbnypl', 'scsbcul'].include? self["location_code"]
     end
 
     class NullItem
@@ -179,6 +184,10 @@ class Requests::Requestable
         'Not Available'
       end
 
+      def status
+        ''
+      end
+
       def available?
         false
       end
@@ -190,20 +199,32 @@ class Requests::Requestable
       def barcode
         ''
       end
+
+      def scsb?
+        false
+      end
     end
 
     private
 
       def available_statuses
-        ["Not Charged", "On-Site", "On Shelf", "Available"]
+        voyager = ["Not Charged", "On-Site", "On Shelf"]
+        scsb = ["Available"]
+        alma = ['Item in place']
+        voyager + scsb + alma
       end
 
       def unavailable_statuses
-        ['Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
-         'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
-         'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
-         'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
-         'Missing', 'On-Site - On Hold', 'Inaccessible', 'Not Available', "Item Barcode doesn't exist in SCSB database."]
+        voyager = ['unavailable', 'Charged', 'Renewed', 'Overdue', 'On Hold', 'Hold Request', 'In transit',
+                   'In transit on hold', 'In Transit Discharged', 'In Transit On Hold', 'At bindery', 'Remote storage request',
+                   'Hold request', 'Recall request', 'Missing', 'Lost--Library Applied',
+                   'Lost--System Applied', 'Claims returned', 'Withdrawn', 'On-Site - Missing',
+                   'Missing', 'On-Site - On Hold', 'Inaccessible']
+        scsb = ['Not Available', "Item Barcode doesn't exist in SCSB database."]
+        alma = ['Claimed Returned', 'Lost', 'Hold Shelf', 'Transit', 'Missing', 'Resource Sharing Request',
+                'Lost Resource Sharing Item', 'Requested', 'In Transit to Remote Storage', 'Lost and paid',
+                'Loan', 'Controlled Digital Lending', 'At Preservation', 'Technical - Migration', 'Preservation and Conservation']
+        voyager + scsb + alma
       end
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Request, vcr: { cassette_name: 'request_models', record: :none } do
+describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
   let(:user) { FactoryGirl.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
@@ -32,8 +32,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:bad_system_id) { 'foo' }
     let(:params) do
       {
-        system_id: '8880549',
-        mfhd: '8805567',
+        system_id: '9988805493506421',
+        mfhd: '22208751700006421',
         patron: patron
       }
     end
@@ -108,7 +108,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
       it "has a mfhd" do
         expect(request_with_holding_item.requestable[0].holding).to be_truthy
-        expect(request_with_holding_item.requestable[0].holding.key?("8805567")).to be_truthy
+        expect(request_with_holding_item.requestable[0].holding.key?(params[:mfhd])).to be_truthy
       end
 
       it "has location data" do
@@ -116,17 +116,16 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
     end
 
-    describe "#load_locations" do
-      it "provides a list of location data" do
-        expect(request_with_holding_item.locations.size).to eq(1)
-        expect(request_with_holding_item.locations.key?('ues')).to be_truthy
+    describe "#load_location" do
+      it "provides the location of the data" do
+        expect(request_with_holding_item.location[:code]).to eq('arch$stacks')
       end
     end
 
     describe "#system_id" do
       it "has a system id" do
         expect(request_with_holding_item.system_id).to be_truthy
-        expect(request_with_holding_item.system_id).to eq('8880549')
+        expect(request_with_holding_item.system_id).to eq('9988805493506421')
       end
     end
 
@@ -152,8 +151,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "with a system_id and a mfhd that only has a holding record" do
     let(:params) do
       {
-        system_id: '1791763',
-        mfhd: '2056183',
+        system_id: '9917917633506421',
+        mfhd: '22178797250006421',
         patron: patron
       }
     end
@@ -168,7 +167,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
       it "has a mfhd" do
         expect(request_with_only_holding.requestable[0].holding).to be_truthy
-        expect(request_with_only_holding.requestable[0].holding.key?("2056183")).to be_truthy
+        expect(request_with_only_holding.requestable[0].holding.key?(params[:mfhd])).to be_truthy
       end
 
       it "has location data" do
@@ -180,8 +179,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "with a system_id only that has holdings and item records" do
     let(:params) do
       {
-        system_id: '490930',
-        mfhd: '4740830',
+        system_id: '994909303506421',
+        mfhd: '22240456670006421',
         patron: patron
       }
     end
@@ -209,8 +208,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "with a system_id that only has holdings records" do
     let(:params) do
       {
-        system_id: '4758976',
-        mfhd: '4977668',
+        system_id: '9947589763506421',
+        mfhd: '22101312640006421',
         patron: patron
       }
     end
@@ -236,8 +235,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "with a system_id that has holdings records that do and don't have item records attached" do
     let(:params) do
       {
-        system_id: '2478499',
-        mfhd: '2779466',
+        system_id: '9924784993506421',
+        mfhd: '22170331510006421',
         patron: patron
       }
     end
@@ -260,11 +259,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
   end
 
+  # on reserve flag = N in the availability response, should be Y
+  # https://bibdata-alma-staging.princeton.edu/bibliographic/9931973043506421/holdings/22185253590006421/availability.json
+  # https://github.com/pulibrary/bibdata/issues/1363
   context "A system id that has a holding with item on reserve" do
     let(:params) do
       {
-        system_id: '8179402',
-        mfhd: '7946042',
+        system_id: '9931973043506421',
+        mfhd: '22185253590006421',
         patron: patron
       }
     end
@@ -272,6 +274,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#requestable" do
       it "is on reserve" do
+        pending "https://github.com/pulibrary/bibdata/issues/1363"
         expect(request_with_items_on_reserve.requestable.first.on_reserve?).to be_truthy
       end
     end
@@ -280,8 +283,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "A system id that has a holding with items in a temporary location" do
     let(:params) do
       {
-        system_id: '6195942',
-        mfhd: '6218590',
+        system_id: '9961959423506421',
+        mfhd: '22192559740006421',
         patron: patron
       }
     end
@@ -295,7 +298,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
 
       it "has location data that reflects an item's temporary location" do
-        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('sciresp')
+        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('lewis$resterm')
       end
     end
   end
@@ -303,8 +306,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "A system id that has a holding with item not in a temporary location" do
     let(:params) do
       {
-        system_id: '6195942',
-        mfhd: '6218596',
+        system_id: '9961959423506421',
+        mfhd: '22192559740006421',
         patron: patron
       }
     end
@@ -315,7 +318,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_items_at_temp_locations.requestable).to be_truthy
         expect(request_with_items_at_temp_locations.requestable.size).to eq(1)
         expect(request_with_items_at_temp_locations.requestable[0]).to be_instance_of(Requests::Requestable)
-        expect(request_with_items_at_temp_locations.requestable.last.location_code).to eq('sci')
+        expect(request_with_items_at_temp_locations.requestable.last.location_code).to eq('lewis$resterm')
       end
     end
   end
@@ -323,7 +326,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "a system_id with no holdings or items" do
     let(:params) do
       {
-        system_id: '2385868',
+        system_id: '9923858683506421',
         mfhd: nil,
         patron: patron
       }
@@ -340,8 +343,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "when a recap with no items" do
     let(:params) do
       {
-        system_id: '4759591',
-        mfhd: '4978217',
+        system_id: '9947595913506421',
+        mfhd: '2232011730006421',
         patron: patron
       }
     end
@@ -372,6 +375,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_with_only_system_id) { described_class.new(params) }
 
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
+        .to_return(status: 200, body: fixture('/dsp01rr1720547.json'), headers: {})
+    end
+
     describe "#requestable" do
       it "has a list of request objects" do
         expect(request_with_only_system_id.requestable).to be_truthy
@@ -380,9 +388,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
 
       it "has a thesis holding location" do
+        # todo- mudd location code does not exists in bibdata, but is being passed back by the index
         expect(request_with_only_system_id.requestable[0].holding.key?('thesis')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd$stacks'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -426,6 +435,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_with_only_system_id) { described_class.new(params) }
 
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+        .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
+    end
+
     describe "#requestable" do
       it "has a list of request objects" do
         expect(request_with_only_system_id.requestable).to be_truthy
@@ -436,7 +450,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       it "has a numismatics holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -474,11 +488,16 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:params) do
       {
         system_id: 'coin-1167',
-        mfhd: 'numismatics',
+        mfhd: nil,
         patron: patron
       }
     end
     let(:request_with_only_system_id) { described_class.new(params) }
+
+    before do
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+        .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
+    end
 
     describe "#requestable" do
       it "has a list of request objects" do
@@ -487,10 +506,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_only_system_id.requestable[0]).to be_instance_of(Requests::Requestable)
       end
 
-      it "has a thesis holding location" do
+      it "has a numismatics holding location" do
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
-        expect(request_with_only_system_id.requestable[0].location_code).to eq 'num'
+        expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'
         expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
       end
     end
@@ -521,8 +540,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for a paging location in nec outside of call number range" do
     let(:params) do
       {
-        system_id: '2937003',
-        mfhd: '3251699',
+        system_id: '9929370033506421',
+        mfhd: '22107682210006421',
         patron: patron
       }
     end
@@ -530,7 +549,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#requestable" do
       it "is unavailable" do
-        expect(request_at_paging_outside.requestable[0].location_code).to eq('nec')
+        expect(request_at_paging_outside.requestable[0].location_code).to eq('firestone$nec')
         expect(request_at_paging_outside.any_pageable?).to be(false)
         expect(request_at_paging_outside.requestable[0].pageable?).to be_nil
       end
@@ -577,8 +596,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for a paging location in f outside of call number range" do
     let(:params) do
       {
-        system_id: '4340413',
-        mfhd: '4594920',
+        system_id: '9943404133506421',
+        mfhd: '2254777780006421',
         patron: patron
       }
     end
@@ -586,7 +605,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#pageable?" do
       it "is be false" do
-        expect(request_at_paging_f.requestable[0].location_code).to eq('f')
+        expect(request_at_paging_f.requestable[0].location_code).to eq('recap$pa')
         expect(request_at_paging_f.requestable[0].pageable?).to be_nil
       end
     end
@@ -616,8 +635,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for a paging location f outside of call number range" do
     let(:params) do
       {
-        system_id: '9545726',
-        mfhd: '9396713',
+        system_id: '9995457263506421',
+        mfhd: '22154199260006421',
         patron: patron
       }
     end
@@ -625,7 +644,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#requestable" do
       it "is unavailable" do
-        expect(request_at_paging_f.requestable[0].location_code).to eq('f')
+        expect(request_at_paging_f.requestable[0].location_code).to eq('firestone$stacks')
         expect(request_at_paging_f.requestable[0].pageable?).to eq(nil)
         expect(request_at_paging_f.any_pageable?).to be(false)
         expect(request_at_paging_f.requestable[0].voyager_managed?).to eq(true)
@@ -655,17 +674,17 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9602549',
-        mfhd: '9442916',
+        system_id: '99120493093506421',
+        mfhd: '2251949020006421',
         patron: patron
       }
     end
     let(:request_with_on_order) { described_class.new(params) }
     let(:firestone_circ) do
-      { label: "Firestone Library", gfa_pickup: "PA", staff_only: false }
+      { label: "Firestone Library", gfa_pickup: "PA", pick_up_location_code: "firestone", staff_only: false }
     end
     let(:architecture) do
-      { label: "Architecture Library", gfa_pickup: "PW", staff_only: false }
+      { label: "Architecture Library", gfa_pickup: "PW", pick_up_location_code: "arch", staff_only: false }
     end
 
     describe "#requestable" do
@@ -702,8 +721,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '9602551',
-        mfhd: '9442918',
+        system_id: '9954176583506421',
+        mfhd: '22201569680006421',
         patron: patron
       }
     end
@@ -715,11 +734,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
 
       it "has a requestable with 'on order' service" do
-        expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
+        expect(request_with_on_order.requestable.last.services.include?('on_order')).to be_truthy
       end
 
       it "has a requestable on order item" do
-        expect(request_with_on_order.requestable[0].voyager_managed?).to eq(true)
+        expect(request_with_on_order.requestable.last.voyager_managed?).to eq(true)
       end
     end
   end
@@ -759,8 +778,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for an Item in a pageable location that has no call number" do
     let(:params) do
       {
-        system_id: '9602545',
-        mfhd: '9442912',
+        system_id: '9996025453506421',
+        mfhd: '22152823160006421',
         patron: patron
       }
     end
@@ -772,7 +791,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
 
       it "is in a pageable location" do
-        expect(request_no_callnum.requestable[0].location_code).to eq('f')
+        expect(request_no_callnum.requestable[0].location_code).to eq('firestone$stacks')
         expect(request_no_callnum.requestable[0].voyager_managed?).to eq(true)
       end
 
@@ -791,24 +810,23 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed a mfhd with missing items" do
     let(:params) do
       {
-        system_id: '2002206',
-        mfhd: '2281830',
+        system_id: '9920022063506421',
+        mfhd: '22140105560006421',
         patron: patron
       }
     end
     let(:request_with_missing) { described_class.new(params) }
 
     before do
-      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026169985")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026169985")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026169985\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026132058")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026132058")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026132058\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101025649177")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101025649177")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649177\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101025649169")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101025649169")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649169\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101026173334")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026173334")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026173334\",\"status\":\"Item not Found\"}", headers: {})
     end
     describe "#requestable" do
@@ -829,8 +847,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an Aeon ID" do
     let(:params) do
       {
-        system_id: '9627261',
-        mfhd: '9478752',
+        system_id: '9996272613506421',
+        mfhd: '2244110690006421',
         patron: patron
       }
     end
@@ -856,8 +874,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "Aeon item with holdings without items" do
     let(:params) do
       {
-        system_id: '616086',
-        mfhd: '675720',
+        system_id: '9917917633506421',
+        mfhd: '22178797250006421',
         patron: patron
       }
     end
@@ -887,9 +905,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "Aeon item with holdings without items with mfhd" do
     let(:params) do
       {
-        system_id: '616086',
+        system_id: '996160863506421',
         patron: patron,
-        mfhd: '675722'
+        mfhd: '22256352610006421'
       }
     end
     let(:request) { described_class.new(params) }
@@ -918,14 +936,18 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When Passed a ReCAP ID" do
     let(:params) do
       {
-        system_id: '9676483',
-        mfhd: '9504920',
+        system_id: '9996764833506421',
+        mfhd: '2275983490006421',
         patron: patron
       }
     end
     let(:request) { described_class.new(params) }
 
     describe "#requestable" do
+      before do
+        stub_scsb_availability(bib_id: "9996764833506421", institution_id: "PUL", barcode: '32101099103457')
+      end
+
       it "has an requestable items" do
         expect(request.requestable.size).to be >= 1
       end
@@ -950,8 +972,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When Passed a ReCAP ID and mfhd for a serial at a non EDD location" do
     let(:params) do
       {
-        system_id: '426420',
-        mfhd: '464640',
+        system_id: '994264203506421',
+        mfhd: '2284665060006421',
         patron: patron
       }
     end
@@ -984,28 +1006,29 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
   end
 
-  context "When passed an unavailable item where other local copies are on reserve." do
+  # Now that we don't consider multiple holdings I think this is invalid
+  # context "When passed an unavailable item where other local copies are on reserve." do
+  #   let(:params) do
+  #     {
+  #       system_id: '9991688293506421',
+  #       mfhd: '22209242250006421',
+  #       patron: patron
+  #     }
+  #   end
+  #   let(:request) { described_class.new(params) }
+
+  #   describe "#borrow_direct_eligible?" do
+  #     it "is Borrow Direct Eligible" do
+  #       expect(request.borrow_direct_eligible?).to be true
+  #     end
+  #   end
+  # end
+
+  context "When passed a Loaned Item that is eligible for Borrow Direct" do
     let(:params) do
       {
-        system_id: '9168829',
-        mfhd: '9048082',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
-
-    describe "#borrow_direct_eligible?" do
-      it "is Borrow Direct Eligible" do
-        expect(request.borrow_direct_eligible?).to be true
-      end
-    end
-  end
-
-  context "When passed a Recallable Item that is eligible for Borrow Direct" do
-    let(:params) do
-      {
-        system_id: '9738136',
-        mfhd: '9558038',
+        system_id: '993703593506421',
+        mfhd: '22272145180006421',
         patron: patron
       }
     end
@@ -1069,8 +1092,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context 'When passed an item that is traceable and mappable' do
     let(:params) do
       {
-        system_id: '9907433',
-        mfhd: '9723988',
+        system_id: '9999074333506421',
+        mfhd: '22248460150006421',
         patron: patron
       }
     end
@@ -1101,8 +1124,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context 'When passed a holding with a null item record' do
     let(:params) do
       {
-        system_id: '495501',
-        mfhd: '538750',
+        system_id: '994955013506421',
+        mfhd: '22246895310006421',
         patron: patron
       }
     end
@@ -1114,29 +1137,12 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
   end
 
-  # 9994692
-  context 'When passed a holding with all online items' do
-    let(:params) do
-      {
-        system_id: '9994692',
-        mfhd: '9800910',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
-    describe '#requestable' do
-      it "is all online" do
-        expect(request.all_items_online?).to be true
-      end
-    end
-  end
-
   # 9746776
   context 'When passed a holdings with mixed physical and online items' do
     let(:params) do
       {
-        system_id: '9746776',
-        mfhd: '9565269',
+        system_id: '9997467763506421',
+        mfhd: '2263454980006421',
         patron: patron
       }
     end
@@ -1152,8 +1158,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context 'When passed a non-enumerated holdings with at least one loanable item' do
     let(:params) do
       {
-        system_id: '4815239',
-        mfhd: '5018096',
+        system_id: '9948152393506421',
+        mfhd: '2229814610006421',
         patron: patron
       }
     end
@@ -1174,8 +1180,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context 'Enumerated record with charged items' do
     let(:params) do
       {
-        system_id: '495220',
-        mfhd: '538419',
+        system_id: '994952203506421',
+        mfhd: '22247009760006421',
         patron: patron
       }
     end
@@ -1196,8 +1202,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context 'Enumerated record without charged items' do
     let(:params) do
       {
-        system_id: '7494358',
-        mfhd: '7313959',
+        system_id: '9974943583506421',
+        mfhd: '2216383480006421',
         patron: patron
       }
     end
@@ -1225,8 +1231,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '5596067',
-        mfhd: '9378993',
+        system_id: '9925693243506421',
+        mfhd: '22177909800006421',
         patron: patron
       }
     end
@@ -1244,35 +1250,37 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
   end
 
-  context 'Multi-holding record with charged items and items available at restricted locations' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:params) do
-      {
-        system_id: '9696811',
-        mfhd: '9814851',
-        patron: patron
-      }
-    end
-    let(:request) { described_class.new(params) }
-    describe '#any_loanable_copies?' do
-      it "has available copy" do
-        expect(request.any_loanable_copies?).to be false
-      end
-    end
+  # Since we don't load multiple holdings any longer I'm not sure this is a valid test scenario
+  #
+  # context 'Multi-holding record with charged items and items available at restricted locations' do
+  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:params) do
+  #     {
+  #       system_id: '9996968113506421',
+  #       mfhd: '22117193570006421',
+  #       patron: patron
+  #     }
+  #   end
+  #   let(:request) { described_class.new(params) }
+  #   describe '#any_loanable_copies?' do
+  #     it "has available copy" do
+  #       expect(request.any_loanable_copies?).to be false
+  #     end
+  #   end
 
-    describe '#borrow_direct_eligible?' do
-      it 'is not borrow_direct_eligible' do
-        expect(request.borrow_direct_eligible?).to be true
-      end
-    end
-  end
+  #   describe '#borrow_direct_eligible?' do
+  #     it 'is not borrow_direct_eligible' do
+  #       expect(request.borrow_direct_eligible?).to be true
+  #     end
+  #   end
+  # end
 
   ### Review this test
   context 'RBSC single Item with no isbn' do
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '2631265',
+        system_id: '9926312653506421',
         mfhd: '4238081',
         patron: patron
       }
@@ -1295,8 +1303,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:user) { FactoryGirl.build(:user) }
     let(:params) do
       {
-        system_id: '1788796',
-        mfhd: '2053005',
+        system_id: '9917887963506421',
+        mfhd: '22196156490006421',
         patron: patron
       }
     end
@@ -1317,8 +1325,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context 'When a barcode only user visits the site' do
     let(:params) do
       {
-        system_id: '495501',
-        mfhd: '538750',
+        system_id: '994955013506421',
+        mfhd: '22246895310006421',
         patron: patron
       }
     end
@@ -1333,8 +1341,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed mfhd and source params" do
     let(:params) do
       {
-        system_id: '1969881',
-        mfhd: '2246633',
+        system_id: '9919698813506421',
+        mfhd: '2275228980006421',
         source: 'pulsearch',
         patron: patron
       }
@@ -1343,7 +1351,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
     describe "#request" do
       it "has accessible mfhd param" do
-        expect(request_with_optional_params.mfhd).to eq('2246633')
+        expect(request_with_optional_params.mfhd).to eq('2275228980006421')
       end
 
       it "has accessible source param" do
@@ -1355,15 +1363,15 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed an ID for a preservation office location" do
     let(:params) do
       {
-        system_id: '9712355',
-        mfhd: '9533612',
+        system_id: '9997123553506421',
+        mfhd: '2229149680006421',
         patron: patron
       }
     end
     let(:request_for_preservation) { described_class.new(params) }
     describe "#requestable" do
       it "has a preservation location code" do
-        expect(request_for_preservation.requestable[0].location_code).to eq('pres')
+        expect(request_for_preservation.requestable[0].location_code).to eq('firestone$pres')
       end
     end
   end
@@ -1371,8 +1379,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   context "When passed a system_id for a record with a single aeon holding" do
     let(:params) do
       {
-        system_id: '4693146',
-        mfhd: '4919837',
+        system_id: '9946931463506421',
+        mfhd: '22134335010006421',
         patron: patron
       }
     end
@@ -1400,7 +1408,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_single_holding_item, headers: {})
       stub_scsb_availability(bib_id: "5992543", institution_id: "CUL", barcode: 'CU11388110')
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=65339789")
@@ -1446,7 +1454,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_edd_item, headers: {})
       stub_scsb_availability(bib_id: "9488888", institution_id: "CUL", barcode: 'MR00429228')
       stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=748826840")
@@ -1482,7 +1490,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_no_format, headers: {})
       stub_scsb_availability(bib_id: ".b106574619", institution_id: "NYPL", barcode: '33433088591924')
     end
@@ -1506,15 +1514,14 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         "patron_id" => "99999", "active_email" => "foo@princeton.edu",
         campus_authorized: true, campus_authorized_category: "full" }.with_indifferent_access
     end
-    let(:marquand) { fixture('/5620053.json') }
-    let(:availability) { fixture('/availability_5620053.json') }
-    let(:mfhd_availability) { fixture('/availability_5749706.json') }
+    let(:marquand) { fixture('/9956200533506421_raw.json') }
+    let(:mfhd_availability) { fixture('/availability_2219823460006421.json') }
     let(:location_code) { 'scsbnypl' }
     let(:params) do
       {
-        system_id: '5620053',
+        system_id: '9956200533506421',
         source: 'pulsearch',
-        mfhd: '5749706',
+        mfhd: '2219823460006421',
         patron: patron
       }
     end
@@ -1522,12 +1529,9 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     before do
       stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: marquand, headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?id=#{params[:system_id]}")
-        .to_return(status: 200, body: availability, headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/availability?mfhd=#{params[:mfhd]}")
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/bibliographic/#{params[:system_id]}/holdings/#{params[:mfhd]}/availability.json")
         .to_return(status: 200, body: mfhd_availability, headers: {})
-      ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
-      stub_request(:get, "#{ENV['CLANCY_BASE_URL']}/itemstatus/v1/32101068477817")
+      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101068477817")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101068477817\",\"status\":\"Item In at Rest\"}", headers: {})
     end
     describe '#requestable' do

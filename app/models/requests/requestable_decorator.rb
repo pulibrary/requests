@@ -1,12 +1,13 @@
 module Requests
   class RequestableDecorator
-    delegate :system_id, :aeon_mapped_params, :services, :charged?, :annexa?, :annexb?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
+    delegate :system_id, :aeon_mapped_params, :services, :charged?, :annex?, :annexb?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
              :ask_me?, :etas?, :etas_limited_access, :aeon_request_url, :location, :temp_loc?, :call_number, :eligible_to_pickup?,
              :holding_library_in_library_only?, :holding_library, :bib, :circulates?, :open_libraries, :item_data?, :recap_edd?, :user_barcode, :clancy?,
-             :holding, :item_location_code, :item?, :item, :scsb?, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,
+             :holding, :item_location_code, :item?, :item, :scsb?, :status, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,
              :cron_value, :illiad_request_parameters, :location_label, :online?, :aeon?, :borrow_direct?, :patron, :held_at_marquand_library?,
              :ill_eligible?, :scsb_in_library_use?, :pick_up_locations, :on_shelf?, :pending?, :recap?, :illiad_request_url, :available?,
-             :campus_authorized, :on_order?, :urls, :in_process?, :voyager_managed?, :covid_trained?, :title, :map_url, :cul_avery?, :cul_music?, to: :requestable
+             :campus_authorized, :on_order?, :urls, :in_process?, :voyager_managed?, :covid_trained?, :title, :map_url, :cul_avery?, :cul_music?,
+             :pick_up_location_code, :resource_shared?, to: :requestable
     delegate :content_tag, :hidden_field_tag, :concat, to: :view_context
 
     alias bib_id system_id
@@ -37,7 +38,7 @@ module Requests
 
     def pick_up?
       return false if etas? || !eligible_to_pickup?
-      item_data? && (on_shelf? || recap? || annexa?) && circulates? && !holding_library_in_library_only? && !scsb_in_library_use? && !request_status?
+      item_data? && (on_shelf? || recap? || annex?) && circulates? && !holding_library_in_library_only? && !scsb_in_library_use? && !request_status?
     end
 
     def fill_in_pick_up?
@@ -57,7 +58,7 @@ module Requests
     def help_me?
       (request_status? && !eligible_to_pickup?) || # a requestable item that the user can not pick up
         ask_me? || # recap scsb in library only items
-        (!located_in_an_open_library? && !aeon?) # item in a closed library that is not aeon managed
+        (!located_in_an_open_library? && !aeon? && !resource_shared?) # item in a closed library that is not aeon managed or resource shared
     end
 
     def will_submit_via_form?
@@ -83,7 +84,7 @@ module Requests
     end
 
     def off_site?
-      recap? || annexa? || item_at_clancy? || held_at_marquand_library?
+      recap? || annex? || item_at_clancy? || held_at_marquand_library?
     end
 
     def off_site_location
@@ -93,6 +94,8 @@ module Requests
         "clancy_unavailable" # at clancy but not available
       elsif recap? && (holding_library == "marquand" || requestable.cul_avery?)
         "recap_marquand"
+      elsif recap?
+        "recap"
       else
         library_code
       end
@@ -116,12 +119,17 @@ module Requests
     end
 
     def status_badge
-      css_class = if requestable.charged?
-                    "badge-danger"
-                  else
+      css_class = if requestable.status == "Available"
                     "badge-success"
+                  else
+                    "badge-danger"
                   end
-      content_tag(:span, requestable.status_label, class: "availability--label badge #{css_class}")
+      status = if requestable.status_label.nil? || requestable.status == requestable.status_label
+                 requestable.status
+               else
+                 requestable.status + ' - ' + requestable.status_label
+               end
+      content_tag(:span, status, class: "availability--label badge #{css_class}")
     end
 
     def help_me_message

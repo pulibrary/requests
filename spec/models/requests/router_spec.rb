@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :none } do
+describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :new_episodes } do
   context "A Princeton Community User has signed in" do
     let(:user) { FactoryGirl.create(:user) }
     let(:valid_patron) { { "netid" => "foo" }.with_indifferent_access }
@@ -31,7 +31,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
 
     describe "SCSB item that is charged" do
       before do
-        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}.json")
+        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
           .to_return(status: 200, body: scsb_single_holding_item, headers: {})
         stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
           .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
@@ -70,7 +70,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
       let(:stubbed_questions) do
         { voyager_managed?: true, online?: false, in_process?: false,
           charged?: false, on_order?: false, aeon?: false,
-          preservation?: false, annexa?: false, annexb?: false,
+          preservation?: false, annex?: false, annexb?: false,
           plasma?: false, lewis?: false, recap?: false, held_at_marquand_library?: false,
           item_data?: false, recap_edd?: false, pageable?: false, scsb_in_library_use?: false, item: item,
           library_code: 'ABC' }
@@ -136,12 +136,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         end
       end
 
-      context "annexa" do
+      context "annex" do
         before do
-          stubbed_questions[:annexa?] = true
+          stubbed_questions[:annex?] = true
         end
-        it "returns annexa in the services" do
-          expect(router.calculate_services).to eq(['annexa', 'on_shelf_edd'])
+        it "returns annex in the services" do
+          expect(router.calculate_services).to eq(['annex', 'on_shelf_edd'])
         end
       end
 

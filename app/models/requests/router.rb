@@ -11,7 +11,7 @@ module Requests
 
     # Possible Services
     # :online
-    # :annexa
+    # :annex
     # :annexb
     # :on_shelf
     # :on_order
@@ -62,8 +62,8 @@ module Requests
         ## any check at this level means items must fall in one bucket or another
         elsif requestable.preservation?
           ['pres']
-        elsif requestable.annexa?
-          ['annexa', 'on_shelf_edd']
+        elsif requestable.annex?
+          ['annex', 'on_shelf_edd']
         elsif requestable.annexb?
           ['annexb']
         elsif requestable.plasma?
@@ -95,9 +95,9 @@ module Requests
       def calculate_recap_services
         if !requestable.item_data?
           ['recap_no_items']
-        elsif requestable.scsb_in_library_use? && requestable.item[:collection_code] != "MR" && requestable.campus_authorized
+        elsif (requestable.scsb_in_library_use? && requestable.item[:collection_code] != "MR" && requestable.campus_authorized) || (!requestable.circulates? && !requestable.recap_edd?)
           ['recap_in_library']
-        elsif (!requestable.circulates? && !requestable.recap_edd?) || (requestable.scsb_in_library_use? && (!requestable.eligible_to_pickup? || requestable.etas?))
+        elsif requestable.scsb_in_library_use? && (!requestable.eligible_to_pickup? || requestable.etas?)
           ['ask_me']
         elsif auth_user?
           services = []

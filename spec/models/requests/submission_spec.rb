@@ -16,13 +16,13 @@ describe Requests::Submission do
       [
         {
           "selected" => "true",
-          "mfhd" => "534137",
+          "mfhd" => "22113812720006421",
           "call_number" => "HA202 .U581",
-          "location_code" => "rcppa",
-          "item_id" => "3059236",
-          "delivery_mode_3059236" => "print",
+          "location_code" => "recap$pa",
+          "item_id" => "23113812570006421",
+          "delivery_mode_23113812570006421" => "print",
           "barcode" => "32101044283008",
-          "enum" => "2000 (13th ed.)",
+          "enum_display" => "2000 (13th ed.)",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -42,7 +42,7 @@ describe Requests::Submission do
     end
     let(:bib) do
       {
-        "id" => "491654",
+        "id" => "994916543506421",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
@@ -135,13 +135,13 @@ describe Requests::Submission do
       [
         {
           "selected" => "true",
-          "mfhd" => "534137",
+          "mfhd" => "22113812720006421",
           "call_number" => "HA202 .U581",
-          "location_code" => "rcppa",
-          "item_id" => "3059236",
+          "location_code" => "recap$pa",
+          "item_id" => "23113812570006421",
           "delivery_mode_3059236" => "print",
           "barcode" => "32101044283008",
-          "enum" => "2000 (13th ed.)",
+          "enum_display" => "2000 (13th ed.)",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -156,13 +156,13 @@ describe Requests::Submission do
         },
         {
           "selected" => "true",
-          "mfhd" => "534137",
+          "mfhd" => "22113812720006421",
           "call_number" => "HA202 .U581",
-          "location_code" => "rcppa",
-          "item_id" => "3059237",
+          "location_code" => "recap$pa",
+          "item_id" => "23113812580006421",
           "delivery_mode_3059237" => "edd",
           "barcode" => "32101044283008",
-          "enum" => "2000 (13th ed.)",
+          "enum_display" => "2000 (13th ed.)",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -180,7 +180,7 @@ describe Requests::Submission do
 
     let(:bib) do
       {
-        "id" => "491654",
+        "id" => "994916543506421",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
@@ -217,13 +217,13 @@ describe Requests::Submission do
       [
         {
           "selected" => "true",
-          "mfhd" => "534137",
+          "mfhd" => "22113812720006421",
           "call_number" => "HA202 .U581",
-          "location_code" => "rcppa",
-          "item_id" => "3059236",
+          "location_code" => "recap$pa",
+          "item_id" => "23113812570006421",
           "delivery_mode_3059236" => "print",
           "barcode" => "32101044283008",
-          "enum" => "2000 (13th ed.)",
+          "enum_display" => "2000 (13th ed.)",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "bd",
@@ -246,7 +246,7 @@ describe Requests::Submission do
     end
     let(:bib) do
       {
-        "id" => "491654",
+        "id" => "994916543506421",
         "title" => "County and city data book.",
         "author" => "United States",
         "date" => "1949"
@@ -298,24 +298,24 @@ describe Requests::Submission do
     let(:requestable) do
       [
         { "selected" => "true",
-          "mfhd" => "538419",
+          "mfhd" => "22247009760006421",
           "call_number" => "GN670 .P74",
-          "location_code" => "rcppa",
-          "item_id" => "3710038",
+          "location_code" => "recap$pa",
+          "item_id" => "23247008490006421",
           "barcode" => "32101091858066",
-          "enum" => "vol. 5 (1896)",
+          "enum_display" => "vol. 5 (1896)",
           "copy_number" => "1",
           "status" => "Charged",
           "type" => "recall",
           "pick_up" => "299|.Firestone Library Circulation Desk" },
         {
           "selected" => "true",
-          "mfhd" => "538419",
+          "mfhd" => "22247009760006421",
           "call_number" => "GN670 .P74",
-          "location_code" => "rcppa",
-          "item_id" => "3707281",
+          "location_code" => "recap$pa",
+          "item_id" => "23247009580006421",
           "barcode" => "32101091857142",
-          "enum" => "vol. 4 (1895)",
+          "enum_display" => "vol. 4 (1895)",
           "copy_number" => "1",
           "status" => "Not Charged",
           "type" => "recap",
@@ -334,7 +334,7 @@ describe Requests::Submission do
 
     let(:bib) do
       {
-        "id" => "495220",
+        "id" => "994952203506421",
         "title" => "Journal of the Polynesian Society.",
         "author" => "Polynesian Society (N.Z.)",
         "date" => "1892"
@@ -382,7 +382,7 @@ describe Requests::Submission do
   context 'Invalid Submissions' do
     let(:bib) do
       {
-        "id" => "495220",
+        "id" => "994952203506421",
         "title" => "Journal of the Polynesian Society.",
         "author" => "Polynesian Society (N.Z.)",
         "date" => "1892"
@@ -417,15 +417,15 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
-            "item_id" => "3059236",
+            "location_code" => "recap$pa",
+            "item_id" => "23247008490006421",
             "barcode" => "32101044283008",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Not Charged",
-            "type" => "annexa",
+            "type" => "annex",
             "edd_start_page" => "",
             "edd_end_page" => "",
             "edd_volume_number" => "",
@@ -464,7 +464,7 @@ describe Requests::Submission do
       end
 
       it 'has an error message with the item ID as the message key' do
-        expect(submission.errors.messages[:items].first.keys.include?('3059236')).to be true
+        expect(submission.errors.messages[:items].first.keys.include?('23247008490006421')).to be true
       end
     end
 
@@ -473,15 +473,15 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Not Charged",
-            "type" => "annexa",
+            "type" => "annex",
             "edd_start_page" => "",
             "edd_end_page" => "",
             "edd_volume_number" => "",
@@ -520,7 +520,7 @@ describe Requests::Submission do
       end
 
       it 'has an error message with the mfhd ID as the message key' do
-        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+        expect(submission.errors.messages[:items].first.keys.include?('22247009760006421')).to be true
       end
     end
 
@@ -529,12 +529,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Missing",
             "type" => "recall",
@@ -576,8 +576,8 @@ describe Requests::Submission do
       end
 
       it 'has an error message with the mfhd ID as the message key' do
-        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
-        expect(submission.errors.messages[:items].first['534137']).to eq('text' => "Item Cannot be Recalled, see circulation desk.", 'type' => 'options')
+        expect(submission.errors.messages[:items].first.keys.include?('22247009760006421')).to be true
+        expect(submission.errors.messages[:items].first['22247009760006421']).to eq('text' => "Item Cannot be Recalled, see circulation desk.", 'type' => 'options')
       end
     end
     describe 'A recall submission without a pick-up location' do
@@ -585,12 +585,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "12131313",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Missing",
             "type" => "recall",
@@ -640,12 +640,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Missing",
             "type" => "bd",
@@ -690,7 +690,7 @@ describe Requests::Submission do
       end
 
       it 'has an error message with the mfhd ID as the message key' do
-        expect(submission.errors.messages[:items].first.keys.include?('534137')).to be true
+        expect(submission.errors.messages[:items].first.keys.include?('22247009760006421')).to be true
       end
     end
     describe 'A bd submission without a pick-up location' do
@@ -698,12 +698,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "12131313",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Missing",
             "type" => "bd",
@@ -753,12 +753,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
-            "item_id" => "",
+            "location_code" => "recap$pa",
+            "item_id" => "534137",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Not Charged",
             "type" => "recap",
@@ -808,12 +808,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "121333",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "status" => "Not Charged",
             "type" => "recap",
@@ -863,12 +863,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "121333",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "delivery_mode_121333" => "print",
             "status" => "Not Charged",
@@ -919,12 +919,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "121333",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "delivery_mode_121333" => "edd",
             "status" => "Not Charged",
@@ -975,12 +975,12 @@ describe Requests::Submission do
         [
           {
             "selected" => "true",
-            "mfhd" => "534137",
+            "mfhd" => "22247009760006421",
             "call_number" => "HA202 .U581",
-            "location_code" => "rcppa",
+            "location_code" => "recap$pa",
             "item_id" => "121333",
             "barcode" => "",
-            "enum" => "2000 (13th ed.)",
+            "enum_display" => "2000 (13th ed.)",
             "copy_number" => "1",
             "delivery_mode_121333" => "edd",
             "status" => "Not Charged",
@@ -1083,7 +1083,7 @@ describe Requests::Submission do
           "location_code" => "scsbcul",
           "item_id" => "6348205",
           "barcode" => "CU13232533",
-          "enum" => "",
+          "enum_display" => "",
           "copy_number" => "1",
           "status" => "Available",
           "cgc" => "",
@@ -1137,14 +1137,14 @@ describe Requests::Submission do
   context 'Clancy Item' do
     let(:requestable) do
       [
-        { "selected" => "true", "bibid" => "5636487", "mfhd" => "5744248", "call_number" => "N7668.D6 J64 2008",
-          "location_code" => "sa", "item_id" => "5214248", "barcode" => "32101072349515", "copy_number" => "1",
+        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "clancy_in_library", "fill_in" => "false",
-          "delivery_mode_5214248" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23186505470006421" => "in_library", "pick_up" => "PA" }
       ]
     end
 
-    let(:bib) { { "id" => "5636487", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
+    let(:bib) { { "id" => "9956364873506421", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
     let(:params) do
       {
         request: user_info,
@@ -1157,34 +1157,30 @@ describe Requests::Submission do
     end
 
     describe "#process_submission" do
-      before do
-        ENV['CLANCY_BASE_URL'] = "https://example.caiasoft.com/api"
-      end
-
       it 'items contacts clancy and voyager' do
-        voyager_url = stub_voyager_hold_success('5636487', '5214248', '99999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).to have_been_made
       end
 
       it "returns hold errors" do
-        voyager_url = stub_voyager_hold_failure('5636487', '5214248', '99999')
-        clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
+        alma_url = stub_alma_hold_failure('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
+        clancy_url = "#{Requests.config[:clancy_base]}/circrequests/v1"
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).not_to have_been_made
         expect(submission.service_errors.first[:type]).to eq('clancy_hold')
       end
 
       it 'returns clancy errors' do
-        voyager_url = stub_voyager_hold_success('5636487', '5214248', '99999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).to have_been_made
         expect(submission.service_errors.first[:type]).to eq('clancy')
       end
@@ -1194,13 +1190,13 @@ describe Requests::Submission do
   context 'Clancy EDD Item' do
     let(:requestable) do
       [
-        { "selected" => "true", "bibid" => "5636487", "mfhd" => "5744248", "call_number" => "N7668.D6 J64 2008",
-          "location_code" => "sa", "item_id" => "5214248", "barcode" => "32101072349515", "copy_number" => "1",
+        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "clancy_edd", "fill_in" => "false",
-          "delivery_mode_5214248" => "edd", "pick_up" => "PA", "edd_art_title" => "Test This is only a test", "edd_start_page" => "",
+          "delivery_mode_23186505470006421" => "edd", "pick_up" => "PA", "edd_art_title" => "Test This is only a test", "edd_start_page" => "",
           "edd_end_page" => "", "edd_volume_number" => "", "edd_issue" => "", "edd_author" => "", "edd_note" => "This is a test",
           "edd_genre" => "book", "edd_location" => "Marquand Library", "edd_isbn" => "9782754101578", "edd_date" => "2008",
-          "edd_publisher" => "Paris: Hazan", "edd_call_number" => "ND553.P6 D24 2008q", "edd_oclc_number" => "263300578", "edd_title" => "Picasso" }
+          "edd_publisher" => "Paris: Hazan", "edd_call_number" => "ND553.P6 D24 2008q", "edd_oclc_number" => "263300578", "edd_title" => "Picasso" }.with_indifferent_access
       ]
     end
 
@@ -1243,7 +1239,7 @@ describe Requests::Submission do
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         stub_request(:post, transaction_url)
           .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
-                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
           .to_return(status: 200, body: responses[:transaction_created], headers: {})
         stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
         expect(submission).to be_valid
@@ -1258,7 +1254,7 @@ describe Requests::Submission do
       it "returns illiad errors" do
         stub_request(:post, transaction_url)
           .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
-                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
           .to_return(status: 503, body: responses[:transaction_error], headers: {})
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(a_request(:get, patron_url)).to have_been_made
@@ -1268,10 +1264,9 @@ describe Requests::Submission do
 
       it "returns clancy errors" do
         clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
-        stub_request(:post, transaction_url).to_return(status: 200, body: responses[:transaction_created], headers: {})
         stub_request(:post, transaction_url)
-          .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => "09/09/2021", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
-                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+          .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
           .to_return(status: 200, body: responses[:transaction_created], headers: {})
         stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
@@ -1286,14 +1281,14 @@ describe Requests::Submission do
   context 'Marquand non Clancy Item' do
     let(:requestable) do
       [
-        { "selected" => "true", "bibid" => "5636487", "mfhd" => "5744248", "call_number" => "N7668.D6 J64 2008",
-          "location_code" => "sa", "item_id" => "5214248", "barcode" => "32101072349515", "copy_number" => "1",
+        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "marquand_in_library", "fill_in" => "false",
-          "delivery_mode_5214248" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23186505470006421" => "in_library", "pick_up" => "PA" }
       ]
     end
 
-    let(:bib) { { "id" => "5636487", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
+    let(:bib) { { "id" => "9956364873506421", "title" => "Dogs : history, myth, art", "author" => "Johns, Catherine", "isbn" => "9780674030930" } }
     let(:params) do
       {
         request: user_info,
@@ -1305,19 +1300,21 @@ describe Requests::Submission do
       described_class.new(params, user_info)
     end
 
+    let(:clancy_url) { "#{Requests.config[:clancy_base]}/circrequests/v1" }
+
     describe "#process_submission" do
-      it 'items contacts voyager and emails marquand' do
-        voyager_url = stub_voyager_hold_success('5636487', '5214248', '99999')
+      it 'items contacts voyager and does not email marquand or contact clancy' do
+        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
+        expect(a_request(:post, clancy_url)).not_to have_been_made
       end
 
       it "returns hold errors" do
-        voyager_url = stub_voyager_hold_failure('5636487', '5214248', '99999')
-        clancy_url = "#{ENV['CLANCY_BASE_URL']}/circrequests/v1"
+        alma_url = stub_alma_hold_failure('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(a_request(:put, voyager_url)).to have_been_made
+        expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).not_to have_been_made
         expect(submission.service_errors.first[:type]).to eq('marquand_in_library')
       end

@@ -13,7 +13,7 @@ describe Requests::RequestableDecorator do
   let(:patron) { Requests::Patron.new(user: user, session: {}, patron: valid_patron) }
 
   let(:requestable) { instance_double(Requests::Requestable, stubbed_questions) }
-  let(:default_stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: false, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, cul_avery?: false } }
+  let(:default_stubbed_questions) { { etas?: false, item_data?: true, circulates?: true, eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: false, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, cul_avery?: false, resource_shared?: false } }
   let(:stubbed_questions) { default_stubbed_questions.merge(etas?: false) }
   let(:view_context) { ActionView::Base.new }
   let(:ldap) { {} }
@@ -298,64 +298,64 @@ describe Requests::RequestableDecorator do
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and in_library_only" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: true) }
+      context "not in etas, has item data and circulates and annex? and in_library_only" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and scsb_in_library_use?" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, scsb_in_library_use?: true) }
+      context "not in etas, has item data and circulates and annex? and scsb_in_library_use?" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, scsb_in_library_use?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and on_order" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: true) }
+      context "not in etas, has item data and circulates and annex? and on_order" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and in_process" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: true) }
+      context "not in etas, has item data and circulates and annex? and in_process" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and traceable" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: true) }
+      context "not in etas, has item data and circulates and annex? and traceable" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and borrow_direct?" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true) }
+      context "not in etas, has item data and circulates and annex? and borrow_direct?" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa? and ill_eligible?" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, ill_eligible?: true) }
+      context "not in etas, has item data and circulates and annex? and ill_eligible?" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, ill_eligible?: true) }
         it 'can not be picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
       end
 
-      context "not in etas, has item data and circulates and annexa?" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: true, holding_library_in_library_only?: false, ill_eligible?: false, services: ['annexa']) }
+      context "not in etas, has item data and circulates and annex?" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: true, holding_library_in_library_only?: false, ill_eligible?: false, services: ['annex']) }
         it 'can be picked up' do
           expect(decorator.pick_up?).to be_truthy
         end
       end
 
-      context "not in etas, has item data and circulates not on shelf and not recap? and not annexa?" do
-        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annexa?: false) }
+      context "not in etas, has item data and circulates not on shelf and not recap? and not annex?" do
+        let(:stubbed_questions) { default_stubbed_questions.merge(eligible_to_pickup?: true, on_shelf?: false, recap?: false, annex?: false) }
         it 'can be not picked up' do
           expect(decorator.pick_up?).to be_falsey
         end
@@ -1448,7 +1448,7 @@ describe Requests::RequestableDecorator do
     end
 
     context "at annex" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(annexa?: true) }
+      let(:stubbed_questions) { default_stubbed_questions.merge(annex?: true) }
       it 'is off site' do
         expect(decorator.off_site?).to be_truthy
       end
@@ -1462,7 +1462,7 @@ describe Requests::RequestableDecorator do
     end
 
     context "at annex and recap and clancy" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(clancy?: true, annexa?: true, recap?: true) }
+      let(:stubbed_questions) { default_stubbed_questions.merge(clancy?: true, annex?: true, recap?: true) }
       it 'is off site' do
         expect(decorator.off_site?).to be_truthy
       end
@@ -1478,7 +1478,7 @@ describe Requests::RequestableDecorator do
     context "at recap" do
       let(:stubbed_questions) { default_stubbed_questions.merge(recap?: true, library_code: 'abc', holding_library: 'abc') }
       it 'is off site' do
-        expect(decorator.off_site_location).to eq('abc')
+        expect(decorator.off_site_location).to eq('recap')
       end
     end
 
@@ -1497,7 +1497,7 @@ describe Requests::RequestableDecorator do
     end
 
     context "at annex" do
-      let(:stubbed_questions) { default_stubbed_questions.merge(annexa?: true, library_code: 'abc') }
+      let(:stubbed_questions) { default_stubbed_questions.merge(annex?: true, library_code: 'abc') }
       it 'is off site' do
         expect(decorator.off_site_location).to eq('abc')
       end
@@ -1549,6 +1549,80 @@ describe Requests::RequestableDecorator do
       let(:stubbed_questions) { default_stubbed_questions.merge(held_at_marquand_library?: false, cul_avery?: false, cul_music?: true) }
       it 'shows the location code' do
         expect(decorator.delivery_location_code).to eq('PK')
+      end
+    end
+  end
+
+  describe "#help_me?" do
+    context "any service in an open library" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: ['on_shelf'], library_code: 'abc12') }
+      xit 'does not need help' do
+        expect(decorator.help_me?).to be_falsey
+      end
+    end
+
+    context "ask me" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: true, open_libraries: ['abc12'], services: ['on_shelf']) }
+      it 'does not need help' do
+        expect(decorator.help_me?).to be_truthy
+      end
+    end
+
+    context "no services in an closed library" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: [], library_code: nil) }
+      it 'does need help' do
+        expect(decorator.help_me?).to be_truthy
+      end
+    end
+
+    context "no services in an open library" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: [], library_code: 'abc12') }
+      xit 'does not need help' do
+        expect(decorator.help_me?).to be_falsey
+      end
+    end
+
+    context "no services being resource shared" do
+      let(:stubbed_questions) { default_stubbed_questions.merge(resource_shared?: true, ask_me?: false, open_libraries: ['abc12'], services: [], library_code: 'abc12') }
+      it 'does not need help' do
+        expect(decorator.help_me?).to be_falsey
+      end
+    end
+  end
+
+  describe "#status_badge" do
+    let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, status_label: 'Item in place', status: 'Available') }
+
+    it 'shows the status' do
+      expect(decorator.status_badge).to eq('<span class="availability--label badge badge-success">Available - Item in place</span>')
+    end
+
+    context 'Status label nil' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: false, status_label: nil, status: 'Available') }
+
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-success">Available</span>')
+      end
+    end
+
+    context 'Charged item' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: true, status_label: 'Technical - Migration', status: 'Not Available') }
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-danger">Not Available - Technical - Migration</span>')
+      end
+    end
+
+    context 'Status and label match' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(charged?: true, status_label: 'Not Available', status: 'Not Available') }
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-danger">Not Available</span>')
+      end
+    end
+
+    context 'migration item that is available' do
+      let(:stubbed_questions) { default_stubbed_questions.merge(status_label: 'Technical - Migration', status: 'Available') }
+      it 'shows the status' do
+        expect(decorator.status_badge).to eq('<span class="availability--label badge badge-success">Available - Technical - Migration</span>')
       end
     end
   end

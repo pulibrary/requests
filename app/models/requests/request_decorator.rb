@@ -62,7 +62,7 @@ module Requests
 
     def any_fill_in_eligible?
       # close everything for the alma migration
-      false      
+      false
       # fill_in = false
       # unless (requestable.count == 1) && (requestable.first.services & ["on_order", "online"]).present?
       #   if requestable.any? { |r| !(r.services & fill_in_services).empty? }

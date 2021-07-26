@@ -319,7 +319,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         #   expect(page).to have_content 'Help Me Get It'
         # end
 
-        it 'allows CAS patrons to request On-Order items' do
+        xit 'allows CAS patrons to request On-Order items' do
           visit "/requests/#{on_order_id}"
           expect(page).to have_button('Request this Item', disabled: false)
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -353,7 +353,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content "ReCAP Paging Request"
         end
 
-        it 'allows CAS patrons to locate an on_shelf record' do
+        xit 'allows CAS patrons to locate an on_shelf record' do
           stub_alma_hold_success('9912636153506421', '22272105130006421', '23272105120006421', '960594184')
 
           visit "requests/9912636153506421?mfhd=22272105130006421"
@@ -410,7 +410,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         #   expect(page).to have_content 'Help Me Get It'
         # end
 
-        it 'allows patrons to request a Forrestal annex' do
+        xit 'allows patrons to request a Forrestal annex' do
           visit '/requests/999455503506421?mfhd=2221072930006421'
           choose('requestable__delivery_mode_2321072920006421_print') # chooses 'print' radio button
           # todo: should we still have the text?
@@ -458,7 +458,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
         end
 
-        it 'allows patrons to request a Lewis' do
+        xit 'allows patrons to request a Lewis' do
           stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
           stub_alma_hold_success('9970533073506421', '22214952030006421', '23214952020006421', '960594184')
           visit '/requests/9970533073506421?mfhd=22214952030006421'
@@ -483,7 +483,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
         end
 
-        it 'allows patrons to request a on-order' do
+        xit 'allows patrons to request a on-order' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           ## having trouble finding a firestone item in BL.
           visit '/requests/99120493093506421?mfhd=2251949020006421'
@@ -495,7 +495,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Request submitted'
         end
 
-        it 'allows patrons to ask for digitizing on non circulating items' do
+        xit 'allows patrons to ask for digitizing on non circulating items' do
           visit '/requests/9995948403506421?mfhd=2258775160006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
@@ -515,14 +515,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Request submitted'
         end
 
-        it 'allows filtering items by mfhd' do
+        xit 'allows filtering items by mfhd' do
           visit '/requests/9979171923506421?mfhd=22230315750006421'
           expect(page).to have_content 'Pick-up location: Lewis Library'
           expect(page).not_to have_content 'Copy 2'
           expect(page).not_to have_content 'Copy 3'
         end
 
-        it 'show a fill in form if the item is an enumeration (Journal ect.) and choose a print copy' do
+        xit 'show a fill in form if the item is an enumeration (Journal ect.) and choose a print copy' do
           visit 'requests/99105746993506421?mfhd=22217601660006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
@@ -546,7 +546,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
         end
 
-        it 'show a fill in form if the item is an enumeration (Journal ect.) and choose a electronic copy' do
+        xit 'show a fill in form if the item is an enumeration (Journal ect.) and choose a electronic copy' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -598,7 +598,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")
         end
 
-        it "shows items in the Architecture Library as available" do
+        xit "shows items in the Architecture Library as available" do
           stub_alma_hold_success('99117876713506421', '22196862260006421', '23196862250006421', '960594184')
           visit '/requests/99117876713506421?mfhd=22196862260006421'
           # choose('requestable__delivery_mode_8298341_edd') # chooses 'edd' radio button
@@ -646,7 +646,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'there are no requestable items for this record'
         end
 
-        it 'Borrow Direct successful on Missing items' do
+        xit 'Borrow Direct successful on Missing items' do
           borrow_direct = ::BorrowDirect::RequestItem.new("22101008199999")
           expect(::BorrowDirect::RequestItem).to receive(:new).with("22101008199999").and_return(borrow_direct)
           expect(borrow_direct).to receive(:make_request).with("Firestone Library", isbn: '9780812929645').and_return('123456')
@@ -659,7 +659,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).not_to have_content 'Your request was submittied. Our library staff will review the request and contact you with aviable options.'
         end
 
-        it 'Borrow direct unsuccessful, but no exception thrown sent on to illiad' do
+        xit 'Borrow direct unsuccessful, but no exception thrown sent on to illiad' do
           borrow_direct = ::BorrowDirect::RequestItem.new("22101008199999")
           expect(::BorrowDirect::RequestItem).to receive(:new).with("22101008199999").and_return(borrow_direct)
           expect(borrow_direct).to receive(:make_request).with("Firestone Library", isbn: '9780812929645').and_return(nil)
@@ -689,7 +689,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
         end
 
-        it 'Borrow Direct unsuccessful on missing item sent to illiad' do
+        xit 'Borrow Direct unsuccessful on missing item sent to illiad' do
           borrow_direct = ::BorrowDirect::RequestItem.new("22101008199999")
           expect(::BorrowDirect::RequestItem).to receive(:new).with("22101008199999").and_return(borrow_direct)
           expect(borrow_direct).to receive(:make_request).with("Firestone Library", isbn: '9780812929645').and_raise(::BorrowDirect::Error, "Error with borrow direct")
@@ -719,7 +719,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
         end
 
-        it 'allow interlibrary loan to be requested' do
+        xit 'allow interlibrary loan to be requested' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -744,7 +744,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("7th census of U.S.1850")
         end
 
-        it 'allows cas user to request from Annex or Firestone in mixed holding' do
+        xit 'allows cas user to request from Annex or Firestone in mixed holding' do
           visit '/requests/9922868943506421?mfhd=22109192600006421'
           expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_user_supplied_enum_22109192600006421'
@@ -757,7 +757,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content I18n.t('requests.submit.annex_success')
         end
 
-        it 'allows a non circulating item with no item data to be digitized' do
+        xit 'allows a non circulating item with no item data to be digitized' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -793,7 +793,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        it 'allows an in process item to be requested' do
+        xit 'allows an in process item to be requested' do
           visit '/requests/99113412093506421?mfhd=22213415640006421'
           expect(page).to have_content 'In Process materials are typically available in several business days'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -809,37 +809,6 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(in_process_email.to).to eq(["fstcirc@princeton.edu"])
           expect(in_process_email.cc).to be_blank
         end
-
-          it 'allows a non circulating item with no item data to be digitized' do
-            stub_request(:get, patron_url)
-              .to_return(status: 200, body: responses[:found], headers: {})
-            stub_request(:post, transaction_url)
-              .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
-                                         "Location" => "Marquand Library", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/4127409", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
-              .to_return(status: 200, body: responses[:transaction_created], headers: {})
-            stub_request(:post, transaction_note_url)
-              .to_return(status: 200, body: responses[:note_created], headers: {})
-            stub_clancy_status(barcode: "32101072349515")
-            visit '/requests/9941274093506421?mfhd=22197827810006421'
-            expect(page).to have_content 'Electronic Delivery'
-            choose('requestable__delivery_mode_22197827810006421_edd') # chooses 'edd' radio button
-            fill_in "Article/Chapter Title", with: "ABC"
-            fill_in "Author", with: "I Aman Author"
-            expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
-            confirm_email = ActionMailer::Base.deliveries.last
-            expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-            expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.html_part.body.to_s).to have_content(I18n.t('requests.marquand_edd.email_conf_msg'))
-            expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
-            marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
-            expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan")
-            expect(marquand_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
-            expect(marquand_email.html_part.body.to_s).to have_content("ABC")
-            expect(marquand_email.html_part.body.to_s).to have_content("I Aman Author")
-            expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
-            expect(marquand_email.cc).to be_blank
-          end
 
         # it 'allows an etas item to be digitized' do
         #   # TODO: - Do we need to worry about ETAS? No, PUL ETAS is being deprecated at alma go live
@@ -974,7 +943,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
-        it "places a hold and sends emails for a marquand in library use item" do
+        xit "places a hold and sends emails for a marquand in library use item" do
           stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '960594184')
           stub_clancy_status(barcode: "32101072349515")
           visit '/requests/9956364873506421?mfhd=22186505500006421'
@@ -999,7 +968,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        it "places a hold and a clancy request for a marquand in library use item at Clancy" do
+        xit "places a hold and a clancy request for a marquand in library use item at Clancy" do
           stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '960594184')
           stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
           stub_clancy_post(barcode: "32101072349515")
@@ -1023,7 +992,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        it "only has edd for a marquand in library use item at Clancy that is unavailable" do
+        xit "only has edd for a marquand in library use item at Clancy that is unavailable" do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1061,7 +1030,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        it "sends an email and places an illiad request for a marquand edd item at Clancy" do
+        xit "sends an email and places an illiad request for a marquand edd item at Clancy" do
           stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '960594184')
           stub_clancy_status(barcode: "32101072349515", status: "Item In at Rest")
           stub_clancy_post(barcode: "32101072349515")
@@ -1148,7 +1117,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Alesso Baldovinetti und die Florentiner Malerei der Frührenaissance")
         end
 
-        it 'Shows recap item that has not made it to recap yet as in process' do
+        xit 'Shows recap item that has not made it to recap yet as in process' do
           visit '/requests/99118892553506421?mfhd=2241086570006421'
           expect(page).to have_content 'In Process'
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
@@ -1170,77 +1139,77 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
     end
 
-          xit "shows in library use option for SCSB ReCAP items in Firestone" do
-            scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
-            stub_request(:post, scsb_url)
-              .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
-              .to_return(status: 200, body: good_response, headers: {})
-            stub_scsb_availability(bib_id: ".b215204128", institution_id: "NYPL", barcode: '33433121206696')
-            visit 'requests/SCSB-8953469'
-            expect(page).not_to have_content 'Help Me Get It'
-            expect(page).to have_content 'Available for In Library'
-            expect(page).not_to have_content 'Electronic Delivery'
-            expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-            expect(a_request(:post, scsb_url)).to have_been_made
-            expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
-            confirm_email = ActionMailer::Base.deliveries.last
-            expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
-            expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-            expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
-          end
-
-      describe 'Visits a request page', js: true do
-        it 'Tells the user their patron record is not available' do
-          visit "/requests/99117809653506421?mfhd=22203397510006421"
-          expect(a_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")).to have_been_made
-          expect(page).to have_content(I18n.t("requests.account.auth_user_lookup_fail"))
-        end
-      end
+    xit "shows in library use option for SCSB ReCAP items in Firestone" do
+      scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+      stub_request(:post, scsb_url)
+        .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
+        .to_return(status: 200, body: good_response, headers: {})
+      stub_scsb_availability(bib_id: ".b215204128", institution_id: "NYPL", barcode: '33433121206696')
+      visit 'requests/SCSB-8953469'
+      expect(page).not_to have_content 'Help Me Get It'
+      expect(page).to have_content 'Available for In Library'
+      expect(page).not_to have_content 'Electronic Delivery'
+      expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect(a_request(:post, scsb_url)).to have_been_made
+      expect(page).to have_content "Request submitted. See confirmation email with details about when your item(s) will be available"
+      confirm_email = ActionMailer::Base.deliveries.last
+      expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+      expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+      expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+      expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
     end
 
-    context 'A barcode holding user' do
-      let(:user) { FactoryGirl.create(:valid_barcode_patron) }
-      # change this back #438
-      it 'displays a request form for a ReCAP item.' do
-        stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
-          .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
-        login_as user
-        visit "/requests/#{voyager_id}"
-        expect(page).not_to have_content 'Electronic Delivery'
-        expect(page).not_to have_selector '#request_user_barcode', visible: false
-        expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
+    describe 'Visits a request page', js: true do
+      xit 'Tells the user their patron record is not available' do
+        visit "/requests/99117809653506421?mfhd=22203397510006421"
+        expect(a_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")).to have_been_made
+        expect(page).to have_content(I18n.t("requests.account.auth_user_lookup_fail"))
       end
     end
+  end
 
-    context 'A covid-trained pick-up only user' do
-      let(:user) { FactoryGirl.create(:user) }
-      xit 'displays a request form for a ReCAP item.' do
-        stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
-          .to_return(status: 200, body: valid_barcode_patron_pick_up_only_response, headers: {})
-        login_as user
-        visit "/requests/#{voyager_id}"
-        expect(page).to have_content 'Electronic Delivery'
-        expect(page).to have_content('Physical Item Delivery')
-        expect(page).to have_selector '#request_user_barcode', visible: false
-      end
+  context 'A barcode holding user' do
+    let(:user) { FactoryGirl.create(:valid_barcode_patron) }
+    # change this back #438
+    xit 'displays a request form for a ReCAP item.' do
+      stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+        .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
+      login_as user
+      visit "/requests/#{voyager_id}"
+      expect(page).not_to have_content 'Electronic Delivery'
+      expect(page).not_to have_selector '#request_user_barcode', visible: false
+      expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
     end
+  end
 
-    context 'An undergraduate student who has not taken the training' do
-      let(:user) { FactoryGirl.create(:user) }
-      xit 'displays a request form for a ReCAP item.' do
-        stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
-          .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
-        login_as user
-        visit "/requests/#{voyager_id}"
-        expect(page).to have_content 'Electronic Delivery'
-        expect(page).to have_selector '#request_user_barcode', visible: false
-        expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
-        expect(page).not_to have_content('If you would like to have access to pick-up books')
-      end
+  context 'A covid-trained pick-up only user' do
+    let(:user) { FactoryGirl.create(:user) }
+    xit 'displays a request form for a ReCAP item.' do
+      stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+        .to_return(status: 200, body: valid_barcode_patron_pick_up_only_response, headers: {})
+      login_as user
+      visit "/requests/#{voyager_id}"
+      expect(page).to have_content 'Electronic Delivery'
+      expect(page).to have_content('Physical Item Delivery')
+      expect(page).to have_selector '#request_user_barcode', visible: false
+    end
+  end
+
+  context 'An undergraduate student who has not taken the training' do
+    let(:user) { FactoryGirl.create(:user) }
+    xit 'displays a request form for a ReCAP item.' do
+      stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
+      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+        .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
+      login_as user
+      visit "/requests/#{voyager_id}"
+      expect(page).to have_content 'Electronic Delivery'
+      expect(page).to have_selector '#request_user_barcode', visible: false
+      expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
+      expect(page).not_to have_content('If you would like to have access to pick-up books')
+    end
 
     context 'An graduate student who has not taken the training' do
       let(:user) { FactoryGirl.create(:user) }
@@ -1257,67 +1226,67 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         expect(page).not_to have_content('If you would like to have access to pick-up books')
       end
 
-    context 'a princeton net ID user without a barcode' do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
-      let(:recap_in_process_id) { '99105873133506421?mfhd=22251746380006421' }
-
-      let(:recap_params) do
-        {
-          Bbid: "9994933183506421",
-          item: "23131438400006421",
-          lname: "Student",
-          delivery: "p",
-          pickup: "PN",
-          startpage: "",
-          endpage: "",
-          email: "a@b.com",
-          volnum: "",
-          issue: "",
-          aauthor: "",
-          atitle: "",
-          note: ""
-        }
-      end
-
-      context 'An undergraduate student who has not taken the training' do
+      context 'a princeton net ID user without a barcode' do
         let(:user) { FactoryGirl.create(:user) }
-        xit 'displays a request form for a ReCAP item.' do
-          stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
-            .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
-          login_as user
-          visit "/requests/#{voyager_id}"
-          expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_selector '#request_user_barcode', visible: false
-          expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
-          expect(page).not_to have_content('If you would like to have access to pick-up books')
-        end
-      end
+        let(:in_process_id) { '99121095223506421?mfhd=22183262530006421' }
+        let(:recap_in_process_id) { '99105873133506421?mfhd=22251746380006421' }
 
-      describe 'When visiting a voyager ID as a CAS User' do
-        xit 'allow CAS patrons to request an available ReCAP item.' do
-          stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
-          scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
-          stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9994933183506421", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
-                                       requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
-            .to_return(status: 200, body: good_response, headers: {})
-          stub_request(:post, Requests.config[:scsb_base])
-            .with(headers: { 'Accept' => '*/*' })
-            .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
-          stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/9994933183506421/holdings/22131438430006421/items/23131438400006421/requests?user_id=960594184")
-            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
-            .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
-          visit "/requests/#{voyager_id}"
-          expect(page).to have_content 'Electronic Delivery'
-          expect(page).to have_content('Physical Item Delivery')
-          expect(page).to have_selector '#request_user_barcode', visible: false
-          expect(page).not_to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
-          expect(page).not_to have_content('If you would like to have access to pick-up books')
+        let(:recap_params) do
+          {
+            Bbid: "9994933183506421",
+            item: "23131438400006421",
+            lname: "Student",
+            delivery: "p",
+            pickup: "PN",
+            startpage: "",
+            endpage: "",
+            email: "a@b.com",
+            volnum: "",
+            issue: "",
+            aauthor: "",
+            atitle: "",
+            note: ""
+          }
         end
-      end
 
-        it 'disallows access to in process items' do
+        context 'An undergraduate student who has not taken the training' do
+          let(:user) { FactoryGirl.create(:user) }
+          xit 'displays a request form for a ReCAP item.' do
+            stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+              .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
+            login_as user
+            visit "/requests/#{voyager_id}"
+            expect(page).to have_content 'Electronic Delivery'
+            expect(page).to have_selector '#request_user_barcode', visible: false
+            expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
+            expect(page).not_to have_content('If you would like to have access to pick-up books')
+          end
+        end
+
+        describe 'When visiting a voyager ID as a CAS User' do
+          xit 'allow CAS patrons to request an available ReCAP item.' do
+            stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
+            scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
+            stub_request(:post, scsb_url)
+              .with(body: hash_including(author: "", bibId: "9994933183506421", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
+                                         requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
+              .to_return(status: 200, body: good_response, headers: {})
+            stub_request(:post, Requests.config[:scsb_base])
+              .with(headers: { 'Accept' => '*/*' })
+              .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
+            stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/9994933183506421/holdings/22131438430006421/items/23131438400006421/requests?user_id=960594184")
+              .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
+              .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
+            visit "/requests/#{voyager_id}"
+            expect(page).to have_content 'Electronic Delivery'
+            expect(page).to have_content('Physical Item Delivery')
+            expect(page).to have_selector '#request_user_barcode', visible: false
+            expect(page).not_to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
+            expect(page).not_to have_content('If you would like to have access to pick-up books')
+          end
+        end
+
+        xit 'disallows access to in process items' do
           visit "/requests/#{in_process_id}"
           expect(page).not_to have_content 'Pick-up location: Marquand Library'
           expect(page).to have_button('Request this Item')
@@ -1346,7 +1315,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        it 'Help Me Get it for On-Order recap items' do
+        xit 'Help Me Get it for On-Order recap items' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1368,7 +1337,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
-        it 'allows access to a record that has no item data' do
+        xit 'allows access to a record that has no item data' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1429,7 +1398,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        it 'allows digitizing, but not pick-up of on on_shelf record' do
+        xit 'allows digitizing, but not pick-up of on on_shelf record' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1479,7 +1448,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("L'écrivain, magazine litteraire trimestriel")
         end
 
-        it 'allows patrons to request a Forrestal annex' do
+        xit 'allows patrons to request a Forrestal annex' do
           visit '/requests/999455503506421?mfhd=2221072930006421'
           expect(page).not_to have_content 'Pick-up location: '
           expect(page).to have_content 'Electronic Delivery'
@@ -1505,7 +1474,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
         end
 
-        it 'allows patrons to request a digital copy from Lewis' do
+        xit 'allows patrons to request a digital copy from Lewis' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1530,14 +1499,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
         end
 
-        it 'allows patrons to ask for digitizing on non circulating items' do
+        xit 'allows patrons to ask for digitizing on non circulating items' do
           visit '/requests/9995948403506421?mfhd=2258775160006421'
           expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Pick-up location: Lewis Library'
           expect(page).to have_css '.submit--request'
         end
 
-        it 'allows filtering items by mfhd' do
+        xit 'allows filtering items by mfhd' do
           visit '/requests/9979171923506421?mfhd=22230315750006421'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'Electronic Delivery'
@@ -1545,12 +1514,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).not_to have_content 'Copy 3'
         end
 
-        it 'shows an error if MFHD is not present' do
+        xit 'shows an error if MFHD is not present' do
           visit '/requests/9979171923506421'
           expect(page).not_to have_content 'Please Select a location on the main record page.'
         end
 
-        it 'allow fillin forms in digital only' do
+        xit 'allow fillin forms in digital only' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1598,7 +1567,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")
         end
 
-        it "shows items in the Architecture Library as available" do
+        xit "shows items in the Architecture Library as available" do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1627,17 +1596,17 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
-        it 'allows aeon requests for all users' do
+        xit 'allows aeon requests for all users' do
           visit '/requests/9973529363506421?mfhd=22111313200006421'
           expect(page).to have_content 'Request to View in Reading Room'
         end
 
-        it 'allows guest patrons to see there are no items for Online only' do
+        xit 'allows guest patrons to see there are no items for Online only' do
           visit '/requests/9999946923506421?mfhd=22131438430006421'
           expect(page).to have_content 'there are no requestable items for this record'
         end
 
-        it 'Help Me Get It instead of using Borrow Direct, ILL, and Recall on Missing items' do
+        xit 'Help Me Get It instead of using Borrow Direct, ILL, and Recall on Missing items' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1663,7 +1632,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
-        it 'allows generic fill in requests enums from Annex or Firestone in mixed holding' do
+        xit 'allows generic fill in requests enums from Annex or Firestone in mixed holding' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1694,7 +1663,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
-        it 'allows a non circulating item with not item data to be digitized' do
+        xit 'allows a non circulating item with not item data to be digitized' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)

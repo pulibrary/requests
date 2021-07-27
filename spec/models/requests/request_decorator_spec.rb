@@ -108,8 +108,7 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
-      # close everything for the alma migration
-      xit "identifies any mfhds that require fill in option" do
+      it "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
       end
     end
@@ -176,8 +175,7 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true } }
-      # close everything for the alma migration
-      xit "is not a single item" do
+      it "is not a single item" do
         expect(decorator.single_item_request?).to be_falsey
       end
     end

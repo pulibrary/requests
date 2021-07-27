@@ -66,9 +66,7 @@ module Requests
     end
 
     def located_in_an_open_library?
-      # close everything for the alma migration
-      false
-      # open_libraries.include?(library_code)
+      open_libraries.include?(library_code)
     end
 
     def on_shelf_edd?

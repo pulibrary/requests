@@ -255,8 +255,9 @@ module Requests
       request_email(submission: submission, subject_key: 'requests.recall.staff_email_subject', destination_key: 'requests.recap.scsb_recall_destination')
     end
 
-    def service_error_email(services)
+    def service_error_email(services, submission)
       @services = services
+      @submission = submission
       errors = services.map(&:errors).flatten
       error_types = errors.map { |error| error[:type] }.uniq
       destination_email = if error_types.include?("digitize")

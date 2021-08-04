@@ -3,7 +3,7 @@ require 'spec_helper'
 # rubocop:disable RSpec/MultipleExpectations
 describe Requests::Recap do
   context 'ReCAP Request' do
-    let(:valid_patron) { { "netid" => "foo", "university_id" => "99999999" }.with_indifferent_access }
+    let(:valid_patron) { { "netid" => "foo", "university_id" => "99999999", "active_email" => 'foo1@princeton.edu', barcode: '111222333' }.with_indifferent_access }
     let(:user_info) do
       user = instance_double(User, guest?: false, uid: 'foo')
       Requests::Patron.new(user: user, session: {}, patron: valid_patron)
@@ -143,6 +143,12 @@ describe Requests::Recap do
         expect(error_email.to).to eq(["recapproblems@princeton.edu"])
         expect(error_email.cc).to be_blank
         expect(error_email.html_part.body.to_s).to include("Recap request was successful, but creating the hold in Alma had an error: Can not create hold")
+        expect(error_email.html_part.body.to_s).to include("foo")
+        expect(error_email.html_part.body.to_s).to include("foo1@princeton.edu")
+        expect(error_email.html_part.body.to_s).to include("111222333")
+        expect(error_email.text_part.body.to_s).to include("foo")
+        expect(error_email.text_part.body.to_s).to include("foo1@princeton.edu")
+        expect(error_email.text_part.body.to_s).to include("111222333")
       end
 
       context 'when the SCSB web service responds with an invalid response' do

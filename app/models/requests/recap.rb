@@ -59,7 +59,7 @@ module Requests
           reply_text = error["reply_text"]
           error.merge("reply_text" => "Recap request was successful, but creating the hold in Alma had an error: #{reply_text}")
         end
-        Requests::RequestMailer.send("service_error_email", [hold]).deliver_now
+        Requests::RequestMailer.send("service_error_email", [hold], @submission).deliver_now
       end
   end
 end

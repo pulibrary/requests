@@ -57,7 +57,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe "#open_libraries" do
       it "has all the open libraries" do
-        expect(requestable.open_libraries).to eq(["firestone", "annex", "marquand", "mendel", "stokes", "eastasian", "arch", "lewis", "engineer"])
+        expect(requestable.open_libraries).to eq(["firestone", "annex", "marquand", "mendel", "stokes", "eastasian", "arch", "lewis", "engineer", "recap"])
       end
     end
   end
@@ -928,7 +928,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
         stub_scsb_availability(bib_id: "9999998003506421", institution_id: "PUL", barcode: '32101099186403')
       end
 
-      xit "has recap request service available" do
+      it "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
       it "has recap edd request service available" do
@@ -1049,7 +1049,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       end
 
       # TODO: Activate test when campus has re-opened
-      xit "has recap request service available" do
+      it "has recap request service available" do
         expect(requestable.services.include?('recap')).to be true
       end
       it "has recap edd request service available" do

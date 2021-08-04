@@ -154,6 +154,7 @@ FactoryGirl.define do
   factory :request_with_items_charged, class: 'Requests::Request' do
     system_id '9913891213506421'
     mfhd_id '22256065790006421'
+    # mfhd_id '22739043950006421' This is the truly charged item
     source 'pulsearch'
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, patron: patron, mfhd: mfhd_id, source: source) }

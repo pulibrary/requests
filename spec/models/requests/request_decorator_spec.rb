@@ -129,7 +129,7 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with item data that is enumerated" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum_display' => true) } }
-      xit "identifies any mfhds that require fill in option" do
+      it "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
       end
     end
@@ -152,14 +152,14 @@ describe Requests::RequestDecorator do
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annex?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, open_libraries: ['abc'], library_code: 'abc' } }
-      xit "submits via form" do
+      it "submits via form" do
         expect(decorator.any_will_submit_via_form?).to be_truthy
       end
     end
 
     context "on_shelf services with no item data and circulates" do
       let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false, recap_edd?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annex?: false, clancy?: false, item_at_clancy?: false, held_at_marquand_library?: false, open_libraries: ['abc'], library_code: 'abc' } }
-      xit "does not submit via form" do
+      it "does not submit via form" do
         expect(decorator.any_will_submit_via_form?).to be_falsey
       end
     end

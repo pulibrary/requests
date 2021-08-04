@@ -218,7 +218,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
 
       describe 'When visiting a voyager ID as a CAS User' do
-        xit 'Shows a ReCAP item that is at preservation and conservation as a partner request' do
+        it 'Shows a ReCAP item that is at preservation and conservation as a partner request' do
           stub_request(:post, transaction_url)
             .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Zhongguo xin li xue hui", "LoanTitle" => "Xin li ke xue = Journal of psychological science 心理科学 = Journal of psychological science", "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => "BF8.C5 H76", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/9941150973506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
             .to_return(status: 200, body: responses[:transaction_created], headers: {})
@@ -243,7 +243,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        xit 'allow CAS patrons to request an available ReCAP item.' do
+        it 'allow CAS patrons to request an available ReCAP item.' do
           stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
@@ -290,7 +290,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
         end
 
-        xit 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
+        it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
           select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
@@ -339,14 +339,14 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        xit 'allows CAS patrons to request a ReCAP record that has no item data' do
+        it 'allows CAS patrons to request a ReCAP record that has no item data' do
           visit "/requests/99113283293506421?mfhd=2256094420006421"
           check('requestable__selected', exact: true)
           fill_in 'requestable[][user_supplied_enum]', with: 'Some Volume'
           expect(page).to have_button('Request this Item', disabled: false)
         end
 
-        xit 'allows CAS patrons to locate an ReCAP record that has no item data' do
+        it 'allows CAS patrons to locate an ReCAP record that has no item data' do
           visit "/requests/#{on_shelf_no_items_id}"
           choose('requestable__delivery_mode_22261908670006421_print') # chooses 'print' radio button
           select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
@@ -379,7 +379,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
-        xit 'allows patrons to request a physical recap item' do
+        it 'allows patrons to request a physical recap item' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: "", bibId: "9999443553506421", callNumber: "DT549 .E274q Oversize", chapterTitle: "ABC", deliveryLocation: "PA", emailAddress: "a@b.com", endPage: "", issue: "",
@@ -437,7 +437,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        xit 'allows patrons to request a Lewis recap item digitally' do
+        it 'allows patrons to request a Lewis recap item digitally' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_scsb_availability(bib_id: "9970533073506421", institution_id: "PUL", barcode: '32101051217659')
           stub_request(:post, scsb_url)
@@ -579,7 +579,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
-        xit 'Shows Marqaund Recap Item as an EDD option or In Library Use, no delivery' do
+        it 'Shows Marqaund Recap Item as an EDD option or In Library Use, no delivery' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url).to_return(status: 200, body: good_response, headers: {})
           stub_scsb_availability(bib_id: "99117809653506421", institution_id: "PUL", barcode: '32101106347378')
@@ -617,7 +617,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
         end
 
-        xit "allows requests of recap pick-up only items" do
+        it "allows requests of recap pick-up only items" do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_scsb_availability(bib_id: "99115783193506421", institution_id: "PUL", barcode: '32101108035435')
           stub_request(:post, scsb_url)
@@ -878,7 +878,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         # end
 
         # need to check on CUL etas
-        xit "allows a columbia item that is not in hathi etas to be picked up or digitized" do
+        it "allows a columbia item that is not in hathi etas to be picked up or digitized" do
           stub_scsb_availability(bib_id: "1000060", institution_id: "CUL", barcode: 'CU01805363')
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=21154437")
             .to_return(status: 200, body: '[]')
@@ -906,7 +906,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        xit "allows a columbia item that is open access to be picked up or digitized" do
+        it "allows a columbia item that is open access to be picked up or digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=502557695")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"502557695","bibid":"9938633913506421","status":"ALLOW","origin":"CUL"}]')
           stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-4634001/raw")
@@ -933,7 +933,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
-        xit "allows a columbia item that is ETAS to only be digitized" do
+        it "allows a columbia item that is ETAS to only be digitized" do
           stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=19774500")
             .to_return(status: 200, body: '[{"id":null,"oclc_number":"19774500","bibid":"99310000663506421","status":"DENY","origin":"CUL"}]')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
@@ -1087,7 +1087,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        xit "shows in library use option for SCSB ReCAP items in Firestone" do
+        it "shows in library use option for SCSB ReCAP items in Firestone" do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
             .with(body: hash_including(author: nil, bibId: "SCSB-8953469", callNumber: "ReCAP 18-69309", chapterTitle: nil, deliveryLocation: "QX", emailAddress: "a@b.com", endPage: nil, issue: nil, itemBarcodes: ["33433121206696"], itemOwningInstitution: "NYPL", patronBarcode: "22101008199999", requestNotes: nil, requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: nil, titleIdentifier: "1955-1968 : gli artisti italiani alle Documenta di Kassel", username: "jstudent", volume: nil))
@@ -1109,7 +1109,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("955-1968 : gli artisti italiani alle Documenta di Kassel")
         end
 
-        xit 'Shows marqaund recap item as an EDD or In Library Use' do
+        it 'Shows marqaund recap item as an EDD or In Library Use' do
           stub_scsb_availability(bib_id: "99117809653506421", institution_id: "PUL", barcode: '32101106347378')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
@@ -1191,7 +1191,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     context 'A covid-trained pick-up only user' do
       let(:user) { FactoryGirl.create(:user) }
-      xit 'displays a request form for a ReCAP item.' do
+      it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_pick_up_only_response, headers: {})
@@ -1205,7 +1205,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     context 'An undergraduate student who has not taken the training' do
       let(:user) { FactoryGirl.create(:user) }
-      xit 'displays a request form for a ReCAP item.' do
+      it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
@@ -1220,7 +1220,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
 
     context 'An graduate student who has not taken the training' do
       let(:user) { FactoryGirl.create(:user) }
-      xit 'displays a request form for a ReCAP item.' do
+      it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
         stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_graduate_student_no_campus_response, headers: {})
@@ -1264,7 +1264,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
       end
 
       describe 'When visiting a voyager ID as a CAS User' do
-        xit 'allow CAS patrons to request an available ReCAP item.' do
+        it 'allow CAS patrons to request an available ReCAP item.' do
           stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
@@ -1289,7 +1289,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
         end
 
-        xit 'Help Me Get it for in process recap items' do
+        it 'Help Me Get it for in process recap items' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1308,10 +1308,11 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_nil
           expect(confirm_email.html_part.body.to_s).to have_content("Unrecognised by the world at large : a biography of Dr Henry Parse")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
         end
 
-        xit 'Help Me Get it for On-Order recap items' do
+        it 'Help Me Get it for On-Order recap items' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
           stub_request(:post, transaction_url)
@@ -1360,7 +1361,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(marquand_email.cc).to be_blank
         end
 
-        xit 'allows access an ReCAP record that has no item data to be digitized' do
+        it 'allows access an ReCAP record that has no item data to be digitized' do
           visit "/requests/#{on_shelf_no_items_id}"
           expect(page).to have_button('Request this Item')
           expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
@@ -1382,7 +1383,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to eq([])
           expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).to have_content("Digitization Requested")
         end
 
         it 'allows digitizing, but not pick-up of on on_shelf record' do
@@ -1411,7 +1413,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
-        xit 'allows patrons to request a physical recap item' do
+        it 'allows patrons to request a physical recap item' do
           stub_scsb_availability(bib_id: "9999443553506421", institution_id: "PUL", barcode: '32101098722844')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
@@ -1441,7 +1443,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(page).to have_content 'Electronic Delivery'
         end
 
-        xit 'allows patrons to request a Lewis recap item digitally' do
+        it 'allows patrons to request a Lewis recap item digitally' do
           stub_scsb_availability(bib_id: "9970533073506421", institution_id: "PUL", barcode: '32101051217659')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
@@ -1537,7 +1539,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
         end
 
         # TODO: once Marquad in library use is available again it should show pick-up at marquand also
-        xit 'Shows ReCAP marqaund as an EDD option only' do
+        it 'Shows ReCAP marqaund as an EDD option only' do
           stub_scsb_availability(bib_id: "99117809653506421", institution_id: "PUL", barcode: '32101106347378')
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"
           stub_request(:post, scsb_url)
@@ -1576,7 +1578,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :new_episo
           expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
         end
 
-        xit "disallows requests of recap pick-up only items" do
+        it "disallows requests of recap pick-up only items" do
           stub_scsb_availability(bib_id: "99115783193506421", institution_id: "PUL", barcode: '32101108035435')
           visit '/requests/99115783193506421?mfhd=22155047580006421'
           expect(page).not_to have_button('Request this Item')

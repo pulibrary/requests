@@ -1110,7 +1110,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       # these tests are temporarily pending until trace feature is resolved
       # see https://github.com/pulibrary/requests/issues/164 for info
 
-      xit "should be eligible for multiple services" do
+      it "is eligible for multiple services" do
         expect(request.requestable.first.services.size).to eq(2)
       end
 
@@ -1187,7 +1187,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
-      xit "has available copy" do
+      it "has available copy" do
         expect(request.any_loanable_copies?).to be true
       end
     end
@@ -1209,7 +1209,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     end
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
-      xit "has available copy" do
+      it "has available copy" do
         expect(request.any_loanable_copies?).to be true
       end
     end

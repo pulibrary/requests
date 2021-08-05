@@ -1137,10 +1137,10 @@ describe Requests::Submission do
   context 'Clancy Item' do
     let(:requestable) do
       [
-        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
-          "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
+        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22587331490006421", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "23587331480006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "clancy_in_library", "fill_in" => "false",
-          "delivery_mode_23186505470006421" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23587331480006421" => "in_library", "pick_up" => "PA" }
       ]
     end
 
@@ -1158,7 +1158,7 @@ describe Requests::Submission do
 
     describe "#process_submission" do
       it 'items contacts clancy and voyager' do
-        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
@@ -1167,7 +1167,7 @@ describe Requests::Submission do
       end
 
       it "returns hold errors" do
-        alma_url = stub_alma_hold_failure('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
+        alma_url = stub_alma_hold_failure('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         clancy_url = "#{Requests.config[:clancy_base]}/circrequests/v1"
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(a_request(:post, alma_url)).to have_been_made
@@ -1176,7 +1176,7 @@ describe Requests::Submission do
       end
 
       it 'returns clancy errors' do
-        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
@@ -1190,10 +1190,10 @@ describe Requests::Submission do
   context 'Clancy EDD Item' do
     let(:requestable) do
       [
-        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
-          "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
+        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22587331490006421", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "23587331480006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "clancy_edd", "fill_in" => "false",
-          "delivery_mode_23186505470006421" => "edd", "pick_up" => "PA", "edd_art_title" => "Test This is only a test", "edd_start_page" => "",
+          "delivery_mode_23587331480006421" => "edd", "pick_up" => "PA", "edd_art_title" => "Test This is only a test", "edd_start_page" => "",
           "edd_end_page" => "", "edd_volume_number" => "", "edd_issue" => "", "edd_author" => "", "edd_note" => "This is a test",
           "edd_genre" => "book", "edd_location" => "Marquand Library", "edd_isbn" => "9782754101578", "edd_date" => "2008",
           "edd_publisher" => "Paris: Hazan", "edd_call_number" => "ND553.P6 D24 2008q", "edd_oclc_number" => "263300578", "edd_title" => "Picasso" }.with_indifferent_access
@@ -1239,7 +1239,7 @@ describe Requests::Submission do
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         stub_request(:post, transaction_url)
           .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
-                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
           .to_return(status: 200, body: responses[:transaction_created], headers: {})
         stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
         expect(submission).to be_valid
@@ -1254,7 +1254,7 @@ describe Requests::Submission do
       it "returns illiad errors" do
         stub_request(:post, transaction_url)
           .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
-                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
           .to_return(status: 503, body: responses[:transaction_error], headers: {})
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(a_request(:get, patron_url)).to have_been_made
@@ -1266,7 +1266,7 @@ describe Requests::Submission do
         clancy_url = stub_clancy_post(barcode: "32101072349515", deny: 'Y', status: "Item Cannot be Retrieved - Item is Currently Circulating")
         stub_request(:post, transaction_url)
           .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
-                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog-alma-qa.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
+                                     "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Dogs : history, myth, art", "PhotoItemPublisher" => "Paris: Hazan", "ISSN" => "9780674030930", "CallNumber" => "ND553.P6 D24 2008q", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/5636487", "PhotoJournalYear" => "2008", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand Clancy EDD", "AcceptNonEnglish" => true, "ESPNumber" => "263300578", "DocumentType" => "Book", "Location" => "Marquand Library", "PhotoArticleTitle" => "Test This is only a test"))
           .to_return(status: 200, body: responses[:transaction_created], headers: {})
         stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
@@ -1281,10 +1281,10 @@ describe Requests::Submission do
   context 'Marquand non Clancy Item' do
     let(:requestable) do
       [
-        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22186505500006421", "call_number" => "N7668.D6 J64 2008",
-          "location_code" => "sa", "item_id" => "23186505470006421", "barcode" => "32101072349515", "copy_number" => "1",
+        { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22587331490006421", "call_number" => "N7668.D6 J64 2008",
+          "location_code" => "sa", "item_id" => "23587331480006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "marquand_in_library", "fill_in" => "false",
-          "delivery_mode_23186505470006421" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23587331480006421" => "in_library", "pick_up" => "PA" }
       ]
     end
 
@@ -1304,7 +1304,7 @@ describe Requests::Submission do
 
     describe "#process_submission" do
       it 'items contacts voyager and does not email marquand or contact clancy' do
-        alma_url = stub_alma_hold_success('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
+        alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         expect(submission).to be_valid
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(a_request(:post, alma_url)).to have_been_made
@@ -1312,7 +1312,7 @@ describe Requests::Submission do
       end
 
       it "returns hold errors" do
-        alma_url = stub_alma_hold_failure('9956364873506421', '22186505500006421', '23186505470006421', '9999999')
+        alma_url = stub_alma_hold_failure('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).not_to have_been_made

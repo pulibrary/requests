@@ -2,7 +2,7 @@ require 'spec_helper'
 require './app/models/requests/request.rb'
 
 RSpec.describe Requests::ApplicationHelper, type: :helper,
-                                            vcr: { cassette_name: 'request_models', record: :new_episodes } do
+                                            vcr: { cassette_name: 'request_models', record: :none } do
 
   let(:user) { FactoryGirl.build(:user) }
   let(:valid_patron) do
@@ -31,7 +31,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '9981794023506421',
-        mfhd: '22237592660006421',
+        mfhd: '22591269990006421',
         patron: patron
       }
     end
@@ -48,7 +48,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '9992220243506421',
-          mfhd: '22251138630006421',
+          mfhd: '22558467250006421',
           patron: patron
         }
       end
@@ -67,7 +67,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       let(:params) do
         {
           system_id: '9938488723506421',
-          mfhd: '22205589810006421',
+          mfhd: '22522147400006421',
           patron: patron
         }
       end
@@ -82,7 +82,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '994916543506421',
-        mfhd: '22113812540006421',
+        mfhd: '22724990930006421',
         patron: patron
       }
     end
@@ -94,7 +94,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pick_up_choices(lewis_request_with_multiple_requestable.requestable.last, default_pick_ups)
-      expect(choices).to eq("<div id=\"fields-print__23113812530006421\" class=\"collapse request--print\"><div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div><div id=\"fields-print__23113812530006421_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pick_up]\" id=\"requestable__pick_up\" value=\"{&quot;pick_up&quot;:&quot;PN&quot;,&quot;pick_up_location_code&quot;:&quot;lewis&quot;}\" class=\"single-pick-up-hidden\" /><label class=\"single-pick-up\" style=\"\" for=\"requestable__pick_up\">Pick-up location: Lewis Library</label></div></div>")
+      expect(choices).to eq("<div id=\"fields-print__23724990920006421\" class=\"collapse request--print\"><div><ul class=\"service-list\"><li class=\"service-item\">Requests for pick-up typically take 2 business days to process.</li></ul></div><div id=\"fields-print__23724990920006421_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pick_up]\" id=\"requestable__pick_up\" value=\"{&quot;pick_up&quot;:&quot;PN&quot;,&quot;pick_up_location_code&quot;:&quot;lewis&quot;}\" class=\"single-pick-up-hidden\" /><label class=\"single-pick-up\" style=\"\" for=\"requestable__pick_up\">Pick-up location: Lewis Library</label></div></div>")
     end
   end
 
@@ -102,7 +102,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '994264203506421',
-        mfhd: '2284684460006421',
+        mfhd: '22697858020006421',
         patron: patron
       }
     end
@@ -114,7 +114,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:submit_button_disabled) { helper.submit_button_disabled(requestable_list) }
     it 'lewis is a submitable request' do
       choices = helper.pick_up_choices(lewis_request_with_multiple_requestable.requestable.last, default_pick_ups)
-      expect(choices).to eq("<div id=\"fields-print__2384684450006421\" class=\"collapse request--print\"><ul class=\"service-list\"><li class=\"service-item\">Item offsite at Forrestal Annex. Requests for pick-up typically take 1-2 business days to process.</li></ul><div id=\"fields-print__2384684450006421_card\" class=\"card card-body bg-light\"><select name=\"requestable[][pick_up]\" id=\"requestable__pick_up\"><option value=\"\">Select a Delivery Location</option><option value=\"{&quot;pick_up&quot;:&quot;PA&quot;,&quot;pick_up_location_code&quot;:&quot;firestone&quot;}\">Firestone Library</option>\n<option value=\"{&quot;pick_up&quot;:&quot;PW&quot;,&quot;pick_up_location_code&quot;:&quot;arch&quot;}\">Architecture Library</option>\n<option value=\"{&quot;pick_up&quot;:&quot;PL&quot;,&quot;pick_up_location_code&quot;:&quot;eastasian&quot;}\">East Asian Library</option>\n<option value=\"{&quot;pick_up&quot;:&quot;PN&quot;,&quot;pick_up_location_code&quot;:&quot;lewis&quot;}\">Lewis Library</option>\n<option value=\"{&quot;pick_up&quot;:&quot;PK&quot;,&quot;pick_up_location_code&quot;:&quot;mendel&quot;}\">Mendel Music Library</option>\n<option value=\"{&quot;pick_up&quot;:&quot;PM&quot;,&quot;pick_up_location_code&quot;:&quot;stokes&quot;}\">Stokes Library</option>\n<option value=\"{&quot;pick_up&quot;:&quot;QA&quot;,&quot;pick_up_location_code&quot;:&quot;firestone&quot;}\">Firestone Library, Resource Sharing (Staff Only)</option>\n<option value=\"{&quot;pick_up&quot;:&quot;QT&quot;,&quot;pick_up_location_code&quot;:&quot;firestone&quot;}\">Technical Services 693 (Staff Only)</option>\n<option value=\"{&quot;pick_up&quot;:&quot;QC&quot;,&quot;pick_up_location_code&quot;:&quot;firestone&quot;}\">Technical Services HMT (Staff Only)</option></select></div></div>")
+      expect(choices).to eq("<div id=\"fields-print__23697857990006421\" class=\"collapse request--print show\"><ul class=\"service-list\"><li class=\"service-item\">In Process materials are typically available in several business days.</li></ul><div id=\"fields-print__23697857990006421_card\" class=\"card card-body bg-light\"><input type=\"hidden\" name=\"requestable[][pick_up]\" id=\"requestable__pick_up\" value=\"{&quot;pick_up&quot;:&quot;PN&quot;,&quot;pick_up_location_code&quot;:&quot;lewis&quot;}\" class=\"single-pick-up-hidden\" /><label class=\"single-pick-up\" style=\"\" for=\"requestable__pick_up\">Pick-up location: Lewis Library</label></div></div>")
     end
   end
 
@@ -124,7 +124,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:params) do
       {
         system_id: '9973529363506421',
-        mfhd: '22111313060006421',
+        mfhd: '22667098870006421',
         patron: patron
       }
     end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :new_episodes } do
+describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :none } do
   let(:user) { FactoryGirl.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
@@ -13,7 +13,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context "Is a bibliographic record on the shelf" do
     let(:request) { FactoryGirl.build(:request_on_shelf, patron: patron) }
-    let(:requestable) { request.requestable.first }
+    let(:requestable) { request.requestable.last }
     let(:mfhd_id) { requestable.holding.first[0] }
     let(:call_number) { CGI.escape(requestable.holding[mfhd_id]['call_number']) }
     let(:location_code) { CGI.escape(requestable.holding[mfhd_id]['location_code']) }
@@ -297,14 +297,14 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
       describe '#location_label' do
         it 'has a location label' do
-          expect(requestable.first.location_label).to eq('Firestone Library - Stacks')
+          expect(requestable.first.location_label).to eq('Lewis Library - Stacks')
         end
       end
     end
 
     describe '#pick_up_locations' do
       it 'has pickup locations' do
-        expect(requestable.first.pick_up_locations).to eq([{ "label" => "Firestone Library", "address" => "One Washington Rd. Princeton, NJ 08544", "phone_number" => "609-258-1470", "contact_email" => "fstcirc@princeton.edu", "gfa_pickup" => "PA", "staff_only" => false, "pickup_location" => true, "digital_location" => true, "library" => { "label" => "Firestone Library", "code" => "firestone", "order" => 0 }, "pick_up_location_code" => "firestone" }])
+        expect(requestable.first.pick_up_locations).to eq([{ "label" => "Lewis Library", "address" => "Washington Road and Ivy Lane Princeton, NJ 08544", "phone_number" => "609-258-6004", "contact_email" => "lewislib@princeton.edu", "gfa_pickup" => "PN", "staff_only" => false, "pickup_location" => true, "digital_location" => true, "library" => { "code" => "lewis", "label" => "Lewis Library", "order" => 0 }, "pick_up_location_code" => "lewis" }])
       end
     end
 
@@ -335,8 +335,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
       it 'gets values' do
         expect(requestable.item_data?).to be true
         expect(requestable.item_type_non_circulate?).to be true
-        expect(requestable.pick_up_location_id).to eq 'stacks'
-        expect(requestable.pick_up_location_code).to eq 'stacks'
+        expect(requestable.pick_up_location_id).to eq 'firestone'
+        expect(requestable.pick_up_location_code).to eq 'firestone'
         expect(requestable.enum_value).to eq 'vol.22'
         expect(requestable.cron_value).to eq '1996'
         expect(requestable.location_label).to eq('Firestone Library - Stacks')
@@ -357,8 +357,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     describe '#item_type_circulate' do
       it 'returns the item type from alma' do
         expect(requestable.item_type_non_circulate?).to be false
-        expect(requestable.pick_up_location_id).to eq 'stacks'
-        expect(requestable.pick_up_location_code).to eq 'stacks'
+        expect(requestable.pick_up_location_id).to eq 'firestone'
+        expect(requestable.pick_up_location_code).to eq 'firestone'
       end
     end
 
@@ -436,7 +436,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable serial item that has volume and item data in its openurl' do
     let(:request) { FactoryGirl.build(:aeon_rbsc_enumerated, patron: patron) }
-    let(:requestable_holding) { request.requestable.select { |r| r.holding['22127290370006421'] } }
+    let(:requestable_holding) { request.requestable.select { |r| r.holding['22677203260006421'] } }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     describe '#aeon_open_url' do
       it 'returns an openurl with volume data' do
@@ -450,7 +450,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
+        expect(requestable.location_label).to eq('Special Collections - Remote Storage (ReCAP): Rare Books. Special Collections Use Only')
       end
     end
 
@@ -475,7 +475,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
     let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
-    let(:requestable_holding) { request.requestable.select { |r| r.holding['22256352610006421'] } }
+    let(:requestable_holding) { request.requestable.select { |r| r.holding['22563389780006421'] } }
     let(:holding_id) { '22256352610006421' }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     let(:enumeration) { 'v.7' }
@@ -594,7 +594,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('ReCAP - Remote Storage: Marquand Library (Rare) use only')
+        expect(requestable.location_label).to eq('Marquand Library - Remote Storage (ReCAP): Marquand Library Use Only')
       end
     end
 
@@ -744,7 +744,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     describe '#location_label' do
       it 'has a location label' do
-        expect(requestable.location_label).to eq('ReCAP - Rare Books Off-Site Storage')
+        expect(requestable.location_label).to eq('Special Collections - Remote Storage (ReCAP): Rare Books. Special Collections Use Only')
       end
     end
 
@@ -838,7 +838,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
 
     ## The JSON response for holding w/no items is empty now. We used to check the availability at the bib level, but that is not available in alma
     ##  We must therefore assume that a holding with no itesm is not available
-    ## https://bibdata-alma-staging.princeton.edu/bibliographic/9944928463506421/holdings/2217515100006421/availability.json
+    ## https://bibdata-alma-staging.princeton.edu/bibliographic/9944928463506421/holdings/22490610730006421/availability.json
     describe "#available?" do
       it "is not available" do
         expect(requestable).not_to be_available
@@ -916,7 +916,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) do
       {
         system_id: '9999998003506421',
-        mfhd: '2293023360006421',
+        mfhd: '22480198860006421',
         patron: patron
       }
     end
@@ -947,7 +947,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged) }
-    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22256065790006421'] } }
+    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22739043950006421'] } }
     let(:requestable_charged) { requestable_holding.first }
 
     describe '# checked-out requestable' do
@@ -1036,7 +1036,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) do
       {
         system_id: '9999998003506421',
-        mfhd: '2293023360006421',
+        mfhd: '22480198860006421',
         patron: patron
       }
     end
@@ -1076,7 +1076,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     # end
 
     let(:request_charged) { FactoryGirl.build(:request_with_items_charged_barcode_patron) }
-    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22256065790006421'] } }
+    let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22739043950006421'] } }
     let(:requestable_charged) { requestable_holding.first }
 
     describe '#checked-out requestable' do
@@ -1111,7 +1111,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
     let(:params) do
       {
         system_id: '9999998003506421',
-        mfhd: '2293023360006421',
+        mfhd: '22480198860006421',
         patron: patron
       }
     end
@@ -1190,7 +1190,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :ne
   context 'A requestable item from a RBSC holding creates an openurl with volume and call number info' do
     let(:user) { FactoryGirl.build(:user) }
     let(:request) { FactoryGirl.build(:request_aeon_holding_volume_note) }
-    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '22256352610006421' }.first }
+    let(:requestable) { request.requestable.select { |m| m.holding.first.first == '22563389780006421' }.first }
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#aeon_openurl' do
       it 'includes the location_has note as the volume' do

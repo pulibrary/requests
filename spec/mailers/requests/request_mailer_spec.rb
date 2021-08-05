@@ -3,7 +3,7 @@ include Requests::ApplicationHelper
 
 # rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable Metrics/BlockLength
-describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :new_episodes } do
+describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer', record: :none } do
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
 
   let(:user_info) do

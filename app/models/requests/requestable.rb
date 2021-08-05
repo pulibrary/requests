@@ -253,7 +253,7 @@ module Requests
     end
 
     def held_at_marquand_library?
-      library_code == 'marquand'
+      library_code == 'marquand' && !recap?
     end
 
     def clancy_item

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'request', vcr: { cassette_name: 'bd_request_features', record: :new_episodes }, type: :feature do
+describe 'request', vcr: { cassette_name: 'bd_request_features', record: :none }, type: :feature do
   let(:direct_match) { '9913584543506421?mfhd=mfhd=22733836270006421' }
   let(:no_direct_match) { '99101599263506421' }
   let(:no_isbn) { '9925591603506421' }

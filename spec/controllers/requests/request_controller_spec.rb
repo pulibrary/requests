@@ -1,7 +1,7 @@
 require 'spec_helper'
 require "mail"
 
-describe Requests::RequestController, type: :controller, vcr: { cassette_name: 'request_controller', record: :new_episodes } do
+describe Requests::RequestController, type: :controller, vcr: { cassette_name: 'request_controller', record: :none } do
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
@@ -61,7 +61,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         get :generate, params: {
           source: 'pulsearch',
           system_id: '9995768803506421',
-          mfhd: '2298692690006421'
+          mfhd: '22497016220006421'
         }
         expect(response.status).to eq(302)
       end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new_episodes } do
+describe Requests::Request, vcr: { cassette_name: 'request_models', record: :none } do
   let(:user) { FactoryGirl.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
@@ -33,7 +33,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9988805493506421',
-        mfhd: '22208751700006421',
+        mfhd: '22705318390006421',
         patron: patron
       }
     end
@@ -152,7 +152,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9917917633506421',
-        mfhd: '22178797250006421',
+        mfhd: '22720740220006421',
         patron: patron
       }
     end
@@ -180,7 +180,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '994909303506421',
-        mfhd: '22240456670006421',
+        mfhd: '22584686190006421',
         patron: patron
       }
     end
@@ -209,7 +209,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9947589763506421',
-        mfhd: '22101312640006421',
+        mfhd: '22656885190006421',
         patron: patron
       }
     end
@@ -236,7 +236,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9924784993506421',
-        mfhd: '22170331510006421',
+        mfhd: '22708132010006421',
         patron: patron
       }
     end
@@ -283,8 +283,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "A system id that has a holding with items in a temporary location" do
     let(:params) do
       {
-        system_id: '9961959423506421',
-        mfhd: '22192559740006421',
+        system_id: '9931805453506421',
+        mfhd: '22705623210006421',
         patron: patron
       }
     end
@@ -298,7 +298,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has location data that reflects an item's temporary location" do
-        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('lewis$resterm')
+        expect(request_with_items_at_temp_locations.requestable.first.location_code).to eq('eastasian$reserve')
       end
     end
   end
@@ -307,7 +307,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9961959423506421',
-        mfhd: '22192559740006421',
+        mfhd: '22525427880006421',
         patron: patron
       }
     end
@@ -344,7 +344,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9947595913506421',
-        mfhd: '2232011730006421',
+        mfhd: '22489764810006421',
         patron: patron
       }
     end
@@ -541,7 +541,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9929370033506421',
-        mfhd: '22107682210006421',
+        mfhd: '22539090210006421',
         patron: patron
       }
     end
@@ -597,7 +597,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9943404133506421',
-        mfhd: '2254777780006421',
+        mfhd: '22514049930006421',
         patron: patron
       }
     end
@@ -636,7 +636,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9995457263506421',
-        mfhd: '22154199260006421',
+        mfhd: '22560953240006421',
         patron: patron
       }
     end
@@ -674,8 +674,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed an ID for an On Order Title" do
     let(:params) do
       {
-        system_id: '99120493093506421',
-        mfhd: '2251949020006421',
+        system_id: '99103251433506421',
+        mfhd: '22480270140006421',
         patron: patron
       }
     end
@@ -693,11 +693,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       end
 
       it "has a requestable with 'on order' service" do
-        expect(request_with_on_order.requestable[0].services.include?('on_order')).to be_truthy
+        expect(request_with_on_order.requestable.last.services.include?('on_order')).to be_truthy
       end
 
       it "has a requestable on order item" do
-        expect(request_with_on_order.requestable[0].voyager_managed?).to eq(true)
+        expect(request_with_on_order.requestable.last.voyager_managed?).to eq(true)
       end
 
       it "provides a list of the default pick-up locations" do
@@ -714,31 +714,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
       it "alphas sort the pickups between Firestone and staff locations" do
         expect(request_with_on_order.default_pick_ups[1]).to eq(architecture)
-      end
-    end
-  end
-
-  context "When passed an ID for an On Order Title" do
-    let(:params) do
-      {
-        system_id: '9954176583506421',
-        mfhd: '22201569680006421',
-        patron: patron
-      }
-    end
-    let(:request_with_on_order) { described_class.new(params) }
-
-    describe "#requestable" do
-      it "has requestable items" do
-        expect(request_with_on_order.requestable.size).to be >= 1
-      end
-
-      it "has a requestable with 'on order' service" do
-        expect(request_with_on_order.requestable.last.services.include?('on_order')).to be_truthy
-      end
-
-      it "has a requestable on order item" do
-        expect(request_with_on_order.requestable.last.voyager_managed?).to eq(true)
       end
     end
   end
@@ -779,7 +754,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9996025453506421',
-        mfhd: '22152823160006421',
+        mfhd: '22565008360006421',
         patron: patron
       }
     end
@@ -811,7 +786,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9920022063506421',
-        mfhd: '22140105560006421',
+        mfhd: '22560993150006421',
         patron: patron
       }
     end
@@ -848,7 +823,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9996272613506421',
-        mfhd: '2244110690006421',
+        mfhd: '22529639530006421',
         patron: patron
       }
     end
@@ -875,7 +850,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9917917633506421',
-        mfhd: '22178797250006421',
+        mfhd: '22720740220006421',
         patron: patron
       }
     end
@@ -907,7 +882,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       {
         system_id: '996160863506421',
         patron: patron,
-        mfhd: '22256352610006421'
+        mfhd: '22563389780006421'
       }
     end
     let(:request) { described_class.new(params) }
@@ -937,7 +912,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9996764833506421',
-        mfhd: '2275983490006421',
+        mfhd: '22680107620006421',
         patron: patron
       }
     end
@@ -973,7 +948,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '994264203506421',
-        mfhd: '2284665060006421',
+        mfhd: '22697842050006421',
         patron: patron
       }
     end
@@ -1027,8 +1002,8 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
   context "When passed a Loaned Item that is eligible for Borrow Direct" do
     let(:params) do
       {
-        system_id: '993703593506421',
-        mfhd: '22272145180006421',
+        system_id: '9991001053506421',
+        mfhd: '22691592660006421',
         patron: patron
       }
     end
@@ -1055,7 +1030,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     describe "#isbn_numbers" do
       it 'returns an array of all attached isbn numbers' do
         expect(request.isbn_numbers.is_a?(Array)).to be true
-        expect(request.isbn_numbers.size).to eq(1)
+        expect(request.isbn_numbers.size).to eq(2)
       end
     end
 
@@ -1093,7 +1068,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9999074333506421',
-        mfhd: '22248460150006421',
+        mfhd: '22578723910006421',
         patron: patron
       }
     end
@@ -1110,7 +1085,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
       # these tests are temporarily pending until trace feature is resolved
       # see https://github.com/pulibrary/requests/issues/164 for info
 
-      xit "should be eligible for multiple services" do
+      it "is eligible for multiple services" do
         expect(request.requestable.first.services.size).to eq(2)
       end
 
@@ -1125,7 +1100,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '994955013506421',
-        mfhd: '22246895310006421',
+        mfhd: '22644665360006421',
         patron: patron
       }
     end
@@ -1142,7 +1117,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9997467763506421',
-        mfhd: '2263454980006421',
+        mfhd: '22597992220006421',
         patron: patron
       }
     end
@@ -1159,7 +1134,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9948152393506421',
-        mfhd: '2229814610006421',
+        mfhd: '22717671090006421',
         patron: patron
       }
     end
@@ -1181,13 +1156,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '994952203506421',
-        mfhd: '22247009760006421',
+        mfhd: '22644769680006421',
         patron: patron
       }
     end
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
-      xit "has available copy" do
+      it "has available copy" do
         expect(request.any_loanable_copies?).to be true
       end
     end
@@ -1203,13 +1178,13 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9974943583506421',
-        mfhd: '2216383480006421',
+        mfhd: '22711798720006421',
         patron: patron
       }
     end
     let(:request) { described_class.new(params) }
     describe '#any_loanable_copies?' do
-      xit "has available copy" do
+      it "has available copy" do
         expect(request.any_loanable_copies?).to be true
       end
     end
@@ -1232,7 +1207,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9925693243506421',
-        mfhd: '22177909800006421',
+        mfhd: '22554332290006421',
         patron: patron
       }
     end
@@ -1281,7 +1256,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9926312653506421',
-        mfhd: '4238081',
+        mfhd: '22692741390006421',
         patron: patron
       }
     end
@@ -1304,7 +1279,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9917887963506421',
-        mfhd: '22196156490006421',
+        mfhd: '22503918400006421',
         patron: patron
       }
     end
@@ -1326,7 +1301,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '994955013506421',
-        mfhd: '22246895310006421',
+        mfhd: '22644665360006421',
         patron: patron
       }
     end
@@ -1342,7 +1317,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9919698813506421',
-        mfhd: '2275228980006421',
+        mfhd: '22589919750006421',
         source: 'pulsearch',
         patron: patron
       }
@@ -1351,7 +1326,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
 
     describe "#request" do
       it "has accessible mfhd param" do
-        expect(request_with_optional_params.mfhd).to eq('2275228980006421')
+        expect(request_with_optional_params.mfhd).to eq('22589919750006421')
       end
 
       it "has accessible source param" do
@@ -1364,7 +1339,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9997123553506421',
-        mfhd: '2229149680006421',
+        mfhd: '22586693240006421',
         patron: patron
       }
     end
@@ -1380,7 +1355,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :new
     let(:params) do
       {
         system_id: '9946931463506421',
-        mfhd: '22134335010006421',
+        mfhd: '22715350280006421',
         patron: patron
       }
     end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_request', record: :new_episodes } do
+describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_request', record: :none } do
   context 'Recall Request' do
     let(:valid_patron) do
       { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",

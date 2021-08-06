@@ -1548,7 +1548,7 @@ describe Requests::RequestableDecorator do
   describe "#help_me?" do
     context "any service in an open library" do
       let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: ['on_shelf'], library_code: 'abc12') }
-      xit 'does not need help' do
+      it 'does not need help' do
         expect(decorator.help_me?).to be_falsey
       end
     end
@@ -1569,7 +1569,7 @@ describe Requests::RequestableDecorator do
 
     context "no services in an open library" do
       let(:stubbed_questions) { default_stubbed_questions.merge(ask_me?: false, open_libraries: ['abc12'], services: [], library_code: 'abc12') }
-      xit 'does not need help' do
+      it 'does not need help' do
         expect(decorator.help_me?).to be_falsey
       end
     end

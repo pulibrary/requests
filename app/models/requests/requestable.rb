@@ -218,7 +218,7 @@ module Requests
     end
 
     def open_libraries
-      open = ['firestone', 'annex', 'marquand', 'mendel', 'stokes', 'eastasian', 'arch', 'lewis', 'engineer']
+      open = ['firestone', 'annex', 'marquand', 'mendel', 'stokes', 'eastasian', 'arch', 'lewis', 'engineer', 'recap']
       open << "online" if etas?
       open
     end
@@ -253,7 +253,7 @@ module Requests
     end
 
     def held_at_marquand_library?
-      library_code == 'marquand'
+      library_code == 'marquand' && !recap?
     end
 
     def clancy_item

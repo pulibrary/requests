@@ -147,7 +147,7 @@ module Requests
       if requestable.voyager_managed?
         requestable.aeon_request_url(request_ctx)
       else
-        "#{Requests.config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}"
+        "#{Requests::Config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}"
       end
     end
 

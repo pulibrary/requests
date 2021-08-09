@@ -376,7 +376,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request_with_only_system_id) { described_class.new(params) }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
         .to_return(status: 200, body: fixture('/dsp01rr1720547.json'), headers: {})
     end
 
@@ -436,7 +436,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request_with_only_system_id) { described_class.new(params) }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/coin-1167/raw")
         .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
     end
 
@@ -495,7 +495,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request_with_only_system_id) { described_class.new(params) }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/coin-1167/raw")
         .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
     end
 
@@ -793,15 +793,15 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     let(:request_with_missing) { described_class.new(params) }
 
     before do
-      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026169985")
+      stub_request(:get, "#{Requests::Config[:clancy_base]}/itemstatus/v1/32101026169985")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026169985\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026132058")
+      stub_request(:get, "#{Requests::Config[:clancy_base]}/itemstatus/v1/32101026132058")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026132058\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101025649177")
+      stub_request(:get, "#{Requests::Config[:clancy_base]}/itemstatus/v1/32101025649177")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649177\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101025649169")
+      stub_request(:get, "#{Requests::Config[:clancy_base]}/itemstatus/v1/32101025649169")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101025649169\",\"status\":\"Item not Found\"}", headers: {})
-      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101026173334")
+      stub_request(:get, "#{Requests::Config[:clancy_base]}/itemstatus/v1/32101026173334")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101026173334\",\"status\":\"Item not Found\"}", headers: {})
     end
     describe "#requestable" do
@@ -1383,10 +1383,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_single_holding_item, headers: {})
       stub_scsb_availability(bib_id: "5992543", institution_id: "CUL", barcode: 'CU11388110')
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=65339789")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=65339789")
         .to_return(status: 200, body: '[]')
     end
     describe '#requestable' do
@@ -1429,10 +1429,10 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_edd_item, headers: {})
       stub_scsb_availability(bib_id: "9488888", institution_id: "CUL", barcode: 'MR00429228')
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=748826840")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=748826840")
         .to_return(status: 200, body: '[]')
     end
     describe '#requestable' do
@@ -1465,7 +1465,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request_scsb) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: scsb_no_format, headers: {})
       stub_scsb_availability(bib_id: ".b106574619", institution_id: "NYPL", barcode: '33433088591924')
     end
@@ -1502,11 +1502,11 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
     end
     let(:request) { described_class.new(params) }
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
         .to_return(status: 200, body: marquand, headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/bibliographic/#{params[:system_id]}/holdings/#{params[:mfhd]}/availability.json")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/bibliographic/#{params[:system_id]}/holdings/#{params[:mfhd]}/availability.json")
         .to_return(status: 200, body: mfhd_availability, headers: {})
-      stub_request(:get, "#{Requests.config[:clancy_base]}/itemstatus/v1/32101068477817")
+      stub_request(:get, "#{Requests::Config[:clancy_base]}/itemstatus/v1/32101068477817")
         .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"32101068477817\",\"status\":\"Item In at Rest\"}", headers: {})
     end
     describe '#requestable' do

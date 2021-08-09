@@ -20,7 +20,7 @@ describe Requests::Patron do
   let(:user) do
     instance_double(User, guest?: guest?, uid: uid)
   end
-  let(:bibdata_uri) { Requests.config[:bibdata_base] }
+  let(:bibdata_uri) { Requests::Config[:bibdata_base] }
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }
@@ -43,7 +43,7 @@ describe Requests::Patron do
   context 'A user with a valid princeton net id patron record' do
     describe '#patron' do
       before do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 200, body: valid_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
@@ -65,7 +65,7 @@ describe Requests::Patron do
     describe '#current_patron' do
       let(:user) { FactoryGirl.create(:valid_barcode_patron) }
       before do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
@@ -82,7 +82,7 @@ describe Requests::Patron do
   context 'A user with a netid that does not have a matching patron record' do
     describe '#current_patron' do
       before do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 404, body: invalid_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
@@ -94,7 +94,7 @@ describe Requests::Patron do
   context 'Cannot connect to Patron Data service' do
     describe '#current_patron' do
       before do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 403, body: invalid_patron_response, headers: {})
       end
       it 'Handles an authorized princeton net ID holder' do
@@ -106,7 +106,7 @@ describe Requests::Patron do
   context 'System Error from Patron data service' do
     describe '#current_patron' do
       before do
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 500, body: invalid_patron_response, headers: {})
       end
       it 'cannot return a patron record' do

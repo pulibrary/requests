@@ -6,7 +6,7 @@ module Requests
     extend ActiveSupport::Concern
 
     def conn
-      conn = Faraday.new(url: Requests.config[:voyager_api_base]) do |faraday|
+      conn = Faraday.new(url: Requests::Config[:voyager_api_base]) do |faraday|
         faraday.request  :multipart # allow XML data to be sent with request
         faraday.response :logger unless Rails.env.test?
         # faraday.response :logger                  # log requests to STDOUT
@@ -24,7 +24,7 @@ module Requests
     end
 
     def put_response(params, payload)
-      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/recall?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}&patron_group=#{params[:patron_group]}"
+      request_url = "#{Requests::Config[:voyager_api_base]}/vxws/record/#{params[:recordID]}/items/#{params[:itemID]}/recall?patron=#{params[:patron]}&patron_homedb=#{params[:patron_homedb]}&patron_group=#{params[:patron_group]}"
       conn.put request_url, payload, 'X-Accept' => 'application/xml'
     end
 
@@ -33,7 +33,7 @@ module Requests
     end
 
     def get_response(params)
-      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}&patron_group=#{params['request']['patron_group']}"
+      request_url = "#{Requests::Config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/items/#{params['requestable'].first['item_id']}/recall?patron=#{params['request']['patron_id']}&patron_homedb=#{voyager_ub_id}&patron_group=#{params['request']['patron_group']}"
       conn.get request_url
     end
 
@@ -42,7 +42,7 @@ module Requests
     end
 
     def request_url(params)
-      request_url = "#{Requests.config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/"
+      request_url = "#{Requests::Config[:voyager_api_base]}/vxws/record/#{params['bib']['id']}/"
       # if multiple items are selected by the patron this will alaways submit the first on the requestable hash
       # each requestable object will have a unique item id
       # request_url += "items/#{params['requestable'].first['item_id']}/"

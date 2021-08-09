@@ -35,7 +35,7 @@ module Requests
 
     # accepts the base Openurl Context Object and formats it appropriately for Aeon
     def aeon_request_url(ctx = nil)
-      "#{Requests.config[:aeon_base]}/OpenURL?#{aeon_openurl(ctx)}"
+      "#{Requests::Config[:aeon_base]}/OpenURL?#{aeon_openurl(ctx)}"
     end
 
     # returns encoded OpenURL string for voyager derived records

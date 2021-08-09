@@ -68,7 +68,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:holding_id) { "thesis" }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp019c67wp402/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/dsp019c67wp402/raw")
         .to_return(status: 200, body: fixture('/dsp019c67wp402.json'), headers: {})
     end
 
@@ -133,7 +133,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:holding_id) { "numismatics" }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/coin-1167/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/coin-1167/raw")
         .to_return(status: 200, body: fixture('/coin-1167.json'), headers: {})
     end
 
@@ -738,7 +738,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
     describe '#aeon_request_url' do
       it 'beings with Aeon GFA base' do
-        expect(requestable.aeon_request_url(request.ctx)).to match(/^#{Requests.config[:aeon_base]}/)
+        expect(requestable.aeon_request_url(request.ctx)).to match(/^#{Requests::Config[:aeon_base]}/)
       end
     end
 
@@ -1105,7 +1105,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:user) { FactoryGirl.build(:unauthenticated_patron) }
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:patron) do
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/foo?ldap=true").to_return(status: 200, body: valid_patron_response, headers: {})
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true").to_return(status: 200, body: valid_patron_response, headers: {})
       Requests::Patron.new(user: user, session: {})
     end
     let(:params) do
@@ -1220,9 +1220,9 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
     describe '#pick_up_locations' do
       it 'has a single pick-up location' do
-        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-5235419/raw")
+        stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/SCSB-5235419/raw")
           .to_return(status: 200, body: fixture('/SCSB-5235419.json'), headers: {})
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=53360890")
           .to_return(status: 200, body: '[]')
         expect(requestable.pick_up_locations.size).to eq(1)
         expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('QX')
@@ -1232,7 +1232,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     # ETAS Status not relevant for Alma
     # describe '#etas_limited_access' do
     #   it 'is not restricted' do
-    #     stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=53360890")
+    #     stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=53360890")
     #       .to_return(status: 200, body: '[]')
     #     expect(requestable.etas_limited_access). to be_falsey
     #   end
@@ -1245,7 +1245,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-5396104/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/SCSB-5396104/raw")
         .to_return(status: 200, body: fixture('/SCSB-5396104.json'), headers: {})
     end
 
@@ -1274,11 +1274,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2650865/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/SCSB-2650865/raw")
         .to_return(status: 200, body: fixture('/SCSB-2650865.json'), headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=29065769")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=29065769")
         .to_return(status: 200, body: '[]')
-      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+      stub_request(:post, "#{Requests::Config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .to_return(status: 200, body: "[{\"itemBarcode\":\"AR65651294\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]")
     end
 
@@ -1309,11 +1309,11 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/SCSB-2901229/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/SCSB-2901229/raw")
         .to_return(status: 200, body: fixture('/SCSB-2901229.json'), headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=17322905")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=17322905")
         .to_return(status: 200, body: '[{"id":null,"oclc_number":"17322905","bibid":"1029088","status":"ALLOW","origin":"CUL"}, {"id":null,"oclc_number":"17322905","bibid":"1029088","status":"DENY","origin":"CUL"}]')
-      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+      stub_request(:post, "#{Requests::Config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .to_return(status: 200, body: "[{\"itemBarcode\":\"MR72802120\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]")
     end
 
@@ -1349,17 +1349,17 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable) { request.requestable.first }
 
     before do
-      stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/9977664533506421/raw")
+      stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/9977664533506421/raw")
         .to_return(status: 200, body: fixture('/9977664533506421.json'), headers: {})
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/bibliographic/9977664533506421/holdings/22109013720006421/availability.json")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/bibliographic/9977664533506421/holdings/22109013720006421/availability.json")
         .to_return(status: 200, body: '[{"barcode":"32101092097763","id":"23109013710006421","holding_id":"22109013720006421","copy_number":"1",'\
                                       '"status":"Not Available","status_label":"Resource Sharing Request","status_source":"process_type","process_type":"ILL","on_reserve":"N","item_type":"Gen","pickup_location_id":"RES_SHARE",'\
                                       '"pickup_location_code":"RES_SHARE","location":"RES_SHARE$OUT_RS_REQ","label":"ReCAP","description":"","enum_display":"","chron_display":"","in_temp_library":true,"temp_library_code":"RES_SHARE",'\
                                       '"temp_library_label":"Resource Sharing Library","temp_location_code":"RES_SHARE$OUT_RS_REQ","temp_location_label":"Resource Sharing Library"}]')
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/locations/holding_locations/RES_SHARE$OUT_RS_REQ.json")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/locations/holding_locations/RES_SHARE$OUT_RS_REQ.json")
         .to_return(status: 200, body: '{"label":"Borrowing Resource Sharing Requests","code":"RES_SHARE$OUT_RS_REQ","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,'\
                                       '"remote_storage":"","library":{"label":"Resource Sharing Library","code":"RES_SHARE","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}')
-      stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+      stub_request(:post, "#{Requests::Config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
         .to_return(status: 200, body: "[{\"itemBarcode\":\"MR72802120\",\"itemAvailabilityStatus\":\"Available\",\"errorMessage\":null,\"collectionGroupDesignation\":\"Shared\"}]")
     end
 

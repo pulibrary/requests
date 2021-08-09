@@ -22,7 +22,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     context "An campus authorized user" do
       before do
         sign_in(user)
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_patron_response, headers: {})
       end
 
@@ -47,7 +47,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         expect(assigns(:mode)).to eq('standard')
       end
       it 'redirects you when a thesis record is requested' do
-        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
+        stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/dsp01rr1720547/raw")
           .to_return(status: 200, body: fixture('/dsp01rr1720547.json'), headers: {})
 
         get :generate, params: {
@@ -124,7 +124,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
 
     before do
       sign_in(user)
-      stub_request(:get, "#{Requests.config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
+      stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
         .to_return(status: 200, body: valid_patron_response, headers: {})
 
       without_partial_double_verification do
@@ -242,7 +242,7 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       }
     end
     before do
-      stub_url = Requests.config[:voyager_api_base] + "/vxws/record/" + bib['id'] +
+      stub_url = Requests::Config[:voyager_api_base] + "/vxws/record/" + bib['id'] +
                  "/items/" + requestable[0]['item_id'] +
                  "/recall?patron=" + user_info['patron_id'] +
                  "&patron_group=" + user_info['patron_group'] +

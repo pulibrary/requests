@@ -57,7 +57,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
 
     describe 'All Recall Requests' do
       let(:stub_url) do
-        Requests.config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
+        Requests::Config[:voyager_api_base] + "/vxws/record/" + submission.bib['id'] +
           "/items/" + submission.items[0]['item_id'] +
           "/recall?patron=" + submission.patron.patron_id +
           "&patron_group=" + submission.patron.patron_group +

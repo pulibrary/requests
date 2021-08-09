@@ -61,7 +61,7 @@ describe Requests::PickupLookup do
 
     describe 'All PickupLookup Requests' do
       let(:stub_url) do
-        Requests.config[:voyager_api_base] + "/vxws/record/" + params['bib']['id'] +
+        Requests::Config[:voyager_api_base] + "/vxws/record/" + params['bib']['id'] +
           "/items/" + params['requestable'][0]['item_id'] +
           "/recall?patron=" + params['request']['patron_id'] +
           "&patron_group=" + params['request']['patron_group'] +

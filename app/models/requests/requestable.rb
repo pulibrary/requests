@@ -287,7 +287,7 @@ module Requests
     private
 
       def scsb_locations
-        Requests.config[:recap_partner_locations].keys
+        Requests::Config[:recap_partner_locations].keys
       end
 
       def scsb_edd_collection_codes

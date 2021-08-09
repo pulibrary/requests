@@ -65,7 +65,7 @@ module Requests
     end
 
     def scsb_item?(item)
-      Requests.config[:recap_partner_locations].keys.include? item["location_code"]
+      Requests::Config[:recap_partner_locations].keys.include? item["location_code"]
     end
 
     def service_types

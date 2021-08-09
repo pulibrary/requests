@@ -213,7 +213,6 @@ module Requests
                   hidden_field_tag("requestable[][item_id]", "", value: requestable.preferred_request_id, id: "requestable_item_id_#{requestable.preferred_request_id}")
                 end
       hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.scsb?
-      hidden += hidden_field_tag "requestable[][scsb_status]", "", value: requestable.item['scsb_status'].to_s, id: "requestable_scsb_status_#{request_id}" if requestable.item? && requestable.item["scsb_status"].present?
       hidden
     end
 
@@ -348,7 +347,7 @@ module Requests
 
     def system_status_label(requestable)
       return "" if requestable.item.blank?
-      content_tag(:div, requestable.item[:status], class: 'system-status') unless requestable.item.key? :scsb_status
+      content_tag(:div, requestable.item[:status], class: 'system-status')
     end
 
     def display_urls(requestable)

@@ -49,6 +49,7 @@ module Requests
 
     delegate :user, to: :patron
 
+    # Is this a partner system id
     def scsb?
       return true if /^SCSB-\d+/ =~ system_id.to_s
     end

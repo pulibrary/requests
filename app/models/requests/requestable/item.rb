@@ -95,8 +95,10 @@ class Requests::Requestable
       self[:barcode]
     end
 
+    # Is the ReCAP Item from a partner location
+    # currently not used?
     def scsb?
-      ['scsbnypl', 'scsbcul'].include? self["location_code"]
+      Requests.config[:recap_partner_locations].keys.include? self["location_code"]
     end
 
     class NullItem

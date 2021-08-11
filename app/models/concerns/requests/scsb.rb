@@ -123,17 +123,11 @@ module Requests
     end
 
     def scsb_owning_institution(location)
-      if location == 'scsbnypl'
-        'NYPL'
-      elsif location == 'scsbcul'
-        'CUL'
-      else
-        'PUL'
-      end
+      Requests.config[:recap_partner_locations].fetch(location, "PUL")
     end
 
     def scsb_locations
-      ["scsbcul", "scsbnypl"]
+      Requests.config[:recap_partner_locations].keys
     end
 
     private

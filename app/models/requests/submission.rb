@@ -17,6 +17,7 @@ module Requests
       @bd = params[:bd] # TODO: can we remove this?
       @services = []
       @success_messages = []
+      @duplicate = false
     end
 
     attr_reader :patron, :success_messages
@@ -121,6 +122,10 @@ module Requests
       delivery_mode.present? && delivery_mode == "edd"
     end
 
+    def duplicate?
+      @duplicate
+    end
+
     private
 
       # rubocop:disable Metrics/MethodLength
@@ -177,6 +182,7 @@ module Requests
                  Requests::HoldItem.new(self, service_type: 'marquand_in_library')
                end
         hold.handle
+        @duplicate = hold.duplicate?
         @services << hold
       end
 
@@ -253,8 +259,12 @@ module Requests
       end
 
       def generate_success_messages(success_messages)
-        service_types.each do |type|
-          success_messages << I18n.t("requests.submit.#{type}_success") unless generic_service?(type)
+        if duplicate?
+          success_messages << I18n.t("requests.submit.duplicate")
+        else
+          service_types.each do |type|
+            success_messages << I18n.t("requests.submit.#{type}_success") unless generic_service?(type)
+          end
         end
         success_messages
       end

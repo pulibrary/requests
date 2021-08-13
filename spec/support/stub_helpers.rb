@@ -6,22 +6,23 @@ def stub_delivery_locations
 end
 
 def stub_alma_hold_success(id, mfhd, item_id, patron_id)
-  stub_url = "#{Alma.configuration.region}/almaws/v1/bibs/#{id}/holdings/#{mfhd}/items/#{item_id}/requests?user_id=#{patron_id}"
-  stub_request(:post, stub_url)
-    .to_return(status: 200,
-               body: fixture("alma_hold_response.json"),
-               headers: { 'content-type': 'application/json' })
-  stub_url
+  stub_alma_hold(id, mfhd, item_id, patron_id)
 end
 
 def stub_alma_hold_failure(id, mfhd, item_id, patron_id)
+  stub_alma_hold(id, mfhd, item_id, patron_id, status: 400, fixture_name: "alma_hold_error_no_library_response.json")
+end
+
+# rubocop:disable Metrics/ParameterLists
+def stub_alma_hold(id, mfhd, item_id, patron_id, status: 200, fixture_name: "alma_hold_response.json")
   stub_url = "#{Alma.configuration.region}/almaws/v1/bibs/#{id}/holdings/#{mfhd}/items/#{item_id}/requests?user_id=#{patron_id}"
   stub_request(:post, stub_url)
-    .to_return(status: 400,
-               body: fixture("alma_hold_error_no_library_response.json"),
+    .to_return(status: status,
+               body: fixture(fixture_name),
                headers: { 'content-type': 'application/json' })
   stub_url
 end
+# rubocop:enable Metrics/ParameterLists
 
 def stub_clancy_post(barcode:, status: 'Item Requested', deny: 'N')
   clancy_url = "#{Requests.config[:clancy_base]}/circrequests/v1"

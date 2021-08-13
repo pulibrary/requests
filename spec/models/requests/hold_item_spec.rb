@@ -65,9 +65,9 @@ describe Requests::HoldItem, type: :controller do
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "fcirc"))
           .to_return(status: 200, body: responses[:error], headers: { 'content-type': 'application/json' })
         hold_request.handle
-        expect(hold_request.submitted.size).to eq(0)
-        expect(hold_request.errors.size).to eq(1)
-        expect(hold_request.errors.first[:create_hold][:note]).to eq('Hold already exists')
+        expect(hold_request.submitted.size).to eq(1)
+        expect(hold_request.errors.size).to eq(0)
+        expect(hold_request).to be_duplicate
       end
 
       it "captures errors when the request is malformed" do

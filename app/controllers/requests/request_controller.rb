@@ -118,6 +118,7 @@ module Requests
         # TODO: Why does this go into an infinite loop
         # logger.info "#Request Submission - #{submission.as_json}"
         logger.info "Request Sent"
+        return if submission.duplicate? # do not send emails if this is a duplicate request
         service_types = submission.service_types.reject { |type| ['bd', 'ill'].include? type } # emails already sent for ill and bd
         service_types.each do |type|
           Requests::RequestMailer.send("#{type}_email", submission).deliver_now unless type == 'recap_edd'

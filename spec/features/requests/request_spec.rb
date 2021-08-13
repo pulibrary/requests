@@ -381,6 +381,18 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
 
+        it 'allows CAS patrons to request an item twice and see a message about the duplication' do
+          stub_alma_hold('9912636153506421', '22557213410006421', '23557213400006421', '960594184', status: 200, fixture_name: "alma_hold_error_response.json")
+
+          visit "requests/9912636153506421?mfhd=22557213410006421"
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          choose('requestable__delivery_mode_23557213400006421_print') # chooses 'print' radio button
+          expect(page).to have_content 'Pick-up location: Firestone Library'
+          expect(page).to have_content 'Electronic Delivery'
+          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(0)
+          expect(page).to have_content 'You have sent a duplicate request to Alma for this item'
+        end
+
         let(:good_response) { fixture('/scsb_request_item_response.json') }
         it 'allows patrons to request a physical recap item' do
           scsb_url = "#{Requests.config[:scsb_base]}/requestItem/requestItem"

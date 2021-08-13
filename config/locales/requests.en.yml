@@ -37,6 +37,7 @@ en:
       trace_success: "Item is now being traced."
       error: "We were unable to process your request. Correct the highlighted errors."
       service_error: "There was a problem with this request which Library staff need to investigate. You'll be notified once it's resolved and requested for you."
+      duplicate: "You have sent a duplicate request to Alma for this item.  Your request for this item has been accepted by Alma and will be processed."
     no_services:
       brief_msg: "Item is not requestable."
       access_msg: 'Some resources may only be requested by Princeton Users.'

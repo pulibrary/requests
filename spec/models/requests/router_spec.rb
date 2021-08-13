@@ -31,12 +31,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
 
     describe "SCSB item that is charged" do
       before do
-        stub_request(:get, "#{Requests.config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
+        stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/#{params[:system_id]}/raw")
           .to_return(status: 200, body: scsb_single_holding_item, headers: {})
-        stub_request(:post, "#{Requests.config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
+        stub_request(:post, "#{Requests::Config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
           .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
           .to_return(status: 200, body: scsb_availability_response)
-        stub_request(:get, "#{Requests.config[:bibdata_base]}/hathi/access?oclc=18321158")
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=18321158")
           .to_return(status: 200, body: '[{"id":null,"oclc_number":"18321158","bibid":"667075","status":"DENY","origin":"CUL"}]')
       end
 

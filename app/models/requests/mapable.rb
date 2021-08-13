@@ -9,7 +9,7 @@ module Requests
     end
 
     def map_url(mfhd_id)
-      "#{Requests.config[:pulsearch_base]}/catalog/#{bib_id}/stackmap?#{map_params(mfhd_id).to_query}"
+      "#{Requests::Config[:pulsearch_base]}/catalog/#{bib_id}/stackmap?#{map_params(mfhd_id).to_query}"
     end
 
     private

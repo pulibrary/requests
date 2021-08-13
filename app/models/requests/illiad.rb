@@ -19,7 +19,7 @@ module Requests
     def illiad_request_url(solr_open_url_context, note: nil)
       query_params = illiad_query_parameters(referrer: solr_open_url_context.referrer, referent: solr_open_url_context.referent,
                                              metadata: solr_open_url_context.referent.metadata, note: note)
-      "#{Requests.config[:ill_base]}?#{query_params}"
+      "#{Requests::Config[:ill_base]}?#{query_params}"
     end
 
     def illiad_request_parameters(solr_open_url_context, note: nil)
@@ -82,7 +82,7 @@ module Requests
       def catalog_url(referent)
         bibidata_url = URI(referent.identifiers.first)
         bibid = bibidata_url.path.split('/').last
-        "#{Requests.config[:pulsearch_base]}/catalog/#{bibid}"
+        "#{Requests::Config[:pulsearch_base]}/catalog/#{bibid}"
       end
 
       def get_lccn(rft)

@@ -28,7 +28,7 @@ describe Requests::Illiad, vcr: { cassette_name: 'request_models', record: :none
 
   it "provides an ILLiad URL" do
     illiad = Requests::Illiad.new(enum: "Volume foo", chron: "Chronicle 1")
-    expect(illiad.illiad_request_url(ctx)).to start_with(Requests.config[:ill_base])
+    expect(illiad.illiad_request_url(ctx)).to start_with(Requests::Config[:ill_base])
   end
 
   it "provides illiad query parameters with enumeration" do

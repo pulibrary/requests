@@ -355,13 +355,6 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       end
     end
 
-    context "with item scsb_status" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'scsb_status' => 'status' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
-      it 'shows hidden fields' do
-        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][scsb_status]" id="requestable_scsb_status_aaabbb" value="status" />'
-      end
-    end
-
     context "with holding call number" do
       let(:holding) { { "1594697" => { "location" => "Firestone Library", "library" => "Firestone Library", "location_code" => "f", "copy_number" => "0", "call_number" => "6251.9765", "call_number_browse" => "6251.9765" } } }
       let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: holding, location: { code: 'location_code' }, scsb?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }

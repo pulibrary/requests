@@ -129,7 +129,7 @@ describe Requests::Recap do
           to_return(status: 200, body: good_response, headers: {})
         stub_request(:post, alma_url)
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
-          .to_return(status: 200, body: fixture("alma_hold_error_response.json"), headers: { 'content-type': 'application/json' })
+          .to_return(status: 400, body: fixture("alma_hold_error_no_library_response.json"), headers: { 'content-type': 'application/json' })
         expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(recap_request.submitted.size).to eq(2)
         expect(recap_request.errors.size).to eq(0)

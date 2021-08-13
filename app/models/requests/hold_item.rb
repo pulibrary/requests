@@ -26,12 +26,16 @@ module Requests
       @sent
     end
 
+    def duplicate?
+      submitted.count == 1 && submitted.first[:response] == "DuplicateRequest"
+    end
+
     def handle_item(item:)
       status = {}
       begin
         status = place_hold(item)
-      rescue Alma::BibRequest::ItemAlreadyExists => exists
-        errors << { reply_text: "Can not create hold", create_hold: { note: "Hold already exists", message: exists.message } }.merge(submission.bib.to_h).merge(item.to_h).with_indifferent_access
+      rescue Alma::BibRequest::ItemAlreadyExists
+        status = item.merge(payload: payload(item), response: "DuplicateRequest")
       rescue StandardError => invalid
         errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created", message: invalid.message } }.merge(submission.bib.to_h).merge(item.to_h).with_indifferent_access
       end
@@ -42,7 +46,7 @@ module Requests
 
       def place_hold(item)
         status = {}
-        options = { mms_id: submission.bib['id'], holding_id: item["mfhd"], item_pid: item['item_id'], user_id: submission.patron.university_id, request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: item["pick_up_location_code"] }
+        options = payload(item)
         response = Requests::AlmaHoldRequest.submit(options)
         if response.success?
           status = item.merge(payload: options, response: response.raw_response.parsed_response)
@@ -50,6 +54,10 @@ module Requests
           errors << reponse_json["response"].merge(submission.bib.to_h).merge(item.to_h).merge(type: @service_type)
         end
         status
+      end
+
+      def payload(item)
+        { mms_id: submission.bib['id'], holding_id: item["mfhd"], item_pid: item['item_id'], user_id: submission.patron.university_id, request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: item["pick_up_location_code"] }
       end
   end
 end

@@ -17,6 +17,7 @@ module Requests
       @bd = params[:bd] # TODO: can we remove this?
       @services = []
       @success_messages = []
+      @duplicate = false
     end
 
     attr_reader :patron, :success_messages
@@ -94,6 +95,8 @@ module Requests
       end
 
       @success_messages = generate_success_messages(@success_messages)
+
+      send_mail if service_errors.blank? && !@duplicate
 
       @services
     end
@@ -177,6 +180,7 @@ module Requests
                  Requests::HoldItem.new(self, service_type: 'marquand_in_library')
                end
         hold.handle
+        @duplicate = hold.duplicate?
         @services << hold
       end
 
@@ -253,10 +257,23 @@ module Requests
       end
 
       def generate_success_messages(success_messages)
-        service_types.each do |type|
-          success_messages << I18n.t("requests.submit.#{type}_success") unless generic_service?(type)
+        if @duplicate
+          success_messages << I18n.t("requests.submit.duplicate")
+        else
+          service_types.each do |type|
+            success_messages << I18n.t("requests.submit.#{type}_success") unless generic_service?(type)
+          end
         end
         success_messages
+      end
+
+      def send_mail
+        mail_service_types = service_types.reject { |type| ['bd', 'ill'].include? type } # emails already sent for ill and bd
+        mail_service_types.each do |type|
+          Requests::RequestMailer.send("#{type}_email", self).deliver_now unless type == 'recap_edd'
+          Requests::RequestMailer.send("#{type}_confirmation", self).deliver_now if type != 'recall'
+          Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && scsb?
+        end
       end
   end
 end

@@ -1,6 +1,7 @@
 module Requests
   class RequestMailer < ApplicationMailer
     include Requests::Bibdata
+    helper "requests/application"
 
     def digitize_fill_in_confirmation(submission)
       @submission = submission

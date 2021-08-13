@@ -1140,7 +1140,7 @@ describe Requests::Submission do
         { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22587331490006421", "call_number" => "N7668.D6 J64 2008",
           "location_code" => "sa", "item_id" => "23587331480006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "clancy_in_library", "fill_in" => "false",
-          "delivery_mode_23587331480006421" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23587331480006421" => "in_library", "pick_up" => "PA" }.with_indifferent_access
       ]
     end
 
@@ -1158,10 +1158,11 @@ describe Requests::Submission do
 
     describe "#process_submission" do
       it 'items contacts clancy and voyager' do
+        stub_delivery_locations
         alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         expect(submission).to be_valid
-        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).to have_been_made
       end
@@ -1236,6 +1237,7 @@ describe Requests::Submission do
 
       # rubocop:disable RSpec/MultipleExpectations
       it 'items contacts illiad' do
+        stub_delivery_locations
         clancy_url = stub_clancy_post(barcode: "32101072349515")
         stub_request(:post, transaction_url)
           .with(body: hash_including("Username" => "foo", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "NotWantedAfter" => (DateTime.current + 6.months).strftime("%m/%d/%Y"), "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Johns, Catherine",
@@ -1243,7 +1245,7 @@ describe Requests::Submission do
           .to_return(status: 200, body: responses[:transaction_created], headers: {})
         stub_request(:post, transaction_note_url).to_return(status: 200, body: responses[:note_created], headers: {})
         expect(submission).to be_valid
-        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(a_request(:get, patron_url)).to have_been_made
         expect(a_request(:post, transaction_url)).to have_been_made
         expect(a_request(:post, transaction_note_url)).to have_been_made
@@ -1284,7 +1286,7 @@ describe Requests::Submission do
         { "selected" => "true", "bibid" => "9956364873506421", "mfhd" => "22587331490006421", "call_number" => "N7668.D6 J64 2008",
           "location_code" => "sa", "item_id" => "23587331480006421", "barcode" => "32101072349515", "copy_number" => "1",
           "status" => "On-Site", "type" => "marquand_in_library", "fill_in" => "false",
-          "delivery_mode_23587331480006421" => "in_library", "pick_up" => "PA" }
+          "delivery_mode_23587331480006421" => "in_library", "pick_up" => "PA" }.with_indifferent_access
       ]
     end
 
@@ -1304,9 +1306,10 @@ describe Requests::Submission do
 
     describe "#process_submission" do
       it 'items contacts voyager and does not email marquand or contact clancy' do
+        stub_delivery_locations
         alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         expect(submission).to be_valid
-        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(2)
         expect(a_request(:post, alma_url)).to have_been_made
         expect(a_request(:post, clancy_url)).not_to have_been_made
       end

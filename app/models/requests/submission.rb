@@ -96,6 +96,8 @@ module Requests
 
       @success_messages = generate_success_messages(@success_messages)
 
+      send_mail if service_errors.blank? && !@duplicate
+
       @services
     end
 
@@ -120,10 +122,6 @@ module Requests
       # return false if item["type"] == "digitize_fill_in"
       delivery_mode = delivery_mode(item)
       delivery_mode.present? && delivery_mode == "edd"
-    end
-
-    def duplicate?
-      @duplicate
     end
 
     private
@@ -259,7 +257,7 @@ module Requests
       end
 
       def generate_success_messages(success_messages)
-        if duplicate?
+        if @duplicate
           success_messages << I18n.t("requests.submit.duplicate")
         else
           service_types.each do |type|
@@ -267,6 +265,15 @@ module Requests
           end
         end
         success_messages
+      end
+
+      def send_mail
+        mail_service_types = service_types.reject { |type| ['bd', 'ill'].include? type } # emails already sent for ill and bd
+        mail_service_types.each do |type|
+          Requests::RequestMailer.send("#{type}_email", self).deliver_now unless type == 'recap_edd'
+          Requests::RequestMailer.send("#{type}_confirmation", self).deliver_now if type != 'recall'
+          Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && scsb?
+        end
       end
   end
 end

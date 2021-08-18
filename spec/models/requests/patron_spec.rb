@@ -56,7 +56,7 @@ describe Requests::Patron do
         expect(patron.telephone).to eq('111-222-3333')
         expect(patron.status).to eq('student')
         expect(patron.pustatus).to eq('undergraduate')
-        expect(patron.training_eligable?).to be_falsey
+        expect(patron.training_eligable?).to be_truthy
         expect(patron.eligible_to_pickup?).to be_truthy
       end
     end

@@ -51,12 +51,12 @@ module Requests
     end
 
     def campus_authorized
-      # only students need to be authorized for campus.  Other folks with a netid are allowed to be on campus
-      patron[:campus_authorized] || (!undergraduate? && !guest? && !barcode_provider? && barcode.present?)
+      # Folks with a netids are allowed to be on campus, but guests are not yet
+      patron[:campus_authorized] || (!guest? && !barcode_provider? && barcode.present?)
     end
 
     def eligible_to_pickup?
-      barcode.present? && (campus_authorized || (covid_trained? && !undergraduate?))
+      barcode.present? && (campus_authorized || covid_trained?)
     end
 
     def pick_up_only?
@@ -68,7 +68,7 @@ module Requests
     end
 
     def training_eligable?
-      ["staff", "faculty", "student"].include?(status) && !undergraduate?
+      ["staff", "faculty", "student"].include?(status)
     end
 
     def undergraduate?

@@ -291,7 +291,8 @@ module Requests
       end
 
       def scsb_edd_collection_codes
-        %w[AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP]
+        %w[AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP] +
+          %w[AH DL FL GUT HB HC HJ HK HL HS HW HY MCZ ML TZ WL] # Harvard collections available to digitize
       end
 
       def location_valid?

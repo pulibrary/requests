@@ -15,6 +15,7 @@ defaults: &defaults
   recap_partner_locations:
     scsbcul: "CUL"
     scsbnypl: "NYPL"
+    scsbhl: "HL"
 development:
   <<: *defaults
 

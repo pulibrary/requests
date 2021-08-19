@@ -409,7 +409,7 @@ module Requests
       end
 
       def hidden_fields_for_scsb(item:)
-        hidden = hidden_field_tag("requestable[][cgc]", "", value: item['cgc'].to_s, id: "requestable_cgc_#{item['id']}")
+        hidden = hidden_field_tag("requestable[][cgd]", "", value: item['cgd'].to_s, id: "requestable_cgd_#{item['id']}")
         hidden += hidden_field_tag("requestable[][cc]", "", value: item['collection_code'].to_s, id: "requestable_collection_code_#{item['id']}")
         hidden + hidden_field_tag("requestable[][use_statement]", "", value: item['use_statement'].to_s, id: "requestable_use_statement_#{item['id']}")
       end

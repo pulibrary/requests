@@ -1387,4 +1387,22 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
   end
+
+  context 'A ReCAP Harvard Item' do
+    let(:user) { FactoryGirl.build(:user) }
+    let(:request) { FactoryGirl.build(:request_scsb_hl) }
+    let(:requestable) { request.requestable.first }
+    describe '#pick_up_locations' do
+      it 'has a single pick-up location' do
+        stub_request(:get, "#{Requests::Config[:pulsearch_base]}/catalog/SCSB-10966202/raw")
+          .to_return(status: 200, body: fixture('/SCSB-10966202.json'), headers: {})
+        stub_request(:get, "#{Requests::Config[:bibdata_base]}/hathi/access?oclc=40820403")
+          .to_return(status: 200, body: '[]')
+        stub_scsb_availability(bib_id: "990081790140203941", institution_id: "HL", barcode: 'HXSS9U')
+        expect(requestable.pick_up_locations.size).to eq(1)
+        expect(requestable.pick_up_locations.first[:gfa_pickup]).to eq('QX')
+        expect(requestable).to be_recap_edd
+      end
+    end
+  end
 end

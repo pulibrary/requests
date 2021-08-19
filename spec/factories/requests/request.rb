@@ -231,4 +231,12 @@ FactoryGirl.define do
     patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
     initialize_with { new(system_id: system_id, patron: patron, mfhd: mfhd_id, source: source) }
   end
+
+  factory :request_scsb_hl, class: 'Requests::Request' do
+    system_id 'SCSB-10966202'
+    mfhd nil
+    source 'pulsearch'
+    patron { Requests::Patron.new(user: FactoryGirl.build(:unauthenticated_patron)) }
+    initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron, source: source) }
+  end
 end

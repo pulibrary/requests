@@ -114,4 +114,18 @@ describe Requests::IlliadPatron, type: :controller do
       expect(patron).to be_blank
     end
   end
+
+  context "ldap data is blank" do
+    let(:ldap_data) { {} }
+    it "returns empty attributes when illiad user is not present" do
+      expect(illiad_patron.attributes).to eq({})
+    end
+  end
+
+  context "ldap data is blank except for status" do
+    let(:ldap_data) { { status: 'faculty' } }
+    it "returns empty attributes when illiad user is not present" do
+      expect(illiad_patron.attributes).to eq({})
+    end
+  end
 end

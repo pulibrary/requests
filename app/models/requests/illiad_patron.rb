@@ -32,9 +32,9 @@ module Requests
     private
 
       def illiad_patron_attributes
-        return nil if patron.status.blank?
+        return {} if patron.status.blank?
         illiad_status = illiad_status(ldap_status: patron.status, ldap_pustatus: patron.pustatus, ldap_department: patron.department, ldap_title: patron.title)
-        return nil if illiad_status.blank?
+        return {} if illiad_status.blank?
         addresses = patron.address&.split('$')
         {
           "Username" => patron.netid, "ExternalUserId" => patron.netid, "FirstName" => patron.first_name,

@@ -12,7 +12,6 @@ module Requests
     # Possible Services
     # :online
     # :annex
-    # :annexb
     # :on_shelf
     # :on_order
     # :in_process
@@ -64,8 +63,6 @@ module Requests
           ['pres']
         elsif requestable.annex?
           ['annex', 'on_shelf_edd']
-        elsif requestable.annexb?
-          ['annexb']
         elsif requestable.plasma?
           ['ppl']
         elsif requestable.recap?

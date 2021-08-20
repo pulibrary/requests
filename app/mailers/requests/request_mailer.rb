@@ -53,21 +53,6 @@ module Requests
       confirmation_email(submission: submission, subject_key: 'requests.annex.email_subject')
     end
 
-    def annexb_email(submission)
-      @submission = submission
-      destination_email = []
-      @submission.items.each do |item|
-        destination_email.push(I18n.t('requests.annexb.email')) if item["type"] == 'annexb'
-      end
-      mail(to: destination_email,
-           from: I18n.t('requests.default.email_from'),
-           subject: subject_line(I18n.t('requests.annexb.email_subject'), @submission.user_barcode))
-    end
-
-    def annexb_confirmation(submission)
-      confirmation_email(submission: submission, subject_key: 'requests.annexb.email_subject')
-    end
-
     def ppl_email(submission)
       request_email(submission: submission, subject_key: 'requests.ppl.email_subject', destination_key: 'requests.ppl.email')
     end

@@ -1,6 +1,6 @@
 module Requests
   class RequestableDecorator
-    delegate :system_id, :aeon_mapped_params, :services, :charged?, :annex?, :annexb?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
+    delegate :system_id, :aeon_mapped_params, :services, :charged?, :annex?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
              :ask_me?, :etas?, :etas_limited_access, :aeon_request_url, :location, :temp_loc?, :call_number, :eligible_to_pickup?,
              :holding_library_in_library_only?, :holding_library, :bib, :circulates?, :open_libraries, :item_data?, :recap_edd?, :user_barcode, :clancy?,
              :holding, :item_location_code, :item?, :item, :scsb?, :status, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,

@@ -1169,6 +1169,20 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Ḍaḥāyā al-zawāj")
           expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
         end
+
+        it "Delivers scsb in library use art items only to marquand" do
+          stub_scsb_availability(bib_id: "9008865", institution_id: "CUL", barcode: 'AR01220551')
+          visit '/requests/SCSB-5595350'
+          expect(page).to have_content 'Available for In Library Use'
+          expect(page).to have_content 'Pick-up location: Marquand Library at Firestone'
+        end
+
+        it "Delivers scsb in library use music items only to mendel" do
+          stub_scsb_availability(bib_id: "14577462", institution_id: "CUL", barcode: 'MR00393223')
+          visit '/requests/SCSB-9726156'
+          expect(page).to have_content 'Available for In Library Use'
+          expect(page).to have_content 'Pick-up location: Mendel Music Library'
+        end
       end
     end
 

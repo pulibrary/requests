@@ -38,10 +38,17 @@ describe Requests::RequestDecorator do
       expect(decorator.patron_message).to eq ""
     end
 
-    context "student ldap status" do
-      let(:ldap) { { status: 'student', pustatus: "undergraduate" } }
+    context "Barcoded user" do
+      let(:user) { FactoryGirl.build(:valid_barcode_patron) }
       it 'shows the message for the campus unauthorized patron' do
         expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please send an inquiry to <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you believe you should have access to these services.</div>"
+      end
+    end
+
+    context "student ldap status" do
+      let(:ldap) { { status: 'student', pustatus: "undergraduate" } }
+      it 'does not show the message for the campus unauthorized patron' do
+        expect(decorator.patron_message).to be_blank
       end
     end
 

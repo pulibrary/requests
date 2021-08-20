@@ -51,8 +51,6 @@ module Requests
       content_tag(:ul, class: "service-list") do
         brief_msg = if requestable.annex?
                       I18n.t("requests.annex.brief_msg")
-                    elsif requestable.annexb?
-                      I18n.t("requests.annexb.brief_msg")
                     elsif requestable.preservation?
                       I18n.t("requests.pres.brief_msg")
                     elsif requestable.services.include? 'recap_no_items'
@@ -78,7 +76,7 @@ module Requests
 
     def output_request_input(requestable)
       output = ""
-      ['annex', 'bd', 'annexb', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace', 'on_shelf'].each do |type|
+      ['annex', 'bd', 'pres', 'ppl', 'lewis', 'paging', 'on_order', 'trace', 'on_shelf'].each do |type|
         next unless requestable.services.include?(type)
         output = request_input(type)
         break
@@ -90,8 +88,6 @@ module Requests
     def hidden_service_options_fill_in(requestable)
       if requestable.annex?
         request_input('annex')
-      elsif requestable.annexb?
-        request_input('annexb')
       elsif requestable.services.include? 'recap_no_items'
         request_input('recap_no_items')
       else
@@ -281,9 +277,7 @@ module Requests
     end
 
     def submitable_services
-      # temporary changes issue 438 do not disable the button for circulating items
-      # ['in_process', 'on_order', 'annex', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
-      ['on_shelf', 'in_process', 'on_order', 'annex', 'annexb', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
+      ['on_shelf', 'in_process', 'on_order', 'annex', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
     end
 
     def submit_message(requestable_list)
@@ -294,7 +288,7 @@ module Requests
       if requestable_list.first.services.empty?
         no_item
       elsif requestable_list.first.charged?
-        return multi_item if requestable_list.first.annex? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+        return multi_item if requestable_list.first.annex? || requestable_list.first.pageable_loc?
         single_item # no_item
       else
         submit_message_for_requestable_items(requestable_list)
@@ -305,7 +299,7 @@ module Requests
       single_item = "Request this Item"
       multi_item = "Request Selected Items"
       trace = "Trace this item"
-      if requestable_list.first.annex? || requestable_list.first.annexb? || requestable_list.first.pageable_loc?
+      if requestable_list.first.annex? || requestable_list.first.pageable_loc?
         multi_item
       elsif requestable_list.first.traceable?
         trace

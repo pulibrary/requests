@@ -123,7 +123,7 @@ module Requests
       end
 
       def fill_in_services
-        ["annex", "annexb", "recap_no_items", "on_shelf"]
+        ["annex", "recap_no_items", "on_shelf"]
       end
 
       def any_circulate?

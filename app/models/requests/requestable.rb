@@ -89,14 +89,8 @@ module Requests
       location_code == 'pres'
     end
 
-    # merge these two
     def annex?
       location_valid? && location[:library][:code] == 'annex'
-    end
-
-    # locations temporarily moved to annex should work
-    def annexb?
-      location_valid? && location[:library][:code] == 'annexb'
     end
 
     def circulates?

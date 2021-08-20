@@ -70,7 +70,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
       let(:stubbed_questions) do
         { voyager_managed?: true, online?: false, in_process?: false,
           charged?: false, on_order?: false, aeon?: false,
-          preservation?: false, annex?: false, annexb?: false,
+          preservation?: false, annex?: false,
           plasma?: false, lewis?: false, recap?: false, held_at_marquand_library?: false,
           item_data?: false, recap_edd?: false, pageable?: false, scsb_in_library_use?: false, item: item,
           library_code: 'ABC' }
@@ -142,15 +142,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         end
         it "returns annex in the services" do
           expect(router.calculate_services).to eq(['annex', 'on_shelf_edd'])
-        end
-      end
-
-      context "annexb" do
-        before do
-          stubbed_questions[:annexb?] = true
-        end
-        it "returns annexb in the services" do
-          expect(router.calculate_services).to eq(['annexb'])
         end
       end
 

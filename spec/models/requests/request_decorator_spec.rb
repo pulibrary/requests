@@ -41,7 +41,7 @@ describe Requests::RequestDecorator do
     context "Barcoded user" do
       let(:user) { FactoryGirl.build(:valid_barcode_patron) }
       it 'shows the message for the campus unauthorized patron' do
-        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>You are not currently authorized for on-campus services at the Library. Please send an inquiry to <a href='mailto:refdesk@princeton.edu'>refdesk@princeton.edu</a> if you believe you should have access to these services.</div>"
+        expect(decorator.patron_message).to eq "<div class='alert alert-warning'>There is a problem with your library account. Please reach out to us at  <a href='mailto:fstcirc@princeton.edu'>fstcirc@princeton.edu</a> regarding your access to Library services.</div>"
       end
     end
 

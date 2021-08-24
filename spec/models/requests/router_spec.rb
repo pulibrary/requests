@@ -298,7 +298,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
       context "not voyager managed or scsb" do
         before do
           stubbed_questions[:voyager_managed?] = false
-          stubbed_questions[:scsb?] = false
+          stubbed_questions[:partner_holding?] = false
         end
         it "returns aeon in the services" do
           expect(router.calculate_services).to eq(['aeon'])

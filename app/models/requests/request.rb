@@ -50,7 +50,7 @@ module Requests
     delegate :user, to: :patron
 
     # Is this a partner system id
-    def scsb?
+    def partner_system_id?
       return true if /^SCSB-\d+/ =~ system_id.to_s
     end
 
@@ -75,7 +75,7 @@ module Requests
 
     # Does this request object have any available copies?
     def any_loanable_copies?
-      requestable_unrouted.any? { |request| !(request.charged? || (request.aeon? || !request.circulates? || request.scsb? || request.on_reserve?)) }
+      requestable_unrouted.any? { |requestable| !(requestable.charged? || (requestable.aeon? || !requestable.circulates? || requestable.partner_holding? || requestable.on_reserve?)) }
     end
 
     def any_enumerated?
@@ -192,7 +192,7 @@ module Requests
       # returns a collection of requestable objects or nil
       def build_requestable
         return [] if doc.blank?
-        if scsb?
+        if partner_system_id?
           build_scsb_requestable
         elsif !items.nil?
           build_requestable_with_items

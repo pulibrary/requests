@@ -12,7 +12,7 @@
 </select>
 <br/>
 
-<% if (requestable.scsb? && requestable.recallable?) %>
+<% if (requestable.partner_holding? && requestable.recallable?) %>
   <select aria-label="Select a delivery location" name="updated_by_client" id="requestable__pick_up" class="recall-pick-up" aria-live="polite">
       <%= pick_up_choices requestable, [] %>
   </select>

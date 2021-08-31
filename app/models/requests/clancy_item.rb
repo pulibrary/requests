@@ -6,7 +6,7 @@ module Requests
 
     def initialize(barcode: nil, connection: Faraday.new(url: Requests::Config[:clancy_base]))
       @clancy_conn = connection
-      @api_key = ENV['CLANCY_API_KEY']
+      @api_key = Requests::Config[:clancy_api_key]
       @barcode = barcode
       @errors = []
     end

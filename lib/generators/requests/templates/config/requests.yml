@@ -12,6 +12,9 @@ defaults: &defaults
   # scsb_base: https://scsb.recaplib.org:9093
   scsb_active_mq: uat-recap-direct.htcinc.com
   clancy_base: <%= ENV['CLANCY_BASE_URL'] || "https://example.caiasoft.com/api" %>
+  clancy_api_key: <%= ENV['CLANCY_API_KEY'] %>
+  illiad_api_key: <%= ENV['ILLIAD_API_KEY'] %>
+  illiad_api_base: <%= ENV['ILLIAD_API_BASE_URL'] || "https://lib-illiad.princeton.edu" %>
   recap_partner_locations:
     scsbcul: "CUL"
     scsbnypl: "NYPL"

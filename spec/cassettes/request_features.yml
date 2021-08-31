@@ -5543,4 +5543,172 @@ http_interactions:
       encoding: UTF-8
       string: ''
   recorded_at: Fri, 20 Aug 2021 16:33:20 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/SCSB-9919951/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Tue, 31 Aug 2021 18:57:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 9b7dae7b-fa81-4ade-bfd7-fb5a166cfbbe
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"70e352b8e3faf192a900e0e597905690"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.022289'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.10
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IlNDU0ItOTkxOTk1MSIsIm51bWVyaWNfaWRfYiI6ZmFsc2UsIm90aGVyX2lkX3MiOlsiOTkwMTQzNjUzNDAwMjAzOTQxIl0sImF1dGhvcl9jaXRhdGlvbl9kaXNwbGF5IjpbIlBhbGFjaW9zLCBDYXJsb3MiLCJDb2ZmZXksIE1hcnkgSy4iLCJNdXNlbyBkZSBBcnRlIENhcnJpbGxvIEdpbCJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltcIkNvZmZleSwgTWFyeSBLLlwiLFwiTXVzZW8gZGUgQXJ0ZSBDYXJyaWxsbyBHaWxcIl0sXCJ0cmFuc2xhdG9yc1wiOltdLFwiZWRpdG9yc1wiOltcIlBhbGFjaW9zLCBDYXJsb3NcIl0sXCJjb21waWxlcnNcIjpbXX0iLCJhdXRob3JfcyI6WyJQYWxhY2lvcywgQ2FybG9zIiwiQ29mZmV5LCBNYXJ5IEsuLCAxOTY4LSIsIk11c2VvIGRlIEFydGUgQ2FycmlsbG8gR2lsIl0sInRpdGxlX2Rpc3BsYXkiOiJSYXpvzIFuIGRlIHNlciA6IG9icmFzIGVtYmxlbWHMgXRpY2FzIGRlIGxhIENvbGVjY2lvzIFuIENhcnJpbGxvIEdpbCA6IE9yb3pjbywgUml2ZXJhLCBTaXF1ZWlyb3MsIFBhYWxlbiwgR2VyenNvIC8gQ2FybG9zIEUuIFBhbGFjaW9zLCBlZGl0b3IgPSBlZGl0b3IgOyBNYXJ5IEsuIENvZmZleS4uLiBbYW5kIDggb3RoZXJzXSwgdGV4dG9zID0gdGV4dHMuIiwidGl0bGVfdCI6WyJSYXpvzIFuIGRlIHNlciA6IG9icmFzIGVtYmxlbWHMgXRpY2FzIGRlIGxhIENvbGVjY2lvzIFuIENhcnJpbGxvIEdpbCA6IE9yb3pjbywgUml2ZXJhLCBTaXF1ZWlyb3MsIFBhYWxlbiwgR2VyenNvIC8gQ2FybG9zIEUuIFBhbGFjaW9zLCBlZGl0b3IgPSBlZGl0b3IgOyBNYXJ5IEsuIENvZmZleS4uLiBbYW5kIDggb3RoZXJzXSwgdGV4dG9zID0gdGV4dHMuIl0sInRpdGxlX2NpdGF0aW9uX2Rpc3BsYXkiOlsiUmF6b8yBbiBkZSBzZXIgOiBvYnJhcyBlbWJsZW1hzIF0aWNhcyBkZSBsYSBDb2xlY2Npb8yBbiBDYXJyaWxsbyBHaWwgOiBPcm96Y28sIFJpdmVyYSwgU2lxdWVpcm9zLCBQYWFsZW4sIEdlcnpzbyJdLCJjb21waWxlZF9jcmVhdGVkX3QiOlsiUmF6b8yBbiBkZSBzZXIgOiBvYnJhcyBlbWJsZW1hzIF0aWNhcyBkZSBsYSBDb2xlY2Npb8yBbiBDYXJyaWxsbyBHaWwgOiBPcm96Y28sIFJpdmVyYSwgU2lxdWVpcm9zLCBQYWFsZW4sIEdlcnpzbyAvIENhcmxvcyBFLiBQYWxhY2lvcywgZWRpdG9yID0gZWRpdG9yIDsgTWFyeSBLLiBDb2ZmZXkuLi4gW2FuZCA4IG90aGVyc10sIHRleHRvcyA9IHRleHRzLiJdLCJlZGl0aW9uX2Rpc3BsYXkiOlsiUHJpbWVyYSBlZGljaW/MgW4uIl0sInB1Yl9jcmVhdGVkX2Rpc3BsYXkiOlsiTWXMgXhpY28sIEQuRi4gOiBDT05BQ1VMVEEgOiBJTkJBIDogTXVzZW8gZGUgQXJ0ZSBDYXJyaWxsbyBHaWwsIDIwMTQuIl0sInB1Yl9jcmVhdGVkX3MiOlsiTWXMgXhpY28sIEQuRi4gOiBDT05BQ1VMVEEgOiBJTkJBIDogTXVzZW8gZGUgQXJ0ZSBDYXJyaWxsbyBHaWwsIDIwMTQuIl0sInB1Yl9jaXRhdGlvbl9kaXNwbGF5IjpbIk1lzIF4aWNvLCBELkYuOiBNdXNlbyBkZSBBcnRlIENhcnJpbGxvIEdpbCJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTQiXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxNCwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyIyNTEgcGFnZXMgOiBpbGx1c3RyYXRpb25zIChjaGllZmx5IGNvbG9yKSA7IDI2IGNtIl0sImRlc2NyaXB0aW9uX3QiOlsiMjUxIHBhZ2VzIDogaWxsdXN0cmF0aW9ucyAoY2hpZWZseSBjb2xvcikgOyAyNiBjbSJdLCJudW1iZXJfb2ZfcGFnZXNfY2l0YXRpb25fZGlzcGxheSI6WyIyNTEgcGFnZXMiXSwiZ2VvY29kZV9kaXNwbGF5IjpbIk1leGljbyJdLCJiaWJfcmVmX25vdGVzX2Rpc3BsYXkiOlsiSW5jbHVkZXMgYmlibGlvZ3JhcGhpY2FsIHJlZmVyZW5jZXMuIl0sImxhbmd1YWdlX2Rpc3BsYXkiOlsiVGV4dHMgaW4gU3BhbmlzaCBhbmQgRW5nbGlzaC4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiU3BhbmlzaCIsIkVuZ2xpc2giXSwibGFuZ3VhZ2VfY29kZV9zIjpbInNwYSIsImVuZyJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiZXMiLCJlbiJdLCJjb250ZW50c19kaXNwbGF5IjpbIlByZXNlbnRhY2lvbmVzIC0tIFNpbmd1bGFyaWRhZGVzIGNvbGVjY2lvbmnMgXN0aWNhcyBkZSBBbHZhciBDYXJyaWxsbyBHaWwgLyBBbmEgR2FyZHVuzINvIC0tIEFsdmFyIENhcnJpbGxvIEdpbCAvIENhcmxvcyBFLiBQYWxhY2lvcyAtLSBHdWVycmEsIG11amVyZXMgeSBlc2NlbmEgdXJiYW5hOiBKb3NlzIEgQ2xlbWVudGUgT3JvemNvIGVuIGxhIENvbGVjY2lvzIFuIENhcnJpbGxvIEdpbCAvIE1hcnkgSy4gQ29mZmV5IC0tIERhdmlkIEFsZmFybyBTaXF1ZWlyb3MgZW4gbGEgQ29sZWNjaW/MgW4gQ2FycmlsbG8gR2lsLiBFeHBlcmltZW50YWNpb8yBbiBzZXJpYWwgcGFyYSBsYSBpbnRlZ3JhY2lvzIFuIHBsYcyBc3RpY2EgLyBOYXRhbGlhIGRlIGxhIFJvc2EgLS0gRGllZ28gUml2ZXJhLCBNYXhpbWlsaWFuIFZvbG9zaGluIHkgZWwgUGFyacyBcyBkZSBsYSBQcmltZXJhIEd1ZXJyYSBNdW5kaWFsIC8gUnViZcyBbiBHYWxsbyAtLSBFc2NlbmFyaW9zIGVuIGxhIG9icmEgZGUgR3VudGhlciBHZXJ6c28gMTk1MC0xOTYxIC8gS2FyZW4gQ29yZGVybyBSZWltYW4gLS0gV29sZmdhbmcgUGFhbGVuOiBDb2xlY2Npb8yBbiBDYXJyaWxsbyBHaWwgLyBBcmEgSC4gTWVyamlhbiAtLSBBcGXMgW5kaWNlIC0tIEJyZXZlIGludHJvZHVjY2lvzIFuIGFsIFVraXlvLWUgZGUgbGEgQ29sZWNjaW/MgW4gTUFDRyAvIEliYXJpIE9ydGVnYSAtLSBTZWxlY2Npb8yBbiBkZSBVa2l5by1lIGRlIGxhIENvbGVjY2lvzIFuIENhcnJpbGxvIEdpbCAvIENvbWVudGFkYSBwb3IgQW1hdXJ5IEdhcmNpYSBSb2RyacyBZ3VleiAtLSBTZWxlY2Npb8yBbiBkZSBleHBvc2ljaW9uZXMgZGUgbGEgQ29sZWNjaW/MgW4gQ2FycmlsbG8gR2nMgnQiXSwibGNfc3ViamVjdF9kaXNwbGF5IjpbIkFydOKAlFByaXZhdGUgY29sbGVjdGlvbnPigJRNZXhpY2/igJRNZXhpY28gQ2l0eeKAlENhdGFsb2dzIiwiQ2FycmlsbG8gR2lsLCBBbHZhcuKAlEFydCBjb2xsZWN0aW9uc+KAlENhdGFsb2dzIiwiUml2ZXJhLCBEaWVnbywgMTg4Ni0xOTU34oCUQ2F0YWxvZ3MiLCJPcm96Y28sIEpvc2XMgSBDbGVtZW50ZSwgMTg4My0xOTQ54oCUQ2F0YWxvZ3MiLCJTaXF1ZWlyb3MsIERhdmlkIEFsZmFybywgMTg5Ni0xOTc04oCUQ2F0YWxvZ3MiLCJQYWFsZW4sIFdvbGZnYW5nLCAxOTA3LTE5NTnigJRDYXRhbG9ncyIsIkdlcnpzbywgR3VudGhlciwgMTkxNS0yMDAw4oCUQ2F0YWxvZ3MiXSwic3ViamVjdF9mYWNldCI6WyJBcnTigJRQcml2YXRlIGNvbGxlY3Rpb25z4oCUTWV4aWNv4oCUTWV4aWNvIENpdHnigJRDYXRhbG9ncyIsIkNhcnJpbGxvIEdpbCwgQWx2YXLigJRBcnQgY29sbGVjdGlvbnPigJRDYXRhbG9ncyIsIlJpdmVyYSwgRGllZ28sIDE4ODYtMTk1N+KAlENhdGFsb2dzIiwiT3JvemNvLCBKb3NlzIEgQ2xlbWVudGUsIDE4ODMtMTk0OeKAlENhdGFsb2dzIiwiU2lxdWVpcm9zLCBEYXZpZCBBbGZhcm8sIDE4OTYtMTk3NOKAlENhdGFsb2dzIiwiUGFhbGVuLCBXb2xmZ2FuZywgMTkwNy0xOTU54oCUQ2F0YWxvZ3MiLCJHZXJ6c28sIEd1bnRoZXIsIDE5MTUtMjAwMOKAlENhdGFsb2dzIl0sInJlbGF0ZWRfbmFtZV9qc29uXzFkaXNwbGF5Ijoie1wiRWRpdG9yXCI6W1wiUGFsYWNpb3MsIENhcmxvc1wiXSxcIldyaXRlciBvZiBhZGRlZCB0ZXh0XCI6W1wiQ29mZmV5LCBNYXJ5IEsuLCAxOTY4LVwiXSxcIkhvc3QgaW5zdGl0dXRpb25cIjpbXCJNdXNlbyBkZSBBcnRlIENhcnJpbGxvIEdpbFwiXX0iLCJvdGhlcl90aXRsZV9kaXNwbGF5IjpbIk9icmFzIGVtYmxlbWHMgXRpY2FzIGRlIGxhIENvbGVjY2lvzIFuIENhcnJpbGxvIEdpbCA6IE9yb3pjbywgUml2ZXJhLCBTaXF1ZWlyb3MsIFBhYWxlbiwgR2VyenNvIDogT3JvemNvLCBSaXZlcmEsIFNpcXVlaXJvcywgUGFhbGVuLCBHZXJ6c28iLCJPYnJhcyBlbWJsZW1hzIF0aWNhcyBkZSBsYSBDb2xlY2Npb8yBbiBDYXJyaWxsbyBHaWwgOiBPcm96Y28sIFJpdmVyYSwgU2lxdWVpcm9zLCBQYWFsZW4sIEdlcnpzbyJdLCJhbHRfdGl0bGVfMjQ2X2Rpc3BsYXkiOlsiT2JyYXMgZW1ibGVtYcyBdGljYXMgZGUgbGEgQ29sZWNjaW/MgW4gQ2FycmlsbG8gR2lsIDogT3JvemNvLCBSaXZlcmEsIFNpcXVlaXJvcywgUGFhbGVuLCBHZXJ6c28gOiBPcm96Y28sIFJpdmVyYSwgU2lxdWVpcm9zLCBQYWFsZW4sIEdlcnpzbyIsIk9icmFzIGVtYmxlbWHMgXRpY2FzIGRlIGxhIENvbGVjY2lvzIFuIENhcnJpbGxvIEdpbCA6IE9yb3pjbywgUml2ZXJhLCBTaXF1ZWlyb3MsIFBhYWxlbiwgR2VyenNvIl0sImlzYm5fZGlzcGxheSI6WyI5Nzg2MDc2MDUzMTg4IiwiNjA3NjA1MzE4NiJdLCJpc2JuX3MiOlsiOTc4NjA3NjA1MzE4OCJdLCJvY2xjX3MiOlsiOTA3MzEwMjgxIl0sIm90aGVyX3ZlcnNpb25fcyI6WyI5Nzg2MDc2MDUzMTg4Iiwib2NuOTA3MzEwMjgxIl0sImhvbGRpbmdzXzFkaXNwbGF5Ijoie1wiMTA2NTg3ODBcIjp7XCJjYWxsX251bWJlclwiOlwiTjUyMzAuTTYyIFIzOSAyMDE0XCIsXCJjYWxsX251bWJlcl9icm93c2VcIjpcIk41MjMwLk02MiBSMzkgMjAxNFwiLFwibG9jYXRpb25fY29kZVwiOlwic2NzYmhsXCIsXCJsb2NhdGlvblwiOlwiXCIsXCJsaWJyYXJ5XCI6XCJSZUNBUFwiLFwiaXRlbXNcIjpbe1wiaG9sZGluZ19pZFwiOlwiMTA2NTg3ODBcIixcImlkXCI6XCIxNjM0NzgwN1wiLFwic3RhdHVzX2F0X2xvYWRcIjpcIkF2YWlsYWJsZVwiLFwiYmFyY29kZVwiOlwiMzIwNDQxMzY2MDI2ODdcIixcImNnY1wiOlwiU2hhcmVkXCIsXCJjb2xsZWN0aW9uX2NvZGVcIjpcIkZMXCIsXCJzdG9yYWdlX2xvY2F0aW9uXCI6XCJIRFwifV19fSIsInJlY2FwX25vdGVzX2Rpc3BsYXkiOlsiSCAtIFMiXSwibG9jYXRpb25fY29kZV9zIjpbInNjc2JobCJdLCJsb2NhdGlvbiI6WyJSZUNBUCJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIiJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbInNjc2JobCIsIlJlQ0FQIl0sIl92ZXJzaW9uXyI6MTcwOTAyMTM3OTkxNjk4ODQxNiwidGltZXN0YW1wIjoiMjAyMS0wOC0yNVQwMDowMzoxNS45ODlaIn0=
+  recorded_at: Tue, 31 Aug 2021 18:57:34 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/scsbhl.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Tue, 31 Aug 2021 18:57:34 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"462c3d3f60bb9f8fac6a57f3ba01fd0d"
+      X-Runtime:
+      - '0.010947'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - '04998626-d87d-46c4-8aa3-2150dc4f7b72'
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.9
+    body:
+      encoding: UTF-8
+      string: '{"label":"Remote Storage","code":"scsbhl","aeon_location":false,"recap_electronic_delivery_location":true,"open":false,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"recap_rmt","library":{"label":"ReCAP","code":"recap","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[{"label":"Firestone
+        Circulation Desk","address":"One Washington Rd. Princeton, NJ 08544","phone_number":"609
+        258-2345","contact_email":"fstcirc@princton.edu","gfa_pickup":"QX","staff_only":false,"pickup_location":false,"digital_location":false,"library":{"label":"Firestone
+        Library","code":"firestone","order":0}}]}'
+  recorded_at: Tue, 31 Aug 2021 18:57:34 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/bibliographic/SCSB-9919951/holdings/10658780/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Tue, 31 Aug 2021 18:57:34 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 400 Bad Request
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - no-cache
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Runtime:
+      - '0.259522'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 867e703a-c21a-41bf-9fad-68fdb536c229
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.9
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Tue, 31 Aug 2021 18:57:34 GMT
 recorded_with: VCR 6.0.0

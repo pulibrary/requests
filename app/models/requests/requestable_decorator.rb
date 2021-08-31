@@ -152,7 +152,8 @@ module Requests
     end
 
     def delivery_location_label
-      if requestable.held_at_marquand_library? || (recap? && (requestable.holding_library == "marquand" || requestable.cul_avery?))
+      if requestable.held_at_marquand_library? ||
+         (recap? && (requestable.holding_library == "marquand" || requestable.cul_avery? || requestable.hl_art?))
         "Marquand Library at Firestone"
       elsif requestable.cul_music?
         "Mendel Music Library"
@@ -162,7 +163,7 @@ module Requests
     end
 
     def delivery_location_code
-      if requestable.cul_avery?
+      if requestable.cul_avery? || requestable.hl_art?
         "PJ"
       elsif requestable.cul_music?
         "PK"

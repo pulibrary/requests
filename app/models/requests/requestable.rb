@@ -183,7 +183,7 @@ module Requests
 
     # override the default delivery location for SCSB at certain collection codes
     def scsb_pick_up_override(collection_code)
-      if collection_code == 'AR'
+      if ['AR', 'FL'].include? collection_code
         [Requests::BibdataService.delivery_locations[:PJ]]
       elsif collection_code == 'MR'
         [Requests::BibdataService.delivery_locations[:PK]]
@@ -194,7 +194,7 @@ module Requests
 
     def scsb_in_library_use?
       return false unless item?
-      scsb? && item[:use_statement] == "In Library Use"
+      scsb? && (item[:use_statement] == "In Library Use" || collection_code == 'FL')
     end
 
     def holding_library_in_library_only?
@@ -272,6 +272,11 @@ module Requests
     def cul_music?
       return false unless item?
       item[:collection_code].present? && item[:collection_code] == 'MR'
+    end
+
+    def hl_art?
+      return false unless item?
+      item[:collection_code].present? && item[:collection_code] == 'FL'
     end
 
     def resource_shared?

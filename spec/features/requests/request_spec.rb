@@ -1183,6 +1183,30 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'Available for In Library Use'
           expect(page).to have_content 'Pick-up location: Mendel Music Library'
         end
+
+        it "allows a harvard item that is in library use for Marquand to be viewwed" do
+          scsb_url = "#{Requests::Config[:scsb_base]}/requestItem/requestItem"
+          stub_scsb_availability(bib_id: "990143653400203941", institution_id: "HL", barcode: '32044136602687')
+          stub_request(:post, scsb_url)
+            .with(body: hash_including(author: "", bibId: "SCSB-9919951", callNumber: "N5230.M62 R39 2014", chapterTitle: "", deliveryLocation: "PJ", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32044136602687"], itemOwningInstitution: "HL", patronBarcode: "22101008199999", requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "Razón de ser : obras emblemáticas de la Colección Carrillo Gil : Orozco, Rivera, Siqueiros, Paalen, Gerzso", username: "jstudent", volume: ""))
+            .to_return(status: 200, body: good_response, headers: {})
+          visit '/requests/SCSB-9919951'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).to have_content 'Available for In Library Use'
+          expect(page).to have_content('Pick-up location: Marquand Library at Firestone')
+          expect(page).to have_content 'ReCAP N5230.M62 R39 2014'
+          # expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          # expect(a_request(:post, scsb_url)).to have_been_made
+          # expect(page).to have_content "Request submitted to ReCAP, our offsite storage facility"
+          # confirm_email = ActionMailer::Base.deliveries.last
+          # expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
+          # expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          # expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          # expect(confirm_email.html_part.body.to_s).to have_content(" Your request to pick this item up has been received. We will process the requests as soon as possible")
+          # expect(confirm_email.html_part.body.to_s).to have_content("Chong wen men shang shui ya men xian xing shui ze")
+          # expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+        end
       end
     end
 

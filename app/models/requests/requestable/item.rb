@@ -96,8 +96,7 @@ class Requests::Requestable
     end
 
     # Is the ReCAP Item from a partner location
-    # currently not used?
-    def scsb?
+    def partner_holding?
       Requests::Config[:recap_partner_locations].keys.include? self["location_code"]
     end
 
@@ -202,7 +201,7 @@ class Requests::Requestable
         ''
       end
 
-      def scsb?
+      def partner_holding?
         false
       end
     end

@@ -61,11 +61,7 @@ module Requests
       @bib[:id]
     end
 
-    def scsb?
-      @items.select { |item| scsb_item?(item) }.size.positive?
-    end
-
-    def scsb_item?(item)
+    def partner_item?(item)
       Requests::Config[:recap_partner_locations].keys.include? item["location_code"]
     end
 
@@ -272,8 +268,12 @@ module Requests
         mail_service_types.each do |type|
           Requests::RequestMailer.send("#{type}_email", self).deliver_now unless type == 'recap_edd'
           Requests::RequestMailer.send("#{type}_confirmation", self).deliver_now if type != 'recall'
-          Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && scsb?
+          Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && items_held_by_partner?
         end
+      end
+
+      def items_held_by_partner?
+        @items.select { |item| partner_item?(item) }.size.positive?
       end
   end
 end

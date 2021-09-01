@@ -47,7 +47,7 @@ module Requests
 
       def handle_item(item:, scsb_params:)
         # location = get_location(item['location_code'])
-        if scsb_locations.include? item['location_code'] # || (location[:library][:code] == 'recap')
+        if Requests::Config.recap_partner_location_codes.include? item['location_code'] # || (location[:library][:code] == 'recap')
           params = scsb_param_mapping(@submission.bib, @submission.patron, item)
           if scsb_params.empty?
             scsb_params = params

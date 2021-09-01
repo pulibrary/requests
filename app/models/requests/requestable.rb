@@ -40,7 +40,7 @@ module Requests
     end
 
     delegate :pick_up_location_id, :pick_up_location_code, :item_type, :enum_value, :cron_value, :item_data?,
-             :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?,
+             :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?, :partner_holding?,
              :id, :use_statement, :collection_code, :missing?, :charged?, :status, :status_label, :barcode?, :barcode, to: :item
 
     # non voyager options
@@ -73,7 +73,7 @@ module Requests
     end
 
     def recap_edd?
-      return location[:recap_electronic_delivery_location] == true unless scsb?
+      return location[:recap_electronic_delivery_location] == true unless partner_holding?
       scsb_edd_collection_codes.include?(collection_code) && !scsb_in_library_use?
     end
 
@@ -105,22 +105,17 @@ module Requests
       location[:always_requestable] == true
     end
 
-    # Is the ReCAP Item from a partner location
-    def scsb?
-      scsb_locations.include?(location_code)
-    end
-
     def use_restriction?
-      scsb? && use_statement.present?
+      partner_holding? && use_statement.present?
     end
 
     def in_process?
-      return false unless item? && !scsb?
+      return false unless item? && !partner_holding?
       in_process_statuses.include?(item[:status_label])
     end
 
     def on_order?
-      return false unless item? && !scsb?
+      return false unless item? && !partner_holding?
       item[:status_label] == 'Acquisition'
     end
 
@@ -174,7 +169,7 @@ module Requests
 
     def pick_up_locations
       return nil if location[:delivery_locations].empty?
-      if scsb?
+      if partner_holding?
         scsb_pick_up_override(item[:collection_code])
       else
         location[:delivery_locations]
@@ -194,7 +189,7 @@ module Requests
 
     def scsb_in_library_use?
       return false unless item?
-      scsb? && (item[:use_statement] == "In Library Use" || collection_code == 'FL')
+      partner_holding? && (item[:use_statement] == "In Library Use" || collection_code == 'FL')
     end
 
     def holding_library_in_library_only?
@@ -284,10 +279,6 @@ module Requests
     end
 
     private
-
-      def scsb_locations
-        Requests::Config[:recap_partner_locations].keys
-      end
 
       def scsb_edd_collection_codes
         %w[AR BR CA CH CJ CP CR CU EN EV GC GE GS HS JC JD LD LE ML SW UT NA NH NL NP NQ NS NW GN JN JO PA PB PN GP JP] +

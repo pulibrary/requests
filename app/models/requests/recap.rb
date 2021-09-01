@@ -50,7 +50,7 @@ module Requests
       end
 
       def handle_hold_for_item(item)
-        return if submission.scsb_item?(item) || submission.edd?(item)
+        return if submission.partner_item?(item) || submission.edd?(item)
 
         hold = Requests::HoldItem.new(@submission, service_type: "recap")
         hold.handle_item(item: item)

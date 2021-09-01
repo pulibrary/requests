@@ -98,7 +98,7 @@ describe Requests::Submission do
       end
 
       it 'does identify as a scsb partner item' do
-        expect(submission.scsb?).to be false
+        expect(submission.partner_item?(submission.items.first)).to be false
       end
     end
   end
@@ -1130,7 +1130,7 @@ describe Requests::Submission do
     end
 
     it 'Identifies as a SCSB partner item' do
-      expect(submission.scsb?).to be true
+      expect(submission.partner_item?(submission.items.first)).to be true
     end
   end
 

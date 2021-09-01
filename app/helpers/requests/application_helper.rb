@@ -208,7 +208,7 @@ module Requests
                 else
                   hidden_field_tag("requestable[][item_id]", "", value: requestable.preferred_request_id, id: "requestable_item_id_#{requestable.preferred_request_id}")
                 end
-      hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.scsb?
+      hidden += hidden_fields_for_scsb(item: requestable.item) if requestable.partner_holding?
       hidden
     end
 

@@ -126,10 +126,6 @@ module Requests
       Requests::Config[:recap_partner_locations].fetch(location, "PUL")
     end
 
-    def scsb_locations
-      Requests::Config.recap_partner_location_codes
-    end
-
     private
 
       def scsb_auth_key

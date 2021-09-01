@@ -37,9 +37,9 @@ module Requests
     # top level call, returns a hash of symbols with service objects as values
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
-      if (requestable.voyager_managed? || requestable.scsb?) && requestable.online?
+      if (requestable.voyager_managed? || requestable.partner_holding?) && requestable.online?
         ['online']
-      elsif (requestable.voyager_managed? || requestable.scsb?) && !requestable.aeon?
+      elsif (requestable.voyager_managed? || requestable.partner_holding?) && !requestable.aeon?
         calculate_voyager_or_scsb_services
       else # Default Service is Aeon
         ['aeon']

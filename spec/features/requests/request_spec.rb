@@ -242,7 +242,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Xin li ke xue = Journal of psychological science 心理科学 = Journal of psychological science")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allow CAS patrons to request an available ReCAP item.' do
@@ -274,7 +274,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("ʻAwāṭif madfūnah")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         # it 'allow CAS patrons to request an available ReCAP item with Help Me' do
@@ -312,7 +312,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Konteneryzacja w PRL")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         # it 'makes sure In-Process ReCAP items get Help Me' do
@@ -339,7 +339,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Jahrbuch Praktische Philosophie in globaler Perspektive = Yearbook practical philosophy in a global perspective")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allows CAS patrons to request a ReCAP record that has no item data' do
@@ -378,7 +378,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("John Webster; a critical study")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allows CAS patrons to request an item twice and see a message about the duplication' do
@@ -449,7 +449,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allows patrons to request a Lewis recap item digitally' do
@@ -888,7 +888,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         #   expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
         #   expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
         #   expect(confirm_email.html_part.body.to_s).to have_content("Semitistik")
-        #   expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+        #   expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         # end
 
         # need to check on CUL etas
@@ -917,7 +917,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content("Your request to pick this item up has been received. We will process the requests as soon as possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Mir, uvidennyĭ s gor : ocherk tvorchestva Shukurbeka Beĭshenalieva")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it "allows a columbia item that is open access to be picked up or digitized" do
@@ -944,7 +944,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           expect(confirm_email.html_part.body.to_s).to have_content(" Your request to pick this item up has been received. We will process the requests as soon as possible")
           expect(confirm_email.html_part.body.to_s).to have_content("Chong wen men shang shui ya men xian xing shui ze")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it "allows a columbia item that is ETAS to only be digitized" do
@@ -1167,7 +1167,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.to).to eq(["a@b.com"])
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("Ḍaḥāyā al-zawāj")
-          expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it "Delivers scsb in library use art items only to marquand" do
@@ -1205,7 +1205,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
           # expect(confirm_email.html_part.body.to_s).to have_content(" Your request to pick this item up has been received. We will process the requests as soon as possible")
           # expect(confirm_email.html_part.body.to_s).to have_content("Chong wen men shang shui ya men xian xing shui ze")
-          # expect(confirm_email.html_part.body.to_s).to have_content("Remain only in the designated pick-up area")
+          # expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
       end
     end

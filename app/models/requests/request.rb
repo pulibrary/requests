@@ -19,6 +19,7 @@ module Requests
     attr_reader :pick_ups
     alias default_pick_ups pick_ups
     delegate :ctx, :openurl_ctx_kev, to: :@ctx_obj
+    delegate :eligible_for_library_services?, to: :patron
 
     include Requests::Bibdata
     include Requests::Scsb

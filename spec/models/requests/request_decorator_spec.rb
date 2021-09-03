@@ -14,7 +14,7 @@ describe Requests::RequestDecorator do
   let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
   let(:request) do
     instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [requestable], patron: patron, first_filtered_requestable: requestable,
-                                       display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en')
+                                       display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', eligible_for_library_services?: true)
   end
   let(:solr_context) { instance_double(Requests::SolrOpenUrlContext) }
   let(:stubbed_questions) { { etas?: false } }
@@ -151,21 +151,32 @@ describe Requests::RequestDecorator do
 
   describe "#any_will_submit_via_form?" do
     context "recap services" do
-      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'], will_submit_via_form?: true, item_data?: true, recap_edd?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false } }
+      let(:stubbed_questions) { { etas?: false, services: ['recap', 'recap_edd'], will_submit_via_form?: true, item_data?: true, recap_edd?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, eligible_for_library_services?: true } }
       it "identifies any mfhds that require fill in option" do
         expect(decorator.any_will_submit_via_form?).to be_truthy
       end
     end
 
     context "on_shelf services with no item data and circulates" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annex?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, open_libraries: ['abc'], library_code: 'abc' } }
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: true, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annex?: false, clancy?: false, held_at_marquand_library?: false, item_at_clancy?: false, open_libraries: ['abc'], library_code: 'abc', eligible_for_library_services?: true } }
       it "submits via form" do
         expect(decorator.any_will_submit_via_form?).to be_truthy
       end
     end
 
     context "on_shelf services with no item data and circulates" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false, recap_edd?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annex?: false, clancy?: false, item_at_clancy?: false, held_at_marquand_library?: false, open_libraries: ['abc'], library_code: 'abc' } }
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: false, circulates?: false, recap_edd?: false, eligible_to_pickup?: true, scsb_in_library_use?: false, on_order?: false, in_process?: false, traceable?: false, aeon?: false, borrow_direct?: false, ill_eligible?: false, user_barcode: '111222', ask_me?: false, recap?: false, annex?: false, clancy?: false, item_at_clancy?: false, held_at_marquand_library?: false, open_libraries: ['abc'], library_code: 'abc', eligible_for_library_services?: true } }
+      it "does not submit via form" do
+        expect(decorator.any_will_submit_via_form?).to be_falsey
+      end
+    end
+
+    context "user is not eligible for library services" do
+      let(:request) do
+        instance_double(Requests::Request, system_id: '123abc', mfhd: '112233', ctx: solr_context, requestable: [requestable], patron: patron, first_filtered_requestable: requestable,
+                                           display_metadata: { title: 'title', author: 'author', isbn: 'isbn' }, language: 'en', eligible_for_library_services?: false)
+      end
+      let(:stubbed_questions) { { eligible_for_library_services?: false } }
       it "does not submit via form" do
         expect(decorator.any_will_submit_via_form?).to be_falsey
       end

@@ -59,6 +59,10 @@ module Requests
       barcode.present? && (campus_authorized || covid_trained?)
     end
 
+    def eligible_for_library_services?
+      barcode.present?
+    end
+
     def pick_up_only?
       !campus_authorized && patron[:campus_authorized_category] == "trained"
     end

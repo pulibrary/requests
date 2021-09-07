@@ -1,7 +1,7 @@
 module Requests
   class RequestableDecorator
     delegate :system_id, :aeon_mapped_params, :services, :charged?, :annex?, :lewis?, :pageable_loc?, :traceable?, :on_reserve?,
-             :ask_me?, :etas?, :etas_limited_access, :aeon_request_url, :location, :temp_loc?, :call_number, :eligible_to_pickup?,
+             :ask_me?, :etas?, :etas_limited_access, :aeon_request_url, :location, :temp_loc?, :call_number, :eligible_to_pickup?, :eligible_for_library_services?,
              :holding_library_in_library_only?, :holding_library, :bib, :circulates?, :open_libraries, :item_data?, :recap_edd?, :user_barcode, :clancy?,
              :holding, :item_location_code, :item?, :item, :partner_holding?, :status, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,
              :cron_value, :illiad_request_parameters, :location_label, :online?, :aeon?, :borrow_direct?, :patron, :held_at_marquand_library?,
@@ -29,7 +29,7 @@ module Requests
     end
 
     def digitize?
-      (item_data? || !circulates?) && (on_shelf_edd? || recap_edd? || marquand_edd?) && !request_status?
+      eligible_for_library_services? && (item_data? || !circulates?) && (on_shelf_edd? || recap_edd? || marquand_edd?) && !request_status?
     end
 
     def fill_in_digitize?
@@ -56,13 +56,15 @@ module Requests
     end
 
     def help_me?
+      return false unless eligible_for_library_services?
       (request_status? && !eligible_to_pickup?) || # a requestable item that the user can not pick up
         ask_me? || # recap scsb in library only items
         (!located_in_an_open_library? && !aeon? && !resource_shared?) # item in a closed library that is not aeon managed or resource shared
     end
 
     def will_submit_via_form?
-      digitize? || pick_up? || scsb_in_library_use? || off_site? || (ill_eligible? && patron.covid_trained?) || (user_barcode.present? && (on_order? || in_process? || traceable?)) || help_me?
+      return false unless eligible_for_library_services?
+      digitize? || pick_up? || scsb_in_library_use? || (ill_eligible? && patron.covid_trained?) || on_order? || in_process? || traceable? || off_site? || help_me?
     end
 
     def located_in_an_open_library?
@@ -133,9 +135,9 @@ module Requests
     def help_me_message
       key = if patron.campus_authorized || !located_in_an_open_library? || (requestable.scsb_in_library_use? && requestable.etas?)
               "full_access"
-            elsif patron.barcode.blank?
+            elsif !eligible_for_library_services?
               "cas_user_no_barcode_no_choice_msg"
-            elsif patron.eligible_to_pickup?
+            elsif eligible_to_pickup?
               "pickup_access"
             else
               "digital_access"

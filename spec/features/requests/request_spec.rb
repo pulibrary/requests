@@ -1317,244 +1317,124 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
       end
 
       describe 'When visiting a voyager ID as a CAS User' do
-        it 'allow CAS patrons to request an available ReCAP item.' do
+        it 'disallows access to request an available ReCAP item.' do
           stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
-          scsb_url = "#{Requests::Config[:scsb_base]}/requestItem/requestItem"
-          stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9994933183506421", callNumber: "PJ7962.A5495 A95 2016", chapterTitle: "", deliveryLocation: "PA", emailAddress: 'a@b.com', endPage: "", issue: "", itemBarcodes: ["32101095798938"], itemOwningInstitution: "PUL", patronBarcode: "22101008199999",
-                                       requestNotes: "", requestType: "RETRIEVAL", requestingInstitution: "PUL", startPage: "", titleIdentifier: "ʻAwāṭif madfūnah عواطف مدفونة", username: "jstudent", volume: ""))
-            .to_return(status: 200, body: good_response, headers: {})
-          stub_request(:post, Requests::Config[:scsb_base])
-            .with(headers: { 'Accept' => '*/*' })
-            .to_return(status: 200, body: "<document count='1' sent='true'></document>", headers: {})
-          stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/9994933183506421/holdings/22558528920006421/items/23131438400006421/requests?user_id=960594184")
-            .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
-            .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
           visit "/requests/#{voyager_id}"
-          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
         it 'disallows access to in process items' do
           visit "/requests/#{in_process_id}"
-          expect(page).not_to have_content 'Pick-up location: Marquand Library'
-          expect(page).to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'Help Me Get it for in process recap items' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Lewandowski, Krzysztof", "LoanTitle" => "Konteneryzacja w PRL", "LoanPublisher" => nil, "ISSN" => "9788395296505", "CallNumber" => nil, "CitedIn" => "https://catalog.princeton.edu/catalog/99114026863506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access for in process recap items' do
           visit "/requests/#{recap_in_process_id}"
-          expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("Konteneryzacja w PRL")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
-          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business days to process")
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'Help Me Get it for On-Order recap items' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "", "LoanTitle" => "Jahrbuch Praktische Philosophie in globaler Perspektive = Yearbook practical philosophy in a global perspective", "LoanPublisher" => nil, "ISSN" => "", "CallNumber" => "B832.A1 J34", "CitedIn" => "https://catalog.princeton.edu/catalog/99103251433506421", "ItemInfo3" => "", "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access for On-Order recap items' do
           visit "/requests/#{on_order_id}"
-          check 'requestable_selected_23480270130006421'
-          expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
-          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("Jahrbuch Praktische Philosophie ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows access to a record that has no item data' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9941274093506421", "PhotoJournalYear" => "2002", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "Location" => "Marquand Library - Stacks", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access to a record that has no item data' do
           visit "/requests/#{no_items_id}"
-          # stub illiad
-          expect(page).to have_button('Request this Item')
-          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
-          fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.html_part.body.to_s).to have_content(I18n.t('requests.marquand_edd.email_conf_msg'))
-          expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
-          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
-          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan")
-          expect(marquand_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
-          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
-          expect(marquand_email.cc).to be_blank
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows access an ReCAP record that has no item data to be digitized' do
+        it 'disallows access to a ReCAP record that has no item data to be digitized' do
           visit "/requests/993083506421?mfhd=22740191180006421"
-          expect(page).to have_button('Request this Item')
-          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
-          fill_in "requestable_user_supplied_enum_22740191180006421", with: "ABC ZZZ"
-          within("#request_user_supplied_22740191180006421") do
-            fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
-            check "requestable__selected"
-          end
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
-          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(email.subject).to eq("ReCAP Non-Barcoded Request.")
-          expect(email.to).to eq(["recapproblems@princeton.edu"])
-          expect(email.cc).to be_nil
-          expect(email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to eq([])
-          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
-          expect(confirm_email.html_part.body.to_s).to have_content("Digitization Requested")
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows digitizing, but not pick-up of on on_shelf record' do
+        it 'disallows access of on on_shelf record' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Chekhov, Anton Pavlovich", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Pʹesy Пьесы", "PhotoItemPublisher" => "Moskva: Letniĭ sad", "ISSN" => "9785988562320", "CallNumber" => "PG3455 .A2 2015", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9997708113506421", "PhotoJournalYear" => "2015", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "964907363", "DocumentType" => "Book", "Location" => "Firestone Library - Stacks", "PhotoArticleTitle" => "ABC"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
-
-          stub_alma_hold_success('9997708113506421', '22729045760006421', '23729045750006421', '960594184')
-
           visit "/requests/9997708113506421?mfhd=22729045760006421"
-          expect(page).not_to have_content 'Pick-up location: Firestone Library'
-          expect(page).to have_content 'Electronic Delivery'
-          fill_in "Article/Chapter Title", with: "ABC"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_blank
-          expect(confirm_email.html_part.body.to_s).to have_content("Chekhov, Anton Pavlovich")
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
         let(:good_response) { fixture('/scsb_request_item_response.json') }
-        it 'allows patrons to request a physical recap item' do
+        it 'disallows access to request a physical recap item' do
           stub_scsb_availability(bib_id: "9999443553506421", institution_id: "PUL", barcode: '32101098722844')
-          scsb_url = "#{Requests::Config[:scsb_base]}/requestItem/requestItem"
-          stub_request(:post, scsb_url)
-            .with(body: hash_including(author: "", bibId: "9999443553506421", callNumber: "DT549 .E274q Oversize", chapterTitle: "ABC", deliveryLocation: "", emailAddress: "a@b.com", endPage: "", issue: "", itemBarcodes: ["32101098722844"], itemOwningInstitution: "PUL", patronBarcode: '198572131', requestNotes: "", requestType: "EDD", requestingInstitution: "PUL", startPage: "", titleIdentifier: "L'écrivain, magazine litteraire trimestriel", username: "jstudent", volume: "2016"))
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9999443553506421?mfhd=22743365320006421'
-          expect(page).not_to have_content 'Pick-up location: '
-          expect(page).to have_content 'Electronic Delivery'
-          choose('requestable__delivery_mode_23743365310006421_edd') # chooses 'edd' radio button
-          expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
-          fill_in "Article/Chapter Title", with: "ABC"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(a_request(:post, scsb_url)).to have_been_made
-          expect(page).to have_content 'Request submitted'
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_blank
-          expect(confirm_email.html_part.body.to_s).to have_content("L'écrivain, magazine litteraire trimestriel")
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows patrons to request a Forrestal annex' do
+        it 'disallows access to request a Forrestal annex' do
           visit '/requests/999455503506421?mfhd=22642306790006421'
-          expect(page).not_to have_content 'Pick-up location: '
-          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows patrons to request a Lewis recap item digitally' do
+        it 'disallows access to request a Lewis recap item digitally' do
           stub_scsb_availability(bib_id: "9970533073506421", institution_id: "PUL", barcode: '32101051217659')
-          scsb_url = "#{Requests::Config[:scsb_base]}/requestItem/requestItem"
-          stub_request(:post, scsb_url)
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/9970533073506421?mfhd=22667391160006421'
-          expect(page).not_to have_content 'Available for In Library Use'
-          fill_in "Title", with: "my stuff"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(a_request(:post, scsb_url)).to have_been_made
-          expect(page).to have_content 'Request submitted'
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_blank
-          expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows patrons to request a digital copy from Lewis' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Alexakis, Spyros", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "The decomposition of global conformal invariants", "PhotoItemPublisher" => "Princeton: Princeton University Press", "ISSN" => "9780691153476 9780691153483", "CallNumber" => "QA646 .A44 2012", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9970533073506421", "PhotoJournalYear" => "2012", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "757838203", "DocumentType" => "Book", "Location" => "Lewis Library - Stacks", "PhotoArticleTitle" => "ABC"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access to request a digital copy from Lewis' do
           visit '/requests/9970533073506421?mfhd=22667391180006421'
-          expect(page).not_to have_content 'Pick-up location: Lewis Library'
-          choose('requestable__delivery_mode_23667391170006421_edd') # edd version
-          within('#request_23667391170006421') do
-            fill_in "Article/Chapter Title", with: "ABC"
-          end
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          expect(page).to have_content 'Request submitted to Illiad'
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("The decomposition of global conformal invariants")
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows patrons to ask for digitizing on non circulating items' do
+        it 'disallows access to ask for digitizing on non circulating items' do
           visit '/requests/9995948403506421?mfhd=22500774400006421'
-          expect(page).to have_content 'Electronic Delivery'
-          expect(page).not_to have_content 'Pick-up location: Lewis Library'
-          expect(page).to have_css '.submit--request'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
         it 'allows filtering items by mfhd' do
           visit '/requests/9979171923506421?mfhd=22637778670006421'
-          expect(page).not_to have_content 'Physical Item Delivery'
-          expect(page).to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Copy 2'
           expect(page).not_to have_content 'Copy 3'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
         it 'shows an error if MFHD is not present' do
@@ -1562,81 +1442,42 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'Please Select a location on the main record page.'
         end
 
-        it 'allow fillin forms in digital only' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Mefisto : rivista di medicina, filosofia, storia", "PhotoItemPublisher" => "", "ISSN" => "", "CallNumber" => "R131.A1 M38", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/99105746993506421", "PhotoJournalYear" => "2017", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1028553183", "DocumentType" => "Article", "Location" => "Firestone Library - Stacks", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
-
+        it 'disallows access to fillin forms in digital only' do
           visit 'requests/99105746993506421?mfhd=22547424510006421'
-          expect(page).to have_button('Request Selected Items')
-          within("h3") do
-            expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
-          end
-          fill_in "requestable_user_supplied_enum_22547424510006421", with: "ABC ZZZ"
-          within("#request_user_supplied_22547424510006421") do
-            fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
-            check "requestable__selected"
-          end
-          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        # TODO: once Marquad in library use is available again it should show pick-up at marquand also
-        it 'Shows ReCAP marqaund as an EDD option only' do
+        it 'disallows access ReCAP marqaund as an EDD option only' do
           stub_scsb_availability(bib_id: "99117809653506421", institution_id: "PUL", barcode: '32101106347378')
-          scsb_url = "#{Requests::Config[:scsb_base]}/requestItem/requestItem"
-          stub_request(:post, scsb_url)
-            .to_return(status: 200, body: good_response, headers: {})
           visit '/requests/99117809653506421?mfhd=22613352460006421'
-          choose('requestable__delivery_mode_23613352450006421_edd') # chooses 'edd' radio button
-          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
-          expect(page).to have_content 'Article/Chapter Title (Required)'
-          fill_in "Title", with: "my stuff"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          email = ActionMailer::Base.deliveries.last
-          expect(email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(email.html_part.body.to_s).to have_content("You will receive an email including a link where you can download your scanned section")
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it "shows items in the Architecture Library as available" do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "Steele, James", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory", "PhotoItemPublisher" => "New York, NY: The American University...", "ISSN" => "9789774168901", "CallNumber" => "NA1585.A23 S7 2020", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/99117876713506421", "PhotoJournalYear" => "2020", "PhotoJournalVolume" => "", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "1137152638", "DocumentType" => "Book", "Location" => "Architecture Library - Stacks", "PhotoArticleTitle" => "ABC"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it "disallows access to items in the Architecture Library as available" do
           visit '/requests/99117876713506421?mfhd=22561348800006421'
-          expect(page).to have_content 'Electronic Delivery'
+          expect(page).not_to have_button('Request this Item')
+          expect(page).not_to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
-          expect(page).not_to have_content 'Pick-up location: Architecture Library'
-          fill_in "Article/Chapter Title", with: "ABC"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.html_part.body.to_s).to have_content("Electronic document delivery requests typically take 1-2 business")
-          expect(confirm_email.html_part.body.to_s).to have_content("Abdelhalim Ibrahim Abdelhalim : an architecture of collective memory")
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
         it "disallows requests of recap pick-up only items" do
           stub_scsb_availability(bib_id: "99115783193506421", institution_id: "PUL", barcode: '32101108035435')
           visit '/requests/99115783193506421?mfhd=22534122440006421'
           expect(page).not_to have_button('Request this Item')
-          expect(page).to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
         it 'allows aeon requests for all users' do
@@ -1649,88 +1490,28 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_content 'there are no requestable items for this record'
         end
 
-        it 'Help Me Get It instead of using Borrow Direct, ILL, and Recall on Missing items' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Request Processing", "RequestType" => "Loan", "ProcessType" => "Borrowing",
-                                       "WantedBy" => "Yes, until the semester's", "LoanAuthor" => "Trump, Donald Bohner, Kate", "LoanTitle" => "Trump : the art of the comeback",
-                                       "LoanPublisher" => nil, "ISSN" => "9780812929645", "CallNumber" => "HC102.5.T78 A3 1997", "CitedIn" => "https://catalog.princeton.edu/catalog/9917887963506421", "ItemInfo3" => "",
-                                       "ItemInfo4" => nil, "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => nil, "DocumentType" => "Book", "LoanPlace" => nil))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .with(body: hash_including("Note" => "Help Me Get It Request: User does not have access to physical item pickup"))
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access on Missing items' do
           visit '/requests/9917887963506421?mfhd=22503918400006421'
-          expect(page).to have_content(I18n.t("requests.help_me.brief_msg.cas_user_no_barcode_no_choice_msg"))
-          check "requestable_selected_23503918390006421"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Help Me Get It Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("Trump : the art of the comeback")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows generic fill in requests enums from Annex or Firestone in mixed holding' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoItemAuthor" => "", "PhotoArticleAuthor" => "", "PhotoJournalTitle" => "Birth control news", "PhotoItemPublisher" => "", "ISSN" => "", "CallNumber" => "HQ766 .B53f Oversize", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9922868943506421", "PhotoJournalYear" => "1000", "PhotoJournalVolume" => "ABC ZZZ", "PhotoJournalIssue" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "COVID-19 Campus Closure", "AcceptNonEnglish" => true, "ESPNumber" => "53175640", "DocumentType" => "Book", "Location" => "Forrestal Annex - Locked", "PhotoArticleTitle" => "ELECTRONIC CHAPTER"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access generic fill in requests enums from Annex or Firestone in mixed holding' do
           visit '/requests/9922868943506421?mfhd=22692156940006421'
-          expect(page).to have_field 'requestable__selected', disabled: false
-          expect(page).to have_field 'requestable_user_supplied_enum_22692156940006421'
-          expect(page).to have_content 'Electronic Delivery'
-
-          expect(page).to have_button('Request Selected Items')
-          expect(page).not_to have_content(I18n.t("requests.account.cas_user_no_barcode_no_choice_msg"))
-          fill_in "requestable_user_supplied_enum_22692156940006421", with: "ABC ZZZ"
-          within("#request_user_supplied_22692156940006421") do
-            fill_in "Article/Chapter Title", with: "ELECTRONIC CHAPTER"
-            check "requestable__selected"
-          end
-          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(1)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.to).to eq(["a@b.com"])
-          expect(confirm_email.cc).to be_nil
-          expect(confirm_email.html_part.body.to_s).to have_content("ABC ZZZ")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
 
-        it 'allows a non circulating item with not item data to be digitized' do
-          stub_request(:get, patron_url)
-            .to_return(status: 200, body: responses[:found], headers: {})
-          stub_request(:post, transaction_url)
-            .with(body: hash_including("Username" => "jstudent", "TransactionStatus" => "Awaiting Article Express Processing", "RequestType" => "Article", "ProcessType" => "Borrowing", "WantedBy" => "Yes, until the semester's", "PhotoArticleAuthor" => "I Aman Author", "PhotoItemAuthor" => "Herzog, Hans-Michael Daros Collection (Art)", "PhotoJournalTitle" => "La mirada : looking at photography in Latin America today", "PhotoItemPublisher" => "Zürich: Edition Oehrli", "PhotoJournalIssue" => "",
-                                       "Location" => "Marquand Library - Stacks", "ISSN" => "9783905597363", "CallNumber" => "", "PhotoJournalInclusivePages" => "-", "CitedIn" => "https://catalog.princeton.edu/catalog/9941274093506421", "PhotoJournalVolume" => "", "ItemInfo3" => "", "ItemInfo4" => "", "CitedPages" => "Marquand EDD", "AcceptNonEnglish" => true, "ESPNumber" => "", "DocumentType" => "Book", "PhotoArticleTitle" => "ABC", "PhotoJournalYear" => "2002"))
-            .to_return(status: 200, body: responses[:transaction_created], headers: {})
-          stub_request(:post, transaction_note_url)
-            .to_return(status: 200, body: responses[:note_created], headers: {})
+        it 'disallows access a non circulating item with not item data to be digitized' do
           visit '/requests/9941274093506421?mfhd=22690999210006421'
-          expect(page).to have_content 'Electronic Delivery'
-          fill_in "Article/Chapter Title", with: "ABC"
-          fill_in "Author", with: "I Aman Author"
-          expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
-          confirm_email = ActionMailer::Base.deliveries.last
-          expect(confirm_email.subject).to eq("Electronic Document Delivery Request Confirmation")
-          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
-          expect(confirm_email.html_part.body.to_s).to have_content(I18n.t('requests.marquand_edd.email_conf_msg'))
-          expect(confirm_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
-          marquand_email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
-          expect(marquand_email.subject).to eq("Patron Initiated Catalog Request Scan")
-          expect(marquand_email.html_part.body.to_s).to have_content("La mirada : looking at photography in Latin America today")
-          expect(marquand_email.to).to eq(["marquandoffsite@princeton.edu"])
-          expect(marquand_email.cc).to be_blank
+          expect(page).not_to have_content 'Electronic Delivery'
+          expect(page).not_to have_content 'Physical Item Delivery'
+          expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'
+          expect(page).not_to have_content 'Only items available for digitization can be requested when you do not have a barcode registered with the Library. Library staff will work to try to get you access to a digital copy of the desired material.'
         end
       end
     end

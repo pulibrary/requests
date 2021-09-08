@@ -5,7 +5,7 @@ describe 'request', vcr: { cassette_name: 'bd_request_features', record: :none }
   let(:no_direct_match) { '99101599263506421' }
   let(:no_isbn) { '9925591603506421' }
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:valid_patron_response) { fixture('/bibdata_patron_response.json') }
   let(:valid_barcode_patron_response) { fixture('/bibdata_patron_response_barcode.json') }
   let(:invalid_patron_response) { fixture('/bibdata_not_found_patron_response.json') }

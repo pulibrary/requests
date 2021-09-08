@@ -4,7 +4,7 @@ require './app/models/requests/request.rb'
 RSpec.describe Requests::ApplicationHelper, type: :helper,
                                             vcr: { cassette_name: 'request_models', record: :none } do
 
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request", "barcode" => "22101007797777",
       "university_id" => "9999999", "patron_group" => "staff", "patron_id" => "99999", "active_email" => "foo@princeton.edu" }.with_indifferent_access
@@ -27,7 +27,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe '#submit_disabled' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:params) do
       {
         system_id: '9981794023506421',
@@ -119,7 +119,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
   end
 
   describe '#suppress_login' do
-    let(:unauthenticated_patron) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:unauthenticated_patron) { FactoryBot.build(:unauthenticated_patron) }
     let(:patron) { Requests::Patron.new(user: unauthenticated_patron, session: {}) }
     let(:params) do
       {

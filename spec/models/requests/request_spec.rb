@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Requests::Request, vcr: { cassette_name: 'request_models', record: :none } do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
       "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
@@ -612,7 +612,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
   # 6009363 returned
   # context "When passed an ID for a paging location f within a call in a range" do
-  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:user) { FactoryBot.build(:user) }
   #   let(:params) {
   #     {
   #       system_id: '6009363',
@@ -1203,7 +1203,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'Multi-holding record with charged items and items available at non-restricted locations' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:params) do
       {
         system_id: '9925693243506421',
@@ -1228,7 +1228,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   # Since we don't load multiple holdings any longer I'm not sure this is a valid test scenario
   #
   # context 'Multi-holding record with charged items and items available at restricted locations' do
-  #   let(:user) { FactoryGirl.build(:user) }
+  #   let(:user) { FactoryBot.build(:user) }
   #   let(:params) do
   #     {
   #       system_id: '9996968113506421',
@@ -1252,7 +1252,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   ### Review this test
   context 'RBSC single Item with no isbn' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:params) do
       {
         system_id: '9926312653506421',
@@ -1275,7 +1275,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   end
 
   context 'single missing item with isbn' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:params) do
       {
         system_id: '9917887963506421',

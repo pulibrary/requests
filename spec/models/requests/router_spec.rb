@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :none } do
   context "A Princeton Community User has signed in" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:valid_patron) { { "netid" => "foo" }.with_indifferent_access }
     let(:patron) do
       Requests::Patron.new(user: user, session: {}, patron: valid_patron)
@@ -94,7 +94,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           expect(router.calculate_services).to eq(['in_process'])
         end
         context "unauthorized user" do
-          let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+          let(:user) { FactoryBot.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
             expect(router.calculate_services).to eq([])
@@ -110,7 +110,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           expect(router.calculate_services).to eq(['on_order'])
         end
         context "unauthorized user" do
-          let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+          let(:user) { FactoryBot.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
             expect(router.calculate_services).to eq([])
@@ -191,7 +191,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
           end
         end
         context "unauthorized user" do
-          let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+          let(:user) { FactoryBot.build(:unauthenticated_patron) }
 
           it "returns nothing in the services" do
             expect(router.calculate_services).to eq([])
@@ -365,14 +365,14 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
 
   # Fill in when we support guest authentication
   # context "An Access Patron has signed in" do
-  #   let(:user) { FactoryGirl.create(:valid_access_patron) }
+  #   let(:user) { FactoryBot.create(:valid_access_patron) }
 
   #   describe "Print Holding with Charged Item"
   #   end
   # end
 
   # context "The user has not authenticated but can self-identify as an access patron" do
-  #   let(:user) { FactoryGirl.create(:unauthenticated_patron) }
+  #   let(:user) { FactoryBot.create(:unauthenticated_patron) }
 
   #   describe "Print Holding with Charge Item" do
   #   end

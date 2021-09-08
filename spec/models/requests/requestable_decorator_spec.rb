@@ -3,7 +3,7 @@ require 'spec_helper'
 # rubocop:disable Metrics/BlockLength
 describe Requests::RequestableDecorator do
   subject(:decorator) { described_class.new(requestable, view_context) }
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
       "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",

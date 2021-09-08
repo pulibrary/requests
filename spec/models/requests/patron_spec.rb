@@ -63,7 +63,7 @@ describe Requests::Patron do
   end
   context 'A user with a valid barcode patron record' do
     describe '#current_patron' do
-      let(:user) { FactoryGirl.create(:valid_barcode_patron) }
+      let(:user) { FactoryBot.create(:valid_barcode_patron) }
       before do
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})

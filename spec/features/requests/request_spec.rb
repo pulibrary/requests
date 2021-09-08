@@ -190,7 +190,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'a princeton net ID user' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       let(:recap_params) do
         {
@@ -1211,7 +1211,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'A Princeton net ID user without a bibdata record' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       before do
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 404, body: invalid_patron_response, headers: {})
@@ -1228,7 +1228,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'A barcode holding user' do
-      let(:user) { FactoryGirl.create(:valid_barcode_patron) }
+      let(:user) { FactoryBot.create(:valid_barcode_patron) }
       # change this back #438
       it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
@@ -1243,7 +1243,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'A covid-trained pick-up only user' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
@@ -1257,7 +1257,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'An undergraduate student who has not taken the training' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
@@ -1272,7 +1272,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'An graduate student who has not taken the training' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       it 'displays a request form for a ReCAP item.' do
         stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
@@ -1288,7 +1288,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
     end
 
     context 'a princeton net ID user without a barcode' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
       let(:in_process_id) { '99124449473506421?mfhd=22664801380006421' }
       let(:recap_in_process_id) { '99114026863506421?mfhd=22753408610006421' }
 

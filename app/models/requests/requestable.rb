@@ -110,7 +110,7 @@ module Requests
     end
 
     def in_process?
-      return false unless item? && !partner_holding?
+      return false if !item? || partner_holding?
       in_process_statuses.include?(item[:status_label])
     end
 

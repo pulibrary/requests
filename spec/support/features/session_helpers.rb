@@ -29,7 +29,7 @@ module Features
       user = if who.instance_of?(User)
                who.username
              else
-               FactoryGirl.create(:user).username
+               FactoryBot.create(:user).username
              end
       # Devise.mappings[:user]
       OmniAuth.config.add_mock(:cas, uid: user)
@@ -40,7 +40,7 @@ module Features
       user = if who.instance_of?(User)
                who.username
              else
-               FactoryGirl.create(:valid_barcode_user).username
+               FactoryBot.create(:valid_barcode_user).username
              end
       # Devise.mappings[:user]
       OmniAuth.config.add_mock(:barcode, uid: user)

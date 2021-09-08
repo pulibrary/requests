@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :none } do
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
       "barcode" => "22101007797777", "university_id" => "9999999", "patron_group" => "staff",
@@ -12,7 +12,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   let(:patron) { Requests::Patron.new(user: user, patron: valid_patron) }
 
   context "Is a bibliographic record on the shelf" do
-    let(:request) { FactoryGirl.build(:request_on_shelf, patron: patron) }
+    let(:request) { FactoryBot.build(:request_on_shelf, patron: patron) }
     let(:requestable) { request.requestable.last }
     let(:mfhd_id) { requestable.holding.first[0] }
     let(:call_number) { CGI.escape(requestable.holding[mfhd_id]['call_number']) }
@@ -63,7 +63,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context "Is a bibliographic record from the thesis collection" do
-    let(:request) { FactoryGirl.build(:request_thesis, patron: patron) }
+    let(:request) { FactoryBot.build(:request_thesis, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:holding_id) { "thesis" }
 
@@ -128,7 +128,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context "Is a bibliographic record from the numismatics collection" do
-    let(:request) { FactoryGirl.build(:request_numismatics, patron: patron) }
+    let(:request) { FactoryBot.build(:request_numismatics, patron: patron) }
     let(:requestable) { request.requestable.first }
     let(:holding_id) { "numismatics" }
 
@@ -193,7 +193,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item with a missing status' do
-    let(:request) { FactoryGirl.build(:request_missing_item, patron: patron) }
+    let(:request) { FactoryBot.build(:request_missing_item, patron: patron) }
     let(:requestable) { request.requestable }
     describe "#services" do
       it "returns an item status of missing" do
@@ -240,7 +240,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item with hold_request status' do
-    let(:request) { FactoryGirl.build(:request_serial_with_item_on_hold, patron: patron) }
+    let(:request) { FactoryBot.build(:request_serial_with_item_on_hold, patron: patron) }
     let(:requestable_on_hold) { request.requestable[0] }
     describe '#hold_request?' do
       it 'with a Hold Request status it should be on the hold shelf' do
@@ -280,7 +280,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item eligible for borrow direct' do
-    let(:request) { FactoryGirl.build(:missing_item, patron: patron) }
+    let(:request) { FactoryBot.build(:missing_item, patron: patron) }
     let(:requestable) { request.requestable }
     describe '#services' do
       it 'is missing' do
@@ -322,7 +322,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A non circulating item' do
-    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
+    let(:request) { FactoryBot.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
     let(:requestable) { request.requestable[12] }
     # let(:item) { barcode :"32101024595744", id: 282_632, location: "f", copy_number: 1, item_sequence_number: 14, status: "Not Charged", on_reserve: "N", item_type: "NoCirc", pickup_location_id: 299, pickup_location_code: "fcirc", enum: "vol.22", "chron": "1996", enum_display: "vol.22 (1996)", label: "Firestone Library" }
     let(:no_circ_item_id) { requestable.item['id'] }
@@ -346,7 +346,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   # rubocop:enable RSpec/MultipleExpectations
 
   context 'A circulating item' do
-    let(:request) { FactoryGirl.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
+    let(:request) { FactoryBot.build(:mfhd_with_no_circ_and_circ_item, patron: patron) }
     let(:requestable) { request.requestable[0] }
     # let(:item) {"barcode":"32101022548893","id":282628,"location":"f","copy_number":1,"item_sequence_number":10,"status":"Not Charged","on_reserve":"N","item_type":"Gen","pickup_location_id":299,"pickup_location_code":"fcirc","enum_display":"vol.18","chron":"1992","enum_display":"vol.18 (1992)","label":"Firestone Library"}
     let(:no_circ_item_id) { requestable.item['id'] }
@@ -388,7 +388,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
-    let(:request) { FactoryGirl.build(:aeon_eal_voyager_item, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_eal_voyager_item, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#services' do
@@ -435,7 +435,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable serial item that has volume and item data in its openurl' do
-    let(:request) { FactoryGirl.build(:aeon_rbsc_enumerated, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_rbsc_enumerated, patron: patron) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['22677203260006421'] } }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     describe '#aeon_open_url' do
@@ -474,7 +474,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
-    let(:request) { FactoryGirl.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['22563389780006421'] } }
     let(:holding_id) { '22256352610006421' }
     let(:requestable) { requestable_holding.first } # assume only one requestable
@@ -521,7 +521,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from a RBSC holding without an item record' do
-    let(:request) { FactoryGirl.build(:aeon_no_item_record, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_no_item_record, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
     describe '#barcode?' do
       it 'does not have a barcode' do
@@ -570,8 +570,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A MUDD holding' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_mudd) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:aeon_mudd) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#site' do
@@ -582,7 +582,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A Recap Marquand holding' do
-    let(:request) { FactoryGirl.build(:aeon_marquand, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_marquand, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#site' do
@@ -619,7 +619,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
   context 'A Non-Recap Marquand holding' do
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryBot.build(:user) }
     let(:item) { { status_label: "Available", location_code: "scsbnypl" }.with_indifferent_access }
     let(:location) { { "holding_library" => { "code" => "marquand" }, "library" => { "code" => "marquand" } } }
     let(:requestable) { Requests::Requestable.new(bib: {}, holding: [{ 1 => { 'call_number_browse': 'blah' } }], location: location, patron: patron, item: item) }
@@ -644,8 +644,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from a RBSC holding that has a long title' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:aeon_w_long_title) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:aeon_w_long_title) }
     let(:requestable) { request.requestable.first } # assume only one requestable
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#aeon_basic_params' do
@@ -687,7 +687,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from a RBSC holding with an item record including a barcode' do
-    let(:request) { FactoryGirl.build(:aeon_w_barcode, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_w_barcode, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#barcode?' do
@@ -768,7 +768,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from Forrestal Annex with no item data' do
-    let(:request) { FactoryGirl.build(:request_no_items, patron: patron) }
+    let(:request) { FactoryBot.build(:request_no_items, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     # rubocop:disable RSpec/MultipleExpectations
@@ -847,7 +847,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'On Order materials' do
-    let(:request) { FactoryGirl.build(:request_on_order, patron: patron) }
+    let(:request) { FactoryBot.build(:request_on_order, patron: patron) }
     let(:requestable) { request.requestable.last } # serial records on order at the end
 
     describe 'with a status of on_order ' do
@@ -946,7 +946,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
 
-    let(:request_charged) { FactoryGirl.build(:request_with_items_charged) }
+    let(:request_charged) { FactoryBot.build(:request_with_items_charged) }
     let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22739043950006421'] } }
     let(:requestable_charged) { requestable_holding.first }
 
@@ -978,7 +978,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
 
     describe '# missing requestable' do
-      let(:request_missing) { FactoryGirl.build(:request_missing_item) }
+      let(:request_missing) { FactoryBot.build(:request_missing_item) }
       let(:requestable_missing) { request_missing.requestable.first }
 
       # TODO: Remove when campus has re-opened
@@ -1006,7 +1006,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
 
-    let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd) }
+    let(:request_aeon_mudd) { FactoryBot.build(:aeon_mudd) }
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
 
     describe '# reading_room requestable' do
@@ -1015,7 +1015,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
 
-    # let(:request_paging) { FactoryGirl.build(:request_paging_available) }
+    # let(:request_paging) { FactoryBot.build(:request_paging_available) }
     # let(:requestable_paging) { request_paging.requestable.first }
 
     # describe '# paging requestable' do
@@ -1066,7 +1066,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
 
-    # let(:request_paging) { FactoryGirl.build(:request_paging_available_barcode_patron) }
+    # let(:request_paging) { FactoryBot.build(:request_paging_available_barcode_patron) }
     # let(:requestable_paging) { request_paging.requestable.first }
 
     # describe '#paging requestable' do
@@ -1075,7 +1075,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     #   end
     # end
 
-    let(:request_charged) { FactoryGirl.build(:request_with_items_charged_barcode_patron) }
+    let(:request_charged) { FactoryBot.build(:request_with_items_charged_barcode_patron) }
     let(:requestable_holding) { request_charged.requestable.select { |r| r.holding['22739043950006421'] } }
     let(:requestable_charged) { requestable_holding.first }
 
@@ -1091,7 +1091,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       end
     end
 
-    let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd_barcode_patron) }
+    let(:request_aeon_mudd) { FactoryBot.build(:aeon_mudd_barcode_patron) }
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
 
     describe '#reading room requestable' do
@@ -1102,7 +1102,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'When an access only user visits the site' do
-    let(:user) { FactoryGirl.build(:unauthenticated_patron) }
+    let(:user) { FactoryBot.build(:unauthenticated_patron) }
     let(:valid_patron_response) { '{"netid":"foo","first_name":"Foo","last_name":"Request","barcode":"22101007797777","university_id":"9999999","patron_group":"staff","patron_id":"99999","active_email":"foo@princeton.edu"}' }
     let(:patron) do
       stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/foo?ldap=true").to_return(status: 200, body: valid_patron_response, headers: {})
@@ -1134,7 +1134,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
 
     # describe '#paging-requestable' do
-    #   let(:request_paging) { FactoryGirl.build(:request_paging_available_unauthenticated_patron) }
+    #   let(:request_paging) { FactoryBot.build(:request_paging_available_unauthenticated_patron) }
     #   let(:requestable_paging) { request_paging.requestable.first }
 
     #   it "should have the Paging request service available" do
@@ -1142,7 +1142,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     #   end
     # end
 
-    let(:request_aeon_mudd) { FactoryGirl.build(:aeon_mudd_unauthenticated_patron) }
+    let(:request_aeon_mudd) { FactoryBot.build(:aeon_mudd_unauthenticated_patron) }
     let(:requestable_aeon_mudd) { request_aeon_mudd.requestable.first }
 
     describe '#reading room requestable' do
@@ -1152,7 +1152,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
 
     # Barcode users should NOT have the following privileges ...
-    let(:request_charged) { FactoryGirl.build(:request_with_items_charged_unauthenticated_patron) }
+    let(:request_charged) { FactoryBot.build(:request_with_items_charged_unauthenticated_patron) }
     let(:requestable_charged) { request_charged.requestable.first }
 
     describe '#checked-out requestable' do
@@ -1188,8 +1188,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
   context 'A requestable item from a RBSC holding creates an openurl with volume and call number info' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_aeon_holding_volume_note) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:request_aeon_holding_volume_note) }
     let(:requestable) { request.requestable.select { |m| m.holding.first.first == '22563389780006421' }.first }
     let(:aeon_ctx) { requestable.aeon_openurl(request.ctx) }
     describe '#aeon_openurl' do
@@ -1215,8 +1215,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     end
   end
   context 'A SCSB Item from a location with no pick-up restrictions' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_scsb_cu) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:request_scsb_cu) }
     let(:requestable) { request.requestable.first }
     describe '#pick_up_locations' do
       it 'has a single pick-up location' do
@@ -1240,8 +1240,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A SCSB Item with no oclc number' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_scsb_no_oclc) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:request_scsb_no_oclc) }
     let(:requestable) { request.requestable.first }
 
     before do
@@ -1269,8 +1269,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A SCSB Item from a location with a pick-up and in library use restriction' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_scsb_ar) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:request_scsb_ar) }
     let(:requestable) { request.requestable.first }
 
     before do
@@ -1304,8 +1304,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A SCSB Item from a location with a pick-up restrictions' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_scsb_mr) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:request_scsb_mr) }
     let(:requestable) { request.requestable.first }
 
     before do
@@ -1389,8 +1389,8 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A ReCAP Harvard Item' do
-    let(:user) { FactoryGirl.build(:user) }
-    let(:request) { FactoryGirl.build(:request_scsb_hl) }
+    let(:user) { FactoryBot.build(:user) }
+    let(:request) { FactoryBot.build(:request_scsb_hl) }
     let(:requestable) { request.requestable.first }
     describe '#pick_up_locations' do
       it 'has a single pick-up location' do

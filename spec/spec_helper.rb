@@ -18,7 +18,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../.internal_test_app/config/environment', __FILE__)
-require 'factory_girl'
+require 'factory_bot'
 require 'devise'
 require 'engine_cart'
 require 'database_cleaner'
@@ -84,8 +84,8 @@ EngineCart.load_application!
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+FactoryBot.find_definitions
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
@@ -131,7 +131,7 @@ RSpec.configure do |config|
 
   config.include Requests::Engine.routes.url_helpers
   config.include Capybara::DSL
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :feature

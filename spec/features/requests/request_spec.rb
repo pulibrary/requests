@@ -182,7 +182,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).to have_field 'requestable_user_supplied_enum_2576882'
           check('requestable__selected', exact: true)
           fill_in 'requestable_user_supplied_enum_2576882', with: 'test'
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up_2576882')
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annex_success')
         end
@@ -263,7 +263,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
           choose('requestable__delivery_mode_23558528910006421_print') # chooses 'print' radio button
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up_23558528910006421')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(a_request(:post, scsb_url)).to have_been_made
           expect(page).to have_content I18n.t("requests.submit.recap_success")
@@ -295,9 +295,9 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it 'makes sure In-Process ReCAP items with no holding library can be delivered anywhere' do
           visit "/requests/#{recap_in_process_id}"
           expect(page).to have_content 'In Process'
-          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
-          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up')
-          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up')
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up_23753408600006421')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up_23753408600006421')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up_23753408600006421')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
@@ -403,7 +403,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_scsb_availability(bib_id: "9999443553506421", institution_id: "PUL", barcode: '32101098722844')
           visit '/requests/9999443553506421?mfhd=22743365320006421'
           expect(page).to have_content 'Electronic Delivery'
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up_23743365310006421')
           choose('requestable__delivery_mode_23743365310006421_edd') # chooses 'edd' radio button
           expect(page).to have_content I18n.t("requests.recap_edd.note_msg")
           fill_in "Article/Chapter Title", with: "ABC"
@@ -431,10 +431,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # todo: should we still have the text?
           # expect(page).to have_content 'Item offsite at Forrestal Annex. Requests for pick-up'
           expect(page).to have_content 'Electronic Delivery'
-          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up')
-          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up')
-          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up')
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library, Resource Sharing (Staff Only)', from: 'requestable__pick_up_23642306760006421')
+          select('Technical Services 693 (Staff Only)', from: 'requestable__pick_up_23642306760006421')
+          select('Technical Services HMT (Staff Only)', from: 'requestable__pick_up_23642306760006421')
+          select('Firestone Library', from: 'requestable__pick_up_23642306760006421')
           expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content 'Request submitted'
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
@@ -644,7 +644,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(page).not_to have_content 'Item is not requestable.'
           expect(page).not_to have_content 'Electronic Delivery'
           expect(page).to have_content 'Item off-site at ReCAP facility. Request for delivery in 1-2 business days.'
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up_23534122430006421')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(1)
           expect(a_request(:post, scsb_url)).to have_been_made
           confirm_email = ActionMailer::Base.deliveries.last
@@ -766,7 +766,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             check('requestable__selected', exact: true)
             fill_in 'requestable_user_supplied_enum_22692156940006421', with: 'test'
           end
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up_22692156940006421')
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annex_success')
         end
@@ -1152,7 +1152,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         it 'Shows recap item that has not made it to recap yet as in process' do
           visit '/requests/99123340993506421?mfhd=22569931350006421'
           expect(page).to have_content 'In Process'
-          select('Firestone Library', from: 'requestable__pick_up')
+          select('Firestone Library', from: 'requestable__pick_up_23896622240006421')
           expect { click_button 'Request this Item' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content I18n.t("requests.submit.in_process_success")
           email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]

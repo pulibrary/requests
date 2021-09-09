@@ -1,6 +1,6 @@
 <tr class='user-supplied-input' id='request_user_supplied_<%= "#{requestable.holding.keys[0]}" %>'>
   <td class='request--select'>
-    <%= hidden_field_tag 'requestable[][selected]', false %>
+    <%= hidden_field_tag 'requestable[][selected]', false, id: "hidden_selected" %>
     <%= check_box_tag "requestable[][selected]", true, false, class: 'request--select', aria: { label: "Volume not listed"} %>
     <%= hidden_fields_item requestable %>
   </td>

@@ -148,14 +148,11 @@ module Requests
           locs = pick_up_locations(requestable, default_pick_ups)
           # temporary changes issue 438
           name = 'requestable[][pick_up]'
+          id = "requestable__pick_up_#{requestable.preferred_request_id}"
           if locs.size > 1
-            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], { 'pick_up' => loc[:gfa_pickup], 'pick_up_location_code' => loc[:pick_up_location_code] }.to_json] }), prompt: I18n.t("requests.default.pick_up_placeholder")
+            select_tag name.to_s, options_for_select(locs.map { |loc| [loc[:label], { 'pick_up' => loc[:gfa_pickup], 'pick_up_location_code' => loc[:pick_up_location_code] }.to_json] }), prompt: I18n.t("requests.default.pick_up_placeholder"), id: id
           else
-            style = 'margin-top:10px;' if requestable.charged?
-            style ||= ''
-            hidden = hidden_field_tag name.to_s, "", value: { 'pick_up' => locs[0][:gfa_pickup], 'pick_up_location_code' => locs[0][:pick_up_location_code] }.to_json, class: 'single-pick-up-hidden'
-            label = label_tag name.to_s, "Pick-up location: #{locs[0][:label]}", class: 'single-pick-up', style: style.to_s
-            hidden + label
+            single_pickup(requestable.charged?, name, id, locs[0])
           end
         end
     end
@@ -406,6 +403,17 @@ module Requests
         hidden = hidden_field_tag("requestable[][cgc]", "", value: item['cgc'].to_s, id: "requestable_cgc_#{item['id']}")
         hidden += hidden_field_tag("requestable[][cc]", "", value: item['collection_code'].to_s, id: "requestable_collection_code_#{item['id']}")
         hidden + hidden_field_tag("requestable[][use_statement]", "", value: item['use_statement'].to_s, id: "requestable_use_statement_#{item['id']}")
+      end
+
+      def single_pickup(is_charged, name, id, location)
+        style = if is_charged
+                  'margin-top:10px;'
+                else
+                  ''
+                end
+        hidden = hidden_field_tag name.to_s, "", value: { 'pick_up' => location[:gfa_pickup], 'pick_up_location_code' => location[:pick_up_location_code] }.to_json, class: 'single-pick-up-hidden', id: id
+        label = label_tag id, "Pick-up location: #{location[:label]}", class: 'single-pick-up', style: style.to_s
+        hidden + label
       end
   end
 end

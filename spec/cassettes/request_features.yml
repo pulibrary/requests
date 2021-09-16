@@ -5711,4 +5711,123 @@ http_interactions:
       encoding: UTF-8
       string: ''
   recorded_at: Tue, 31 Aug 2021 18:57:34 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/99125378834306421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 16 Sep 2021 14:04:56 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 5d6c4e19-25c8-4ea8-ba16-138ef5165321
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"cb5e8be07d7f95938880a5a6c4095efc"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.016042'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.10
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5MTI1Mzc4ODM0MzA2NDIxIiwibnVtZXJpY19pZF9iIjp0cnVlLCJhdXRob3JfZGlzcGxheSI6WyJDaGVuLCBRaXVmYW4iLCLpmYjmpbjluIYuIl0sImF1dGhvcl9jaXRhdGlvbl9kaXNwbGF5IjpbIkNoZW4sIFFpdWZhbiJdLCJhdXRob3Jfcm9sZXNfMWRpc3BsYXkiOiJ7XCJzZWNvbmRhcnlfYXV0aG9yc1wiOltcIumZiOaluOW4hi5cIl0sXCJ0cmFuc2xhdG9yc1wiOltdLFwiZWRpdG9yc1wiOltdLFwiY29tcGlsZXJzXCI6W10sXCJwcmltYXJ5X2F1dGhvclwiOlwiQ2hlbiwgUWl1ZmFuXCJ9IiwiYXV0aG9yX3MiOlsiQ2hlbiwgUWl1ZmFuIiwi6ZmI5qW45biGLiJdLCJtYXJjX3JlbGF0b3JfZGlzcGxheSI6WyJBdXRob3IiXSwidGl0bGVfZGlzcGxheSI6Ikh1YW5nIGNoYW8gLyBDaGVuIFFpdWZhbiB6aHUuIiwidGl0bGVfdmVybl9kaXNwbGF5Ijoi6I2S5r2uIC8g6ZmI5qW45biG6JGXLiIsInRpdGxlX3QiOlsiSHVhbmcgY2hhbyAvIENoZW4gUWl1ZmFuIHpodS4iXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyJIdWFuZyBjaGFvIiwi6I2S5r2uIl0sImNvbXBpbGVkX2NyZWF0ZWRfdCI6WyJIdWFuZyBjaGFvIC8gQ2hlbiBRaXVmYW4gemh1LiIsIuiNkua9riAvIOmZiOaluOW4huiRly4iXSwicHViX2NyZWF0ZWRfdmVybl9kaXNwbGF5IjpbIuS4iua1tyA6IOS4iua1t+aWh+iJuuWHuueJiOekviwgMjAxOS4iXSwicHViX2NyZWF0ZWRfZGlzcGxheSI6WyJTaGFuZ2hhaSA6IFNoYW5naGFpIHdlbiB5aSBjaHUgYmFuIHNoZSwgMjAxOS4iLCLkuIrmtbcgOiDkuIrmtbfmlofoibrlh7rniYjnpL4sIDIwMTkuIl0sInB1Yl9jcmVhdGVkX3MiOlsiU2hhbmdoYWkgOiBTaGFuZ2hhaSB3ZW4geWkgY2h1IGJhbiBzaGUsIDIwMTkuIiwi5LiK5rW3IDog5LiK5rW35paH6Im65Ye654mI56S+LCAyMDE5LiJdLCJwdWJfY2l0YXRpb25fZGlzcGxheSI6WyJTaGFuZ2hhaTogU2hhbmdoYWkgd2VuIHlpIGNodSBiYW4gc2hlIiwi5LiK5rW3OiDkuIrmtbfmlofoibrlh7rniYjnpL4iXSwicHViX2RhdGVfZGlzcGxheSI6WyIyMDE5Il0sInB1Yl9kYXRlX3N0YXJ0X3NvcnQiOjIwMTksImNhdGFsb2dlZF90ZHQiOiIyMDIxLTA4LTEyVDIzOjI0OjEyWiIsImZvcm1hdCI6WyJCb29rIl0sImxhbmd1YWdlX2ZhY2V0IjpbIkNoaW5lc2UiXSwibGFuZ3VhZ2VfY29kZV9zIjpbImNoaSJdLCJsYW5ndWFnZV9pYW5hX3MiOlsiemgiXSwiaXNibl9kaXNwbGF5IjpbIjk3ODc1MzIxNzI1NTkgOiJdLCJpc2JuX3MiOlsiOTc4NzUzMjE3MjU1OSJdLCJvdGhlcl92ZXJzaW9uX3MiOlsiOTc4NzUzMjE3MjU1OSJdLCJob2xkaW5nc18xZGlzcGxheSI6IntcIjIyODk3MTg0ODEwMDA2NDIxXCI6e1wibG9jYXRpb25fY29kZVwiOlwicmVjYXAkcGFcIixcImxvY2F0aW9uXCI6XCJSZW1vdGUgU3RvcmFnZVwiLFwibGlicmFyeVwiOlwiUmVDQVBcIixcIml0ZW1zXCI6W3tcImhvbGRpbmdfaWRcIjpcIjIyODk3MTg0ODEwMDA2NDIxXCIsXCJpZFwiOlwiMjM4OTcxODQ4MDAwMDY0MjFcIixcInN0YXR1c19hdF9sb2FkXCI6XCIwXCIsXCJjb3B5X251bWJlclwiOlwiMVwifV19fSIsImxvY2F0aW9uX2NvZGVfcyI6WyJyZWNhcCRwYSJdLCJsb2NhdGlvbiI6WyJSZUNBUCJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIlJlbW90ZSBTdG9yYWdlIl0sImFkdmFuY2VkX2xvY2F0aW9uX3MiOlsicmVjYXAkcGEiLCJSZUNBUCJdLCJuYW1lX3RpdGxlX2Jyb3dzZV9zIjpbIkNoZW4sIFFpdWZhbi4gSHVhbmcgY2hhbyIsIumZiOaluOW4hi4uIOiNkua9riJdLCJfdmVyc2lvbl8iOjE3MTAzNjgxNjY0NzM4OTE4NDAsInRpbWVzdGFtcCI6IjIwMjEtMDktMDhUMjA6NDk6NTEuODkxWiJ9
+  recorded_at: Thu, 16 Sep 2021 14:04:56 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/bibliographic/99125378834306421/holdings/22897184810006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.10
+      Date:
+      - Thu, 16 Sep 2021 14:05:02 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"cdbe0f86cec1bf13fe034ebd454b9f45"
+      X-Runtime:
+      - '4.909069'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - 7f3bc462-0cbd-47ed-a6a0-d917725c17b4
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.10
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"","id":"23897184800006421","holding_id":"22897184810006421","copy_number":"1","status":"Not
+        Available","status_label":"Acquisition","status_source":"process_type","process_type":"ACQ","on_reserve":"N","item_type":"Gen","pickup_location_id":"recap","pickup_location_code":"recap","location":"recap$pa","label":"ReCAP
+        - Remote Storage","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
+  recorded_at: Thu, 16 Sep 2021 14:05:02 GMT
 recorded_with: VCR 6.0.0

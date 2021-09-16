@@ -233,12 +233,12 @@ module Requests
       def build_barcode_sort(items:, availability_data:)
         barcodesort = {}
         items.each do |item|
-          item[:status_label] = "In Process" unless item["status_source"] == "work_order"
+          item[:status_label] = "In Process" if item["status_source"] != "work_order" && availability_data.empty?
           barcodesort[item['barcode']] = item
         end
         availability_data.each do |item|
           barcode_item = barcodesort[item['itemBarcode']]
-          next if barcode_item.nil? || barcode_item["status_source"] == "work_order"
+          next if barcode_item.nil? || barcode_item["status_source"] == "work_order" || item['errorMessage'].present?
           barcode_item['status_label'] = item['itemAvailabilityStatus']
           barcode_item['status'] = nil
         end

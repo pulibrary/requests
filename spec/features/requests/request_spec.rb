@@ -1207,6 +1207,12 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           # expect(confirm_email.html_part.body.to_s).to have_content("Chong wen men shang shui ya men xian xing shui ze")
           # expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
+
+        it "shows a on order princton ReCap item as Acquisition" do
+          stub_scsb_availability(bib_id: "99125378834306421", institution_id: "PUL", barcode: nil, item_availability_status: nil, error_message: "Bib Id doesn't exist in SCSB database.")
+          visit '/requests/99125378834306421?mfhd=22897184810006421'
+          expect(page).to have_content 'On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pick-up.'
+        end
       end
     end
 

@@ -35,9 +35,9 @@ def stub_clancy_status(barcode:, status: "Item not Found")
     .to_return(status: 200, body: "{\"success\":true,\"error\":\"\",\"barcode\":\"#{barcode}\",\"status\":\"#{status}\"}", headers: {})
 end
 
-def stub_scsb_availability(bib_id:, institution_id:, barcode:, item_availability_status: "Available")
+def stub_scsb_availability(bib_id:, institution_id:, barcode:, item_availability_status: "Available", error_message: nil)
   scsb_availability_params = { bibliographicId: bib_id, institutionId: institution_id }
-  scsb_response = [{ itemBarcode: barcode, itemAvailabilityStatus: item_availability_status, errorMessage: nil }]
+  scsb_response = [{ itemBarcode: barcode, itemAvailabilityStatus: item_availability_status, errorMessage: error_message }]
   stub_request(:post, "#{Requests::Config[:scsb_base]}/sharedCollection/bibAvailabilityStatus")
     .with(headers: { Accept: 'application/json', api_key: 'TESTME' }, body: scsb_availability_params)
     .to_return(status: 200, body: scsb_response.to_json)

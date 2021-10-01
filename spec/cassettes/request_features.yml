@@ -5830,4 +5830,182 @@ http_interactions:
         Available","status_label":"Acquisition","status_source":"process_type","process_type":"ACQ","on_reserve":"N","item_type":"Gen","pickup_location_id":"recap","pickup_location_code":"recap","location":"recap$pa","label":"ReCAP
         - Remote Storage","description":"","enum_display":"","chron_display":"","in_temp_library":false}]'
   recorded_at: Thu, 16 Sep 2021 14:05:02 GMT
+- request:
+    method: get
+    uri: https://catalog.princeton.edu/catalog/9973397793506421/raw
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.21.3
+      Date:
+      - Fri, 01 Oct 2021 18:25:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Request-Id:
+      - 6ee3cafd-e08e-4ea1-919e-a8aabb1619f3
+      X-Download-Options:
+      - noopen
+      X-Ua-Compatible:
+      - IE=edge,chrome=1
+      Etag:
+      - W/"d17f324b84a1ba58a22ea76d3a4721e7"
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.022176'
+      X-Content-Type-Options:
+      - nosniff
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.10
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, OPTIONS
+      Access-Control-Allow-Headers:
+      - DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Origin
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk5NzMzOTc3OTM1MDY0MjEiLCJudW1lcmljX2lkX2IiOnRydWUsImF1dGhvcl9kaXNwbGF5IjpbIkthbmcsIENodW4tbWFuIiwi6rCV7KSA66eMIl0sImF1dGhvcl9jaXRhdGlvbl9kaXNwbGF5IjpbIkthbmcsIENodW4tbWFuIl0sImF1dGhvcl9yb2xlc18xZGlzcGxheSI6IntcInNlY29uZGFyeV9hdXRob3JzXCI6W1wi6rCV7KSA66eMXCJdLFwidHJhbnNsYXRvcnNcIjpbXSxcImVkaXRvcnNcIjpbXSxcImNvbXBpbGVyc1wiOltdLFwicHJpbWFyeV9hdXRob3JcIjpcIkthbmcsIENodW4tbWFuXCJ9IiwiYXV0aG9yX3MiOlsiS2FuZywgQ2h1bi1tYW4iLCLqsJXspIDrp4wiXSwibWFyY19yZWxhdG9yX2Rpc3BsYXkiOlsiQXV0aG9yIl0sInRpdGxlX2Rpc3BsYXkiOiJIYW4nZ3VrIGh5b8yGbmRhZXNhIHNhbmNoJ2Flay4gMjAwMC15b8yGbmRhZSBwJ3lvzIZuIDogTm8gTXUtaHlvzIZuIHNpZGFlIHXMhmkgbXlvzIZuZ2FtIC8gS2FuZyBDaHVuLW1hbiBjaG/Mhi4iLCJ0aXRsZV92ZXJuX2Rpc3BsYXkiOiLtlZzqta3tmITrjIDsgqzsgrDssYUuIDIwMDDrhYTrjIDtjrggOiDrhbjrrLTtmITsi5zrjIDsnZjrqoXslZQgLyDqsJXspIDrp4zsoIAuIiwidGl0bGVfdCI6WyJIYW4nZ3VrIGh5b8yGbmRhZXNhIHNhbmNoJ2Flay4gMjAwMC15b8yGbmRhZSBwJ3lvzIZuIDogTm8gTXUtaHlvzIZuIHNpZGFlIHXMhmkgbXlvzIZuZ2FtIC8gS2FuZyBDaHVuLW1hbiBjaG/Mhi4iXSwidGl0bGVfY2l0YXRpb25fZGlzcGxheSI6WyJIYW4nZ3VrIGh5b8yGbmRhZXNhIHNhbmNoJ2Flay4gTm8gTXUtaHlvzIZuIHNpZGFlIHXMhmkgbXlvzIZuZ2FtIiwi7ZWc6rWt7ZiE64yA7IKs7IKw7LGFLiDrhbjrrLTtmITsi5zrjIDsnZjrqoXslZQiXSwiY29tcGlsZWRfY3JlYXRlZF90IjpbIkhhbidndWsgaHlvzIZuZGFlc2Egc2FuY2gnYWVrLiAyMDAwLXlvzIZuZGFlIHAneW/Mhm4gOiBObyBNdS1oeW/Mhm4gc2lkYWUgdcyGaSBteW/Mhm5nYW0gLyBLYW5nIENodW4tbWFuIGNob8yGLiIsIu2VnOq1re2YhOuMgOyCrOyCsOyxhS4gMjAwMOuFhOuMgO2OuCA6IOuFuOustO2YhOyLnOuMgOydmOuqheyVlCAvIOqwleykgOunjOyggC4iXSwiZWRpdGlvbl9kaXNwbGF5IjpbIjEtcCdhbi4iLCIx7YyQLiJdLCJwdWJfY3JlYXRlZF92ZXJuX2Rpc3BsYXkiOlsi7ISc7Jq47IucIDog7J2466y86rO87IKs7IOB7IKsLCAyMDExLiJdLCJwdWJfY3JlYXRlZF9kaXNwbGF5IjpbIlNvzIZ1bC1zaSA6IElubXVsIGt3YSBTYXNhbmdzYSwgMjAxMS4iLCLshJzsmrjsi5wgOiDsnbjrrLzqs7zsgqzsg4HsgqwsIDIwMTEuIl0sInB1Yl9jcmVhdGVkX3MiOlsiU2/MhnVsLXNpIDogSW5tdWwga3dhIFNhc2FuZ3NhLCAyMDExLiIsIuyEnOyauOyLnCA6IOyduOusvOqzvOyCrOyDgeyCrCwgMjAxMS4iXSwicHViX2NpdGF0aW9uX2Rpc3BsYXkiOlsiU2/MhnVsLXNpOiBJbm11bCBrd2EgU2FzYW5nc2EiLCLshJzsmrjsi5w6IOyduOusvOqzvOyCrOyDgeyCrCJdLCJwdWJfZGF0ZV9kaXNwbGF5IjpbIjIwMTEiXSwicHViX2RhdGVfc3RhcnRfc29ydCI6MjAxMSwiY2F0YWxvZ2VkX3RkdCI6IjIwMjEtMDctMTJUMjE6NTk6NDlaIiwiZm9ybWF0IjpbIkJvb2siXSwiZGVzY3JpcHRpb25fZGlzcGxheSI6WyI1IHZvbHVtZXMgOiBpbGx1c3RyYXRpb25zIDsgMjIgY20iXSwiZGVzY3JpcHRpb25fdCI6WyI1IHZvbHVtZXMgOiBpbGx1c3RyYXRpb25zIDsgMjIgY20iXSwibnVtYmVyX29mX3BhZ2VzX2NpdGF0aW9uX2Rpc3BsYXkiOlsiNSB2b2x1bWVzIl0sImdlb2NvZGVfZGlzcGxheSI6WyJLb3JlYSAoU291dGgpIl0sImJpYl9yZWZfbm90ZXNfZGlzcGxheSI6WyJJbmNsdWRlcyBiaWJsaW9ncmFwaGljYWwgcmVmZXJlbmNlcy4iXSwibGFuZ3VhZ2VfZmFjZXQiOlsiS29yZWFuIl0sImxhbmd1YWdlX2NvZGVfcyI6WyJrb3IiXSwibGFuZ3VhZ2VfaWFuYV9zIjpbImtvIl0sImxjX3N1YmplY3RfZGlzcGxheSI6WyJSb2gsIE1vbyBIeXVuLCAxOTQ2LTIwMDkiLCJLb3JlYSAoU291dGgp4oCUUG9saXRpY3MgYW5kIGdvdmVybm1lbnTigJQyMDAyLSIsIktvcmVhIChTb3V0aCnigJRIaXN0b3J54oCUMjAwMi0iLCLrhbjrrLTtmIQsIDE5NDYtMjAwOSJdLCJzdWJqZWN0X2ZhY2V0IjpbIlJvaCwgTW9vIEh5dW4sIDE5NDYtMjAwOSIsIktvcmVhIChTb3V0aCnigJRQb2xpdGljcyBhbmQgZ292ZXJubWVudOKAlDIwMDItIiwiS29yZWEgKFNvdXRoKeKAlEhpc3RvcnnigJQyMDAyLSIsIuuFuOustO2YhCwgMTk0Ni0yMDA5Il0sIm90aGVyX3RpdGxlX2Rpc3BsYXkiOlsiTm8gTXUtaHlvzIZuIHNpZGFlIHXMhmkgbXlvzIZuZ2FtIiwi64W466y07ZiE7Iuc64yA7J2Y66qF7JWUIl0sImFsdF90aXRsZV8yNDZfZGlzcGxheSI6WyJObyBNdS1oeW/Mhm4gc2lkYWUgdcyGaSBteW/Mhm5nYW0iLCLrhbjrrLTtmITsi5zrjIDsnZjrqoXslZQiXSwiaXNibl9kaXNwbGF5IjpbIjk3ODg5NTkwNjE5MDcgKHNldCkiLCI4OTU5MDYxOTA1IChzZXQpIiwiOTc4ODk1OTA2MTkxNCAodi4gMSkiLCI4OTU5MDYxOTEzICh2LiAxKSIsIjk3ODg5NTkwNjE5MjEgKHYuIDIpIiwiODk1OTA2MTkyMSAodi4gMikiLCI5Nzg4OTU5MDYxOTM4ICh2LiAzKSIsIjg5NTkwNjE5M1ggKHYuIDMpIiwiOTc4ODk1OTA2MTk0NSAodi4gNCkiLCI4OTU5MDYxOTQ4ICh2LiA0KSIsIjk3ODg5NTkwNjE5NTIgKHYuIDUpIiwiODk1OTA2MTk1NiAodi4gNSkiXSwibGNjbl9kaXNwbGF5IjpbIiAgMjAxMTUxNzg0NiJdLCJsY2NuX3MiOlsiMjAxMTUxNzg0NiJdLCJpc2JuX3MiOlsiOTc4ODk1OTA2MTkwNyIsIjk3ODg5NTkwNjE5MTQiLCI5Nzg4OTU5MDYxOTIxIiwiOTc4ODk1OTA2MTkzOCIsIjk3ODg5NTkwNjE5NDUiLCI5Nzg4OTU5MDYxOTUyIl0sIm9jbGNfcyI6WyI3NTIyNjgxMTQiXSwib3RoZXJfdmVyc2lvbl9zIjpbIm9jbjc1MjI2ODExNCIsIjk3ODg5NTkwNjE5MDciLCI5Nzg4OTU5MDYxOTE0IiwiOTc4ODk1OTA2MTkyMSIsIjk3ODg5NTkwNjE5MzgiLCI5Nzg4OTU5MDYxOTQ1IiwiOTc4ODk1OTA2MTk1MiJdLCJzdWJqZWN0X2VyYV9mYWNldCI6WyJTaW5jZSAyMDAyIiwiMjAwMi0iXSwiaG9sZGluZ3NfMWRpc3BsYXkiOiJ7XCIyMjU0MTE4NzI1MDAwNjQyMVwiOntcImxvY2F0aW9uX2NvZGVcIjpcImVhc3Rhc2lhbiRjamtcIixcImxvY2F0aW9uXCI6XCJcIixcImxpYnJhcnlcIjpcIkVhc3QgQXNpYW4gTGlicmFyeVwiLFwiY2FsbF9udW1iZXJcIjpcIkRTOTIzLjI1IC5LMzYzIDIwMTFcIixcImNhbGxfbnVtYmVyX2Jyb3dzZVwiOlwiRFM5MjMuMjUgLkszNjMgMjAxMVwiLFwibG9jYXRpb25faGFzXCI6W1wiVm9sLjEtdi41XCJdLFwiaXRlbXNcIjpbe1wiaG9sZGluZ19pZFwiOlwiMjI1NDExODcyNTAwMDY0MjFcIixcImlkXCI6XCIyMzU0MTE4NzIwMDAwNjQyMVwiLFwic3RhdHVzX2F0X2xvYWRcIjpcIjFcIixcImVudW1lcmF0aW9uXCI6XCJ2b2wuNVwiLFwiYmFyY29kZVwiOlwiMzIxMDEwODA5MTIzNTNcIixcImNvcHlfbnVtYmVyXCI6XCIxXCJ9LHtcImhvbGRpbmdfaWRcIjpcIjIyNTQxMTg3MjUwMDA2NDIxXCIsXCJpZFwiOlwiMjM1NDExODcyMzAwMDY0MjFcIixcInN0YXR1c19hdF9sb2FkXCI6XCIxXCIsXCJlbnVtZXJhdGlvblwiOlwidm9sLjJcIixcImJhcmNvZGVcIjpcIjMyMTAxMDgwOTEyMzc5XCIsXCJjb3B5X251bWJlclwiOlwiMVwifSx7XCJob2xkaW5nX2lkXCI6XCIyMjU0MTE4NzI1MDAwNjQyMVwiLFwiaWRcIjpcIjIzNTQxMTg3MjQwMDA2NDIxXCIsXCJzdGF0dXNfYXRfbG9hZFwiOlwiMFwiLFwiZW51bWVyYXRpb25cIjpcInZvbC4xXCIsXCJiYXJjb2RlXCI6XCIzMjEwMTA4MDkxMjI4OFwiLFwiY29weV9udW1iZXJcIjpcIjFcIn0se1wiaG9sZGluZ19pZFwiOlwiMjI1NDExODcyNTAwMDY0MjFcIixcImlkXCI6XCIyMzU0MTE4NzIxMDAwNjQyMVwiLFwic3RhdHVzX2F0X2xvYWRcIjpcIjFcIixcImVudW1lcmF0aW9uXCI6XCJ2b2wuNFwiLFwiYmFyY29kZVwiOlwiMzIxMDEwODA5MTIzMDRcIixcImNvcHlfbnVtYmVyXCI6XCIxXCJ9LHtcImhvbGRpbmdfaWRcIjpcIjIyNTQxMTg3MjUwMDA2NDIxXCIsXCJpZFwiOlwiMjM1NDExODcyMjAwMDY0MjFcIixcInN0YXR1c19hdF9sb2FkXCI6XCIxXCIsXCJlbnVtZXJhdGlvblwiOlwidm9sLjNcIixcImJhcmNvZGVcIjpcIjMyMTAxMDgwOTEyMzYxXCIsXCJjb3B5X251bWJlclwiOlwiMVwifV19fSIsImxvY2F0aW9uX2NvZGVfcyI6WyJlYXN0YXNpYW4kY2prIl0sImxvY2F0aW9uIjpbIkVhc3QgQXNpYW4gTGlicmFyeSJdLCJsb2NhdGlvbl9kaXNwbGF5IjpbIiJdLCJhZHZhbmNlZF9sb2NhdGlvbl9zIjpbImVhc3Rhc2lhbiRjamsiLCJFYXN0IEFzaWFuIExpYnJhcnkiXSwibmFtZV90aXRsZV9icm93c2VfcyI6WyJLYW5nLCBDaHVuLW1hbi4gSGFuJ2d1ayBoeW/Mhm5kYWVzYSBzYW5jaCdhZWsiLCLqsJXspIDrp4wuIO2VnOq1re2YhOuMgOyCrOyCsOyxhS4iXSwiY2FsbF9udW1iZXJfZGlzcGxheSI6WyJEUzkyMy4yNSAuSzM2MyAyMDExIl0sImNhbGxfbnVtYmVyX2Jyb3dzZV9zIjpbIkRTOTIzLjI1IC5LMzYzIDIwMTEiXSwiY2FsbF9udW1iZXJfbG9jYXRvcl9kaXNwbGF5IjpbIkRTOTIzLjI1IC5LMzYzIDIwMTEiXSwiX3ZlcnNpb25fIjoxNzA4OTk4NTg1NDcyNzc4MjQxLCJ0aW1lc3RhbXAiOiIyMDIxLTA4LTI0VDE4OjAwOjU3LjYxNloifQ==
+  recorded_at: Fri, 01 Oct 2021 18:25:17 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/bibliographic/9973397793506421/holdings/22541187250006421/availability.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.21.3
+      Date:
+      - Fri, 01 Oct 2021 18:25:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"5d33f19d934fd6fb3cf4337ddecdaf7b"
+      X-Runtime:
+      - '6.022197'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - '0998c089-835f-4c9b-b9c6-b2d0140c0a0e'
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.9
+    body:
+      encoding: UTF-8
+      string: '[{"barcode":"32101080912353","id":"23541187200006421","holding_id":"22541187250006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"eastasian","pickup_location_code":"eastasian","location":"eastasian$cjk","label":"East
+        Asian Library","description":"vol.5","enum_display":"vol.5","chron_display":"","in_temp_library":false},{"barcode":"32101080912304","id":"23541187210006421","holding_id":"22541187250006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"eastasian","pickup_location_code":"eastasian","location":"eastasian$cjk","label":"East
+        Asian Library","description":"vol.4","enum_display":"vol.4","chron_display":"","in_temp_library":false},{"barcode":"32101080912361","id":"23541187220006421","holding_id":"22541187250006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"eastasian","pickup_location_code":"eastasian","location":"eastasian$cjk","label":"East
+        Asian Library","description":"vol.3","enum_display":"vol.3","chron_display":"","in_temp_library":false},{"barcode":"32101080912379","id":"23541187230006421","holding_id":"22541187250006421","copy_number":"1","status":"Available","status_label":"Item
+        in place","status_source":"base_status","process_type":null,"on_reserve":"N","item_type":"Gen","pickup_location_id":"eastasian","pickup_location_code":"eastasian","location":"eastasian$cjk","label":"East
+        Asian Library","description":"vol.2","enum_display":"vol.2","chron_display":"","in_temp_library":false},{"barcode":"32101080912288","id":"23541187240006421","holding_id":"22541187250006421","copy_number":"1","status":"Not
+        Available","status_label":"Loan","status_source":"process_type","process_type":"LOAN","on_reserve":"N","item_type":"Gen","pickup_location_id":"eastasian","pickup_location_code":"eastasian","location":"eastasian$cjk","label":"East
+        Asian Library","description":"vol.1","enum_display":"vol.1","chron_display":"","in_temp_library":false}]'
+  recorded_at: Fri, 01 Oct 2021 18:25:23 GMT
+- request:
+    method: get
+    uri: https://bibdata.princeton.edu/locations/holding_locations/eastasian$cjk.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.5.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.21.3
+      Date:
+      - Fri, 01 Oct 2021 18:26:36 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Access-Control-Allow-Headers:
+      - Origin, Content-Type, Accept, Authorization, Token
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"7fd5d6cf079c8bb89b1fef060ecda91b"
+      X-Runtime:
+      - '0.014707'
+      Access-Control-Request-Method:
+      - GET
+      X-Request-Id:
+      - '0098d3d7-12a4-427a-a37a-37c1efd7cde6'
+      X-Powered-By:
+      - Phusion Passenger(R) 6.0.9
+    body:
+      encoding: UTF-8
+      string: '{"label":"","code":"eastasian$cjk","aeon_location":false,"recap_electronic_delivery_location":false,"open":true,"requestable":true,"always_requestable":false,"circulates":true,"remote_storage":"","fulfillment_unit":"General","library":{"label":"East
+        Asian Library","code":"eastasian","order":0},"holding_library":null,"hours_location":null,"delivery_locations":[]}'
+  recorded_at: Fri, 01 Oct 2021 18:26:37 GMT
 recorded_with: VCR 6.0.0

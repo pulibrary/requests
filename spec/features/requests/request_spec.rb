@@ -1213,6 +1213,31 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit '/requests/99125378834306421?mfhd=22897184810006421'
           expect(page).to have_content 'On Order books have not yet been received. Place a request to be notified when this item has arrived and is ready for your pick-up.'
         end
+
+        it 'Request an enumerated book correctly' do
+          stub_alma_hold_success('9973397793506421', '22541187250006421', '23541187200006421', '960594184')
+          visit '/requests/9973397793506421?mfhd=22541187250006421'
+          expect(page).to have_content "Han'guk hyŏndaesa sanch'aek. No Mu-hyŏn sidae ŭi myŏngam"
+          check('requestable_selected_23541187200006421')
+          choose('requestable__delivery_mode_23541187200006421_print')
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          expect(page).to have_content I18n.t("requests.submit.on_shelf_success")
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("On the Shelf Paging Request (EASTASIAN$CJK) DS923.25 .K363 2011")
+          expect(email.to).to eq(["gestcirc@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("Han'guk hyŏndaesa sanch'aek. No Mu-hyŏn sidae ŭi myŏngam")
+          expect(email.html_part.body.to_s).to have_content("vol.5")
+          expect(email.text_part.body.to_s).to have_content("vol.5")
+          expect(confirm_email.subject).to eq("East Asian Library Pick-up Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Han'guk hyŏndaesa sanch'aek. No Mu-hyŏn sidae ŭi myŏngam")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+        end
       end
     end
 

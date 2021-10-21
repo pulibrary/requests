@@ -426,6 +426,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         # end
 
         it 'allows patrons to request a Forrestal annex' do
+          alma_url = stub_alma_hold_success('999455503506421', '22642306790006421', '23642306760006421', '960594184')
           visit '/requests/999455503506421?mfhd=22642306790006421'
           choose('requestable__delivery_mode_23642306760006421_print') # chooses 'print' radio button
           # todo: should we still have the text?
@@ -450,6 +451,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.cc).to be_blank
           expect(confirm_email.html_part.body.to_s).to have_content("A tale of cats and mice of Obeyd of Záákán")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+          expect(a_request(:post, alma_url)).to have_been_made
         end
 
         it 'allows patrons to request a Lewis recap item digitally' do
@@ -759,6 +761,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         it 'allows cas user to request from Annex or Firestone in mixed holding' do
+          alma_url = stub_alma_hold_success('9922868943506421', '22692156940006421', '22692156940006421', '960594184')
           visit '/requests/9922868943506421?mfhd=22692156940006421'
           expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_user_supplied_enum_22692156940006421'
@@ -769,6 +772,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           select('Firestone Library', from: 'requestable__pick_up_22692156940006421')
           click_button 'Request Selected Items'
           expect(page).to have_content I18n.t('requests.submit.annex_success')
+          expect(a_request(:post, alma_url)).to have_been_made
         end
 
         it 'allows a non circulating item with no item data to be digitized' do

@@ -168,12 +168,14 @@ module Requests
       end
 
       def process_hold
-        return unless service_types.include?('on_shelf') || service_types.include?('marquand_in_library')
+        return unless service_types.include?('on_shelf') || service_types.include?('marquand_in_library') || service_types.include?('annex')
 
         hold = if service_types.include? 'on_shelf'
                  Requests::HoldItem.new(self)
                elsif service_types.include? 'marquand_in_library'
                  Requests::HoldItem.new(self, service_type: 'marquand_in_library')
+               elsif service_types.include? 'annex'
+                 Requests::HoldItem.new(self, service_type: 'annex')
                end
         hold.handle
         @duplicate = hold.duplicate?

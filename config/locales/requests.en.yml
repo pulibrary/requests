@@ -48,7 +48,7 @@ en:
       brief_msg: "Item offsite at Forrestal Annex. Requests for pick-up typically take 1-2 business days to process."
       # temporary changes issue 438
       #email_conf_msg: "You will be notified via email when your item is ready for pick-up. Most items are ready in 1 to 2 business days."
-      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email telling you the item will be available for pick-up in Firestone Lobby between the hours of 11am - 3pm, Monday - Friday."
+      email_conf_msg: "Your request to pick this item up has been received. We will process the requests as soon as possible, but given the demand and the current circumstances some delay may occur. You will receive an email when the book is available for pick-up."
       in_library_use_msg_html: After notification of your item's arrival at %{location_label}, you should visit the Library to view it
     anxadoc:
       email: "docstor@princeton.edu"

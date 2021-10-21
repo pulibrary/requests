@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 describe Requests::Submission do
   let(:valid_patron) do
     { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
@@ -1323,4 +1324,45 @@ describe Requests::Submission do
       end
     end
   end
+
+  context 'Annex Item' do
+    let(:requestable) do
+      [
+        { "selected" => "true", "bibid" => "99124704963506421", "mfhd" => "22741721830006421", "call_number" => "QK551 .G723 2021",
+          "location_code" => "sa", "item_id" => "23741721820006421", "barcode" => "32101104020456", "copy_number" => "1",
+          "status" => "On-Site", "type" => "annex", "fill_in" => "false",
+          "delivery_mode_23741721820006421" => "in_library", "pick_up" => "PA" }.with_indifferent_access
+      ]
+    end
+    let(:bib) { { "id" => "99124704963506421", "title" => "The liverworts and hornworts of Colombia and Ecuador", "author" => "Gradstein, S. R.", "isbn" => "9783030494490" } }
+    let(:params) do
+      {
+        request: user_info,
+        requestable: requestable,
+        bib: bib
+      }
+    end
+    let(:submission) do
+      described_class.new(params, user_info)
+    end
+
+    describe "#process_submission" do
+      it 'sends an email and places an alma hold' do
+        stub_delivery_locations
+        alma_url = stub_alma_hold_success('99124704963506421', '22741721830006421', '23741721820006421', '9999999')
+        expect(submission).to be_valid
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect(submission.service_errors.count).to eq(0)
+        expect(a_request(:post, alma_url)).to have_been_made
+      end
+
+      it "returns hold errors" do
+        alma_url = stub_alma_hold_failure('99124704963506421', '22741721830006421', '23741721820006421', '9999999')
+        expect { submission.process_submission }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(a_request(:post, alma_url)).to have_been_made
+        expect(submission.service_errors.count).to eq(1)
+      end
+    end
+  end
 end
+# rubocop:enable Metrics/BlockLength

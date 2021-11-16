@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'borrow_direct'
 
-describe Requests::BorrowDirectLookup do
+describe Requests::Submissions::BorrowDirectLookup do
   let(:borrow_direct_lookup) { described_class.new }
 
   context 'An available item in borrow direct' do

@@ -1,26 +1,24 @@
 require 'faraday'
 
-module Requests
+module Requests::Submissions
   class Recap
     # include Requests::Gfa
     include Requests::Scsb
 
-    attr_reader :submission
+    attr_reader :submission, :service_type, :success_message
 
-    def initialize(submission)
-      @service_types = ['recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library', 'recap_marquand_edd']
+    def initialize(submission, service_type: 'recap')
       @submission = submission
       @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
       @errors = [] # array of hashes with bibid and item_id and error message
-      handle
+      @service_type = service_type
+      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
     end
 
     def handle
-      service_types.each do |service_type|
-        items = submission.filter_items_by_service(service_type)
-        items.each do |item|
-          handle_item(item)
-        end
+      items = submission.filter_items_by_service(service_type)
+      items.each do |item|
+        handle_item(item)
       end
     end
 
@@ -28,7 +26,7 @@ module Requests
       @sent
     end
 
-    attr_reader :errors, :service_types
+    attr_reader :errors
 
     private
 
@@ -52,7 +50,7 @@ module Requests
       def handle_hold_for_item(item)
         return if submission.partner_item?(item) || submission.edd?(item)
 
-        hold = Requests::HoldItem.new(@submission, service_type: "recap")
+        hold = Requests::Submissions::HoldItem.new(@submission, service_type: "recap")
         hold.handle_item(item: item)
         return if hold.errors.empty?
         hold.errors.map! do |error|

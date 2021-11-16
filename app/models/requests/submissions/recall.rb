@@ -1,21 +1,23 @@
 require 'faraday'
 
-module Requests
+module Requests::Submissions
   class Recall
     include Requests::Voyager
     include Requests::Scsb
     include Requests::Bibdata
+
+    attr_reader :service_type, :success_message
 
     def initialize(submission)
       @service_type = 'recall'
       @submission = submission
       @errors = []
       @sent = []
-      handle
+      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
     end
 
     def handle
-      items = @submission.filter_items_by_service(@service_type)
+      items = @submission.filter_items_by_service(service_type)
       scsb_params = {}
       items.each do |item|
         scsb_params = handle_item(item: item, scsb_params: scsb_params)

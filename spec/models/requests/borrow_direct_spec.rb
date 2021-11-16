@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable RSpec/MultipleExpectations
-describe Requests::BorrowDirect do
+describe Requests::Submissions::BorrowDirect do
   let(:user_info) do
     {
       "netid" => "jstudent",

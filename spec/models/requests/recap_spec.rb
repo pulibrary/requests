@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable RSpec/MultipleExpectations
-describe Requests::Recap do
+describe Requests::Submissions::Recap do
   context 'ReCAP Request' do
     let(:valid_patron) { { "netid" => "foo", "university_id" => "99999999", "active_email" => 'foo1@princeton.edu', barcode: '111222333' }.with_indifferent_access }
     let(:user_info) do
@@ -79,19 +79,32 @@ describe Requests::Recap do
     end
 
     let(:recap_request) { described_class.new(submission) }
+    let(:recap_edd_request) { described_class.new(submission, service_type: 'recap_edd') }
     let(:good_request) { fixture('/scsb_find_request.json') }
     let(:good_response) { fixture('/scsb_request_item_response.json') }
     let(:bad_response) { fixture('/scsb_request_item_response_errors.json') }
 
     describe 'All ReCAP Requests' do
-      it "captures errors when the request is unsuccessful or malformed." do
+      it "captures recap errors when the request is unsuccessful or malformed." do
         stub_request(:post, scsb_url).
           # with(headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
           to_return(status: 401, body: "Unauthorized", headers: {})
-        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect { recap_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(0)
-        expect(recap_request.errors.size).to eq(2)
-        expect(a_request(:post, scsb_url)).to have_been_made.twice
+        expect(recap_request.errors.size).to eq(1)
+        expect(a_request(:post, scsb_url)).to have_been_made.once
+        expect(a_request(:post, alma_url)).not_to have_been_made
+        expect(a_request(:post, alma2_url)).not_to have_been_made
+      end
+
+      it "captures recap edd errors when the request is unsuccessful or malformed." do
+        stub_request(:post, scsb_url).
+          # with(headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+          to_return(status: 401, body: "Unauthorized", headers: {})
+        expect { recap_edd_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(recap_edd_request.submitted.size).to eq(0)
+        expect(recap_edd_request.errors.size).to eq(1)
+        expect(a_request(:post, scsb_url)).to have_been_made.once
         expect(a_request(:post, alma_url)).not_to have_been_made
         expect(a_request(:post, alma2_url)).not_to have_been_made
       end
@@ -100,26 +113,39 @@ describe Requests::Recap do
         stub_request(:post, scsb_url).
           # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
           to_return(status: 200, body: bad_response, headers: {})
-        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect { recap_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(0)
-        expect(recap_request.errors.size).to eq(2)
-        expect(a_request(:post, scsb_url)).to have_been_made.twice
+        expect(recap_request.errors.size).to eq(1)
+        expect(a_request(:post, scsb_url)).to have_been_made.once
         expect(a_request(:post, alma_url)).not_to have_been_made
         expect(a_request(:post, alma2_url)).not_to have_been_made
       end
 
-      it "captures successful request submissions." do
+      it "captures successful request submission" do
         stub_request(:post, scsb_url).
           # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
           to_return(status: 200, body: good_response, headers: {})
         stub_request(:post, alma_url)
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
           .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
-        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
-        expect(recap_request.submitted.size).to eq(2)
+        expect { recap_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(recap_request.submitted.size).to eq(1)
         expect(recap_request.errors.size).to eq(0)
-        expect(a_request(:post, scsb_url)).to have_been_made.twice
+        expect(a_request(:post, scsb_url)).to have_been_made.once
         expect(a_request(:post, alma_url)).to have_been_made
+      end
+
+      it "captures successful edd request submission" do
+        stub_request(:post, scsb_url).
+          # with(body: good_request, headers: { 'Accept' => '*/*', 'Content-Type' => "application/json", 'api_key' => 'TESTME' }).
+          to_return(status: 200, body: good_response, headers: {})
+        stub_request(:post, alma_url)
+          .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
+          .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
+        expect { recap_edd_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect(recap_edd_request.submitted.size).to eq(1)
+        expect(recap_edd_request.errors.size).to eq(0)
+        expect(a_request(:post, scsb_url)).to have_been_made.once
         expect(a_request(:post, alma2_url)).not_to have_been_made # no alma hold for edd
       end
 
@@ -130,12 +156,11 @@ describe Requests::Recap do
         stub_request(:post, alma_url)
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
           .to_return(status: 400, body: fixture("alma_hold_error_no_library_response.json"), headers: { 'content-type': 'application/json' })
-        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        expect(recap_request.submitted.size).to eq(2)
+        expect { recap_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect(recap_request.submitted.size).to eq(1)
         expect(recap_request.errors.size).to eq(0)
-        expect(a_request(:post, scsb_url)).to have_been_made.twice
+        expect(a_request(:post, scsb_url)).to have_been_made.once
         expect(a_request(:post, alma_url)).to have_been_made
-        expect(a_request(:post, alma2_url)).not_to have_been_made # no alma hold for EDD
         error_email = ActionMailer::Base.deliveries.last
         expect(error_email.subject).to eq("Request Service Error")
         expect(error_email.html_part.body.to_s).not_to include("translation missing")
@@ -158,13 +183,12 @@ describe Requests::Recap do
           stub_request(:post, scsb_url).to_return(status: 200, body: '{invalid', headers: {})
           allow(Rails.logger).to receive(:error)
 
-          expect { recap }.to change { ActionMailer::Base.deliveries.count }.by(0)
+          expect { recap.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
           expect(recap.submitted.size).to eq(0)
-          expect(recap.errors.size).to eq(2)
-          expect(Rails.logger).to have_received(:error).with(/Invalid response from the SCSB server/).twice
-          expect(a_request(:post, scsb_url)).to have_been_made.twice
+          expect(recap.errors.size).to eq(1)
+          expect(Rails.logger).to have_received(:error).with(/Invalid response from the SCSB server/).once
+          expect(a_request(:post, scsb_url)).to have_been_made.once
           expect(a_request(:post, alma_url)).not_to have_been_made
-          expect(a_request(:post, alma2_url)).not_to have_been_made
         end
       end
     end
@@ -261,7 +285,7 @@ describe Requests::Recap do
         stub_request(:post, alma2_url)
           .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "mudd"))
           .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
-        expect { recap_request }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        expect { recap_request.handle }.to change { ActionMailer::Base.deliveries.count }.by(0)
         expect(recap_request.submitted.size).to eq(2)
         expect(recap_request.errors.size).to eq(0)
         expect(a_request(:post, scsb_url)).to have_been_made.twice

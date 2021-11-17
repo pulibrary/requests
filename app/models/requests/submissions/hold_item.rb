@@ -2,10 +2,11 @@ require 'faraday'
 
 module Requests::Submissions
   class HoldItem < Service
-
+    attr_accessor :duplicate
 
     def initialize(submission, service_type: 'on_shelf')
       super
+      @duplicate = false
     end
 
     def handle
@@ -18,15 +19,20 @@ module Requests::Submissions
     end
 
     def duplicate?
-      submitted.count == 1 && submitted.first[:response] == "DuplicateRequest"
+      duplicate
     end
 
     def handle_item(item:)
       status = {}
       begin
-        status = place_hold(item)
+        status = if item["user_supplied_enum"].present?
+                   item # noop - Alma can not create the correct hold.  This assumes the correct emails will go out during send_mail
+                 else
+                   place_hold(item)
+                 end
       rescue Alma::BibRequest::ItemAlreadyExists
         status = item.merge(payload: payload(item), response: "DuplicateRequest")
+        @duplicate = true
       rescue StandardError => invalid
         errors << { reply_text: "Can not create hold", create_hold: { note: "Hold can not be created", message: invalid.message } }.merge(submission.bib.to_h).merge(item.to_h).with_indifferent_access
       end

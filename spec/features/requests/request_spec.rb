@@ -760,8 +760,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("7th census of U.S.1850")
         end
 
-        it 'allows cas user to request from Annex or Firestone in mixed holding' do
-          alma_url = stub_alma_hold_success('9922868943506421', '22692156940006421', '22692156940006421', '960594184')
+        it 'an annex item with user supplied information creates annex emails' do
           visit '/requests/9922868943506421?mfhd=22692156940006421'
           expect(page).to have_field 'requestable__selected', disabled: false
           expect(page).to have_field 'requestable_user_supplied_enum_22692156940006421'
@@ -770,9 +769,23 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
             fill_in 'requestable_user_supplied_enum_22692156940006421', with: 'test'
           end
           select('Firestone Library', from: 'requestable__pick_up_22692156940006421')
-          click_button 'Request Selected Items'
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
           expect(page).to have_content I18n.t('requests.submit.annex_success')
-          expect(a_request(:post, alma_url)).to have_been_made
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Annex Request")
+          expect(email.to).to eq(["forranx@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("Birth control news")
+          expect(email.html_part.body.to_s).to have_content("test")
+          expect(email.text_part.body.to_s).to have_content("test")
+          expect(confirm_email.subject).to eq("Annex Request")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Birth control news")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
 
         it 'allows a non circulating item with no item data to be digitized' do

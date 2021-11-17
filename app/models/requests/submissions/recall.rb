@@ -1,19 +1,13 @@
 require 'faraday'
 
 module Requests::Submissions
-  class Recall
+  class Recall < Service
     include Requests::Voyager
     include Requests::Scsb
     include Requests::Bibdata
 
-    attr_reader :service_type, :success_message
-
     def initialize(submission)
-      @service_type = 'recall'
-      @submission = submission
-      @errors = []
-      @sent = []
-      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
+      super(submission, service_type: 'recall')
     end
 
     def handle
@@ -39,11 +33,10 @@ module Requests::Submissions
       # end
     end
 
-    def submitted
-      @sent
+    def send_mail
+      Requests::RequestMailer.send("#{type}_email", self).deliver_now
+      Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if items_held_by_partner?
     end
-
-    attr_reader :errors
 
     private
 
@@ -73,6 +66,10 @@ module Requests::Submissions
           error_message = "Failed request: " + xml_response.xpath("//note").text
           @errors << { bibid: params[:recordID], item: params[:itemID], user_name: @submission.user_name, patron: params[:patron], error: error_message }
         end
+      end
+
+      def items_held_by_partner?
+        @items.select { |item| submission.partner_item?(item) }.size.positive?
       end
   end
 end

@@ -189,23 +189,10 @@ module Requests
 
       def generate_success_messages(success_messages)
         @services.each do |service|
-          type = service.service_type
           success_messages << service.success_message
-          if service.errors.empty?
-            if inter_library_services.include?(type)
-              Requests::RequestMailer.send("interlibrary_loan_confirmation", self).deliver_now if service.handled_by != "borrow_direct"
-            elsif !service.respond_to?(:duplicate?) || !service.duplicate?
-              Requests::RequestMailer.send("#{type}_email", self).deliver_now unless type == 'recap_edd'
-              Requests::RequestMailer.send("#{type}_confirmation", self).deliver_now if type != 'recall'
-              Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && items_held_by_partner?
-            end
-          end
+          service.send_mail
         end
         success_messages
-      end
-
-      def items_held_by_partner?
-        @items.select { |item| partner_item?(item) }.size.positive?
       end
   end
 end

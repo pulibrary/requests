@@ -1,21 +1,15 @@
 require 'faraday'
 
 module Requests::Submissions
-  class DigitizeItem
+  class DigitizeItem < Service
     include Requests::Voyager
 
-    attr_reader :service_type, :success_message
-
     def initialize(submission, service_type: 'digitize')
+      super
       @service_types = { digitize: { cited_pages: 'COVID-19 Campus Closure', note: 'Digitization Request' },
                          marquand_edd: { cited_pages: 'Marquand EDD', note: 'Digitization Request Marquand Item' },
                          clancy_edd: { cited_pages: 'Marquand Clancy EDD', note: 'Digitization Request Marquand Item at Clancy' },
                          clancy_unavailable_edd: { cited_pages: 'Marquand Clancy UNAVAIL EDD', note: 'Digitization Request Marquand Item at Clancy (Unavailable)' } }
-      @submission = submission
-      @errors = []
-      @sent = []
-      @service_type = service_type
-      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
     end
 
     def handle
@@ -34,8 +28,6 @@ module Requests::Submissions
     def submitted
       @sent
     end
-
-    attr_reader :errors
 
     private
 

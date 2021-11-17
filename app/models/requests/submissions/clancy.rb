@@ -1,15 +1,9 @@
 require 'faraday'
 
 module Requests::Submissions
-  class Clancy
-    attr_reader :clancy_conn, :api_key, :errors, :service_type, :success_message
-
+  class Clancy < Service
     def initialize(submission)
-      @service_type = 'clancy_in_library'
-      @submission = submission
-      @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
-      @errors = [] # array of hashes with bibid and item_id and error message
-      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
+      super(submission, service_type: 'clancy_in_library')
     end
 
     def handle
@@ -17,10 +11,6 @@ module Requests::Submissions
       items.each do |item|
         handle_item(item)
       end
-    end
-
-    def submitted
-      @sent
     end
 
     private

@@ -1,18 +1,8 @@
 module Requests::Submissions
-  class HelpMe
-    attr_reader :errors
-    attr_reader :sent
-    attr_reader :service_type
-    attr_reader :isbn
-    attr_reader :submission
-    attr_reader :success_message
-
+  class HelpMe < Service
     def initialize(submission)
+      super(submission, service_type: 'help_me')
       @submission = submission
-      @errors = []
-      @sent = []
-      @service_type = 'help_me'
-      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
     end
 
     def handle

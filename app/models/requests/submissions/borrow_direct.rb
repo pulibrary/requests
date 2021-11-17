@@ -1,20 +1,15 @@
 require 'borrow_direct'
 
 module Requests::Submissions
-  class BorrowDirect
-    attr_reader :errors, :sent, :service_type
+  class BorrowDirect < Service
     attr_reader :handled_by
     attr_reader :isbn
-    attr_reader :submission
 
     def initialize(submission, service_type: 'bd')
-      @submission = submission
-      @errors = []
-      @sent = []
+      super
       @handled_by = "borrow_direct"
       @isbn = submission.bib["isbn"].split(" ").first if submission.bib["isbn"].present?
       @pickup_location = "Firestone Library"
-      @service_type = service_type
     end
 
     def handle
@@ -38,6 +33,11 @@ module Requests::Submissions
       else
         I18n.t('requests.submit.interlibrary_loan_success')
       end
+    end
+
+    def send_mail
+      return if errors.present? || handled_by == "borrow_direct"
+      Requests::RequestMailer.send("interlibrary_loan_confirmation", submission).deliver_now
     end
 
     private

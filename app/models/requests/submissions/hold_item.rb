@@ -1,16 +1,11 @@
 require 'faraday'
 
 module Requests::Submissions
-  class HoldItem
-    include Requests::Voyager
+  class HoldItem < Service
 
-    attr_reader :submission, :errors, :service_type
 
     def initialize(submission, service_type: 'on_shelf')
-      @service_type = service_type
-      @submission = submission
-      @errors = []
-      @sent = []
+      super
     end
 
     def handle
@@ -20,10 +15,6 @@ module Requests::Submissions
         @sent << item_status unless item_status.blank?
       end
       return false if @errors.present?
-    end
-
-    def submitted
-      @sent
     end
 
     def duplicate?
@@ -48,6 +39,11 @@ module Requests::Submissions
       else
         I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
       end
+    end
+
+    def send_mail
+      return if duplicate?
+      super
     end
 
     private

@@ -1,18 +1,12 @@
 require 'faraday'
 
 module Requests::Submissions
-  class Recap
+  class Recap < Service
     # include Requests::Gfa
     include Requests::Scsb
 
-    attr_reader :submission, :service_type, :success_message
-
     def initialize(submission, service_type: 'recap')
-      @submission = submission
-      @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
-      @errors = [] # array of hashes with bibid and item_id and error message
-      @service_type = service_type
-      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
+      super
     end
 
     def handle
@@ -22,11 +16,11 @@ module Requests::Submissions
       end
     end
 
-    def submitted
-      @sent
+    def send_mail
+      return if errors.present?
+      Requests::RequestMailer.send("#{service_type}_email", submission).deliver_now unless service_type == 'recap_edd'
+      Requests::RequestMailer.send("#{service_type}_confirmation", submission).deliver_now
     end
-
-    attr_reader :errors
 
     private
 

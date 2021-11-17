@@ -1,10 +1,10 @@
 require 'faraday'
 
-module Requests
+module Requests::Submissions
   class HoldItem
     include Requests::Voyager
 
-    attr_reader :submission, :errors
+    attr_reader :submission, :errors, :service_type
 
     def initialize(submission, service_type: 'on_shelf')
       @service_type = service_type
@@ -14,7 +14,7 @@ module Requests
     end
 
     def handle
-      items = submission.filter_items_by_service(@service_type)
+      items = submission.filter_items_by_service(service_type)
       items.each do |item|
         item_status = handle_item(item: item)
         @sent << item_status unless item_status.blank?
@@ -42,6 +42,14 @@ module Requests
       status
     end
 
+    def success_message
+      if duplicate?
+        I18n.t("requests.submit.duplicate")
+      else
+        I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
+      end
+    end
+
     private
 
       def place_hold(item)
@@ -51,7 +59,7 @@ module Requests
         if response.success?
           status = item.merge(payload: options, response: response.raw_response.parsed_response)
         else
-          errors << reponse_json["response"].merge(submission.bib.to_h).merge(item.to_h).merge(type: @service_type)
+          errors << reponse_json["response"].merge(submission.bib.to_h).merge(item.to_h).merge(type: service_type)
         end
         status
       end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable RSpec/MultipleExpectations
-describe Requests::HelpMe do
+describe Requests::Submissions::HelpMe do
   let(:user_info) do
     {
       "netid" => "jstudent",

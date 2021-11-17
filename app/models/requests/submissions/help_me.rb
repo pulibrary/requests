@@ -1,16 +1,18 @@
-module Requests
+module Requests::Submissions
   class HelpMe
     attr_reader :errors
     attr_reader :sent
     attr_reader :service_type
     attr_reader :isbn
     attr_reader :submission
+    attr_reader :success_message
 
     def initialize(submission)
       @submission = submission
       @errors = []
       @sent = []
       @service_type = 'help_me'
+      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
     end
 
     def handle
@@ -24,7 +26,7 @@ module Requests
 
       def handle_with_illiad(item:)
         patron = @submission.patron
-        client = IlliadTransactionClient.new(patron: patron, metadata_mapper: Requests::IlliadMetadata::Loan.new(patron: patron, bib: @submission.bib, item: item, note: patron_note(patron: patron)))
+        client = Requests::IlliadTransactionClient.new(patron: patron, metadata_mapper: Requests::IlliadMetadata::Loan.new(patron: patron, bib: @submission.bib, item: item, note: patron_note(patron: patron)))
         transaction = client.create_request
         errors << { type: 'help_me', bibid: @submission.bib, item: item, user_name: @submission.user_name, barcode: @submission.user_barcode, error: "Invalid Help Me Request" } if transaction.blank?
         transaction

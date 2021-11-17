@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_request', record: :none } do
+describe Requests::Submissions::Recall, type: :controller, vcr: { cassette_name: 'recall_request', record: :none } do
   context 'Recall Request' do
     let(:valid_patron) do
       { "netid" => "foo", "first_name" => "Foo", "last_name" => "Request",
@@ -68,6 +68,7 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
         stub_request(:put, stub_url).
           # with(headers: { 'Accept' => '*/*' }).
           to_return(status: 405, body: responses[:error], headers: {})
+        recall_request.handle
         expect(recall_request.submitted.size).to eq(0)
         expect(recall_request.errors.size).to eq(1)
       end
@@ -76,21 +77,16 @@ describe Requests::Recall, type: :controller, vcr: { cassette_name: 'recall_requ
         stub_request(:put, stub_url)
           .with(headers: { 'X-Accept' => 'application/xml' })
           .to_return(status: 201, body: responses[:success], headers: {})
+        recall_request.handle
         expect(recall_request.submitted.size).to eq(1)
         expect(recall_request.errors.size).to eq(0)
       end
 
       it 'constructs a expiration date for the recall request' do
-        stub_request(:put, stub_url)
-          .with(headers: { 'X-Accept' => 'application/xml' })
-          .to_return(status: 201, body: responses[:success], headers: {})
         expect(recall_request.request_payload(submission.items.first)).to include("<last-interest-date>#{recall_request.expiration_date(60)}</last-interest-date>")
       end
 
       it 'has an expiry date 60 days from today formatted as yyyy-mm-dd' do
-        stub_request(:put, stub_url)
-          .with(headers: { 'X-Accept' => 'application/xml' })
-          .to_return(status: 201, body: responses[:success], headers: {})
         expect(recall_request.expiration_date(60)).to eq((todays_date + 60).strftime("%Y%m%d"))
       end
     end

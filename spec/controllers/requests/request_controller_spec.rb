@@ -133,11 +133,11 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
 
     context "recap requestable" do
-      let(:recap) { instance_double(Requests::Recap, errors: []) }
+      let(:recap) { instance_double(Requests::Submissions::Recap, errors: [], handle: {}, service_type: 'recap_edd', success_message: 'success!') }
       it 'contacts recap and sends email' do
         requestable.first["library_code"] = "recap"
         requestable.first["delivery_mode_7391704"] = "edd"
-        expect(Requests::Recap).to receive(:new).and_return(recap)
+        expect(Requests::Submissions::Recap).to receive(:new).with(anything, service_type: 'recap_edd').and_return(recap)
         expect(Requests::RequestMailer).to receive(:send).with("recap_edd_confirmation", anything).and_return(mail_message)
         expect(Requests::RequestMailer).not_to receive(:send).with("recap_email", anything)
         post :submit, params: { "request" => user_info,
@@ -147,13 +147,13 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
 
     context "borrow direct requestable" do
-      let(:borrow_direct) { instance_double(Requests::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }], handled_by: "borrow_direct") }
+      let(:borrow_direct) { instance_double(Requests::Submissions::BorrowDirect, errors: [], handle: true, sent: [{ request_number: '123' }], handled_by: "borrow_direct", service_type: 'bd', success_message: 'success!') }
       it 'contacts borrow direct and sends no emails ' do
         requestable.first["type"] = "bd"
         requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
         requestable.first["bd"] = { query_params: "abc" }
         expect(Requests::RequestMailer).not_to receive(:send)
-        expect(Requests::BorrowDirect).to receive(:new).and_return(borrow_direct)
+        expect(Requests::Submissions::BorrowDirect).to receive(:new).and_return(borrow_direct)
         post :submit, params: { "request" => user_info,
                                 "requestable" => requestable,
                                 "bib" => bib, "format" => "js" }
@@ -161,11 +161,11 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
 
     context "recall requestable and sends recall_email" do
-      let(:recal) { instance_double(Requests::Recall, errors: []) }
+      let(:recal) { instance_double(Requests::Submissions::Recall, errors: [], handle: {}, service_type: 'recall', success_message: 'success!') }
       it 'contacts recall and sends email' do
         requestable.first["type"] = "recall"
         requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
-        expect(Requests::Recall).to receive(:new).and_return(recal)
+        expect(Requests::Submissions::Recall).to receive(:new).and_return(recal)
         expect(Requests::RequestMailer).to receive(:send).with("recall_email", anything).and_return(mail_message)
         expect(Requests::RequestMailer).not_to receive(:send).with("recall_confirmation", anything)
         post :submit, params: { "request" => user_info,
@@ -175,11 +175,11 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
     end
 
     context "recap_no_items requestable" do
-      let(:generic) { instance_double(Requests::Generic, errors: []) }
+      let(:generic) { instance_double(Requests::Submissions::Generic, errors: [], handle: {}, service_type: 'recap_no_items', success_message: 'success!') }
       it 'sends email and confirmation email' do
         requestable.first["type"] = "recap_no_items"
         requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
-        expect(Requests::Generic).to receive(:new).and_return(generic)
+        expect(Requests::Submissions::Generic).to receive(:new).with(anything, service_type: 'recap_no_items').and_return(generic)
         expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_email", anything).and_return(mail_message)
         expect(Requests::RequestMailer).to receive(:send).with("recap_no_items_confirmation", anything).and_return(mail_message)
         post :submit, params: { "request" => user_info,

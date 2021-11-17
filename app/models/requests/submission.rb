@@ -17,7 +17,6 @@ module Requests
       @bd = params[:bd] # TODO: can we remove this?
       @services = []
       @success_messages = []
-      @duplicate = false
     end
 
     attr_reader :patron, :success_messages
@@ -76,23 +75,17 @@ module Requests
     end
 
     def process_submission
-      process_hold
-      process_recall
-      process_recap
-      process_borrow_direct
-      process_digitize
-      process_help_me
-      process_clancy
-
-      # if !recap && !recall && !bd !(a1 & a2).empty?
-      if generic_service_only?
-        @services << Requests::Generic.new(self)
-        success_messages << I18n.t('requests.submit.success')
+      @services = service_types.map do |type|
+        if access_only?
+          # Access users cannot use services directly
+          Requests::Submissions::Generic.new(self, service_type: type)
+        else
+          service_by_type(type)
+        end
       end
+      @services.each(&:handle)
 
       @success_messages = generate_success_messages(@success_messages)
-
-      send_mail if service_errors.blank? && !@duplicate
 
       @services
     end
@@ -123,6 +116,29 @@ module Requests
     private
 
       # rubocop:disable Metrics/MethodLength
+      def service_by_type(type)
+        case type
+        when 'on_shelf', 'marquand_in_library', 'annex'
+          Requests::Submissions::HoldItem.new(self, service_type: type)
+        when 'recall'
+          Requests::Submissions::Recall.new(self)
+        when 'recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library', 'recap_marquand_edd'
+          Requests::Submissions::Recap.new(self, service_type: type)
+        when 'clancy_in_library'
+          Requests::Submissions::Clancy.new(self)
+        when 'clancy_edd'
+          Requests::Submissions::ClancyEdd.new(self)
+        when 'digitize', 'marquand_edd', 'clancy_unavailable_edd'
+          Requests::Submissions::DigitizeItem.new(self, service_type: type)
+        when 'help_me'
+          Requests::Submissions::HelpMe.new(self)
+        when *inter_library_services
+          Requests::Submissions::BorrowDirect.new(self, service_type: type)
+        else
+          Requests::Submissions::Generic.new(self, service_type: type)
+        end
+      end
+
       def categorize_by_delivery_and_location(item)
         library_code = item["library_code"]
         if recap_no_items?(item)
@@ -167,111 +183,25 @@ module Requests
         item["delivery_mode_#{item['item_id']}"]
       end
 
-      def process_hold
-        return unless service_types.include?('on_shelf') || service_types.include?('marquand_in_library') || service_types.include?('annex')
-
-        hold = if service_types.include? 'on_shelf'
-                 Requests::HoldItem.new(self)
-               elsif service_types.include? 'marquand_in_library'
-                 Requests::HoldItem.new(self, service_type: 'marquand_in_library')
-               elsif service_types.include? 'annex'
-                 Requests::HoldItem.new(self, service_type: 'annex')
-               end
-        hold.handle
-        @duplicate = hold.duplicate?
-        @services << hold
-      end
-
-      def process_recall
-        return unless service_types.include? 'recall'
-        @services << Requests::Recall.new(self)
-      end
-
-      def process_digitize
-        return if (['digitize', 'marquand_edd', 'clancy_unavailable_edd'] & service_types).blank?
-        @services << if access_only?
-                       # Access users cannot use illiad service directly
-                       Requests::Generic.new(self)
-                     else
-                       Requests::DigitizeItem.new(self)
-                     end
-      end
-
-      def process_recap
-        return if (['recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library', 'recap_marquand_edd'] & service_types).blank?
-        @services << if access_only?
-                       # Access users cannot use recap service directly
-                       Requests::Generic.new(self)
-                     else
-                       Requests::Recap.new(self)
-                     end
-      end
-
-      def process_clancy
-        return if (['clancy_in_library', 'clancy_edd'] & service_types).blank?
-        clancy_services = []
-        clancy_services << Requests::Clancy.new(self) if service_types.include?('clancy_in_library')
-        clancy_services << Requests::ClancyEdd.new(self) if service_types.include?('clancy_edd')
-        clancy_services.each(&:handle)
-        @services += clancy_services
-      end
-
-      def process_help_me
-        return unless service_types.include?('help_me')
-        @services << if access_only?
-                       # Access users cannot use illiad directly
-                       Requests::Generic.new(self)
-                     else
-                       help_me = Requests::HelpMe.new(self)
-                       help_me.handle
-                       help_me
-                     end
-      end
-
-      def process_borrow_direct
-        return unless service_types.include?('bd') || service_types.include?('ill')
-        bd_request = Requests::BorrowDirect.new(self)
-        bd_request.handle
-        @services << bd_request
-        return if bd_request.errors.present?
-        if bd_request.handled_by == "borrow_direct"
-          success_messages << "#{I18n.t('requests.submit.bd_success')} Your request number is #{bd_request.sent[0][:request_number]}"
-        else
-          Requests::RequestMailer.send("interlibrary_loan_confirmation", self).deliver_now
-          success_messages << I18n.t('requests.submit.interlibrary_loan_success')
-        end
-      end
-
-      def generic_service?(type)
-        !non_generic_services.include?(type)
-      end
-
-      def generic_service_only?
-        (service_types & non_generic_services).empty? && (!service_types.include?('bd') && !service_types.include?('ill'))
-      end
-
-      def non_generic_services
-        ['recap', 'recall', 'on_shelf', 'digitize', 'help_me', 'clancy_in_library', 'clancy_edd', 'marquand_edd', 'marquand_in_library']
+      def inter_library_services
+        ['bd', 'ill']
       end
 
       def generate_success_messages(success_messages)
-        if @duplicate
-          success_messages << I18n.t("requests.submit.duplicate")
-        else
-          service_types.each do |type|
-            success_messages << I18n.t("requests.submit.#{type}_success") unless generic_service?(type)
+        @services.each do |service|
+          type = service.service_type
+          success_messages << service.success_message
+          if service.errors.empty?
+            if inter_library_services.include?(type)
+              Requests::RequestMailer.send("interlibrary_loan_confirmation", self).deliver_now if service.handled_by != "borrow_direct"
+            elsif !service.respond_to?(:duplicate?) || !service.duplicate?
+              Requests::RequestMailer.send("#{type}_email", self).deliver_now unless type == 'recap_edd'
+              Requests::RequestMailer.send("#{type}_confirmation", self).deliver_now if type != 'recall'
+              Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && items_held_by_partner?
+            end
           end
         end
         success_messages
-      end
-
-      def send_mail
-        mail_service_types = service_types.reject { |type| ['bd', 'ill'].include? type } # emails already sent for ill and bd
-        mail_service_types.each do |type|
-          Requests::RequestMailer.send("#{type}_email", self).deliver_now unless type == 'recap_edd'
-          Requests::RequestMailer.send("#{type}_confirmation", self).deliver_now if type != 'recall'
-          Requests::RequestMailer.send("scsb_recall_email", self).deliver_now if type == 'recall' && items_held_by_partner?
-        end
       end
 
       def items_held_by_partner?

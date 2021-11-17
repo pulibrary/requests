@@ -1,22 +1,21 @@
 require 'faraday'
 
-module Requests
+module Requests::Submissions
   class Clancy
-    attr_reader :clancy_conn, :api_key, :errors, :service_types
+    attr_reader :clancy_conn, :api_key, :errors, :service_type, :success_message
 
     def initialize(submission)
-      @service_types = ['clancy_in_library']
+      @service_type = 'clancy_in_library'
       @submission = submission
       @sent = [] # array of hashes of bibid and item_ids for each successfully sent item
       @errors = [] # array of hashes with bibid and item_id and error message
+      @success_message = I18n.t("requests.submit.#{service_type}_success", default: I18n.t('requests.submit.success'))
     end
 
     def handle
-      service_types.each do |service_type|
-        items = @submission.filter_items_by_service(service_type)
-        items.each do |item|
-          handle_item(item)
-        end
+      items = @submission.filter_items_by_service(service_type)
+      items.each do |item|
+        handle_item(item)
       end
     end
 
@@ -28,12 +27,12 @@ module Requests
 
       def handle_item(item)
         # place the item on hold
-        hold = Requests::HoldItem.new(@submission, service_type: item["type"])
+        hold = Requests::Submissions::HoldItem.new(@submission, service_type: item["type"])
         hold.handle
 
         if hold.errors.empty?
           # request it from the clancy facility
-          clancy_item = ClancyItem.new(barcode: item[:barcode])
+          clancy_item = Requests::ClancyItem.new(barcode: item[:barcode])
           status = clancy_item.request(patron: @submission.patron, hold_id: hold_id(item_barcode: item[:barcode], patron_barcode: @submission.patron.barcode))
           @errors << { type: 'clancy', error: clancy_item.errors.first } unless status
         else

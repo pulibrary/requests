@@ -1255,6 +1255,31 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           expect(confirm_email.html_part.body.to_s).to have_content("Han'guk hyŏndaesa sanch'aek. No Mu-hyŏn sidae ŭi myŏngam")
           expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
         end
+
+        it 'Request an annex in library book correctly' do
+          stub_alma_hold_success('9941347943506421', '22560381400006421', '23560381360006421', '960594184')
+          visit 'requests/9941347943506421?mfhd=22560381400006421'
+          expect(page).to have_content "Er ru ting Qun fang pu : [san shi juan]"
+          check('requestable_selected_23560381360006421')
+          choose('requestable__delivery_mode_23560381360006421_in_library')
+          expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+          expect(page).to have_content I18n.t("requests.submit.annex_in_library_success")
+          email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+          confirm_email = ActionMailer::Base.deliveries.last
+          expect(email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(email.to).to eq(["forranx@princeton.edu"])
+          expect(email.cc).to be_blank
+          expect(email.html_part.body.to_s).to have_content("Er ru ting Qun fang pu : [san shi juan]")
+          expect(email.html_part.body.to_s).to have_content("vol.9-16")
+          expect(email.text_part.body.to_s).to have_content("vol.9-16")
+          expect(confirm_email.subject).to eq("Patron Initiated Catalog Request In Library Confirmation")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+          expect(confirm_email.to).to eq(["a@b.com"])
+          expect(confirm_email.cc).to be_blank
+          expect(confirm_email.html_part.body.to_s).to have_content("Er ru ting Qun fang pu : [san shi juan]")
+          expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+        end
       end
     end
 

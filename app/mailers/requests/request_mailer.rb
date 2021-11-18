@@ -53,6 +53,17 @@ module Requests
       confirmation_email(submission: submission, subject_key: 'requests.annex.email_subject')
     end
 
+    def annex_in_library_email(submission)
+      @submission = submission
+      mail(to: I18n.t('requests.annex.email'),
+           from: I18n.t('requests.default.email_from'),
+           subject: subject_line(I18n.t('requests.annex_in_library.email_subject'), @submission.user_barcode))
+    end
+
+    def annex_in_library_confirmation(submission)
+      confirmation_email(submission: submission, subject_key: 'requests.annex_in_library.email_subject')
+    end
+
     def ppl_email(submission)
       request_email(submission: submission, subject_key: 'requests.ppl.email_subject', destination_key: 'requests.ppl.email')
     end

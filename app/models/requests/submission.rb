@@ -118,7 +118,7 @@ module Requests
       # rubocop:disable Metrics/MethodLength
       def service_by_type(type)
         case type
-        when 'on_shelf', 'marquand_in_library', 'annex'
+        when 'on_shelf', 'marquand_in_library', 'annex', 'annex_in_library'
           Requests::Submissions::HoldItem.new(self, service_type: type)
         when 'recall'
           Requests::Submissions::Recall.new(self)
@@ -143,14 +143,14 @@ module Requests
         library_code = item["library_code"]
         if recap_no_items?(item)
           item["type"] = "recap_no_items"
+        elsif print?(item) && library_code == 'annex'
+          item["type"] = "annex"
         elsif off_site?(library_code)
           item["type"] = library_code
           item["type"] += "_edd" if edd?(item)
           item["type"] += "_in_library" if in_library?(item)
         elsif item["type"] == "paging"
           item["type"] = "digitize" if edd?(item)
-        elsif print?(item) && library_code == 'annex'
-          item["type"] = "annex"
         elsif edd?(item) && library_code.present?
           item["type"] = "digitize"
         elsif print?(item) && library_code.present?
@@ -171,7 +171,7 @@ module Requests
       end
 
       def off_site?(library_code)
-        library_code == 'recap' || library_code == 'marquand' || library_code == 'clancy' || library_code == 'recap_marquand' || library_code == 'clancy_unavailable'
+        library_code == 'recap' || library_code == 'marquand' || library_code == 'clancy' || library_code == 'recap_marquand' || library_code == 'clancy_unavailable' || library_code == 'annex'
       end
 
       def print?(item)

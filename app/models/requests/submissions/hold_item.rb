@@ -67,7 +67,13 @@ module Requests::Submissions
       end
 
       def payload(item)
-        { mms_id: submission.bib['id'], holding_id: item["mfhd"], item_pid: item['item_id'], user_id: submission.patron.university_id, request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: item["pick_up_location_code"] }
+        pick_up_library = if item["pick_up_location_code"] == "annex"
+                            "firestone"
+                          else
+                            item["pick_up_location_code"]
+                          end
+
+        { mms_id: submission.bib['id'], holding_id: item["mfhd"], item_pid: item['item_id'], user_id: submission.patron.university_id, request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: pick_up_library }
       end
   end
 end

@@ -1,4 +1,5 @@
 require 'date'
+require 'faraday/encode_xml'
 
 module Requests
   module Voyager
@@ -7,7 +8,7 @@ module Requests
 
     def conn
       conn = Faraday.new(url: Requests::Config[:voyager_api_base]) do |faraday|
-        faraday.request  :multipart # allow XML data to be sent with request
+        faraday.request  :xml
         faraday.response :logger unless Rails.env.test?
         # faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter # make requests with Net::HTTP

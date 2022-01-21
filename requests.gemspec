@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'yaml_db', '~> 0.7.0'
   s.add_dependency 'simple_form'
   s.add_dependency 'faraday'
+  s.add_dependency 'faraday-encode_xml'
   s.add_dependency 'borrow_direct', '~> 1.2.0'
   s.add_dependency 'lcsort'
   s.add_dependency 'email_validator'

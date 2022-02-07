@@ -1087,7 +1087,7 @@ describe Requests::Submission do
           "enum_display" => "",
           "copy_number" => "1",
           "status" => "Available",
-          "cgc" => "",
+          "cgd" => "",
           "cc" => "",
           "use_statement" => "",
           "type" => "recap",

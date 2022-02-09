@@ -21,7 +21,7 @@ describe Requests::Submissions::BorrowDirect do
         "item_id" => "3059236",
         "delivery_mode_3059236" => "print",
         "barcode" => "32101044283008",
-        "enum_display" => "2000 (13th ed.)",
+        "enum" => "2000 (13th ed.)",
         "copy_number" => "1",
         "status" => "Not Charged",
         "type" => "bd",

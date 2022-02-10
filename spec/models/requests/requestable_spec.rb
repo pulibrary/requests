@@ -79,7 +79,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
       it "reports as a non Voyager aeon resource" do
         expect(requestable.aeon?).to be_truthy
-        expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
 
       it "returns a params list with an Aeon Site MUDD" do
@@ -144,7 +143,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
 
       it "reports as a non Voyager aeon resource" do
         expect(requestable.aeon?).to be_truthy
-        expect(requestable.non_voyager?(holding_id)).to be_truthy
       end
 
       it "returns a params list with an Aeon Site RBSC" do
@@ -199,10 +197,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       it "returns an item status of missing" do
         expect(requestable.size).to eq(1)
         expect(requestable.first.services).to be_truthy
-      end
-
-      it 'is not recallable' do
-        expect(requestable.first.services.include?('recall')).to be_falsey
       end
 
       it 'is available via borrow direct' do
@@ -388,7 +382,7 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
-    let(:request) { FactoryBot.build(:aeon_eal_voyager_item, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_eal_alma_item, patron: patron) }
     let(:requestable) { request.requestable.first } # assume only one requestable
 
     describe '#services' do
@@ -474,16 +468,15 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
   end
 
   context 'A requestable item from an Aeon EAL Holding with a nil barcode' do
-    let(:request) { FactoryBot.build(:aeon_rbsc_voyager_enumerated, patron: patron) }
+    let(:request) { FactoryBot.build(:aeon_rbsc_alma_enumerated, patron: patron) }
     let(:requestable_holding) { request.requestable.select { |r| r.holding['22563389780006421'] } }
     let(:holding_id) { '22256352610006421' }
     let(:requestable) { requestable_holding.first } # assume only one requestable
     let(:enumeration) { 'v.7' }
 
     describe '#aeon_open_url' do
-      it 'identifies as an aeon eligible voyager mananaged item' do
+      it 'identifies as an aeon eligible alma mananaged item' do
         expect(requestable.aeon?).to be true
-        expect(requestable.non_voyager?(holding_id)).to be false
       end
 
       it 'returns an openurl with enumeration when available' do
@@ -970,11 +963,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       xit "should have ILL request service available" do
         expect(requestable_charged.services.include?('ill')).to be true
       end
-
-      # TODO: Activate test when campus has re-opened
-      xit "should have recall request service available" do
-        expect(requestable_charged.services.include?('recall')).to be true
-      end
     end
 
     describe '# missing requestable' do
@@ -999,10 +987,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
       # TODO: Activate test when campus has re-opened
       xit "should have ILL request service available" do
         expect(requestable_missing.services.include?('ill')).to be true
-      end
-
-      it "does not have recall request service available" do
-        expect(requestable_missing.services.include?('recall')).to be false
       end
     end
 
@@ -1156,10 +1140,6 @@ describe Requests::Requestable, vcr: { cassette_name: 'requestable', record: :no
     let(:requestable_charged) { request_charged.requestable.first }
 
     describe '#checked-out requestable' do
-      it "does not have recall request service available" do
-        expect(requestable_charged.services.include?('recall')).to be false
-      end
-
       it "does not have Borrow Direct request service available" do
         expect(requestable_charged.services.include?('bd')).to be false
       end

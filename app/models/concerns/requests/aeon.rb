@@ -3,7 +3,7 @@ module Requests
     # for Aeon Related Bibliographic Helpers
     extend ActiveSupport::Concern
 
-    # for use with only non-voyager thesis records
+    # for use with only non-alma thesis records
     def aeon_mapped_params
       params = {
         Action: '10',
@@ -20,7 +20,7 @@ module Requests
       params.reject { |_k, v| v.nil? }
     end
 
-    ## params shared by both voyager and non-voyager aeon requests
+    ## params shared by both alma and non-alma aeon requests
     def aeon_basic_params
       params = {
         ReferenceNumber: bib[:id],
@@ -38,7 +38,7 @@ module Requests
       "#{Requests::Config[:aeon_base]}/OpenURL?#{aeon_openurl(ctx)}"
     end
 
-    # returns encoded OpenURL string for voyager derived records
+    # returns encoded OpenURL string for alma derived records
     def aeon_openurl(ctx)
       if item.present?
         ctx.referent.set_metadata('iteminfo5', item[:id]&.to_s)
@@ -54,15 +54,6 @@ module Requests
       aeon_params[:ItemNumber] = barcode if barcode?
       ## returned mashed together in an encoded string
       "#{ctx.kev}&#{aeon_params.to_query}"
-    end
-
-    # this non_voyager? method has an OL dependency
-    def non_voyager?(holding_id)
-      if holding_id == 'thesis' || holding_id == 'numismatics'
-        true
-      else
-        false
-      end
     end
 
     def site

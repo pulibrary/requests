@@ -43,7 +43,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
       it "has Borrow Direct, ILL, but not Recall as a request service option" do
         expect(router.calculate_services.include?('bd')).to be_truthy
         expect(router.calculate_services.include?('ill')).to be_truthy
-        expect(router.calculate_services.include?('recall')).to be_falsy
       end
     end
 
@@ -68,7 +67,7 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
     describe "calculate_services" do
       let(:item) { {} }
       let(:stubbed_questions) do
-        { voyager_managed?: true, online?: false, in_process?: false,
+        { alma_managed?: true, online?: false, in_process?: false,
           charged?: false, on_order?: false, aeon?: false,
           preservation?: false, annex?: false,
           plasma?: false, lewis?: false, recap?: false, held_at_marquand_library?: false,
@@ -295,9 +294,9 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         end
       end
 
-      context "not voyager managed or scsb" do
+      context "not alma managed or scsb" do
         before do
-          stubbed_questions[:voyager_managed?] = false
+          stubbed_questions[:alma_managed?] = false
           stubbed_questions[:partner_holding?] = false
         end
         it "returns aeon in the services" do

@@ -1404,20 +1404,20 @@ describe Requests::RequestableDecorator do
 
   describe "#aeon_url" do
     let(:ctx) { instance_double(Requests::SolrOpenUrlContext) }
-    context "aeon voyager managed" do
+    context "aeon alma managed" do
       let(:stubbed_questions) do
         { services: ['lewis'], charged?: false, aeon?: true,
-          voyager_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
+          alma_managed?: true, ask_me?: false, aeon_request_url: 'aeon_link' }
       end
       it 'a link for reading room' do
         expect(decorator.aeon_url(ctx)).to eq('aeon_link')
       end
     end
 
-    context "aeon NOT voyager managed" do
+    context "aeon NOT alma managed" do
       let(:stubbed_questions) do
         { services: ['lewis'], charged?: false, aeon?: true,
-          voyager_managed?: false, ask_me?: false, aeon_request_url: 'link',
+          alma_managed?: false, ask_me?: false, aeon_request_url: 'link',
           aeon_mapped_params: { abc: 123 } }
       end
       it 'a link for reading room' do

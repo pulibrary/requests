@@ -191,7 +191,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     context "on shelf not traceable" do
       let(:stubbed_questions) do
         { services: ['on_shelf'], charged?: false, aeon?: false,
-          voyager_managed?: false, ask_me?: false, on_shelf?: true,
+          alma_managed?: false, ask_me?: false, on_shelf?: true,
           map_url: 'map_abc', traceable?: false, location: { library: { label: 'abc' } } }
       end
       it 'a link to a map' do
@@ -205,7 +205,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     context "on shelf traceable" do
       let(:stubbed_questions) do
         { services: ['on_shelf'], charged?: false, aeon?: false,
-          voyager_managed?: false, ask_me?: false, on_shelf?: true,
+          alma_managed?: false, ask_me?: false, on_shelf?: true,
           map_url: 'map_abc', traceable?: true, location: { library: { label: 'abc' } } }
       end
       it 'a link to a map' do

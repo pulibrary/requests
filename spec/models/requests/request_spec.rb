@@ -392,7 +392,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_only_system_id.requestable[0].holding.key?('thesis')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location_code).to eq 'mudd$stacks'
-        expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
+        expect(request_with_only_system_id.requestable[0].alma_managed?).to be_falsey
       end
     end
 
@@ -451,7 +451,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'
-        expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
+        expect(request_with_only_system_id.requestable[0].alma_managed?).to be_falsey
       end
     end
 
@@ -510,7 +510,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_with_only_system_id.requestable[0].holding.key?('numismatics')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location.key?('code')).to be_truthy
         expect(request_with_only_system_id.requestable[0].location_code).to eq 'rare$num'
-        expect(request_with_only_system_id.requestable[0].voyager_managed?).to be_falsey
+        expect(request_with_only_system_id.requestable[0].alma_managed?).to be_falsey
       end
     end
 
@@ -647,7 +647,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
         expect(request_at_paging_f.requestable[0].location_code).to eq('firestone$stacks')
         expect(request_at_paging_f.requestable[0].pageable?).to eq(nil)
         expect(request_at_paging_f.any_pageable?).to be(false)
-        expect(request_at_paging_f.requestable[0].voyager_managed?).to eq(true)
+        expect(request_at_paging_f.requestable[0].alma_managed?).to eq(true)
       end
     end
   end
@@ -666,7 +666,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
   #       expect(request_at_paging_f.requestable[0].location_code).to eq('xl')
   #       expect(request_at_paging_f.requestable[0].pageable?).to eq(true)
   #       expect(request_at_paging_f.any_pageable?).to be(true)
-  #       expect(request_at_paging_f.requestable[0].voyager_managed?).to eq(true)
+  #       expect(request_at_paging_f.requestable[0].alma_managed?).to eq(true)
   #     end
   #   end
   # end
@@ -697,7 +697,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
       end
 
       it "has a requestable on order item" do
-        expect(request_with_on_order.requestable.last.voyager_managed?).to eq(true)
+        expect(request_with_on_order.requestable.last.alma_managed?).to eq(true)
       end
 
       it "provides a list of the default pick-up locations" do
@@ -736,7 +736,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
   #     it "should be in a location that contains some pageable items" do
   #       expect(request_oversize.requestable[0].location_code).to eq('f')
-  #       expect(request_oversize.requestable[0].voyager_managed?).to eq(true)
+  #       expect(request_oversize.requestable[0].alma_managed?).to eq(true)
   #     end
 
   #     it "should be have pageable items" do
@@ -767,7 +767,7 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
       it "is in a pageable location" do
         expect(request_no_callnum.requestable[0].location_code).to eq('firestone$stacks')
-        expect(request_no_callnum.requestable[0].voyager_managed?).to eq(true)
+        expect(request_no_callnum.requestable[0].alma_managed?).to eq(true)
       end
 
       it "does not have any pageable items" do
@@ -1050,16 +1050,6 @@ describe Requests::Request, vcr: { cassette_name: 'request_models', record: :non
 
       it "is eligible for borrow direct services" do
         expect(request.requestable.first.services.include?('bd')).to be_truthy
-      end
-
-      # TODO: Remove when campus has re-opened
-      it "is not eligible for recall" do
-        expect(request.requestable.first.services.include?('recall')).to be_falsey
-      end
-
-      # TODO: Activate test when campus has re-opened
-      xit "should be eligible for recall" do
-        expect(request.requestable.first.services.include?('recall')).to be_truthy
       end
     end
   end

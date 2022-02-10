@@ -25,7 +25,7 @@ module Requests
     include Requests::Scsb
 
     # @option opts [String] :system_id A bib record id or a special collection ID value
-    # @option opts [Fixnum] :mfhd voyager id
+    # @option opts [Fixnum] :mfhd alma holding id
     # @option opts [Patron] :patron current Patron object
     # @option opts [String] :source represents system that directed user to request form. i.e.
     def initialize(system_id:, mfhd:, patron: nil, source: nil)

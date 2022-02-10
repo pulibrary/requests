@@ -2,8 +2,6 @@ require 'faraday'
 
 module Requests::Submissions
   class DigitizeItem < Service
-    include Requests::Voyager
-
     def initialize(submission, service_type: 'digitize')
       super
       @service_types = { digitize: { cited_pages: 'COVID-19 Campus Closure', note: 'Digitization Request' },

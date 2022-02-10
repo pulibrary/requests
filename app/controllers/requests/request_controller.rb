@@ -38,13 +38,6 @@ module Requests
       end
     end
 
-    # will request recall pick-up location options from voyager
-    # will convert from xml to json
-    def recall_pickups
-      @pick_ups = Requests::PickupLookup.new(params)
-      render json: @pick_ups.returned
-    end
-
     # will post and a JSON document of selected "requestable" objects with selection parameters and
     # user information for further processing and distribution to various request endpoints.
     def submit

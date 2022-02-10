@@ -21,7 +21,6 @@ module Requests
     # :bd
     # :ill
     # :paging
-    # :recall
     # :trace
 
     # user levels
@@ -37,10 +36,10 @@ module Requests
     # top level call, returns a hash of symbols with service objects as values
     # services[:service_name] = Requests::Service::GenericService
     def calculate_services
-      if (requestable.voyager_managed? || requestable.partner_holding?) && requestable.online?
+      if (requestable.alma_managed? || requestable.partner_holding?) && requestable.online?
         ['online']
-      elsif (requestable.voyager_managed? || requestable.partner_holding?) && !requestable.aeon?
-        calculate_voyager_or_scsb_services
+      elsif (requestable.alma_managed? || requestable.partner_holding?) && !requestable.aeon?
+        calculate_alma_or_scsb_services
       else # Default Service is Aeon
         ['aeon']
       end
@@ -49,7 +48,7 @@ module Requests
     private
 
       # rubocop:disable Metrics/MethodLength
-      def calculate_voyager_or_scsb_services
+      def calculate_alma_or_scsb_services
         return [] unless auth_user?
         if requestable.charged?
           calculate_unavailable_services
@@ -109,19 +108,6 @@ module Requests
         services << 'bd' if !requestable.enumerated? && cas_user? && !any_loanable? && requestable.bib['isbn_s'].present?
         # for mongraphs - title level check OR for serials - copy level check
         services << 'ill' if (cas_user? && !any_loanable?) || (cas_user? && requestable.enumerated?)
-        # TODO: Uncomment this block when library returns to normal operation
-        # # for mongraphs - title level check
-        # if !any_loanable? && auth_user?
-        #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
-        #     services << 'recall'
-        #   end
-        # end
-        # # for serials - copy level check
-        # if (auth_user? && requestable.enumerated?)
-        #   unless requestable.missing? || requestable.inaccessible? || requestable.hold_request? || requestable.recap?
-        #     services << 'recall'
-        #   end
-        # end
         services
       end
 

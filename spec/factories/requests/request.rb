@@ -66,7 +66,7 @@ FactoryBot.define do
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end
 
-  factory :aeon_eal_voyager_item, class: 'Requests::Request' do
+  factory :aeon_eal_alma_item, class: 'Requests::Request' do
     system_id { '9977213233506421' }
     mfhd { '22707739710006421' }
     patron { Requests::Patron.new(user: FactoryBot.build(:unauthenticated_patron)) }
@@ -94,7 +94,7 @@ FactoryBot.define do
     initialize_with { new(system_id: system_id, mfhd: mfhd, patron: patron) }
   end
 
-  factory :aeon_rbsc_voyager_enumerated, class: 'Requests::Request' do
+  factory :aeon_rbsc_alma_enumerated, class: 'Requests::Request' do
     system_id { '996160863506421' }
     mfhd_id { '22563389780006421' }
     source { 'pulsearch' }

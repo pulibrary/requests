@@ -30,7 +30,7 @@ module Requests
     end
 
     def redirect_single_aeon_thesis_numistatics
-      ### redirect to Aeon non-voyager items or single Aeon requestable
+      ### redirect to Aeon for thesis or coin items or single Aeon requestable
       if @request.thesis? || @request.numismatics?
         redirect_to "#{Requests::Config[:aeon_base]}?#{@request.requestable.first.aeon_mapped_params.to_query}"
       elsif @request.single_aeon_requestable?

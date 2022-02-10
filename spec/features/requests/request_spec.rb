@@ -4,7 +4,7 @@ require 'spec_helper'
 describe 'request', vcr: { cassette_name: 'request_features', record: :none }, type: :feature do
   # rubocop:disable RSpec/MultipleExpectations
   describe "request form" do
-    let(:voyager_id) { '9994933183506421?mfhd=22558528920006421' }
+    let(:mms_id) { '9994933183506421?mfhd=22558528920006421' }
     let(:thesis_id) { 'dsp01rr1720547' }
     let(:in_process_id) { '99117665883506421?mfhd=22707341710006421' }
     # going to need to review this with Mark to see if this example is good
@@ -217,7 +217,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         login_as user
       end
 
-      describe 'When visiting a voyager ID as a CAS User' do
+      describe 'When visiting an alma ID as a CAS User' do
         it 'Shows a ReCAP item that is at preservation and conservation as a partner request' do
           stub_request(:get, patron_url)
             .to_return(status: 200, body: responses[:found], headers: {})
@@ -258,7 +258,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           stub_request(:post, "#{Alma.configuration.region}/almaws/v1/bibs/9994933183506421/holdings/22558528920006421/items/23558528910006421/requests?user_id=960594184")
             .with(body: hash_including(request_type: "HOLD", pickup_location_type: "LIBRARY", pickup_location_library: "firestone"))
             .to_return(status: 200, body: fixture("alma_hold_response.json"), headers: { 'content-type': 'application/json' })
-          visit "/requests/#{voyager_id}"
+          visit "/requests/#{mms_id}"
           expect(page).to have_content 'Electronic Delivery'
           # some weird issue with this and capybara examining the page source shows it is there.
           expect(page).to have_selector '#request_user_barcode', visible: false
@@ -278,7 +278,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
 
         # it 'allow CAS patrons to request an available ReCAP item with Help Me' do
-        #   visit "/requests/#{voyager_id}"
+        #   visit "/requests/#{mms_id}"
         #   expect(page).to have_content "Requests for ReCAP materials will be unavailable during a planned system update"
         #   expect(page).to have_content 'Help Me Get It'
         # end
@@ -1308,7 +1308,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_response, headers: {})
         login_as user
-        visit "/requests/#{voyager_id}"
+        visit "/requests/#{mms_id}"
         expect(page).not_to have_content 'Electronic Delivery'
         expect(page).not_to have_selector '#request_user_barcode', visible: false
         expect(page).to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
@@ -1322,7 +1322,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_barcode_patron_pick_up_only_response, headers: {})
         login_as user
-        visit "/requests/#{voyager_id}"
+        visit "/requests/#{mms_id}"
         expect(page).to have_content 'Electronic Delivery'
         expect(page).to have_content('Physical Item Delivery')
         expect(page).to have_selector '#request_user_barcode', visible: false
@@ -1336,7 +1336,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_patron_no_campus_response, headers: {})
         login_as user
-        visit "/requests/#{voyager_id}"
+        visit "/requests/#{mms_id}"
         expect(page).to have_content 'Electronic Delivery'
         expect(page).to have_selector '#request_user_barcode', visible: false
         expect(page).not_to have_content('You are not currently authorized for on-campus services at the Library. Please send an inquiry to refdesk@princeton.edu if you believe you should have access to these services.')
@@ -1351,7 +1351,7 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         stub_request(:get, "#{Requests::Config[:bibdata_base]}/patron/#{user.uid}?ldap=true")
           .to_return(status: 200, body: valid_graduate_student_no_campus_response, headers: {})
         login_as user
-        visit "/requests/#{voyager_id}"
+        visit "/requests/#{mms_id}"
         expect(page).to have_content 'Electronic Delivery'
         expect(page).to have_content('Physical Item Delivery')
         expect(page).to have_selector '#request_user_barcode', visible: false
@@ -1389,10 +1389,10 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         login_as user
       end
 
-      describe 'When visiting a voyager ID as a CAS User' do
+      describe 'When visiting a alma ID as a CAS User' do
         it 'disallows access to request an available ReCAP item.' do
           stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '32101095798938')
-          visit "/requests/#{voyager_id}"
+          visit "/requests/#{mms_id}"
           expect(page).not_to have_content 'Electronic Delivery'
           expect(page).not_to have_content 'Physical Item Delivery'
           expect(page).to have_content 'You must register with the Library before you can request materials. Please go to Firestone Circulation for assistance. Thank you.'

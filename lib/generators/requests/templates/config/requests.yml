@@ -5,7 +5,6 @@ defaults: &defaults
   bibdata_base: https://bibdata.princeton.edu
   pulsearch_base: https://catalog.princeton.edu
   proxy_base: https://library.princeton.edu/resolve/lookup?url=
-  voyager_api_base: https://webvoyage.princeton.edu:7014
   aeon_base: https://library.princeton.edu/aeon/aeon.dll
   ill_base: https://lib-illiad.princeton.edu/illiad/illiad.dll/OpenURL
   scsb_base: https://uat-recap.htcinc.com:9093

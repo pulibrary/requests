@@ -6,7 +6,7 @@ module Requests
              :holding, :item_location_code, :item?, :item, :partner_holding?, :status, :status_label, :use_restriction?, :library_code, :enum_value, :item_at_clancy?,
              :cron_value, :illiad_request_parameters, :location_label, :online?, :aeon?, :borrow_direct?, :patron, :held_at_marquand_library?,
              :ill_eligible?, :scsb_in_library_use?, :pick_up_locations, :on_shelf?, :pending?, :recap?, :illiad_request_url, :available?,
-             :campus_authorized, :on_order?, :urls, :in_process?, :voyager_managed?, :covid_trained?, :title, :map_url, :cul_avery?, :cul_music?,
+             :campus_authorized, :on_order?, :urls, :in_process?, :alma_managed?, :covid_trained?, :title, :map_url, :cul_avery?, :cul_music?,
              :pick_up_location_code, :resource_shared?, to: :requestable
     delegate :content_tag, :hidden_field_tag, :concat, to: :view_context
 
@@ -146,7 +146,7 @@ module Requests
     end
 
     def aeon_url(request_ctx)
-      if requestable.voyager_managed?
+      if requestable.alma_managed?
         requestable.aeon_request_url(request_ctx)
       else
         "#{Requests::Config[:aeon_base]}?#{requestable.aeon_mapped_params.to_query}"

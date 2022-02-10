@@ -43,7 +43,7 @@ module Requests
              :temp_loc?, :on_reserve?, :inaccessible?, :hold_request?, :enumerated?, :item_type_non_circulate?, :partner_holding?,
              :id, :use_statement, :collection_code, :missing?, :charged?, :status, :status_label, :barcode?, :barcode, to: :item
 
-    # non voyager options
+    # non alma options
     def thesis?
       holding.key?("thesis") && holding["thesis"][:location_code] == 'mudd$stacks'
     end
@@ -145,12 +145,8 @@ module Requests
       services.include?('bd')
     end
 
-    def recallable?
-      services.include?('recall')
-    end
-
-    # assume numeric ids come from voyager
-    def voyager_managed?
+    # assume numeric ids come from alma
+    def alma_managed?
       bib[:id].to_i.positive?
     end
 

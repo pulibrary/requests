@@ -163,19 +163,6 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
       end
     end
 
-    context "recall requestable and sends recall_email" do
-      let(:recall) { instance_double(Requests::Submissions::Recall, errors: [], handle: {}, service_type: 'recall', success_message: 'success!') }
-      it 'contacts recall and sends email' do
-        requestable.first["type"] = "recall"
-        requestable.first["pick_up"] = { pick_up: "PA", pick_up_location_code: "firestone" }.to_json
-        expect(Requests::Submissions::Recall).to receive(:new).and_return(recall)
-        expect(recall).to receive(:send_mail)
-        post :submit, params: { "request" => user_info,
-                                "requestable" => requestable,
-                                "bib" => bib, "format" => "js" }
-      end
-    end
-
     context "recap_no_items requestable" do
       let(:generic) { instance_double(Requests::Submissions::Generic, errors: [], handle: {}, service_type: 'recap_no_items', success_message: 'success!') }
       it 'sends email and confirmation email' do
@@ -211,52 +198,6 @@ describe Requests::RequestController, type: :controller, vcr: { cassette_name: '
         expect(response.status).to eq(200)
         expect(flash[:error]).to eq("There was a problem with this request which Library staff need to investigate. You'll be notified once it's resolved and requested for you.")
       end
-    end
-  end
-
-  describe 'POST #recall_pick_ups' do
-    let(:user_info) do
-      {
-        "patron_id" => "12345",
-        "patron_group" => "staff"
-      }.with_indifferent_access
-    end
-    let(:requestable) do
-      [
-        {
-          "item_id" => "23173625050006421"
-        }.with_indifferent_access
-      ]
-    end
-    let(:bib) do
-      {
-        "id" => "994620293506421"
-      }.with_indifferent_access
-    end
-    let(:responses) do
-      {
-        error: '<?xml version="1.0" encoding="UTF-8"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><recall allowed="N"><note type="error">You have already placed a request for this item.</note></recall></response>',
-        success: '<?xml version="1.0" encoding="UTF-8"?><response><reply-text>ok</reply-text><reply-code>0</reply-code><recall allowed="Y"><pick_up-locations usage="Mandatory"><pick_up-location code="299" default="Y">.Firestone Library Circulation Desk</pick_up-location><pick_up-location code="533" default="N">693 TSD Circulation Desk</pick_up-location><pick_up-location code="356" default="N">Architecture Library Circulation Desk</pick_up-location><pick_up-location code="333" default="N">Donald E. Stokes Library, Wallace Hall, Circulation Desk</pick_up-location><pick_up-location code="303" default="N">' \
-          'East Asian Library Circulation Desk</pick_up-location><pick_up-location code="345" default="N">Engineering Library Circulation Desk</pick_up-location><pick_up-location code="440" default="N">Firestone Microforms Services</pick_up-location><pick_up-location code="293" default="N">Annex A Circulation Desk</pick_up-location><pick_up-location code="395" default="N">Interlibrary Services Circulation Desk</pick_up-location><pick_up-location code="489" default="N">Lewis Library Circulation Desk</pick_up-location><pick_up-location code="321" default="N">Marquand Library Circulation Desk</pick_up-location>' \
-          '<pick_up-location code="309" default="N">Mendel Music Library Circulation Desk</pick_up-location><pick_up-location code="312" default="N">Harold P. Furth Plasma Physics Library Circulation Desk</pick_up-location><pick_up-location code="400" default="N">Pre-Bindery Circulation Desk</pick_up-location><pick_up-location code="394" default="N">Preservation Office Circulation</pick_up-location><pick_up-location code="427" default="N">RECAP Circulation</pick_up-location><pick_up-location code="315" default="N">Rare Books and Special Collections Circulation Desk</pick_up-location><pick_up-location code="306" default="N">' \
-          'Seeley G. Mudd Library Circulation Desk</pick_up-location><pick_up-location code="353" default="N">Technical Services Circulation</pick_up-location><pick_up-location code="359" default="N">Video Collection: Video Circulation Desk</pick_up-location><pick_up-location code="437" default="N">Borrow Direct Service. Princeton University Library</pick_up-location><pick_up-location code="439" default="N">zDatabase Maintenance</pick_up-location>"    </pick_up-locations>"    <dbkey code="" usage="Mandatory">Local Database</dbkey>"    <instructions usage="read-only">Please select an item.</instructions><last-interest-date usage="Mandatory">2017-02-11</last-interest-date><comment max_len="100" usage="Optional"/></recall></response>'
-      }
-    end
-    before do
-      stub_url = Requests::Config[:voyager_api_base] + "/vxws/record/" + bib['id'] +
-                 "/items/" + requestable[0]['item_id'] +
-                 "/recall?patron=" + user_info['patron_id'] +
-                 "&patron_group=" + user_info['patron_group'] +
-                 "&patron_homedb=" + URI.escape('1@DB')
-      stub_request(:get, stub_url)
-        .with(headers: { 'Accept' => '*/*' })
-        .to_return(status: 201, body: responses[:success], headers: {})
-    end
-    it 'returns a pick-up json response' do
-      post :recall_pickups, params: { "request" => user_info,
-                                      "requestable" => requestable,
-                                      "bib" => bib }
-      expect(response.status).to eq(200)
     end
   end
 

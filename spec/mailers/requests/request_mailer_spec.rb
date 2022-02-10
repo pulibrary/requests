@@ -837,60 +837,6 @@ describe Requests::RequestMailer, type: :mailer, vcr: { cassette_name: 'mailer',
     end
   end
 
-  context "send recall email request" do
-    let(:requestable) do
-      [
-        {
-          "selected" => "true",
-          "mfhd" => "22269760880006421",
-          "call_number" => "B2430.D484 G54 2011",
-          "location_code" => "firestone$stacks",
-          "item_id" => "23269760870006421",
-          "barcode" => "32101081296699",
-          "copy_number" => "1",
-          "status" => "Renewed",
-          "type" => "recall",
-          "pick_up" => "299|.Firestone Library Circulation Desk"
-        }.with_indifferent_access,
-        {
-          "selected" => "false"
-        }.with_indifferent_access
-      ]
-    end
-    let(:bib) do
-      {
-        "id" => "9968831253506421",
-        "title" => "Derrida : a very short introduction /",
-        "author" => "Glendinning, Simon"
-      }.with_indifferent_access
-    end
-    let(:params) do
-      {
-        request: user_info,
-        requestable: requestable,
-        bib: bib
-      }
-    end
-
-    let(:submission_for_recall) do
-      Requests::Submission.new(params, user_info)
-    end
-
-    let(:scsb_recall_mail) do
-      Requests::RequestMailer.send("scsb_recall_email", submission_for_recall).deliver_now
-    end
-
-    it "renders the headers for a staff email" do
-      expect(scsb_recall_mail.subject).to eq(I18n.t('requests.recall.staff_email_subject'))
-      expect(scsb_recall_mail.to).to eq([I18n.t('requests.recap.scsb_recall_destination')])
-      expect(scsb_recall_mail.from).to eq([I18n.t('requests.default.email_from')])
-    end
-
-    it "renders the body for a staff email" do
-      expect(scsb_recall_mail.body.encoded).to have_content I18n.t('requests.recall.staff_conf_msg')
-    end
-  end
-
   context "send plasma email request" do
     let(:requestable) do
       [

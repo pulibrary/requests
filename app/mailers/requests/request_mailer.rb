@@ -248,10 +248,6 @@ module Requests
       confirmation_email(submission: submission, subject_key: 'requests.marquand_in_library.confirmation_subject')
     end
 
-    def scsb_recall_email(submission)
-      request_email(submission: submission, subject_key: 'requests.recall.staff_email_subject', destination_key: 'requests.recap.scsb_recall_destination')
-    end
-
     def service_error_email(services, submission)
       @services = services
       @submission = submission

@@ -292,86 +292,6 @@ describe Requests::Submission do
     end
   end
 
-  context 'Recall' do
-  end
-
-  context 'Multiple Submission Types (Recap and Recall)' do
-    let(:requestable) do
-      [
-        { "selected" => "true",
-          "mfhd" => "22247009760006421",
-          "call_number" => "GN670 .P74",
-          "location_code" => "recap$pa",
-          "item_id" => "23247008490006421",
-          "barcode" => "32101091858066",
-          "enum_display" => "vol. 5 (1896)",
-          "copy_number" => "1",
-          "status" => "Charged",
-          "type" => "recall",
-          "pick_up" => "299|.Firestone Library Circulation Desk" },
-        {
-          "selected" => "true",
-          "mfhd" => "22247009760006421",
-          "call_number" => "GN670 .P74",
-          "location_code" => "recap$pa",
-          "item_id" => "23247009580006421",
-          "barcode" => "32101091857142",
-          "enum_display" => "vol. 4 (1895)",
-          "copy_number" => "1",
-          "status" => "Not Charged",
-          "type" => "recap",
-          "delivery_mode_3707281" => "print",
-          "pick_up" => "PA",
-          "edd_start_page" => "",
-          "edd_end_page" => "",
-          "edd_volume_number" => "",
-          "edd_issue" => "",
-          "edd_author" => "",
-          "edd_art_title" => "",
-          "edd_note" => ""
-        }
-      ]
-    end
-
-    let(:bib) do
-      {
-        "id" => "994952203506421",
-        "title" => "Journal of the Polynesian Society.",
-        "author" => "Polynesian Society (N.Z.)",
-        "date" => "1892"
-      }
-    end
-    let(:params) do
-      {
-        request: user_info,
-        requestable: requestable,
-        bib: bib
-      }
-    end
-    let(:submission) do
-      described_class.new(params, user_info)
-    end
-
-    describe "Mixed Service Types" do
-      it 'recall items have voyager pick-up location code' do
-        pick_up = submission.items[0]['pick_up'].split("|")
-
-        expect(submission.items[0]['pick_up']).to be_truthy
-        expect(pick_up[0].to_i.to_s).to eq(pick_up[0])
-        expect(submission.items[0]['type']).to eq("recall")
-        expect(submission.patron.patron_id).to be_truthy
-        expect(submission.patron.patron_group).to be_truthy
-      end
-
-      it 'recap items have gfa pick-up location code' do
-        expect(submission.items[1]['pick_up']).to be_truthy
-        expect(submission.items[1]['pick_up']).to be_a(String)
-        expect(submission.items[1]['pick_up'].size).to eq(2)
-        expect(submission.items[1]['type']).to eq("recap")
-      end
-    end
-  end
-
   context 'Submission with User Supplied Data' do
     describe 'Valid user Supplied Data' do
     end
@@ -525,117 +445,6 @@ describe Requests::Submission do
       end
     end
 
-    describe 'A recall submission without a pick-up location and item ID' do
-      let(:requestable) do
-        [
-          {
-            "selected" => "true",
-            "mfhd" => "22247009760006421",
-            "call_number" => "HA202 .U581",
-            "location_code" => "recap$pa",
-            "item_id" => "",
-            "barcode" => "",
-            "enum_display" => "2000 (13th ed.)",
-            "copy_number" => "1",
-            "status" => "Missing",
-            "type" => "recall",
-            "edd_start_page" => "",
-            "edd_end_page" => "",
-            "edd_volume_number" => "",
-            "edd_issue" => "",
-            "edd_author" => "",
-            "edd_art_title" => "",
-            "edd_note" => "",
-            "pick_up" => ""
-          },
-          {
-            "selected" => "false"
-          }
-        ]
-      end
-      let(:params) do
-        {
-          request: user_info,
-          requestable: requestable,
-          bib: bib
-        }
-      end
-
-      let(:submission) do
-        described_class.new(params, user_info)
-      end
-      before do
-        submission.valid?
-      end
-
-      it 'is invalid' do
-        expect(submission.valid?).to be false
-      end
-
-      it 'has an error message' do
-        expect(submission.errors.messages).to be_truthy
-      end
-
-      it 'has an error message with the mfhd ID as the message key' do
-        expect(submission.errors.messages[:items].first.keys.include?('22247009760006421')).to be true
-        expect(submission.errors.messages[:items].first['22247009760006421']).to eq('text' => "Item Cannot be Recalled, see circulation desk.", 'type' => 'options')
-      end
-    end
-    describe 'A recall submission without a pick-up location' do
-      let(:requestable) do
-        [
-          {
-            "selected" => "true",
-            "mfhd" => "22247009760006421",
-            "call_number" => "HA202 .U581",
-            "location_code" => "recap$pa",
-            "item_id" => "12131313",
-            "barcode" => "",
-            "enum_display" => "2000 (13th ed.)",
-            "copy_number" => "1",
-            "status" => "Missing",
-            "type" => "recall",
-            "edd_start_page" => "",
-            "edd_end_page" => "",
-            "edd_volume_number" => "",
-            "edd_issue" => "",
-            "edd_author" => "",
-            "edd_art_title" => "",
-            "edd_note" => "",
-            "pick_up" => ""
-          },
-          {
-            "selected" => "false"
-          }
-        ]
-      end
-      let(:params) do
-        {
-          request: user_info,
-          requestable: requestable,
-          bib: bib
-        }
-      end
-
-      let(:submission) do
-        described_class.new(params, user_info)
-      end
-      before do
-        submission.valid?
-      end
-
-      it 'is invalid' do
-        expect(submission.valid?).to be false
-      end
-
-      it 'has an error message' do
-        expect(submission.errors.messages).to be_truthy
-      end
-
-      it 'has an error message with the item ID as the message key' do
-        expect(submission.errors.messages[:items].first.keys.include?('12131313')).to be true
-      end
-    end
     describe 'A borrow direct submission without a pick-up location and item ID' do
       let(:requestable) do
         [
@@ -1158,7 +967,7 @@ describe Requests::Submission do
     end
 
     describe "#process_submission" do
-      it 'items contacts clancy and voyager' do
+      it 'items contacts clancy and alma' do
         stub_delivery_locations
         alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         clancy_url = stub_clancy_post(barcode: "32101072349515")
@@ -1306,7 +1115,7 @@ describe Requests::Submission do
     let(:clancy_url) { "#{Requests::Config[:clancy_base]}/circrequests/v1" }
 
     describe "#process_submission" do
-      it 'items contacts voyager and does not email marquand or contact clancy' do
+      it 'items contacts alma and does not email marquand or contact clancy' do
         stub_delivery_locations
         alma_url = stub_alma_hold_success('9956364873506421', '22587331490006421', '23587331480006421', '9999999')
         expect(submission).to be_valid

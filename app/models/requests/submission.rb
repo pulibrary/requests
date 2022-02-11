@@ -120,8 +120,6 @@ module Requests
         case type
         when 'on_shelf', 'marquand_in_library', 'annex', 'annex_in_library'
           Requests::Submissions::HoldItem.new(self, service_type: type)
-        when 'recall'
-          Requests::Submissions::Recall.new(self)
         when 'recap', 'recap_edd', 'recap_in_library', 'recap_marquand_in_library', 'recap_marquand_edd'
           Requests::Submissions::Recap.new(self, service_type: type)
         when 'clancy_in_library'

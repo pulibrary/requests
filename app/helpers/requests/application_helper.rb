@@ -274,7 +274,7 @@ module Requests
     end
 
     def submitable_services
-      ['on_shelf', 'in_process', 'on_order', 'annex', 'recap', 'recap_edd', 'paging', 'recall', 'bd', 'recap_no_items', 'ppl', 'lewis']
+      ['on_shelf', 'in_process', 'on_order', 'annex', 'recap', 'recap_edd', 'paging', 'bd', 'recap_no_items', 'ppl', 'lewis']
     end
 
     def submit_message(requestable_list)

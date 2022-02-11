@@ -111,8 +111,6 @@ module Requests
     def scsb_request_map(request_type)
       if request_type == 'edd'
         'EDD'
-      elsif request_type == 'recall'
-        'RECALL'
       else
         'RETRIEVAL' # Default is print retrieval
       end

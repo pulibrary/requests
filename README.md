@@ -70,4 +70,35 @@ Under current campus access policies if you are interactively testing this gem y
 3. Add your net ID: ```CampusAccess.create(uid:'mynetid')```
 
 
+## Overview
+
+```mermaid
+flowchart TD
+    start[Request from Orangelight] --> open
+    open{Library open?}
+    open -->|Yes| available
+    open -->|No| D[Help me get it form]
+    available{Available?} -->|Yes| acqcat
+    available -->|No| F[Request via partner library]
+    acqcat{InProcess? Acquisitions and cataloging} -->|Yes| email[Request form -sends email]
+    acqcat -->|No| onorder
+    onorder{OnOrder?} -->|Yes| email
+    onorder -->|No| offsite
+    offsite{Offsite?} -->|Yes| recap
+    recap{Recap?} -->|Yes| recap-items
+    recap-items{Items?} -->|Yes| recap-luo
+    recap-items -->|No| Q[Fill in Form]
+    recap-luo{In Library Use Only?} -->|Yes| recap-luo-digitize
+    recap-luo -->|No| recap-digitize
+    recap-luo-digitize{Can digitize?} -->|Yes| O[In library & EDD form]
+    recap-luo-digitize -->|No| P[In library form]
+    offsite -->|No| pul-luo
+    recap-digitize{Can digitize?} -->|Yes| S[EDD or pickup form]
+    recap-digitize -->|No| T[Pickup form]
+    pul-luo{In library use only?} -->|Yes| S
+    pul-luo -->|No| W[EDD only form]
+    annex{Annex?}
+    marquand{Marquand?}
+```
+
 

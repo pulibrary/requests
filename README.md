@@ -12,6 +12,20 @@ The gem also is dependent on Orangelight to service requests for non-alma IDs. B
 
 You need to have a working version of Chromedriver http://chromedriver.chromium.org/ on your path to successfully run the feature tests associated with this project. Homebrew is a good way to accomplish this. It is currently part of https://github.com/Homebrew/homebrew-cask. 
 
+## External Interfaces
+
+```mermaid
+  graph TD;
+      A[Requests]-->B[Alma EDD and Print];
+      A-->C[Recap/SCSB EDD and Print];
+      A-->D[Ciasoft Print];
+      A-->E[Illiad EDD and Print];
+      A-->F[AEON Print];
+      A-->G[Borrow Direct Print];
+      A-->H[Email Print];
+```
+
+
 ## To Install for Development
 
 After you've cloned the repo:

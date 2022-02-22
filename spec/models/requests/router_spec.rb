@@ -126,30 +126,12 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         end
       end
 
-      context "preservation" do
-        before do
-          stubbed_questions[:preservation?] = true
-        end
-        it "returns pres in the services" do
-          expect(router.calculate_services).to eq(['pres'])
-        end
-      end
-
       context "annex" do
         before do
           stubbed_questions[:annex?] = true
         end
         it "returns annex in the services" do
           expect(router.calculate_services).to eq(['annex', 'on_shelf_edd'])
-        end
-      end
-
-      context "plasma" do
-        before do
-          stubbed_questions[:plasma?] = true
-        end
-        it "returns ppl in the services" do
-          expect(router.calculate_services).to eq(['ppl'])
         end
       end
 
@@ -273,15 +255,6 @@ describe Requests::Router, vcr: { cassette_name: 'requests_router', record: :non
         end
         it "returns ill in the services" do
           expect(router.calculate_services).to eq(["ill"])
-        end
-      end
-
-      context "pageable" do
-        before do
-          stubbed_questions[:pageable?] = true
-        end
-        it "returns paging in the services" do
-          expect(router.calculate_services).to eq(['paging'])
         end
       end
 

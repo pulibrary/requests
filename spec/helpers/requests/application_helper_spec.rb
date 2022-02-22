@@ -226,7 +226,7 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     end
 
     context "no services enum" do
-      let(:stubbed_questions) { { services: [], preferred_request_id: '123', title: 'My Title', item: { enum_display: "abc123" } } }
+      let(:stubbed_questions) { { services: [], preferred_request_id: '123', title: 'My Title', item: Requests::Requestable::Item.new({ enum_display: "abc123" }.with_indifferent_access) } }
       it 'a message for lewis' do
         expect(helper.show_service_options(requestable, 'acb')).to eq \
           "<div class=\"sr-only\">My Title abc123 Item is not requestable.</div>" \
@@ -318,35 +318,35 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
     let(:requestable) { instance_double(Requests::RequestableDecorator, stubbed_questions) }
 
     context "no services" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb" }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to eq '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" /><input type="hidden" name="requestable[][mfhd]" id="requestable_mfhd_aaabbb" value="key1" /><input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="" /><input type="hidden" name="requestable[][item_id]" id="requestable_item_id_aaabbb" value="aaabbb" /><input type="hidden" name="requestable[][copy_number]" id="requestable_copy_number_aaabbb" value="" /><input type="hidden" name="requestable[][status]" id="requestable_status_aaabbb" value="" />'
       end
     end
 
     context "with item location" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'location' => 'place' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: 'place' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb", 'location' => 'place' }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: 'place' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="place" />'
       end
     end
 
     context "with item barcode" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'barcode' => '111222333' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb", 'barcode' => '111222333' }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][barcode]" id="requestable_barcode_aaabbb" value="111222333" />'
       end
     end
 
     context "with item enum" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb", 'enum_display' => 'vvv' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb", 'enum_display' => 'vvv' }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][enum]" id="requestable_enum_aaabbb" value="vvv" />'
       end
     end
 
     context "with item enumeration" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { id: "aaabbb", enumeration: 'sss', copy_number: '0', enum_display: 'v.2' }, holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ id: "aaabbb", enumeration: 'sss', copy_number: '0', enum_display: 'v.2' }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" />'
       end
@@ -357,14 +357,14 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
 
     context "with holding call number" do
       let(:holding) { { "1594697" => { "location" => "Firestone Library", "library" => "Firestone Library", "location_code" => "f", "copy_number" => "0", "call_number" => "6251.9765", "call_number_browse" => "6251.9765" } } }
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: holding, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb" }.with_indifferent_access), holding: holding, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][call_number]" id="requestable_call_number_aaabbb" value="6251.9765" />'
       end
     end
 
     context "scsb item" do
-      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: { 'id' => "aaabbb" }, holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: true, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb" }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: true, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
       it 'shows hidden fields' do
         expect(helper.hidden_fields_item(requestable)).to eq '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" /><input type="hidden" name="requestable[][mfhd]" id="requestable_mfhd_aaabbb" value="key1" /><input type="hidden" name="requestable[][location_code]" id="requestable_location_aaabbb" value="" /><input type="hidden" name="requestable[][item_id]" id="requestable_item_id_aaabbb" value="aaabbb" /><input type="hidden" name="requestable[][copy_number]" id="requestable_copy_number_aaabbb" value="" /><input type="hidden" name="requestable[][status]" id="requestable_status_aaabbb" value="" /><input type="hidden" name="requestable[][cgd]" id="requestable_cgd_aaabbb" value="" /><input type="hidden" name="requestable[][cc]" id="requestable_collection_code_aaabbb" value="" /><input type="hidden" name="requestable[][use_statement]" id="requestable_use_statement_aaabbb" value="" />'
       end

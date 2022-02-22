@@ -105,13 +105,7 @@ module Requests
     # rubocop:disable Style/NumericPredicate
     def enum_copy_display(item)
       return "" if item.blank?
-      display = ""
-      display += item[:enum_display] unless item[:enum_display].nil?
-      display += " " if !item[:enum_display].nil? && !item[:copy_number].nil?
-      # For scsb materials
-      display += item[:enumeration] if item[:enumeration]
-      display += "Copy #{item[:copy_number]}" unless item[:copy_number].blank? || item[:copy_number] == '0' || item[:copy_number] == 1 || item[:copy_number] == '1'
-      display
+      [item.description, item.copy_value].join(" ").strip
     end
     # rubocop:enable Style/NumericPredicate
 
@@ -393,9 +387,8 @@ module Requests
       def hidden_fields_for_item(item:, preferred_request_id:)
         hidden = hidden_field_tag("requestable[][item_id]", "", value: preferred_request_id.to_s, id: "requestable_item_id_#{preferred_request_id}")
         hidden += hidden_field_tag("requestable[][barcode]", "", value: item['barcode'].to_s, id: "requestable_barcode_#{preferred_request_id}") unless item["barcode"].nil?
-        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enum_display'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enum_display"].nil?
-        hidden += hidden_field_tag("requestable[][enum]", "", value: item['enumeration'].to_s, id: "requestable_enum_#{preferred_request_id}") unless item["enumeration"].nil?
-        hidden += hidden_field_tag("requestable[][copy_number]", "", value: item['copy_number'].to_s, id: "requestable_copy_number_#{preferred_request_id}")
+        hidden += hidden_field_tag("requestable[][enum]", "", value: item.enum_value.to_s, id: "requestable_enum_#{preferred_request_id}") unless item.enum_value.blank?
+        hidden += hidden_field_tag("requestable[][copy_number]", "", value: item.copy_number.to_s, id: "requestable_copy_number_#{preferred_request_id}")
         hidden + hidden_field_tag("requestable[][status]", "", value: item['status'].to_s, id: "requestable_status_#{preferred_request_id}")
       end
 

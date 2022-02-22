@@ -542,6 +542,8 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
           visit 'requests/99105746993506421?mfhd=22547424510006421'
           expect(page).to have_content 'Pick-up location: Firestone Library'
           expect(page).to have_content 'If the specific volume does not appear in the list below, please enter it here:'
+          expect(page).to have_content 't. 2, no 2 (2018 )' # include enumeration and chron
+          expect(page).to have_content 't. 3, no 2 (2019 )' # include enumeration and chron
           within(".user-supplied-input") do
             check('requestable__selected')
           end

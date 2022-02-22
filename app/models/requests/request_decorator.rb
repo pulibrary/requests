@@ -139,7 +139,7 @@ module Requests
       end
 
       def any_enumerated?
-        requestable.any? { |r| r.item&.key?('enum_display') && !r.item['enum_display'].blank? }
+        requestable.any?(&:enumerated?)
       end
 
       def any_items?

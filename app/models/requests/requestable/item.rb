@@ -13,12 +13,30 @@ class Requests::Requestable
       self['item_type'] || ""
     end
 
+    def description
+      self[:description] || enum_value
+    end
+
     def enum_value
-      self['enum_display'] || ""
+      # enum_display from alma, enumeration from scsb
+      [self['enum_display'], self['enumeration']].join(" ").strip
     end
 
     def cron_value
       self['chron_display'] || ""
+    end
+
+    def copy_number
+      self[:copy_number] || ""
+    end
+
+    def copy_value
+      @copy_value ||= if self[:copy_number].present? && self[:copy_number].to_i != 0 && self[:copy_number].to_i != 1
+                        "Copy #{self[:copy_number]}"
+                      else
+                        ""
+                      end
+      @copy_value
     end
 
     def item_data?
@@ -42,7 +60,7 @@ class Requests::Requestable
     end
 
     def enumerated?
-      self[:enum_display].present?
+      !enum_value.blank?
     end
 
     # item type on the item level
@@ -134,6 +152,10 @@ class Requests::Requestable
       end
 
       def cron_value
+        ""
+      end
+
+      def copy_value
         ""
       end
 

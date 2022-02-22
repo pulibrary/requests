@@ -128,14 +128,14 @@ describe Requests::RequestDecorator do
     end
 
     context "on_shelf services with item data that is not enumerated" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new({}) } }
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, enumerated?: false } }
       it "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_falsey
       end
     end
 
     context "on_shelf services with item data that is enumerated" do
-      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, item: Requests::Requestable::Item.new('enum_display' => true) } }
+      let(:stubbed_questions) { { etas?: false, services: ['on_shelf'], item_data?: true, circulates?: false, enumerated?: true } }
       it "identifies any mfhds that require fill in option" do
         expect(decorator.any_fill_in_eligible?).to be_truthy
       end

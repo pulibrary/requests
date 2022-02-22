@@ -56,18 +56,10 @@ module Requests
           ['in_process']
         elsif requestable.on_order?
           ['on_order']
-        # my item status is positive or non-existent churn through statuses
-        ## any check at this level means items must fall in one bucket or another
-        elsif requestable.preservation?
-          ['pres']
         elsif requestable.annex?
           ['annex', 'on_shelf_edd']
-        elsif requestable.plasma?
-          ['ppl']
         elsif requestable.recap?
           calculate_recap_services
-        elsif requestable.pageable?
-          ['paging']
         elsif requestable.held_at_marquand_library?
           calculate_marquand_services
         else

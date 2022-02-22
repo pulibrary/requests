@@ -13,6 +13,10 @@ class Requests::Requestable
       self['item_type'] || ""
     end
 
+    def description
+      self[:description] || enum_value
+    end
+
     def enum_value
       # enum_display from alma, enumeration from scsb
       [self['enum_display'], self['enumeration']].join(" ").strip
@@ -27,7 +31,7 @@ class Requests::Requestable
     end
 
     def copy_value
-      @copy_value ||= if self[:copy_number].present? && self[:copy_number].to_i != 0 &&  self[:copy_number].to_i != 1
+      @copy_value ||= if self[:copy_number].present? && self[:copy_number].to_i != 0 && self[:copy_number].to_i != 1
                         "Copy #{self[:copy_number]}"
                       else
                         ""
@@ -154,7 +158,7 @@ class Requests::Requestable
       def copy_value
         ""
       end
-  
+
       def temp_loc?
         false
       end

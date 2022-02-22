@@ -355,6 +355,26 @@ RSpec.describe Requests::ApplicationHelper, type: :helper,
       end
     end
 
+    context "with item description" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ id: "aaabbb", description: 'v2 sss', copy_number: '0' }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" />'
+      end
+      it 'hides the enum display if the copy number is zero (0)' do
+        expect(helper.enum_copy_display(requestable.item)).to eq("v2 sss")
+      end
+    end
+
+    context "with item description and copy" do
+      let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ id: "aaabbb", description: 'v2 sss', copy_number: '2' }.with_indifferent_access), holding: { key1: 'value1' }, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }
+      it 'shows hidden fields' do
+        expect(helper.hidden_fields_item(requestable)).to include '<input type="hidden" name="requestable[][bibid]" id="requestable_bibid_aaabbb" value="abc123" />'
+      end
+      it 'hides the enum display if the copy number is zero (0)' do
+        expect(helper.enum_copy_display(requestable.item)).to eq("v2 sss Copy 2")
+      end
+    end
+
     context "with holding call number" do
       let(:holding) { { "1594697" => { "location" => "Firestone Library", "library" => "Firestone Library", "location_code" => "f", "copy_number" => "0", "call_number" => "6251.9765", "call_number_browse" => "6251.9765" } } }
       let(:stubbed_questions) { { bib: { id: 'abc123' }, item: Requests::Requestable::Item.new({ 'id' => "aaabbb" }.with_indifferent_access), holding: holding, location: { code: 'location_code' }, partner_holding?: false, preferred_request_id: 'aaabbb', item?: true, item_location_code: '' } }

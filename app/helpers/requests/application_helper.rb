@@ -105,7 +105,7 @@ module Requests
     # rubocop:disable Style/NumericPredicate
     def enum_copy_display(item)
       return "" if item.blank?
-      [item.enum_value, item.copy_value].join(" ").strip
+      [item.description, item.copy_value].join(" ").strip
     end
     # rubocop:enable Style/NumericPredicate
 

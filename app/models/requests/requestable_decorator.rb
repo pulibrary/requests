@@ -13,10 +13,11 @@ module Requests
 
     alias bib_id system_id
 
-    attr_reader :requestable, :view_context
-    def initialize(requestable, view_context)
+    attr_reader :requestable, :view_context, :for_fill_in
+    def initialize(requestable, view_context, for_fill_in: false)
       @requestable = requestable
       @view_context = view_context
+      @for_fill_in = for_fill_in
     end
 
     ## If the item doesn't have any item level data use the holding mfhd ID as a unique key
@@ -26,15 +27,17 @@ module Requests
     end
 
     def digitize?
-      eligible_for_library_services? && (item_data? || !circulates?) && (on_shelf_edd? || recap_edd? || marquand_edd?) && !request_status?
+      return false unless patron.cas_provider? # only allow digitization for cas users
+      eligible_for_library_services? && (item_data? || !circulates? || for_fill_in) && (on_shelf_edd? || recap_edd? || marquand_edd?) && !request_status?
     end
 
     def fill_in_digitize?
+      return false unless patron.cas_provider? # only allow fill in digitization for cas users
       !item_data? || digitize?
     end
 
     def pick_up?
-      return false if etas? || !eligible_to_pickup?
+      return false if etas? || !eligible_to_pickup? || (!patron.cas_provider? && !off_site?)
       item_data? && (on_shelf? || recap? || annex?) && circulates? && !holding_library_in_library_only? && !scsb_in_library_use? && !request_status?
     end
 
@@ -60,7 +63,7 @@ module Requests
     end
 
     def will_submit_via_form?
-      return false unless eligible_for_library_services?
+      return false if !eligible_for_library_services? || (!patron.cas_provider? && !off_site?)
       digitize? || pick_up? || scsb_in_library_use? || (ill_eligible? && patron.covid_trained?) || on_order? || in_process? || traceable? || off_site? || help_me?
     end
 
@@ -101,7 +104,7 @@ module Requests
     def create_fill_in_requestable
       fill_in_req = Requestable.new(bib: bib, holding: holding, item: nil, location: location, patron: patron)
       fill_in_req.services = services
-      RequestableDecorator.new(fill_in_req, view_context)
+      RequestableDecorator.new(fill_in_req, view_context, for_fill_in: true)
     end
 
     def libcal_url

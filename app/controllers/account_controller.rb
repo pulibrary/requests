@@ -62,10 +62,11 @@ class AccountController < ApplicationController
 
     def cas_user
       if current_user
-        set_patron
-        if @patron && @patron[:barcode] && current_user.provider == 'cas'
-          redirect_to borrow_direct_url(@patron[:barcode])
+        if current_user.cas_provider?
+          set_patron
+          redirect_to borrow_direct_url(@patron[:barcode]) if @patron && @patron[:barcode]
         else
+          @illiad_transactions = []
           flash[:error] = I18n.t('blacklight.account.borrow_direct_ineligible')
           redirect_to root_url
         end
@@ -85,7 +86,7 @@ class AccountController < ApplicationController
 
     def illiad_patron_client(patron)
       @illiad_transactions = []
-      return unless patron && current_user.provider == 'cas'
+      return unless patron && current_user.cas_provider?
 
       @illiad_account = IlliadAccount.new(patron)
       return unless @illiad_account.verify_user

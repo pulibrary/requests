@@ -51,7 +51,6 @@ module Requests
         return if selected['pick_up'].present?
         id = selected['item_id']
         id = selected['mfhd'] if id.blank?
-
         record.errors[:items] << { id => { 'text' => "Please select a pick-up location for your selected #{type} item", 'type' => 'pick_up' } }
       end
 

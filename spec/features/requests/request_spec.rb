@@ -1596,6 +1596,67 @@ describe 'request', vcr: { cassette_name: 'request_features', record: :none }, t
         end
       end
     end
+
+    context 'An Alma user' do
+      let(:alma_login_response) { fixture('/alma_login_response.json') }
+      let(:user) { FactoryBot.create(:valid_alma_patron) }
+      before do
+        stub_request(:get, "#{Alma.configuration.region}/almaws/v1/users/#{user.uid}?expand=fees,requests,loans")
+          .to_return(status: 200, headers: { "Content-Type" => ["application/json", "charset=UTF-8"] },
+                     body: alma_login_response)
+        login_as user
+      end
+
+      it "allows a physical pickup request SCSB Recap Item" do
+        stub_scsb_availability(bib_id: "9994933183506421", institution_id: "PUL", barcode: '33333059902417')
+        visit 'requests/SCSB-6710959'
+        expect(page).not_to have_content 'Electronic Delivery'
+        expect(page).to have_content 'Physical Item Delivery'
+      end
+
+      it "allows a physical pickup request of ReCAP Item" do
+        stub_scsb_availability(bib_id: "9941151723506421", institution_id: "PUL", barcode: '32101050751989')
+        visit 'requests/9941151723506421?mfhd=22492702000006421'
+        expect(page).not_to have_content 'Electronic Delivery'
+        expect(page).to have_content 'Physical Item Delivery'
+      end
+
+      it "allows only physical pickup to enumerated annex item" do
+        stub_alma_hold_success('9947220743506421', '22734584180006421', '23734584140006421', user.uid)
+
+        visit "requests/9947220743506421?mfhd=22734584180006421"
+        expect(page).not_to have_content 'Electronic Delivery'
+        expect(page).to have_content 'Physical Item Delivery'
+
+        expect(page).to have_content "Department of Homeland Security appropriations for 2007"
+        check('requestable_selected_23734584140006421')
+        select('Firestone Library', from: 'requestable__pick_up_23734584140006421')
+        page.find(".submit--request") # this is really strange, but if I find the button then I can click it in the next line...
+        expect { click_button 'Request Selected Items' }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect(page).to have_content I18n.t("requests.submit.annex_success")
+        email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.count - 2]
+        confirm_email = ActionMailer::Base.deliveries.last
+        expect(email.subject).to eq("Annex Request")
+        expect(email.to).to eq(["docstor@princeton.edu"])
+        expect(email.cc).to be_blank
+        expect(email.html_part.body.to_s).to have_content("Department of Homeland Security appropriations for 2007")
+        expect(email.html_part.body.to_s).to have_content("pt.6")
+        expect(email.text_part.body.to_s).to have_content("pt.6")
+        expect(confirm_email.subject).to eq(I18n.t("requests.annex.email_subject"))
+        expect(confirm_email.html_part.body.to_s).not_to have_content("translation missing")
+        expect(confirm_email.text_part.body.to_s).not_to have_content("translation missing")
+        expect(confirm_email.to).to eq(["login@test.com"])
+        expect(confirm_email.cc).to be_blank
+        expect(confirm_email.html_part.body.to_s).to have_content("Department of Homeland Security appropriations for 2007")
+        expect(confirm_email.html_part.body.to_s).not_to have_content("Remain only in the designated pick-up area")
+      end
+
+      it "does not allow access to items on the shelf" do
+        visit "requests/99125452799106421?mfhd=22917143470006421"
+        expect(page).not_to have_content 'Electronic Delivery'
+        expect(page).not_to have_content 'Physical Item Delivery'
+      end
+    end
   end
   # rubocop:enable RSpec/MultipleExpectations
 end

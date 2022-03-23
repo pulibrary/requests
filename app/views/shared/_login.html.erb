@@ -74,7 +74,7 @@
         <div class='field form-group col-md-12 row'>
           <%= f.label 'Password', class: 'control-label col-md-2 col-form-label' %>
           <div class='col-md-5 <%= 'has-error' if flash[:password] %>'>
-            <%= text_field_tag 'password', '', class: 'form-control', autocomplete: 'off' %>
+            <%= password_field_tag 'password', '', class: 'form-control', autocomplete: 'off' %>
             <% if flash[:password] %>
               <span id="inputError2Status" class="sr-only">(error)</span>
               <span class="error">Password error</span>

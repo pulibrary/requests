@@ -97,10 +97,11 @@ module Requests
       end
 
       def calculate_unavailable_services
+        return [] unless user.cas_provider?
         services = []
-        services << 'bd' if !requestable.enumerated? && cas_user? && !any_loanable? && requestable.bib['isbn_s'].present?
+        services << 'bd' if !requestable.enumerated? && !any_loanable? && requestable.bib['isbn_s'].present?
         # for mongraphs - title level check OR for serials - copy level check
-        services << 'ill' if (cas_user? && !any_loanable?) || (cas_user? && requestable.enumerated?)
+        services << 'ill' if !any_loanable? || requestable.enumerated?
         services
       end
 
@@ -126,16 +127,8 @@ module Requests
         end
       end
 
-      def barcode_user?
-        @user.provider == 'barcode'
-      end
-
-      def cas_user?
-        @user.provider == 'cas'
-      end
-
       def auth_user?
-        cas_user? || barcode_user?
+        @user.cas_provider? || @user.barcode_provider? || @user.alma_provider?
       end
   end
 end

@@ -87,7 +87,6 @@ module Requests
       @services.each(&:handle)
 
       @success_messages = generate_success_messages(@success_messages)
-
       @services
     end
 

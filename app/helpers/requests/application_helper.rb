@@ -32,33 +32,18 @@ module Requests
       if requestable.on_shelf?
         display_on_shelf(requestable, mfhd_id)
       else
-        display_requestable_list(requestable.services)
+        display_requestable_list(requestable)
       end
     end
 
     def show_service_options(requestable, _mfhd_id)
-      if requestable.services.empty?
+      if requestable.no_services?
         content_tag(:div, "#{requestable.title} #{enum_copy_display(requestable.item)} #{I18n.t('requests.no_services.brief_msg').html_safe}", class: 'sr-only') +
           content_tag(:div, I18n.t("requests.no_services.brief_msg").html_safe, class: 'service-item', aria: { hidden: true })
       elsif requestable.charged? && !requestable.aeon? && !requestable.ask_me?
         render partial: 'checked_out_options', locals: { requestable: requestable }
       else
-        display_requestable_list(requestable.services)
-      end
-    end
-
-    def show_service_options_fill_in(requestable)
-      content_tag(:ul, class: "service-list") do
-        brief_msg = if requestable.annex?
-                      I18n.t("requests.annex.brief_msg")
-                    elsif requestable.preservation?
-                      I18n.t("requests.pres.brief_msg")
-                    elsif requestable.services.include? 'recap_no_items'
-                      I18n.t("requests.recap_no_items.brief_msg")
-                    else
-                      I18n.t("requests.paging.brief_msg")
-                    end
-        concat content_tag(:li, brief_msg.html_safe, class: "service-item")
+        display_requestable_list(requestable)
       end
     end
 
@@ -348,17 +333,15 @@ module Requests
 
     private
 
-      def display_requestable_list(services)
-        return if services.blank? # || services.include?('recap_edd') # || services.include?(recap)
+      def display_requestable_list(requestable)
+        return if requestable.no_services?
         content_tag(:ul, class: "service-list") do
-          services_to_filter = ["on_shelf_edd", "recap_edd"]
-          if services.include?('bd') && services.include?('ill')
-            services_to_filter << 'bd' << 'ill'
-            concat content_tag(:li, I18n.t("requests.bd_and_ill.brief_msg").html_safe, class: "service-item")
-          end
-          filtered_services = services.reject { |val| services_to_filter.include?(val) }
-          filtered_services.each do |service|
-            brief_msg = I18n.t("requests.#{service}.brief_msg")
+          if requestable.borrow_direct? || requestable.ill_eligible?
+            concat content_tag(:li, I18n.t("requests.ill.brief_msg").html_safe, class: "service-item")
+          else
+            # there are no instances where more than one actual service is available to an item, so we are going to take the first service that is not edd
+            filtered_services = requestable.services.reject { |service_name| service_name.include?("edd") }
+            brief_msg = I18n.t("requests.#{filtered_services.first}.brief_msg")
             concat content_tag(:li, brief_msg.html_safe, class: "service-item")
           end
         end
@@ -366,7 +349,7 @@ module Requests
 
       def display_on_shelf(requestable, _mfhd_id)
         content_tag(:div) do
-          display_requestable_list(requestable.services)
+          display_requestable_list(requestable)
           # temporary changes issue 438
           # concat link_to 'Where to find it', requestable.map_url(mfhd_id)
           # concat content_tag(:div, I18n.t("requests.trace.brief_msg").html_safe, class: 'service-item') if requestable.traceable?

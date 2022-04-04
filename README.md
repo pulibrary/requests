@@ -1,4 +1,4 @@
-# PUL Requests Engine
+# Deprecated - Merged with Orangelight - PUL Requests Engine
 
 [![CircleCI](https://circleci.com/gh/pulibrary/requests.svg?style=svg)](https://circleci.com/gh/pulibrary/requests)
 
